@@ -268,7 +268,7 @@ struct IS_VER // VERsion
 	byte	Zero;
 
 	char	Version[8];		// LFS version, e.g. 0.3G
-	char	Product[6];		// Product : DEMO or S1 or S2
+	char	Product[6];		// Product : DEMO or S1
 	word	InSimVer;		// InSim Version : increased when InSim packets change
 };
 
@@ -1674,7 +1674,7 @@ struct IS_BTN // BuTtoN - button header - followed by 0 to 240 characters
 	byte	W;			// width  : 0 - 200
 	byte	H;			// height : 0 - 200
 
-	char	Text[112]; // 0 to 240 characters of text
+	char	Text[240]; // 0 to 240 characters of text
 };
 
 // ClickID byte : this value is returned in IS_BTC and IS_BTT packets.

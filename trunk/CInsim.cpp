@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, Cristóbal Marco
+ * Copyright (c) 2010, CristÃ³bal Marco
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,24 +19,35 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
- /*
- * CInsim v0.3
+/*
+ * CInsim v0.6
  * ===========
  *
  * CInsim is a LFS InSim library written in basic C/C++. It provides basic
- * functionality to interact with InSim in Windows. It uses WinSock2 for the socket
- * communication.
+ * functionality to interact with InSim in Windows and *NIX. It uses WinSock2 for
+ * the socket communication under Windows, and pthreads-w32 for thread safe sending
+ * method under Windows.
+ *
+ * *NIX style sockets and POSIX compliant threads are used for *NIX compatibility.
+ * *NIX compatibility code provided by MadCat.
  */
 
 using namespace std;
 
 #include "CInsim.h"
 
+#ifdef CIS_LINUX
+#define INVALID_SOCKET -1
+#endif
+
 /**
 * Constructor: Initialize the buffers
 */
 CInsim::CInsim ()
 {
+    // Initialize the mutex var
+    pthread_mutex_init(&ismutex, NULL);
+
 	// Initialize global buffers
 	memset(gbuf.buffer, 0, PACKET_BUFFER_SIZE);
 	gbuf.bytes = 0;
@@ -56,6 +67,17 @@ CInsim::CInsim ()
 
 }
 
+
+/**
+* Destructor: Initialize the buffers
+*/
+CInsim::~CInsim ()
+{
+    // Destroy the mutex var
+    pthread_mutex_destroy(&ismutex);
+}
+
+
 /**
 * Initialize the socket and the Insim connection
 * If "struct IS_VER *pack_ver" is set it will contain an IS_VER packet after returning. It's an optional argument
@@ -64,22 +86,29 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 {
 	// Initialise WinSock
 	// Only required on Windows
-   WSADATA wsadata;
+    #ifdef CIS_WINDOWS
+    WSADATA wsadata;
 
 	if (WSAStartup(0x202, &wsadata) == SOCKET_ERROR)
 	{
 		WSACleanup();
 		return -1;
 	}
+    #endif
 
 	// Create the TCP socket - this defines the type of socket
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	// Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
 	if (sock == INVALID_SOCKET)
-    {
+	{
+        #ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
+        #endif
+        #ifdef CIS_LINUX
+        close(sock);
+        #endif
 		return -1;
     }
 
@@ -103,8 +132,13 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 	// Now the socket address structure is full, lets try to connect
 	if (connect(sock, (struct sockaddr *) &saddr, sizeof(saddr)) < 0)
 	{
+        #ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
+        #endif
+        #ifdef CIS_LINUX
+        close(sock);
+        #endif
 		return -1;
 	}
 
@@ -117,9 +151,15 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         // Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
         if (sockudp == INVALID_SOCKET)
         {
+            #ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
+            #endif
+            #ifdef CIS_LINUX
+            close(sock);
+            close(sockudp);
+            #endif
             return -1;
         }
 
@@ -154,9 +194,15 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         // Connect the UDP using the same address as in the TCP socket
         if (connect(sockudp, (struct sockaddr *) &udp_saddr, sizeof(udp_saddr)) < 0)
         {
+            #ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
+            #endif
+            #ifdef CIS_LINUX
+            close(sock);
+            close(sockudp);
+            #endif
             return -1;
         }
 
@@ -165,38 +211,72 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 	}
 
     // Ok, so we're connected. First we need to let LFS know we're here by sending the IS_ISI packet
-
 	struct IS_ISI isi_p;
 	memset(&isi_p, 0, sizeof(struct IS_ISI));
 	isi_p.Size = sizeof(struct IS_ISI);
 	isi_p.Type = ISP_ISI;
-	isi_p.UDPPort = udpport;
-	isi_p.ReqI = 1;
-	isi_p.Flags = flags;
+
+	if (pack_ver != NULL)             // We request an ISP_VER if the caller asks for it
+        isi_p.ReqI = 1;
+
 	isi_p.Prefix = prefix;
-	isi_p.Interval = interval;
-	strcpy(isi_p.Admin,admin);
-	strcpy(isi_p.IName , product);
+    isi_p.UDPPort = udpport;
+    isi_p.Flags = flags;
+    isi_p.Interval = interval;
+	memcpy(isi_p.IName, product, sizeof(isi_p.IName)-1);
+	memcpy(isi_p.Admin, admin, 16);
 
-
-    send_packet(&isi_p);
     // Send the initialization packet
+    if(send_packet(&isi_p) < 0)
+    {
+        if (using_udp)
+        {
+            #ifdef CIS_WINDOWS
+            closesocket(sockudp);
+            #endif
+            #ifdef CIS_LINUX
+            close(sockudp);
+            #endif
+		}
+
+        #ifdef CIS_WINDOWS
+        closesocket(sock);
+        WSACleanup();
+        #endif
+        #ifdef CIS_LINUX
+        close(sock);
+        #endif
+        return -1;
+    }
 
     // Set the timeout period
     select_timeout.tv_sec = IS_TIMEOUT;
     select_timeout.tv_usec = 0;
 
-      if (pack_ver != NULL)
+    // If an IS_VER packet was requested
+    if (pack_ver != NULL)
     {
         if (next_packet() < 0)              // Get next packet, supposed to be an IS_VER
         {
             if (isclose() < 0)
             {
                 if (using_udp)
+                {
+                    #ifdef CIS_WINDOWS
                     closesocket(sockudp);
+                    #endif
+                    #ifdef CIS_LINUX
+                    close(sockudp);
+                    #endif
+                }
 
+                #ifdef CIS_WINDOWS
                 closesocket(sock);
                 WSACleanup();
+                #endif
+                #ifdef CIS_LINUX
+                close(sock);
+                #endif
                 return -1;
             }
             return -1;
@@ -211,15 +291,27 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
                 if (isclose() < 0)
                 {
                     if (using_udp)
+                    {
+                        #ifdef CIS_WINDOWS
                         closesocket(sockudp);
+                        #endif
+                        #ifdef CIS_LINUX
+                        close(sockudp);
+                        #endif
+                    }
 
+                    #ifdef CIS_WINDOWS
                     closesocket(sock);
                     WSACleanup();
+                    #endif
+                    #ifdef CIS_LINUX
+                    close(sock);
+                    #endif
                 }
                 return -1;
         }
     }
-    return 0;
+	return 0;
 }
 
 /**
@@ -235,10 +327,22 @@ int CInsim::isclose()
         return -1;
 
     if (using_udp)
+    {
+        #ifdef CIS_WINDOWS
         closesocket(sockudp);
+        #endif
+        #ifdef CIS_LINUX
+        close(sockudp);
+        #endif
+    }
 
+    #ifdef CIS_WINDOWS
     closesocket(sock);
     WSACleanup();
+    #endif
+    #ifdef CIS_LINUX
+    close(sock);
+    #endif
     return 0;
 }
 
@@ -280,7 +384,12 @@ int CInsim::next_packet()
             FD_SET(sock, &readfd);
             FD_SET(sock, &exceptfd);
 
+            #ifdef CIS_WINDOWS
             int rc = select(0, &readfd, NULL, &exceptfd, &select_timeout);
+            #endif
+            #ifdef CIS_LINUX
+            int rc = select(sock + 1, &readfd, NULL, &exceptfd, &select_timeout);
+            #endif
 
             if (rc == 0)                    // Timeout
                 continue;
@@ -368,7 +477,12 @@ int CInsim::udp_next_packet()
         FD_SET(sockudp, &udp_readfd);
         FD_SET(sockudp, &udp_exceptfd);
 
+        #ifdef CIS_WINDOWS
         int rc = select(0, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
+        #endif
+        #ifdef CIS_LINUX
+        int rc = select(sockudp + 1, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
+        #endif
 
         if (rc == 0)                    // Timeout
             continue;
@@ -420,21 +534,41 @@ void* CInsim::udp_get_packet()
 */
 int CInsim::send_packet(void* s_packet)
 {
+    pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
         return -1;
-
+    }
+    pthread_mutex_unlock (&ismutex);
     return 0;
 }
 
-int CInsim::send_text_packet(const char* s_packet)
+
+/**
+* Send a variable sized button
+*/
+int CInsim::send_button(void* s_button)
 {
-    int len = strlen(s_packet);
+    struct IS_BTN *pack_btn = (struct IS_BTN*)s_button;
 
-    if (len > 512)
-        return -2;
-    if (send(sock,s_packet, len, 0) < 0)
+    int text_len = strlen(pack_btn->Text);
+    int text2send;
+
+    if (text_len == 0)
+        text2send = 0;
+    else
+        text2send = (1+((text_len-1)/4))*4;
+
+    pack_btn->Size = 12 + text2send;
+
+    pthread_mutex_lock (&ismutex);
+    if (send(sock, (const char *)pack_btn, pack_btn->Size, 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
         return -1;
-
+    }
+    pthread_mutex_unlock (&ismutex);
     return 0;
 }
 
@@ -442,3 +576,215 @@ int CInsim::send_text_packet(const char* s_packet)
 /**
 * Other functions!!!
 */
+
+
+/**
+* Converts miliseconds to a C string
+* 14 characters needed in str to not run into buffer overflow ("-hh:mm:ss.xxx\0")
+* @param    milisecs    Miliseconds to convert
+* @param    str         String to be filled with the result in format "-hh:mm:ss.xxx"
+* @param    thousands   Result shows: 0 = result hundreths of second; other = thousandths of second
+*/
+char* ms2str (long milisecs, char *str, int thousands)
+{
+    unsigned hours = 0;
+    unsigned minutes = 0;
+    unsigned seconds = 0;
+    unsigned hundthou = 0;
+
+    char shours[3], sminutes[3], sseconds[3], shundthou[4];
+
+    memset(str, 0, 14);
+
+    if (milisecs < 0)
+    {
+        strcpy(str,"-");
+        milisecs *= -1;
+    }
+
+    if (milisecs >= 360000000)
+        return 0;
+
+    if (milisecs >= 3600000)
+    {
+        hours = milisecs / 3600000;
+        milisecs %= 3600000;
+    }
+    if (milisecs >= 60000)
+    {
+        minutes = milisecs / 60000;
+        milisecs %= 60000;
+    }
+    if (milisecs >= 1000)
+    {
+        seconds = milisecs / 1000;
+        milisecs %= 1000;
+    }
+    if (thousands)
+        hundthou = milisecs;
+    else
+        hundthou = milisecs / 10;
+
+    if (hundthou == 0)
+    {
+        if (thousands)
+            strcpy(shundthou, "000");
+        else
+            strcpy(shundthou, "00");
+    }
+
+    if (hours > 0)
+    {
+        sprintf(shours,"%d",hours);
+        strcat(strcat(str,shours),":");
+
+        if (minutes > 9)
+            sprintf(sminutes,"%d",minutes);
+        else{
+            strcpy(sminutes,"0");
+            sprintf(sminutes+1,"%d",minutes);
+        }
+        strcat(strcat(str,sminutes),":");
+
+        if (seconds > 9)
+            sprintf(sseconds,"%d",seconds);
+        else{
+            strcpy(sseconds,"0");
+            sprintf(sseconds+1,"%d",seconds);
+        }
+        strcat(strcat(str,sseconds),".");
+
+        if (thousands)
+        {
+            if (hundthou > 99)
+                sprintf(shundthou,"%d",hundthou);
+            else if (hundthou > 9){
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+            else{
+                strcpy(shundthou,"00");
+                sprintf(shundthou+2,"%d",hundthou);
+            }
+        }
+        else
+        {
+            if (hundthou > 9)
+                sprintf(shundthou,"%d",hundthou);
+            else{
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+        }
+        strcat(str,shundthou);
+
+    }
+    else if (minutes > 0)
+    {
+        sprintf(sminutes,"%d",minutes);
+        strcat(strcat(str,sminutes),":");
+
+        if (seconds > 9)
+            sprintf(sseconds,"%d",seconds);
+        else{
+            strcpy(sseconds,"0");
+            sprintf(sseconds+1,"%d",seconds);
+        }
+        strcat(strcat(str,sseconds),".");
+
+        if (thousands)
+        {
+            if (hundthou > 99)
+                sprintf(shundthou,"%d",hundthou);
+            else if (hundthou > 9){
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+            else{
+                strcpy(shundthou,"00");
+                sprintf(shundthou+2,"%d",hundthou);
+            }
+        }
+        else
+        {
+            if (hundthou > 9)
+                sprintf(shundthou,"%d",hundthou);
+            else{
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+        }
+        strcat(str,shundthou);
+    }
+    else if (seconds > 0)
+    {
+        sprintf(sseconds,"%d",seconds);
+        strcat(strcat(str,sseconds),".");
+
+        if (thousands)
+        {
+            if (hundthou > 99)
+                sprintf(shundthou,"%d",hundthou);
+            else if (hundthou > 9){
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+            else{
+                strcpy(shundthou,"00");
+                sprintf(shundthou+2,"%d",hundthou);
+            }
+        }
+        else
+        {
+            if (hundthou > 9)
+                sprintf(shundthou,"%d",hundthou);
+            else{
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+        }
+        strcat(str,shundthou);
+    }
+    else
+    {
+        strcat(str,"0.");
+
+        if (thousands)
+        {
+            if (hundthou > 99)
+                sprintf(shundthou,"%d",hundthou);
+            else if (hundthou > 9){
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+            else{
+                strcpy(shundthou,"00");
+                sprintf(shundthou+2,"%d",hundthou);
+            }
+        }
+        else
+        {
+            if (hundthou > 9)
+                sprintf(shundthou,"%d",hundthou);
+            else{
+                strcpy(shundthou,"0");
+                sprintf(shundthou+1,"%d",hundthou);
+            }
+        }
+        strcat(str,shundthou);
+    }
+
+    return str;
+}
+
+//HACK: This should be considered a hack and needs more proper workaround.
+/*#ifdef CIS_LINUX
+void itoa(int value, char *buffer, int base)
+{
+    //  Implement simple itoa behavior, when base it set to 10, resulting
+    //+ string should have a minus sign when integer value is negative.
+    //+ Otherwise treat every string as unsigned.
+    if (base!=10 && value < 0) value = value * (-1);
+    sprintf(buffer, "%d", value);
+}
+#endif*/
