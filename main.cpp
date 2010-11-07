@@ -138,12 +138,13 @@ void read_user (struct player *splayer)
         int L = strlen(cash) + strlen(energy) + strlen(car) + 3;
         out << "L = " << L << "L2 = " << L2 << endl;
         if (L == L2)
-        lang="eng";
+        lang="rus";
         else
         lang = strtok(NULL,";");
 
 
-        memcpy(&cash,&cashf,strlen(cash));
+        //memcpy(&cashf,&cash,strlen(cash));
+        strcpy(cashf,cash);
         splayer->cash = atof(cashf);
         splayer->Energy = atoi(energy);
         strcpy(splayer->Cars,car);
@@ -3675,8 +3676,8 @@ void read_track(struct player *splayer)
     //strcat(file,"misc\\mysql.cfg");
     strcat(file,"tracks\\");
     strcat(file,ginfo.Track);
-    strcat(file,".");
-    strcat(file,splayer->Lang);
+    //strcat(file,".");
+    //strcat(file,splayer->Lang);
     strcat(file,".txt");
 
     HANDLE fff;
@@ -3720,7 +3721,8 @@ void read_track(struct player *splayer)
                         speed = strtok (NULL,";");
 
                         memset(&splayer->street[i],0,sizeof(streets));
-                        strcpy(splayer->street[i].Street,street);
+                        strcpy(splayer->street[i].Street,"^C^7");
+                        strcat(splayer->street[i].Street,street);
                         splayer->street[i].NodeBeg = atoi(node1);
                         splayer->street[i].NodeEnd = atoi(node2);
                         splayer->street[i].SpeedLimit = atoi(speed);
