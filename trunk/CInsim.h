@@ -36,6 +36,8 @@
 #ifndef _CINSIM_H
 #define _CINSIM_H
 
+#define MAX_PLAYERS 32
+
 
 typedef unsigned char byte;
 typedef unsigned short word;
