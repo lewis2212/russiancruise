@@ -96,7 +96,6 @@ typedef unsigned short word;
 
 
 #define IS_PRODUCT_NAME "Cruise v1.2.1"
-#define MAX_PLAYERS 32
 #define MAX_CARS 30
 #define MAX_FINES 100
 

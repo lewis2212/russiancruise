@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "CInsim.h"
 
-void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
+void *pizzathread(void *arg);// РџРѕС‚РѕРє РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ СЂР°Р±РѕС‚Р°Р»Рё С‡Р°СЃРёРєРё, РєРѕС‚РѕСЂС‹Рµ РѕС‚СЃС‡РёС‚С‹РІР°СЋС‚ РѕР±СЂР°С‚РЅС‹Р№ СЃС‡РµС‚
 
 
 struct PizzaPlayer
@@ -19,10 +19,10 @@ struct PizzaPlayer
     char    CName[4];              // Car Name
     /** Work **/
     byte    WorkZone;
-    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
-    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
-    byte    WorkDestinaion;		// номер точки доставки
-    int     WorkTime;			// время за которое он должен доставить товар
+    byte    WorkAccept;			// 0 = РЅРµ Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№ , 1 = Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№
+    byte    WorkPlayerAccept;   // РµСЃР»Рё РєР°РєРѕР№С‚Рѕ РїР»РµРµСЂ Р·Р°РєР°Р·Р°Р» РїРёС†С†Сѓ (100 + РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ)
+    byte    WorkDestinaion;		// РЅРѕРјРµСЂ С‚РѕС‡РєРё РґРѕСЃС‚Р°РІРєРё
+    int     WorkTime;			// РІСЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РѕРЅ РґРѕР»Р¶РµРЅ РґРѕСЃС‚Р°РІРёС‚СЊ С‚РѕРІР°СЂ
     int     WorkCountDone;
 };
 
@@ -33,11 +33,12 @@ class Pizza{
     struct  PizzaPlayer players[32];     // Array of players
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
-    int init(void *classname, void *CInSim);  // classname - указатель на класс Pizza. Нужно для доступа к классу внутри потока
-                                // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу Pizza
+    int init(void *classname, void *CInSim);  // classname - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ Pizza. РќСѓР¶РЅРѕ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РєР»Р°СЃСЃСѓ РІРЅСѓС‚СЂРё РїРѕС‚РѕРєР°
+                                // Р­С‚Р° С€С‚СѓРєР° РЅСѓР¶РЅР° РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ РѕС‚РґРµР»СЊРЅРѕ Р·Р°РїСѓС‰РµРЅРЅС‹Р№ РїРѕС‚РѕРє РёРјРµР» РґРѕСЃС‚СѓРї Рє РєР»Р°СЃСЃСѓ Pizza
     public:
     Pizza::Pizza();
     Pizza::~Pizza();
+    // РЅР°Р±РѕСЂ РЅСѓР¶РЅС‹С… С„СѓРЅРєС†РёР№ РїРѕРґРѕР±РЅС‹С… case_xxx РёР· РѕСЃРЅРѕРІРЅРѕРіРѕ СЏРґСЂР°
     void Pizza::pizza_ncn();
     void Pizza::pizza_npl();
     void Pizza::pizza_plp();
@@ -46,7 +47,7 @@ class Pizza{
     void Pizza::pizza_crp();
     void Pizza::pizza_mci();
     void Pizza::pizza_mso();
-
+    // РєРѕРЅРµС† СЃРїРёСЃРєР° С„СѓРЅРєС†РёР№
 };
 
 #endif
