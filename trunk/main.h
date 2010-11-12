@@ -4,28 +4,6 @@
 
 Russian Cruise by TurboSnail
 
-v. 1.1.3 at 10.05.10
-        - круиз работает в 2 режимах. консоль и сервис(служба)
-        - so4 pit+ shop+ cafe+ work+points++
-        - add cop system (!pay !sirena !users++)
-        - check nickname when player work cop
-        - забирать заказ из пиццирии можно не дожидаясь вызова
-
-v 1.1.35 at 17.05.10
-        - delete skin system
-        - fix bugs
-
-v 1.1.37 at 19.05.10
-        - !radar for on/off radar (auto off if Speed > 5 km/h)
-        - !trans show all cash transactions of player (if !trans user => show all cash transactions of player and user)
-
-
-TODO:
-        - button for pizza with action info
-        - maping WE1R, ky3 (pitzone, shop, cafe, work, workpoints)
-        - add light system on WE1R, KY3
-        - add recovery_car,ambulator_car system
-
 **/
 
 /**
@@ -68,7 +46,7 @@ buttons ClickId's:
 
 190-202 svetofor
 
-203-205 сирена
+203-205 СЃРёСЂРµРЅР°
 
 210 - pizza clock
 
@@ -80,15 +58,16 @@ H = 118;
 
 */
 using namespace std;
-typedef unsigned char byte;
-typedef unsigned short word;
 
 #include <fstream>
 
 #include <math.h>
-#include "CInsim.h"
 #include <windows.h>
 #include <time.h>
+
+#include "CInsim.h"
+#include "pizza.h"
+#include "message.h"
 
 
 
@@ -111,7 +90,7 @@ time_t  stime;
 int     chek_users =0;
 
 CInsim insim;
-ofstream  out;   // выходной файл для протокола работы сервиса
+ofstream  out;   // РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р» РґР»СЏ РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
 
 SERVICE_STATUS    service_status;
 SERVICE_STATUS_HANDLE  hServiceStatus;
@@ -167,10 +146,30 @@ struct track_info
     int     YCafe[10];
 };
 
+struct CompCar2 // Car info in 28 bytes - there is an array of these in the MCI (below)
+{
+    word	Node;		// current path node
+    word	Lap;		// current lap
+    byte	PLID;		// player's unique id
+    byte	Position;	// current race position : 0 = unknown, 1 = leader, etc...
+    byte	Info;		// flags and other info - see below
+    byte	Sp3;
+    int		X;			// X map (65536 = 1 metre)
+    int		Y;			// Y map (65536 = 1 metre)
+    int		Z;			// Z alt (65536 = 1 metre)
+    int		X2;			// X map (65536 = 1 metre)
+    int		Y2;			// Y map (65536 = 1 metre)
+    int		Z2;			// Z alt (65536 = 1 metre)
+    word	Speed;		// speed (32768 = 100 m/s)
+    word	Direction;	// direction of car's motion : 0 = world y direction, 32768 = 180 deg
+    word	Heading;	// direction of forward axis : 0 = world y direction, 32768 = 180 deg
+    short	AngVel;		// signed, rate of change of heading : (16384 = 360 deg/s)
+};
+
 
 struct player
 {
-    struct  CompCar Info;
+    struct  CompCar2 Info;
     struct user_car cars[MAX_CARS];
     struct user_fine fines[MAX_FINES];
 
@@ -180,7 +179,7 @@ struct player
 
     struct  track_info TrackInf;             // Where PitBox and Shop
 
-    char    message[20000][64];    // Messages !!!!!!!!!!!!!!!!!
+    //char    message[20000][64];    // Messages !!!!!!!!!!!!!!!!!
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    Cars[256];             // Avalible Cars
@@ -192,19 +191,20 @@ struct player
     byte    BID;
     byte    BID2;
     byte    bfn;
-    float   cash;       // Деньги
+    float   cash;       // Р”РµРЅСЊРіРё
     float   Distance;
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
     int     Action;
     char    Lang[4];
+    byte    lang_id;
     byte    Svetofor;
     /** COP **/
     byte    cop;
     byte    radar;
-    byte    sirena;         // коповский выключатель сирены
-    byte    sirenaOnOff;    // постаянная запись положения сирены у духов
-    byte    sirenaKey;      // определяем включить или выключить сирену у духов
+    byte    sirena;         // РєРѕРїРѕРІСЃРєРёР№ РІС‹РєР»СЋС‡Р°С‚РµР»СЊ СЃРёСЂРµРЅС‹
+    byte    sirenaOnOff;    // РїРѕСЃС‚Р°СЏРЅРЅР°СЏ Р·Р°РїРёСЃСЊ РїРѕР»РѕР¶РµРЅРёСЏ СЃРёСЂРµРЅС‹ Сѓ РґСѓС…РѕРІ
+    byte    sirenaKey;      // РѕРїСЂРµРґРµР»СЏРµРј РІРєР»СЋС‡РёС‚СЊ РёР»Рё РІС‹РєР»СЋС‡РёС‚СЊ СЃРёСЂРµРЅСѓ Сѓ РґСѓС…РѕРІ
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
@@ -217,11 +217,11 @@ struct player
     int     FloodTime;
     /** Work **/
     byte    WorkZone;
-    byte    WorkType;			// тип работы
-    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
-    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
-    byte    WorkDestinaion;		// номер точки доставки
-    int     WorkTime;			// время за которое он должен доставить товар
+    byte    WorkType;			// С‚РёРї СЂР°Р±РѕС‚С‹
+    byte    WorkAccept;			// 0 = РЅРµ Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№ , 1 = Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№
+    byte    WorkPlayerAccept;   // РµСЃР»Рё РєР°РєРѕР№С‚Рѕ РїР»РµРµСЂ Р·Р°РєР°Р·Р°Р» РїРёС†С†Сѓ (100 + РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ)
+    byte    WorkDestinaion;		// РЅРѕРјРµСЂ С‚РѕС‡РєРё РґРѕСЃС‚Р°РІРєРё
+    int     WorkTime;			// РІСЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РѕРЅ РґРѕР»Р¶РµРЅ РґРѕСЃС‚Р°РІРёС‚СЊ С‚РѕРІР°СЂ
     int     WorkCountDone;
 };
 
@@ -264,31 +264,7 @@ void read_car();
 void read_fines();
 int read_cop(struct player *splayer);
 
-// for localization
 
-
-
-
-bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
-{
-
-    int      i, j=polySides-1 ;
-    bool  oddNodes=false     ;
-
-    for (i=0; i<polySides; i++)
-    {
-        if (polyY[i]<y && polyY[j]>=y
-                ||  polyY[j]<y && polyY[i]>=y)
-        {
-            if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
-            {
-                oddNodes=!oddNodes;
-            }
-        }
-        j=i;
-    }
-    return oddNodes;
-}
 
 void send_mtc (byte UCID,char* Msg)
 {
@@ -332,46 +308,7 @@ void send_bfn (byte UCID, byte ClickID)
 *
 **************************************************************************************************/
 
-struct worker
-{
-    byte    UCID;
-    /** Work **/
-    byte    WorkZone;
-    byte    WorkType;			// тип работы
-    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
-    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
-    byte    WorkDestinaion;		// номер точки доставки
-    int     WorkTime;			// время за которое он должен доставить товар
-    int     WorkCountDone;
-
-};
-
-struct square           // square of destination point
-{
-    int     X[5];       // 4 X points
-    int     Y[5];       // 4 Y points
-    char    Place[64];  // The name of Destination Point
-};
-
-struct place
-{
-    int     dealX[4];       // 4 X points of Dealer Place
-    int     dealY[4];       // 4 Y points of Dealer Place
-    int     NumPoints;      // Count of Destination points/ Need for random
-    struct  square point[40]; // Destination points. See Bellow
-};
-
-enum
-{
-    WK_NULL =0,
-    WK_PIZZA =1,
-    WK_POST =2,
-    WK_TAXI =3,
-    WK_DRUGS =4,
-    WK_LOTTERY =5
-};
-
-
+/**
 class PostPizza
 {
 private:
@@ -406,201 +343,7 @@ void PostPizza::init(char *Name, char *Lic,byte Type)
 
 }
 
-void PostPizza::deal(struct player *splayer)
-{
-
-    if (splayer->WorkType == WK_NULL)
-    {
-
-        splayer->WorkType = WK_PIZZA;
-        splayer->WorkAccept = 0;
-        send_mtc(splayer->UCID,splayer->message[4000]);
-
-
-    }
-    else if (splayer->WorkType == WK_PIZZA)
-    {
-        send_mtc(splayer->UCID,splayer->message[4001]);
-    }
-    else
-    {
-        send_mtc(splayer->UCID,splayer->message[4002]);
-    }
-}
-
-int PostPizza::check_pos(struct player *splayer)
-{
-    int PLX = splayer->Info.X/65536;
-    int PLY = splayer->Info.Y/65536;
-
-    if (Check_Pos(4,zone.dealX,zone.dealY,PLX,PLY))
-    {
-        return 1;
-    }
-
-    if (Check_Pos(4,zone.point[splayer->WorkDestinaion].X,zone.point[splayer->WorkDestinaion].Y,PLX,PLY))
-    {
-        return 2;
-    }
-
-    return 0;
-}
-
-
-void PostPizza::take(struct player *splayer, struct global_info *ginfo)
-{
-    if (splayer->WorkType == WK_PIZZA)
-    {
-        if (splayer->WorkAccept == 1)
-        {
-            if (splayer->WorkPlayerAccept == 0)
-            {
-                srand(time(&stime));
-                int place = rand()%zone.NumPoints;
-
-                if (place == 0)
-                    place ++;
-
-                int worktime = time(&stime);
-                splayer->WorkTime = worktime+60*6;
-                splayer->WorkDestinaion = place;
-                splayer->WorkAccept = 2;
-                send_mtc(splayer->UCID,splayer->message[4200]);
-                send_mtc(splayer->UCID,zone.point[place].Place);
-            }
-            else if (splayer->WorkPlayerAccept != 0)
-            {
-                int worktime = time(&stime);
-                splayer->WorkTime = worktime+60*6;
-                splayer->WorkDestinaion = splayer->WorkPlayerAccept;
-                splayer->WorkAccept = 2;
-                char text[96];
-                strcpy(text,splayer->message[4201]);
-                strcat(text,ginfo->players[splayer->WorkPlayerAccept - 100].PName);
-                send_mtc(splayer->UCID,text);
-            }
-
-        }
-        else
-        {
-            send_mtc(splayer->UCID,splayer->message[4202]);
-        }
-    }
-    else
-    {
-        send_mtc(splayer->UCID,splayer->message[4203]);
-    }
-}
-
-void PostPizza::done(struct player *splayer)
-{
-
-    //cout << "true" << endl;
-    if ((splayer->WorkType == WK_PIZZA) and (splayer->WorkAccept == 2))
-    {
-        splayer->WorkDestinaion =0;
-        splayer->WorkAccept = 0;
-        splayer->WorkPlayerAccept = 0;
-        splayer->cash += 800;
-        splayer->WorkCountDone ++;
-        send_mtc(splayer->UCID,splayer->message[4300]);
-        send_bfn(splayer->UCID,210);
-        splayer->WorkZone =0;
-    }
-
-}
-void PostPizza::undeal(struct player *splayer, char *Reason)
-{
-
-    //cout << "true" << endl;
-    if (splayer->WorkType == WK_PIZZA)
-    {
-        send_bfn(splayer->UCID,210);
-        send_mtc(splayer->UCID,splayer->message[4100]);
-        send_mtc(splayer->UCID,Reason);
-        splayer->WorkType = WK_NULL;
-        splayer->WorkDestinaion =0;
-        splayer->WorkAccept = 0;
-    }
-
-}
-
-void PostPizza::readconfig(char *Track)
-{
-    char file[MAX_PATH];
-    strcpy(file,RootDir);
-    strcat(file,"work\\");
-    strcat(file,Track);
-    strcat(file,"_");
-    strcat(file,WorkName);
-    strcat(file,".txt");
-
-
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        out << "Can't find " << file << endl;
-        return;
-    }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
-
-
-    int point = 0;
-
-    while (readf.good())
-    {
-        char str[128];
-        readf.getline(str,128);
-
-
-        if (strlen(str) > 0)
-        {
-
-            if (strncmp(str,"/dealer",7)==0)
-            {
-                for (int i=0; i<4; i++)
-                {
-                    readf.getline(str,128);
-                    char * X;
-                    char * Y;
-                    X = strtok (str,",");
-                    Y = strtok (NULL,",");
-                    zone.dealX[i] = atoi(X);
-                    zone.dealY[i] = atoi(Y);
-                    // cout << point << ". X=" << X << "; Y=" << Y << ";\n";
-                }
-            } // if /street
-
-            if (strncmp(str,"point",5)==0)
-            {
-                readf.getline(str,64);
-                strncpy(zone.point[point].Place,str,strlen(str));
-                // cout << "place[" << point << "]= " << pizza.point[point].Place << endl;
-                for (int i=0; i<4; i++)
-                {
-                    readf.getline(str,128);
-                    char * X;
-                    char * Y;
-                    X = strtok (str,",");
-                    Y = strtok (NULL,",");
-                    // cout << point << ". X["<<i<<"]= " << X << ", Y["<<i<<"]= " << Y << endl;
-                    zone.point[point].X[i] = atoi(X);
-                    zone.point[point].Y[i] = atoi(Y);
-                }
-                point ++;
-                zone.NumPoints = point;
-            } // if /street
-
-
-        } // if strlen > 0
-    } //while readf.good()
-
-    readf.close();
-}
+**/
 
 
 /******************************************************************
@@ -610,12 +353,12 @@ void PostPizza::readconfig(char *Track)
 *
 ******************************************************************/
 
-const char* signal1 ="^0•";
-const char* signal2 ="^0•";
-const char* signal3 ="^0•";
-const char* signal11 ="^0•";
-const char* signal12 ="^0•";
-const char* signal13 ="^0•";
+const char* signal1 ="^0вЂў";
+const char* signal2 ="^0вЂў";
+const char* signal3 ="^0вЂў";
+const char* signal11 ="^0вЂў";
+const char* signal12 ="^0вЂў";
+const char* signal13 ="^0вЂў";
 
 
 void btn_svetofor1 (struct player *splayer)

@@ -48,22 +48,22 @@ CInsim::CInsim ()
     // Initialize the mutex var
     pthread_mutex_init(&ismutex, NULL);
 
-	// Initialize global buffers
-	memset(gbuf.buffer, 0, PACKET_BUFFER_SIZE);
-	gbuf.bytes = 0;
+    // Initialize global buffers
+    memset(gbuf.buffer, 0, PACKET_BUFFER_SIZE);
+    gbuf.bytes = 0;
 
-	// Initialize local buffers
-	memset(lbuf.buffer, 0, PACKET_BUFFER_SIZE);
-	memset(udp_lbuf.buffer, 0, PACKET_BUFFER_SIZE);
-	lbuf.bytes = 0;
-	udp_lbuf.bytes = 0;
+    // Initialize local buffers
+    memset(lbuf.buffer, 0, PACKET_BUFFER_SIZE);
+    memset(udp_lbuf.buffer, 0, PACKET_BUFFER_SIZE);
+    lbuf.bytes = 0;
+    udp_lbuf.bytes = 0;
 
     // Initialize packet buffers
-	memset(packet, 0, PACKET_MAX_SIZE);
-	memset(udp_packet, 0, PACKET_MAX_SIZE);
+    memset(packet, 0, PACKET_MAX_SIZE);
+    memset(udp_packet, 0, PACKET_MAX_SIZE);
 
-	// By default we're not using UDP
-	using_udp = 0;
+    // By default we're not using UDP
+    using_udp = 0;
 
 }
 
@@ -84,82 +84,82 @@ CInsim::~CInsim ()
 */
 int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_VER *pack_ver, byte prefix, word flags, word interval, word udpport)
 {
-	// Initialise WinSock
-	// Only required on Windows
-    #ifdef CIS_WINDOWS
+    // Initialise WinSock
+    // Only required on Windows
+#ifdef CIS_WINDOWS
     WSADATA wsadata;
 
-	if (WSAStartup(0x202, &wsadata) == SOCKET_ERROR)
-	{
-		WSACleanup();
-		return -1;
-	}
-    #endif
+    if (WSAStartup(0x202, &wsadata) == SOCKET_ERROR)
+    {
+        WSACleanup();
+        return -1;
+    }
+#endif
 
-	// Create the TCP socket - this defines the type of socket
-	sock = socket(AF_INET, SOCK_STREAM, 0);
+    // Create the TCP socket - this defines the type of socket
+    sock = socket(AF_INET, SOCK_STREAM, 0);
 
-	// Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
-	if (sock == INVALID_SOCKET)
-	{
-        #ifdef CIS_WINDOWS
+    // Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
+    if (sock == INVALID_SOCKET)
+    {
+#ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
-        #endif
-        #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
         close(sock);
-        #endif
-		return -1;
+#endif
+        return -1;
     }
 
     // Resolve the IP address
     struct sockaddr_in saddr;
-	memset(&saddr, 0, sizeof(saddr));
+    memset(&saddr, 0, sizeof(saddr));
 
-	saddr.sin_family = AF_INET;
+    saddr.sin_family = AF_INET;
 
-	struct hostent *hp;
-	hp = gethostbyname(addr);
+    struct hostent *hp;
+    hp = gethostbyname(addr);
 
-	if (hp != NULL)
-		saddr.sin_addr.s_addr = *((unsigned long*)hp->h_addr);
-	else
-		saddr.sin_addr.s_addr = inet_addr(addr);
+    if (hp != NULL)
+        saddr.sin_addr.s_addr = *((unsigned long*)hp->h_addr);
+    else
+        saddr.sin_addr.s_addr = inet_addr(addr);
 
-	// Set the port number in the socket structure - we convert it from host byte order, to network
-	saddr.sin_port = htons(port);
+    // Set the port number in the socket structure - we convert it from host byte order, to network
+    saddr.sin_port = htons(port);
 
-	// Now the socket address structure is full, lets try to connect
-	if (connect(sock, (struct sockaddr *) &saddr, sizeof(saddr)) < 0)
-	{
-        #ifdef CIS_WINDOWS
+    // Now the socket address structure is full, lets try to connect
+    if (connect(sock, (struct sockaddr *) &saddr, sizeof(saddr)) < 0)
+    {
+#ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
-        #endif
-        #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
         close(sock);
-        #endif
-		return -1;
-	}
+#endif
+        return -1;
+    }
 
-	// If the user asked for NLP or MCI packets and defined an udpport
-	if ((udpport) && (flags >= ISF_NLP))
-	{
+    // If the user asked for NLP or MCI packets and defined an udpport
+    if ((udpport) && (flags >= ISF_NLP))
+    {
         // Create the UDP socket - this defines the type of socket
         sockudp = socket(AF_INET, SOCK_DGRAM, 0);
 
         // Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
         if (sockudp == INVALID_SOCKET)
         {
-            #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #endif
-            #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
             close(sock);
             close(sockudp);
-            #endif
+#endif
             return -1;
         }
 
@@ -194,58 +194,58 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         // Connect the UDP using the same address as in the TCP socket
         if (connect(sockudp, (struct sockaddr *) &udp_saddr, sizeof(udp_saddr)) < 0)
         {
-            #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #endif
-            #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
             close(sock);
             close(sockudp);
-            #endif
+#endif
             return -1;
         }
 
-	    // We are using UDP!
-	    using_udp = 1;
-	}
+        // We are using UDP!
+        using_udp = 1;
+    }
 
     // Ok, so we're connected. First we need to let LFS know we're here by sending the IS_ISI packet
-	struct IS_ISI isi_p;
-	memset(&isi_p, 0, sizeof(struct IS_ISI));
-	isi_p.Size = sizeof(struct IS_ISI);
-	isi_p.Type = ISP_ISI;
+    struct IS_ISI isi_p;
+    memset(&isi_p, 0, sizeof(struct IS_ISI));
+    isi_p.Size = sizeof(struct IS_ISI);
+    isi_p.Type = ISP_ISI;
 
-	if (pack_ver != NULL)             // We request an ISP_VER if the caller asks for it
+    if (pack_ver != NULL)             // We request an ISP_VER if the caller asks for it
         isi_p.ReqI = 1;
 
-	isi_p.Prefix = prefix;
+    isi_p.Prefix = prefix;
     isi_p.UDPPort = udpport;
     isi_p.Flags = flags;
     isi_p.Interval = interval;
-	memcpy(isi_p.IName, product, sizeof(isi_p.IName)-1);
-	memcpy(isi_p.Admin, admin, 16);
+    memcpy(isi_p.IName, product, sizeof(isi_p.IName)-1);
+    memcpy(isi_p.Admin, admin, 16);
 
     // Send the initialization packet
     if(send_packet(&isi_p) < 0)
     {
         if (using_udp)
         {
-            #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
             closesocket(sockudp);
-            #endif
-            #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
             close(sockudp);
-            #endif
-		}
+#endif
+        }
 
-        #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
-        #endif
-        #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
         close(sock);
-        #endif
+#endif
         return -1;
     }
 
@@ -262,21 +262,21 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
             {
                 if (using_udp)
                 {
-                    #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
                     closesocket(sockudp);
-                    #endif
-                    #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
                     close(sockudp);
-                    #endif
+#endif
                 }
 
-                #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
                 closesocket(sock);
                 WSACleanup();
-                #endif
-                #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
                 close(sock);
-                #endif
+#endif
                 return -1;
             }
             return -1;
@@ -284,34 +284,34 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
         switch (peek_packet())              // Check if the packet returned was an IS_VER
         {
-            case ISP_VER:                     // It was, get it!
-                memcpy(pack_ver, (struct IS_VER*)get_packet(), sizeof(struct IS_VER));
-                break;
-            default:                          // It wasn't, something went wrong. Quit
-                if (isclose() < 0)
+        case ISP_VER:                     // It was, get it!
+            memcpy(pack_ver, (struct IS_VER*)get_packet(), sizeof(struct IS_VER));
+            break;
+        default:                          // It wasn't, something went wrong. Quit
+            if (isclose() < 0)
+            {
+                if (using_udp)
                 {
-                    if (using_udp)
-                    {
-                        #ifdef CIS_WINDOWS
-                        closesocket(sockudp);
-                        #endif
-                        #ifdef CIS_LINUX
-                        close(sockudp);
-                        #endif
-                    }
-
-                    #ifdef CIS_WINDOWS
-                    closesocket(sock);
-                    WSACleanup();
-                    #endif
-                    #ifdef CIS_LINUX
-                    close(sock);
-                    #endif
+#ifdef CIS_WINDOWS
+                    closesocket(sockudp);
+#endif
+#ifdef CIS_LINUX
+                    close(sockudp);
+#endif
                 }
-                return -1;
+
+#ifdef CIS_WINDOWS
+                closesocket(sock);
+                WSACleanup();
+#endif
+#ifdef CIS_LINUX
+                close(sock);
+#endif
+            }
+            return -1;
         }
     }
-	return 0;
+    return 0;
 }
 
 /**
@@ -328,21 +328,21 @@ int CInsim::isclose()
 
     if (using_udp)
     {
-        #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
         closesocket(sockudp);
-        #endif
-        #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
         close(sockudp);
-        #endif
+#endif
     }
 
-    #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
     closesocket(sock);
     WSACleanup();
-    #endif
-    #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
     close(sock);
-    #endif
+#endif
     return 0;
 }
 
@@ -384,12 +384,12 @@ int CInsim::next_packet()
             FD_SET(sock, &readfd);
             FD_SET(sock, &exceptfd);
 
-            #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
             int rc = select(0, &readfd, NULL, &exceptfd, &select_timeout);
-            #endif
-            #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
             int rc = select(sock + 1, &readfd, NULL, &exceptfd, &select_timeout);
-            #endif
+#endif
 
             if (rc == 0)                    // Timeout
                 continue;
@@ -477,12 +477,12 @@ int CInsim::udp_next_packet()
         FD_SET(sockudp, &udp_readfd);
         FD_SET(sockudp, &udp_exceptfd);
 
-        #ifdef CIS_WINDOWS
+#ifdef CIS_WINDOWS
         int rc = select(0, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
-        #endif
-        #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
         int rc = select(sockudp + 1, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
-        #endif
+#endif
 
         if (rc == 0)                    // Timeout
             continue;
@@ -640,7 +640,8 @@ char* ms2str (long milisecs, char *str, int thousands)
 
         if (minutes > 9)
             sprintf(sminutes,"%d",minutes);
-        else{
+        else
+        {
             strcpy(sminutes,"0");
             sprintf(sminutes+1,"%d",minutes);
         }
@@ -648,7 +649,8 @@ char* ms2str (long milisecs, char *str, int thousands)
 
         if (seconds > 9)
             sprintf(sseconds,"%d",seconds);
-        else{
+        else
+        {
             strcpy(sseconds,"0");
             sprintf(sseconds+1,"%d",seconds);
         }
@@ -658,11 +660,13 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 99)
                 sprintf(shundthou,"%d",hundthou);
-            else if (hundthou > 9){
+            else if (hundthou > 9)
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
-            else{
+            else
+            {
                 strcpy(shundthou,"00");
                 sprintf(shundthou+2,"%d",hundthou);
             }
@@ -671,7 +675,8 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 9)
                 sprintf(shundthou,"%d",hundthou);
-            else{
+            else
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
@@ -686,7 +691,8 @@ char* ms2str (long milisecs, char *str, int thousands)
 
         if (seconds > 9)
             sprintf(sseconds,"%d",seconds);
-        else{
+        else
+        {
             strcpy(sseconds,"0");
             sprintf(sseconds+1,"%d",seconds);
         }
@@ -696,11 +702,13 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 99)
                 sprintf(shundthou,"%d",hundthou);
-            else if (hundthou > 9){
+            else if (hundthou > 9)
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
-            else{
+            else
+            {
                 strcpy(shundthou,"00");
                 sprintf(shundthou+2,"%d",hundthou);
             }
@@ -709,7 +717,8 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 9)
                 sprintf(shundthou,"%d",hundthou);
-            else{
+            else
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
@@ -725,11 +734,13 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 99)
                 sprintf(shundthou,"%d",hundthou);
-            else if (hundthou > 9){
+            else if (hundthou > 9)
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
-            else{
+            else
+            {
                 strcpy(shundthou,"00");
                 sprintf(shundthou+2,"%d",hundthou);
             }
@@ -738,7 +749,8 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 9)
                 sprintf(shundthou,"%d",hundthou);
-            else{
+            else
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
@@ -753,11 +765,13 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 99)
                 sprintf(shundthou,"%d",hundthou);
-            else if (hundthou > 9){
+            else if (hundthou > 9)
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
-            else{
+            else
+            {
                 strcpy(shundthou,"00");
                 sprintf(shundthou+2,"%d",hundthou);
             }
@@ -766,7 +780,8 @@ char* ms2str (long milisecs, char *str, int thousands)
         {
             if (hundthou > 9)
                 sprintf(shundthou,"%d",hundthou);
-            else{
+            else
+            {
                 strcpy(shundthou,"0");
                 sprintf(shundthou+1,"%d",hundthou);
             }
@@ -775,6 +790,27 @@ char* ms2str (long milisecs, char *str, int thousands)
     }
 
     return str;
+}
+
+bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
+{
+
+    int      i, j=polySides-1 ;
+    bool  oddNodes=false     ;
+
+    for (i=0; i<polySides; i++)
+    {
+        if (polyY[i]<y && polyY[j]>=y
+                ||  polyY[j]<y && polyY[i]>=y)
+        {
+            if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
+            {
+                oddNodes=!oddNodes;
+            }
+        }
+        j=i;
+    }
+    return oddNodes;
 }
 
 //HACK: This should be considered a hack and needs more proper workaround.
