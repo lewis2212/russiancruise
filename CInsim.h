@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Cristóbal Marco
+ * Copyright (c) 2010, CristÃ³bal Marco
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -97,8 +97,8 @@ typedef struct
 // Definition for our buffer datatype
 struct buffer
 {
-	char buffer[PACKET_BUFFER_SIZE];    // Packet buffer - 512 should be more than enough
-	unsigned int bytes;                 // Number of bytes currently in buffer
+    char buffer[PACKET_BUFFER_SIZE];    // Packet buffer - 512 should be more than enough
+    unsigned int bytes;                 // Number of bytes currently in buffer
 };
 
 /**
@@ -106,15 +106,15 @@ struct buffer
 */
 class CInsim
 {
-  private:
-    #ifdef CIS_WINDOWS
+private:
+#ifdef CIS_WINDOWS
     SOCKET sock;                            // TCP Socket (most packets)
     SOCKET sockudp;                         // UDP Socket (if requested, for NLP and MCI)
-    #endif
-    #ifdef CIS_LINUX
+#endif
+#ifdef CIS_LINUX
     int sock;                               // TCP Socket (most packets)
     int sockudp;                            // UDP Socket (if requested, for NLP and MCI)
-    #endif
+#endif
     byte using_udp;                         // 1 if we are using UDP for NLP or MCI packets
     struct buffer gbuf;                     // Our global buffer
     struct buffer lbuf;                     // Our local buffer
@@ -126,13 +126,13 @@ class CInsim
     fd_set udp_readfd, udp_exceptfd;        // (for NLP and MCI packets via UDP) File descriptor watches
     pthread_mutex_t ismutex;                // Mutex var used for send_packet() method
 
-  public:
+public:
     CInsim();                               // Constructor
     ~CInsim();                              // Destructor
 
-        //  "int init(...)" Establishes connection with the socket and insim.
-        //+ The last argument ch_ver is a pointer to a IS_VER struct. If it's used an IS_VER packet
-        //+ will be returned. If ch_ver is not used in the call no IS_VER will be requested/returned.
+    //  "int init(...)" Establishes connection with the socket and insim.
+    //+ The last argument ch_ver is a pointer to a IS_VER struct. If it's used an IS_VER packet
+    //+ will be returned. If ch_ver is not used in the call no IS_VER will be requested/returned.
     int init (char *addr, word port, char *product, char *admin, struct IS_VER *pack_ver = NULL, byte prefix = 0, word flags = 0, word interval = 0, word udpport = 0);
     int isclose();                      // Closes connection from insim and from the socket
     int next_packet();                  // Gets next packet ready into "char packet[]"
@@ -151,8 +151,8 @@ class CInsim
 */
 
 char* ms2str (long milisecs, char *str, int thousands=0); // Converts miliseconds to a C string (including negative miliseconds).
+bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
 /*#ifdef CIS_LINUX
 void itoa(int value, char *str, int base);	//itoa() does not necessarily have to be in stdlib.h available on Linux systems, so I we have to rehack it ourselves:)
 #endif*/
-
 #endif
