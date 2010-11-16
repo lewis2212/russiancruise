@@ -45,7 +45,7 @@ void read_words()
 
 void save_user_cars (struct player *splayer)
 {
-    out <<splayer->UName << " save info" << endl;
+    out <<splayer->UName << " save cars_info" << endl;
 
     char file[255];
     strcpy(file,RootDir);
@@ -67,7 +67,7 @@ void save_user_cars (struct player *splayer)
 
 void save_user_fines (struct player *splayer)
 {
-    out <<splayer->UName << " save info" << endl;
+    out <<splayer->UName << " save fines_info" << endl;
 
     char file[255];
     strcpy(file,RootDir);
@@ -89,7 +89,7 @@ void save_user_fines (struct player *splayer)
 
 void save_user (struct player *splayer)
 {
-    out <<splayer->UName << " save info" << endl;
+    out <<splayer->UName << " save user_info" << endl;
 
     char file[255];
     strcpy(file,RootDir);
@@ -137,7 +137,7 @@ void read_user (struct player *splayer)
         car = strtok(NULL,";");
 
         int L = strlen(cash) + strlen(energy) + strlen(car) + 3;
-        out << "L = " << L << "L2 = " << L2 << endl;
+        //out << "L = " << L << "L2 = " << L2 << endl;
         if (L == L2)
             lang="rus";
         else
@@ -347,6 +347,7 @@ void help_cmds (struct player *splayer,int h_type)
     {
 
         int i=0;
+        int j=0;
         for (i=0; i<MAX_FINES; i++)
         {
             if (splayer->fines[i].fine_id > 0)
@@ -373,12 +374,14 @@ void help_cmds (struct player *splayer,int h_type)
                 strcat( Text,pay);
                 strcat( Text," RUR.^3)");
                 send_mtc(splayer->UCID,Text);
+
+                j++;
             }
         }
 
-        if (i == MAX_FINES)
+        if (j == 0)
         {
-            // send_mtc(splayer->UCID,message[3102]);
+             send_mtc(splayer->UCID,msg.message[splayer->lang_id][3102]);
         }
 
     }
@@ -1563,7 +1566,7 @@ void case_btt ()
     {
         if (ginfo.players[i].UCID == pack_btt->UCID)
         {
-            if (pack_btt->ClickID==36)
+            if (pack_btt->ClickID==36) // send cash
             {
 
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -1609,7 +1612,7 @@ void case_btt ()
 
             }
 
-            else if (pack_btt->ClickID == 37)
+            else if (pack_btt->ClickID == 37) // send privat message
             {
 
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -2182,9 +2185,9 @@ void case_mci_energy ()
                     if (time_i > 59)
                     {
                         if (ginfo.players[j].Zone == 3)
-                        ginfo.players[j].Energy += 400;
+                            ginfo.players[j].Energy += 400;
                         else
-                        ginfo.players[j].Energy += 200;
+                            ginfo.players[j].Energy += 200;
 
                         ginfo.players[j].EnergyTime = time(&stime);
                     }
@@ -2900,7 +2903,7 @@ void case_mso ()
         char message2[96];
         strcpy(message2,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-        if (strlen(message2) < 7)
+        if (strlen(message2) < 8)
         {
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2104]);
             return;
@@ -2912,9 +2915,7 @@ void case_mso ()
         comand = strtok (message2," ");
         id = strtok (NULL," ");
 
-
-
-        if (strlen(id) != 3)
+        if ((!id) or (strlen(id) != 3))
         {
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2105]);
             return;
@@ -2936,18 +2937,16 @@ void case_mso ()
             ginfo.players[i].lang_id = 0;
         }
 
-        read_track(&ginfo.players[i]);
+        //read_track(&ginfo.players[i]);
 
     }
 
     /**  FLOOD ***/
-    if (pack_mso->UserType != MSO_PREFIX)
+    if (pack_mso->UserType != MSO_PREFIX) // if msg not with prefix '!'
     {
-        char Msg[96];
-        strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
         time_t timef;
-        int ftime = time(&timef);
+        int ftime = time(&timef); // get current time
 
         if (ginfo.players[i].FloodTime == 0)
         {
@@ -2975,6 +2974,9 @@ void case_mso ()
 
         /*** ฬภา ศ า.ฯ. ***/
         read_words();
+
+        char Msg[96];
+        strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
         for (int j=0; j< ginfo.WordsCount; j++)
         {
@@ -3071,9 +3073,10 @@ void case_mso_cop ()
         comand = strtok (message2," ");
         id = strtok (NULL," ");
 
+
         int id_i = atoi(id);
 
-        if (atoi(id) < 1)
+        if ((!id) or (id_i < 1))
         {
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2105]);
             return;
@@ -3085,14 +3088,16 @@ void case_mso_cop ()
             {
                 ginfo.players[i].fines[j].fine_id = 0;
                 ginfo.players[i].fines[j].fine_date = 0;
+                ginfo.players[i].cash -= ginfo.fines[id_i].cash;
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2106]);
                 break;
             }
+            if (j = MAX_FINES)
+            {
+                send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2107]);
+            }
         }
-        if (j = MAX_FINES)
-        {
-            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2107]);
-        }
+
     }
 
 }
@@ -3775,7 +3780,7 @@ void read_fines()
                 memset(&ginfo.fines[i],0,sizeof(struct cars));
                 ginfo.fines[i].id = i;
                 strcpy(ginfo.fines[i].name, name);
-                ginfo.fines[i].cash =atoi(cash);
+                ginfo.fines[i].cash = atoi(cash);
 
             }
 
