@@ -4,7 +4,7 @@
 
 int ok = 1;
 struct global_info ginfo;
-Pizza pizza;
+RCPizza pizza;
 RCMessage msg;
 
 
@@ -2309,7 +2309,7 @@ void case_mci_svetofor ()
                         ginfo.players[j].Svetofor = 2;
                     }
                     // !-- ZONE 2 PIT 2
-                    // ZONE 3 PIZZA CAFE
+                    // ZONE 3 RCPizza CAFE
                     if ((Node > 377) and (Node < 390) and (Check_Pos(5,Cafe2X,Cafe2Y,X,Y)) and ((H > 300) or (H<10)))
                     {
                         SvetKey = 1;
@@ -2405,7 +2405,7 @@ void case_mci_svetofor ()
                     }
                     // !-- ZONE 2 PIT 2
 
-                    // ZONE 3 PIZZA CAFE
+                    // ZONE 3 RCPizza CAFE
                     if ((Node > 540) and (Node < 550) and (X > -32) and ((H > 300) or (H<10)))
                     {
                         SvetKey = 1;
@@ -4040,8 +4040,8 @@ DWORD WINAPI thread_work (void *params)
     pizza.init(&pizza,&insim,&msg);
     pizza.readconfig(ginfo.Track);
 
-    //int pizza_time = time(&stime);
-    //out << pizza_time << endl;
+    //int RCPizza_time = time(&stime);
+    //out << RCPizza_time << endl;
 
     while (ok > 0)
     {
@@ -4075,7 +4075,7 @@ DWORD WINAPI thread_work (void *params)
                  {
                 srand(time(&stime));
                 int r = rand()%3 + 1;
-                pizza_time += 600/(ginfo.NumP+1);
+                RCPizza_time += 600/(ginfo.NumP+1);
                 //out << r << endl;
                 //out << ginfo_time - time(&stime) << endl;
 
@@ -4083,7 +4083,7 @@ DWORD WINAPI thread_work (void *params)
                 {
 
 
-                if ( (ginfo.players[i].UCID !=0) and (ginfo.players[i].WorkType == WK_PIZZA) and (ginfo.players[i].WorkAccept == 0))
+                if ( (ginfo.players[i].UCID !=0) and (ginfo.players[i].WorkType == WK_RCPizza) and (ginfo.players[i].WorkAccept == 0))
                 {
                 out << ginfo.players[i].UName << " accepted\n";
                 send_mtc(ginfo.players[i].UCID,"^C^3| ^7Поступил заказ на пиццу");
