@@ -66,7 +66,7 @@ using namespace std;
 #include <time.h>
 
 #include "CInsim.h"
-#include "pizza.h"
+#include "RCPizza.h"
 #include "message.h"
 
 
