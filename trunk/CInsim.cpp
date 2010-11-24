@@ -792,27 +792,6 @@ char* ms2str (long milisecs, char *str, int thousands)
     return str;
 }
 
-bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
-{
-
-    int      i, j=polySides-1 ;
-    bool  oddNodes=false     ;
-
-    for (i=0; i<polySides; i++)
-    {
-        if (polyY[i]<y && polyY[j]>=y
-                ||  polyY[j]<y && polyY[i]>=y)
-        {
-            if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
-            {
-                oddNodes=!oddNodes;
-            }
-        }
-        j=i;
-    }
-    return oddNodes;
-}
-
 //HACK: This should be considered a hack and needs more proper workaround.
 /*#ifdef CIS_LINUX
 void itoa(int value, char *buffer, int base)

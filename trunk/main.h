@@ -67,7 +67,11 @@ using namespace std;
 
 #include "CInsim.h"
 #include "RCPizza.h"
-#include "message.h"
+#include "RCMessage.h"
+#include "RCEnergy.h"
+#include "RCBank.h"
+
+//#include "sqlite/SQLite.h"
 
 
 
@@ -141,9 +145,6 @@ struct track_info
     int     ShopCount;
     int     XShop[10];
     int     YShop[10];
-    int     CafeCount;
-    int     XCafe[10];
-    int     YCafe[10];
 };
 
 struct CompCar2 // Car info in 28 bytes - there is an array of these in the MCI (below)
@@ -196,6 +197,8 @@ struct player
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
     int     Action;
+    byte    Bonus_key;
+    int     Bonus_laps;
     char    Lang[4];
     byte    lang_id;
     byte    Svetofor;
@@ -209,20 +212,15 @@ struct player
     char    PogonyaReason[64];
     int     StopTime;
     /** Energy **/
-    int     Energy; // Energy xD
-    time_t  EnergyTime;
+    //int     Energy; // Energy xD
+    //time_t  EnergyTime;
     /** Flood **/
     char    Msg[96];
     int     FloodCount;
     int     FloodTime;
     /** Work **/
-    byte    WorkZone;
-    byte    WorkType;			// тип работы
-    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
-    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
-    byte    WorkDestinaion;		// номер точки доставки
     int     WorkTime;			// время за которое он должен доставить товар
-    int     WorkCountDone;
+
 };
 
 
@@ -247,8 +245,12 @@ struct global_info
     /**  **/
 
     /** IS_STA **/
-    byte	NumP;			// Number of players in race
-    byte	NumConns;		// Number of connections including host
+     /** IS_RST **/
+    word	Node_Finish;		// node index - finish line
+    word	Node_Split1;		// node index - split 1 byte = 1
+    word	Node_Split2;		// node index - split 2 byte = 2
+    word	Node_Split3;		// node index - split 3 byte = 4
+    int     Splits_Count;       // split1(1) + split2(2) + split3(4) = max 7
     char    Track[6];                          // Current track (for streets)
     char    Product[6];                        // DEMO or S1 or S2
     /** insim **/
