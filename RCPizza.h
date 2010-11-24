@@ -8,8 +8,12 @@
 #include <iostream>
 #include <time.h>
 #include <windows.h>
+
+#include "tools.h"
 #include "CInsim.h"
-#include "message.h"
+#include "RCMessage.h"
+#include "RCBank.h"
+#include "RCEnergy.h"
 
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
@@ -33,20 +37,7 @@ struct PizzaPlayer
     int     WorkCountDone;
 };
 
-struct square           // square of destination point
-{
-    int     X[5];       // 4 X points
-    int     Y[5];       // 4 Y points
-    char    Place[64];  // The name of Destination Point
-};
 
-struct place
-{
-    int     dealX[4];       // 4 X points of Dealer Place
-    int     dealY[4];       // 4 Y points of Dealer Place
-    int     NumPoints;      // Count of Destination points/ Need for random
-    struct  square point[40]; // Destination points. See Bellow
-};
 
 enum
 {
@@ -67,13 +58,15 @@ public:
     RCPizza::RCPizza();
     RCPizza::~RCPizza();
 
-    CInsim  *insim;
-    RCMessage *msg;
+    CInsim      *insim;
+    RCMessage   *msg;
+    RCBank      *bank;
+    RCEnergy    *nrg;
 
     struct  place zone;
     struct  PizzaPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(void *classname, void *CInSim, void *Message);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
+    int init(void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
     void readconfig(char *Track);
     void deal(struct PizzaPlayer *splayer);

@@ -33,7 +33,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
             {
                 if (piz->players[i].WorkAccept != 0)
                 {
-                    cout << "piz->player[i].UCID = " << (int)piz->players[i].UCID <<endl;
+                    //cout << "piz->player[i].UCID = " << (int)piz->players[i].UCID <<endl;
                     int nowtime = time(&ptime);
                     if (piz->players[i].WorkTime <= nowtime)
                     {
@@ -101,7 +101,7 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init(void *classname,void *CInSim, void *Message)
+int RCPizza::init(void *classname,void *CInSim, void *Message,void *Bank,void *Energy)
 {
     pthread_attr_init(&attr);
     pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
@@ -121,6 +121,18 @@ int RCPizza::init(void *classname,void *CInSim, void *Message)
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
+        return -1;
+    }
+    bank = (RCBank *)Bank;
+    if(!msg)
+    {
+        printf ("Can't struct RCBank class");
+        return -1;
+    }
+    nrg = (RCEnergy *)Energy;
+    if(!msg)
+    {
+        printf ("Can't struct RCEnergy class");
         return -1;
     }
 
@@ -519,9 +531,9 @@ void RCPizza::pizza_mci ()
                     if ( Check_Pos(4,PLX,PLY,X,Y))
                     {
                         done(&players[j]);
-                        /** TODO: THINK ABOUT THIS
-                        players[PLN-100].cash -= 800;
-                        players[PLN-100].Energy += 800;**/
+                        /** TODO: THINK ABOUT THIS**/
+                        bank->players[PLN-100].Cash -= 800;
+                        nrg->players[PLN-100].Energy += 800;
 
                         send_mtc(players[PLN-100].UCID,msg->message[0][1604]);
 

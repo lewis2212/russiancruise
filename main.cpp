@@ -4,8 +4,10 @@
 
 int ok = 1;
 struct global_info ginfo;
-RCPizza pizza;
-RCMessage msg;
+RCPizza     pizza;
+RCMessage   msg;
+RCEnergy    nrg;
+RCBank      bank;
 
 
 
@@ -49,7 +51,7 @@ void save_user_cars (struct player *splayer)
 
     char file[255];
     strcpy(file,RootDir);
-    strcat(file,"data\\garage\\");
+    strcat(file,"data\\RCGarage\\");
     strcat(file,splayer->UName);
     strcat(file,".txt");
 
@@ -71,7 +73,7 @@ void save_user_fines (struct player *splayer)
 
     char file[255];
     strcpy(file,RootDir);
-    strcat(file,"data\\fines\\");
+    strcat(file,"data\\RCPolice\\fines\\");
     strcat(file,splayer->UName);
     strcat(file,".txt");
 
@@ -100,7 +102,7 @@ void save_user (struct player *splayer)
     ofstream writef (file,ios::out);
     writef << 1 << endl;
     writef << splayer->cash << ";"
-    << splayer->Energy << ";"
+    // << splayer->Energy << ";"
     << splayer->Cars << ";"
     << splayer->Lang << ";"
     << endl;
@@ -147,14 +149,14 @@ void read_user (struct player *splayer)
         //memcpy(&cashf,&cash,strlen(cash));
         strcpy(cashf,cash);
         splayer->cash = atof(cashf);
-        splayer->Energy = atoi(energy);
+        //splayer->Energy = atoi(energy);
         strcpy(splayer->Cars,car);
         strcpy(splayer->Lang,lang);
     }
     else
     {
         splayer->cash = 1000;
-        splayer->Energy = 10000;
+        //splayer->Energy = 10000;
         strcpy(splayer->Cars,"XFG ");
         strcpy(splayer->Lang,"rus");
 
@@ -176,7 +178,7 @@ void read_user_cars(struct player *splayer)
 {
     char file[255];
     strcpy(file,RootDir);
-    strcat(file,"data\\garage\\");
+    strcat(file,"data\\RCGarage\\");
     strcat(file,splayer->UName);
     strcat(file,".txt");
 
@@ -213,7 +215,7 @@ void read_user_fines(struct player *splayer)
 {
     char file[255];
     strcpy(file,RootDir);
-    strcat(file,"data\\fines\\");
+    strcat(file,"data\\RCPolice\\fines\\");
     strcat(file,splayer->UName);
     strcat(file,".txt");
 
@@ -381,7 +383,7 @@ void help_cmds (struct player *splayer,int h_type)
 
         if (j == 0)
         {
-             send_mtc(splayer->UCID,msg.message[splayer->lang_id][3102]);
+            send_mtc(splayer->UCID,msg.message[splayer->lang_id][3102]);
         }
 
     }
@@ -943,50 +945,7 @@ void btn_panel (struct player *splayer)
 
 
 
-void btn_energy (struct player *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    //
-    pack.ClickID = 209;
-    pack.BStyle = 32;
-    pack.L = 100;
-    pack.T = 7;
-    pack.W = 8;
-    pack.H = 4;
-    strcpy(pack.Text,msg.message[splayer->lang_id][100]);
-    insim.send_packet(&pack);
-    //
-    pack.ClickID = 208;
-    pack.BStyle = 32+64;
-    pack.L = 108;
-    pack.T = 7;
-    pack.W = 42;
-    pack.H = 4;
-    //int life = 100;
-    strcpy(pack.Text,"");
 
-
-    for (int i=1; i<=splayer->Energy/100; i++)
-    {
-        if (i == 1)
-            strcat(pack.Text,"^1");
-        if (i == 20)
-            strcat(pack.Text,"^3");
-        if (i == 70)
-            strcat(pack.Text,"^2");
-
-        strcat(pack.Text,"|");
-    }
-
-    insim.send_packet(&pack);
-}
 
 void btn_sirena(struct player *splayer)
 {
@@ -1880,7 +1839,7 @@ void case_flg ()
         }
     }
 }
-
+/**
 void case_lap ()
 {
     out << "IS_LAP\n";
@@ -1907,7 +1866,7 @@ void case_lap ()
 
     }
 }
-
+**/
 void case_mci ()
 {
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim.udp_get_packet();
@@ -1959,6 +1918,63 @@ void case_mci ()
                     }
                 }
 
+                /** Bonus **/
+
+                if ( (Node <= ginfo.Node_Split1+5) and (Node >= ginfo.Node_Split1-5) and (ginfo.Node_Split1 != 0) )
+                {
+                    if (ginfo.players[j].Bonus_key&1)
+                        {}
+                    else
+                    {
+                        ginfo.players[j].Bonus_key += 1;
+                    }
+                }
+
+                else if ( (Node <= ginfo.Node_Split2+5) and (Node >= ginfo.Node_Split2-5) and (ginfo.Node_Split2 != 0) )
+                {
+                    if (ginfo.players[j].Bonus_key&2)
+                        {}
+                    else
+                    {
+                        ginfo.players[j].Bonus_key += 2;
+                    }
+
+                }
+
+                else if ( (Node <= ginfo.Node_Split3+5) and (Node >= ginfo.Node_Split3-5) and (ginfo.Node_Split3 != 0) )
+                {
+                    if (ginfo.players[j].Bonus_key&4)
+                        {}
+                    else
+                    {
+                        ginfo.players[j].Bonus_key += 4;
+                    }
+                }
+
+
+                if ((Node <= ginfo.Node_Finish+5) and (Node >= ginfo.Node_Finish-5) and (ginfo.Node_Finish != 0))
+
+                {
+                    if(ginfo.players[j].Bonus_key&ginfo.Splits_Count)
+                    {
+
+                        int bonus = 100+(50*(ginfo.players[j].Bonus_laps));
+                        ginfo.players[j].Bonus_laps +=1;
+                        ginfo.players[j].Bonus_key = 0;
+
+                        ginfo.players[j].cash += bonus;
+
+                        char bonus_c[64];
+                        strcpy(bonus_c,msg.message[ginfo.players[j].lang_id][1500]);
+                        char bonus_ic[5];
+                        itoa(bonus,bonus_ic,10);
+                        strcat(bonus_c,bonus_ic);
+                        strcat(bonus_c," ^7RUR.");
+                        send_mtc(ginfo.players[j].UCID,bonus_c);
+                    }
+                    //
+                }
+
 
 
                 /** streets  **/
@@ -1987,10 +2003,6 @@ void case_mci ()
                 else if (Check_Pos(ginfo.players[j].TrackInf.ShopCount,ginfo.players[j].TrackInf.XShop,ginfo.players[j].TrackInf.YShop,X,Y))
                 {
                     ginfo.players[j].Zone = 2;
-                }
-                else if (Check_Pos(ginfo.players[j].TrackInf.CafeCount,ginfo.players[j].TrackInf.XCafe,ginfo.players[j].TrackInf.YCafe,X,Y))
-                {
-                    ginfo.players[j].Zone = 3;
                 }
                 else
                 {
@@ -2131,111 +2143,6 @@ void case_mci_cop ()
     }
 }
 
-void case_mci_energy ()
-{
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim.udp_get_packet();
-
-
-    for (int i = 0; i < pack_mci->NumC; i++)
-
-    {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
-
-            if (pack_mci->Info[i].PLID == ginfo.players[j].PLID and ginfo.players[j].PLID != 0 and ginfo.players[j].UCID != 0)
-
-            {
-
-                int X = pack_mci->Info[i].X/65536;
-                int Y = pack_mci->Info[i].Y/65536;
-                int Z = pack_mci->Info[i].Z/65536;
-                int D = pack_mci->Info[i].Direction/182;
-                int H = pack_mci->Info[i].Heading/182;
-                int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-                int A = pack_mci->Info[i].AngVel*360/16384;
-
-                int X1 = ginfo.players[j].Info.X/65536;
-                int Y1 = ginfo.players[j].Info.Y/65536;
-                int Z1 = ginfo.players[j].Info.Z/65536;
-                int D1 = ginfo.players[j].Info.Direction/182;
-                int H1 = ginfo.players[j].Info.Heading/182;
-                int S1 = ((int)ginfo.players[j].Info.Speed*360)/(32768);
-                int A1 = ginfo.players[j].Info.AngVel*360/16384;
-
-
-                long dA = A-A1;
-                long dS = S-S1;
-                long dD = abs((int)(sin(D)*100))-abs((int)(sin(D1)*100));
-                long dH = abs((int)(sin(H)*100))-abs((int)(sin(H1)*100));
-
-                //int K = int(sqrt(abs((dD-dH)*(1+dA)*dS))/32);
-                int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
-
-                //cout << dH << endl;
-                if ((ginfo.players[j].Energy > 5) and (S > 5) and (ginfo.players[j].cop != 1))
-                {
-                    ginfo.players[j].Energy -= K;
-                }
-
-                if (S == 0)
-                {
-
-                    int time_i = time(&stime) - ginfo.players[j].EnergyTime;
-
-                    if (time_i > 59)
-                    {
-                        if (ginfo.players[j].Zone == 3)
-                            ginfo.players[j].Energy += 400;
-                        else
-                            ginfo.players[j].Energy += 200;
-
-                        ginfo.players[j].EnergyTime = time(&stime);
-                    }
-
-                }
-
-                if (ginfo.players[j].Energy > 10000 )
-                {
-                    ginfo.players[j].Energy = 10000;
-                }
-
-                if (X1==0 and Y1==0 and Z1==0)
-                {
-                    X1=X;
-                    Y1=Y;
-                    Z1=Z;
-                }
-
-
-                ginfo.players[j].Info.X = pack_mci->Info[i].X;
-                ginfo.players[j].Info.Y = pack_mci->Info[i].Y;
-                ginfo.players[j].Info.Node = pack_mci->Info[i].Node;
-                ginfo.players[j].Info.Direction = pack_mci->Info[i].Direction;
-                ginfo.players[j].Info.Heading = pack_mci->Info[i].Heading;
-                ginfo.players[j].Info.Speed = pack_mci->Info[i].Speed;
-                ginfo.players[j].Info.AngVel = pack_mci->Info[i].AngVel;
-
-                if (ginfo.players[j].Energy < 10)
-                {
-                    char Text[64];
-                    strcpy(Text, "/spec ");
-                    strcat (Text, ginfo.players[j].UName);
-                    send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][1800]);
-                    send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][1801]);
-                    send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][1802]);
-                    ginfo.players[j].PLID = 0;
-                    ginfo.players[j].Zone = 1;
-                    send_mst(Text);
-                }
-
-
-
-
-
-            } // if pack_mci->Info[i].PLID == ginfo.players[j].PLID
-        }
-    }
-}
 
 
 void case_mci_svetofor ()
@@ -2792,49 +2699,8 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
         }
     }
-    //!Coffee
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!coffee", 7) == 0)
-    {
-        out << ginfo.players[i].UName << " send !coffee" << endl;
-        if (((ginfo.players[i].Zone == 1) and (ginfo.players[i].Energy < 500)) or (ginfo.players[i].Zone == 3))
-        {
-            if (ginfo.players[i].cash > 50)
-            {
-                ginfo.players[i].Energy += 500;
-                ginfo.players[i].cash -= 50;
-            }
-            else
-            {
-                send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2001]);
-            }
-        }
-        else
-        {
-            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2002]);
-        }
-    }
-    //!redbule
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!redbull", 8) == 0)
-    {
-        out << ginfo.players[i].UName << " send !redbull" << endl;
-        if (((ginfo.players[i].Zone == 1) and (ginfo.players[i].Energy < 500)) or (ginfo.players[i].Zone == 3))
-        {
-            if (ginfo.players[i].cash > 100)
-            {
-                ginfo.players[i].Energy += 1000;
-                ginfo.players[i].cash -= 100;
-            }
-            else
-            {
-                send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2001]);
-            }
-        }
-        else
-        {
-            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2002]);
-        }
 
-    }
+
     //!EXIT
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!exit", 5) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
     {
@@ -3209,18 +3075,20 @@ void case_npl ()
                     strcat (Text, ginfo.players[i].UName);
 
                     ginfo.players[i].PLID = pack_npl->PLID;
-                    ginfo.players[i].EnergyTime = time(&stime);
+
 
                     // out << "pack_npl->PType = " << (int)pack_npl->PType << endl;;
 
-                    if ( strstr(ginfo.players[i].Cars,pack_npl->CName))
+                    int j=0;
+                    for (j=0; j<MAX_CARS; j++)
                     {
-                        int j=0;
-                        for (j=0; j<MAX_CARS; j++)
-                        {
-                            if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
-                                break;
-                        }
+                        if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
+                            break;
+                    }
+
+                    if ( j != MAX_CARS)
+                    {
+
 
 
                         strcpy(ginfo.players[i].CName ,pack_npl->CName);
@@ -3267,29 +3135,6 @@ void case_npl ()
                         }
 
 
-                        else if ( ginfo.players[i].Energy < 500 )
-                        {
-
-                            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2402]);
-                            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2403]);
-                            ginfo.players[i].Zone = 1;
-                            ginfo.players[i].PLID = 0;
-                            send_mst(Text);
-                            return;
-                        }
-
-                        /*else if (strcmp(pack_npl->SName,ginfo.players[i].SName)!=0 )
-                        {
-
-                            send_mtc(ginfo.players[i].UCID,"^1| ^C^7Вы одели запрященный на сервере скин");
-                            char skin[96];
-                            strcpy(skin,"^1| ^C^7Оденьте скин:^8 ");
-                            strcat(skin,ginfo.players[i].SName);
-                            send_mtc(ginfo.players[i].UCID,skin);
-                            ginfo.players[i].Zone = 1;
-                            ginfo.players[i].PLID = 0;
-                            send_mst(Text);
-                        }*/
 
                     }
                     else
@@ -3306,7 +3151,7 @@ void case_npl ()
                 else
                 {
                     ginfo.players[i].PLID = pack_npl->PLID;
-                    ginfo.players[i].EnergyTime = time(&stime);
+                    //ginfo.players[i].EnergyTime = time(&stime);
                 }
 
 
@@ -3426,20 +3271,42 @@ void case_plp ()
     }
 }
 
-void case_sta ()
+void case_rst ()
 {
-    struct IS_STA *pack_sta = (struct IS_STA*)insim.get_packet();
-    out << "Race State Packet" << endl;
+    struct IS_RST *pack_rst = (struct IS_RST*)insim.get_packet();
+    out << "Race Start Packet" << endl;
 
-    strcpy(ginfo.Track, pack_sta->Track);
-    ginfo.NumConns = pack_sta->NumConns;
-    ginfo.NumP = pack_sta->NumP;
+    strcpy(ginfo.Track, pack_rst->Track);
+
+
+
+    ginfo.Splits_Count = 0;
+
+    if (pack_rst->Split1 <= pack_rst->NumNodes)
+    {
+        ginfo.Node_Split1 = pack_rst->Split1;
+        ginfo.Splits_Count +=1;
+    }
+    if (pack_rst->Split2 <= pack_rst->NumNodes)
+    {
+        ginfo.Node_Split2 = pack_rst->Split2;
+        ginfo.Splits_Count +=2;
+    }
+    if (pack_rst->Split3 <= pack_rst->NumNodes)
+    {
+        ginfo.Node_Split3 = pack_rst->Split3;
+        ginfo.Splits_Count +=4;
+    }
+
+    ginfo.Node_Finish = pack_rst->Finish;
+
     /////////
     read_car();
     Sleep(100);
     read_fines();
     Sleep(100);
-    pizza.readconfig(pack_sta->Track);
+    pizza.readconfig(pack_rst->Track);
+    nrg.readconfig(pack_rst->Track);
     Sleep(100);
     /////////
 
@@ -3494,7 +3361,7 @@ int core_connect()
         pack_requests.Type = ISP_TINY;
         pack_requests.ReqI = 1;
 
-        pack_requests.SubT = TINY_SST;      // Request all players in-grid to know their PLID
+        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
         insim.send_packet(&pack_requests);
 
         pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
@@ -3506,7 +3373,7 @@ int core_connect()
         //out << "Player info request packet sent!" << endl;
 
 
-        pack_requests.SubT = TINY_SST;      // Request all players in-grid to know their PLID
+        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
         insim.send_packet(&pack_requests);
 
         return 1;
@@ -3540,7 +3407,7 @@ int core_reconnect()
         pack_requests.Type = ISP_TINY;
         pack_requests.ReqI = 1;
 
-        pack_requests.SubT = TINY_SST;      // Request all players in-grid to know their PLID
+        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
         insim.send_packet(&pack_requests);
 
         pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
@@ -3551,7 +3418,7 @@ int core_reconnect()
         insim.send_packet(&pack_requests);
         //out << "Player info request packet sent!" << endl;
 
-        pack_requests.SubT = TINY_SST;      // Request all players in-grid to know their PLID
+        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
         insim.send_packet(&pack_requests);
 
         return 1;
@@ -3563,7 +3430,7 @@ void read_track(struct player *splayer)
     char file[255];
     strcpy(file,RootDir);
     //strcat(file,"misc\\mysql.cfg");
-    strcat(file,"tracks\\");
+    strcat(file,"data\\RCCore\\tracks\\");
     strcat(file,ginfo.Track);
     //strcat(file,".");
     //strcat(file,splayer->Lang);
@@ -3660,23 +3527,6 @@ void read_track(struct player *splayer)
                 }
             }
 
-            if (strncmp(str,"/cafe",5)==0)
-            {
-                readf.getline(str,128);
-                int count = atoi(str);
-                splayer->TrackInf.CafeCount = count;
-
-                for (int i=0 ; i<count; i++)
-                {
-                    readf.getline(str,128);
-                    char * X;
-                    char * Y;
-                    X = strtok (str,";");
-                    Y = strtok (NULL,";");
-                    splayer->TrackInf.XCafe[i] = atoi(X);
-                    splayer->TrackInf.YCafe[i] = atoi(Y);
-                }
-            }
         } // if strlen > 0
     } //while readf.good()
 
@@ -3851,14 +3701,35 @@ void read_cfg()
     FindClose(fff);
 
     ifstream readf (file,ios::in);
-    readf >> ginfo.IP;
-    //out << ginfo.IP << endl;
-    readf >> ginfo.TCPPORT;
-    //out << ginfo.TCPPORT << endl;
-    readf >> ginfo.UDPPORT;
-    // out << ginfo.UDPPORT << endl;
-    readf >> ginfo.ADMIN;
-    // out << ginfo.ADMIN << endl;
+
+    char str[128];
+    while(readf.good())
+    {
+        readf.getline(str,128);
+        if (strlen(str) > 0)
+        {
+            // GET IP
+            if (strncmp("Ip=",str,3)==0)
+            {
+                strncpy(ginfo.IP,str+3,strlen(str+3));
+            }
+            // GET TCPPORT
+            if (strncmp("TcpPort=",str,8)==0)
+            {
+                ginfo.TCPPORT = atoi(str+8);
+            }
+            // GET UDPPORT
+            if (strncmp("UdpPort=",str,8)==0)
+            {
+                ginfo.UDPPORT = atoi(str+8);
+            }
+            //GET ADMIN PASSWORD
+            if (strncmp("Admin=",str,6)==0)
+            {
+                strncpy(ginfo.ADMIN,str+6,strlen(str+6));
+            }
+        }
+    }
 }
 /**
 void read_lang(struct player *splayer)
@@ -3973,10 +3844,11 @@ DWORD WINAPI thread_mci (void *params)
         {
             //out << "UDP packet MCI " << endl;
             case_mci ();
-            case_mci_energy();
             case_mci_svetofor();
             case_mci_cop();
+
             pizza.pizza_mci();
+            nrg.energy_mci();
         }
 
     }
@@ -3992,7 +3864,7 @@ DWORD WINAPI thread_btn (void *params)
         {
             if (ginfo.players[i].UCID != 0)
             {
-                btn_energy(&ginfo.players[i]);
+                //btn_energy(&ginfo.players[i]);
                 btn_panel(&ginfo.players[i]);
             }
         }
@@ -4037,7 +3909,7 @@ DWORD WINAPI thread_work (void *params)
 {
     out << "\tthread \"Work\" started" << endl;
     Sleep(10000);
-    pizza.init(&pizza,&insim,&msg);
+    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
     pizza.readconfig(ginfo.Track);
 
     //int RCPizza_time = time(&stime);
@@ -4290,8 +4162,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     int error_ch;
 
-    pizza.init(&pizza,&insim,&msg);
+    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
     msg.init();
+    nrg.init(&nrg,&insim,&msg,&bank);
 
     //cruise.opendb("cruise.db3");
 
@@ -4351,6 +4224,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             //case_mso_work();
             case_mso_cop();
             pizza.pizza_mso();
+            nrg.energy_mso();
             break;
 
 
@@ -4359,35 +4233,37 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             //chek_users1(&ginfo);
             case_npl ();
             pizza.pizza_npl();
+            nrg.energy_npl();
             break;
 
         case ISP_NCN:
             //out << " IS_NCN \n";
             case_ncn ();
             pizza.pizza_ncn();
+            nrg.energy_ncn();
             break;
 
         case ISP_CNL:
             //out << " IS_CNL \n";
             case_cnl ();
             pizza.pizza_cnl();
+            nrg.energy_cnl();
             break;
 
         case ISP_PLL:
             //out << " IS_PLL \n";
             case_pll ();
             pizza.pizza_pll();
+            nrg.energy_pll();
             break;
 
         case ISP_PLP:
             //out << " IS_PLP \n";
             case_plp ();
             pizza.pizza_plp();
+            nrg.energy_plp();
             break;
 
-        case ISP_LAP:
-            case_lap ();
-            break;
 
         case ISP_BTC:
             //out << " IS_BTC \n";
@@ -4412,11 +4288,12 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             //out << " IS_CPR \n";
             case_cpr ();
             pizza.pizza_crp();
+            nrg.energy_crp();
             break;
 
-        case ISP_STA:
-            //out << " IS_STA \n";
-            case_sta ();
+        case ISP_RST:
+            out << " IS_RST \n";
+            case_rst ();
             break;
 
         case ISP_REO:

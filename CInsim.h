@@ -151,7 +151,6 @@ public:
 */
 
 char* ms2str (long milisecs, char *str, int thousands=0); // Converts miliseconds to a C string (including negative miliseconds).
-bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
 /*#ifdef CIS_LINUX
 void itoa(int value, char *str, int base);	//itoa() does not necessarily have to be in stdlib.h available on Linux systems, so I we have to rehack it ourselves:)
 #endif*/
