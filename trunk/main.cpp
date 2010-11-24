@@ -459,7 +459,7 @@ void btn_info (struct player *splayer, int b_type)
 
     char about_text[10][100];
     strncpy(about_text[0], "^7RUSSIAN CRUISE",99);
-    strncpy(about_text[1], "^C^7Developer: Kostin Dennis",99);
+    strncpy(about_text[1], "^C^7Developer: Kostin Denis",99);
     strncpy(about_text[2], "^C^7ICQ: 5518182",99);
     strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
     strncpy(about_text[4], "^7",99);

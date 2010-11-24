@@ -78,7 +78,7 @@ using namespace std;
 
 
 
-#define IS_PRODUCT_NAME "Cruise v1.2.1"
+#define IS_PRODUCT_NAME "Cruise v1.1.7"
 #define MAX_CARS 30
 #define MAX_FINES 100
 
