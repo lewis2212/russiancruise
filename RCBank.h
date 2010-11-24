@@ -36,10 +36,6 @@ class RCBank
 private:
 
 
-    pthread_t tid; // Thread ID
-    pthread_attr_t attr;
-
-
 public:
     RCBank::RCBank();
     RCBank::~RCBank();
@@ -64,11 +60,11 @@ public:
 
 
     // функции-повторители основных фунцкий ядра
-
+    void bank_save(int j);
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
-    void btn_work (struct BankPlayer *splayer);
+    void btn_cash(int i);
 
     // Функции-утилиты
     int check_pos (struct BankPlayer *splayer); //+

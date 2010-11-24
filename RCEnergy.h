@@ -41,10 +41,10 @@ struct energy_info
 class RCEnergy
 {
 private:
+    pthread_t tid; // Thread ID
+    pthread_attr_t attr;
     time_t nrgtime;
     struct  energy_info TrackInf;             // Where PitBox and Shop
-     pthread_t tid; // Thread ID
-    pthread_attr_t attr;
 public:
     RCEnergy::RCEnergy();
     RCEnergy::~RCEnergy();
@@ -69,8 +69,10 @@ public:
     void energy_mso();
 
 
-    // функции-повторители основных фунцкий ядра
+    // функции
+    void energy_save(int j);
     void btn_energy (struct EnergyPlayer *splayer);
+
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
