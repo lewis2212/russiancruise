@@ -15,7 +15,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
         return 0;
     }
 
-    /**out << "\tthread \"Pizza\" started" << endl;**/
+    cout << "\tthread \"Pizza\" started" << endl;
     //Sleep(10000);
     //piz->readconfig(ginfo.Track);
 

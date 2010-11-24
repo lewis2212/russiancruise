@@ -17,13 +17,7 @@ RCBank::~RCBank()
 
 int RCBank::init(void *CInSim, void *Message)
 {
-   /** pthread_attr_init(&attr);
-    pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
-    pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 
-    if (pthread_create(&tid,&attr,pizzathread,classname) < 0)
-        return -1;
-*/
     insim = (CInsim *)CInSim;
     if(!insim)
     {
@@ -89,11 +83,13 @@ void RCBank::bank_ncn()
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf("Can't find %s\n",file);
+        printf("Can't find %s\n Create File for user",file);
+        players[i].Cash = 1000;
+        bank_save(i);
     }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
+    else
+    {
+        ifstream readf (file,ios::in);
 
     while (readf.good())
     {
@@ -113,6 +109,10 @@ void RCBank::bank_ncn()
 
 
     readf.close();
+    }
+    FindClose(fff);
+
+
 
     return ;
 
@@ -194,12 +194,29 @@ void RCBank::bank_cnl ()
             {
                 //players[i].cash += 500;
             }
-
+            bank_save(i);
             memset(&players[i],0,sizeof(struct BankPlayer));
             break;
         }
     }
 }
+
+void RCBank::bank_save (int j)
+{
+    // Find player and set the whole player struct he was using to 0
+
+            char file[255];
+
+            strcpy(file,"data\\RCBank\\");
+            strcat(file,players[j].UName);
+            strcat(file,".txt");
+
+            ofstream writef (file,ios::out);
+            writef << "Cash=" << players[j].Cash << endl;
+            writef.close();
+
+
+    }
 
 void RCBank::bank_crp()
 {
@@ -217,6 +234,35 @@ void RCBank::bank_crp()
             break;
         }
     }
+}
+
+void RCBank::btn_cash (int i)
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = players[i].UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    pack.BStyle = 32;
+    //
+    pack.ClickID = 162;
+    pack.L = 84;
+    pack.T = 1;
+    pack.W = 15;
+    pack.H = 5;
+
+    char cash[10];
+    itoa((int)players[i].Cash,cash,10);
+    if (players[i].Cash > 0)
+        strcpy(pack.Text,"^2");
+    else
+        strcpy(pack.Text,"^1");
+    strcat(pack.Text,cash);
+    strcat(pack.Text,"^7 RUR.");
+    insim->send_packet(&pack);
 }
 
 // функции-утилиты

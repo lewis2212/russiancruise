@@ -925,22 +925,6 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg.message[splayer->lang_id][403]);
     insim.send_packet(&pack);
 
-    pack.ClickID = 162;
-    pack.L = 84;
-    pack.T = 1;
-    pack.W = 15;
-    pack.H = 5;
-
-    char cash[10];
-    itoa((int)splayer->cash,cash,10);
-    if (splayer->cash > 0)
-        strcpy(pack.Text,"^2");
-    else
-        strcpy(pack.Text,"^1");
-    strcat(pack.Text,cash);
-    strcat(pack.Text,"^7 RUR.");
-    insim.send_packet(&pack);
-
 }
 
 
@@ -1751,7 +1735,7 @@ void case_cnl ()
                 //ginfo.players[i].cash += 500;
             }
 
-            save_user(&ginfo.players[i]);
+            //save_user(&ginfo.players[i]);
             save_user_cars(&ginfo.players[i]);
             save_user_fines(&ginfo.players[i]);
 
@@ -2602,7 +2586,12 @@ void case_mso ()
         out << ginfo.players[i].UName << " send !save" << endl;
         save_car(&ginfo.players[i]);
         Sleep(500);
-        save_user(&ginfo.players[i]);
+        save_user_cars(&ginfo.players[i]);
+        save_user_fines(&ginfo.players[i]);
+
+        bank.bank_save(i);
+        nrg.energy_save(i);
+
         Sleep(500);
         send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][3000]);
 
@@ -3010,7 +2999,7 @@ void case_ncn ()
 
     out <<  "\n******************************" << endl;
     out <<  ginfo.players[i].UName << " connected" << endl;
-    read_user(&ginfo.players[i]);
+    //read_user(&ginfo.players[i]);
     read_user_cars(&ginfo.players[i]);
     read_user_fines(&ginfo.players[i]);
     //read_lang(&ginfo.players[i]);
@@ -3829,42 +3818,44 @@ void chek_users1()
 
 /*********************************************/
 
-DWORD WINAPI thread_mci (void *params)
+void *thread_mci (void *params)
 {
-    out << "\tthread \"Multi Car Info\" started" << endl;
-    while (ok > 0)
+    cout << "\tthread \"Multi Car Info\" started" << endl;
+    while (true)
     {
         if (insim.udp_next_packet() < 0)
         {
-            //out << "\n * Error getting next UDP packet * " << endl;
+            //cout << "\n * Error getting next UDP packet * " << endl;
             continue;
         }
 
         else
         {
-            //out << "UDP packet MCI " << endl;
+            //cout << "UDP packet MCI " << endl;
             case_mci ();
             case_mci_svetofor();
             case_mci_cop();
 
             pizza.pizza_mci();
             nrg.energy_mci();
+            //bank.bank_mci();
         }
 
     }
     return 0;
 };
 
-DWORD WINAPI thread_btn (void *params)
+void *thread_btn (void *params)
 {
-    out << "\tthread \"Buttons\" started" << endl;
+    cout << "\tthread \"Buttons\" started" << endl;
     while (ok > 0)
     {
         for (int i=0; i<MAX_PLAYERS; i++)
         {
             if (ginfo.players[i].UCID != 0)
             {
-                //btn_energy(&ginfo.players[i]);
+                //nrg.btn_energy(i);
+                bank.btn_cash(i);
                 btn_panel(&ginfo.players[i]);
             }
         }
@@ -3873,9 +3864,9 @@ DWORD WINAPI thread_btn (void *params)
     return 0;
 };
 
-DWORD WINAPI thread_save (void *params)
+void *thread_save (void *params)
 {
-    out << "\tthread \"Backup saving\" started" << endl;
+    cout << "\tthread \"Backup saving\" started" << endl;
     SYSTEMTIME sm; //time_t seconds;
     while (ok > 0)
     {
@@ -3888,10 +3879,14 @@ DWORD WINAPI thread_save (void *params)
 
                 if (ginfo.players[j].UCID !=0 )
                 {
+
                     save_car(&ginfo.players[j]);
-                    Sleep(500);
-                    save_user(&ginfo.players[j]);
-                    Sleep(500);
+                    save_user_cars(&ginfo.players[j]);
+                    save_user_fines(&ginfo.players[j]);
+
+                    nrg.energy_save(j);
+                    bank.bank_save(j);
+
                     send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][3000]);
                 }
             }
@@ -3905,12 +3900,12 @@ DWORD WINAPI thread_save (void *params)
     return 0;
 };
 
-DWORD WINAPI thread_work (void *params)
+void *thread_work (void *params)
 {
-    out << "\tthread \"Work\" started" << endl;
+    cout << "\tthread \"Work\" started" << endl;
     Sleep(10000);
-    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
-    pizza.readconfig(ginfo.Track);
+    //pizza.init(&pizza,&insim,&msg,&bank,&nrg);
+    //pizza.readconfig(ginfo.Track);
 
     //int RCPizza_time = time(&stime);
     //out << RCPizza_time << endl;
@@ -3978,9 +3973,9 @@ DWORD WINAPI thread_work (void *params)
     return 0;
 };
 
-DWORD WINAPI thread_svet1(void* params)
+void *thread_svet1(void* params)
 {
-    out << "\tthread \"Svetofor 1\" started" << endl;
+    cout << "\tthread \"Svetofor 1\" started" << endl;
     for (;;)
     {
         int svtime = time(&stime)%40;
@@ -4059,9 +4054,9 @@ DWORD WINAPI thread_svet1(void* params)
     return 0;
 }
 
-DWORD WINAPI thread_svet2( void* params)
+void *thread_svet2( void* params)
 {
-    out << "\tthread \"Svetofor 2\" started" << endl;
+    cout << "\tthread \"Svetofor 2\" started" << endl;
     for (;;)
     {
         int svtime = (time(&stime)+20)%40;
@@ -4162,10 +4157,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     int error_ch;
 
-    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
-    msg.init();
-    nrg.init(&nrg,&insim,&msg,&bank);
-
     //cruise.opendb("cruise.db3");
 
 
@@ -4181,21 +4172,59 @@ DWORD WINAPI ThreadMain(void *CmdLine)
                 break;
         }
     }
-    out << "Cruise started" << endl;
-    out << "Start threads :" << endl;
-    CreateThread(NULL,0,thread_mci,0,0,NULL);
+    pthread_t mci_tid; // Thread ID
+    pthread_t btn_tid; // Thread ID
+    pthread_t work_tid; // Thread ID
+    pthread_t save_tid; // Thread ID
+    pthread_t svet1_tid; // Thread ID
+    pthread_t svet2_tid; // Thread ID
+
+    cout << "Cruise started" << endl;
+    cout << "Start threads :" << endl;
+    if (pthread_create(&btn_tid,NULL,thread_btn,NULL) < 0)
+    {
+        printf("Can't start `thread_btn` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    CreateThread(NULL,0,thread_btn,0,0,NULL);
+    if (pthread_create(&work_tid,NULL,thread_work,NULL) < 0)
+    {
+        printf("Can't start `thread_work` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    CreateThread(NULL,0,thread_work,0,0,NULL);
+    if (pthread_create(&save_tid,NULL,thread_save,NULL) < 0)
+    {
+        printf("Can't start `thread_save` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    CreateThread(NULL,0,thread_save,0,0,NULL);
+    if (pthread_create(&svet1_tid,NULL,thread_svet1,NULL) < 0)
+    {
+        printf("Can't start `thread_svet1` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    CreateThread(NULL,0,thread_svet1,0,0,NULL);
+    if (pthread_create(&svet2_tid,NULL,thread_svet2,NULL) < 0)
+    {
+        printf("Can't start `thread_svet2` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    CreateThread(NULL,0,thread_svet2,0,0,NULL);
+
+    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
+    msg.init();
+    nrg.init(&nrg,&insim,&msg,&bank);
+    bank.init(&insim,&msg);
+
+     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
+    {
+        printf("Can't start `thread_mci` Thread\n");
+        return 0;
+    }
     Sleep(1000);
-    out << "All threads started" << endl;
+    cout << "All threads started" << endl;
+
 
 
 
@@ -4225,6 +4254,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_mso_cop();
             pizza.pizza_mso();
             nrg.energy_mso();
+           // bank.bank_mso();
             break;
 
 
@@ -4234,6 +4264,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_npl ();
             pizza.pizza_npl();
             nrg.energy_npl();
+            bank.bank_npl();
             break;
 
         case ISP_NCN:
@@ -4241,6 +4272,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_ncn ();
             pizza.pizza_ncn();
             nrg.energy_ncn();
+            bank.bank_ncn();
             break;
 
         case ISP_CNL:
@@ -4248,6 +4280,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_cnl ();
             pizza.pizza_cnl();
             nrg.energy_cnl();
+            bank.bank_cnl();
             break;
 
         case ISP_PLL:
@@ -4255,6 +4288,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_pll ();
             pizza.pizza_pll();
             nrg.energy_pll();
+            bank.bank_pll();
             break;
 
         case ISP_PLP:
@@ -4262,6 +4296,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_plp ();
             pizza.pizza_plp();
             nrg.energy_plp();
+            bank.bank_plp();
             break;
 
 
@@ -4289,6 +4324,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_cpr ();
             pizza.pizza_crp();
             nrg.energy_crp();
+            bank.bank_crp();
             break;
 
         case ISP_RST:
@@ -4646,8 +4682,10 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
             if (ginfo.players[j].UCID !=0 )
             {
                 save_car(&ginfo.players[j]);
-                Sleep(500);
-                save_user(&ginfo.players[j]);
+                save_user_cars(&ginfo.players[j]);
+                save_user_fines(&ginfo.players[j]);
+                nrg.energy_save(j);
+                bank.bank_save(j);
                 Sleep(500);
             }
         }

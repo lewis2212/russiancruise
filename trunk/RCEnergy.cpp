@@ -1,8 +1,7 @@
 using namespace std;
 #include "RCEnergy.h"
 
-
-void *thread_btn (void *energy)
+void *nrg_thread_btn (void *energy)
 {
 
     RCEnergy *nrg = (RCEnergy *)energy; //struct our RCPizza class in thread
@@ -49,7 +48,7 @@ int RCEnergy::init(void *classname,void *CInSim, void *Message,void *Bank)
     pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
     pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 
-    if (pthread_create(&tid,&attr,thread_btn,classname) < 0)
+    if (pthread_create(&tid,&attr,nrg_thread_btn,classname) < 0)
         return -1;
 
     insim = (CInsim *)CInSim;
@@ -184,11 +183,13 @@ void RCEnergy::energy_ncn()
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf("Can't find %s\n",file);
+        printf("Can't find %s\n Cteat file user",file);
+        players[i].Energy = 10000;
+        energy_save(i);
     }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
+    else
+    {
+        ifstream readf (file,ios::in);
 
     while (readf.good())
     {
@@ -199,7 +200,7 @@ void RCEnergy::energy_ncn()
             // Get Cash
             if (strncmp("Energy=",str,7)==0)
             {
-                cout << "We Find Energy" << endl;
+                //cout << "We Find Energy" << endl;
                 players[i].Energy = atoi(str+7);
             }
             // Get Credits
@@ -209,6 +210,10 @@ void RCEnergy::energy_ncn()
 
 
     readf.close();
+    }
+    FindClose(fff);
+
+
 
 }
 
@@ -300,21 +305,33 @@ void RCEnergy::energy_cnl ()
                 //players[i].cash += 500;
             }
 
-            char file[255];
-
-            strcpy(file,"data\\RCEnergy\\");
-            strcat(file,players[i].UName);
-            strcat(file,".txt");
-
-    ofstream writef (file,ios::out);
-    writef << "Energy=" << players[i].Energy << endl;
-    writef.close();
+            energy_save(i);
 
             memset(&players[i],0,sizeof(struct EnergyPlayer));
             break;
         }
     }
 }
+
+void RCEnergy::energy_save (int j)
+{
+    // Find player and set the whole player struct he was using to 0
+
+            char file[255];
+
+            strcpy(file,"data\\RCEnergy\\");
+            strcat(file,players[j].UName);
+            strcat(file,".txt");
+
+            ofstream writef (file,ios::out);
+            writef << "Energy=" << players[j].Energy << endl;
+            writef.close();
+
+
+    }
+
+
+
 
 void RCEnergy::energy_crp()
 {
@@ -349,13 +366,16 @@ void RCEnergy::energy_mci ()
             if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
 
             {
+                //printf("UName: %s\n",players[j].UName);
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
                 int Z = pack_mci->Info[i].Z/65536;
                 int D = pack_mci->Info[i].Direction/182;
                 int H = pack_mci->Info[i].Heading/182;
+
                 int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
+
                 int A = pack_mci->Info[i].AngVel*360/16384;
 
                 int X1 = players[j].Info.X/65536;
@@ -375,10 +395,11 @@ void RCEnergy::energy_mci ()
                 //int K = int(sqrt(abs((dD-dH)*(1+dA)*dS))/32);
                 int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
 
-                //cout << dH << endl;
+
                 if ((players[j].Energy > 5) and (S > 5))
                 {
                     players[j].Energy -= K;
+                    //cout << "nrg = " << players[j].Energy << endl;
                 }
 
 
@@ -518,7 +539,6 @@ void RCEnergy::energy_mso ()
 
     }
 
-
 }
 
 void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
@@ -550,6 +570,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     //int life = 100;
     strcpy(pack.Text,"");
 
+    //cout << "nrg = " << splayer->Energy/100 << endl;
 
     for (int i=1; i<=splayer->Energy/100; i++)
     {
