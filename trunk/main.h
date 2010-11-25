@@ -188,7 +188,7 @@ struct player
     //char    message[20000][64];    // Messages !!!!!!!!!!!!!!!!!
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    char    Cars[256];             // Avalible Cars
+    //char    Cars[256];             // Avalible Cars
     char    CName[4];              // Car Name
     char    SName[16];             // Car Skin Name
     int     CTune;                 // Car Tuning

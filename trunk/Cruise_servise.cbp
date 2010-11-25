@@ -48,6 +48,7 @@
 		<Unit filename="RCBank.h" />
 		<Unit filename="RCEnergy.cpp" />
 		<Unit filename="RCEnergy.h" />
+		<Unit filename="RCMessage.cpp" />
 		<Unit filename="RCMessage.h" />
 		<Unit filename="RCPizza.cpp" />
 		<Unit filename="RCPizza.h" />

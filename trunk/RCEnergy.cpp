@@ -562,7 +562,15 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     pack.T = 7;
     pack.W = 8;
     pack.H = 4;
-    strcpy(pack.Text,msg->message[0][100]);
+    if (splayer->Zone == 3)
+    {
+        strcpy(pack.Text,"^2");
+    }
+    else
+    {
+        strcpy(pack.Text,"^3");
+    }
+    strcat(pack.Text,msg->message[0][100]);
     insim->send_packet(&pack);
     //
     pack.ClickID = 208;

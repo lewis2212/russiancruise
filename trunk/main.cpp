@@ -718,6 +718,20 @@ void btn_shop (struct player *splayer)
     insim.send_packet(&pack);
     /* Tabs */
 
+    // Заплатка для магазина
+    char Cars[255];
+    ZeroMemory(&Cars,255);
+    for (int i=1; i<MAX_CARS; i++)
+        {
+            for (int j=1;j<MAX_CARS;j++)
+            {
+                if ((strcmp(ginfo.car[i].car,splayer->cars[j].car) == 0) and (strlen(ginfo.car[i].car) > 0))
+                strcat(Cars,splayer->cars[j].car);
+            }
+        }
+        //cout << Cars << endl;
+
+
     if (splayer->Shop == 1)
     {
 
@@ -731,7 +745,7 @@ void btn_shop (struct player *splayer)
             pack.ClickID = 50 + i;
             pack.T = 65+9*(i-1);
 
-            if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
+            if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(Cars,ginfo.car[i].car)==0))
             {
                 pack.BStyle = 4+16+8;
                 strcpy(pack.Text,"^2");
@@ -757,7 +771,7 @@ void btn_shop (struct player *splayer)
             {
                 pack.ClickID = 50 + i;
                 pack.T = 65+9*(i-10);
-                if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
+                if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(Cars,ginfo.car[i].car)==0))
                 {
                     pack.BStyle = 4+16+8;
                     strcpy(pack.Text,"^2");
@@ -787,7 +801,7 @@ void btn_shop (struct player *splayer)
         {
             // out << ginfo.car[i].car << " " << splayer->Cars << endl;
             // out << (int)strstr(splayer->Cars,ginfo.car[i].car) << endl;
-            if (strstr(splayer->Cars,ginfo.car[i].car))
+            if (strstr(Cars,ginfo.car[i].car))
             {
                 pack.ClickID = 50 + i;
                 pack.T = 65+9*b;
@@ -808,7 +822,7 @@ void btn_shop (struct player *splayer)
             {
                 // out << ginfo.car[10+i].car << " " << splayer->Cars << endl;
                 // out << (int)strstr(splayer->Cars,ginfo.car[10+i].car) << endl;
-                if (strstr(splayer->Cars,ginfo.car[10+i].car))
+                if (strstr(Cars,ginfo.car[10+i].car))
                 {
                     pack.ClickID = 60 + i;
                     pack.T = 65+9*b;
@@ -1242,8 +1256,8 @@ void case_btc ()
                     out << ginfo.players[i].UName << "come in to shop and \n";
                     if (ginfo.players[i].Shop == 1)
                     {
-                        strcat(ginfo.players[i].Cars,ginfo.car[g-50].car);
-                        strcat(ginfo.players[i].Cars," ");
+                        //strcat(ginfo.players[i].Cars,ginfo.car[g-50].car);
+                        //strcat(ginfo.players[i].Cars," ");
                         bank.players[i].Cash -= ginfo.car[g-50].cash;
                         out << "buy car - " << ginfo.car[g-50].car << endl;
 
@@ -1286,15 +1300,15 @@ void case_btc ()
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell car " << ginfo.car[g-50].car << endl;
                             readf.close();
 
-                            string Cars;
+                            /*string Cars;
                             Cars += ginfo.players[i].Cars;
                             out << Cars << endl;
                             Cars.replace(Cars.find(ginfo.car[g-50].car),4,"");
                             out << Cars << endl;
 
-                            strcpy(ginfo.players[i].Cars,Cars.c_str());
+                            strcpy(ginfo.players[i].Cars,Cars.c_str());*/
                             bank.players[i].Cash += ginfo.car[g-50].sell;
-                            out << ginfo.players[i].Cars << endl;
+                            //out << ginfo.players[i].Cars << endl;
 
                             for ( int j=0; j<MAX_CARS; j++)
                             {
@@ -1542,14 +1556,7 @@ void case_btt ()
 
     char send_c[255];
     strcpy(send_c,RootDir);
-    strcat(send_c,"logs\\sends\\send");
-    strcat(send_c,"(");
-    strcat(send_c,day);
-    strcat(send_c,".");
-    strcat(send_c,month);
-    strcat(send_c,".");
-    strcat(send_c,year);
-    strcat(send_c,").txt");
+    strcat(send_c,"logs\\sends\\send.txt");
 
     char fine_c[255];
     strcpy(fine_c,RootDir);
@@ -2651,7 +2658,7 @@ void case_mso ()
 
         char file[255];
         strcpy(file,RootDir);
-        strcat(file,"send.txt");
+        strcat(file,"logs\\sends\\send.txt");
 
         HANDLE fff;
         WIN32_FIND_DATA fd;
@@ -2724,6 +2731,7 @@ void case_mso ()
         {
             for (int j=0; j<200; j++)
                 send_bfn(ginfo.players[i].UCID,j);
+
             ginfo.players[i].Shop=1;
             btn_shop(&ginfo.players[i]);
         }
@@ -4185,7 +4193,7 @@ void *thread_svet2( void* params)
 DWORD WINAPI ThreadMain(void *CmdLine)
 {
     // TODO (#1#): Uncoment in Release
-    Sleep(2*60*1000);
+    //Sleep(2*60*1000);
 
 
 
