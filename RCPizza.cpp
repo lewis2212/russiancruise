@@ -214,10 +214,19 @@ void RCPizza::done(struct PizzaPlayer *splayer)
     //cout << "true" << endl;
     if ((splayer->WorkType == WK_PIZZA) and (splayer->WorkAccept == 2))
     {
+         int i;
+    for (i=0; i < MAX_PLAYERS; i++)
+    {
+        if (bank->players[i].UCID == splayer->UCID)
+        {
+            break;
+        }
+    }
+
         splayer->WorkDestinaion =0;
         splayer->WorkAccept = 0;
         splayer->WorkPlayerAccept = 0;
-        //splayer->cash += 800;
+        bank->players[i].Cash += 800;
 // TODO (#1#): Class Bank
 
         splayer->WorkCountDone ++;

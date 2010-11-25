@@ -88,7 +88,7 @@ void save_user_fines (struct player *splayer)
 
     writef.close();
 }
-
+/**
 void save_user (struct player *splayer)
 {
     out <<splayer->UName << " save user_info" << endl;
@@ -111,7 +111,8 @@ void save_user (struct player *splayer)
     save_user_cars(splayer);
     save_user_fines(splayer);
 }
-
+**/
+/**
 void read_user (struct player *splayer)
 {
     char file[255];
@@ -171,7 +172,7 @@ void read_user (struct player *splayer)
     }
     readf.close();
 }
-
+**/
 void read_user_cars(struct player *splayer)
 {
     char file[255];
@@ -654,6 +655,15 @@ void btn_info (struct player *splayer, int b_type)
 void btn_shop (struct player *splayer)
 {
     //btn_main(splayer);
+    int j;
+    for (j =0 ; j< MAX_PLAYERS; j++)
+    {
+        if (bank.players[j].UCID == splayer->UCID)
+        {
+            break;
+        }
+
+    }
 
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
@@ -721,7 +731,7 @@ void btn_shop (struct player *splayer)
             pack.ClickID = 50 + i;
             pack.T = 65+9*(i-1);
 
-            if ((splayer->cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
+            if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
             {
                 pack.BStyle = 4+16+8;
                 strcpy(pack.Text,"^2");
@@ -747,7 +757,7 @@ void btn_shop (struct player *splayer)
             {
                 pack.ClickID = 50 + i;
                 pack.T = 65+9*(i-10);
-                if ((splayer->cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
+                if ((bank.players[j].Cash > ginfo.car[i].cash) and (strstr(splayer->Cars,ginfo.car[i].car)==0))
                 {
                     pack.BStyle = 4+16+8;
                     strcpy(pack.Text,"^2");
@@ -823,7 +833,7 @@ void btn_shop (struct player *splayer)
         pack.BStyle = 4+16+8;
 
         int b = 1;
-        if (!(splayer->CTune&1) and splayer->cash > 5000)
+        if (!(splayer->CTune&1) and bank.players[j].Cash > 5000)
         {
             pack.ClickID = 71;
             pack.T = 65+9*b;
@@ -831,7 +841,7 @@ void btn_shop (struct player *splayer)
             insim.send_packet(&pack);
             b++;
         }
-        if (!(splayer->CTune&2) and (splayer->CTune&1) and splayer->cash > 10000)
+        if (!(splayer->CTune&2) and (splayer->CTune&1) and bank.players[j].Cash > 10000)
         {
             pack.ClickID = 72;
             pack.T = 65+9*b;
@@ -840,7 +850,7 @@ void btn_shop (struct player *splayer)
             b++;
         }
 
-        if (!(splayer->CTune&8) and splayer->cash > 20000)
+        if (!(splayer->CTune&8) and bank.players[j].Cash > 20000)
         {
             pack.ClickID = 73;
             pack.T = 65+9*b;
@@ -1531,7 +1541,8 @@ void case_btt ()
     itoa(sm.wYear,year,10);
 
     char send_c[255];
-    strcpy(send_c,"logs\\sends\\send");
+    strcpy(send_c,RootDir);
+    strcat(send_c,"logs\\sends\\send");
     strcat(send_c,"(");
     strcat(send_c,day);
     strcat(send_c,".");
@@ -1541,7 +1552,8 @@ void case_btt ()
     strcat(send_c,").txt");
 
     char fine_c[255];
-    strcpy(fine_c,"logs\\fines\\fine");
+    strcpy(fine_c,RootDir);
+    strcat(fine_c,"logs\\fines\\fine");
     strcat(fine_c,"(");
     strcat(fine_c,day);
     strcat(fine_c,".");
@@ -1569,7 +1581,7 @@ void case_btt ()
                             {
                                 out << ginfo.players[i].UName << " send " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
                                 bank.players[i].Cash -= atoi(pack_btt->Text);
-                                ginfo.players[g].cash += atoi(pack_btt->Text);
+                                bank.players[g].Cash += atoi(pack_btt->Text);
 
                                 char money[96];
                                 itoa(atoi(pack_btt->Text),money,10);
@@ -1978,7 +1990,7 @@ void case_mci ()
                         ginfo.players[j].Bonus_laps +=1;
                         ginfo.players[j].Bonus_key = 0;
 
-                        ginfo.players[j].cash += bonus;
+                        bank.players[j].Cash += bonus;
 
                         char bonus_c[64];
                         strcpy(bonus_c,msg.message[ginfo.players[j].lang_id][1500]);
@@ -4173,7 +4185,7 @@ void *thread_svet2( void* params)
 DWORD WINAPI ThreadMain(void *CmdLine)
 {
     // TODO (#1#): Uncoment in Release
-    //Sleep(2*60*1000);
+    Sleep(2*60*1000);
 
 
 

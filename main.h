@@ -197,7 +197,7 @@ struct player
     byte    BID;
     byte    BID2;
     byte    bfn;
-    float   cash;       // Деньги
+    //float   cash;       // Деньги
     float   Distance;
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
