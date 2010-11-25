@@ -15,6 +15,8 @@
 #include "RCBank.h"
 #include "RCEnergy.h"
 
+#include "tools.h"
+
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
 
@@ -53,6 +55,8 @@ private:
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
 
+    char RootDir[MAX_PATH];
+
 
 public:
     RCPizza::RCPizza();
@@ -66,7 +70,7 @@ public:
     struct  place zone;
     struct  PizzaPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
+    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
     void readconfig(char *Track);
     void deal(struct PizzaPlayer *splayer);

@@ -101,8 +101,10 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init(void *classname,void *CInSim, void *Message,void *Bank,void *Energy)
+int RCPizza::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy)
 {
+    strcpy(RootDir,dir);
+
     pthread_attr_init(&attr);
     pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
     pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
@@ -246,10 +248,10 @@ void RCPizza::readconfig(char *Track)
     //cout << "RCPizza::readconfig\n" ;
     char file[MAX_PATH];
     memset(&file,0,MAX_PATH);
-    //strcpy(file,RootDir);
-    strcat(file,"work\\");
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCPizza\\");
     strcat(file,Track);
-    strcat(file,"_pizza.txt");
+    strcat(file,".txt");
 
     //cout << file << endl;
 

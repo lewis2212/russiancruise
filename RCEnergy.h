@@ -16,6 +16,8 @@
 #include "RCMessage.h"
 #include "RCBank.h"
 
+#include "tools.h"
+
 
 struct EnergyPlayer
 {
@@ -45,6 +47,9 @@ private:
     pthread_attr_t attr;
     time_t nrgtime;
     struct  energy_info TrackInf;             // Where PitBox and Shop
+
+    char RootDir[MAX_PATH];
+
 public:
     RCEnergy::RCEnergy();
     RCEnergy::~RCEnergy();
@@ -56,7 +61,7 @@ public:
     struct  place zone;
     struct  EnergyPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(void *classname,void *CInSim, void *Message,void *Bank);
+    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank);
     void readconfig(char *Track);
      // функции-повторители основных фунцкий ядра
     void energy_ncn();

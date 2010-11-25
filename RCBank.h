@@ -35,6 +35,7 @@ class RCBank
 {
 private:
 
+    char RootDir[MAX_PATH];
 
 public:
     RCBank::RCBank();
@@ -46,7 +47,7 @@ public:
     struct  place zone;
     struct  BankPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(void *CInSim, void *Message);
+    int init(char *dir,void *CInSim, void *Message);
     void readconfig(char *Track);
      // функции-повторители основных фунцкий ядра
     void bank_ncn();
