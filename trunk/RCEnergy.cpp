@@ -42,8 +42,10 @@ RCEnergy::~RCEnergy()
 
 }
 
-int RCEnergy::init(void *classname,void *CInSim, void *Message,void *Bank)
+int RCEnergy::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank)
 {
+    strcpy(RootDir,dir);
+
     pthread_attr_init(&attr);
     pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
     pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
@@ -78,9 +80,9 @@ int RCEnergy::init(void *classname,void *CInSim, void *Message,void *Bank)
 void RCEnergy::readconfig(char *Track)
 {
     char file[255];
-    //strcpy(file,RootDir);
+    strcpy(file,RootDir);
     //strcat(file,"misc\\mysql.cfg");
-    strcpy(file,"data\\RCEnergy\\maps\\");
+    strcat(file,"data\\RCEnergy\\maps\\");
     strcat(file,Track);
     //strcat(file,".");
     //strcat(file,splayer->Lang);
@@ -170,7 +172,8 @@ void RCEnergy::energy_ncn()
     players[i].UCID = pack_ncn->UCID;
 
     char file[MAX_PATH];
-    strcpy(file,"data\\RCEnergy\\");
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCEnergy\\");
     strcat(file,players[i].UName);
     strcat(file,".txt");
     //strcat(file,"tracks\\.txt");
@@ -319,7 +322,8 @@ void RCEnergy::energy_save (int j)
 
             char file[255];
 
-            strcpy(file,"data\\RCEnergy\\");
+            strcpy(file,RootDir);
+            strcat(file,"data\\RCEnergy\\");
             strcat(file,players[j].UName);
             strcat(file,".txt");
 

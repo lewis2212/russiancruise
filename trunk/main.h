@@ -59,7 +59,7 @@ H = 118;
 */
 using namespace std;
 
-#include <fstream>
+
 
 #include <math.h>
 #include <windows.h>
@@ -70,6 +70,8 @@ using namespace std;
 #include "RCMessage.h"
 #include "RCEnergy.h"
 #include "RCBank.h"
+
+
 
 //#include "sqlite/SQLite.h"
 
@@ -94,7 +96,11 @@ time_t  stime;
 int     chek_users =0;
 
 CInsim insim;
+
 ofstream  out;   // выходной файл для протокола работы сервиса
+
+char RootDir[MAX_PATH];
+char ServiceName[64];
 
 SERVICE_STATUS    service_status;
 SERVICE_STATUS_HANDLE  hServiceStatus;
@@ -102,8 +108,7 @@ SC_HANDLE  hServiceControlManager, hService;
 
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv);
 VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
-char RootDir[MAX_PATH];
-char ServiceName[64];
+
 
 
 

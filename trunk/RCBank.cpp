@@ -15,20 +15,21 @@ RCBank::~RCBank()
 
 }
 
-int RCBank::init(void *CInSim, void *Message)
+int RCBank::init(char *dir,void *CInSim, void *Message)
 {
+    strcpy(RootDir,dir);
 
     insim = (CInsim *)CInSim;
     if(!insim)
     {
-        printf ("Can't struct CInsim class");
+        cout << "Can't struct CInsim class" << endl;;
         return -1;
     }
 
     msg = (RCMessage *)Message;
     if(!msg)
     {
-        printf ("Can't struct RCMessage class");
+        cout << "Can't struct RCMessage class" << endl;
         return -1;
     }
 
@@ -70,7 +71,8 @@ void RCBank::bank_ncn()
     players[i].UCID = pack_ncn->UCID;
 
     char file[MAX_PATH];
-    strcpy(file,"data\\RCBank\\");
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCBank\\");
     strcat(file,players[i].UName);
     strcat(file,".txt");
     //strcat(file,"tracks\\.txt");
@@ -206,8 +208,8 @@ void RCBank::bank_save (int j)
     // Find player and set the whole player struct he was using to 0
 
             char file[255];
-
-            strcpy(file,"data\\RCBank\\");
+            strcpy(file,RootDir);
+            strcat(file,"data\\RCBank\\");
             strcat(file,players[j].UName);
             strcat(file,".txt");
 

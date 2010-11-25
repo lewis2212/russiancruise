@@ -12,12 +12,14 @@ RCMessage::~RCMessage()
 
 }
 
-int RCMessage::init()
+int RCMessage::init(char *dir)
 {
+    strcpy(RootDir,dir);
+
     char file[255];
-    //strcpy(file,RootDir);
+    strcpy(file,RootDir);
     //strcat(file,"misc\\mysql.cfg");
-    strcpy(file,"lang\\rus.txt");
+    strcat(file,"data\\RCMessages\\rus.txt");
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -51,9 +53,9 @@ int RCMessage::init()
     }
     readf.close();
 
-    //strcpy(file,RootDir);
+    strcpy(file,RootDir);
     //strcat(file,"misc\\mysql.cfg");
-    strcpy(file,"lang\\eng.txt");
+    strcat(file,"data\\RCMessages\\eng.txt");
 
 //    HANDLE fff;
 //    WIN32_FIND_DATA fd;

@@ -1,6 +1,8 @@
 #ifndef _RC_TOOLS_H
 #define _RC_TOOLS_H
 
+
+
 struct square           // square of destination point
 {
     int     X[5];       // 4 X points

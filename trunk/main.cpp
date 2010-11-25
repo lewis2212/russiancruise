@@ -1,6 +1,6 @@
 #include "main.h"
 
-
+#include "tools.h"
 
 int ok = 1;
 struct global_info ginfo;
@@ -160,9 +160,7 @@ void read_user (struct player *splayer)
         strcpy(splayer->Cars,"XFG ");
         strcpy(splayer->Lang,"rus");
 
-        strcpy(splayer->cars[0].car,"XFG");
-        splayer->cars[0].tuning = 0;
-        splayer->cars[0].dist = 0;
+
         save_user(splayer);
         save_user_cars(splayer);
         save_user_fines(splayer);
@@ -183,30 +181,48 @@ void read_user_cars(struct player *splayer)
     strcat(file,".txt");
 
 
-    ifstream readf (file,ios::in);
-    int i=0;
-    while (readf.good())
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
     {
-        char str[128];
-        readf.getline(str,128);
-
-        if (strlen(str) > 0)
+        out << "Can't find " << file << endl;
+        strcpy(splayer->cars[0].car,"XFG");
+        splayer->cars[0].tuning = 0;
+        splayer->cars[0].dist = 0;
+        save_user_cars(splayer);
+    }
+    else
+    {
+        ifstream readf (file,ios::in);
+        int i=0;
+        while (readf.good())
         {
-            char *car;
-            char *tun;
-            char *dis;
+            char str[128];
+            readf.getline(str,128);
 
-            car = strtok(str,";");
-            tun = strtok(NULL,";");
-            dis = strtok(NULL,";");
+            if (strlen(str) > 0)
+            {
+                char *car;
+                char *tun;
+                char *dis;
 
-            strcpy(splayer->cars[i].car,car);
-            splayer->cars[i].tuning = atoi(tun);
-            splayer->cars[i].dist = atoi(dis);
+                car = strtok(str,";");
+                tun = strtok(NULL,";");
+                dis = strtok(NULL,";");
 
-            i++;
+                strcpy(splayer->cars[i].car,car);
+                splayer->cars[i].tuning = atoi(tun);
+                splayer->cars[i].dist = atoi(dis);
+
+                i++;
+            }
         }
     }
+    FindClose(fff);
+
+
+
 
 
 }
@@ -219,30 +235,42 @@ void read_user_fines(struct player *splayer)
     strcat(file,splayer->UName);
     strcat(file,".txt");
 
-
-    ifstream readf (file,ios::in);
-    int i=0;
-    while (readf.good())
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
     {
-        char str[128];
-        readf.getline(str,128);
-
-        if (strlen(str) > 0)
+        out << "Can't find " << file << endl;
+        save_user_fines(splayer);
+    }
+    else
+    {
+        ifstream readf (file,ios::in);
+        int i=0;
+        while (readf.good())
         {
-            char *id;
-            char *date;
+            char str[128];
+            readf.getline(str,128);
+
+            if (strlen(str) > 0)
+            {
+                char *id;
+                char *date;
 
 
-            id = strtok(str,";");
-            date = strtok(NULL,";");
+                id = strtok(str,";");
+                date = strtok(NULL,";");
 
 
-            splayer->fines[i].fine_id = atoi(id);
-            splayer->fines[i].fine_date = atoi(date);
+                splayer->fines[i].fine_id = atoi(id);
+                splayer->fines[i].fine_date = atoi(date);
 
-            i++;
+                i++;
+            }
         }
     }
+
+
 
 
 }
@@ -458,7 +486,7 @@ void btn_info (struct player *splayer, int b_type)
 
 
     char about_text[10][100];
-    strncpy(about_text[0], "^7RUSSIAN CRUISE",99);
+    strncpy(about_text[0], "^7RUSSIAN CRUISE v 1.1.7",99);
     strncpy(about_text[1], "^C^7Developer: Kostin Denis",99);
     strncpy(about_text[2], "^C^7ICQ: 5518182",99);
     strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
@@ -1048,6 +1076,24 @@ void case_btc ()
         if (ginfo.players[i].UCID == pack_btc->UCID)
         {
 
+            char day[3];
+            char month[3];
+            char year[3];
+            SYSTEMTIME sm;
+            GetLocalTime(&sm);
+            itoa(sm.wDay,day,10);
+            itoa(sm.wMonth,month,10);
+            itoa(sm.wYear,year,10);
+            char log[255];
+            strcpy(log,"logs\\shop\\shop");
+            strcat(log,"(");
+            strcat(log,day);
+            strcat(log,".");
+            strcat(log,month);
+            strcat(log,".");
+            strcat(log,year);
+            strcat(log,").txt");
+
             if (pack_btc->ClickID<=32)
             {
                 ginfo.players[i].BID2 =  pack_btc->ClickID;
@@ -1188,16 +1234,14 @@ void case_btc ()
                     {
                         strcat(ginfo.players[i].Cars,ginfo.car[g-50].car);
                         strcat(ginfo.players[i].Cars," ");
-                        ginfo.players[i].cash -= ginfo.car[g-50].cash;
+                        bank.players[i].Cash -= ginfo.car[g-50].cash;
                         out << "buy car - " << ginfo.car[g-50].car << endl;
 
-                        char file[255];
-                        strcpy(file,RootDir);
-                        strcat(file,"shop.txt");
-                        ofstream readf (file,ios::app);
-                        time_t sendtime;
-                        time(&sendtime);
-                        readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " buy car " << ginfo.car[g-50].car << endl;
+
+
+
+                        ofstream readf (log,ios::app);
+                        readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " buy car " << ginfo.car[g-50].car << endl;
                         readf.close();
 
                         for ( int j=0; j<MAX_CARS; j++)
@@ -1226,13 +1270,10 @@ void case_btc ()
                         {
                             out << "sell car - " << ginfo.car[g-50].car << endl;
 
-                            char file[255];
-                            strcpy(file,RootDir);
-                            strcat(file,"shop.txt");
-                            ofstream readf (file,ios::app);
-                            time_t sendtime;
-                            time(&sendtime);
-                            readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " sell car " << ginfo.car[g-50].car << endl;
+
+
+                            ofstream readf (log,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell car " << ginfo.car[g-50].car << endl;
                             readf.close();
 
                             string Cars;
@@ -1242,7 +1283,7 @@ void case_btc ()
                             out << Cars << endl;
 
                             strcpy(ginfo.players[i].Cars,Cars.c_str());
-                            ginfo.players[i].cash += ginfo.car[g-50].sell;
+                            bank.players[i].Cash += ginfo.car[g-50].sell;
                             out << ginfo.players[i].Cars << endl;
 
                             for ( int j=0; j<MAX_CARS; j++)
@@ -1283,15 +1324,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune += 1;
-                    ginfo.players[i].cash -= 5000;
+                    bank.players[i].Cash -= 5000;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " buy ECU "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " buy ECU "<< endl;
                     readf.close();
 
                     for (int j=40; j<200; j++)
@@ -1304,15 +1341,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune -= 1;
-                    ginfo.players[i].cash += 5000*8/10;
+                    bank.players[i].Cash += 5000*8/10;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " sell ECU "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell ECU "<< endl;
                     readf.close();
 
                     for (int j=40; j<200; j++)
@@ -1328,15 +1361,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune += 2;
-                    ginfo.players[i].cash -= 10000;
+                    bank.players[i].Cash -= 10000;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " buy Turbo "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " buy Turbo "<< endl;
                     readf.close();
 
                     for (int j=40; j<200; j++)
@@ -1349,15 +1378,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune -= 2;
-                    ginfo.players[i].cash += 10000*8/10;
+                    bank.players[i].Cash += 10000*8/10;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " sell Turbo "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell Turbo "<< endl;
                     readf.close();
 
                     for (int j=40; j<200; j++)
@@ -1373,15 +1398,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune += 8;
-                    ginfo.players[i].cash -= 20000;
+                    bank.players[i].Cash -= 20000;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " buy ABS "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " buy ABS "<< endl;
                     readf.close();
 
                     for (int j=40; j<159; j++)
@@ -1394,15 +1415,11 @@ void case_btc ()
                 {
 
                     ginfo.players[i].CTune -= 8;
-                    ginfo.players[i].cash += 20000*8/10;
+                    bank.players[i].Cash += 20000*8/10;
 
-                    char file[255];
-                    strcpy(file,RootDir);
-                    strcat(file,"shop.txt");
-                    ofstream readf (file,ios::app);
-                    time_t sendtime;
-                    time(&sendtime);
-                    readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " sell ABS "<< endl;
+
+                    ofstream readf (log,ios::app);
+                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell ABS "<< endl;
                     readf.close();
 
                     for (int j=40; j<159; j++)
@@ -1504,6 +1521,36 @@ void case_btt ()
     struct IS_BTT *pack_btt = (struct IS_BTT*)insim.get_packet();
 
     //out << (int)pack_btt->ClickID << endl;
+    char day[3];
+    char month[3];
+    char year[3];
+    SYSTEMTIME sm;
+    GetLocalTime(&sm);
+    itoa(sm.wDay,day,10);
+    itoa(sm.wMonth,month,10);
+    itoa(sm.wYear,year,10);
+
+    char send_c[255];
+    strcpy(send_c,"logs\\sends\\send");
+    strcat(send_c,"(");
+    strcat(send_c,day);
+    strcat(send_c,".");
+    strcat(send_c,month);
+    strcat(send_c,".");
+    strcat(send_c,year);
+    strcat(send_c,").txt");
+
+    char fine_c[255];
+    strcpy(fine_c,"logs\\fines\\fine");
+    strcat(fine_c,"(");
+    strcat(fine_c,day);
+    strcat(fine_c,".");
+    strcat(fine_c,month);
+    strcat(fine_c,".");
+    strcat(fine_c,year);
+    strcat(fine_c,").txt");
+
+
     int i;
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -1518,10 +1565,10 @@ void case_btt ()
                     {
                         if (atoi(pack_btt->Text) > 0)
                         {
-                            if (ginfo.players[i].cash > atoi(pack_btt->Text))
+                            if (bank.players[i].Cash > atoi(pack_btt->Text))
                             {
                                 out << ginfo.players[i].UName << " send " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
-                                ginfo.players[i].cash -= atoi(pack_btt->Text);
+                                bank.players[i].Cash -= atoi(pack_btt->Text);
                                 ginfo.players[g].cash += atoi(pack_btt->Text);
 
                                 char money[96];
@@ -1534,13 +1581,8 @@ void case_btt ()
                                 strcat(Msg," RUR.");
                                 send_mtc(ginfo.players[g].UCID,Msg);
 
-                                char file[255];
-                                strcpy(file,RootDir);
-                                strcat(file,"send.txt");
-                                ofstream readf (file,ios::app);
-                                time_t sendtime;
-                                time(&sendtime);
-                                readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo.players[g].UName << endl;
+                                ofstream readf (send_c,ios::app);
+                                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo.players[g].UName << endl;
                                 readf.close();
                             }
                             else
@@ -1617,13 +1659,8 @@ void case_btt ()
 
 
 
-                            char file[MAX_PATH];
-                            strcpy(file,RootDir);
-                            strcat(file,"fine.txt");
-                            ofstream readf (file,ios::app);
-                            time_t sendtime;
-                            time(&sendtime);
-                            readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " get fine ID = " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
+                            ofstream readf (fine_c,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " get fine ID = " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
                             readf.close();
 
 
@@ -1673,13 +1710,8 @@ void case_btt ()
 
 
 
-                            char file[MAX_PATH];
-                            strcpy(file,RootDir);
-                            strcat(file,"fine.txt");
-                            ofstream readf (file,ios::app);
-                            time_t sendtime;
-                            time(&sendtime);
-                            readf << "\t" <<ctime(&sendtime) <<  ginfo.players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
+                            ofstream readf (fine_c,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
                             readf.close();
 
 
@@ -1694,9 +1726,9 @@ void case_btt ()
              {
                  if (strlen(pack_btt->Text) > 0)
                  {
-                     if (ginfo.players[i].cash > 5000)
+                     if (bank.players[i].Cash > 5000)
                      {
-                         ginfo.players[i].cash -= 5000;
+                         bank.players[i].Cash -= 5000;
                          strcpy(ginfo.players[i].SName,pack_btt->Text);
 
                          char Msg[64];
@@ -1732,7 +1764,7 @@ void case_cnl ()
         {
             if (pack_cnl->Reason != LEAVR_DISCO)
             {
-                //ginfo.players[i].cash += 500;
+                //bank.players[i].Cash += 500;
             }
 
             //save_user(&ginfo.players[i]);
@@ -1767,7 +1799,7 @@ void case_cpr ()
             while (pch = strstr(PlayerName,"^"))
             {
                 int point = strlen(pch);
-                //cout << pch << endl;
+                //out << pch << endl;
                 strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
             }
             out << PlayerName << endl;
@@ -1836,7 +1868,7 @@ void case_lap ()
 
 
             int bonus = 100+(50*(pack_lap->LapsDone-1));
-            ginfo.players[i].cash += bonus;
+            bank.players[i].Cash += bonus;
             char bonus_c[64];
             strcpy(bonus_c,msg.message[ginfo.players[i].lang_id][1500]);
             char bonus_ic[5];
@@ -1894,7 +1926,7 @@ void case_mci ()
                     if ((abs((int)Dist) > 10) and (S>30) and (S<150))
                     {
                         ginfo.players[j].Distance += abs((int)Dist);
-                        ginfo.players[j].cash += abs((int)Dist)/10;
+                        bank.players[j].Cash += abs((int)Dist)/10;
 
                         ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
                         ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
@@ -2700,9 +2732,11 @@ void case_mso ()
             if (ginfo.players[j].UCID !=0 )
             {
                 save_car(&ginfo.players[j]);
-                Sleep(500);
-                save_user(&ginfo.players[j]);
-                Sleep(500);
+
+                save_user_cars(&ginfo.players[j]);
+                save_user_fines(&ginfo.players[j]);
+                bank.bank_save(j);
+                nrg.energy_save(j);
             }
         }
         ok=0;
@@ -2715,7 +2749,7 @@ void case_mso ()
         strcpy(Msg, "/pitlane ");
         strcat(Msg,ginfo.players[i].UName);
         send_mst(Msg);
-        ginfo.players[i].cash -=250;
+        bank.players[i].Cash -=250;
     }
     //!users
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!users",6) == 0)
@@ -2823,7 +2857,7 @@ void case_mso ()
         {
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2004]);
             ginfo.players[i].FloodCount = 0;
-            ginfo.players[i].cash -= 500;
+            bank.players[i].Cash -= 500;
         }
 
 
@@ -2838,7 +2872,7 @@ void case_mso ()
             if (strstr(Msg,ginfo.Words[j]))
             {
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2005]);
-                ginfo.players[i].cash -= 1000;
+                bank.players[i].Cash -= 1000;
             }
 
         }
@@ -2943,7 +2977,7 @@ void case_mso_cop ()
             {
                 ginfo.players[i].fines[j].fine_id = 0;
                 ginfo.players[i].fines[j].fine_date = 0;
-                ginfo.players[i].cash -= ginfo.fines[id_i].cash;
+                bank.players[i].Cash -= ginfo.fines[id_i].cash;
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2106]);
                 break;
             }
@@ -3032,7 +3066,7 @@ void case_npl ()
                 while (pch = strstr(PlayerName,"^"))
                 {
                     int point = strlen(pch);
-                    //cout << pch << endl;
+                    //out << pch << endl;
                     strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
                 }
                 out << PlayerName << endl;
@@ -3198,7 +3232,7 @@ void case_pll ()
             {
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2600]);
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2601]);
-                ginfo.players[i].cash -= 5000;
+                bank.players[i].Cash -= 5000;
             }
             else
             {
@@ -3206,7 +3240,7 @@ void case_pll ()
                 {
                     send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2602]);
                     send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2603]);
-                    ginfo.players[i].cash -= 500;
+                    bank.players[i].Cash -= 500;
                 }
             }
             for (int g=0; g<200; g++)
@@ -3240,7 +3274,7 @@ void case_plp ()
             {
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2700]);
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2701]);
-                ginfo.players[i].cash -= 5000;
+                bank.players[i].Cash -= 5000;
             }
             else
             {
@@ -3248,7 +3282,7 @@ void case_plp ()
                 {
                     send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2702]);
                     send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2703]);
-                    ginfo.players[i].cash -= 500;
+                    bank.players[i].Cash -= 500;
                 }
             }
 
@@ -3820,18 +3854,18 @@ void chek_users1()
 
 void *thread_mci (void *params)
 {
-    cout << "\tthread \"Multi Car Info\" started" << endl;
+    out << "\tthread \"Multi Car Info\" started" << endl;
     while (true)
     {
         if (insim.udp_next_packet() < 0)
         {
-            //cout << "\n * Error getting next UDP packet * " << endl;
+            //out << "\n * Error getting next UDP packet * " << endl;
             continue;
         }
 
         else
         {
-            //cout << "UDP packet MCI " << endl;
+            //out << "UDP packet MCI " << endl;
             case_mci ();
             case_mci_svetofor();
             case_mci_cop();
@@ -3847,7 +3881,7 @@ void *thread_mci (void *params)
 
 void *thread_btn (void *params)
 {
-    cout << "\tthread \"Buttons\" started" << endl;
+    out << "\tthread \"Buttons\" started" << endl;
     while (ok > 0)
     {
         for (int i=0; i<MAX_PLAYERS; i++)
@@ -3866,7 +3900,7 @@ void *thread_btn (void *params)
 
 void *thread_save (void *params)
 {
-    cout << "\tthread \"Backup saving\" started" << endl;
+    out << "\tthread \"Backup saving\" started" << endl;
     SYSTEMTIME sm; //time_t seconds;
     while (ok > 0)
     {
@@ -3902,7 +3936,7 @@ void *thread_save (void *params)
 
 void *thread_work (void *params)
 {
-    cout << "\tthread \"Work\" started" << endl;
+    out << "\tthread \"Work\" started" << endl;
     Sleep(10000);
     //pizza.init(&pizza,&insim,&msg,&bank,&nrg);
     //pizza.readconfig(ginfo.Track);
@@ -3975,7 +4009,7 @@ void *thread_work (void *params)
 
 void *thread_svet1(void* params)
 {
-    cout << "\tthread \"Svetofor 1\" started" << endl;
+    out << "\tthread \"Svetofor 1\" started" << endl;
     for (;;)
     {
         int svtime = time(&stime)%40;
@@ -4056,7 +4090,7 @@ void *thread_svet1(void* params)
 
 void *thread_svet2( void* params)
 {
-    cout << "\tthread \"Svetofor 2\" started" << endl;
+    out << "\tthread \"Svetofor 2\" started" << endl;
     for (;;)
     {
         int svtime = (time(&stime)+20)%40;
@@ -4179,8 +4213,8 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     pthread_t svet1_tid; // Thread ID
     pthread_t svet2_tid; // Thread ID
 
-    cout << "Cruise started" << endl;
-    cout << "Start threads :" << endl;
+    out << "Cruise started" << endl;
+    out << "Start threads :" << endl;
     if (pthread_create(&btn_tid,NULL,thread_btn,NULL) < 0)
     {
         printf("Can't start `thread_btn` Thread\n");
@@ -4212,18 +4246,18 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     }
     Sleep(1000);
 
-    pizza.init(&pizza,&insim,&msg,&bank,&nrg);
-    msg.init();
-    nrg.init(&nrg,&insim,&msg,&bank);
-    bank.init(&insim,&msg);
+    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg);
+    msg.init(RootDir);
+    nrg.init(RootDir,&nrg,&insim,&msg,&bank);
+    bank.init(RootDir,&insim,&msg);
 
-     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
+    if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
         return 0;
     }
     Sleep(1000);
-    cout << "All threads started" << endl;
+    out << "All threads started" << endl;
 
 
 
@@ -4254,7 +4288,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_mso_cop();
             pizza.pizza_mso();
             nrg.energy_mso();
-           // bank.bank_mso();
+            // bank.bank_mso();
             break;
 
 
@@ -4402,8 +4436,8 @@ int core_install_service(char* param[])
     strcpy(dir,param[0]);
     strcat(dir," ");
     strcat(dir,param[1]);
-    //cout << dir << endl;
-    //cout << "Press any key to continium." << endl;
+    //out << dir << endl;
+    //out << "Press any key to continium." << endl;
     //cin.get();
 
     // устанавливаем новый сервис
@@ -4557,11 +4591,32 @@ int main(int argc, char* argv[])
     }
     else if (strcmp(argv[argc-1],"console") == 0 )
     {
-        char log[255];
+        char day[3];
+        char month[3];
+        char year[3];
+
+        SYSTEMTIME sm;
+        GetLocalTime(&sm);
+
+        itoa(sm.wDay,day,10);
+        itoa(sm.wMonth,month,10);
+        itoa(sm.wYear,year,10);
+
+
+        char log[MAX_PATH];
         strcpy(log,RootDir);
+        strcat(log,"logs\\");
         strcat(log,ServiceName);
-        strcat(log,".log");
+        strcat(log,"(");
+        strcat(log,day);
+        strcat(log,".");
+        strcat(log,month);
+        strcat(log,".");
+        strcat(log,year);
+        strcat(log,").log");
+
         out.open(log);
+
         out << RootDir << endl;
         out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
         CreateThread(NULL,0,ThreadMain,0,0,NULL);
@@ -4597,12 +4652,31 @@ int main(int argc, char* argv[])
 
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
-    char log[255];
+    char day[3];
+    char month[3];
+    char year[3];
+
+    SYSTEMTIME sm;
+    GetLocalTime(&sm);
+
+    itoa(sm.wDay,day,10);
+    itoa(sm.wMonth,month,10);
+    itoa(sm.wYear,year,10);
+
+
+    char log[MAX_PATH];
     strcpy(log,RootDir);
+    strcat(log,"logs\\");
     strcat(log,ServiceName);
-    strcat(log,".log");
+    strcat(log,"(");
+    strcat(log,day);
+    strcat(log,".");
+    strcat(log,month);
+    strcat(log,".");
+    strcat(log,year);
+    strcat(log,").log");
+
     out.open(log);
-    out << RootDir << endl;
 
     //out << "регистрируем обработчик управляющих команд для сервиса\n";
     hServiceStatus = RegisterServiceCtrlHandler(
