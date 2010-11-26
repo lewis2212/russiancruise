@@ -670,10 +670,10 @@ void RCPizza::btn_work (struct PizzaPlayer *splayer)
     pack.TypeIn = 0;
     pack.ClickID = 210;
     pack.BStyle = 32;
-    pack.L = 151;
+    pack.L = 148;
     pack.T = 1;
     pack.W = 10;
-    pack.H = 10;
+    pack.H = 8;
 
     char min_c[3];
     char sec_c[3];

@@ -81,11 +81,8 @@ void RCEnergy::readconfig(char *Track)
 {
     char file[255];
     strcpy(file,RootDir);
-    //strcat(file,"misc\\mysql.cfg");
     strcat(file,"data\\RCEnergy\\maps\\");
     strcat(file,Track);
-    //strcat(file,".");
-    //strcat(file,splayer->Lang);
     strcat(file,".txt");
 
     HANDLE fff;
@@ -558,8 +555,8 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     //
     pack.ClickID = 209;
     pack.BStyle = 32;
-    pack.L = 100;
-    pack.T = 7;
+    pack.L = 92;
+    pack.T = 5;
     pack.W = 8;
     pack.H = 4;
     if (splayer->Zone == 3)
@@ -575,9 +572,9 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     //
     pack.ClickID = 208;
     pack.BStyle = 32+64;
-    pack.L = 108;
-    pack.T = 7;
-    pack.W = 42;
+    pack.L = 100;
+    pack.T = 5;
+    pack.W = 48;
     pack.H = 4;
     //int life = 100;
     strcpy(pack.Text,"");

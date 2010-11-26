@@ -251,10 +251,10 @@ void RCBank::btn_cash (int i)
     pack.BStyle = 32;
     //
     pack.ClickID = 162;
-    pack.L = 84;
+    pack.L = 85;
     pack.T = 1;
     pack.W = 15;
-    pack.H = 5;
+    pack.H = 4;
 
     char cash[10];
     itoa((int)players[i].Cash,cash,10);

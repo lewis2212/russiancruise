@@ -213,6 +213,7 @@ struct player
     byte    sirena;         // коповский выключатель сирены
     byte    sirenaOnOff;    // постаянная запись положения сирены у духов
     byte    sirenaKey;      // определяем включить или выключить сирену у духов
+    int     sirenaSize;      // размер кнопки
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
