@@ -397,6 +397,7 @@ void help_cmds (struct player *splayer,int h_type)
 
                 char pay[5];
                 itoa(ginfo.fines[fine_id].cash,pay,10);
+
                 strcpy(Text,"^2| ^7ID = ");
                 strcat( Text,num);
                 strcat( Text,". ");
@@ -722,14 +723,14 @@ void btn_shop (struct player *splayer)
     char Cars[255];
     ZeroMemory(&Cars,255);
     for (int i=1; i<MAX_CARS; i++)
+    {
+        for (int j=1; j<MAX_CARS; j++)
         {
-            for (int j=1;j<MAX_CARS;j++)
-            {
-                if ((strcmp(ginfo.car[i].car,splayer->cars[j].car) == 0) and (strlen(ginfo.car[i].car) > 0))
+            if ((strcmp(ginfo.car[i].car,splayer->cars[j].car) == 0) and (strlen(ginfo.car[i].car) > 0))
                 strcat(Cars,splayer->cars[j].car);
-            }
         }
-        //cout << Cars << endl;
+    }
+    //cout << Cars << endl;
 
 
     if (splayer->Shop == 1)
@@ -949,10 +950,10 @@ void btn_panel (struct player *splayer)
     pack.TypeIn = 0;
     pack.BStyle = 32;
     pack.ClickID = 160;
-    pack.L = 116;
+    pack.L = 115;
     pack.T = 1;
-    pack.W = 34;
-    pack.H = 5;
+    pack.W = 33;
+    pack.H = 4;
     strcpy(pack.Text,splayer->street[splayer->StreetNum].Street);
     strcat(pack.Text," ^7(^1");
     char speed[3];
@@ -965,7 +966,7 @@ void btn_panel (struct player *splayer)
     pack.L = 100;
     pack.T = 1;
     pack.W = 15;
-    pack.H = 5;
+    pack.H = 4;
 
     if (splayer->Zone== 1)
         strcpy(pack.Text,msg.message[splayer->lang_id][400]);
@@ -985,6 +986,9 @@ void btn_panel (struct player *splayer)
 
 void btn_sirena(struct player *splayer)
 {
+    //int Heith = 30;
+    //int Left = 100 - Heith/2;
+
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
     pack.Size = sizeof(struct IS_BTN);
@@ -995,10 +999,22 @@ void btn_sirena(struct player *splayer)
     pack.TypeIn = 0;
     pack.ClickID = 203;
     pack.BStyle = 1;
-    pack.L = 50;
+    //pack.L = 50;
+
     pack.T = 20;
-    pack.W = 100;
-    pack.H = 30;
+    pack.W = 124 - (splayer->sirenaSize);
+    pack.L = 100 - pack.W/2;
+    pack.H = pack.W/3;
+
+    if (pack.W <= 0)
+    pack.W = 1;
+
+    if (pack.L <= 0)
+    pack.L = 1;
+
+    if (pack.H <= 0)
+    pack.H = 1;
+
     strcpy(pack.Text,siren);
     insim.send_packet(&pack);
 }
@@ -1035,10 +1051,10 @@ void btn_work (struct player *splayer)
     pack.TypeIn = 0;
     pack.ClickID = 210;
     pack.BStyle = 32;
-    pack.L = 151;
+    pack.L = 148;
     pack.T = 1;
     pack.W = 10;
-    pack.H = 10;
+    pack.H = 8;
 
     char min_c[3];
     char sec_c[3];
@@ -2043,6 +2059,14 @@ void case_mci ()
                 {
                     ginfo.players[j].Zone = 0;
                 }
+
+                ginfo.players[j].Info.X = pack_mci->Info[i].X;
+                ginfo.players[j].Info.Y = pack_mci->Info[i].Y;
+                ginfo.players[j].Info.Node = pack_mci->Info[i].Node;
+                ginfo.players[j].Info.Direction = pack_mci->Info[i].Direction;
+                ginfo.players[j].Info.Heading = pack_mci->Info[i].Heading;
+                ginfo.players[j].Info.Speed = pack_mci->Info[i].Speed;
+                ginfo.players[j].Info.AngVel = pack_mci->Info[i].AngVel;
                 //btn_svetofor3(&ginfo.players[i]);
 
             } // if pack_mci->Info[i].PLID == ginfo.players[j].PLID
@@ -2080,30 +2104,92 @@ void case_mci_cop ()
 
                 if (ginfo.players[j].cop == 1)
                 {
+                    btn_svetofor3(&ginfo.players[j]);
+
                     for (int g =0; g < MAX_PLAYERS; g++)
                     {
-                        if (ginfo.players[g].UCID !=0)
+                        if (ginfo.players[g].PLID !=0)
                         {
-                            if (((ginfo.players[g].Info.X/65536 <= ginfo.players[j].Info.X/65536 + 10) and (ginfo.players[g].Info.X/65536 >= ginfo.players[j].Info.X/65536 - 10) and (ginfo.players[g].Info.Y/65536 <= ginfo.players[j].Info.Y/65536 + 10) and (ginfo.players[g].Info.Y/65536 >= ginfo.players[j].Info.Y/65536 - 10)) and (ginfo.players[g].cop != 1))
+                           // int dN = abs(ginfo.players[g].Info.Node - ginfo.players[j].Info.Node);
+                            int dX = abs((ginfo.players[g].Info.X/65536) - (ginfo.players[j].Info.X/65536));
+                            int dY = abs((ginfo.players[g].Info.Y/65536) - (ginfo.players[j].Info.Y/65536));
+
+                            int Rast = (int)sqrt((pow(dX,2))+(pow(dY,2)));
+
+                            //printf("dX=%d ; dY=%d \n",dX,dY);
+                            if (ginfo.players[g].Pogonya == 1)
                             {
-                                int S2 = ginfo.players[g].Info.Speed*360/32768;
 
-                                if ((S2 < 5) and (ginfo.players[g].Pogonya == 1) and (ginfo.players[g].StopTime > 6))
+
+
+                                //printf("COP - %s CRIM - %s dX=%d dY=%d; \n",ginfo.players[j].UName,ginfo.players[g].UName,dX,dY);
+
+                                if ( (Rast < 10) and (ginfo.players[g].cop != 1))
                                 {
-                                    //send_mst("/rcm ^C^1¬€ ¿–≈—“Œ¬¿Õ€");
-                                    ginfo.players[g].Pogonya = 2;
-                                    strcpy(ginfo.players[g].PogonyaReason,msg.message[ginfo.players[g].lang_id][1701]);
-                                    char Text[96];
-                                    strcpy(Text,"/msg ^2| ");
-                                    strcat(Text,ginfo.players[g].PName);
-                                    strcat(Text,msg.message[ginfo.players[j].lang_id][1702]);
-                                    //strcat(Text,ginfo.players[g].PName);
-                                    send_mst(Text);
+                                    int S2 = ginfo.players[g].Info.Speed*360/32768;
 
-                                    send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][1703]);
+                                    if ((S2 < 5) and (ginfo.players[g].StopTime > 6))
+                                    {
+                                        //send_mst("/rcm ^C^1¬€ ¿–≈—“Œ¬¿Õ€");
+                                        ginfo.players[g].Pogonya = 2;
+                                        strcpy(ginfo.players[g].PogonyaReason,msg.message[ginfo.players[g].lang_id][1701]);
+                                        char Text[96];
+                                        strcpy(Text,"/msg ^2| ");
+                                        strcat(Text,ginfo.players[g].PName);
+                                        strcat(Text,msg.message[ginfo.players[j].lang_id][1702]);
+                                        //strcat(Text,ginfo.players[g].PName);
+                                        send_mst(Text);
+
+                                        send_mtc(ginfo.players[j].UCID,msg.message[ginfo.players[j].lang_id][1703]);
+                                    }
+
                                 }
+                            } // pogonya
 
+
+
+                            if (ginfo.players[j].radar ==1 )
+                            {
+                                if ((Rast < 50 ) and (ginfo.players[g].cop != 1))
+                                {
+                                    //printf("COP - %s CRIM - %s dN=%d \n",ginfo.players[j].UName,ginfo.players[g].UName,dN);
+                                    // player[g] in radar zone of player[j]
+                                    int Speed = ginfo.players[g].Info.Speed*360/32768;
+                                    if ((Speed > ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit+10) )
+                                    {
+                                        // speed > SpeedLimit + 10
+                                        char text[64];
+                                        strcpy(text,"^2| ");
+                                        strcat(text,ginfo.players[g].PName);
+                                        strcat(text,msg.message[ginfo.players[g].lang_id][1704]);
+                                        char speed[3];
+                                        int Speed2 = Speed - ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit;
+                                        itoa(Speed2,speed,10);
+                                        strcat(text,speed);
+                                        strcat(text,msg.message[ginfo.players[j].lang_id][1705]);
+                                        send_mtc(ginfo.players[j].UCID,text);
+                                    }
+                                }
                             }
+
+                            if (ginfo.players[j].sirena ==1)
+                            {
+                                if ((dX < 120) and (dY < 120 ) and (ginfo.players[g].cop != 1))
+                                {
+                                    ginfo.players[g].sirenaOnOff = 1;
+                                    ginfo.players[g].sirenaKey = 1;
+                                    ginfo.players[g].sirenaSize = Rast;
+                                }
+                                else
+                                {
+                                    ginfo.players[g].sirenaOnOff = 0;
+                                }
+                            }
+                            else
+                            {
+                                ginfo.players[g].sirenaOnOff = 0;
+                            }
+
                         }
                     }
                 }
@@ -2127,52 +2213,7 @@ void case_mci_cop ()
                 if ( ginfo.players[j].Pogonya != 0)
                     btn_pogonya(&ginfo.players[j]);
 
-                if (ginfo.players[j].cop == 1)
-                {
-                    for (int g =0; g < MAX_PLAYERS; g++)
-                    {
-                        if (ginfo.players[g].UCID !=0)
-                        {
-                            if (((ginfo.players[g].Info.Node <= ginfo.players[j].Info.Node + 5) and (ginfo.players[g].Info.Node >= ginfo.players[j].Info.Node - 5)) and (ginfo.players[g].cop != 1))
-                            {
-                                if (ginfo.players[j].radar ==1 )
-                                {
-                                    // player[g] in radar zone of player[j]
-                                    int Speed = ginfo.players[g].Info.Speed*360/32768;
-                                    if ((Speed > ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit+10) )
-                                    {
-                                        // speed > SpeedLimit + 10
-                                        char text[64];
-                                        strcpy(text,"^2| ");
-                                        strcat(text,ginfo.players[g].PName);
-                                        strcat(text,msg.message[ginfo.players[g].lang_id][1704]);
-                                        char speed[3];
-                                        int Speed2 = Speed - ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit;
-                                        itoa(Speed2,speed,10);
-                                        strcat(text,speed);
-                                        strcat(text,msg.message[ginfo.players[j].lang_id][1705]);
-                                        send_mtc(ginfo.players[j].UCID,text);
-                                    }
-                                }
 
-                                if (ginfo.players[j].sirena ==1)
-                                {
-                                    ginfo.players[g].sirenaOnOff = 1;
-                                    ginfo.players[g].sirenaKey = 1;
-                                }
-                                else
-                                {
-                                    ginfo.players[g].sirenaOnOff = 0;
-                                }
-                            }// node +- 10 and !cop
-                            else
-                            {
-                                ginfo.players[g].sirenaOnOff = 0;
-                            }
-                        }// UCID != 0
-                    }
-                    btn_svetofor3(&ginfo.players[j]);
-                } // if player == cop
             } // if CompCar->PLID == PLID
         }
     }
@@ -2625,11 +2666,6 @@ void case_mso ()
         out << ginfo.players[i].UName << " send !cars" << endl;
         help_cmds(&ginfo.players[i],2);
     }
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!fines", 6) == 0)
-    {
-        out << ginfo.players[i].UName << " send !fines" << endl;
-        help_cmds(&ginfo.players[i],3);
-    }
 
     //!save
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0)
@@ -2760,6 +2796,19 @@ void case_mso ()
             }
         }
         ok=0;
+    }
+    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!reload", 7) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
+    {
+        out << ginfo.players[i].UName << " send !reload" << endl;
+
+        struct IS_TINY pack_requests;
+        memset(&pack_requests, 0, sizeof(struct IS_TINY));
+        pack_requests.Size = sizeof(struct IS_TINY);
+        pack_requests.Type = ISP_TINY;
+        pack_requests.ReqI = 1;
+
+        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+        insim.send_packet(&pack_requests);
     }
     //!evo
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pit", 4) == 0)
@@ -2961,6 +3010,12 @@ void case_mso_cop ()
                 ginfo.players[i].radar = 0;
             }
         }
+    }
+
+    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!fines", 6) == 0)
+    {
+        out << ginfo.players[i].UName << " send !fines" << endl;
+        help_cmds(&ginfo.players[i],3);
     }
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pay", 4) == 0 )
@@ -3947,9 +4002,9 @@ void *thread_save (void *params)
 
         }
         Sleep(500);
-        siren = "^4||||||||^1||||||||";
+        siren = "^4||||||||||^1||||||||||";
         Sleep(500);
-        siren = "^1||||||||^4||||||||";
+        siren = "^1||||||||||^4||||||||||";
     }
     return 0;
 };
