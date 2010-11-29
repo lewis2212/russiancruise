@@ -93,24 +93,24 @@ void RCBank::bank_ncn()
     {
         ifstream readf (file,ios::in);
 
-    while (readf.good())
-    {
-        char str[128];
-        readf.getline(str,128);
-        if (strlen(str) > 0)
+        while (readf.good())
         {
-            // Get Cash
-            if (strncmp("Cash=",str,5)==0)
+            char str[128];
+            readf.getline(str,128);
+            if (strlen(str) > 0)
             {
-                players[i].Cash = atof(str+5);
+                // Get Cash
+                if (strncmp("Cash=",str,5)==0)
+                {
+                    players[i].Cash = atof(str+5);
+                }
+                // Get Credits
+                // Get Deposits
             }
-            // Get Credits
-            // Get Deposits
         }
-    }
 
 
-    readf.close();
+        readf.close();
     }
     FindClose(fff);
 
@@ -207,18 +207,26 @@ void RCBank::bank_save (int j)
 {
     // Find player and set the whole player struct he was using to 0
 
-            char file[255];
-            strcpy(file,RootDir);
-            strcat(file,"data\\RCBank\\");
-            strcat(file,players[j].UName);
-            strcat(file,".txt");
+    char file[255];
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCBank\\");
+    strcat(file,players[j].UName);
+    strcat(file,".txt");
 
-            ofstream writef (file,ios::out);
-            writef << "Cash=" << players[j].Cash << endl;
-            writef.close();
+    ofstream writef (file,ios::out);
+    writef << "Cash=" << players[j].Cash << endl;
+    writef.close();
+
+    char fileb[255];
+    strcpy(fileb,RootDir);
+    strcat(fileb,"data\\RCBank\\_RC_Bank_Capital_.txt");
+    ofstream writeb (fileb,ios::out);
+    writeb << "Capital=" << BankFond << endl;
+    writeb.close();
 
 
-    }
+
+}
 
 void RCBank::bank_crp()
 {
@@ -265,7 +273,113 @@ void RCBank::btn_cash (int i)
     strcat(pack.Text,cash);
     strcat(pack.Text,"^7 RUR.");
     insim->send_packet(&pack);
+
+    if (strcmp(players[i].UName,"denis-takumi") == 0)
+    {
+        pack.ClickID = 163;
+        pack.L = 65;
+        pack.T = 1;
+        pack.W = 20;
+        pack.H = 4;
+
+        char cash[10];
+        sprintf(cash,"%.0f",BankFond);
+        //itoa((int)BankFond,cash,10);
+        if (players[i].Cash > 0)
+            strcpy(pack.Text,"^2");
+        else
+            strcpy(pack.Text,"^1");
+        strcat(pack.Text,cash);
+        strcat(pack.Text,"^7 RUR.");
+        insim->send_packet(&pack);
+    }
 }
+
+void RCBank::readconfig(char *Track)
+{
+    char file[255];
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCBank\\_RC_Bank_Capital_.txt");
+
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        //out << "Can't find " << file << endl;
+        return;
+    }
+    FindClose(fff);
+
+    ifstream readf (file,ios::in);
+    while (readf.good())
+    {
+        char str[128];
+        readf.getline(str,128);
+
+        if (strlen(str) > 0)
+        {
+            if (strncmp(str,"Capital=",8)==0)
+            {
+                BankFond = atof(str+8);
+            }
+        }
+    }
+
+    readf.close();
+
+    /**char file[255];
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCBank\\maps\\");
+    strcat(file,Track);
+    strcat(file,".txt");
+
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        //out << "Can't find " << file << endl;
+        return;
+    }
+    FindClose(fff);
+
+    ifstream readf (file,ios::in);
+
+
+    while (readf.good())
+    {
+        char str[128];
+        readf.getline(str,128);
+
+
+        if (strstr(str,"//")) {}
+        if (strlen(str) > 0)
+        {
+            if (strncmp(str,"/cafe",5)==0)
+            {
+                readf.getline(str,128);
+                int count = atoi(str);
+                TrackInf.BankCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    readf.getline(str,128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str,";");
+                    Y = strtok (NULL,";");
+                    TrackInf.XBank[i] = atoi(X);
+                    TrackInf.YBank[i] = atoi(Y);
+                }
+            }
+
+        } // if strlen > 0
+    } //while readf.good()
+
+    readf.close();**/
+}
+
 
 // функции-утилиты
 

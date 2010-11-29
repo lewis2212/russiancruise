@@ -28,12 +28,19 @@ struct BankPlayer
     byte    Zone;
 };
 
-
+struct Bank_info
+{
+    int     BankCount;
+    int     XBank[10];
+    int     YBank[10];
+};
 
 
 class RCBank
 {
 private:
+
+     struct  Bank_info TrackInf;
 
     char RootDir[MAX_PATH];
 
@@ -43,6 +50,8 @@ public:
 
     CInsim  *insim;
     RCMessage *msg;
+
+    float BankFond;
 
     struct  place zone;
     struct  BankPlayer players[32];     // Array of players

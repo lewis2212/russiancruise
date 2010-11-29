@@ -227,6 +227,7 @@ void RCPizza::done(struct PizzaPlayer *splayer)
         splayer->WorkAccept = 0;
         splayer->WorkPlayerAccept = 0;
         bank->players[i].Cash += 800;
+        bank->BankFond -= 800;
 // TODO (#1#): Class Bank
 
         splayer->WorkCountDone ++;
@@ -544,7 +545,7 @@ void RCPizza::pizza_mci ()
                         done(&players[j]);
                         /** TODO: THINK ABOUT THIS**/
                         bank->players[PLN-100].Cash -= 800;
-                        nrg->players[PLN-100].Energy += 800;
+                        nrg->players[PLN-100].Energy += 8000;
 
                         send_mtc(players[PLN-100].UCID,msg->message[0][1604]);
 

@@ -506,6 +506,7 @@ void RCEnergy::energy_mso ()
              {
                  players[i].Energy += 500;
                  bank->players[i].Cash -= 50;
+                 bank->BankFond +=50;
              }
              else
              {
@@ -527,6 +528,7 @@ void RCEnergy::energy_mso ()
              {
                  players[i].Energy += 1000;
                  bank->players[i].Cash -= 100;
+                 bank->BankFond += 100;
              }
              else
              {
