@@ -1125,7 +1125,8 @@ void case_btc ()
             itoa(sm.wMonth,month,10);
             itoa(sm.wYear,year,10);
             char log[255];
-            strcpy(log,"logs\\shop\\shop");
+            strcpy(log,RootDir);
+            strcat(log,"logs\\shop\\shop");
             strcat(log,"(");
             strcat(log,day);
             strcat(log,".");
@@ -1314,8 +1315,9 @@ void case_btc ()
 
 
                             ofstream readf (log,ios::app);
-                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " sell car " << ginfo.car[g-50].car << endl;
-                            readf.close();
+
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo.players[i].UName << " sell car " << ginfo.car[g-50].car << endl;
+
 
                             /*string Cars;
                             Cars += ginfo.players[i].Cars;
@@ -1324,10 +1326,13 @@ void case_btc ()
                             out << Cars << endl;
 
                             strcpy(ginfo.players[i].Cars,Cars.c_str());*/
+                           // readf << "DEBAG:" << bank.players[i].Cash << endl;
                             bank.players[i].Cash += ginfo.car[g-50].sell;
                             bank.BankFond -= ginfo.car[g-50].sell;
-                            //out << ginfo.players[i].Cars << endl;
 
+                            //readf << "DEBAG:" << bank.players[i].Cash << endl;
+                            //out << ginfo.players[i].Cars << endl;
+                            readf.close();
                             for ( int j=0; j<MAX_CARS; j++)
                             {
                                 if (strcmp(ginfo.players[i].cars[j].car,ginfo.car[g-50].car) == 0)
@@ -1624,7 +1629,7 @@ void case_btt ()
                                 send_mtc(ginfo.players[g].UCID,Msg);
 
                                 ofstream readf (send_c,ios::app);
-                                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo.players[g].UName << endl;
+                                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo.players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo.players[g].UName << endl;
                                 readf.close();
                             }
                             else
