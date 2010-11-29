@@ -80,7 +80,7 @@ using namespace std;
 
 
 
-#define IS_PRODUCT_NAME "Cruise v1.1.7"
+#define IS_PRODUCT_NAME "Cruise v1.1.8"
 #define MAX_CARS 30
 #define MAX_FINES 100
 
@@ -202,8 +202,11 @@ struct player
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
     int     Action;
-    byte    Bonus_key;
+    //byte    Bonus_key;
     int     Bonus_laps;
+    byte    Bonus_s1;
+    byte    Bonus_s2;
+    byte    Bonus_s3;
     char    Lang[4];
     byte    lang_id;
     byte    Svetofor;
@@ -217,6 +220,7 @@ struct player
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
+    byte    Penalty;        // Если превысил скорость в питах
     /** Energy **/
     //int     Energy; // Energy xD
     //time_t  EnergyTime;
