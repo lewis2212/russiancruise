@@ -80,7 +80,7 @@ using namespace std;
 
 
 
-#define IS_PRODUCT_NAME "Cruise v1.1.8"
+#define IS_PRODUCT_NAME "Cruise v1.1.9"
 #define MAX_CARS 30
 #define MAX_FINES 100
 
@@ -109,6 +109,7 @@ SC_HANDLE  hServiceControlManager, hService;
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv);
 VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
 
+pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 
 
 
