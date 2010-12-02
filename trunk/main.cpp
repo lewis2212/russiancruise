@@ -488,7 +488,7 @@ void btn_info (struct player *splayer, int b_type)
 
 
     char about_text[10][100];
-    strncpy(about_text[0], "^7RUSSIAN CRUISE v 1.1.8",99);
+    strncpy(about_text[0], "^7RUSSIAN CRUISE v 1.1.9",99);
     strncpy(about_text[1], "^C^7Developer: Kostin Denis",99);
     strncpy(about_text[2], "^C^7ICQ: 5518182",99);
     strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
@@ -610,7 +610,7 @@ void btn_info (struct player *splayer, int b_type)
 
     if (b_type == 4)
     {
-        for (int i=1; i<=12; i++)
+        for (int i=1; i<=13; i++)
         {
             pack.L = (101-126/2)+1;
             pack.BStyle = 16 + 64;
@@ -1107,6 +1107,7 @@ void case_bfn ()
 
 void case_btc ()
 {
+    pthread_mutex_lock (&RCmutex);
     struct IS_BTC *pack_btc = (struct IS_BTC*)insim.get_packet();
 
     //out << (int)pack_btc->ClickID << endl;
@@ -1326,7 +1327,7 @@ void case_btc ()
                             out << Cars << endl;
 
                             strcpy(ginfo.players[i].Cars,Cars.c_str());*/
-                           // readf << "DEBAG:" << bank.players[i].Cash << endl;
+                            // readf << "DEBAG:" << bank.players[i].Cash << endl;
                             bank.players[i].Cash += ginfo.car[g-50].sell;
                             bank.BankFond -= ginfo.car[g-50].sell;
 
@@ -1566,10 +1567,13 @@ void case_btc ()
             break;
         } // if UCID
     }// for
+    pthread_mutex_unlock (&RCmutex);
+    Sleep(100);
 }
 
 void case_btt ()
 {
+    pthread_mutex_lock (&RCmutex);
     struct IS_BTT *pack_btt = (struct IS_BTT*)insim.get_packet();
 
     //out << (int)pack_btt->ClickID << endl;
@@ -1795,6 +1799,8 @@ void case_btt ()
 
         }
     }
+    pthread_mutex_unlock (&RCmutex);
+    Sleep(100);
 }
 
 
@@ -2656,8 +2662,12 @@ void case_mso ()
         }
     }
 
+    char Msg[96];
+    strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+    printf("Msg: %s\n", Msg);
+
     //!help
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!info", 5) == 0)
+    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
     {
         out << ginfo.players[i].UName << " send !info" << endl;
         for (int j=159; j>0; j--)
@@ -2668,19 +2678,19 @@ void case_mso ()
         btn_info(&ginfo.players[i],1);
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!help", 5) == 0)
+    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
     {
         out << ginfo.players[i].UName << " send !help" << endl;
         help_cmds(&ginfo.players[i],1);
     }
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!cars", 5) == 0)
+    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
     {
         out << ginfo.players[i].UName << " send !cars" << endl;
         help_cmds(&ginfo.players[i],2);
     }
 
     //!save
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0)
+    if ((strncmp(Msg, "!save", 5) == 0) or (strncmp(Msg, "!^Cаминь", 8) == 0))
     {
         out << ginfo.players[i].UName << " send !save" << endl;
         save_car(&ginfo.players[i]);
@@ -2696,13 +2706,13 @@ void case_mso ()
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!trans", 6) == 0 )
+    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
     {
         out << ginfo.players[i].UName << " send !trans" << endl;
 
 
         char message[96];
-        strcpy(message,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+        strcpy(message,Msg);
 
         char file[255];
         strcpy(file,RootDir);
@@ -2772,7 +2782,7 @@ void case_mso ()
     }
 
     //!shop
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!shop", 4) == 0)
+    if ((strncmp(Msg, "!shop", 4) == 0) or (strncmp(Msg, "!^Cмагазин", 10) == 0))
     {
         out << ginfo.players[i].UName << " send !shop" << endl;
         if (ginfo.players[i].Zone == 2)
@@ -2791,7 +2801,7 @@ void case_mso ()
 
 
     //!EXIT
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!exit", 5) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
+    if (strncmp(Msg, "!exit", 5) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
     {
         out << ginfo.players[i].UName << " send !exit" << endl;
         for (int j=0; j<MAX_PLAYERS; j++)
@@ -2809,7 +2819,7 @@ void case_mso ()
         }
         ok=0;
     }
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!reload", 7) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
+    if (strncmp(Msg, "!reload", 7) == 0 and strcmp(ginfo.players[i].UName, "denis-takumi") == 0)
     {
         out << ginfo.players[i].UName << " send !reload" << endl;
 
@@ -2823,7 +2833,7 @@ void case_mso ()
         insim.send_packet(&pack_requests);
     }
     //!evo
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pit", 4) == 0)
+    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
     {
 
         char Msg[64];
@@ -2834,9 +2844,14 @@ void case_mso ()
         bank.BankFond += 250;
     }
     //!users
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!users",6) == 0)
+    if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
     {
         ginfo.players[i].Action = 1;
+
+        for(int h=0; h<240;h++)
+        {
+            send_bfn(ginfo.players[i].UCID,h);
+        }
 
         struct IS_BTN pack_btn;
         memset(&pack_btn, 0, sizeof(struct IS_BTN));
@@ -2867,12 +2882,12 @@ void case_mso ()
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!lang", 5) == 0 )
+    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
     {
         out << ginfo.players[i].UName << " send !lang" << endl;
 
         char message2[96];
-        strcpy(message2,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+        strcpy(message2,Msg);
 
         if (strlen(message2) < 8)
         {
@@ -2947,14 +2962,14 @@ void case_mso ()
         /*** МАТ И Т.П. ***/
         read_words();
 
-        char Msg[96];
-        strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-        //strupr()
+
+        char Msg2[96];
+        strcpy(Msg2,strupr(Msg));
 
         for (int j=0; j< ginfo.WordsCount; j++)
         {
-            if (strstr(Msg,ginfo.Words[j]))
+            if (strstr(Msg2,strupr(ginfo.Words[j])))
             {
                 send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2005]);
                 bank.players[i].Cash -= 1000;
@@ -2990,8 +3005,10 @@ void case_mso_cop ()
             break;
         }
     }
+    char Msg[96];
+    strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!sirena", 7) == 0 )
+    if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
     {
         out << ginfo.players[i].UName << " send !sirena" << endl;
 
@@ -3010,7 +3027,7 @@ void case_mso_cop ()
         }
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!radar", 6) == 0 )
+    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
     {
         out << ginfo.players[i].UName << " send !radar" << endl;
 
@@ -3029,18 +3046,18 @@ void case_mso_cop ()
         }
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!fines", 6) == 0)
+    if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^Cштрафы", 9) == 0 ))
     {
         out << ginfo.players[i].UName << " send !fines" << endl;
         help_cmds(&ginfo.players[i],3);
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pay", 4) == 0 )
+    if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
     {
         out << ginfo.players[i].UName << " send !pay" << endl;
 
         char message2[96];
-        strcpy(message2,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+        strcpy(message2,Msg);
 
         if (strlen(message2) < 6)
         {
@@ -3164,7 +3181,13 @@ void case_npl ()
                 }
                 out << PlayerName << endl;
 
-                if (((strncmp("[ДПС]",PlayerName,5)==0) or (strncmp("[дпс]",PlayerName,5)==0)) and (ginfo.players[i].cop !=1))
+                if (
+                    ((strncmp("[ДПС]",PlayerName,5)==0)
+                    || (strncmp("[дпс]",PlayerName,5)==0)
+                    || (strncmp("[ГАИ]",PlayerName,5)==0)
+                    || (strncmp("[гаи]",PlayerName,5)==0))
+                    && (ginfo.players[i].cop !=1)
+                    )
                 {
                     if ( read_cop(&ginfo.players[i]) < 1)
                     {
@@ -4343,7 +4366,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
 
-
+    pthread_mutex_init(&RCmutex, NULL);
 
     if (strlen(ServiceName) == 0)
     {
@@ -4579,6 +4602,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     service_status.dwCurrentState = SERVICE_STOPPED;
     // изменить состояние сервиса
     SetServiceStatus(hServiceStatus, &service_status);
+
+    pthread_mutex_destroy(&RCmutex);
+
     return 0;
 }
 

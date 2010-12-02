@@ -285,7 +285,7 @@ void RCBank::btn_cash (int i)
         char cash[10];
         sprintf(cash,"%.0f",BankFond);
         //itoa((int)BankFond,cash,10);
-        if (players[i].Cash > 0)
+        if (BankFond > 0)
             strcpy(pack.Text,"^2");
         else
             strcpy(pack.Text,"^1");
