@@ -1855,7 +1855,10 @@ void case_cpr ()
                 //out << pch << endl;
                 strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
             }
-            out << PlayerName << endl;
+            //out << PlayerName << endl;
+            char Text[64];
+            strcpy(Text, "/spec ");
+            strcat (Text, ginfo.players[i].UName);
             if (ginfo.players[i].PLID != 0)
             {
                 if (((strncmp("[ÄÏÑ]",PlayerName,5)==0) or (strncmp("[äïñ]",PlayerName,5)==0)) and (ginfo.players[i].cop !=1))
@@ -1863,9 +1866,6 @@ void case_cpr ()
                     if ( read_cop(&ginfo.players[i]) != 1)
                     {
                         send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][1300]);
-                        char Text[64];
-                        strcpy(Text, "/spec ");
-                        strcat (Text, ginfo.players[i].UName);
                         //ginfo.players[i].PLID =0;
                         send_mst(Text);
                     }
@@ -1881,6 +1881,38 @@ void case_cpr ()
                     {
                         ginfo.players[i].cop =0;
                         send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][1302]);
+
+                        int tune = 45;
+                        if (ginfo.players[i].CTune&1)
+                            tune -= 15;
+                        if (ginfo.players[i].CTune&2)
+                            tune -= 20;
+                        if (ginfo.players[i].H_TRes < tune)
+                        {
+                            ginfo.players[i].PLID = 0;
+                            ginfo.players[i].Zone = 1;
+                            send_mst(Text);
+                            char QSL [8];
+                            itoa(tune,QSL,10);
+                            char Texxt[32];
+                            strcpy(Texxt,msg.message[ginfo.players[i].lang_id][2400] );
+                            strcat(Texxt,QSL);
+                            strcat(Texxt," %");
+                            send_mtc(ginfo.players[i].UCID,Texxt);
+                        }
+                        else if ((ginfo.players[i].SetF&4) and !(ginfo.players[i].CTune&8))
+                        {
+                            char Texxt[32];
+                            strcpy(Texxt,msg.message[ginfo.players[i].lang_id][2401] );
+                            send_mtc(ginfo.players[i].UCID,Texxt);
+                            ginfo.players[i].Zone = 1;
+                            ginfo.players[i].PLID = 0;
+                            char Text[64];
+                            strcpy(Text, "/spec ");
+                            strcat (Text, ginfo.players[i].UName);
+                            send_mst(Text);
+                            return;
+                        }
                     }
                 }
             }
@@ -2708,7 +2740,7 @@ void case_mso ()
 
     if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cïåðåäà÷è", 11) == 0))
     {
-        out << ginfo.players[i].UName << " send !trans" << endl;
+        out << ginfo.players[i].UName << Msg << endl;
 
 
         char message[96];
@@ -2730,34 +2762,16 @@ void case_mso ()
 
         ifstream readf (file,ios::in);
 
+        char * comand;
+        char * user;
+        comand = strtok (message," ");
+        user = strtok (NULL," ");
 
 
-        if (strlen(message) < 8)
-        {
-            // username not exist
-            while (readf.good())
-            {
-                char str[128];
-                readf.getline(str,128);
-                if (strlen(str) > 0)
-                {
-                    if (strstr(str,ginfo.players[i].UName))
-                    {
-                        char Text[64];
-                        strcpy(Text,"^1| ^C^7");
-                        strncat(Text,str,55);
-                        send_mtc(ginfo.players[i].UCID,Text);
-                    }
-                }
-            }
-        }
-        else
+        if ((user) and (strlen(user) > 0))
         {
             // username exist
-            char * comand;
-            char * user;
-            comand = strtok (message," ");
-            user = strtok (NULL," ");
+
 
             while (readf.good())
             {
@@ -2776,6 +2790,26 @@ void case_mso ()
             }
 
         }
+        else
+        {
+            // username not exist
+            while (readf.good())
+            {
+                char str[128];
+                readf.getline(str,128);
+                if (strlen(str) > 0)
+                {
+                    if (strstr(str,ginfo.players[i].UName))
+                    {
+                        char Text[64];
+                        strcpy(Text,"^1| ^C^7");
+                        strncat(Text,str,55);
+                        send_mtc(ginfo.players[i].UCID,Text);
+                    }
+                }
+            }
+        }
+
 
         readf.close();
 
@@ -2848,7 +2882,7 @@ void case_mso ()
     {
         ginfo.players[i].Action = 1;
 
-        for(int h=0; h<240;h++)
+        for(int h=0; h<240; h++)
         {
             send_bfn(ginfo.players[i].UCID,h);
         }
@@ -3059,11 +3093,11 @@ void case_mso_cop ()
         char message2[96];
         strcpy(message2,Msg);
 
-        if (strlen(message2) < 6)
+        /*if (strlen(message2) < 6)
         {
             send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2104]);
             return;
-        }
+        }*/
 
         char * comand;
         char * id;
@@ -3179,15 +3213,15 @@ void case_npl ()
                     //out << pch << endl;
                     strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
                 }
-                out << PlayerName << endl;
+                //out << PlayerName << endl;
 
                 if (
                     ((strncmp("[ÄÏÑ]",PlayerName,5)==0)
-                    || (strncmp("[äïñ]",PlayerName,5)==0)
-                    || (strncmp("[ÃÀÈ]",PlayerName,5)==0)
-                    || (strncmp("[ãàè]",PlayerName,5)==0))
+                     || (strncmp("[äïñ]",PlayerName,5)==0)
+                     || (strncmp("[ÃÀÈ]",PlayerName,5)==0)
+                     || (strncmp("[ãàè]",PlayerName,5)==0))
                     && (ginfo.players[i].cop !=1)
-                    )
+                )
                 {
                     if ( read_cop(&ginfo.players[i]) < 1)
                     {
@@ -3214,6 +3248,8 @@ void case_npl ()
                     strcat (Text, ginfo.players[i].UName);
 
                     ginfo.players[i].PLID = pack_npl->PLID;
+                    ginfo.players[i].H_TRes =  pack_npl->H_TRes;
+                    ginfo.players[i].SetF =  pack_npl->SetF;
 
 
                     // out << "pack_npl->PType = " << (int)pack_npl->PType << endl;;
@@ -3293,6 +3329,8 @@ void case_npl ()
                 else
                 {
                     ginfo.players[i].PLID = pack_npl->PLID;
+                    ginfo.players[i].H_TRes =  pack_npl->H_TRes;
+                    ginfo.players[i].SetF =  pack_npl->SetF;
                     //ginfo.players[i].EnergyTime = time(&stime);
                 }
 

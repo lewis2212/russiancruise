@@ -193,6 +193,8 @@ struct player
     char    CName[4];              // Car Name
     char    SName[16];             // Car Skin Name
     int     CTune;                 // Car Tuning
+    byte    SetF;
+    byte    H_TRes;
     byte    UCID;                  // Connection ID
     byte    PLID;                  // Player ID
     byte    BID;
