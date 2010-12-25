@@ -30,6 +30,7 @@ struct PizzaPlayer
     char    CName[4];              // Car Name
     byte    Zone;
     /** Work **/
+    char    WorkDest[96];       // destination text
     byte    WorkType;
     byte    WorkZone;
     byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
@@ -91,6 +92,7 @@ public:
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
     void btn_work (struct PizzaPlayer *splayer);
+    void btn_destination(struct PizzaPlayer *splayer);
 
     // Функции-утилиты
     int check_pos (struct PizzaPlayer *splayer); //+

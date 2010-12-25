@@ -38,6 +38,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                     if (piz->players[i].WorkTime <= nowtime)
                     {
                         piz->send_bfn(piz->players[i].UCID,210);
+                        piz->send_bfn(piz->players[i].UCID,211);
                         if (piz->players[i].WorkAccept != 0)
                         {
                             piz->send_mtc(piz->players[i].UCID,piz->msg->message[0][4101]);
@@ -50,7 +51,10 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                 }
 
                 if (piz->players[i].WorkAccept != 0)
+                {
                 piz->btn_work(&piz->players[i]);
+                piz->btn_destination(&piz->players[i]);
+                }
 
 
             }
@@ -193,6 +197,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
                 char text[96];
                 strcpy(text,msg->message[0][4201]);
                 strcat(text,players[splayer->WorkPlayerAccept - 100].PName);
+                strcpy(splayer->WorkDest,players[splayer->WorkPlayerAccept - 100].PName);
                 send_mtc(splayer->UCID,text);
             }
 
@@ -698,6 +703,30 @@ void RCPizza::btn_work (struct PizzaPlayer *splayer)
 
     strcat(pack.Text,sec_c);
     insim->send_packet(&pack);
+
+}
+
+void RCPizza::btn_destination (struct PizzaPlayer *splayer)
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = splayer->UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    pack.ClickID = 211;
+    pack.BStyle = 32;
+    pack.L = 100;
+    pack.T = 10;
+    pack.W = 48;
+    pack.H = 4;
+
+    strcpy(pack.Text,splayer->WorkDest);
+
+
+    insim->send_button(&pack);
 
 }
 // функции-утилиты
