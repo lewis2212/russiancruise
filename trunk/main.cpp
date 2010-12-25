@@ -2008,9 +2008,11 @@ void case_mci ()
                 float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
                 if (ginfo.players[j].cop != 1)
                 {
-                    if ((abs((int)Dist) > 10) and (S>30) and (S<150))
+                    if ((abs((int)Dist) > 10) and (S>30))
                     {
                         ginfo.players[j].Distance += abs((int)Dist);
+
+                        if (S<150)
                         bank.players[j].Cash += abs((int)Dist)/10;
                         //bank.BankFond -= abs((int)Dist)/10;
 
