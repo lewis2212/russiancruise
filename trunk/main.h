@@ -49,6 +49,7 @@ buttons ClickId's:
 203-205 сирена
 
 210 - pizza clock
+211 - pizza action
 
 workplace
 L = 38;
@@ -233,7 +234,10 @@ struct player
     int     FloodTime;
     /** Work **/
     int     WorkTime;			// время за которое он должен доставить товар
-
+    /** NPL Hack **/
+    int     NPLTime;
+    int     HackTime;
+    int     NPLHack;
 };
 
 
