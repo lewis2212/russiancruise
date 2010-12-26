@@ -1831,6 +1831,26 @@ void case_cnl ()
     }
 }
 
+void case_toc ()
+{
+    int i;
+
+    struct IS_TOC *pack_toc = (struct IS_TOC*)insim.get_packet();
+
+    // Find player and set the whole player struct he was using to 0
+    for (i=0; i < MAX_PLAYERS; i++)
+    {
+        if (ginfo.players[i].UCID == pack_toc->NewUCID)
+        {
+                char Text[64];
+                strcpy(Text, "/spec ");
+                strcat (Text, ginfo.players[i].UName);
+                send_mtc(pack_toc->NewUCID,"^1Acces Denine");
+                send_mst(Text);
+                break;
+        }
+    }
+}
 
 void case_cpr ()
 {
@@ -2013,7 +2033,7 @@ void case_mci ()
                         ginfo.players[j].Distance += abs((int)Dist);
 
                         if (S<150)
-                        bank.players[j].Cash += abs((int)Dist)/10;
+                            bank.players[j].Cash += abs((int)Dist)/10;
                         //bank.BankFond -= abs((int)Dist)/10;
 
                         ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
@@ -3194,7 +3214,7 @@ void case_npl ()
 {
     // out << "joining race or leaving pits" << endl;
     int i;
-
+    char Text[64];
     struct IS_NPL *pack_npl = (struct IS_NPL*)insim.get_packet();
 
     // Find player using UCID and update his PLID
@@ -3203,6 +3223,52 @@ void case_npl ()
         if (ginfo.players[i].UCID == pack_npl->UCID)
         {
 
+            /*****   Hack Detect ***/
+
+            time_t timeh;
+            int htime = time(&timeh); // get current time
+
+            if (ginfo.players[i].NPLTime == 0)
+            {
+                ginfo.players[i].NPLTime = htime;
+            }
+
+            int ts = htime - ginfo.players[i].HackTime;
+            ginfo.players[i].HackTime = htime;
+
+
+            if (ts < 10)  // 10 sec
+                ginfo.players[i].NPLHack++;
+            else
+            {
+                ginfo.players[i].NPLHack = 1;
+            }
+
+            if (ginfo.players[i].NPLHack > 4)   //max lines to tolerate
+            {
+
+                ginfo.players[i].NPLHack = 0;
+                strcpy(Text, "/kick ");
+                strcat (Text, ginfo.players[i].UName);
+                send_mst("/msg ^1Hack detect");
+                send_mst(Text);
+                return;
+
+            }
+
+
+
+
+            if (strlen(pack_npl->CName) < 3)
+            {
+                strcpy(Text, "/kick ");
+                strcat (Text, ginfo.players[i].UName);
+                send_mst("/msg ^1Hack detect");
+                send_mst(Text);
+                return;
+            }
+
+            /*******    ********/
             // out << "Core.dll: find user " << ginfo.players[i].UName << endl;
             if (pack_npl->PType != 6)
             {
@@ -3227,7 +3293,6 @@ void case_npl ()
                 {
                     if ( read_cop(&ginfo.players[i]) < 1)
                     {
-                        char Text[64];
                         strcpy(Text, "/spec ");
                         strcat (Text, ginfo.players[i].UName);
                         //ginfo.players[i].PLID =0;
@@ -3321,6 +3386,7 @@ void case_npl ()
                     {
                         send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2404]);
 
+                        help_cmds(&ginfo.players[i],2);
                         ginfo.players[i].Zone = 1;
                         ginfo.players[i].PLID = 0;
                         send_mst(Text);
@@ -4624,6 +4690,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         case ISP_VTN:
             //out << " IS_VTN \n";
             case_vtn();
+            break;
+        case ISP_TOC:
+            case_toc();
             break;
         }
 

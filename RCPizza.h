@@ -52,7 +52,6 @@ class RCPizza
 {
 private:
 
-
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
 
@@ -62,6 +61,9 @@ private:
 public:
     RCPizza::RCPizza();
     RCPizza::~RCPizza();
+
+    int NumP;
+    int ginfo_time;
 
     CInsim      *insim;
     RCMessage   *msg;
