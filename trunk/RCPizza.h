@@ -9,7 +9,6 @@
 #include <time.h>
 #include <windows.h>
 
-#include "tools.h"
 #include "CInsim.h"
 #include "RCMessage.h"
 #include "RCBank.h"
