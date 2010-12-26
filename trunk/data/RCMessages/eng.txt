@@ -1,0 +1,167 @@
+100 "Energy"
+
+200 "^2Cars"
+201 "^2Fines"
+202 "^2About"
+
+400 "^2PITSAFE"
+401 "^3Shop"
+402 "^3Cafe"
+403 "^1PITSAFE"
+
+
+600 "^7Auto show"
+601 "^7Service"
+602 "^7Buy"
+603 "^7Sell" 
+604 "^1Close" 
+
+
+
+1000 "^7Send Money"
+1001 "^7Send a message"
+1002 "^7Fine"
+1003 "^7Cancel fine"
+1004 "^7Being the pursuit"
+1005 "^7Cancel the pursuit"
+1006 "^4RIDE FOR YOU"
+1007 "^7Being the pursuit of "
+1008 "^7Cancel the pursuit of "
+1009 "^1| ^7You can not sell the car when you're sitting in it."
+
+1100 "^7 Sent you ^7"
+1101 "^1| ^7you entered an amount greater than what you have in your account."
+1102 "^1| ^7Try select a smaller amount."
+1103 "^1| ^7from "
+1104 "^2| ^7You fined."
+1105 "^2| ^7Вы выписали штраф:"
+1106 "^2| ^7For "
+1107 "^2| ^7Cancled fine."
+1108 "^2| ^7You cancle fine:"
+
+
+
+1300 "^2| ^C^7You are not a Policeman"
+1301 "^2| ^C^7You  Policeman"
+1302 "^2| ^C^7You are not a Policeman"
+
+
+
+1500 "^1|^7 Bonus for lap: ^2"
+
+1600 "^3|^2 Jony Pizza"
+1601 "^3|^2 !deal ^7Take a job"
+1602 "^3|^2 !undeal ^7go out from job"
+1603 "^3|^2 !take ^7Take pizza"
+1604 "^3|^7 Your pizza, Sr. =)"
+
+1700 "^2| ^7Radar off"
+1701 "^1YOU UNDER AREST"
+1702 "^1 under arest"
+1703 "^2| ^7Please set Pursuit in Off mod"
+1704 "^C^7 speeding m.th. ^1"
+1705 " ^3km/h"
+1706 "^7 away from the pursuit"
+
+1800 "^1| ^7You spent all the power!"
+1801 "^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
+1802 "^1| ^7Also recommend to relax in a cafe"
+
+
+
+2000 "^1| ^7You not in shop!"
+2001 "^1| ^7You do not have enough money"
+2002 "^1| ^7You are not in cafe"
+2003 "^1Close"
+2004 "^1| ^7Flood! Fine: 500 RUR."
+2005 "^1| ^7Swearwords! Fine: 1000 RUR."
+2006 
+
+2100 "^2| ^7Srirena On"
+2101 "^2| ^7Sirena Off"
+2102 "^2| ^7Radar On"
+2103 "^2| ^7Radar Off"
+2104 "^2| ^7Need a parameter"
+2105 "^2| ^7Wrong parameter"
+2106 "^2| ^7Fine paid"
+2107 "^2| ^7You not have this fine"
+
+2200 "^3| ^7By voluntarily"
+2201 "^3| ^7Entered an order for pizza"
+2202 "^3| ^7Come to the pizzeria and Take Order"
+2203 "^3| ^7There are currently no free workers"
+2204 "^3| ^7Reservations accepted, expect when you deliver it"
+
+
+
+2400 "^1| ^7Set restrictions injection not menie^2"
+2401 "^1| ^7Turn Off an ^2ABS"
+2402 "^1| ^7You have low power"
+2403 "^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
+2404 "^1| ^1Take alloved car ^7(^2!cars^7)"
+
+
+2600 "^2| ^7Care in spectators during chase."
+2601 "^2| ^7Fine - 5000 ^3 RUR."
+2602 "^1| ^7Care in spectators in the wrong place."
+2603 "^1| ^7Fine - 500 ^3 RUR."
+
+
+2700 "^2| ^7Care in spectators during chase."
+2701 "^2| ^7Fine- 5000 ^3 RUR."
+2702 "^1| ^7Care in the boxes in the wrong place."
+2703 "^1| ^7Fine - 500 ^3 RUR."
+
+
+2900 "/msg ^7Voting on the server is forbidden."
+
+3000 "^1| ^7You soul are saved"
+
+3100 "^1| ^7Available Cars:"
+3101 "^2| ^7List your fines:"
+3102 "^2| ^7You have not any Fine"
+
+3200 "^1| ^7RUSSIAN CRUISE"
+3201 "^1| ^1Commands"
+3202 "^1| ^7!help ^3- List of commands"
+3203 "^1| ^7!cars ^3- List of alloved cars"
+3204 "^1| ^7!fines ^3- List of fines"
+3205 "^1| ^7!info (shift+i) ^3- Info screen"
+3206 "^1| ^7!save ^3- Save your soul =)"
+3207 "^1| ^7!shop ^3- Shop"
+3208 "^1| ^7!pit ^3- tow truck to pit(250 RUR.)"
+3209 "^1| ^7!coffee ^3- Coffee (+5% power)(50 RUR.)"
+3210 "^1| ^7!redbull ^3- Redbull(+10% power)(100 RUR.)"
+3211 "^1| ^7!users ^3- Operations with players"
+3212 "^1| ^7!pizza ^3- Order pizza(800 RUR.)"
+3213 "^1| ^7!pay id ^3- Pay a fine"
+3214 "^1| ^7!lang rus,eng ^3- Choose your langusge"
+
+
+4000 "^3|^7 I'll take you to work"
+4001 "^3|^7 you're not working here"
+4002 "^3|^7 You work not with me, go away"
+
+4100 "^3|^7 You are fired"
+4101 "^3|^7 You lost the order - YOU FIRE^1!!!"
+
+4200 "^3|^7 Deliver order!"
+4201 "^3|^7 Deliver custom player"
+4202 "^3|^7 Took first this order"
+4203 "^3|^7 Wait until I call you"
+
+4300 "^3|^7 Delivered"
+
+4400
+
+4500
+
+4600
+
+4700
+
+4800
+
+4900
+
+5000
