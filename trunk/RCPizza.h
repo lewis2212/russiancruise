@@ -82,6 +82,7 @@ public:
     void done (struct PizzaPlayer *splayer);
 
     // функции-повторители основных фунцкий ядра
+    void next_packet();
     void pizza_ncn(); //+
     void pizza_npl(); //+
     void pizza_plp(); //+

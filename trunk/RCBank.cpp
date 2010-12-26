@@ -36,6 +36,39 @@ int RCBank::init(char *dir,void *CInSim, void *Message)
     return 0;
 }
 
+/** Функции повторители основного ядра  **/
+
+void RCBank::next_packet()
+{
+    switch (insim->peek_packet())
+        {
+        case ISP_NPL:
+            bank_npl();
+            break;
+
+        case ISP_NCN:
+            bank_ncn();
+            break;
+
+        case ISP_CNL:
+            bank_cnl();
+            break;
+
+        case ISP_PLL:
+            bank_pll();
+            break;
+
+        case ISP_PLP:
+            bank_plp();
+            break;
+
+        case ISP_CPR:
+            bank_crp();
+            break;
+
+        }
+}
+
 void RCBank::bank_ncn()
 {
     //printf("New player connect\n");

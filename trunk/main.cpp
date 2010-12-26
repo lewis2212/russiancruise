@@ -4579,123 +4579,80 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         switch (insim.peek_packet())
         {
         case ISP_MSO:
-            //out << " IS_MSO \n";
             case_mso ();
-            //case_mso_work();
             case_mso_cop();
-            pizza.pizza_mso();
-            nrg.energy_mso();
-            // bank.bank_mso();
             break;
 
 
         case ISP_NPL:
-            //out << " IS_NPL \n";
-            //chek_users1(&ginfo);
             case_npl ();
-            pizza.pizza_npl();
-            nrg.energy_npl();
             bank.bank_npl();
             break;
 
         case ISP_NCN:
-            //out << " IS_NCN \n";
             case_ncn ();
-            pizza.pizza_ncn();
-            nrg.energy_ncn();
             bank.bank_ncn();
             break;
 
         case ISP_CNL:
-            //out << " IS_CNL \n";
             case_cnl ();
-            pizza.pizza_cnl();
-            nrg.energy_cnl();
             bank.bank_cnl();
             break;
 
         case ISP_PLL:
-            //out << " IS_PLL \n";
             case_pll ();
-            pizza.pizza_pll();
-            nrg.energy_pll();
             bank.bank_pll();
             break;
 
         case ISP_PLP:
-            //out << " IS_PLP \n";
             case_plp ();
-            pizza.pizza_plp();
-            nrg.energy_plp();
             bank.bank_plp();
             break;
 
 
         case ISP_BTC:
-            //out << " IS_BTC \n";
             case_btc ();
             break;
         case ISP_BTT:
-            //out << " IS_BTT \n";
             case_btt ();
             break;
         case ISP_BFN:
-            //out << " ISP_BFN \n";
             case_bfn();
             break;
 
 
-        case ISP_SPX:
-            //out << " IS_SPX \n";
-            //case_spx (&ginfo);
-            break;
 
         case ISP_CPR:
-            //out << " IS_CPR \n";
             case_cpr ();
-            pizza.pizza_crp();
-            nrg.energy_crp();
             bank.bank_crp();
             break;
 
         case ISP_RST:
-            out << " IS_RST \n";
             case_rst ();
             break;
-
         case ISP_REO:
-            //out << " IS_REO \n";
-            // case_reo (&ginfo);
             break;
-
         case ISP_NLP:
-            //out << " IS_NLP \n";
-            // case_reo (&ginfo);
             break;
-
         case ISP_FLG:
-            //out << " IS_FLG \n";
             case_flg ();
             break;
-
         case ISP_PEN:
-            //out << " IS_PEN \n";
             case_pen ();
             break;
         case  ISP_PLA:
-            cout << " IS_PLA \n";
             case_pla();
             break;
-
         case ISP_VTN:
-            //out << " IS_VTN \n";
             case_vtn();
             break;
         case ISP_TOC:
             case_toc();
             break;
         }
-
+        nrg.next_packet();
+        pizza.next_packet();
+        bank.next_packet();
 
     }
 
