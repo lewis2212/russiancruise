@@ -360,6 +360,43 @@ void RCPizza::readconfig(char *Track)
 
 /** функции-повторители основных фунцкий ядра **/
 
+void RCPizza::next_packet()
+{
+    switch (insim->peek_packet())
+        {
+        case ISP_MSO:
+            pizza_mso();
+            break;
+
+
+        case ISP_NPL:
+            pizza_npl();
+            break;
+
+        case ISP_NCN:
+            pizza_ncn();
+            break;
+
+        case ISP_CNL:
+            pizza_cnl();
+            break;
+
+        case ISP_PLL:
+            pizza_pll();
+            break;
+
+        case ISP_PLP:
+            pizza_plp();
+            break;
+
+        case ISP_CPR:
+            pizza_crp();
+            break;
+
+
+        }
+}
+
 
 void RCPizza::pizza_ncn()
 {

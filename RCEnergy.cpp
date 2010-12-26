@@ -133,6 +133,43 @@ void RCEnergy::readconfig(char *Track)
 
 /** функции-повторители основных фунцкий ядра **/
 
+void RCEnergy::next_packet()
+{
+     switch (insim->peek_packet())
+        {
+        case ISP_MSO:
+            energy_mso();
+            break;
+
+        case ISP_NPL:
+            energy_npl();
+            break;
+
+        case ISP_NCN:
+            energy_ncn();
+            break;
+
+        case ISP_CNL:
+            energy_cnl();
+            break;
+
+        case ISP_PLL:
+            energy_pll();
+            break;
+
+        case ISP_PLP:
+            energy_plp();
+            break;
+
+        case ISP_CPR:
+            energy_crp();
+            break;
+
+
+        }
+
+
+}
 
 void RCEnergy::energy_ncn()
 {

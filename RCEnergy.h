@@ -64,6 +64,7 @@ public:
     int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank);
     void readconfig(char *Track);
      // функции-повторители основных фунцкий ядра
+    void next_packet();
     void energy_ncn();
     void energy_npl();
     void energy_plp();
