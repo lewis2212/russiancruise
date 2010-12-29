@@ -47,9 +47,22 @@ enum
     WK_PIZZA = 1,
 };
 
+struct  Store
+{
+    // all max = 100 (100%)
+    byte    Testo;
+    byte    Vegetable;
+    byte    Meat;
+    byte    Cheese;
+};
+
 class RCPizza
 {
 private:
+
+    float   Capital;
+    int     NumCars;
+    struct Store Sotr;
 
     pthread_t tid; // Thread ID
     pthread_attr_t attr;

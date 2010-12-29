@@ -52,6 +52,8 @@
 		<Unit filename="RCMessage.h" />
 		<Unit filename="RCPizza.cpp" />
 		<Unit filename="RCPizza.h" />
+		<Unit filename="RCTaxi.cpp" />
+		<Unit filename="RCTaxi.h" />
 		<Unit filename="insim.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
