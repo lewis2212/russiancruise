@@ -62,7 +62,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
             }
         } // конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль
 
-            cout << piz->ginfo_time - time(&ptime) << endl;
+           // cout << piz->ginfo_time - time(&ptime) << endl;
          if ( piz->ginfo_time <= time(&ptime))
                  {
 
