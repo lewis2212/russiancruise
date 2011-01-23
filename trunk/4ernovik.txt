@@ -1,0 +1,6 @@
+mso for save
+
+
+add file in RCMessage lang.
+
+if day of the week monday call "TrackRotation()"

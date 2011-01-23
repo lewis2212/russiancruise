@@ -8,6 +8,7 @@ RCPizza     pizza;
 RCMessage   msg;
 RCEnergy    nrg;
 RCBank      bank;
+RCDL        dl;
 
 
 
@@ -4169,6 +4170,10 @@ void *thread_mci (void *params)
 
             pizza.pizza_mci();
             nrg.energy_mci();
+
+            if (dl.inited == 1)
+            dl.mci();
+
             //bank.bank_mci();
         }
 
@@ -4547,6 +4552,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     msg.init(RootDir);
     nrg.init(RootDir,&nrg,&insim,&msg,&bank);
     bank.init(RootDir,&insim,&msg);
+    dl.init(RootDir,&insim,&msg);
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
@@ -4653,6 +4659,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         nrg.next_packet();
         pizza.next_packet();
         bank.next_packet();
+        dl.next_packet();
 
     }
 

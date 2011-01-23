@@ -51,6 +51,8 @@ buttons ClickId's:
 210 - pizza clock
 211 - pizza action
 
+212,213 - drive lic
+
 workplace
 L = 38;
 T = 55;
@@ -71,6 +73,7 @@ using namespace std;
 #include "RCMessage.h"
 #include "RCEnergy.h"
 #include "RCBank.h"
+#include "RCDrivingLicense.h"
 
 
 
