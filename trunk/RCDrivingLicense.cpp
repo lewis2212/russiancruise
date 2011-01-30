@@ -12,6 +12,55 @@ RCDL::~RCDL()
 
 }
 
+int     RCDL::GetLVL(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            return players[i].LVL;
+        }
+    }
+    return 0;
+}
+int     RCDL::GetSkill(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            return players[i].Skill;
+        }
+    }
+    return 0;
+}
+
+bool    RCDL::AddSkill(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Skill += 800;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool    RCDL::RemSkill(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Skill -= 1000;
+            return true;
+        }
+    }
+    return false;
+}
+
 int RCDL::init(char *dir,void *CInSim, void *Message)
 {
     strcpy(RootDir,dir);
@@ -38,41 +87,41 @@ int RCDL::init(char *dir,void *CInSim, void *Message)
 void RCDL::next_packet()
 {
     switch (insim->peek_packet())
-        {
-        case ISP_NPL:
-            npl();
-            break;
+    {
+    case ISP_NPL:
+        npl();
+        break;
 
-        case ISP_NCN:
-            ncn();
-            break;
+    case ISP_NCN:
+        ncn();
+        break;
 
-        case ISP_CNL:
-            cnl();
-            break;
+    case ISP_CNL:
+        cnl();
+        break;
 
-        case ISP_PLL:
-            pll();
-            break;
+    case ISP_PLL:
+        pll();
+        break;
 
-        case ISP_PLP:
-            plp();
-            break;
+    case ISP_PLP:
+        plp();
+        break;
 
-        case ISP_CPR:
-            crp();
-            break;
+    case ISP_CPR:
+        crp();
+        break;
 
-            case ISP_MSO:
-            mso();
-            break;
+    case ISP_MSO:
+        mso();
+        break;
 
-        }
+    }
 }
 
 void RCDL::ncn()
 {
-     //printf("New player connect\n");
+    //printf("New player connect\n");
     int i;
 
     struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
@@ -106,7 +155,7 @@ void RCDL::ncn()
 
     /** read file **/
 
-     char file[MAX_PATH];
+    char file[MAX_PATH];
     strcpy(file,RootDir);
     strcat(file,"data\\RCDrivingLicense\\");
     strcat(file,players[i].UName);
@@ -160,7 +209,7 @@ void RCDL::ncn()
 
 void RCDL::npl()
 {
-     //cout << "joining race or leaving pits" << endl;
+    //cout << "joining race or leaving pits" << endl;
     int i;
 
     struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
@@ -282,7 +331,7 @@ void RCDL::mso()
         cout << players[i].UName << " send !save" << endl;
 
 
-            save(&players[i]);
+        save(&players[i]);
 
     }
 }
@@ -345,34 +394,110 @@ void RCDL::mci()
 
                 float Skill = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
                 //cout << Skill << endl;
-                    if ((abs((int)Skill) > 10) and (S>30))
-                    {
-                        players[j].Skill += abs((int)Skill);
-                        memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
-                    }
+                if ((abs((int)Skill) > 10) and (S>30))
+                {
+                    players[j].Skill += abs((int)Skill);
+                    memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
+                }
 
-                    /** next lvl **/
+                /** next lvl **/
 
-                    float nextlvl = (pow(players[j].LVL,2)*0.5+800)*1000;
+                float nextlvl = (pow(players[j].LVL,2)*0.5+800)*1000;
 
-                    if (players[j].Skill > nextlvl)
-                    {
-                        players[j].LVL ++;
-                        players[j].Skill = 0;
-                        char Msg[64];
-                        sprintf(Msg,"User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-                        send_mst(Msg);
-                    }
+                if (players[j].Skill > nextlvl)
+                {
+                    players[j].LVL ++;
+                    players[j].Skill = 0;
+                    char Msg[64];
+                    sprintf(Msg,"User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
+                    send_mst(Msg);
+                }
 
-                    /** buttons **/
+                /** buttons **/
 
-                    printf("User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-
+                //printf("User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
+                btn_dl(&players[j]);
 
 
             }
         }
     }
+
+}
+
+void RCDL::btn_dl(struct DLPlayer *splayer)
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = splayer->UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    // BG
+    pack.ClickID = 230;
+    pack.BStyle = 32;
+    pack.L = 100;
+    pack.T = 10;
+    pack.W = 35;
+    pack.H = 9;
+    strcat(pack.Text,"");
+    insim->send_packet(&pack);
+    // LVL
+    pack.ClickID = 231;
+    pack.BStyle = 64;
+    pack.L = 101;
+    pack.T = 11;
+    pack.W = 33;
+    pack.H = 3;
+    //int life = 100;
+    sprintf(pack.Text,"^7 Driver License Level: %d", splayer->LVL);
+    insim->send_button(&pack);
+
+    pack.ClickID = 232;
+    pack.BStyle = 64;
+    pack.L = 101;
+    pack.T = 15;
+    pack.W = 6;
+    pack.H = 3;
+    //int life = 100;
+    sprintf(pack.Text,"^7Skill");
+    insim->send_button(&pack);
+
+    pack.ClickID = 233;
+    pack.BStyle = 1;
+    pack.L = 107;
+    pack.T = 15;
+    pack.W = 26;
+    pack.H = 3;
+
+    float nextlvl = (pow(splayer->LVL,2)*0.5+800)*1000;
+
+    int skl = (splayer->Skill/nextlvl)*100;
+
+    // printf("User:%s LVL=%d \tSkill=%d \n",splayer->UName, splayer->LVL,skl);
+
+    int sklend = 100 - skl;
+    strcpy(pack.Text,"^2");
+
+    for (int i=0; i< skl; i++)
+    {
+        strcat(pack.Text,"||");
+    }
+
+    if (sklend > 0)
+    {
+        strcat(pack.Text,"^7");
+
+        for (int i=0; i<sklend; i++)
+        {
+            strcat(pack.Text,"||");
+        }
+
+    }
+
+    insim->send_button(&pack);
 
 }
 

@@ -40,26 +40,14 @@ class RCBank
 {
 private:
 
-     struct  Bank_info TrackInf;
-
-    char RootDir[MAX_PATH];
-
-public:
-    RCBank::RCBank();
-    RCBank::~RCBank();
-
-    CInsim  *insim;
-    RCMessage *msg;
+    struct  Bank_info TrackInf;
+    struct  BankPlayer players[32];     // Array of players
+    struct  place zone;
 
     float BankFond;
 
-    struct  place zone;
-    struct  BankPlayer players[32];     // Array of players
-    // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message);
-    void readconfig(char *Track);
-     // функции-повторители основных фунцкий ядра
-    void next_packet();
+    char RootDir[MAX_PATH];
+
     void bank_ncn();
     void bank_npl();
     void bank_plp();
@@ -70,12 +58,44 @@ public:
     void bank_mso();
 
 
-    // функции-повторители основных фунцкий ядра
-    void bank_save(int j);
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
+
+public:
+    RCBank::RCBank();
+    RCBank::~RCBank();
+
+    CInsim  *insim;
+    RCMessage *msg;
+
+
+
+    bool AddToBank(int Cash);
+    bool RemFrBank(int Cash);
+
+    bool AddCash(byte UCID, int Cash);
+    bool RemCash(byte UCID, int Cash);
+    int  GetCash(byte UCID);
+    byte GetPlayerUCID (int i);
+
+
+
+    // Основные функции класса
+    int init(char *dir,void *CInSim, void *Message,void *Bank);
+    void readconfig(char *Track);
+    void bank_save(byte UCID);
+    // функции-повторители основных фунцкий ядра
+    void next_packet();
     void btn_cash(int i);
+
+
+
+
+
+
+    // функции-повторители основных фунцкий ядра
+
 
     // Функции-утилиты
     int check_pos (struct BankPlayer *splayer); //+

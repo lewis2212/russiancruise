@@ -53,8 +53,8 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
                 if (piz->players[i].WorkAccept != 0)
                 {
-                piz->btn_work(&piz->players[i]);
-                piz->btn_destination(&piz->players[i]);
+                    piz->btn_work(&piz->players[i]);
+                    piz->btn_destination(&piz->players[i]);
                 }
 
 
@@ -62,39 +62,39 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
             }
         } // конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль
 
-           // cout << piz->ginfo_time - time(&ptime) << endl;
-         if ( piz->ginfo_time <= time(&ptime))
-                 {
+        // cout << piz->ginfo_time - time(&ptime) << endl;
+        if ( piz->ginfo_time <= time(&ptime))
+        {
 
-                //srand(time(&ptime));
-                //int r = rand()%3 + 1;
-                int pizza_time = 600/(piz->NumP+1);
-                piz->ginfo_time += pizza_time;
-                //out << r << endl;
-                //out << ginfo_time - time(&ptime) << endl;
+            //srand(time(&ptime));
+            //int r = rand()%3 + 1;
+            int pizza_time = 600/(piz->NumP+1);
+            piz->ginfo_time += pizza_time;
+            //out << r << endl;
+            //out << ginfo_time - time(&ptime) << endl;
 
-                for (int i = 0; i<32; i++)
-                {
+            for (int i = 0; i<32; i++)
+            {
 
 
                 if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
                 {
-                //out << piz->players[i].UName << " accepted\n";
-                piz->send_mtc(piz->players[i].UCID,piz->msg->message[0][2201]);
-                piz->send_mtc(piz->players[i].UCID,piz->msg->message[0][2202]);
+                    //out << piz->players[i].UName << " accepted\n";
+                    piz->send_mtc(piz->players[i].UCID,piz->msg->message[0][2201]);
+                    piz->send_mtc(piz->players[i].UCID,piz->msg->message[0][2202]);
 
-                strcpy(piz->players[i].WorkDest,piz->msg->message[0][2202]+4); // +4 == remove slash
+                    strcpy(piz->players[i].WorkDest,piz->msg->message[0][2202]+4); // +4 == remove slash
 
-                piz->players[i].WorkAccept =1;
-                piz->players[i].WorkPlayerAccept =0;
-                piz->players[i].WorkZone =0;
-                int worktime = time(&ptime);
-                piz->players[i].WorkTime = worktime+60*6;
-                 break; // чтобы оповещал только одного игрока
+                    piz->players[i].WorkAccept =1;
+                    piz->players[i].WorkPlayerAccept =0;
+                    piz->players[i].WorkZone =0;
+                    int worktime = time(&ptime);
+                    piz->players[i].WorkTime = worktime+60*6;
+                    break; // чтобы оповещал только одного игрока
                 }
 
-                }
-                }
+            }
+        }
 
 
 
@@ -236,20 +236,20 @@ void RCPizza::done(struct PizzaPlayer *splayer)
     //cout << "true" << endl;
     if ((splayer->WorkType == WK_PIZZA) and (splayer->WorkAccept == 2))
     {
-         int i;
-    for (i=0; i < MAX_PLAYERS; i++)
-    {
-        if (bank->players[i].UCID == splayer->UCID)
+        int i;
+        for (i=0; i < MAX_PLAYERS; i++)
         {
-            break;
+            if (bank->GetPlayerUCID(i) == splayer->UCID)
+            {
+                break;
+            }
         }
-    }
 
         splayer->WorkDestinaion =0;
         splayer->WorkAccept = 0;
         splayer->WorkPlayerAccept = 0;
-        bank->players[i].Cash += 800;
-        bank->BankFond -= 800;
+        bank->AddCash(players[i].UCID,800);
+        bank->RemFrBank(800);
 // TODO (#1#): Class Bank
 
         splayer->WorkCountDone ++;
@@ -363,38 +363,38 @@ void RCPizza::readconfig(char *Track)
 void RCPizza::next_packet()
 {
     switch (insim->peek_packet())
-        {
-        case ISP_MSO:
-            pizza_mso();
-            break;
+    {
+    case ISP_MSO:
+        pizza_mso();
+        break;
 
 
-        case ISP_NPL:
-            pizza_npl();
-            break;
+    case ISP_NPL:
+        pizza_npl();
+        break;
 
-        case ISP_NCN:
-            pizza_ncn();
-            break;
+    case ISP_NCN:
+        pizza_ncn();
+        break;
 
-        case ISP_CNL:
-            pizza_cnl();
-            break;
+    case ISP_CNL:
+        pizza_cnl();
+        break;
 
-        case ISP_PLL:
-            pizza_pll();
-            break;
+    case ISP_PLL:
+        pizza_pll();
+        break;
 
-        case ISP_PLP:
-            pizza_plp();
-            break;
+    case ISP_PLP:
+        pizza_plp();
+        break;
 
-        case ISP_CPR:
-            pizza_crp();
-            break;
+    case ISP_CPR:
+        pizza_crp();
+        break;
 
 
-        }
+    }
 }
 
 
@@ -580,13 +580,13 @@ void RCPizza::pizza_mci ()
                     {
                         players[j].Zone = 4;
 
-                          send_mtc(players[j].UCID,msg->message[0][1600]); // pizza u Jony
+                        send_mtc(players[j].UCID,msg->message[0][1600]); // pizza u Jony
                         if (players[j].WorkType != WK_PIZZA)
-                          send_mtc(players[j].UCID,msg->message[0][1601]); // deal
-                          else
-                          send_mtc(players[j].UCID,msg->message[0][1602]); // undeal
-                         if (players[j].WorkAccept != 0)
-                          send_mtc(players[j].UCID,msg->message[0][1603]); // take
+                            send_mtc(players[j].UCID,msg->message[0][1601]); // deal
+                        else
+                            send_mtc(players[j].UCID,msg->message[0][1602]); // undeal
+                        if (players[j].WorkAccept != 0)
+                            send_mtc(players[j].UCID,msg->message[0][1603]); // take
 
                     }
                 }
@@ -614,7 +614,7 @@ void RCPizza::pizza_mci ()
                     {
                         done(&players[j]);
                         /** TODO: THINK ABOUT THIS**/
-                        bank->players[PLN-100].Cash -= 800;
+                        bank->RemCash(players[PLN-100].UCID,800);
                         nrg->players[PLN-100].Energy += 8000;
 
                         send_mtc(players[PLN-100].UCID,msg->message[0][1604]);
@@ -687,7 +687,7 @@ void RCPizza::pizza_mso ()
             if (players[i].WorkType == WK_PIZZA)
             {
                 //if (players[i].WorkAccept == 0)
-                   // players[i].WorkAccept =1;
+                // players[i].WorkAccept =1;
             }
             take(&players[i]);
         }
@@ -704,8 +704,8 @@ void RCPizza::pizza_mso ()
             if ( (players[j].UCID !=0) and (players[j].UCID != players[i].UCID) and (players[j].WorkType == WK_PIZZA) and (players[j].WorkAccept == 0))
             {
                 //cout << players[i].UName << " accepted\n";
-                 send_mtc(players[j].UCID,msg->message[0][2201]);
-                 send_mtc(players[j].UCID,msg->message[0][2202]);
+                send_mtc(players[j].UCID,msg->message[0][2201]);
+                send_mtc(players[j].UCID,msg->message[0][2202]);
                 players[j].WorkAccept =1;
                 players[j].WorkPlayerAccept = 100 + i;
                 players[j].WorkZone =0;
