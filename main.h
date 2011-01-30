@@ -265,7 +265,7 @@ struct global_info
     /**  **/
 
     /** IS_STA **/
-     /** IS_RST **/
+    /** IS_RST **/
     word	Node_Finish;		// node index - finish line
     word	Node_Split1;		// node index - split 1 byte = 1
     word	Node_Split2;		// node index - split 2 byte = 2

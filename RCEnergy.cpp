@@ -131,42 +131,42 @@ void RCEnergy::readconfig(char *Track)
     readf.close();
 }
 
-/** Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸-Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚ÐµÐ»Ð¸ Ð¾ÑÐ½Ð¾Ð²Ð½Ñ‹Ñ… Ñ„ÑƒÐ½Ñ†ÐºÐ¸Ð¹ ÑÐ´Ñ€Ð° **/
+/** ôóíêöèè-ïîâòîðèòåëè îñíîâíûõ ôóíöêèé ÿäðà **/
 
 void RCEnergy::next_packet()
 {
-     switch (insim->peek_packet())
-        {
-        case ISP_MSO:
-            energy_mso();
-            break;
+    switch (insim->peek_packet())
+    {
+    case ISP_MSO:
+        energy_mso();
+        break;
 
-        case ISP_NPL:
-            energy_npl();
-            break;
+    case ISP_NPL:
+        energy_npl();
+        break;
 
-        case ISP_NCN:
-            energy_ncn();
-            break;
+    case ISP_NCN:
+        energy_ncn();
+        break;
 
-        case ISP_CNL:
-            energy_cnl();
-            break;
+    case ISP_CNL:
+        energy_cnl();
+        break;
 
-        case ISP_PLL:
-            energy_pll();
-            break;
+    case ISP_PLL:
+        energy_pll();
+        break;
 
-        case ISP_PLP:
-            energy_plp();
-            break;
+    case ISP_PLP:
+        energy_plp();
+        break;
 
-        case ISP_CPR:
-            energy_crp();
-            break;
+    case ISP_CPR:
+        energy_crp();
+        break;
 
 
-        }
+    }
 
 
 }
@@ -228,25 +228,25 @@ void RCEnergy::energy_ncn()
     {
         ifstream readf (file,ios::in);
 
-    while (readf.good())
-    {
-        char str[128];
-        readf.getline(str,128);
-        if (strlen(str) > 0)
+        while (readf.good())
         {
-            // Get Cash
-            if (strncmp("Energy=",str,7)==0)
+            char str[128];
+            readf.getline(str,128);
+            if (strlen(str) > 0)
             {
-                //cout << "We Find Energy" << endl;
-                players[i].Energy = atoi(str+7);
+                // Get Cash
+                if (strncmp("Energy=",str,7)==0)
+                {
+                    //cout << "We Find Energy" << endl;
+                    players[i].Energy = atoi(str+7);
+                }
+                // Get Credits
+                // Get Deposits
             }
-            // Get Credits
-            // Get Deposits
         }
-    }
 
 
-    readf.close();
+        readf.close();
     }
     FindClose(fff);
 
@@ -268,8 +268,8 @@ void RCEnergy::energy_npl()
         {
 
             char Text[64];
-                    strcpy(Text, "/spec ");
-                    strcat (Text, players[i].UName);
+            strcpy(Text, "/spec ");
+            strcat (Text, players[i].UName);
 
 
             players[i].PLID = pack_npl->PLID;
@@ -354,19 +354,19 @@ void RCEnergy::energy_save (int j)
 {
     // Find player and set the whole player struct he was using to 0
 
-            char file[255];
+    char file[255];
 
-            strcpy(file,RootDir);
-            strcat(file,"data\\RCEnergy\\");
-            strcat(file,players[j].UName);
-            strcat(file,".txt");
+    strcpy(file,RootDir);
+    strcat(file,"data\\RCEnergy\\");
+    strcat(file,players[j].UName);
+    strcat(file,".txt");
 
-            ofstream writef (file,ios::out);
-            writef << "Energy=" << players[j].Energy << endl;
-            writef.close();
+    ofstream writef (file,ios::out);
+    writef << "Energy=" << players[j].Energy << endl;
+    writef.close();
 
 
-    }
+}
 
 
 
@@ -539,16 +539,17 @@ void RCEnergy::energy_mso ()
         //out << players[i].UName << " send !coffee" << endl;
         if (((players[i].Zone == 1) and (players[i].Energy < 500)) or (players[i].Zone == 3))
         {
-             if (bank->players[i].Cash > 50)
-             {
-                 players[i].Energy += 500;
-                 bank->players[i].Cash -= 50;
-                 bank->BankFond +=50;
-             }
-             else
-             {
-                 send_mtc(players[i].UCID,msg->message[0][2001]);
-             }
+            if (bank->GetCash(players[i].UCID) > 50)
+            {
+                players[i].Energy += 500;
+                bank->RemCash(players[i].UCID,50);
+                bank->AddToBank(50);
+
+            }
+            else
+            {
+                send_mtc(players[i].UCID,msg->message[0][2001]);
+            }
         }
         else
         {
@@ -561,16 +562,16 @@ void RCEnergy::energy_mso ()
         //out << players[i].UName << " send !redbull" << endl;
         if (((players[i].Zone == 1) and (players[i].Energy < 500)) or (players[i].Zone == 3))
         {
-             if (bank->players[i].Cash > 100)
-             {
-                 players[i].Energy += 1000;
-                 bank->players[i].Cash -= 100;
-                 bank->BankFond += 100;
-             }
-             else
-             {
-                 send_mtc(players[i].UCID,msg->message[0][2001]);
-             }
+            if (bank->GetCash(players[i].UCID) > 100)
+            {
+                players[i].Energy += 1000;
+                bank->RemCash(players[i].UCID,100);
+                bank->AddToBank(100);
+            }
+            else
+            {
+                send_mtc(players[i].UCID,msg->message[0][2001]);
+            }
         }
         else
         {
@@ -581,6 +582,81 @@ void RCEnergy::energy_mso ()
 
 }
 
+void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = splayer->UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    //
+    pack.ClickID = 209;
+    pack.BStyle = 32;
+    pack.L = 92;
+    pack.T = 5;
+    pack.W = 8;
+    pack.H = 4;
+    if (splayer->Zone == 3)
+    {
+        strcpy(pack.Text,"^2");
+    }
+    else
+    {
+        strcpy(pack.Text,"^3");
+    }
+    strcat(pack.Text,msg->message[0][100]);
+    insim->send_packet(&pack);
+    //
+    pack.ClickID = 208;
+    pack.BStyle = 32+64;
+    pack.L = 100;
+    pack.T = 5;
+    pack.W = 26;
+    pack.H = 3;
+    //int life = 100;
+    strcpy(pack.Text,"^7");
+
+    int nrg = splayer->Energy/50 ;
+
+    int nrgend = 200 - splayer->Energy/50;
+
+    if (nrg <= 40 and nrg > 0)
+        strcat(pack.Text,"^1");
+    else if (nrg <= 140 and nrg > 40)
+        strcat(pack.Text,"^3");
+    else
+        strcat(pack.Text,"^2");
+
+    for (int i=0; i< nrg; i++)
+    {
+        /*if (i == 1)
+            strcat(pack.Text,"^1");
+        if (i == 20)
+            strcat(pack.Text,"^3");
+        if (i == 70)
+            strcat(pack.Text,"^2");*/
+
+        strcat(pack.Text,"|");
+    }
+
+    if (nrgend > 0)
+    {
+        strcat(pack.Text,"^7");
+
+        for (int i=0; i<nrgend; i++)
+        {
+            strcat(pack.Text,"|");
+        }
+
+    }
+
+    insim->send_button(&pack);
+
+}
+/*
 void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
 {
     struct IS_BTN pack;
@@ -634,7 +710,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
 
     insim->send_packet(&pack);
 }
-
+*/
 int RCEnergy::check_pos(struct EnergyPlayer *splayer)
 {
     int PLX = splayer->Info.X/65536;

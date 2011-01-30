@@ -4,3 +4,15 @@ mso for save
 add file in RCMessage lang.
 
 if day of the week monday call "TrackRotation()"
+
+
+Банк работоспособен. В магазине доделать покупку с привязкой к лицензии. доделать продажу, начать делать тюнинг с завязкой на лицензяя
+
+XFG - 1
+ECU - 2
+TRB - 3
+WHT - 4
+
+XRG - 5
+
+lvl >= car[i].id * 5

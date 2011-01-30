@@ -4,6 +4,29 @@ using namespace std;
 
 time_t  btime;
 
+void *bankthread (void *arg)
+{
+    RCBank *bnk = (RCBank *)arg; //struct our RCBank class in thread
+    if(!bnk)
+    {
+        printf ("Can't start bankthread");
+        return 0;
+    }
+
+    cout << "\tthread \"Bank\" started" << endl;
+
+
+    for (;;)
+    {
+        for (int i=0; i<MAX_PLAYERS; i++)
+        {
+            if (bnk->GetPlayerUCID(i) != 0)
+                bnk->btn_cash(i);
+        }
+        Sleep(2000);
+    }
+}
+
 
 RCBank::RCBank()
 {
@@ -15,8 +38,75 @@ RCBank::~RCBank()
 
 }
 
-int RCBank::init(char *dir,void *CInSim, void *Message)
+byte RCBank::GetPlayerUCID (int i)
 {
+    if (players[i].UCID != 0)
+        return players[i].UCID;
+
+    return 0;
+}
+
+int RCBank::GetCash(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            return (int)players[i].Cash;
+        }
+    }
+    return 0;
+}
+
+bool    RCBank::AddCash(byte UCID, int Cash)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Cash += Cash;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool    RCBank::RemCash(byte UCID, int Cash)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Cash -= Cash;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool RCBank::AddToBank(int Cash)
+{
+    BankFond += Cash;
+    return true;
+}
+
+bool RCBank::RemFrBank(int Cash)
+{
+    BankFond -= Cash;
+    return true;
+}
+
+int RCBank::init(char *dir,void *CInSim, void *Message,void *Bank)
+{
+    pthread_t tid; // Thread ID
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
+    pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
+
+    if (pthread_create(&tid,&attr,bankthread,Bank) < 0)
+        return -1;
+
     strcpy(RootDir,dir);
 
     insim = (CInsim *)CInSim;
@@ -41,32 +131,32 @@ int RCBank::init(char *dir,void *CInSim, void *Message)
 void RCBank::next_packet()
 {
     switch (insim->peek_packet())
-        {
-        case ISP_NPL:
-            bank_npl();
-            break;
+    {
+    case ISP_NPL:
+        bank_npl();
+        break;
 
-        case ISP_NCN:
-            bank_ncn();
-            break;
+    case ISP_NCN:
+        bank_ncn();
+        break;
 
-        case ISP_CNL:
-            bank_cnl();
-            break;
+    case ISP_CNL:
+        bank_cnl();
+        break;
 
-        case ISP_PLL:
-            bank_pll();
-            break;
+    case ISP_PLL:
+        bank_pll();
+        break;
 
-        case ISP_PLP:
-            bank_plp();
-            break;
+    case ISP_PLP:
+        bank_plp();
+        break;
 
-        case ISP_CPR:
-            bank_crp();
-            break;
+    case ISP_CPR:
+        bank_crp();
+        break;
 
-        }
+    }
 }
 
 void RCBank::bank_ncn()
@@ -120,7 +210,7 @@ void RCBank::bank_ncn()
     {
         printf("Can't find %s\n Create File for user",file);
         players[i].Cash = 1000;
-        bank_save(i);
+        bank_save(players[i].UCID);
     }
     else
     {
@@ -236,26 +326,33 @@ void RCBank::bank_cnl ()
     }
 }
 
-void RCBank::bank_save (int j)
+void RCBank::bank_save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
 
-    char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"data\\RCBank\\");
-    strcat(file,players[j].UName);
-    strcat(file,".txt");
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
 
-    ofstream writef (file,ios::out);
-    writef << "Cash=" << players[j].Cash << endl;
-    writef.close();
+            char file[255];
+            strcpy(file,RootDir);
+            strcat(file,"data\\RCBank\\");
+            strcat(file,players[i].UName);
+            strcat(file,".txt");
 
-    char fileb[255];
-    strcpy(fileb,RootDir);
-    strcat(fileb,"data\\RCBank\\_RC_Bank_Capital_.txt");
-    ofstream writeb (fileb,ios::out);
-    writeb << "Capital=" << BankFond << endl;
-    writeb.close();
+            ofstream writef (file,ios::out);
+            writef << "Cash=" << players[i].Cash << endl;
+            writef.close();
+
+            char fileb[255];
+            strcpy(fileb,RootDir);
+            strcat(fileb,"data\\RCBank\\_RC_Bank_Capital_.txt");
+            ofstream writeb (fileb,ios::out);
+            writeb << "Capital=" << BankFond << endl;
+            writeb.close();
+        }
+    }
 
 
 

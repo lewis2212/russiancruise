@@ -13,9 +13,9 @@
 
 class RCMessage
 {
-     private:
+private:
 
-     char RootDir[MAX_PATH];
+    char RootDir[MAX_PATH];
 
 
 public:

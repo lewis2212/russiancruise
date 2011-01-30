@@ -48,6 +48,10 @@ private:
     void crp();
     void mso();
 
+    //
+
+    void btn_dl(struct DLPlayer *splayer);
+
     // функции-повторители основных фунцкий ядра
     void save(struct DLPlayer *splayer);
     void send_bfn(byte UCID, byte ClickID);
@@ -60,6 +64,13 @@ private:
 public:
     RCDL::RCDL();
     RCDL::~RCDL();
+
+    //
+
+    int     GetLVL(byte UCID);
+    int     GetSkill(byte UCID);
+    bool    AddSkill(byte UCID);
+    bool    RemSkill(byte UCID);
 
     byte inited;
 
