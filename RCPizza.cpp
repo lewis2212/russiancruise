@@ -226,7 +226,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
     }
     else
     {
-        send_mtc(splayer->UCID,msg->message[0][4203]);
+        send_mtc(splayer->UCID,msg->message[0][4002]);
     }
 }
 
@@ -586,7 +586,10 @@ void RCPizza::pizza_mci ()
                         else
                             send_mtc(players[j].UCID,msg->message[0][1602]); // undeal
                         if (players[j].WorkAccept != 0)
-                            send_mtc(players[j].UCID,msg->message[0][1603]); // take
+                            {
+                                send_mtc(players[j].UCID,msg->message[0][1603]); // take
+                                take(&players[j]);
+                            }
 
                     }
                 }
@@ -613,14 +616,9 @@ void RCPizza::pizza_mci ()
                     if ( Check_Pos(4,PLX,PLY,X,Y))
                     {
                         done(&players[j]);
-                        /** TODO: THINK ABOUT THIS**/
                         bank->RemCash(players[PLN-100].UCID,800);
                         nrg->players[PLN-100].Energy += 8000;
-
                         send_mtc(players[PLN-100].UCID,msg->message[0][1604]);
-
-
-
                     }
                 }
 
@@ -741,7 +739,7 @@ void RCPizza::btn_work (struct PizzaPlayer *splayer)
     pack.TypeIn = 0;
     pack.ClickID = 210;
     pack.BStyle = 32;
-    pack.L = 148;
+    pack.L = 136;
     pack.T = 1;
     pack.W = 10;
     pack.H = 8;
@@ -783,9 +781,9 @@ void RCPizza::btn_destination (struct PizzaPlayer *splayer)
     pack.TypeIn = 0;
     pack.ClickID = 211;
     pack.BStyle = 32;
-    pack.L = 100;
-    pack.T = 9;
-    pack.W = 48;
+    pack.L = 85;
+    pack.T = 15;
+    pack.W = 50;
     pack.H = 4;
 
     strcpy(pack.Text,splayer->WorkDest);

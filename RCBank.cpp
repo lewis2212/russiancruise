@@ -319,7 +319,7 @@ void RCBank::bank_cnl ()
             {
                 //players[i].cash += 500;
             }
-            bank_save(i);
+            bank_save(players[i].UCID);
             memset(&players[i],0,sizeof(struct BankPlayer));
             break;
         }

@@ -8,23 +8,30 @@ Russian Cruise by TurboSnail
 
 /**
 
-xfg-1
-xrg-2
-lx4-3
-lx6-4
-rb4-5
-fxo-6
-xrt-7
-mrt-8
+tunbyte
+ecu     1
+trb     2
+wht     4
+abs     8
+skin    16
 
-uf1-9
-rac-10
-fz5-11
-ufr-12
-xfr-13
-fxr-14
-xrr-15
-fzr-16
+1;XFG;80000
+2;XRG;120000
+3;LX4;300000
+4;LX6;350000
+5;RB4;150000
+6;FXO;180000
+7;XRT;220000
+8;MRT;55000
+9;VWS;9999999
+11;UF1;30000
+12;RAC;350000
+13;FZ5;300000
+14;UFR;380000
+15;XFR;420000
+16;FXR;450000
+17;XRR;480000
+18;FZR;500000
 
 Zones:
 0- no works
@@ -34,7 +41,8 @@ Zones:
 buttons ClickId's:
 
 1-49  - users
-50- 79 - cars
+50-59 btn_panel
+60- 79 - pogonya users
 80-99 - tuning
 100 149 - info panel
 {
@@ -84,7 +92,7 @@ using namespace std;
 
 
 
-#define IS_PRODUCT_NAME "Cruise v1.1.9"
+#define IS_PRODUCT_NAME "Cruise v1.1.11"
 #define MAX_CARS 30
 #define MAX_FINES 100
 
@@ -255,9 +263,9 @@ struct global_info
 {
     struct  player players[MAX_PLAYERS];     // Array of players
     byte    Sp1;
-    struct  cars car[20];                    // Array of cars (need for shop)
+    struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
     byte    Sp2;
-    struct  fine fines[100];                 // Array of fines (for cops)
+    struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
     byte    Sp3;
     /** Bad words **/
     int     WordsCount;

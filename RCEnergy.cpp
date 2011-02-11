@@ -350,20 +350,26 @@ void RCEnergy::energy_cnl ()
     }
 }
 
-void RCEnergy::energy_save (int j)
+void RCEnergy::energy_save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
+     for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
 
     char file[255];
 
     strcpy(file,RootDir);
     strcat(file,"data\\RCEnergy\\");
-    strcat(file,players[j].UName);
+    strcat(file,players[i].UName);
     strcat(file,".txt");
 
     ofstream writef (file,ios::out);
-    writef << "Energy=" << players[j].Energy << endl;
+    writef << "Energy=" << players[i].Energy << endl;
     writef.close();
+        }
+    }
 
 
 }
@@ -580,6 +586,13 @@ void RCEnergy::energy_mso ()
 
     }
 
+    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0 )
+    {
+        //cout << players[i].UName << " send !save" << endl;
+        energy_save(i);
+
+    }
+
 }
 
 void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
@@ -592,12 +605,22 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     pack.UCID = splayer->UCID;
     pack.Inst = 0;
     pack.TypeIn = 0;
-    //
-    pack.ClickID = 209;
+    // bg
+    pack.ClickID = 207;
     pack.BStyle = 32;
-    pack.L = 92;
-    pack.T = 5;
-    pack.W = 8;
+    pack.L = 100;
+    pack.T = 1;
+    pack.W = 35;
+    pack.H = 4;
+    strcat(pack.Text,"");
+    insim->send_packet(&pack);
+
+
+    pack.ClickID = 209;
+    pack.BStyle = 1;
+    pack.L = 100;
+    pack.T = 1;
+    pack.W = 7;
     pack.H = 4;
     if (splayer->Zone == 3)
     {
@@ -605,17 +628,17 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     }
     else
     {
-        strcpy(pack.Text,"^3");
+        strcpy(pack.Text,"^1");
     }
     strcat(pack.Text,msg->message[0][100]);
     insim->send_packet(&pack);
     //
     pack.ClickID = 208;
-    pack.BStyle = 32+64;
-    pack.L = 100;
-    pack.T = 5;
+    pack.BStyle = 64;
+    pack.L = 107;
+    pack.T = 2;
     pack.W = 26;
-    pack.H = 3;
+    pack.H = 2;
     //int life = 100;
     strcpy(pack.Text,"^7");
 
@@ -632,13 +655,6 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
 
     for (int i=0; i< nrg; i++)
     {
-        /*if (i == 1)
-            strcat(pack.Text,"^1");
-        if (i == 20)
-            strcat(pack.Text,"^3");
-        if (i == 70)
-            strcat(pack.Text,"^2");*/
-
         strcat(pack.Text,"|");
     }
 

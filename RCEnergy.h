@@ -76,7 +76,7 @@ public:
 
 
     // функции
-    void energy_save(int j);
+    void energy_save(byte UCID);
     void btn_energy (struct EnergyPlayer *splayer);
 
     void send_bfn(byte UCID, byte ClickID);

@@ -171,8 +171,8 @@ void RCDL::ncn()
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf("Can't find %s\n Create File for user",file);
-        players[i].LVL ++;
-        save(&players[i]);
+        players[i].LVL = 0;
+        save(players[i].UCID);
     }
     else
     {
@@ -274,7 +274,7 @@ void RCDL::cnl()
         if (players[i].UCID == pack_cnl->UCID)
         {
             /** save file**/
-            save(&players[i]);
+            save(players[i].UCID);
 
             memset(&players[i],0,sizeof(struct DLPlayer));
             break;
@@ -331,25 +331,35 @@ void RCDL::mso()
         cout << players[i].UName << " send !save" << endl;
 
 
-        save(&players[i]);
+        save(players[i].UCID);
 
     }
 }
 
-void RCDL::save (struct DLPlayer *splayer)
+void RCDL::save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
+
+     for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
 
     char file[255];
     strcpy(file,RootDir);
     strcat(file,"data\\RCDrivingLicense\\");
-    strcat(file,splayer->UName);
+    strcat(file,players[i].UName);
     strcat(file,".txt");
 
     ofstream writef (file,ios::out);
-    writef << "LVL=" << splayer->LVL << endl;
-    writef << "Skill=" << splayer->Skill << endl;
+    writef << "LVL=" << players[i].LVL << endl;
+    writef << "Skill=" << players[i].Skill << endl;
     writef.close();
+
+    break;
+
+        }
+    }
 
 }
 
@@ -402,7 +412,7 @@ void RCDL::mci()
 
                 /** next lvl **/
 
-                float nextlvl = (pow(players[j].LVL,2)*0.5+800)*1000;
+                float nextlvl = (pow(players[j].LVL,2)*0.5+100)*1000;
 
                 if (players[j].Skill > nextlvl)
                 {
@@ -410,7 +420,7 @@ void RCDL::mci()
                     players[j].Skill = 0;
                     char Msg[64];
                     sprintf(Msg,"User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-                    send_mst(Msg);
+                    //send_mst(Msg);
                 }
 
                 /** buttons **/
@@ -439,44 +449,45 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.ClickID = 230;
     pack.BStyle = 32;
     pack.L = 100;
-    pack.T = 10;
+    pack.T = 5;
     pack.W = 35;
-    pack.H = 9;
+    pack.H = 8;
     strcat(pack.Text,"");
     insim->send_packet(&pack);
     // LVL
     pack.ClickID = 231;
     pack.BStyle = 64;
     pack.L = 101;
-    pack.T = 11;
+    pack.T = 5;
     pack.W = 33;
-    pack.H = 3;
+    pack.H = 4;
     //int life = 100;
-    sprintf(pack.Text,"^7 Driver License Level: %d", splayer->LVL);
+    sprintf(pack.Text,"^7^CDrive Level: %d", splayer->LVL);
     insim->send_button(&pack);
 
     pack.ClickID = 232;
     pack.BStyle = 64;
     pack.L = 101;
-    pack.T = 15;
-    pack.W = 6;
-    pack.H = 3;
+    pack.T = 9;
+    pack.W = 33;
+    pack.H = 4;
     //int life = 100;
-    sprintf(pack.Text,"^7Skill");
+    sprintf(pack.Text,"^7^CSkill");
     insim->send_button(&pack);
 
     pack.ClickID = 233;
     pack.BStyle = 1;
     pack.L = 107;
-    pack.T = 15;
+    pack.T = 10;
     pack.W = 26;
-    pack.H = 3;
+    pack.H = 2;
 
-    float nextlvl = (pow(splayer->LVL,2)*0.5+800)*1000;
+    float nextlvl = (pow(splayer->LVL,2)*0.5+100)*1000;
 
+    char Text[64];
     int skl = (splayer->Skill/nextlvl)*100;
 
-    // printf("User:%s LVL=%d \tSkill=%d \n",splayer->UName, splayer->LVL,skl);
+    sprintf(Text,"^4|^7 %s take new level %d",splayer->PName, splayer->LVL);
 
     int sklend = 100 - skl;
     strcpy(pack.Text,"^2");
