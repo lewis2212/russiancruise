@@ -53,7 +53,7 @@ private:
     void btn_dl(struct DLPlayer *splayer);
 
     // функции-повторители основных фунцкий ядра
-    void save(struct DLPlayer *splayer);
+
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
@@ -66,6 +66,7 @@ public:
     RCDL::~RCDL();
 
     //
+    void save(byte UCID);
 
     int     GetLVL(byte UCID);
     int     GetSkill(byte UCID);
