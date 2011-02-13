@@ -83,7 +83,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
     word	Flags;		// Bit flags for options (see below)
 
     byte	Sp0;		// 0
-    byte	Prefix;		// Special host message prefix character
+    byte	Prefix;		// Special host GetMessage prefix character
     word	Interval;	// Time in ms between NLP or MCI (0 = none)
 
     char	Admin[16];	// Admin password (if set in LFS)
@@ -120,7 +120,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
 
 // NOTE 4) Prefix field, if set when initialising InSim on a host :
 
-// Messages typed with this prefix will be sent to your InSim program
+// GetMessages typed with this prefix will be sent to your InSim program
 // on the host (in IS_MSO) and not displayed on anyone's screen.
 
 
@@ -140,10 +140,10 @@ enum // the second byte of any packet is one of these
     ISP_SCC,		//  8 - instruction		: set car camera
     ISP_CPP,		//  9 - both ways		: cam pos pack
     ISP_ISM,		// 10 - info			: start multiplayer
-    ISP_MSO,		// 11 - info			: message out
-    ISP_III,		// 12 - info			: hidden /i message
-    ISP_MST,		// 13 - instruction		: type message or /command
-    ISP_MTC,		// 14 - instruction		: message to a connection
+    ISP_MSO,		// 11 - info			: GetMessage out
+    ISP_III,		// 12 - info			: hidden /i GetMessage
+    ISP_MST,		// 13 - instruction		: type GetMessage or /command
+    ISP_MTC,		// 14 - instruction		: GetMessage to a connection
     ISP_MOD,		// 15 - instruction		: set screen mode
     ISP_VTN,		// 16 - info			: vote notification
     ISP_RST,		// 17 - info			: race start
@@ -168,8 +168,8 @@ enum // the second byte of any packet is one of these
     ISP_REO,		// 36 - both ways		: reorder (info or instruction)
     ISP_NLP,		// 37 - info			: node and lap packet
     ISP_MCI,		// 38 - info			: multi car info
-    ISP_MSX,		// 39 - instruction		: type message
-    ISP_MSL,		// 40 - instruction		: message to local computer
+    ISP_MSX,		// 39 - instruction		: type GetMessage
+    ISP_MSL,		// 40 - instruction		: GetMessage to local computer
     ISP_CRS,		// 41 - info			: car reset
     ISP_BFN,		// 42 - both ways		: delete buttons / receive button requests
     ISP_AXI,		// 43 - info			: autocross layout information
@@ -402,7 +402,7 @@ struct IS_SFP // State Flags Pack
     byte	Sp3;		// spare
 };
 
-// Other states must be set by using keypresses or messages (see below)
+// Other states must be set by using keypresses or GetMessages (see below)
 
 
 // SCREEN MODE
@@ -430,17 +430,17 @@ struct IS_MOD // MODe : send to LFS to change screen mode
 // If Width and Height are both zero, LFS will switch to windowed mode.
 
 
-// TEXT MESSAGES AND KEY PRESSES
+// TEXT GetMessageS AND KEY PRESSES
 // ==============================
 
-// You can send 64-byte text messages to LFS as if the user had typed them in.
-// Messages that appear on LFS screen (up to 128 bytes) are reported to the
+// You can send 64-byte text GetMessages to LFS as if the user had typed them in.
+// GetMessages that appear on LFS screen (up to 128 bytes) are reported to the
 // external program.  You can also send simulated keypresses to LFS.
 
-// MESSAGES OUT (FROM LFS)
+// GetMessageS OUT (FROM LFS)
 // ------------
 
-struct IS_MSO // MSg Out - system messages and user messages
+struct IS_MSO // MSg Out - system GetMessages and user GetMessages
 {
     byte	Size;		// 136
     byte	Type;		// ISP_MSO
@@ -459,16 +459,16 @@ struct IS_MSO // MSg Out - system messages and user messages
 
 enum
 {
-    MSO_SYSTEM,			// 0 - system message
-    MSO_USER,			// 1 - normal visible user message
-    MSO_PREFIX,			// 2 - hidden message starting with special prefix (see ISI)
-    MSO_O,				// 3 - hidden message typed on local pc with /o command
+    MSO_SYSTEM,			// 0 - system GetMessage
+    MSO_USER,			// 1 - normal visible user GetMessage
+    MSO_PREFIX,			// 2 - hidden GetMessage starting with special prefix (see ISI)
+    MSO_O,				// 3 - hidden GetMessage typed on local pc with /o command
     MSO_NUM
 };
 
-// NOTE : Typing "/o MESSAGE" into LFS will send an IS_MSO with UserType = MSO_O
+// NOTE : Typing "/o GetMessage" into LFS will send an IS_MSO with UserType = MSO_O
 
-struct IS_III // InsIm Info - /i message from user to host's InSim
+struct IS_III // InsIm Info - /i GetMessage from user to host's InSim
 {
     byte	Size;		// 72
     byte	Type;		// ISP_III
@@ -483,10 +483,10 @@ struct IS_III // InsIm Info - /i message from user to host's InSim
     char	Msg[64];
 };
 
-// MESSAGES IN (TO LFS)
+// GetMessageS IN (TO LFS)
 // -----------
 
-struct IS_MST // MSg Type - send to LFS to type message or command
+struct IS_MST // MSg Type - send to LFS to type GetMessage or command
 {
     byte	Size;		// 68
     byte	Type;		// ISP_MST
@@ -506,12 +506,12 @@ struct IS_MSX // MSg eXtended - like MST but longer (not for commands)
     char	Msg[96];	// last byte must be zero
 };
 
-struct IS_MSL // MSg Local - message to appear on local computer only
+struct IS_MSL // MSg Local - GetMessage to appear on local computer only
 {
     byte	Size;		// 132
     byte	Type;		// ISP_MSL
     byte	ReqI;		// 0
-    byte	Sound;		// sound effect (see Message Sounds below)
+    byte	Sound;		// sound effect (see GetMessage Sounds below)
 
     char	Msg[128];	// last byte must be zero
 };
@@ -531,13 +531,13 @@ struct IS_MTC // Msg To Connection - hosts only - send to a connection or a play
     char	Msg[64];	// last byte must be zero
 };
 
-// Message Sounds (for Sound byte)
+// GetMessage Sounds (for Sound byte)
 
 enum
 {
     SND_SILENT,
-    SND_MESSAGE,
-    SND_SYSMESSAGE,
+    SND_GetMessage,
+    SND_SYSGetMessage,
     SND_INVALIDKEY,
     SND_ERROR,
     SND_NUM

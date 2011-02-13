@@ -26,6 +26,7 @@ struct DLPlayer
     byte    PLID;                  // PLayer ID
     u_int     LVL;
     u_int     Skill;
+    byte    mcicount;
 };
 
 
@@ -80,7 +81,7 @@ public:
 
     struct  DLPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message);
+    int init(char *dir,void *CInSim, void *GetMessage);
 };
 
 #endif

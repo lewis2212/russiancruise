@@ -96,7 +96,7 @@ bool RCBank::RemFrBank(int Cash)
     return true;
 }
 
-int RCBank::init(char *dir,void *CInSim, void *Message,void *Bank)
+int RCBank::init(char *dir,void *CInSim, void *GetMessage,void *Bank)
 {
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
@@ -116,7 +116,7 @@ int RCBank::init(char *dir,void *CInSim, void *Message,void *Bank)
         return -1;
     }
 
-    msg = (RCMessage *)Message;
+    msg = (RCMessage *)GetMessage;
     if(!msg)
     {
         cout << "Can't struct RCMessage class" << endl;

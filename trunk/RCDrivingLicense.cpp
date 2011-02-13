@@ -61,7 +61,7 @@ bool    RCDL::RemSkill(byte UCID)
     return false;
 }
 
-int RCDL::init(char *dir,void *CInSim, void *Message)
+int RCDL::init(char *dir,void *CInSim, void *GetMessage)
 {
     strcpy(RootDir,dir);
 
@@ -72,7 +72,7 @@ int RCDL::init(char *dir,void *CInSim, void *Message)
         return -1;
     }
 
-    msg = (RCMessage *)Message;
+    msg = (RCMessage *)GetMessage;
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
@@ -306,10 +306,10 @@ void RCDL::mso()
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    // The chat message is sent by the host, don't do anything
+    // The chat GetMessage is sent by the host, don't do anything
     if (pack_mso->UCID == 0)
     {
-        //cout << "(Chat message by host: " << pack_mso->Msg + ((unsigned char)pack_mso->TextStart) << ")" << endl;
+        //cout << "(Chat GetMessage by host: " << pack_mso->Msg + ((unsigned char)pack_mso->TextStart) << ")" << endl;
         return;
 
     }
@@ -426,7 +426,16 @@ void RCDL::mci()
                 /** buttons **/
 
                 //printf("User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-                btn_dl(&players[j]);
+                if (players[j].mcicount == 10)
+                {
+                    btn_dl(&players[j]);
+                    players[j].mcicount = 0;
+                }
+                else
+                {
+                    players[j].mcicount ++;
+                }
+
 
 
             }
@@ -544,49 +553,3 @@ void RCDL::send_bfn (byte UCID, byte ClickID)
     pack.ClickID = ClickID;
     insim->send_packet(&pack);
 };
-/*
-void RCDL::btn_lic (struct DLPlayer *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    //
-    pack.ClickID = 212;
-    pack.BStyle = 32;
-    pack.L = 92;
-    pack.T = 5;
-    pack.W = 8;
-    pack.H = 4;
-
-
-    pack.ClickID = 213;
-    pack.BStyle = 32+64;
-    pack.L = 100;
-    pack.T = 5;
-    pack.W = 48;
-    pack.H = 4;
-    //int life = 100;
-    strcpy(pack.Text,"");
-
-    //cout << "nrg = " << splayer->Energy/100 << endl;
-
-    for (int i=1; i<=splayer->Energy/100; i++)
-    {
-        if (i == 1)
-            strcat(pack.Text,"^1");
-        if (i == 20)
-            strcat(pack.Text,"^3");
-        if (i == 70)
-            strcat(pack.Text,"^2");
-
-        strcat(pack.Text,"|");
-    }
-
-    insim->send_packet(&pack);
-}
-*/

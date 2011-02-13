@@ -82,7 +82,7 @@ public:
 
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message,void *Bank);
+    int init(char *dir,void *CInSim, void *GetMessage,void *Bank);
     void readconfig(char *Track);
     void bank_save(byte UCID);
     // функции-повторители основных фунцкий ядра
