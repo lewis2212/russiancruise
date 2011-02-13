@@ -2568,6 +2568,11 @@ void case_mso ()
 
     if (strncmp(Msg, "!tun", 4) == 0)
     {
+        if (ginfo.players[i].Zone != 2)
+        {
+            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
+            return;
+        }
         char * comand;
         char * id;
 
@@ -2690,7 +2695,7 @@ void case_mso ()
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Need %d RUR.",needcash);
+                sprintf(msg,"^C^2| ^7Вам нужно %d RUR.",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
             }
 
@@ -2699,8 +2704,13 @@ void case_mso ()
     }
 
 
-    if (strncmp(Msg, "!untun", 4) == 0)
+    if (strncmp(Msg, "!untun", 6) == 0)
     {
+        if (ginfo.players[i].Zone != 2)
+        {
+            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
+            return;
+        }
         char * comand;
         char * id;
 
@@ -2716,7 +2726,7 @@ void case_mso ()
 
         if (strcmp(id,"ECU")==0)
         {
-            int sellcash = (5000 + GetCarID(ginfo.players[i].CName)*1000)*8/10;
+            int sellcash = (5000 + (GetCarID(ginfo.players[i].CName)-1)*1000)*8/10;
             //!lvl
 
             if (ginfo.players[i].CTune&1)
@@ -2736,7 +2746,7 @@ void case_mso ()
 
         else if (strcmp(id,"TRB")==0)
         {
-            int sellcash = (10000 + GetCarID(ginfo.players[i].CName)*10000)*8/10;
+            int sellcash = (10000 + (GetCarID(ginfo.players[i].CName)-1)*10000)*8/10;
             //!lvl
 
             if (ginfo.players[i].CTune&2)
@@ -2756,7 +2766,7 @@ void case_mso ()
 
         else if (strcmp(id,"WHT")==0)
         {
-            int sellcash = (3000 + GetCarID(ginfo.players[i].CName)*1000)*8/10;
+            int sellcash = (3000 + (GetCarID(ginfo.players[i].CName)-1)*1000)*8/10;
             //!lvl
 
             if (ginfo.players[i].CTune&4)
@@ -2780,8 +2790,11 @@ void case_mso ()
 
     if (strncmp(Msg, "!buy", 4) == 0)
     {
-        if (ginfo.players[i].Zone == 2)
+        if (ginfo.players[i].Zone != 2)
         {
+            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
+            return;
+        }
             char * comand;
             char * id;
 
@@ -2810,7 +2823,7 @@ void case_mso ()
 
             if (CarID == MAX_CARS)
             {
-                send_mtc(ginfo.players[i].UCID,"^2| ^7У нас нет такой машины!");
+                send_mtc(ginfo.players[i].UCID,"^C^2| ^7У нас нет такой машины!");
                 return;
             }
 
@@ -2887,20 +2900,24 @@ void case_mso ()
                     strcpy(ginfo.players[i].cars[j].car,id);
                     ginfo.players[i].cars[j].tuning=0;
                     ginfo.players[i].cars[j].dist=0;
-                    send_mtc(ginfo.players[i].UCID,"u buy car");
+                    char msg[64];
+                    sprintf(msg,"^C^2|^7 Вы купили %s",id);
+                    send_mtc(ginfo.players[i].UCID,msg);
                     break;
                 }
 
             }
-        }
-        else
-        {
-            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
-        }
+
+
     }
 
     if (strncmp(Msg, "!sell", 4) == 0)
     {
+       if (ginfo.players[i].Zone != 2)
+        {
+            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][2000]);
+            return;
+        }
         char * comand;
         char * id;
 
@@ -2977,7 +2994,7 @@ void case_mso ()
         }
         else
         {
-            send_mtc(ginfo.players[i].UCID,"cant sell car when you in it");
+            send_mtc(ginfo.players[i].UCID,msg.message[ginfo.players[i].lang_id][1009]);
         }
 
     }
