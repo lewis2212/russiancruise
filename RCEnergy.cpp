@@ -279,8 +279,8 @@ void RCEnergy::energy_npl()
             if ( players[i].Energy < 500 )
             {
 
-                send_mtc(players[i].UCID,msg->message[0][2402]);
-                send_mtc(players[i].UCID,msg->message[0][2403]);
+                send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2402));
+                send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2403));
                 players[i].Zone = 1;
                 players[i].PLID = 0;
                 send_mst(Text);
@@ -499,9 +499,9 @@ void RCEnergy::energy_mci ()
                     char Text[64];
                     strcpy(Text, "/spec ");
                     strcat (Text, players[j].UName);
-                    //send_mtc(players[j].UCID,msg->message[players[j].lang_id][1800]);
-                    //send_mtc(players[j].UCID,msg->message[players[j].lang_id][1801]);
-                    //send_mtc(players[j].UCID,msg->message[players[j].lang_id][1802]);
+                    //send_mtc(players[j].UCID,msg->GetMessage[players[j].lang_id][1800]);
+                    //send_mtc(players[j].UCID,msg->GetMessage[players[j].lang_id][1801]);
+                    //send_mtc(players[j].UCID,msg->GetMessage[players[j].lang_id][1802]);
                     players[j].PLID = 0;
                     players[j].Zone = 1;
                     send_mst(Text);
@@ -554,12 +554,12 @@ void RCEnergy::energy_mso ()
             }
             else
             {
-                send_mtc(players[i].UCID,msg->message[0][2001]);
+                send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2001));
             }
         }
         else
         {
-            send_mtc(players[i].UCID,msg->message[0][2002]);
+            send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2002));
         }
     }
     //!redbule
@@ -576,12 +576,12 @@ void RCEnergy::energy_mso ()
             }
             else
             {
-                send_mtc(players[i].UCID,msg->message[0][2001]);
+                send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2001));
             }
         }
         else
         {
-            send_mtc(players[i].UCID,msg->message[0][2002]);
+            send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2002));
         }
 
     }
@@ -630,7 +630,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     {
         strcpy(pack.Text,"^1");
     }
-    strcat(pack.Text,msg->message[0][100]);
+    strcat(pack.Text,msg->GetMessage(splayer->UCID,100));
     insim->send_packet(&pack);
     //
     pack.ClickID = 208;
@@ -698,7 +698,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     {
         strcpy(pack.Text,"^3");
     }
-    strcat(pack.Text,msg->message[0][100]);
+    strcat(pack.Text,msg->GetMessage[0][100]);
     insim->send_packet(&pack);
     //
     pack.ClickID = 208;

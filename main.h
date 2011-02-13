@@ -198,7 +198,7 @@ struct player
 
     struct  track_info TrackInf;             // Where PitBox and Shop
 
-    //char    message[20000][64];    // Messages !!!!!!!!!!!!!!!!!
+    //char    GetMessage[20000][64];    // GetMessages !!!!!!!!!!!!!!!!!
     char    UName[24];             // Username
     char    PName[24];             // Player name
     //char    Cars[256];             // Avalible Cars

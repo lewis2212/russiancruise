@@ -61,7 +61,7 @@ public:
     struct  place zone;
     struct  EnergyPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank);
+    int init(char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
     void readconfig(char *Track);
     // функции-повторители основных фунцкий ядра
     void next_packet();
