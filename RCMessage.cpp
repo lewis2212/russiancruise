@@ -340,7 +340,7 @@ char* RCMessage::GetMessage(byte UCID, byte MsgID)
             return message[players[i].LangID][MsgID];
         }
     }
-    return "";
+    return "^1ERROR";
 }
 
 void RCMessage::send_mtc (byte UCID,char* Msg)

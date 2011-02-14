@@ -494,7 +494,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     float nextlvl = (pow(splayer->LVL,2)*0.5+100)*1000;
 
     char Text[64];
-    int skl = (splayer->Skill/nextlvl)*100;
+    int skl = int((splayer->Skill/nextlvl)*100);
 
     sprintf(Text,"^4|^7 %s take new level %d",splayer->PName, splayer->LVL);
 
