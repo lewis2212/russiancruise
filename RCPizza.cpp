@@ -23,11 +23,12 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
     //out << pizza_time << endl;
 
     int ok =1;
+    piz->ShopAccepted = false;
 
+    /** вывод кнопки с часиками и скрытие ее если таймер пришел в ноль **/
 
     while (ok > 0)
     {
-        // РІС‹РІРѕРґ РєРЅРѕРїРєРё СЃ С‡Р°СЃРёРєР°РјРё Рё СЃРєСЂС‹С‚РёРµ РµРµ РµСЃР»Рё С‚Р°Р№РјРµСЂ РїСЂРёС€РµР» РІ РЅРѕР»СЊ
         for (int i=0; i<MAX_PLAYERS; i++)
         {
             if (piz->players[i].UCID != 0)
@@ -40,14 +41,18 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                     {
                         piz->send_bfn(piz->players[i].UCID,210);
                         piz->send_bfn(piz->players[i].UCID,211);
+
+                        if (piz->players[i].WorkAccept == 3) // не успел заказать продукты
+                            piz->ShopAccepted = false;
+
                         if (piz->players[i].WorkAccept != 0)
                         {
                             piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,4101));
                             piz->players[i].WorkType = WK_NULL;
                             piz->players[i].WorkAccept = 0;
                             piz->players[i].WorkPlayerAccept = 0;
+                            piz->CarsInWork --;
                         }
-
                     }
                 }
 
@@ -60,8 +65,8 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 
             }
-        } // РєРѕРЅРµС† С†РёРєР»Р° РІС‹РІРѕРґР° РєРЅРѕРїРєРё СЃ С‡Р°СЃРёРєР°РјРё Рё СЃРєСЂС‹С‚РёРµ РµРµ РµСЃР»Рё С‚Р°Р№РјРµСЂ РїСЂРёС€РµР» РІ РЅРѕР»СЊ
-
+        }
+        /** конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль **/
         // cout << piz->ginfo_time - time(&ptime) << endl;
         if ( piz->ginfo_time <= time(&ptime))
         {
@@ -73,27 +78,89 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
             //out << r << endl;
             //out << ginfo_time - time(&ptime) << endl;
 
-            for (int i = 0; i<32; i++)
+            if ((piz->PStore.Muka > 5) && (piz->PStore.Voda > 5) && (piz->PStore.Ovoshi > 5) && (piz->PStore.Cheese > 5))
             {
 
-
-                if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
+                for (int i = 0; i<32; i++)
                 {
-                    //out << piz->players[i].UName << " accepted\n";
 
-                    piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
-                    piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
 
-                    strcpy(piz->players[i].WorkDest,piz->msg->GetMessage(piz->players[i].UCID,2201)+4); // +4 == remove slash
+                    if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
+                    {
+                        //out << piz->players[i].UName << " accepted\n";
 
-                    piz->players[i].WorkAccept =1;
-                    piz->players[i].WorkPlayerAccept =0;
-                    piz->players[i].WorkZone =0;
-                    int worktime = time(&ptime);
-                    piz->players[i].WorkTime = worktime+60*6;
-                    break; // С‡С‚РѕР±С‹ РѕРїРѕРІРµС‰Р°Р» С‚РѕР»СЊРєРѕ РѕРґРЅРѕРіРѕ РёРіСЂРѕРєР°
+                        /** прогон пользователей на предмет заказа **/
+                        int j = 0;
+                        for (j = 0; j<32; j++)
+                        {
+
+
+                            if ( (piz->players[j].UCID !=0) and (piz->players[j].UCID != piz->players[i].UCID) and (piz->players[j].Pizza != 0))
+                            {
+                                //cout << players[i].UName << " accepted\n";
+                                piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
+                                piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
+                                piz->players[i].WorkAccept =1;
+                                piz->players[i].WorkPlayerAccept = 100 + j;
+                                piz->players[i].WorkZone =0;
+                                int worktime = time(&ptime);
+                                piz->players[i].WorkTime = worktime+60*6;
+                                break; // чтобы оповещал только одного игрока
+                            }
+
+                        }
+                        // заплатка чтобы вместо игрока пиццу не вешал
+                        if (j >= 32)
+                        {
+                        	break;
+                        }
+
+
+                        piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
+                        piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
+
+                        strcpy(piz->players[i].WorkDest,piz->msg->GetMessage(piz->players[i].UCID,2201)+4); // +4 == remove slash
+
+                        piz->players[i].WorkAccept =1;
+                        piz->players[i].WorkPlayerAccept =0;
+                        piz->players[i].WorkZone =0;
+                        int worktime = time(&ptime);
+                        piz->players[i].WorkTime = worktime+60*6;
+                        break; // чтобы оповещал только одного игрока
+                    }
+
                 }
+            }
+        }
 
+        /*** проверка склада на наличие продуктов, и если не хватает то просить работника зказать продукты ***/
+
+        if ((piz->PStore.Muka < 10) || (piz->PStore.Voda < 10) || (piz->PStore.Ovoshi < 10) || (piz->PStore.Cheese < 10))
+        {
+            if  (piz->ShopAccepted == false)
+            {
+
+                for (int i = 0; i<32; i++)
+                {
+
+
+                    if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
+                    {
+                        //out << piz->players[i].UName << " accepted\n";
+
+                        piz->send_mtc(piz->players[i].UCID,"^C^3| ^7Заедте в магазин и закажите продукты.");
+                        strcpy(piz->players[i].WorkDest,"^C^7Заедте в магазин и закажите продукты."); // +4 == remove slash
+
+                        piz->players[i].WorkAccept =3;
+                        piz->players[i].WorkPlayerAccept =0;
+                        piz->players[i].WorkZone =0;
+                        int worktime = time(&ptime);
+                        piz->players[i].WorkTime = worktime+60*6;
+                        piz->ShopAccepted = true;
+                        break; // чтобы оповещал только одного игрока
+                    }
+
+                }
             }
         }
 
@@ -106,6 +173,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 RCPizza::RCPizza()
 {
+
 
 }
 
@@ -153,6 +221,85 @@ int RCPizza::init(char *dir,void *classname,void *CInSim, void *GetMessage,void 
 
     ginfo_time = time(&ptime)+60;
 
+    /*** READ STORE DATA ***/
+    char file[MAX_PATH];
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    sprintf(file,"%sdata\\RCPizza\\_Store.txt",RootDir);
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        printf ("RCPizza can't find _Store.txt");
+        return 0;
+    }
+    FindClose(fff);
+
+    ifstream ReadStore (file,ios::in);
+    while (ReadStore.good())
+    {
+        char str[128];
+        ReadStore.getline(str,128);
+
+        //cout << str << endl;
+
+        if (strlen(str) > 0)
+        {
+            if (strncmp(str,"Muka=",strlen("Muka="))==0)
+            {
+                PStore.Muka = atof(str+strlen("Muka="));
+            }
+
+            if (strncmp(str,"Voda=",strlen("Voda="))==0)
+            {
+                PStore.Voda = atof(str+strlen("Voda="));
+            }
+
+            if (strncmp(str,"Ovoshi=",strlen("Ovoshi="))==0)
+            {
+                PStore.Ovoshi = atof(str+strlen("Ovoshi="));
+            }
+
+            if (strncmp(str,"Cheese=",strlen("Cheese="))==0)
+            {
+                PStore.Cheese = atof(str+strlen("Cheese="));
+            }
+        }
+    }
+    ReadStore.close();
+
+    sprintf(file,"%sdata\\RCPizza\\_Pizza.txt",RootDir);
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        printf ("RCPizza can't find _Pizza.txt");
+        return 0;
+    }
+    FindClose(fff);
+
+    ifstream ReadInfo (file,ios::in);
+    while (ReadInfo.good())
+    {
+        char str[128];
+        ReadInfo.getline(str,128);
+
+        //cout << str << endl;
+
+        if (strlen(str) > 0)
+        {
+            if (strncmp(str,"Capital=",strlen("Capital="))==0)
+            {
+                Capital = atoi(str+strlen("Capital="));
+            }
+
+            if (strncmp(str,"NumCars=",strlen("NumCars="))==0)
+            {
+                NumCars = atoi(str+strlen("NumCars="));
+            }
+
+        }
+    }
+    ReadInfo.close();
+
     return 0;
 }
 
@@ -161,10 +308,18 @@ void RCPizza::deal(struct PizzaPlayer *splayer)
 
     if (splayer->WorkType == WK_NULL)
     {
-
-        splayer->WorkType = WK_PIZZA;
-        splayer->WorkAccept = 0;
-        send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4000));
+        if (CarsInWork <= NumCars)
+        {
+            splayer->WorkType = WK_PIZZA;
+            splayer->WorkAccept = 0;
+            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4000));
+            CarsInWork ++;
+        }
+        else
+        {
+            send_mtc(splayer->UCID,"^C^3| ^7Нет вакансий");
+            return;
+        }
 
 
     }
@@ -184,7 +339,20 @@ void RCPizza::take(struct PizzaPlayer *splayer)
     {
         if (splayer->WorkAccept == 1)
         {
-            if (splayer->WorkPlayerAccept == 0)
+            /** Готовим пиццу **/
+            /**
+            *   Одна порция пиццы - 1 кг муки 0.6 кг вода, 0.9 томатов, 0.4 сыра
+            *   Себестоимость за порцию = 12+ 9 +72 +224 = 317 руб
+            *   Окончательная цена 552 руб
+            *   оплата за изготовление 235 руб
+            *   оплата за доставку 248 руб.
+            **/
+            PStore.Muka -= 1;
+            PStore.Voda -= 0.6;
+            PStore.Ovoshi -= 0.9;
+            PStore.Cheese -= 0.4;
+
+            if (splayer->WorkPlayerAccept == 0) // даем обычный заказ
             {
                 srand(time(&ptime));
                 int place = rand()%zone.NumPoints;
@@ -199,8 +367,9 @@ void RCPizza::take(struct PizzaPlayer *splayer)
                 send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4200));
                 send_mtc(splayer->UCID,zone.point[place].Place);
                 strcpy(splayer->WorkDest,zone.point[place].Place);
+
             }
-            else if (splayer->WorkPlayerAccept != 0)
+            else if (splayer->WorkPlayerAccept != 0) // заказал игрок
             {
                 int worktime = time(&ptime);
                 splayer->WorkTime = worktime+60*6;
@@ -218,7 +387,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
         }
         else if (splayer->WorkAccept == 2)
         {
-            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4202)); // РћС‚РІРµР·Рё СЃРЅР°С‡Р°Р»Р° СЌС‚РѕС‚ Р·Р°РєР°Р·
+            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4202)); // Отвези сначала этот заказ
         }
         else
         {
@@ -249,8 +418,9 @@ void RCPizza::done(struct PizzaPlayer *splayer)
         splayer->WorkDestinaion =0;
         splayer->WorkAccept = 0;
         splayer->WorkPlayerAccept = 0;
-        bank->AddCash(players[i].UCID,800);
-        bank->RemFrBank(800);
+        bank->AddCash(players[i].UCID,248); // цена за доставку 248 руб.
+        Capital += 235;
+        //bank->RemFrBank(800);
 // TODO (#1#): Class Bank
 
         splayer->WorkCountDone ++;
@@ -274,6 +444,7 @@ void RCPizza::undeal(struct PizzaPlayer *splayer, char *Reason)
         splayer->WorkType = WK_NULL;
         splayer->WorkDestinaion =0;
         splayer->WorkAccept = 0;
+        CarsInWork --;
     }
 
 }
@@ -282,12 +453,7 @@ void RCPizza::readconfig(char *Track)
 {
     //cout << "RCPizza::readconfig\n" ;
     char file[MAX_PATH];
-    memset(&file,0,MAX_PATH);
-    strcpy(file,RootDir);
-    strcat(file,"data\\RCPizza\\");
-    strcat(file,Track);
-    strcat(file,".txt");
-
+    sprintf(file,"%sdata\\RCPizza\\%s.txt",RootDir,Track);
     //cout << file << endl;
 
 
@@ -332,6 +498,24 @@ void RCPizza::readconfig(char *Track)
                 }
             } // if /street
 
+            if (strncmp(str,"/shop",5)==0)
+            {
+                readf.getline(str,128);
+                int count = atoi(str);
+                TrackInf.ShopCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    readf.getline(str,128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str,";");
+                    Y = strtok (NULL,";");
+                    TrackInf.XShop[i] = atoi(X);
+                    TrackInf.YShop[i] = atoi(Y);
+                }
+            }
+
             if (strncmp(str,"point",5)==0)
             {
                 readf.getline(str,64);
@@ -357,9 +541,10 @@ void RCPizza::readconfig(char *Track)
     } //while readf.good()
 
     readf.close();
+
 }
 
-/** С„СѓРЅРєС†РёРё-РїРѕРІС‚РѕСЂРёС‚РµР»Рё РѕСЃРЅРѕРІРЅС‹С… С„СѓРЅС†РєРёР№ СЏРґСЂР° **/
+/** функции-повторители основных фунцкий ядра **/
 
 void RCPizza::next_packet()
 {
@@ -514,10 +699,31 @@ void RCPizza::pizza_cnl ()
                 //players[i].cash += 500;
             }
 
+            if (players[i].WorkType == WK_PIZZA)
+                CarsInWork --;
+
             memset(&players[i],0,sizeof(struct PizzaPlayer));
             break;
         }
     }
+    /** Save Pizza Info **/
+
+    char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCPizza\\_Store.txt",RootDir);
+    ofstream writef (file,ios::out);
+    writef << "Muka=" << PStore.Muka << endl;
+    writef << "Voda=" << PStore.Voda << endl;
+    writef << "Ovoshi=" << PStore.Ovoshi << endl;
+    writef << "Cheese=" << PStore.Cheese << endl;
+    writef.close();
+
+    sprintf(file,"%sdata\\RCPizza\\_Pizza.txt",RootDir);
+    ofstream WriteInfo (file,ios::out);
+    WriteInfo << "Capital=" << Capital << endl;
+    WriteInfo << "NumCars=" << NumCars << endl;
+    WriteInfo.close();
+
+
 }
 
 void RCPizza::pizza_crp()
@@ -573,7 +779,7 @@ void RCPizza::pizza_mci ()
                 //printf ("Pozition on map X:%d Y:%d\n",players[j].Info.X/65536,players[j].Info.Y/65536);
 
 
-                // РїСЂРѕРІРµСЂРєР° РµСЃР»Рё СЋР·РµСЂ РїРѕРїР°Р» РІ Р·РѕРЅСѓ РґРѕСЃС‚Р°РІРєРё Рё СЃРєРѕСЂРѕСЃС‚СЊ СЂР°РІРЅР° РЅСѓР»СЋ
+                // проверка если юзер попал в зону доставки и скорость равна нулю
 
                 if (check_pos(&players[j]) == 1)
                 {
@@ -587,10 +793,10 @@ void RCPizza::pizza_mci ()
                         else
                             send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1602)); // undeal
                         if (players[j].WorkAccept != 0)
-                            {
-                                send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1603)); // take
-                                take(&players[j]);
-                            }
+                        {
+                            send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1603)); // take
+                            take(&players[j]);
+                        }
 
                     }
                 }
@@ -623,6 +829,45 @@ void RCPizza::pizza_mci ()
                     }
                 }
 
+                if ((players[j].WorkAccept ==3) && (Check_Pos(TrackInf.ShopCount,TrackInf.XShop,TrackInf.YShop,X,Y))) // если игроку сказали заказать продукты и он приехал в магазин
+                {
+                    players[j].WorkDestinaion =0;
+                    players[j].WorkAccept = 0;
+                    players[j].WorkPlayerAccept = 0;
+                    send_bfn(players[j].UCID,210);
+                    send_bfn(players[j].UCID,211);
+                    send_mtc(players[j].UCID,"^C^3| ^7Спасибо за заказ продуктов.");
+
+                    // проверяем склад на продукты
+
+                    if (PStore.Muka < 10)
+                    {
+                        PStore.Muka += 990;
+                        Capital -= 990 * 12;
+                        bank->AddToBank(990 * 12);
+                    }
+                    if (PStore.Voda < 10)
+                    {
+                        PStore.Voda += 990;
+                        Capital -= 990 * 10;
+                        bank->AddToBank(990 * 10);
+                    }
+                    if (PStore.Ovoshi < 10)
+                    {
+                        PStore.Ovoshi += 990;
+                        Capital -= 990 * 80;
+                        bank->AddToBank(990 * 80);
+                    }
+                    if (PStore.Cheese < 10)
+                    {
+                        PStore.Cheese += 990;
+                        Capital -= 990 * 560;
+                        bank->AddToBank(990 * 560);
+                    }
+                    ShopAccepted = false;
+
+                }
+
 
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
@@ -653,7 +898,24 @@ void RCPizza::pizza_mso ()
         }
     }
 
+    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pstat", 6) == 0 )
+    {
+        //cout << players[i].UName << " send !deal" << endl;
+        char Text[64];
+        sprintf(Text,"^C^3| ^7Капитал Пиццерии составляет %d Руб.",Capital);
+        send_mtc(players[i].UCID,Text);
+        sprintf(Text,"^C^3| ^7Продукты на складе.");
+        send_mtc(players[i].UCID,Text);
+        sprintf(Text,"^C^3| ^7Мука: %1.2f Кг.",PStore.Muka);
+        send_mtc(players[i].UCID,Text);
+        sprintf(Text,"^C^3| ^7Вода: %1.2f Кг.",PStore.Voda);
+        send_mtc(players[i].UCID,Text);
+        sprintf(Text,"^C^3| ^7Овощи: %1.2f Кг.",PStore.Ovoshi);
+        send_mtc(players[i].UCID,Text);
+        sprintf(Text,"^C^3| ^7Сыр: %1.2f Кг.",PStore.Cheese);
+        send_mtc(players[i].UCID,Text);
 
+    }
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!deal", 5) == 0 )
     {
@@ -693,35 +955,17 @@ void RCPizza::pizza_mso ()
     }
 
     //!pizza
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pizza", 6) == 0)
+    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!tofu", 5) == 0)
     {
-        int j = 0;
-        for (j = 0; j<32; j++)
+
+        if (players[i].Pizza != 0)
         {
-
-
-            if ( (players[j].UCID !=0) and (players[j].UCID != players[i].UCID) and (players[j].WorkType == WK_PIZZA) and (players[j].WorkAccept == 0))
-            {
-                //cout << players[i].UName << " accepted\n";
-                send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,2201));
-                send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,2202));
-                players[j].WorkAccept =1;
-                players[j].WorkPlayerAccept = 100 + i;
-                players[j].WorkZone =0;
-                int worktime = time(&ptime);
-                players[j].WorkTime = worktime+60*6;
-                break; // С‡С‚РѕР±С‹ РѕРїРѕРІРµС‰Р°Р» С‚РѕР»СЊРєРѕ РѕРґРЅРѕРіРѕ РёРіСЂРѕРєР°
-            }
-
-        }
-        cout << "j= " << j << endl;
-        if (j >= 32)
-        {
-            send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2203));
+            //send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2203)); // нет свободныйх игроков
         }
         else
         {
-            send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2204));
+            players[i].Pizza = 1;
+            send_mtc(players[i].UCID,msg->GetMessage(players[i].UCID,2204)); // заказ принят
         }
 
     }
@@ -793,7 +1037,7 @@ void RCPizza::btn_destination (struct PizzaPlayer *splayer)
     insim->send_button(&pack);
 
 }
-// С„СѓРЅРєС†РёРё-СѓС‚РёР»РёС‚С‹
+// функции-утилиты
 
 int RCPizza::check_pos(struct PizzaPlayer *splayer)
 {
@@ -845,5 +1089,6 @@ void RCPizza::send_bfn (byte UCID, byte ClickID)
     pack.ClickID = ClickID;
     insim->send_packet(&pack);
 };
+
 
 

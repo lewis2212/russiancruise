@@ -12,6 +12,25 @@ RCMessage::~RCMessage()
 
 }
 
+char* RCMessage::GetMessage(byte UCID, int MsgID)
+{
+    for (int i=0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (players[i].LangID == 0)
+            return "^1LangID == 0";
+
+            //printf("%s LangID=%d MsgID=%d\n",players[i].UName,players[i].LangID,MsgID);
+
+            //strncpy(MSG,MsgArray[players[i].LangID][MsgID],strlen(MsgArray[players[i].LangID][MsgID]));
+            //sprintf(MSG,"STRLEN = %d\n",strlen(MsgArray[players[i].LangID][MsgID]));
+            return MsgArray[players[i].LangID][MsgID];
+        }
+    }
+    return "^1User Not Found";
+}
+
 
 
 int RCMessage::init(char *dir, void *CInSim)
@@ -53,10 +72,10 @@ int RCMessage::init(char *dir, void *CInSim)
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
 
-            //cout << "id = " << id << "GetMessage = " << mesage << endl;
-
             //memset(&GetMessage[atoi(id)],0,sizeof(GetMessage));
-            strcpy(message[0][atoi(id)], mesage);
+            strncpy(MsgArray[1][atoi(id)], mesage,strlen(mesage));
+            //cout << "id = " << id << "message = " << message[1][atoi(id)] << endl;
+            //send_mst(MsgArray[1][atoi(id)]);
 
         }
     }
@@ -93,7 +112,7 @@ int RCMessage::init(char *dir, void *CInSim)
             //cout << "id = " << id << "GetMessage = " << mesage << endl;
 
             //memset(&GetMessage[atoi(id)],0,sizeof(GetMessage));
-            strcpy(message[1][atoi(id)], mesage);
+            strncpy(MsgArray[2][atoi(id)], mesage,strlen(mesage));
 
         }
     }
@@ -169,7 +188,7 @@ void RCMessage::ncn()
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf("Can't find %s\n Create File for user",file);
-        players[i].LangID = 0;
+        players[i].LangID = 1;
         save(players[i].UCID);
     }
     else
@@ -183,9 +202,9 @@ void RCMessage::ncn()
             if (strlen(str) > 0)
             {
                 // Get Cash
-                if (strncmp("LangID=",str,6)==0)
+                if (strncmp("LangID=",str,7)==0)
                 {
-                    players[i].LangID = atoi(str+6);
+                    players[i].LangID = atoi(str+7);
                 }
 
                 // Get Credits
@@ -293,11 +312,11 @@ void RCMessage::mso()
         //read_lang(&ginfo.players[i]);
         if (strcmp(id,"eng") == 0)
         {
-            players[i].LangID = 1;
+            players[i].LangID = 2;
         }
         else if (strcmp(id,"rus") == 0)
         {
-            players[i].LangID = 0;
+            players[i].LangID = 1;
         }
 
         //read_track(&ginfo.players[i]);
@@ -328,19 +347,6 @@ void RCMessage::save (byte UCID)
         }
     }
 
-}
-
-
-char* RCMessage::GetMessage(byte UCID, byte MsgID)
-{
-    for (int i=0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            return message[players[i].LangID][MsgID];
-        }
-    }
-    return "^1ERROR";
 }
 
 void RCMessage::send_mtc (byte UCID,char* Msg)

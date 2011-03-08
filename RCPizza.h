@@ -18,6 +18,12 @@
 
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
+struct pizza_info
+{
+    int     ShopCount;
+    int     XShop[10];
+    int     YShop[10];
+};
 
 struct PizzaPlayer
 {
@@ -28,6 +34,7 @@ struct PizzaPlayer
     byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
     byte    Zone;
+    byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
     /** Work **/
     char    WorkDest[96];       // destination text
     byte    WorkType;
@@ -49,20 +56,29 @@ enum
 
 struct  Store
 {
-    // all max = 100 (100%)
-    byte    Testo;
-    byte    Vegetable;
-    byte    Meat;
-    byte    Cheese;
+    /**
+    *   Одна порция пиццы - 1 кг муки 0.6 кг вода, 0.9 томатов, 0.4 сыра
+    *   Себестоимость за порцию = 12+ 9 +72 +224 = 317 руб
+    *   Окончательная цена 552 руб
+    *   оплата за изготовление 235 руб
+    *   оплата за доставку 248 руб.
+    **/
+    // all max = 1000 (1000kg)
+    float    Muka; // 12000 rur/t.
+    float    Voda; // 10000 rur/t
+    float    Ovoshi; // 80000 rur/t
+    float    Cheese; // 560000 rur/t
 };
 
 class RCPizza
 {
 private:
 
-    float   Capital;
+    u_int   Capital;
     int     NumCars;
-    struct Store Sotr;
+
+
+
 
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
@@ -74,8 +90,13 @@ public:
     RCPizza::RCPizza();
     RCPizza::~RCPizza();
 
+    bool    ShopAccepted;
+    int     CarsInWork;
+
     int NumP;
     int ginfo_time;
+    struct Store PStore;
+    struct  pizza_info TrackInf;
 
     CInsim      *insim;
     RCMessage   *msg;
@@ -103,6 +124,7 @@ public:
     void pizza_crp(); //+
     void pizza_mci();
     void pizza_mso();
+
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);

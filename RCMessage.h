@@ -15,7 +15,7 @@ struct MPlayer
 {
     byte UCID;
     char UName[24];
-    byte LangID;
+    int LangID;
 };
 
 class RCMessage
@@ -26,7 +26,7 @@ CInsim  *insim;
 
     char RootDir[MAX_PATH];
 
-    char message[3][20000][64]; // message[lang_id][msg_id][msg_len];
+    char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
 
     struct MPlayer players[MAX_PLAYERS];
 
@@ -48,7 +48,7 @@ public:
 
     void save(byte UCID);
 
-    char* GetMessage(byte UCID, byte MsgID);
+    char* GetMessage(byte UCID, int MsgID);
 
 }; // this method is not good but better when old method.
 
