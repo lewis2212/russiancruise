@@ -24,6 +24,36 @@ int GetCarID(char *CarName)
     return 0;
 }
 
+int IfCop (struct player *splayer)
+{
+    char PlayerName[32];
+    strcpy(PlayerName,splayer->PName);
+
+    int COP = 0;
+
+    if (
+        ((strncmp("^4[^C^7ДПС^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ДПC^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7дпс^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7дпc^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ГАИ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7гаи^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ГAИ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7гaи^4]",PlayerName,13)==0))
+        && (splayer->cop !=1)
+    )
+    {
+        COP += 1;
+    }
+
+    if ( read_cop(splayer) > 0)
+    {
+        COP += 2;
+    }
+
+    return COP;
+}
+
 
 void read_words()
 {
@@ -201,7 +231,7 @@ void read_user_cars(struct player *splayer)
     if (fff == INVALID_HANDLE_VALUE)
     {
         out << "Can't find " << file << endl;
-        strcpy(splayer->cars[0].car,"XFG");
+        strcpy(splayer->cars[0].car,"UF1");
         splayer->cars[0].tuning = 0;
         splayer->cars[0].dist = 0;
         save_user_cars(splayer);
@@ -210,6 +240,7 @@ void read_user_cars(struct player *splayer)
     {
         ifstream readf (file,ios::in);
         int i=0;
+        bool UF1 = false;
         while (readf.good())
         {
             char str[128];
@@ -225,12 +256,22 @@ void read_user_cars(struct player *splayer)
                 tun = strtok(NULL,";");
                 dis = strtok(NULL,";");
 
+                if (strncmp(car,"UF1",3)==0)
+                UF1 = true;
+
                 strcpy(splayer->cars[i].car,car);
                 splayer->cars[i].tuning = atoi(tun);
                 splayer->cars[i].dist = atoi(dis);
 
                 i++;
             }
+        }
+        if (!UF1)
+        {
+            strcpy(splayer->cars[i].car,"UF1");
+            splayer->cars[i].tuning = 0;
+            splayer->cars[i].dist = 0;
+            send_mtc(splayer->UCID,"^C^1| ^7 Вам сделан подарок в виде автомобиля ^2UF1");
         }
     }
     FindClose(fff);
@@ -559,25 +600,25 @@ void btn_info (struct player *splayer, int b_type)
         for (int i=2; i<9; i++)
         {
             pack.L = (101-126/2)+1;
-            pack.BStyle = 16;
-            pack.T = 46+9*(i-1)+1;
+            pack.BStyle = 16 + 64;
+            pack.T = 50+6*(i-1)+1;
             pack.W = 50;
-            pack.H = 8;
+            pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_packet(&pack);
+            insim.send_button(&pack);
         }
 
         for (int i=11; i<19; i++)
         {
             pack.L = (101-126/2)+1+51;
-            pack.BStyle = 16;
-            pack.T = 46+9*(i-10)+1;
+            pack.BStyle = 16 + 64;
+            pack.T = 50+6*(i-10)+1;
             pack.W = 50;
-            pack.H = 8;
+            pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_packet(&pack);
+            insim.send_button(&pack);
         }
 
     } // if (type == 1)
@@ -605,33 +646,22 @@ void btn_info (struct player *splayer, int b_type)
 
     if (b_type == 4)
     {
-        for (int i=1; i<=13; i++)
+        int fineID = 0;
+        for (int i=0; i<MAX_FINES; i++)
         {
             pack.L = (101-126/2)+1;
             pack.BStyle = 16 + 64;
-            pack.T = 56+7*(i-1);
-            pack.W = 122;
-            pack.H = 6;
-            pack.ClickID = 110 + i;
+            if (ginfo.fines[i].id != 0)
+            {
+                fineID ++;
+                pack.T = 56+6*(fineID-1);
+                pack.W = 122;
+                pack.H = 6;
+                pack.ClickID = 110 + fineID;
+                sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo.fines[i].id,ginfo.fines[i].name,ginfo.fines[i].cash);
+                insim.send_button(&pack);
+            }
 
-            // row[0] = username
-            // row[1] = fine_id
-            // row[2] = fine_date
-            // int fine_date = atoi(row[2));
-            char num[3];
-            itoa(ginfo.fines[i].id,num,10);
-
-            char pay[5];
-            itoa(ginfo.fines[i].cash,pay,10);
-
-            strcpy(pack.Text,"^2| ^7ID = ");
-            strcat( pack.Text,num);
-            strcat( pack.Text,". ");
-            strncat( pack.Text,ginfo.fines[i].name,96-34);
-            strcat( pack.Text," ^3(^2");
-            strcat( pack.Text,pay);
-            strcat( pack.Text," RUR.^3)");
-            insim.send_packet(&pack);
         }
 
     }
@@ -1482,37 +1512,17 @@ void case_cpr ()
             out << ginfo.players[i].PName << " rename to " << pack_cpr->PName << endl;
             strcpy(ginfo.players[i].PName, pack_cpr->PName);
             // убираем ЛФС коды ^1 ^C ^L ^7 и т.д.
-            char PlayerName[32];
-            strcpy(PlayerName,pack_cpr->PName);
-            char * pch;
-            while (pch = strstr(PlayerName,"^"))
-            {
-                int point = strlen(pch);
-                //out << pch << endl;
-                strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
-            }
-            //out << PlayerName << endl;
+
+            /*
             char Text[64];
             strcpy(Text, "/spec ");
             strcat (Text, ginfo.players[i].UName);
             if (ginfo.players[i].PLID != 0)
             {
-                if (((strncmp("[ДПС]",PlayerName,5)==0) or (strncmp("[дпс]",PlayerName,5)==0)) and (ginfo.players[i].cop !=1))
+                if(!IfCop(&ginfo.players[i]))
                 {
-                    if ( read_cop(&ginfo.players[i]) != 1)
-                    {
-                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1300));
-                        //ginfo.players[i].PLID =0;
-                        send_mst(Text);
-                    }
-                    else
-                    {
-                        ginfo.players[i].cop =1;
-                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1301));
-                    }
-                }
-                else
-                {
+                    send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1300));
+                    send_mst(Text);
                     if (ginfo.players[i].cop == 1)
                     {
                         ginfo.players[i].cop =0;
@@ -1523,6 +1533,9 @@ void case_cpr ()
                             tune -= 15;
                         if (ginfo.players[i].CTune&2)
                             tune -= 20;
+                        if (ginfo.players[i].CTune&4)
+                            tune -= 10;
+
                         if (ginfo.players[i].H_TRes < tune)
                         {
                             ginfo.players[i].PLID = 0;
@@ -1531,28 +1544,19 @@ void case_cpr ()
                             char QSL [8];
                             itoa(tune,QSL,10);
                             char Texxt[32];
-                            strcpy(Texxt,msg.GetMessage(ginfo.players[i].UCID,2400));
-                            strcat(Texxt,QSL);
-                            strcat(Texxt," %");
+                            sprintf(Texxt,"%s%d%%",msg.GetMessage(ginfo.players[i].UCID,2400),tune);
                             send_mtc(ginfo.players[i].UCID,Texxt);
-                        }
-                        else if ((ginfo.players[i].SetF&4) and !(ginfo.players[i].CTune&8))
-                        {
-                            char Texxt[32];
-                            strcpy(Texxt,msg.GetMessage(ginfo.players[i].UCID,2401));
-                            send_mtc(ginfo.players[i].UCID,Texxt);
-                            ginfo.players[i].Zone = 1;
-                            ginfo.players[i].PLID = 0;
-                            char Text[64];
-                            strcpy(Text, "/spec ");
-                            strcat (Text, ginfo.players[i].UName);
-                            send_mst(Text);
-                            return;
                         }
                     }
                 }
-            }
+                else
+                {
+                    ginfo.players[i].cop =1;
+                    send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1301));
+                }
 
+            }
+            */
             break;
         }
     }
@@ -1642,8 +1646,7 @@ void case_mci ()
                 }
 
                 float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
-                if (ginfo.players[j].cop != 1)
-                {
+
                     if ((abs((int)Dist) > 10) and (S>30))
                     {
                         ginfo.players[j].Distance += abs((int)Dist);
@@ -1657,7 +1660,6 @@ void case_mci ()
                         ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
                         ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
                     }
-                }
 
                 /** Bonus **/
 
@@ -2909,9 +2911,13 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,"Error");
             return;
         }
+        if (strcmp(id,"UF1")==0)
+        {
+            return;
+        }
         // search car in global base
         int j = 0; // global car id
-        for ( j=0 ; j< MAX_CARS; j++)
+        for ( j=1 ; j< MAX_CARS; j++)
         {
             if (strcmp(id,ginfo.car[j].car)==0)
             {
@@ -3289,7 +3295,7 @@ void case_ncn ()
     read_track(&ginfo.players[i]);
     out <<  "******************************" << endl;
 
-    help_cmds(&ginfo.players[i],1);
+    //help_cmds(&ginfo.players[i],1);
     help_cmds(&ginfo.players[i],2);
 }
 
@@ -3355,167 +3361,120 @@ void case_npl ()
             // out << "Core.dll: find user " << ginfo.players[i].UName << endl;
             if (pack_npl->PType != 6)
             {
-                char PlayerName[32];
-                strcpy(PlayerName,ginfo.players[i].PName);
-                char * pch;
-                while (pch = strstr(PlayerName,"^"))
-                {
-                    int point = strlen(pch);
-                    //out << pch << endl;
-                    strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
-                }
-                //out << PlayerName << endl;
 
-                if (
-                    ((strncmp("[ДПС]",PlayerName,5)==0)
-                     || (strncmp("[дпс]",PlayerName,5)==0)
-                     || (strncmp("[ГАИ]",PlayerName,5)==0)
-                     || (strncmp("[гаи]",PlayerName,5)==0))
-                    && (ginfo.players[i].cop !=1)
-                )
+                if (IfCop(&ginfo.players[i]) == 1)
                 {
-                    if ( read_cop(&ginfo.players[i]) < 1)
-                    {
-                        strcpy(Text, "/spec ");
-                        strcat (Text, ginfo.players[i].UName);
-                        //ginfo.players[i].PLID =0;
-                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1300));
-                        send_mst(Text);
-                        return;
-                    }
-                    else
-                    {
-                        ginfo.players[i].cop =1;
-                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1301));
-                    }
-                }
-
-                if (ginfo.players[i].cop != 1)
-                {
-
                     char Text[64];
                     strcpy(Text, "/spec ");
                     strcat (Text, ginfo.players[i].UName);
-
-                    ginfo.players[i].PLID = pack_npl->PLID;
-                    ginfo.players[i].H_TRes =  pack_npl->H_TRes;
-                    ginfo.players[i].SetF =  pack_npl->SetF;
-
-
-                    // out << "pack_npl->PType = " << (int)pack_npl->PType << endl;;
-
-                    int j=0;
-                    for (j=0; j<MAX_CARS; j++)
-                    {
-                        if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
-                            break;
-                    }
-
-                    if ( j != MAX_CARS)
-                    {
-
-
-
-
-                        strcpy(ginfo.players[i].CName ,pack_npl->CName);
-                        ginfo.players[i].CTune = ginfo.players[i].cars[j].tuning;
-                        ginfo.players[i].Distance = ginfo.players[i].cars[j].dist;
-                        //strcpy(ginfo.players[i].SName , row[2));
-
-
-                        //! LVL
-                        int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5;
-
-                        int tune = 45;
-                        if (ginfo.players[i].CTune&1)
-                        {
-                            tune -= 15;
-                            // needlvl ++;
-                        }
-                        if (ginfo.players[i].CTune&2)
-                        {
-                            tune -= 20;
-                            //  needlvl ++;
-                        }
-                        if (ginfo.players[i].CTune&4)
-                        {
-                            tune -= 10;
-                            //  needlvl ++;
-                        }
-
-                        //int tune2 = needlvl - (GetCarID(ginfo.players[i].CName)-1)*5;
-
-                        if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
-                        {
-                            ginfo.players[i].PLID = 0;
-                            ginfo.players[i].Zone = 1;
-                            send_mst(Text);
-
-                            char msg2[64];
-                            sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
-                            send_mtc(ginfo.players[i].UCID,msg2);
-                            send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2404));
-
-                            char Text2[64];
-                            strcpy(Text2,"^1| ^2");
-                            for (int k=0; k< MAX_CARS; k++)
-                            {
-                                if ((strlen(ginfo.players[i].cars[k].car) != 0) and ((GetCarID(ginfo.players[i].cars[k].car)-1)*5 <= dl.GetLVL(ginfo.players[i].UCID)))
-                                {
-                                    strcat(Text2,ginfo.players[i].cars[k].car);
-                                    strcat(Text2," ");
-                                }
-                            }
-                            send_mtc(ginfo.players[i].UCID,Text2);
-                            return;
-                        }
-                        else if ((pack_npl->H_TRes < tune))
-                        {
-                            ginfo.players[i].PLID = 0;
-                            ginfo.players[i].Zone = 1;
-                            send_mst(Text);
-
-                            char Texxt[32];
-                            sprintf(Texxt,"%s %d %s",msg.GetMessage(ginfo.players[i].UCID,2400),tune,"%");
-                            send_mtc(ginfo.players[i].UCID,Texxt);
-
-                        }
-                        else if ((pack_npl->SetF&4) and !(ginfo.players[i].CTune&8))
-                        {
-                            char Texxt[32];
-                            strcpy(Texxt,msg.GetMessage(ginfo.players[i].UCID,2401) );
-                            send_mtc(ginfo.players[i].UCID,Texxt);
-                            ginfo.players[i].Zone = 1;
-                            ginfo.players[i].PLID = 0;
-                            char Text[64];
-                            strcpy(Text, "/spec ");
-                            strcat (Text, ginfo.players[i].UName);
-                            send_mst(Text);
-                            return;
-                        }
-
-                    }
-                    else
-                    {
-                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2404));
-
-                        help_cmds(&ginfo.players[i],2);
-                        ginfo.players[i].Zone = 1;
-                        ginfo.players[i].PLID = 0;
-                        send_mst(Text);
-                        return;
-                    }
-
-                } // if cop !=1
-                else
+                    send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1300));
+                }
+                else if (IfCop(&ginfo.players[i]) == 3)
                 {
-                    ginfo.players[i].PLID = pack_npl->PLID;
-                    ginfo.players[i].H_TRes =  pack_npl->H_TRes;
-                    ginfo.players[i].SetF =  pack_npl->SetF;
-                    //ginfo.players[i].EnergyTime = time(&stime);
+                    send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1301));
+                    ginfo.players[i].cop = 1;
                 }
 
 
+                char Text[64];
+                strcpy(Text, "/spec ");
+                strcat (Text, ginfo.players[i].UName);
+
+                ginfo.players[i].PLID = pack_npl->PLID;
+                ginfo.players[i].H_TRes =  pack_npl->H_TRes;
+                ginfo.players[i].SetF =  pack_npl->SetF;
+
+
+                // out << "pack_npl->PType = " << (int)pack_npl->PType << endl;;
+
+                int j=0;
+                for (j=0; j<MAX_CARS; j++)
+                {
+                    if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
+                        break;
+                }
+
+                if ( j != MAX_CARS)
+                {
+
+
+
+
+                    strcpy(ginfo.players[i].CName ,pack_npl->CName);
+                    ginfo.players[i].CTune = ginfo.players[i].cars[j].tuning;
+                    ginfo.players[i].Distance = ginfo.players[i].cars[j].dist;
+                    //strcpy(ginfo.players[i].SName , row[2));
+
+
+                    //! LVL
+                    int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5;
+
+                    int tune = 45;
+                    if (ginfo.players[i].CTune&1)
+                    {
+                        tune -= 15;
+                        // needlvl ++;
+                    }
+                    if (ginfo.players[i].CTune&2)
+                    {
+                        tune -= 20;
+                        //  needlvl ++;
+                    }
+                    if (ginfo.players[i].CTune&4)
+                    {
+                        tune -= 10;
+                        //  needlvl ++;
+                    }
+
+                    //int tune2 = needlvl - (GetCarID(ginfo.players[i].CName)-1)*5;
+
+                    if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
+                    {
+                        ginfo.players[i].PLID = 0;
+                        ginfo.players[i].Zone = 1;
+                        send_mst(Text);
+
+                        char msg2[64];
+                        sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
+                        send_mtc(ginfo.players[i].UCID,msg2);
+                        send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2404));
+
+                        char Text2[64];
+                        strcpy(Text2,"^1| ^2");
+                        for (int k=0; k< MAX_CARS; k++)
+                        {
+                            if ((strlen(ginfo.players[i].cars[k].car) != 0) and ((GetCarID(ginfo.players[i].cars[k].car)-1)*5 <= dl.GetLVL(ginfo.players[i].UCID)))
+                            {
+                                strcat(Text2,ginfo.players[i].cars[k].car);
+                                strcat(Text2," ");
+                            }
+                        }
+                        send_mtc(ginfo.players[i].UCID,Text2);
+                        return;
+                    }
+                    else if ((pack_npl->H_TRes < tune))
+                    {
+                        ginfo.players[i].PLID = 0;
+                        ginfo.players[i].Zone = 1;
+                        send_mst(Text);
+
+                        char Texxt[32];
+                        sprintf(Texxt,"%s %d %%",msg.GetMessage(ginfo.players[i].UCID,2400),tune);
+                        send_mtc(ginfo.players[i].UCID,Texxt);
+
+                    }
+
+                }
+                else
+                {
+                    send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2404));
+
+                    help_cmds(&ginfo.players[i],2);
+                    ginfo.players[i].Zone = 1;
+                    ginfo.players[i].PLID = 0;
+                    send_mst(Text);
+                    return;
+                }
 
                 break;
             } //if PTupe != 6
@@ -3630,6 +3589,8 @@ void case_pll ()
             ginfo.players[i].Info.Z = 0;
             ginfo.players[i].Penalty =0;
 
+            ginfo.players[i].cop = 0;
+
             save_car(&ginfo.players[i]);
 
             if (ginfo.players[i].Pogonya == 1)
@@ -3675,6 +3636,8 @@ void case_plp ()
             ginfo.players[i].Info.Y = 0;
             ginfo.players[i].Info.Z = 0;
             ginfo.players[i].Penalty =0;
+
+            ginfo.players[i].cop = 0;
 
             save_car(&ginfo.players[i]);
 
@@ -4734,6 +4697,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         }
 
+        msg.next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
 
         switch (insim.peek_packet())
         {
@@ -4813,7 +4777,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         pizza.next_packet();
         bank.next_packet();
         dl.next_packet();
-        msg.next_packet();
+
 
     }
 

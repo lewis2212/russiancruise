@@ -55,6 +55,11 @@
 		<Unit filename="RCMessage.h" />
 		<Unit filename="RCPizza.cpp" />
 		<Unit filename="RCPizza.h" />
+		<Unit filename="RCPolice.cpp" />
+		<Unit filename="RCPolice.h" />
+		<Unit filename="RCTaxi.cpp" />
+		<Unit filename="RCTaxi.h" />
+		<Unit filename="RCclasses.h" />
 		<Unit filename="Release note.txt" />
 		<Unit filename="TODO.txt" />
 		<Unit filename="insim.h" />

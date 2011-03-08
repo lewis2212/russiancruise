@@ -69,6 +69,7 @@ void RCTaxi::taxi_crp()
     {
         if (players[i].UCID == pack_cpr->UCID)
         {
+            /** DO SOME CODE **/
 
             strcpy(players[i].PName, pack_cpr->PName);
             break;
@@ -82,17 +83,17 @@ void RCTaxi::taxi_mci ()
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
 
-    for (int i = 0; i < pack_mci->NumC; i++)
+    for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
 
     {
-        for (int j =0; j < MAX_PLAYERS; j++)
+        for (int j =0; j < MAX_PLAYERS; j++) // прогон по всему массиву players[j]
         {
 
-            if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
-
+            if (pack_mci->Info[i].PLID == players[j].PLID) // старая заплатка ( and players[j].PLID != 0 and players[j].UCID != 0)
             {
+                /** DO SOME CODE **/
 
-
+                /** NOTE: don't use break **/
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
     }
@@ -126,8 +127,7 @@ void RCTaxi::taxi_mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!text", 5) == 0 )
     {
-
-
+        /** DO SOME CODE **/
     }
 
 }
@@ -167,6 +167,8 @@ void RCTaxi::taxi_ncn()
     strcpy(players[i].PName, pack_ncn->PName);
     players[i].UCID = pack_ncn->UCID;
 
+    /** DO SOME CODE **/
+
 
 }
 
@@ -183,6 +185,8 @@ void RCTaxi::taxi_npl()
         if (players[i].UCID == pack_npl->UCID)
         {
             players[i].PLID = pack_npl->PLID;
+            /** DO SOME CODE **/
+            break;
         }
     }
 }
@@ -199,7 +203,9 @@ void RCTaxi::taxi_plp()
     {
         if (players[i].PLID == pack_plp->PLID)
         {
+            /** DO SOME CODE **/
             players[i].PLID = 0;
+            /** DO SOME CODE **/
             break;
         }
     }
@@ -217,7 +223,9 @@ void RCTaxi::taxi_pll()
     {
         if (players[i].PLID == pack_pll->PLID)
         {
+            /** DO SOME CODE **/
             players[i].PLID = 0;
+            /** DO SOME CODE **/
             break;
         }
     }

@@ -303,7 +303,7 @@ void send_mtc (byte UCID,char* Msg)
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
+    strncpy(pack_mtc.Msg, Msg,strlen(Msg));
     insim.send_packet(&pack_mtc);
 };
 
@@ -313,7 +313,7 @@ void send_mst (char* Text)
     memset(&pack_mst, 0, sizeof(struct IS_MST));
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
+    strncpy(pack_mst.Msg,Text,strlen(Text));
     insim.send_packet(&pack_mst);
 };
 

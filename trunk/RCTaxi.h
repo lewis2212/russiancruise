@@ -3,8 +3,8 @@
 
 #include <stdio.h>      //
 #include <iostream>     //
-#include <time.h>       //
-#include <windows.h>    //
+#include <time.h>       // для работы с временем и рандомом
+#include <windows.h>    // не помню для чего но ингда нужно
 
 #include "CInsim.h"     // Insim
 #include "RCMessage.h"  // Messages
@@ -77,7 +77,7 @@ class RCTaxi
 
 
     // Функции-утилиты
-    int check_pos (struct PizzaPlayer *splayer); //+
+    // int check_pos (struct PizzaPlayer *splayer); //+
 
 };
 #endif // #define _RC_TAXI_H
