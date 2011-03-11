@@ -67,7 +67,50 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
             }
         }
         /** конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль **/
-        // cout << piz->ginfo_time - time(&ptime) << endl;
+
+        /** тут заказ пиццы игроком **/
+        if ((piz->PStore.Muka > 5) && (piz->PStore.Voda > 5) && (piz->PStore.Ovoshi > 5) && (piz->PStore.Cheese > 5))
+        {
+
+            for (int i = 0; i<32; i++) // пробег по работникам
+            {
+
+
+                if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
+                {
+                    //out << piz->players[i].UName << " accepted\n";
+
+                    /** прогон пользователей на предмет заказа **/
+                    int j = 0;
+                    for (j = 0; j<32; j++) // пробег по заказчикам
+                    {
+
+
+                        if ( (piz->players[j].UCID !=0) and (piz->players[j].UCID != piz->players[i].UCID) and (piz->players[j].Pizza != 0))
+                        {
+                            //cout << players[i].UName << " accepted\n";
+                            piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
+                            piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
+                            piz->players[i].WorkAccept =1;
+                            piz->players[i].WorkPlayerAccept = 100 + j;
+                            piz->players[i].WorkZone =0;
+                            int worktime = time(&ptime);
+                            piz->players[i].WorkTime = worktime+60*6;
+                            break; // чтобы оповещал только одного игрока
+
+                            // дебаг
+                            char Text[64];
+                            sprintf(Text,"%s -> %s ",piz->players[i].UName,piz->players[j].UName);
+                            piz->send_mst(Text);
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        /** тут заказ пиццы ботом **/
         if ( piz->ginfo_time <= time(&ptime))
         {
 
@@ -112,7 +155,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                         // заплатка чтобы вместо игрока пиццу не вешал
                         if (j >= 32)
                         {
-                        	break;
+                            break;
                         }
 
 
@@ -826,6 +869,7 @@ void RCPizza::pizza_mci ()
                         bank->RemCash(players[PLN-100].UCID,800);
                         nrg->players[PLN-100].Energy += 8000;
                         send_mtc(players[PLN-100].UCID,msg->GetMessage(players[PLN-100].UCID,1604));
+                        players[PLN-100].Pizza = 0;
                     }
                 }
 
@@ -842,27 +886,27 @@ void RCPizza::pizza_mci ()
 
                     if (PStore.Muka < 10)
                     {
-                        PStore.Muka += 990;
-                        Capital -= 990 * 12;
-                        bank->AddToBank(990 * 12);
+                        PStore.Muka += 99;
+                        Capital -= 99 * 12;
+                        bank->AddToBank(99 * 12);
                     }
                     if (PStore.Voda < 10)
                     {
-                        PStore.Voda += 990;
-                        Capital -= 990 * 10;
-                        bank->AddToBank(990 * 10);
+                        PStore.Voda += 99;
+                        Capital -= 99 * 10;
+                        bank->AddToBank(99 * 10);
                     }
                     if (PStore.Ovoshi < 10)
                     {
-                        PStore.Ovoshi += 990;
-                        Capital -= 990 * 80;
-                        bank->AddToBank(990 * 80);
+                        PStore.Ovoshi += 99;
+                        Capital -= 99 * 80;
+                        bank->AddToBank(99 * 80);
                     }
                     if (PStore.Cheese < 10)
                     {
-                        PStore.Cheese += 990;
-                        Capital -= 990 * 560;
-                        bank->AddToBank(990 * 560);
+                        PStore.Cheese += 99;
+                        Capital -= 99 * 560;
+                        bank->AddToBank(99 * 560);
                     }
                     ShopAccepted = false;
 
@@ -920,10 +964,18 @@ void RCPizza::pizza_mso ()
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!deal", 5) == 0 )
     {
         //cout << players[i].UName << " send !deal" << endl;
-
-        if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
+        if (strcmp(players[i].CName,"UF1") == 0 )
         {
-            deal(&players[i]);
+
+
+            if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
+            {
+                deal(&players[i]);
+            }
+        }
+        else
+        {
+            send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
         }
 
     }
@@ -941,16 +993,23 @@ void RCPizza::pizza_mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!take", 5) == 0)
     {
-        //cout << players[i].UName << " send !take" << endl;
-
-        if (check_pos(&players[i]) == 1)
+        if (strcmp(players[i].CName,"UF1") == 0 )
         {
-            if (players[i].WorkType == WK_PIZZA)
+            //cout << players[i].UName << " send !take" << endl;
+
+            if (check_pos(&players[i]) == 1)
             {
-                //if (players[i].WorkAccept == 0)
-                // players[i].WorkAccept =1;
+                if (players[i].WorkType == WK_PIZZA)
+                {
+                    //if (players[i].WorkAccept == 0)
+                    // players[i].WorkAccept =1;
+                }
+                take(&players[i]);
             }
-            take(&players[i]);
+        }
+        else
+        {
+            send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
         }
     }
 
