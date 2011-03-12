@@ -68,6 +68,7 @@
 		<Unit filename="pthread.h" />
 		<Unit filename="tools.cpp" />
 		<Unit filename="tools.h" />
+		<Unit filename="version.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

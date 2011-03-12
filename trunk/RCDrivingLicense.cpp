@@ -496,7 +496,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     char Text[64];
     int skl = int((splayer->Skill/nextlvl)*100);
 
-    sprintf(Text,"^4|^7 %s take new level %d",splayer->PName, splayer->LVL);
+    sprintf(Text,"^C^4| %s ^7перешел на %d уровень",splayer->PName, splayer->LVL);
 
     int sklend = 100 - skl;
     strcpy(pack.Text,"^2");
