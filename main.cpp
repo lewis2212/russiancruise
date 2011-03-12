@@ -9,6 +9,7 @@ RCMessage   msg;
 RCEnergy    nrg;
 RCBank      bank;
 RCDL        dl;
+RCAntCheat  antcht;
 
 int GetCarID(char *CarName)
 {
@@ -1630,40 +1631,6 @@ void case_mci ()
                 int Z = pack_mci->Info[i].Z/65536;
 
                 int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
-                /** speed hack detector **/
-                float Speed = pack_mci->Info[i].Speed/32768;
-                float Speed2 = ginfo.players[j].Info.Speed/32768;
-                float Accelerate = (Speed - Speed2)*2; // mci delay == 0.5 sec
-
-                struct IS_BTN pack;
-                memset(&pack, 0, sizeof(struct IS_BTN));
-                pack.Size = sizeof(struct IS_BTN);
-                pack.Type = ISP_BTN;
-                pack.ReqI = 1;
-                pack.UCID = ginfo.players[j].UCID;
-                pack.Inst = 0;
-                pack.TypeIn = 0;
-                pack.ClickID = 110;
-                pack.BStyle = 32;
-                pack.L = 136;
-                pack.T = 10;
-                pack.W = 10;
-                pack.H = 8;
-
-                sprintf(pack.Text,"%1.3f",Accelerate);
-
-                insim.send_button(&pack);
-
-                if (strcmp(ginfo.players[j].CName,"")==0)
-                {
-                    if (Accelerate > 2)
-                        continue;
-                    // spec
-                }
-
-
-
 
 
 
@@ -3429,7 +3396,7 @@ void case_npl ()
                     if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
                         break;
                 }
-
+/**
                 if ( j != MAX_CARS)
                 {
 
@@ -3510,7 +3477,7 @@ void case_npl ()
                     ginfo.players[i].PLID = 0;
                     send_mst(Text);
                     return;
-                }
+                } **/
 
                 break;
             } //if PTupe != 6
@@ -4280,6 +4247,8 @@ void *thread_mci (void *params)
             case_mci_svetofor();
             case_mci_cop();
 
+            antcht.mci();
+
             pizza.pizza_mci();
             nrg.energy_mci();
 
@@ -4705,6 +4674,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     nrg.init(RootDir,&nrg,&insim,&msg,&bank);
     bank.init(RootDir,&insim,&msg,&bank);
     dl.init(RootDir,&insim,&msg);
+    antcht.init(RootDir,&antcht,&insim,&msg,&bank,&nrg);
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
@@ -4813,6 +4783,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         pizza.next_packet();
         bank.next_packet();
         dl.next_packet();
+        antcht.next_packet();
 
 
     }
