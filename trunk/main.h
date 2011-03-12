@@ -329,51 +329,6 @@ void send_bfn (byte UCID, byte ClickID)
     insim.send_packet(&pack);
 };
 
-/*************************************************************************************************
-*
-*                   WORK
-*       USING FOR POSTMAN AND PIZZA
-*
-*
-*
-**************************************************************************************************/
-
-/**
-class PostPizza
-{
-private:
-    char    Product[6];
-    char    WorkName[16];
-    byte    WorkType;
-    struct  place zone;
-
-public:
-    PostPizza::PostPizza();
-    void init(char *Name, char *Lic,byte Type); //+
-    void readconfig(char *Track); //+
-    void deal(struct player *splayer); //+
-    void undeal(struct player *splayer, char *Reason);
-    void take (struct player *splayer, struct global_info *ginfo); //+
-    void done (struct player *splayer); //+
-    int check_pos (struct player *splayer); //+
-};
-
-
-
-PostPizza::PostPizza()
-{
-
-}
-
-void PostPizza::init(char *Name, char *Lic,byte Type)
-{
-    strcpy(WorkName,Name);
-    strcpy(Product,Lic);
-    WorkType = Type;
-
-}
-
-**/
 
 
 /******************************************************************

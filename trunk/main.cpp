@@ -257,7 +257,7 @@ void read_user_cars(struct player *splayer)
                 dis = strtok(NULL,";");
 
                 if (strncmp(car,"UF1",3)==0)
-                UF1 = true;
+                    UF1 = true;
 
                 strcpy(splayer->cars[i].car,car);
                 splayer->cars[i].tuning = atoi(tun);
@@ -1631,6 +1631,42 @@ void case_mci ()
 
                 int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
+                /** speed hack detector **/
+                float Speed = pack_mci->Info[i].Speed/32768;
+                float Speed2 = ginfo.players[j].Info.Speed/32768;
+                float Accelerate = (Speed - Speed2)*2; // mci delay == 0.5 sec
+
+                struct IS_BTN pack;
+                memset(&pack, 0, sizeof(struct IS_BTN));
+                pack.Size = sizeof(struct IS_BTN);
+                pack.Type = ISP_BTN;
+                pack.ReqI = 1;
+                pack.UCID = ginfo.players[j].UCID;
+                pack.Inst = 0;
+                pack.TypeIn = 0;
+                pack.ClickID = 110;
+                pack.BStyle = 32;
+                pack.L = 136;
+                pack.T = 10;
+                pack.W = 10;
+                pack.H = 8;
+
+                sprintf(pack.Text,"%1.3f",Accelerate);
+
+                insim.send_button(&pack);
+
+                if (strcmp(ginfo.players[j].CName,"")==0)
+                {
+                    if (Accelerate > 2)
+                        continue;
+                    // spec
+                }
+
+
+
+
+
+
                 int X1 = ginfo.players[j].Info.X2/65536;
                 int Y1 = ginfo.players[j].Info.Y2/65536;
                 int Z1 = ginfo.players[j].Info.Z2/65536;
@@ -1647,19 +1683,19 @@ void case_mci ()
 
                 float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
 
-                    if ((abs((int)Dist) > 10) and (S>30))
-                    {
-                        ginfo.players[j].Distance += abs((int)Dist);
+                if ((abs((int)Dist) > 10) and (S>30))
+                {
+                    ginfo.players[j].Distance += abs((int)Dist);
 
-                        if (S<150)
-                            //bank.players[j].Cash += abs((int)Dist)/10;
-                            bank.AddCash(ginfo.players[j].UCID,abs((int)Dist)/10);
-                        //bank.BankFond -= abs((int)Dist)/10;
+                    if (S<150)
+                        //bank.players[j].Cash += abs((int)Dist)/10;
+                        bank.AddCash(ginfo.players[j].UCID,abs((int)Dist)/10);
+                    //bank.BankFond -= abs((int)Dist)/10;
 
-                        ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
-                        ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
-                        ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
-                    }
+                    ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
+                    ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
+                    ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
+                }
 
                 /** Bonus **/
 
