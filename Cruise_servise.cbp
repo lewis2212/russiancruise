@@ -45,6 +45,8 @@
 		<Unit filename="4ernovik.txt" />
 		<Unit filename="CInsim.cpp" />
 		<Unit filename="CInsim.h" />
+		<Unit filename="RCAntCheat.cpp" />
+		<Unit filename="RCAntCheat.h" />
 		<Unit filename="RCBank.cpp" />
 		<Unit filename="RCBank.h" />
 		<Unit filename="RCDrivingLicense.cpp" />

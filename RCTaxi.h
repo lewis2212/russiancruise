@@ -12,6 +12,13 @@
 
 #include "tools.h"      // Check_Pos  etc.
 
+struct Taxi_info
+{
+    int     ShopCount;
+    int     XShop[10];
+    int     YShop[10];
+};
+
 // Задаем структуру игрока
 
 struct TaxiPlayer
@@ -52,13 +59,15 @@ class RCTaxi
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
+    struct  Taxi_info TrackInf;
+    struct  place zone;
     struct  TaxiPlayer players[32];     // Структура игроков
 
     // Основные функции класса
     int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCTaxi.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCTaxi
-    //void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
 
     // функции-повторители основных фунцкий ядра
     void next_packet(); // Функция переборки типа пакета

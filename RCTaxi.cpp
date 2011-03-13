@@ -41,6 +41,82 @@ int RCTaxi::init(char *dir,void *classname,void *CInSim, void *Message,void *Ban
     return 0;
 }
 
+
+void RCTaxi::readconfig(char *Track)
+{
+    //cout << "RCTaxi::readconfig\n" ;
+    char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCTaxi\\%s.txt",RootDir,Track);
+    //cout << file << endl;
+
+
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        printf ("Can't find ");
+        return;
+    }
+    FindClose(fff);
+
+    ifstream readf (file,ios::in);
+
+
+    while (readf.good())
+    {
+        char str[128];
+        readf.getline(str,128);
+
+        //cout << str << endl;
+
+
+        if (strlen(str) > 0)
+        {
+
+            if (strncmp(str,"/dealer",7)==0)
+            {
+                for (int i=0; i<4; i++)
+                {
+                    readf.getline(str,128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str,",");
+                    Y = strtok (NULL,",");
+                    zone.dealX[i] = atoi(X);
+                    zone.dealY[i] = atoi(Y);
+                    //cout << point << ". X=" << X << "; Y=" << Y << ";\n";
+                }
+            } // if /street
+
+            if (strncmp(str,"/shop",5)==0)
+            {
+                readf.getline(str,128);
+                int count = atoi(str);
+                TrackInf.ShopCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    readf.getline(str,128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str,";");
+                    Y = strtok (NULL,";");
+                    TrackInf.XShop[i] = atoi(X);
+                    TrackInf.YShop[i] = atoi(Y);
+                }
+            }
+
+
+
+        } // if strlen > 0
+    } //while readf.good()
+
+    readf.close();
+
+}
+
+
 void RCTaxi::taxi_cnl ()
 {
     int i;
