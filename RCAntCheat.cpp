@@ -12,7 +12,7 @@ RCAntCheat::~RCAntCheat()
 
 }
 
-int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy)
+int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
 

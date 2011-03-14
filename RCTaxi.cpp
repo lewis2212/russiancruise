@@ -114,6 +114,26 @@ void RCTaxi::readconfig(char *Track)
 
     readf.close();
 
+    /** READ PTH FILE **/
+
+    sprintf(file,"%sdata\\RCTaxi\\pth\\%s.pth",RootDir,Track);
+    //cout << file << endl;
+
+
+
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        printf ("Can't find file \n %s",file);
+        return;
+    }
+    FindClose(fff);
+
+    ifstream readpth (file,ios::in);
+
+    //readpth
+
+
 }
 
 
