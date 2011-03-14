@@ -55,7 +55,7 @@ class RCAntCheat
     struct  Player players[32];     // Структура игроков
 
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCAntCheat.
+    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank);    // classname - указатель на класс RCAntCheat.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCAntCheat
     //void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"

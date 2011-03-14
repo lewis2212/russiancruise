@@ -4,11 +4,25 @@
 
 int ok = 1;
 struct global_info ginfo;
-RCPizza     pizza;
+
+#ifdef _RC_PIZZA_H
+RCPizza pizza = new RCPizza();
+#endif
+
 RCMessage   msg;
+
+#ifdef _RC_ENERGY_H
 RCEnergy    nrg;
+#endif
+
+#ifdef _RC_BANK_H
 RCBank      bank;
+#endif
+
+#ifdef _RC_LEVEL_H
 RCDL        dl;
+#endif
+
 RCAntCheat  antcht;
 
 int GetCarID(char *CarName)
@@ -2488,7 +2502,7 @@ void case_mso ()
 
         sprintf(Text,"/msg ^7Cash: ^1%d",bank.GetCash(ginfo.players[i].UCID));
         send_mst(Text);
-
+        #ifdef _RC_LEVEL_H
         sprintf(Text,"/msg ^7Drive Level: ^1%d",dl.GetLVL(ginfo.players[i].UCID));
         send_mst(Text);
 
@@ -2498,7 +2512,7 @@ void case_mso ()
 
         sprintf(Text,"/msg ^7Drive Skill: ^1%d%s",prog,"%");
         send_mst(Text);
-
+        #endif
         for ( int j=0; j<MAX_CARS; j++)
         {
             if (strlen(ginfo.players[i].cars[j].car)>0)
@@ -2596,6 +2610,7 @@ void case_mso ()
         {
             int needcash = 5000 + (GetCarID(ginfo.players[i].CName)-1)*1000;
             //!lvl
+            #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+1;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2605,7 +2620,7 @@ void case_mso ()
                 return;
             }
             //!
-
+            #endif
             if (ginfo.players[i].CTune&1)
             {
                 char msg[64];
@@ -2634,6 +2649,7 @@ void case_mso ()
         {
             int needcash = 10000 + (GetCarID(ginfo.players[i].CName)-1)*10000;
             //!lvl
+            #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+2;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2642,6 +2658,7 @@ void case_mso ()
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
+            #endif
             //!
             if (ginfo.players[i].CTune&2)
             {
@@ -2672,6 +2689,7 @@ void case_mso ()
         {
             int needcash = 3000 + (GetCarID(ginfo.players[i].CName)-1)*1000;
             //!lvl
+            #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+3;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2680,6 +2698,7 @@ void case_mso ()
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
+            #endif
             //!
             if (ginfo.players[i].CTune&4)
             {
@@ -2832,7 +2851,7 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,"^C^2| ^7У нас нет такой машины!");
             return;
         }
-
+        #ifdef _RC_LEVEL_H
         int needlvl = (CarID-1)*5;
         if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
         {
@@ -2841,7 +2860,7 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,msg);
             return;
         }
-
+        #endif
         if (bank.GetCash(ginfo.players[i].UCID) < (int)ginfo.car[CarID].cash)
         {
             char msg[64];
@@ -2984,8 +3003,13 @@ void case_mso ()
                 save_user_cars(&ginfo.players[j]);
                 save_user_fines(&ginfo.players[j]);
                 bank.bank_save(ginfo.players[j].UCID);
+                #ifdef _RC_ENERGY_H
                 nrg.energy_save(ginfo.players[j].UCID);
+                #endif
+
+                #ifdef _RC_LEVEL_H
                 dl.save(ginfo.players[j].UCID);
+                #endif
             }
         }
         ok=0;
@@ -3704,8 +3728,12 @@ void case_rst ()
     Sleep(100);
     read_fines();
     Sleep(100);
+    #ifdef _RC_PIZZA_H
     pizza.readconfig(pack_rst->Track);
+    #endif
+    #ifdef _RC_ENERGY_H
     nrg.readconfig(pack_rst->Track);
+    #endif
     bank.readconfig(pack_rst->Track);
     Sleep(100);
     /////////
@@ -4248,12 +4276,18 @@ void *thread_mci (void *params)
             case_mci_cop();
 
             antcht.mci();
-
+            #ifdef _RC_PIZZA_H
             pizza.pizza_mci();
-            nrg.energy_mci();
+            #endif
 
+            #ifdef _RC_ENERGY_H
+            nrg.energy_mci();
+            #endif
+
+            #ifdef _RC_LEVEL_H
             if (dl.inited == 1)
                 dl.mci();
+            #endif
 
             //bank.bank_mci();
         }
@@ -4339,10 +4373,13 @@ void *thread_save (void *params)
                     save_car(&ginfo.players[j]);
                     save_user_cars(&ginfo.players[j]);
                     save_user_fines(&ginfo.players[j]);
-
+                    #ifdef _RC_ENERGY_H
                     nrg.energy_save(ginfo.players[j].UCID);
+                    #endif
                     bank.bank_save(ginfo.players[j].UCID);
+                    #ifdef _RC_LEVEL_H
                     dl.save(ginfo.players[j].UCID);
+                    #endif
 
                     send_mtc(ginfo.players[j].UCID,msg.GetMessage(ginfo.players[j].UCID,3000));
                 }
@@ -4668,13 +4705,18 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         return 0;
     }
     Sleep(1000);
-
+    #ifdef _RC_PIZZA_H
     pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg);
+    #endif
     msg.init(RootDir,&insim);
+    #ifdef _RC_ENERGY_H
     nrg.init(RootDir,&nrg,&insim,&msg,&bank);
+    #endif
     bank.init(RootDir,&insim,&msg,&bank);
+    #ifdef _RC_LEVEL_H
     dl.init(RootDir,&insim,&msg);
-    antcht.init(RootDir,&antcht,&insim,&msg,&bank,&nrg);
+    #endif
+    antcht.init(RootDir,&antcht,&insim,&msg,&bank);
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
@@ -4779,10 +4821,16 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_toc();
             break;
         }
+        #ifdef _RC_ENERGY_H
         nrg.next_packet();
+        #endif
+        #ifdef _RC_PIZZA_H
         pizza.next_packet();
+        #endif
         bank.next_packet();
+        #ifdef _RC_LEVEL_H
         dl.next_packet();
+        #endif
         antcht.next_packet();
 
 
@@ -5154,10 +5202,13 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
                 save_car(&ginfo.players[j]);
                 save_user_cars(&ginfo.players[j]);
                 save_user_fines(&ginfo.players[j]);
-
+                #ifdef _RC_ENERGY_H
                 nrg.energy_save(ginfo.players[j].UCID);
+                #endif
                 bank.bank_save(ginfo.players[j].UCID);
+                #ifdef _RC_LEVEL_H
                 dl.save(ginfo.players[j].UCID);
+                #endif
                 Sleep(500);
             }
         }

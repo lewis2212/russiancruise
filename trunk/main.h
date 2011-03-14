@@ -77,11 +77,11 @@ using namespace std;
 #include <time.h>
 
 #include "CInsim.h"
-#include "RCPizza.h"
+//#include "RCPizza.h"
 #include "RCMessage.h"
-#include "RCEnergy.h"
+//#include "RCEnergy.h"
 #include "RCBank.h"
-#include "RCDrivingLicense.h"
+//#include "RCDrivingLicense.h"
 #include "RCAntCheat.h"
 
 

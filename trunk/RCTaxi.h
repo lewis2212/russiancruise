@@ -63,6 +63,9 @@ class RCTaxi
     struct  place zone;
     struct  TaxiPlayer players[32];     // Структура игроков
 
+    struct PTH pth;
+    struct PTH_NODES nodes;
+
     // Основные функции класса
     int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCTaxi.
     // Нужно для доступа к классу внутри потока
