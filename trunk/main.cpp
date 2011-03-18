@@ -6,7 +6,7 @@ int ok = 1;
 struct global_info ginfo;
 
 #ifdef _RC_PIZZA_H
-RCPizza pizza = new RCPizza();
+RCPizza pizza;
 #endif
 
 RCMessage   msg;
@@ -23,7 +23,9 @@ RCBank      bank;
 RCDL        dl;
 #endif
 
+#ifdef _RC_CHEAT_H
 RCAntCheat  antcht;
+#endif
 
 int GetCarID(char *CarName)
 {
@@ -693,7 +695,7 @@ void btn_info (struct player *splayer, int b_type)
 
 
 
-void btn_panel (struct player *splayer)
+void btn_street (struct player *splayer)
 {
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
@@ -737,7 +739,19 @@ void btn_panel (struct player *splayer)
     pack.H = 14;
     sprintf(pack.Text,"^0%d",splayer->street[splayer->StreetNum].SpeedLimit);
     insim.send_packet(&pack);
+}
+void btn_panel (struct player *splayer)
+{
     /****************************/
+     struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = splayer->UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    pack.BStyle = 1;
     pack.ClickID = 54;
     pack.BStyle = 32;
     pack.L = 85;
@@ -1660,6 +1674,8 @@ void case_mci ()
                     ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
                     ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
                     ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
+
+                    ginfo.players[j].StreetNum = 255;
                 }
 
                 float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
@@ -1744,7 +1760,11 @@ void case_mci ()
                 {
                     if (Node >= ginfo.players[j].street[g].NodeBeg and Node <= ginfo.players[j].street[g].NodeEnd )
                     {
-                        ginfo.players[j].StreetNum = g;
+                        if (ginfo.players[j].StreetNum != g)
+                        {
+                            ginfo.players[j].StreetNum = g;
+                            btn_street(&ginfo.players[j]);
+                        }
                         //strcpy(ginfo.players[j].Street,"^C^7");
                         //strcat(ginfo.players[j].Street,ginfo.players[j].street[g].Street);
                     }
@@ -1752,6 +1772,23 @@ void case_mci ()
 
 
                 /**  steets **/
+
+                /** pit wrong route **/
+
+                int pit1x[10] = {119,163,196,209,206,190,154,111};
+                int pit1y[10] = {460,340,288,230,230,290,340,460};
+                int Hed = pack_mci->Info[i].Heading/(32768/180);
+
+                if (Check_Pos(8,pit1x,pit1y,X,Y))
+                {
+                    if( (Hed < 190+90) and (Hed > 190-90) )
+                    continue;
+                    else
+                    {
+                        // vivod zhaka kirpich
+                    }
+                }
+
 
                 /** Zones (PitSave, shop, etc) **/
 
@@ -3420,7 +3457,7 @@ void case_npl ()
                     if (strcmp(ginfo.players[i].cars[j].car,pack_npl->CName)==0)
                         break;
                 }
-/**
+
                 if ( j != MAX_CARS)
                 {
 
@@ -3433,8 +3470,6 @@ void case_npl ()
                     //strcpy(ginfo.players[i].SName , row[2));
 
 
-                    //! LVL
-                    int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5;
 
                     int tune = 45;
                     if (ginfo.players[i].CTune&1)
@@ -3453,6 +3488,9 @@ void case_npl ()
                         //  needlvl ++;
                     }
 
+                     //! LVL
+                    #ifdef _RC_LEVEL_H
+                    int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5;
                     //int tune2 = needlvl - (GetCarID(ginfo.players[i].CName)-1)*5;
 
                     if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
@@ -3490,6 +3528,7 @@ void case_npl ()
                         send_mtc(ginfo.players[i].UCID,Texxt);
 
                     }
+                    #endif
 
                 }
                 else
@@ -3501,7 +3540,7 @@ void case_npl ()
                     ginfo.players[i].PLID = 0;
                     send_mst(Text);
                     return;
-                } **/
+                }
 
                 break;
             } //if PTupe != 6
@@ -4274,8 +4313,10 @@ void *thread_mci (void *params)
             case_mci ();
             case_mci_svetofor();
             case_mci_cop();
-
+            #ifdef _RC_CHEAT_H
             antcht.mci();
+            #endif
+
             #ifdef _RC_PIZZA_H
             pizza.pizza_mci();
             #endif
@@ -4716,7 +4757,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     #ifdef _RC_LEVEL_H
     dl.init(RootDir,&insim,&msg);
     #endif
+    #ifdef _RC_CHEAT_H
     antcht.init(RootDir,&antcht,&insim,&msg,&bank);
+    #endif
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
@@ -4757,27 +4800,22 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         case ISP_NPL:
             case_npl ();
-
             break;
 
         case ISP_NCN:
             case_ncn ();
-
             break;
 
         case ISP_CNL:
             case_cnl ();
-
             break;
 
         case ISP_PLL:
             case_pll ();
-
             break;
 
         case ISP_PLP:
             case_plp ();
-
             break;
 
 
@@ -4795,7 +4833,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         case ISP_CPR:
             case_cpr ();
-
             break;
 
         case ISP_RST:
@@ -4821,6 +4858,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_toc();
             break;
         }
+
         #ifdef _RC_ENERGY_H
         nrg.next_packet();
         #endif
@@ -4831,7 +4869,10 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         #ifdef _RC_LEVEL_H
         dl.next_packet();
         #endif
+
+        #ifdef _RC_CHEAT_H
         antcht.next_packet();
+        #endif
 
 
     }

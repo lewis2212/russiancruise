@@ -78,7 +78,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
                 if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
                 {
-                    //out << piz->players[i].UName << " accepted\n";
+                    //cout << piz->players[i].UName << " accepted\n";
 
                     /** прогон пользователей на предмет заказа **/
                     int j = 0;
@@ -86,7 +86,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                     {
 
 
-                        if ( (piz->players[j].UCID !=0) and (piz->players[j].UCID != piz->players[i].UCID) and (piz->players[j].Pizza != 0))
+                        if ( (piz->players[j].UCID !=0) and (piz->players[j].UCID != piz->players[i].UCID) and (piz->players[j].Pizza == 1))
                         {
                             //cout << players[i].UName << " accepted\n";
                             piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
@@ -96,12 +96,15 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                             piz->players[i].WorkZone =0;
                             int worktime = time(&ptime);
                             piz->players[i].WorkTime = worktime+60*6;
+
+                            piz->players[j].Pizza == 2;
+
                             break; // чтобы оповещал только одного игрока
 
                             // дебаг
-                            char Text[64];
-                            sprintf(Text,"%s -> %s ",piz->players[i].UName,piz->players[j].UName);
-                            piz->send_mst(Text);
+                            //char Text[64];
+                            //sprintf(Text,"%s -> %s ",piz->players[i].UName,piz->players[j].UName);
+                            //piz->send_mst(Text);
                         }
 
                     }
@@ -111,9 +114,10 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 
         /** тут заказ пиццы ботом **/
+        //cout << piz->ginfo_time - time(&ptime);
         if ( piz->ginfo_time <= time(&ptime))
         {
-
+            cout << "try to send pizza" << endl;
             //srand(time(&ptime));
             //int r = rand()%3 + 1;
             int pizza_time = 600/(piz->NumP+1);
@@ -130,34 +134,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
                     if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
                     {
-                        //out << piz->players[i].UName << " accepted\n";
-
-                        /** прогон пользователей на предмет заказа **/
-                        int j = 0;
-                        for (j = 0; j<32; j++)
-                        {
-
-
-                            if ( (piz->players[j].UCID !=0) and (piz->players[j].UCID != piz->players[i].UCID) and (piz->players[j].Pizza != 0))
-                            {
-                                //cout << players[i].UName << " accepted\n";
-                                piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
-                                piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
-                                piz->players[i].WorkAccept =1;
-                                piz->players[i].WorkPlayerAccept = 100 + j;
-                                piz->players[i].WorkZone =0;
-                                int worktime = time(&ptime);
-                                piz->players[i].WorkTime = worktime+60*6;
-                                break; // чтобы оповещал только одного игрока
-                            }
-
-                        }
-                        // заплатка чтобы вместо игрока пиццу не вешал
-                        if (j >= 32)
-                        {
-                            break;
-                        }
-
+                        cout << piz->players[i].UName << " accepted\n";
 
                         piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
                         piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
@@ -173,6 +150,10 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                     }
 
                 }
+            }
+            else
+            {
+                cout << "malo productov" << endl;
             }
         }
 

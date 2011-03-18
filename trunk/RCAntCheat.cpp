@@ -131,10 +131,13 @@ void RCAntCheat::mci ()
                 float X = pack_mci->Info[i].X/65536;
                 float Y = pack_mci->Info[i].Y/65536;
                 float Z = pack_mci->Info[i].Z/65536;
+                float Speed = pack_mci->Info[i].Speed/327.65;
 
                 float X1 = players[j].X/65536;
                 float Y1 = players[j].Y/65536;
                 float Z1 = players[j].Z/65536;
+
+                float Speed2 = players[j].Speed;
 
                 if (X1==0 and Y1==0 and Z1==0)
                 {
@@ -143,18 +146,13 @@ void RCAntCheat::mci ()
                     Z1=Z;
                 }
 
-                //printf("X=%d Y=%d\n",X,Y);
-
-                float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
-                Dist = (Dist)*2;
 
                 // NOTE: speed hack
-                float Speed = Dist;
-                float Speed2 = players[j].Speed;
+
 
                 float Accelerate = (Speed - Speed2)*2; // mci delay == 0.5 sec
-                if (Accelerate > players[j].MaxAcelerate)
-                players[j].MaxAcelerate = Accelerate;
+                if ((Accelerate > players[j].MaxAcelerate) and (Speed > 28))
+                    players[j].MaxAcelerate = Accelerate;
 
                 struct IS_BTN pack;
                 memset(&pack, 0, sizeof(struct IS_BTN));
@@ -172,7 +170,7 @@ void RCAntCheat::mci ()
                 pack.H = 8;
                 sprintf(pack.Text,"^7%3.3f m/ss",Accelerate);
                 //printf(pack.Text,"^7%f",Dist);
-                insim->send_button(&pack);
+                //insim->send_button(&pack);
 
                 pack.ClickID = 111;
                 pack.BStyle = 32;
@@ -182,7 +180,7 @@ void RCAntCheat::mci ()
                 pack.H = 8;
                 sprintf(pack.Text,"^7Max %3.3f m/ss",players[j].MaxAcelerate);
                 //printf(pack.Text,"^7%f",Dist);
-                insim->send_button(&pack);
+                //insim->send_button(&pack);
 
                 pack.ClickID = 112;
                 pack.BStyle = 32;
@@ -190,9 +188,9 @@ void RCAntCheat::mci ()
                 pack.T = 28;
                 pack.W = 30;
                 pack.H = 8;
-                sprintf(pack.Text,"^7X %f m",X);
+                sprintf(pack.Text,"^7%f m/s",Speed);
                 //printf(pack.Text,"^7%f",Dist);
-                insim->send_button(&pack);
+                //insim->send_button(&pack);
 
                 pack.ClickID = 113;
                 pack.BStyle = 32;
@@ -202,13 +200,49 @@ void RCAntCheat::mci ()
                 pack.H = 8;
                 sprintf(pack.Text,"^7Y %f m",Y);
                 //printf(pack.Text,"^7%f",Dist);
-                insim->send_button(&pack);
+                //insim->send_button(&pack);
 
 
                 players[j].X = pack_mci->Info[i].X;
                 players[j].Y = pack_mci->Info[i].Y;
                 players[j].Z = pack_mci->Info[i].Z;
-                players[j].Speed = Dist;
+                players[j].Speed = Speed;
+
+                //cout << players[j].CName << " " << Accelerate << " " << Speed << endl;
+
+                time_t timef;
+                int ftime = time(&timef); // get current time
+
+                if ((strcmp(players[j].CName,"UF1")==0) and (Accelerate > 1.7) and (Speed > 28))
+                {
+                    if (players[j].CheatTime == 0)
+                    {
+                        players[j].CheatTime = ftime;
+                    }
+
+                    int ts = ftime - players[i].CheatTime;
+                    players[j].CheatTime = ftime;
+
+
+                    if (ts < 10)
+                        players[j].CheatCount++;
+                    else
+                    {
+                        players[j].CheatCount = 1;
+                    }
+
+                    if (players[j].CheatCount > 4)   //max
+                    {
+
+                        players[j].CheatCount = 0;
+                        pitlane(players[j].UName);
+                        send_mtc(players[j].UCID,"^1cheat");
+                    }
+                }
+
+
+
+
 
 
 
@@ -246,6 +280,7 @@ void RCAntCheat::mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!text", 5) == 0 )
     {
+        players[i].MaxAcelerate = 0;
         /** DO SOME CODE **/
     }
 
@@ -304,6 +339,7 @@ void RCAntCheat::npl()
         if (players[i].UCID == pack_npl->UCID)
         {
             players[i].PLID = pack_npl->PLID;
+            strcpy(players[i].CName,pack_npl->CName);
             /** DO SOME CODE **/
             break;
         }
@@ -360,4 +396,33 @@ void RCAntCheat::pll()
     }
 }
 
+void RCAntCheat::send_mst (char* Text)
+{
+    struct IS_MST pack_mst;
+    memset(&pack_mst, 0, sizeof(struct IS_MST));
+    pack_mst.Size = sizeof(struct IS_MST);
+    pack_mst.Type = ISP_MST;
+    strncpy(pack_mst.Msg,Text,strlen(Text));
+    insim->send_packet(&pack_mst);
+}
 
+void RCAntCheat::send_mtc (byte UCID,char* Msg)
+{
+    struct IS_MTC pack_mtc;
+    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
+    pack_mtc.Size = sizeof(struct IS_MTC);
+    pack_mtc.Type = ISP_MTC;
+    pack_mtc.UCID = UCID;
+    strncpy(pack_mtc.Msg, Msg,strlen(Msg));
+    insim->send_packet(&pack_mtc);
+}
+
+void RCAntCheat::pitlane (char* UName)
+{
+    struct IS_MST pack_mst;
+    memset(&pack_mst, 0, sizeof(struct IS_MST));
+    pack_mst.Size = sizeof(struct IS_MST);
+    pack_mst.Type = ISP_MST;
+    sprintf(pack_mst.Msg,"/spec %s",UName);
+    insim->send_packet(&pack_mst);
+}

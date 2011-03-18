@@ -1,5 +1,5 @@
-#ifndef _RC_TAXI_H // Проверка, чтобы файл подключался один раз
-#define _RC_TAXI_H
+#ifndef _RC_CHEAT_H // Проверка, чтобы файл подключался один раз
+#define _RC_CHEAT_H
 
 #include <stdio.h>      //
 #include <iostream>     //
@@ -30,6 +30,9 @@ struct Player
     float	Speed;		// speed (m/s)
     float   Acelerate;
     float   MaxAcelerate;
+
+    int     CheatTime;
+    int     CheatCount;
 };
 
 
@@ -74,6 +77,7 @@ class RCAntCheat
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
+    void pitlane(char *UName);
 
 
     // Функции-утилиты
