@@ -46,7 +46,7 @@ void RCTaxi::readconfig(char *Track)
 {
     //cout << "RCTaxi::readconfig\n" ;
     char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCTaxi\\%s.txt",RootDir,Track);
+    sprintf(file,"%sdata\\RCTaxi\\tracks\\%s.txt",RootDir,Track);
     //cout << file << endl;
 
 
@@ -55,7 +55,7 @@ void RCTaxi::readconfig(char *Track)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("Can't find ");
+        printf ("Can't find \n%s",file);
         return;
     }
     FindClose(fff);
@@ -129,7 +129,39 @@ void RCTaxi::readconfig(char *Track)
     }
     FindClose(fff);
 
-    ifstream readpth (file,ios::in);
+    HANDLE  hFile;
+
+    //! открываем файл для чтения
+    hFile = CreateFile(file, GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+    //! проверяем на успешное открытие
+    DWORD  dwBytesRead;
+    if (hFile == INVALID_HANDLE_VALUE)
+    {
+        printf("Create file failed. \nThe last error code: %d\n",(int)GetLastError());
+        return;
+    }
+
+    if ( !ReadFile(hFile,&pth,sizeof(PTH),&dwBytesRead,(LPOVERLAPPED)NULL) )
+    {
+        cerr << "Read \"PTH Header\" failed." << endl;
+        return;
+    }
+
+
+    for (int j = 0; j < pth.num_nodes; j++)
+    {
+        if ( !ReadFile(hFile,&nodes[j],sizeof(PTH_NODES),&dwBytesRead,(LPOVERLAPPED)NULL) )
+        {
+            cerr << "Read \"PTH Nodes[" << j << "]\" failed." << endl;
+            return;
+        }
+
+        if (dwBytesRead == 0)
+            break;
+    }
+
+    /** закрываем дескриптор файла **/
+    CloseHandle(hFile);
 
     //readpth
 
