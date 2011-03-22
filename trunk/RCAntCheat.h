@@ -15,6 +15,16 @@
 
 // Задаем структуру игрока
 
+struct CarAcl
+{
+    char    CName[4];
+    float   MaxAcelerate4060;
+    float   MaxAcelerate6080;
+    float   MaxAcelerate80100;
+    float   MaxAcelerate100;
+    float   MaxSpeed;
+};
+
 struct Player
 {
     struct  CompCar Info;
@@ -29,7 +39,10 @@ struct Player
     int		Z;			// Z alt (65536 = 1 metre)
     float	Speed;		// speed (m/s)
     float   Acelerate;
-    float   MaxAcelerate;
+    float   MaxAcelerate4060;
+    float   MaxAcelerate6080;
+    float   MaxAcelerate80100;
+    float   MaxAcelerate100;
 
     int     CheatTime;
     int     CheatCount;
@@ -78,6 +91,7 @@ class RCAntCheat
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
     void pitlane(char *UName);
+    void cheat(struct  Player *splayer);
 
 
     // Функции-утилиты

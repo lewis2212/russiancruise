@@ -2,6 +2,8 @@ using namespace std;
 
 #include "RCAntCheat.h"
 
+struct CarAcl anticheat[3];
+
 RCAntCheat::RCAntCheat()
 {
 
@@ -37,6 +39,49 @@ int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void 
         printf ("Can't struct RCBank class");
         return -1;
     }
+
+    strcpy(anticheat[0].CName,"UF1");
+    strcpy(anticheat[1].CName,"XFG");
+    strcpy(anticheat[2].CName,"XRG");
+
+    anticheat[0].MaxAcelerate4060 = 6.5;
+    anticheat[0].MaxAcelerate6080 = 4.5;
+    anticheat[0].MaxAcelerate80100 = 4;
+    anticheat[0].MaxAcelerate100 = 2.2;
+    anticheat[0].MaxSpeed = 160;
+
+    anticheat[1].MaxAcelerate4060 = 5.3;
+    anticheat[1].MaxAcelerate6080 = 4.5;
+    anticheat[1].MaxAcelerate80100 = 4.1;
+    anticheat[1].MaxAcelerate100 = 3.9;
+    anticheat[1].MaxSpeed = 200;
+
+    anticheat[2].MaxAcelerate4060 = 5.3;
+    anticheat[2].MaxAcelerate6080 = 4.5;
+    anticheat[2].MaxAcelerate80100 = 4.1;
+    anticheat[2].MaxAcelerate100 = 3.9;
+    anticheat[2].MaxSpeed = 200;
+
+    strcpy(anticheat[3].CName,"XRT");
+    anticheat[3].MaxAcelerate4060 = 7;
+    anticheat[3].MaxAcelerate6080 = 6;
+    anticheat[3].MaxAcelerate80100 = 5.5;
+    anticheat[3].MaxAcelerate100 = 4;
+    anticheat[3].MaxSpeed = 220;
+
+    strcpy(anticheat[4].CName,"FXO");
+    anticheat[4].MaxAcelerate4060 = 7;
+    anticheat[4].MaxAcelerate6080 = 6;
+    anticheat[4].MaxAcelerate80100 = 5.5;
+    anticheat[4].MaxAcelerate100 = 4;
+    anticheat[4].MaxSpeed = 220;
+
+    strcpy(anticheat[5].CName,"RB4");
+    anticheat[5].MaxAcelerate4060 = 8;
+    anticheat[5].MaxAcelerate6080 = 7.5;
+    anticheat[5].MaxAcelerate80100 = 6;
+    anticheat[5].MaxAcelerate100 = 5;
+    anticheat[5].MaxSpeed = 220;
 
     return 0;
 }
@@ -151,8 +196,30 @@ void RCAntCheat::mci ()
 
 
                 float Accelerate = (Speed - Speed2)*2; // mci delay == 0.5 sec
-                if ((Accelerate > players[j].MaxAcelerate) and (Speed > 28))
-                    players[j].MaxAcelerate = Accelerate;
+
+                float Speed1 = Speed*3.6;
+                if (Speed1 > 39 and Speed1 < 60)
+                {
+                    if (Accelerate > players[j].MaxAcelerate4060)
+                        players[j].MaxAcelerate4060 = Accelerate;
+                }
+
+                if (Speed1 > 59 and Speed1 < 80)
+                {
+                    if (Accelerate > players[j].MaxAcelerate6080)
+                        players[j].MaxAcelerate6080 = Accelerate;
+                }
+                if (Speed1 > 79 and Speed1 < 100)
+                {
+                    if (Accelerate > players[j].MaxAcelerate80100)
+                        players[j].MaxAcelerate80100 = Accelerate;
+                }
+
+                if (Speed1 > 100)
+                {
+                    if (Accelerate > players[j].MaxAcelerate100)
+                        players[j].MaxAcelerate100 = Accelerate;
+                }
 
                 struct IS_BTN pack;
                 memset(&pack, 0, sizeof(struct IS_BTN));
@@ -168,7 +235,7 @@ void RCAntCheat::mci ()
                 pack.T = 10;
                 pack.W = 30;
                 pack.H = 8;
-                sprintf(pack.Text,"^7%3.3f m/ss",Accelerate);
+                sprintf(pack.Text,"^7%3.3f km/h",Speed1);
                 //printf(pack.Text,"^7%f",Dist);
                 //insim->send_button(&pack);
 
@@ -178,7 +245,7 @@ void RCAntCheat::mci ()
                 pack.T = 19;
                 pack.W = 30;
                 pack.H = 8;
-                sprintf(pack.Text,"^7Max %3.3f m/ss",players[j].MaxAcelerate);
+                sprintf(pack.Text,"^7Max %3.3f m/ss(40-60)",players[j].MaxAcelerate4060);
                 //printf(pack.Text,"^7%f",Dist);
                 //insim->send_button(&pack);
 
@@ -188,7 +255,7 @@ void RCAntCheat::mci ()
                 pack.T = 28;
                 pack.W = 30;
                 pack.H = 8;
-                sprintf(pack.Text,"^7%f m/s",Speed);
+                sprintf(pack.Text,"^7Max %3.3f m/ss(60-80)",players[j].MaxAcelerate6080);
                 //printf(pack.Text,"^7%f",Dist);
                 //insim->send_button(&pack);
 
@@ -198,7 +265,17 @@ void RCAntCheat::mci ()
                 pack.T = 37;
                 pack.W = 30;
                 pack.H = 8;
-                sprintf(pack.Text,"^7Y %f m",Y);
+                sprintf(pack.Text,"^7Max %3.3f m/ss(80-100)",players[j].MaxAcelerate80100);
+                //printf(pack.Text,"^7%f",Dist);
+                //insim->send_button(&pack);
+
+                pack.ClickID = 114;
+                pack.BStyle = 32;
+                pack.L = 136;
+                pack.T = 46;
+                pack.W = 30;
+                pack.H = 8;
+                sprintf(pack.Text,"^7Max %3.3f m/ss(100-)",players[j].MaxAcelerate100);
                 //printf(pack.Text,"^7%f",Dist);
                 //insim->send_button(&pack);
 
@@ -210,40 +287,39 @@ void RCAntCheat::mci ()
 
                 //cout << players[j].CName << " " << Accelerate << " " << Speed << endl;
 
-                time_t timef;
-                int ftime = time(&timef); // get current time
 
-                if ((strcmp(players[j].CName,"UF1")==0) and (Accelerate > 1.7) and (Speed > 28))
+
+                for (int g=0; g<6; g++)
                 {
-                    if (players[j].CheatTime == 0)
+                    if (strcmp(anticheat[g].CName,players[j].CName)==0)
                     {
-                        players[j].CheatTime = ftime;
-                    }
+                        if (Speed1 > 39 and Speed1 < 60)
+                        {
+                            if (Accelerate > players[j].MaxAcelerate4060)
+                              cheat(&players[j]);
+                        }
+                        else if (Speed1 > 59 and Speed1 < 80)
+                        {
+                            if (Accelerate > anticheat[g].MaxAcelerate6080)
+                               cheat(&players[j]);
+                        }
+                        else if (Speed1 > 79 and Speed1 < 100)
+                        {
+                            if (Accelerate > anticheat[g].MaxAcelerate80100)
+                                cheat(&players[j]);
+                        }
+                        else if (Speed1 > 100)
+                        {
+                            if (Accelerate > anticheat[g].MaxAcelerate100)
+                               cheat(&players[j]);
+                        }
 
-                    int ts = ftime - players[i].CheatTime;
-                    players[j].CheatTime = ftime;
+                        if (Speed1 > anticheat[g].MaxSpeed)
+                        cheat(&players[j]);
 
-
-                    if (ts < 10)
-                        players[j].CheatCount++;
-                    else
-                    {
-                        players[j].CheatCount = 1;
-                    }
-
-                    if (players[j].CheatCount > 4)   //max
-                    {
-
-                        players[j].CheatCount = 0;
-                        pitlane(players[j].UName);
-                        send_mtc(players[j].UCID,"^1cheat");
+                        break;
                     }
                 }
-
-
-
-
-
 
 
                 /** NOTE: don't use break **/
@@ -280,7 +356,10 @@ void RCAntCheat::mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!text", 5) == 0 )
     {
-        players[i].MaxAcelerate = 0;
+        players[i].MaxAcelerate4060 = 0;
+        players[i].MaxAcelerate6080 = 0;
+        players[i].MaxAcelerate80100 = 0;
+        players[i].MaxAcelerate100 = 0;
         /** DO SOME CODE **/
     }
 
@@ -360,7 +439,11 @@ void RCAntCheat::plp()
         {
             /** DO SOME CODE **/
             // NOTE: speed
-            players[i].MaxAcelerate = 0;
+            players[i].MaxAcelerate4060 = 0;
+            players[i].MaxAcelerate6080 = 0;
+            players[i].MaxAcelerate80100 = 0;
+            players[i].MaxAcelerate100 = 0;
+
             players[i].X = 0;
             players[i].Y = 0;
             players[i].Z = 0;
@@ -385,7 +468,11 @@ void RCAntCheat::pll()
         {
             /** DO SOME CODE **/
             // NOTE: speed
-            players[i].MaxAcelerate = 0;
+            players[i].MaxAcelerate4060 = 0;
+            players[i].MaxAcelerate6080 = 0;
+            players[i].MaxAcelerate80100 = 0;
+            players[i].MaxAcelerate100 = 0;
+
             players[i].X = 0;
             players[i].Y = 0;
             players[i].Z = 0;
@@ -423,6 +510,34 @@ void RCAntCheat::pitlane (char* UName)
     memset(&pack_mst, 0, sizeof(struct IS_MST));
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
-    sprintf(pack_mst.Msg,"/spec %s",UName);
+    sprintf(pack_mst.Msg,"/pitlane %s",UName);
     insim->send_packet(&pack_mst);
+}
+void RCAntCheat::cheat(struct  Player *splayer)
+{
+    time_t timef;
+    int ftime = time(&timef); // get current time
+    if (splayer->CheatTime == 0)
+    {
+        splayer->CheatTime = ftime;
+    }
+
+    int ts = ftime - splayer->CheatTime;
+    splayer->CheatTime = ftime;
+
+
+    if (ts < 10)
+        splayer->CheatCount++;
+    else
+    {
+        splayer->CheatCount = 1;
+    }
+
+    if (splayer->CheatCount > 4)   //max
+    {
+
+        splayer->CheatCount = 0;
+        pitlane(splayer->UName);
+        send_mtc(splayer->UCID,"^1Cheat");
+    }
 }
