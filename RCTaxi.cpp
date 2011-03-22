@@ -225,6 +225,12 @@ void RCTaxi::taxi_mci ()
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
     }
+
+    /** thread xD **/
+
+
+
+    /** thread **/
 }
 
 void RCTaxi::taxi_mso ()

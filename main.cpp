@@ -1675,7 +1675,7 @@ void case_mci ()
                     ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
                     ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
 
-                    ginfo.players[j].StreetNum = 255;
+                    ginfo.players[j].StreetNum = 250;
                 }
 
                 float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
