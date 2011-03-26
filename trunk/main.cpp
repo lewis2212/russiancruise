@@ -5076,34 +5076,17 @@ int main(int argc, char* argv[])
     }
     else if (strcmp(argv[argc-1],"console") == 0 )
     {
-        char day[3];
-        char month[3];
-        char year[3];
 
         SYSTEMTIME sm;
         GetLocalTime(&sm);
 
-        itoa(sm.wDay,day,10);
-        itoa(sm.wMonth,month,10);
-        itoa(sm.wYear,year,10);
-
-
         char log[MAX_PATH];
-        strcpy(log,RootDir);
-        strcat(log,"logs\\");
-        strcat(log,ServiceName);
-        strcat(log,"(");
-        strcat(log,day);
-        strcat(log,".");
-        strcat(log,month);
-        strcat(log,".");
-        strcat(log,year);
-        strcat(log,").log");
+        sprintf(log,"%slogs\\%s(%d.%d.%d).log",RootDir,ServiceName,sm.wDay,sm.wMonth,sm.wYear);
 
         out.open(log);
-
         out << RootDir << endl;
         out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
+
         CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
         // рабочий цикл сервиса
@@ -5137,29 +5120,11 @@ int main(int argc, char* argv[])
 
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
-    char day[3];
-    char month[3];
-    char year[3];
-
-    SYSTEMTIME sm;
+   SYSTEMTIME sm;
     GetLocalTime(&sm);
 
-    itoa(sm.wDay,day,10);
-    itoa(sm.wMonth,month,10);
-    itoa(sm.wYear,year,10);
-
-
     char log[MAX_PATH];
-    strcpy(log,RootDir);
-    strcat(log,"logs\\");
-    strcat(log,ServiceName);
-    strcat(log,"(");
-    strcat(log,day);
-    strcat(log,".");
-    strcat(log,month);
-    strcat(log,".");
-    strcat(log,year);
-    strcat(log,").log");
+    sprintf(log,"%slogs\\%s(%d.%d.%d).log",RootDir,ServiceName,sm.wDay,sm.wMonth,sm.wYear);
 
     out.open(log);
 

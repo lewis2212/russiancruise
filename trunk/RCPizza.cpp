@@ -97,7 +97,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                             int worktime = time(&ptime);
                             piz->players[i].WorkTime = worktime+60*6;
 
-                            piz->players[j].Pizza == 2;
+                            piz->players[j].Pizza = 2;
 
                             break; // чтобы оповещал только одного игрока
 
