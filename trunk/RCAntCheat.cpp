@@ -289,7 +289,7 @@ void RCAntCheat::mci ()
 
 
 
-                for (int g=0; g<6; g++)
+                for (int g=0; g<3; g++)
                 {
                     if (strcmp(anticheat[g].CName,players[j].CName)==0)
                     {
