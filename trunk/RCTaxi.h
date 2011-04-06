@@ -32,11 +32,15 @@ struct TaxiPlayer
     byte    Zone;
     /** Work **/
     char    WorkDest[96];           // destination text
-    byte    WorkType;               // WK_TAXI
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkNodeDestinaion;     // Номер нода трассы, куда надо доставить
     int     WorkTime;			    // Время за которое он должен доставить товар
     int     WorkCountDone;
+
+    byte    Work;
+    int     FiredPenalty;
+    int     PenaltyCount;
+    int     PassCount;
 };
 
 
@@ -87,6 +91,8 @@ class RCTaxi
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
 
+    void read_user(struct TaxiPlayer *splayer);
+    void save_user(struct TaxiPlayer *splayer);
 
     // Функции-утилиты
     // int check_pos (struct PizzaPlayer *splayer); //+
