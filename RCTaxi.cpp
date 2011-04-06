@@ -180,6 +180,7 @@ void RCTaxi::taxi_cnl ()
     {
         if (players[i].UCID == pack_cnl->UCID)
         {
+            save_user(&players[i]);
             memset(&players[i],0,sizeof(struct TaxiPlayer));
             break;
         }
@@ -221,13 +222,31 @@ void RCTaxi::taxi_mci ()
             {
                 /** DO SOME CODE **/
 
+                int X = pack_mci->Info[i].X/65536;
+                int Y = pack_mci->Info[i].Y/65536;
+
+                // Если игрок находится в зоне приема на работу, выводим воспомогательные сообщения в чат
+
+                int TX[4] = {0,0,0,0};
+                int TY[4] = {0,0,0,0};
+                if (Check_Pos(4,TX,TY,X,Y))
+                {
+                    send_mtc(players[j].UCID,"Taxi Radriges");
+                    send_mtc(players[j].UCID,"!deal");
+                    send_mtc(players[j].UCID,"!undeal");
+                    send_mtc(players[j].UCID,"!workstart");
+                    send_mtc(players[j].UCID,"!workend");
+                }
+
+
+
+
                 /** NOTE: don't use break **/
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
     }
 
     /** thread xD **/
-
 
 
     /** thread **/
@@ -257,9 +276,11 @@ void RCTaxi::taxi_mso ()
         }
     }
 
+    char Message[96];
+    strcpy(Message,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!text", 5) == 0 )
+    if (strncmp(Message, "!text", 5) == 0 )
     {
         /** DO SOME CODE **/
     }
@@ -300,6 +321,8 @@ void RCTaxi::taxi_ncn()
     strcpy(players[i].UName, pack_ncn->UName);
     strcpy(players[i].PName, pack_ncn->PName);
     players[i].UCID = pack_ncn->UCID;
+
+    read_user(&players[i]);
 
     /** DO SOME CODE **/
 
@@ -365,4 +388,114 @@ void RCTaxi::taxi_pll()
     }
 }
 
+void RCTaxi::read_user(struct TaxiPlayer *splayer)
+{
+    /** read file **/
 
+    char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCTaxi\\users\\%s.txt",RootDir,splayer->UName);
+    //strcat(file,"tracks\\.txt");
+
+    // Read Data From File
+
+    // Try Find New File
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        printf("Can't find %s\n Create File for user",file);
+        // create
+        splayer->Work= 0;
+        splayer->FiredPenalty= 0;
+        splayer->PenaltyCount = 0;
+        splayer->PassCount = 0;
+    }
+    else
+    {
+        ifstream readf (file,ios::in);
+
+        while (readf.good())
+        {
+            char str[128];
+            readf.getline(str,128);
+            if (strlen(str) > 0)
+            {
+
+                if (strncmp("Work=",str,strlen("Work="))==0)
+                {
+                    splayer->Work = atoi(str+strlen("Work="));
+                }
+
+                if (strncmp("FiredPenalty=",str,strlen("FiredPenalty="))==0)
+                {
+                    splayer->FiredPenalty= atoi(str+strlen("FiredPenalty="));
+                }
+
+                if (strncmp("PenaltyCount=",str,strlen("PenaltyCount="))==0)
+                {
+                    splayer->PenaltyCount = atoi(str+strlen("PenaltyCount="));
+                }
+
+                if (strncmp("PassCount=",str,strlen("PassCount="))==0)
+                {
+                    splayer->PassCount = atoi(str+strlen("PassCount="));
+                }
+
+
+            }
+        }
+
+
+
+        readf.close();
+    }
+    FindClose(fff);
+}
+
+void RCTaxi::save_user(struct TaxiPlayer *splayer)
+{
+    char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCTaxi\\users\\%s.txt",RootDir,splayer->UName);
+    //printf(file);
+
+    ofstream writef (file,ios::out);
+    writef << "Work=" << splayer->Work << endl;
+    writef << "FiredPenalty=" << splayer->FiredPenalty << endl;
+    writef << "PenaltyCount=" << splayer->PenaltyCount << endl;
+    writef << "PassCount=" << splayer->PassCount << endl;
+    writef.close();
+}
+
+
+void RCTaxi::send_mtc (byte UCID,char* Msg)
+{
+    struct IS_MTC pack_mtc;
+    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
+    pack_mtc.Size = sizeof(struct IS_MTC);
+    pack_mtc.Type = ISP_MTC;
+    pack_mtc.UCID = UCID;
+    strcpy(pack_mtc.Msg, Msg);
+    insim->send_packet(&pack_mtc);
+}
+
+void RCTaxi::send_mst (char* Text)
+{
+    struct IS_MST pack_mst;
+    memset(&pack_mst, 0, sizeof(struct IS_MST));
+    pack_mst.Size = sizeof(struct IS_MST);
+    pack_mst.Type = ISP_MST;
+    strcpy(pack_mst.Msg,Text);
+    insim->send_packet(&pack_mst);
+}
+
+void RCTaxi::send_bfn (byte UCID, byte ClickID)
+{
+    struct IS_BFN pack;
+    memset(&pack, 0, sizeof(struct IS_BFN));
+    pack.Size = sizeof(struct IS_BFN);
+    pack.Type = ISP_BFN;
+    pack.UCID = UCID;
+    pack.ClickID = ClickID;
+    insim->send_packet(&pack);
+}
