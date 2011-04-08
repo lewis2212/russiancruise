@@ -50,8 +50,12 @@ class RCTaxi
 {
     private:
     // Переменные и функции, доступные только самому классу
-
+    time_t  acctime;
+    int     accept_time;
+    int     NumP;
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
+
+    void accept_user();
 
     public:
     // Переменные и функции, доступные для всех

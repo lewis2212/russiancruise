@@ -15,6 +15,9 @@ byte    StreetNum;
 3. Список экспортируемых функций
 bool IfInited()
 char *CurentStreet (byte UCID)
+int CurentStreetNum(byte UCID)
+int CurentStreetInfo(void StreetInfo, int StreetNum)
+int StreetCount()
 
 4. Список импортируемых функций
 bool init(char *Track)
@@ -24,6 +27,14 @@ void next_packet()
 5. внутренняя функция btnStreet, выполняется, если игрок въехал на другую улицу
 
 6. для мци пакета информация тут  main.cpp 1756
+
+7. работа функции CurentStreetInfo(void StreetInfo, int StreetNum)
+смотри в массиве улицу с номером StreetNum
+переменную StreetInfo преобразуем в структуру улицы (main.h  149)
+struct streets *street = (streets*)StreetInfo;
+strncpy(street->Street,Street[StreetNum].Street,50);
+street->NodeBeg = Street[StreetNum].NodeBeg
+и .т.д
 
  _____________________________________________________________________
 
@@ -146,6 +157,11 @@ if day of the week monday call "TrackRotation()"
  #incude <time.h>
   srand ( time(NULL) );
   rand() % Street[i].NodeEnd + Street[i].NodeStart;
+
+  записываем нод доставки в структуру
+  ждем когда игрок заедет на улицу
+  когда игрок въезжает на улицу,то мы смотрим координаты нода и вычисляем расстояние
+  до точки назначения и выводим это значение с округлением до кратности 50 (тут, 50 100 150 200 250 и т.д.)
 
 
 
