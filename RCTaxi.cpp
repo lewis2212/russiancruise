@@ -168,6 +168,34 @@ void RCTaxi::readconfig(char *Track)
 
 }
 
+void RCTaxi::accept_user()
+{
+    if ( accept_time >= time(&acctime))
+    return;
+            //srand(time(&ptime));
+            //int r = rand()%3 + 1;
+     int taxi_time = 600/(NumP+1);
+     accept_time += taxi_time;
+
+    for (int i=0; i< 32; i++)
+    {
+        if ((players[i].Work == 1) and (players[i].WorkAccept == 0))
+        {
+            // accept player
+            #ifdef RC_STREET
+            int CurStreet = street->CurentStreetNum(players[i].UCID);
+            int DestStreet = 0;
+            srand(time(NULL));
+
+            while (DestStreet == CurStreet)
+            DestStreet = rand()%street->StreetCount;
+
+            players[i].WorkNodeDestinaion =
+            #endif
+        }
+    }
+}
+
 
 void RCTaxi::taxi_cnl ()
 {
@@ -209,6 +237,7 @@ void RCTaxi::taxi_crp()
 void RCTaxi::taxi_mci ()
 {
     //cout << "taxi_mci" << endl;
+
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
 
@@ -247,6 +276,7 @@ void RCTaxi::taxi_mci ()
     }
 
     /** thread xD **/
+    accept_user();
 
 
     /** thread **/
