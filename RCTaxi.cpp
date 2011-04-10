@@ -190,7 +190,14 @@ void RCTaxi::accept_user()
             while (DestStreet == CurStreet)
             DestStreet = rand()%street->StreetCount;
 
-            players[i].WorkNodeDestinaion =
+            struct streets StreetInfo;
+            memset(&StreetInfo,,sizeof(streets));
+            if !(street->CurentStreetInfo(&StreetInfo,DestStreet))
+            return;
+
+            int DestNode = rand()%StreetInfo->NodeEnd + StreetInfo->NodeBeg;
+
+            players[i].WorkNodeDestinaion = DestNode;
             #endif
         }
     }
