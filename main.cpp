@@ -27,6 +27,14 @@ RCDL        dl;
 RCAntCheat  antcht;
 #endif
 
+#ifdef _RC_STREET_H
+RCStreet  street;
+#endif
+
+#ifdef _RC_TAXI_H
+RCTaxi  taxi;
+#endif
+
 int GetCarID(char *CarName)
 {
     if (strlen(CarName)!=3)
@@ -695,51 +703,6 @@ void btn_info (struct player *splayer, int b_type)
 
 
 
-void btn_street (struct player *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.BStyle = 1;
-    pack.ClickID = 50;
-    pack.L = 10;
-    pack.T = 158;
-    pack.W = 33;
-    pack.H = 6;
-    strcpy(pack.Text,splayer->street[splayer->StreetNum].Street);
-    insim.send_packet(&pack);
-
-    pack.BStyle = 64;
-    pack.ClickID = 51;
-    pack.L = 30;
-    pack.T = 130;
-    pack.W = 80;
-    pack.H = 80;
-    strcpy(pack.Text,"^1•");
-    insim.send_packet(&pack);
-
-    pack.ClickID = 52;
-    pack.L = 35;
-    pack.T = 140;
-    pack.W = 61;
-    pack.H = 61;
-    strcpy(pack.Text,"^7•");
-    insim.send_packet(&pack);
-
-    pack.ClickID = 53;
-    pack.BStyle = 1;
-    pack.L = 44;
-    pack.T = 166;
-    pack.W = 15;
-    pack.H = 14;
-    sprintf(pack.Text,"^0%d",splayer->street[splayer->StreetNum].SpeedLimit);
-    insim.send_packet(&pack);
-}
 void btn_panel (struct player *splayer)
 {
     /****************************/
@@ -1753,25 +1716,7 @@ void case_mci ()
 
 
 
-                /** streets  **/
 
-
-                for (int g=0; g<ginfo.players[j].str_count; g++)
-                {
-                    if (Node >= ginfo.players[j].street[g].NodeBeg and Node <= ginfo.players[j].street[g].NodeEnd )
-                    {
-                        if (ginfo.players[j].StreetNum != g)
-                        {
-                            ginfo.players[j].StreetNum = g;
-                            btn_street(&ginfo.players[j]);
-                        }
-                        //strcpy(ginfo.players[j].Street,"^C^7");
-                        //strcat(ginfo.players[j].Street,ginfo.players[j].street[g].Street);
-                    }
-                }
-
-
-                /**  steets **/
 
                 /** pit wrong route **/
 
@@ -1901,7 +1846,10 @@ void case_mci_cop ()
                                     //printf("COP - %s CRIM - %s dN=%d \n",ginfo.players[j].UName,ginfo.players[g].UName,dN);
                                     // player[g] in radar zone of player[j]
                                     int Speed = ginfo.players[g].Info.Speed*360/32768;
-                                    if ((Speed > ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit+10) )
+                                    struct streets StreetInfo;
+                                    street.CurentStreetInfo(&StreetInfo,street.CurentStreetNum(ginfo.players[g].UCID));
+
+                                    if ((Speed > StreetInfo.SpeedLimit+10) )
                                     {
                                         // speed > SpeedLimit + 10
                                         char text[64];
@@ -1909,7 +1857,7 @@ void case_mci_cop ()
                                         strcat(text,ginfo.players[g].PName);
                                         strcat(text,msg.GetMessage(ginfo.players[g].UCID,1704));
                                         char speed[3];
-                                        int Speed2 = Speed - ginfo.players[j].street[ginfo.players[g].StreetNum].SpeedLimit;
+                                        int Speed2 = Speed - StreetInfo.SpeedLimit;
                                         itoa(Speed2,speed,10);
                                         strcat(text,speed);
                                         strcat(text,msg.GetMessage(ginfo.players[j].UCID,1705));
@@ -3926,36 +3874,6 @@ void read_track(struct player *splayer)
         if (strlen(str) > 0)
         {
 
-            if (strncmp(str,"/street",7)==0)
-            {
-                int i = 0;
-                readf.getline(str,128);
-                while (strncmp(str,"#street",7)!=0)
-                {
-                    if (!(strstr(str,"#street")))
-                    {
-                        char * street;
-                        char * node1;
-                        char * node2;
-                        char * speed;
-                        street = strtok (str,";");
-                        node1 = strtok (NULL,";");
-                        node2 = strtok (NULL,";");
-                        speed = strtok (NULL,";");
-
-                        memset(&splayer->street[i],0,sizeof(streets));
-                        strcpy(splayer->street[i].Street,"^C^7");
-                        strcat(splayer->street[i].Street,street);
-                        splayer->street[i].NodeBeg = atoi(node1);
-                        splayer->street[i].NodeEnd = atoi(node2);
-                        splayer->street[i].SpeedLimit = atoi(speed);
-                        readf.getline(str,128);
-                        i++;
-                    }
-                } // while #street
-                splayer->str_count = i;
-            } // if /street
-
             if (strncmp(str,"/pitzone",8)==0)
             {
                 readf.getline(str,128);
@@ -4325,10 +4243,21 @@ void *thread_mci (void *params)
             nrg.energy_mci();
             #endif
 
+            #ifdef _RC_STREET_H
+            if (street.IfInited)
+                street.street_mci();
+            #endif
+
             #ifdef _RC_LEVEL_H
             if (dl.inited == 1)
                 dl.mci();
             #endif
+
+            #ifdef _RC_TAXI_H
+            if (taxi.inited == 1)
+                taxi.taxi_mci();
+            #endif
+
 
             //bank.bank_mci();
         }
@@ -4761,6 +4690,14 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     antcht.init(RootDir,&antcht,&insim,&msg,&bank);
     #endif
 
+    #ifdef _RC_STREET_H
+    street.init(RootDir,&insim,&msg);
+    #endif
+
+    #ifdef _RC_TAXI_H
+    taxi.init(RootDir,&insim,&msg,&bank,&dl,&street);
+    #endif
+
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
@@ -4872,6 +4809,14 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         #ifdef _RC_CHEAT_H
         antcht.next_packet();
+        #endif
+
+        #ifdef _RC_STREET_H
+        street.next_packet();
+        #endif
+
+        #ifdef _RC_TAXI_H
+        taxi.next_packet();
         #endif
 
 
