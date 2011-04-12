@@ -83,8 +83,8 @@ using namespace std;
 #include "RCBank.h"
 #include "RCDrivingLicense.h"
 //#include "RCAntCheat.h"
-
-
+#include "RCStreet.h"
+#include "RCTaxi.h"
 
 //#include "sqlite/SQLite.h"
 
@@ -146,14 +146,6 @@ struct user_fine
     int     fine_date;
 };
 
-struct streets
-{
-    char    Street[50];
-    word    NodeBeg;
-    word    NodeEnd;
-    int     SpeedLimit;
-};
-
 
 
 struct track_info
@@ -194,7 +186,6 @@ struct player
     struct user_fine fines[MAX_FINES];
 
     int     str_count;                          // Count of streets
-    struct  streets street[30];              // Array of streets
     byte    StreetNum;
 
     struct  track_info TrackInf;             // Where PitBox and Shop

@@ -10,6 +10,9 @@
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
 
+#include "RCDrivingLicense.h"
+#include "RCStreet.h"
+
 #include "tools.h"      // Check_Pos  etc.
 
 struct Taxi_info
@@ -35,8 +38,9 @@ struct TaxiPlayer
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkNodeDestinaion;     // Номер нода трассы, куда надо доставить
     int     WorkTime;			    // Время за которое он должен доставить товар
-    int     WorkCountDone;
 
+    byte    InZone;
+    byte    WorkNow;
     byte    Work;
     int     FiredPenalty;
     int     PenaltyCount;
@@ -66,6 +70,8 @@ class RCTaxi
     CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
+    RCDL        *dl;
+    RCStreet    *street;
 
     struct  Taxi_info TrackInf;
     struct  place zone;
@@ -75,9 +81,9 @@ class RCTaxi
     struct PTH_NODES nodes[2000];
 
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy);    // classname - указатель на класс RCTaxi.
-    // Нужно для доступа к классу внутри потока
-    // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCTaxi
+    int init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * street);
+    byte inited;
+
     void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
 
     // функции-повторители основных фунцкий ядра
