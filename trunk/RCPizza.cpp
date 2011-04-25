@@ -4,6 +4,7 @@ using namespace std;
 
 time_t  ptime;
 
+pthread_t tid; // Thread ID
 
 
 void *pizzathread(void *arg)  // arg == classname from RCPizza::init
@@ -22,7 +23,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
     //int pizza_time = time(&ptime);
     //out << pizza_time << endl;
 
-    int ok =1;
+    int ok = 1;
     piz->ShopAccepted = false;
 
     /** вывод кнопки с часиками и скрытие ее если таймер пришел в ноль **/
@@ -210,11 +211,9 @@ int RCPizza::init(char *dir,void *classname,void *CInSim, void *GetMessage,void 
 {
     strcpy(RootDir,dir);
 
-    pthread_attr_init(&attr);
-    pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
-    pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
-
-    if (pthread_create(&tid,&attr,pizzathread,classname) < 0)
+    pthread_cancel(tid);
+    Sleep (1500);
+    if (pthread_create(&tid,NULL,pizzathread,classname) < 0)
         return -1;
 
     insim = (CInsim *)CInSim;
@@ -253,7 +252,7 @@ int RCPizza::init(char *dir,void *classname,void *CInSim, void *GetMessage,void 
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza can't find _Store.txt");
+        printf ("RCPizza: Can't find _Store.txt");
         return 0;
     }
     FindClose(fff);
@@ -295,7 +294,7 @@ int RCPizza::init(char *dir,void *classname,void *CInSim, void *GetMessage,void 
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza can't find _Pizza.txt");
+        printf ("RCPizza: Can't find _Pizza.txt");
         return 0;
     }
     FindClose(fff);
@@ -378,7 +377,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
 
             if (splayer->WorkPlayerAccept == 0) // даем обычный заказ
             {
-                srand(time(&ptime));
+                srand(time(NULL));
                 int place = rand()%zone.NumPoints;
 
                 if (place == 0)
@@ -486,7 +485,7 @@ void RCPizza::readconfig(char *Track)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("Can't find ");
+        printf ("RCPizza: Can't find\n%s",file);
         return;
     }
     FindClose(fff);
@@ -818,8 +817,15 @@ void RCPizza::pizza_mci ()
                             send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1602)); // undeal
                         if (players[j].WorkAccept != 0)
                         {
-                            send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1603)); // take
-                            take(&players[j]);
+                            if (strcmp(players[i].CName,"UF1") == 0 )
+                            {
+                                send_mtc(players[j].UCID,msg->GetMessage(players[j].UCID,1603)); // take
+                                take(&players[j]);
+                            }
+                            else
+                            {
+                                send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
+                            }
                         }
 
                     }
@@ -945,19 +951,21 @@ void RCPizza::pizza_mso ()
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!deal", 5) == 0 )
     {
         //cout << players[i].UName << " send !deal" << endl;
-        if (strcmp(players[i].CName,"UF1") == 0 )
+
+
+
+        if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
         {
-
-
-            if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
+            if (strcmp(players[i].CName,"UF1") == 0 )
             {
                 deal(&players[i]);
             }
+            else
+            {
+                send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
+            }
         }
-        else
-        {
-            send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
-        }
+
 
     }
 
@@ -974,12 +982,13 @@ void RCPizza::pizza_mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!take", 5) == 0)
     {
-        if (strcmp(players[i].CName,"UF1") == 0 )
-        {
-            //cout << players[i].UName << " send !take" << endl;
 
-            if (check_pos(&players[i]) == 1)
+
+        if (check_pos(&players[i]) == 1)
+        {
+            if (strcmp(players[i].CName,"UF1") == 0 )
             {
+                //cout << players[i].UName << " send !take" << endl;
                 if (players[i].WorkType == WK_PIZZA)
                 {
                     //if (players[i].WorkAccept == 0)
@@ -987,11 +996,12 @@ void RCPizza::pizza_mso ()
                 }
                 take(&players[i]);
             }
+            else
+            {
+                send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
+            }
         }
-        else
-        {
-            send_mtc(players[i].UCID, "^3^C| ^7Нужна машина ^2UF1");
-        }
+
     }
 
     //!pizza

@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include "version.h"
 #include "tools.h"
 
 int ok = 1;
@@ -31,9 +31,73 @@ RCAntCheat  antcht;
 RCStreet  street;
 #endif
 
+#ifdef _RC_LIGHT_H
+RCLight lgh;
+#endif
+
 #ifdef _RC_TAXI_H
 RCTaxi  taxi;
 #endif
+
+void init_classes()
+{
+#ifdef _RC_PIZZA_H
+    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg);
+#endif
+    msg.init(RootDir,&insim);
+#ifdef _RC_ENERGY_H
+    nrg.init(RootDir,&nrg,&insim,&msg,&bank);
+#endif
+    bank.init(RootDir,&insim,&msg,&bank);
+#ifdef _RC_LEVEL_H
+    dl.init(RootDir,&insim,&msg);
+#endif
+#ifdef _RC_CHEAT_H
+    antcht.init(RootDir,&antcht,&insim,&msg,&bank);
+#endif
+
+#ifdef _RC_STREET_H
+    street.init(RootDir,&insim,&msg);
+#endif
+
+#ifdef _RC_LIGHT_H
+    lgh.init(RootDir,&insim,&msg);
+#endif
+
+#ifdef _RC_TAXI_H
+    taxi.init(RootDir,&insim,&msg,&bank,&dl,&street);
+#endif
+}
+
+void readconfigs()
+{
+#ifdef _RC_PIZZA_H
+    pizza.readconfig(ginfo.Track);
+#endif
+    msg.readconfig(ginfo.Track);
+#ifdef _RC_ENERGY_H
+    nrg.readconfig(ginfo.Track);
+#endif
+
+    bank.readconfig(ginfo.Track);
+
+
+#ifdef _RC_CHEAT_H
+    antcht.readconfig(ginfo.Track);
+#endif
+
+#ifdef _RC_STREET_H
+    street.readconfig(ginfo.Track);
+#endif
+
+#ifdef _RC_LIGHT_H
+    lgh.readconfig(ginfo.Track);
+#endif
+
+#ifdef _RC_TAXI_H
+    taxi.readconfig(ginfo.Track);
+#endif
+}
 
 int GetCarID(char *CarName)
 {
@@ -706,7 +770,7 @@ void btn_info (struct player *splayer, int b_type)
 void btn_panel (struct player *splayer)
 {
     /****************************/
-     struct IS_BTN pack;
+    struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
     pack.Size = sizeof(struct IS_BTN);
     pack.Type = ISP_BTN;
@@ -1727,7 +1791,7 @@ void case_mci ()
                 if (Check_Pos(8,pit1x,pit1y,X,Y))
                 {
                     if( (Hed < 190+90) and (Hed > 190-90) )
-                    continue;
+                        continue;
                     else
                     {
                         // vivod zhaka kirpich
@@ -1795,7 +1859,7 @@ void case_mci_cop ()
 
                 if (ginfo.players[j].cop == 1)
                 {
-                    btn_svetofor3(&ginfo.players[j]);
+                    //btn_svetofor3(&ginfo.players[j]);
 
                     for (int g =0; g < MAX_PLAYERS; g++)
                     {
@@ -1847,7 +1911,7 @@ void case_mci_cop ()
                                     // player[g] in radar zone of player[j]
                                     int Speed = ginfo.players[g].Info.Speed*360/32768;
                                     struct streets StreetInfo;
-                                    street.CurentStreetInfo(&StreetInfo,street.CurentStreetNum(ginfo.players[g].UCID));
+                                    street.CurentStreetInfo(&StreetInfo,ginfo.players[g].UCID);
 
                                     if ((Speed > StreetInfo.SpeedLimit+10) )
                                     {
@@ -1926,406 +1990,6 @@ void case_mci_cop ()
         }
     }
 }
-
-
-
-void case_mci_svetofor ()
-{
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim.udp_get_packet();
-
-
-    for (int i = 0; i < pack_mci->NumC; i++)
-
-    {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
-
-            if (pack_mci->Info[i].PLID == ginfo.players[j].PLID)
-
-            {
-                //out << "MCI packet for " << ginfo.players[j].UName << endl;
-
-                int Node = pack_mci->Info[i].Node;
-                int X = pack_mci->Info[i].X/65536;
-                int Y = pack_mci->Info[i].Y/65536;
-                int H = pack_mci->Info[i].Heading/182;
-                //int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
-                int SvetKey = 0;
-
-                if (strcmp(ginfo.Track,"AS5") == 0)
-                {
-                    //out << ginfo.Track << endl;
-                    // ZONE 1 PIT 1
-                    // from 1 pit 2 svetofot
-                    int Pit1X[5] = {-605,-624,-624,-605};
-                    int Pit1Y[5] = {1,1,10,10};
-                    int Pit2X[5] = {-605,-624,-624,-605};
-                    int Pit2Y[5] = {-510,-510,-500,-500};
-                    int CafeX[5] = {974,984,984,974};
-                    int CafeY[5] = {-1027,-1027,-1039,-1039};
-                    int Cafe2X[6] = {974,967,947,942,962};
-                    int Cafe2Y[6] = {-1039,-1066,-1086,1075,-1040};
-
-                    if ((Node > 12) and (Node < 32) and (X > -610) and (H > 140) and (H<185))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 0) and (Node < 12) and (X > -610) and ((H > 350) or (H < 10)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Check_Pos(4,Pit1X,Pit1Y,X,Y)) and (H > 260) and (H < 360))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 1 PIT 1
-                    // ZONE 2 PIT 2
-                    if ((Node > 726) and (Node < 738) and (X > -610) and (H > 140) and (H<185))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 713) and (Node < 727) and (X > -610) and ((H > 350) or (H < 10)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Check_Pos(4,Pit2X,Pit2Y,X,Y)) and (H > 200) and (H < 360))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 2 PIT 2
-                    // ZONE 3 RCPizza CAFE
-                    if ((Node > 377) and (Node < 390) and (Check_Pos(5,Cafe2X,Cafe2Y,X,Y)) and ((H > 300) or (H<10)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 360) and (Node < 377) and (X < 975) and (H > 140) and (H < 185))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Check_Pos(4,CafeX,CafeY,X,Y)) and (H > 0) and (H < 100))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 3
-                    // ZONE 4
-                    if ((Node > 223) and (Node < 235) and (H > 170) and (H< 280))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 238) and (Node < 262) and (H > 60) and (H< 100))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 4
-
-                    // ZONE 5
-                    if ((Node > 534) and (Node < 549) and (H > 100) and (H< 170))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 549) and (Node < 560) and ((H > 340) or (H< 10)))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 5
-
-                }// AS5
-
-                else if (strcmp(ginfo.Track,"FE4") == 0)
-                {
-                    //out << ginfo.Track << endl;
-                    // ZONE 1 PIT 1
-                    // from 1 pit 2 svetofot
-                    int Pit1X[5] = {179,189,189,179};
-                    int Pit1Y[5] = {-15,-15,-23,-23};
-
-                    int Pit2X[5] = {173,190,190,173};
-                    int Pit2Y[5] = {210,210,205,205};
-
-                    //int CafeX[5] = {974,984,984,974};
-                    //int CafeY[5] = {-1027,-1027,-1039,-1039};
-
-                    //int Cafe2X[6] = {974,967,947,942,962};
-                    //int Cafe2Y[6] = {-1039,-1066,-1086,1075,-1040};
-
-                    if ((Node > 220) and (Node < 231) and (X < 180) and (H > 130) and (H<230))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 210) and (Node < 221) and (X < 180) and ((H > 310) or (H < 50)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Check_Pos(4,Pit1X,Pit1Y,X,Y)) and (H > 75-50) and (H < 75+50))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 1 PIT 1
-                    // ZONE 2 PIT 2
-                    if ((Node > 246) and (Node < 260) and (X < 180) and (H > 180-50) and (H<180+50))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 237) and (Node < 247) and (X < 180) and ((H > 360-50) or (H < 50)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Check_Pos(4,Pit2X,Pit2Y,X,Y)) and (H > 90-50) and (H < 90+50))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 2 PIT 2
-
-                    // ZONE 3 RCPizza CAFE
-                    if ((Node > 540) and (Node < 550) and (X > -32) and ((H > 300) or (H<10)))
-                    {
-                        SvetKey = 1;
-                        ginfo.players[j].Svetofor = 1;
-                    }
-                    if ((Node > 550) and (Node < 560) and (X > -32) and (H > 140) and (H < 185))
-                    {
-                        SvetKey = 2;
-                        ginfo.players[j].Svetofor = 2;
-                    }
-                    // !-- ZONE 3
-                    // ZONE 4
-
-                    // !-- ZONE 4
-
-                    // ZONE 5
-
-                    // !-- ZONE 5
-
-
-                }// FE4
-
-                else if (strcmp(ginfo.Track,"SO4") == 0)
-                {
-                    /**********светофоры*********/
-
-                    /***************** 1 zone ***************/
-
-//1.1
-                    if ((Node>=526) or (Node>=0 and Node<=3 )and X<-140)
-                    {
-                        if (H>180 and H<220)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-//2.2
-                    if (Node >= 6 and Node <=13 )
-                    {
-                        if (H>0 and H<40)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-                    if (Node >= 3 and Node <6)
-                    {
-                        if (X>=-151 and X<-140)
-                        {
-                            if (H>60 and H<130)
-                            {
-                                SvetKey = 2;
-                                ginfo.players[j].Svetofor = 2;
-                            }
-                        }
-
-                    }
-                    /******************************************/
-
-                    /***************** 2 zone ***************/
-//3.1
-                    if (Node>=13 and Node<24 )
-                    {
-                        if (H>160 and H<200)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-//4.2
-                    if ( Node>27 and Node<=40 )
-                    {
-                        if (H>250 and H<290)
-                        {
-                            SvetKey = 2;
-                            ginfo.players[j].Svetofor = 2;
-                        }
-                    }
-
-
-
-
-                    /********************************/
-
-                    /***************** 3 zone ***************/
-//5.1
-                    if (Node>83 and Node<=93 )
-                    {
-                        if (H>70 and H<100)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-//6.2
-                    if ( Node>=97 and Node<102 )
-                    {
-                        if (H<20 or H>300)
-                        {
-                            SvetKey = 2;
-                            ginfo.players[j].Svetofor = 2;
-                        }
-
-                    }
-                    if ( Node>=102 and Node<106 )
-                    {
-                        if (H>260)
-                        {
-                            SvetKey = 2;
-                            ginfo.players[j].Svetofor = 2;
-                        }
-
-                    }
-
-
-                    /********************************/
-
-                    /***************** 4 zone ***************/
-//7.1
-                    if (Node>188 and Node<208 )
-                    {
-                        if (H>280 and H<320)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-//8.2
-                    if ( Node>=214 and Node<224 )
-                    {
-                        if ( H<20 or H>350)
-                        {
-                            SvetKey = 2;
-                            ginfo.players[j].Svetofor = 2;
-                        }
-
-                    }
-
-
-                    /********************************/
-
-
-                    /***************** 5 zone ***************/
-                    if (Node>405 and Node<422 )
-                    {
-                        if (H<60 or H>351)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-
-                    /***/
-
-//8.2
-                    if ( Node>=433 and Node<440 and X>=250)
-                    {
-                        if ( H>160 and H<190)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-                    }
-
-                    if ( Node>=428 and Node<433 and X>=244)
-                    {
-                        if ( H>160 and H<190)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-
-                    if ( Node>=425 and Node<428 and X>=240)
-                    {
-                        if ( H>160 and H<190)
-                        {
-                            SvetKey = 1;
-                            ginfo.players[j].Svetofor = 1;
-                        }
-
-                    }
-
-                    if ( Node>=425 and Node<=428 and X<240)
-                    {
-                        if ( H>160 and H<190)
-                        {
-                            SvetKey = 2;
-                            ginfo.players[j].Svetofor = 2;
-                        }
-                    }
-
-                }// SO4
-
-                //SvetKey = 1;
-
-                if (SvetKey == 1)
-                {
-                    btn_svetofor1(&ginfo.players[j]);
-                }
-                else if (SvetKey == 2)
-                {
-                    btn_svetofor2(&ginfo.players[j]);
-                }
-                else
-                {
-                    if (ginfo.players[j].Svetofor != 0)
-                    {
-                        for (int f=190; f < 203; f++)
-                            send_bfn(ginfo.players[j].UCID,f);
-
-                        ginfo.players[j].Svetofor = 0;
-                        //out << "clear svetofor" << endl;
-                    }
-                }
-
-            } // if pack_mci->Info[i].PLID == ginfo.players[j].PLID
-        }
-    }
-}
-
 
 
 void case_mso ()
@@ -2487,7 +2151,7 @@ void case_mso ()
 
         sprintf(Text,"/msg ^7Cash: ^1%d",bank.GetCash(ginfo.players[i].UCID));
         send_mst(Text);
-        #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
         sprintf(Text,"/msg ^7Drive Level: ^1%d",dl.GetLVL(ginfo.players[i].UCID));
         send_mst(Text);
 
@@ -2497,7 +2161,7 @@ void case_mso ()
 
         sprintf(Text,"/msg ^7Drive Skill: ^1%d%s",prog,"%");
         send_mst(Text);
-        #endif
+#endif
         for ( int j=0; j<MAX_CARS; j++)
         {
             if (strlen(ginfo.players[i].cars[j].car)>0)
@@ -2595,7 +2259,7 @@ void case_mso ()
         {
             int needcash = 5000 + (GetCarID(ginfo.players[i].CName)-1)*1000;
             //!lvl
-            #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+1;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2605,7 +2269,7 @@ void case_mso ()
                 return;
             }
             //!
-            #endif
+#endif
             if (ginfo.players[i].CTune&1)
             {
                 char msg[64];
@@ -2634,7 +2298,7 @@ void case_mso ()
         {
             int needcash = 10000 + (GetCarID(ginfo.players[i].CName)-1)*10000;
             //!lvl
-            #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+2;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2643,7 +2307,7 @@ void case_mso ()
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
-            #endif
+#endif
             //!
             if (ginfo.players[i].CTune&2)
             {
@@ -2674,7 +2338,7 @@ void case_mso ()
         {
             int needcash = 3000 + (GetCarID(ginfo.players[i].CName)-1)*1000;
             //!lvl
-            #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5+3;
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
@@ -2683,7 +2347,7 @@ void case_mso ()
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
-            #endif
+#endif
             //!
             if (ginfo.players[i].CTune&4)
             {
@@ -2836,7 +2500,7 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,"^C^2| ^7” нас нет такой машины!");
             return;
         }
-        #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
         int needlvl = (CarID-1)*5;
         if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
         {
@@ -2845,7 +2509,7 @@ void case_mso ()
             send_mtc(ginfo.players[i].UCID,msg);
             return;
         }
-        #endif
+#endif
         if (bank.GetCash(ginfo.players[i].UCID) < (int)ginfo.car[CarID].cash)
         {
             char msg[64];
@@ -2988,13 +2652,13 @@ void case_mso ()
                 save_user_cars(&ginfo.players[j]);
                 save_user_fines(&ginfo.players[j]);
                 bank.bank_save(ginfo.players[j].UCID);
-                #ifdef _RC_ENERGY_H
+#ifdef _RC_ENERGY_H
                 nrg.energy_save(ginfo.players[j].UCID);
-                #endif
+#endif
 
-                #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
                 dl.save(ginfo.players[j].UCID);
-                #endif
+#endif
             }
         }
         ok=0;
@@ -3011,7 +2675,8 @@ void case_mso ()
 
         pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
         insim.send_packet(&pack_requests);
-        msg.init(RootDir,&insim);
+
+        readconfigs();
     }
     //!evo
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
@@ -3324,59 +2989,13 @@ void case_npl ()
         if (ginfo.players[i].UCID == pack_npl->UCID)
         {
 
-            /*****   Hack Detect ***/
-
-            time_t timeh;
-            int htime = time(&timeh); // get current time
-
-            if (ginfo.players[i].NPLTime == 0)
-            {
-                ginfo.players[i].NPLTime = htime;
-            }
-
-            int ts = htime - ginfo.players[i].HackTime;
-            ginfo.players[i].HackTime = htime;
-
-
-            if (ts < 10)  // 10 sec
-                ginfo.players[i].NPLHack++;
-            else
-            {
-                ginfo.players[i].NPLHack = 1;
-            }
-
-            if (ginfo.players[i].NPLHack > 4)   //max lines to tolerate
-            {
-
-                ginfo.players[i].NPLHack = 0;
-                strcpy(Text, "/kick ");
-                strcat (Text, ginfo.players[i].UName);
-                send_mst("/msg ^1Hack detect");
-                send_mst(Text);
-                return;
-
-            }
-
-
-
-
-            if (strlen(pack_npl->CName) < 3)
-            {
-                strcpy(Text, "/kick ");
-                strcat (Text, ginfo.players[i].UName);
-                send_mst("/msg ^1Hack detect");
-                send_mst(Text);
-                return;
-            }
-
-            /*******    ********/
             // out << "Core.dll: find user " << ginfo.players[i].UName << endl;
             if (pack_npl->PType != 6)
             {
 
                 if (IfCop(&ginfo.players[i]) == 1)
                 {
-                    char Text[64];
+
                     strcpy(Text, "/spec ");
                     strcat (Text, ginfo.players[i].UName);
                     send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1300));
@@ -3436,8 +3055,8 @@ void case_npl ()
                         //  needlvl ++;
                     }
 
-                     //! LVL
-                    #ifdef _RC_LEVEL_H
+                    //! LVL
+#ifdef _RC_LEVEL_H
                     int needlvl = (GetCarID(ginfo.players[i].CName)-1)*5;
                     //int tune2 = needlvl - (GetCarID(ginfo.players[i].CName)-1)*5;
 
@@ -3476,7 +3095,7 @@ void case_npl ()
                         send_mtc(ginfo.players[i].UCID,Texxt);
 
                     }
-                    #endif
+#endif
 
                 }
                 else
@@ -3710,19 +3329,11 @@ void case_rst ()
 
     ginfo.Node_Finish = pack_rst->Finish;
 
+    readconfigs();
     /////////
     read_car();
-    Sleep(100);
+
     read_fines();
-    Sleep(100);
-    #ifdef _RC_PIZZA_H
-    pizza.readconfig(pack_rst->Track);
-    #endif
-    #ifdef _RC_ENERGY_H
-    nrg.readconfig(pack_rst->Track);
-    #endif
-    bank.readconfig(pack_rst->Track);
-    Sleep(100);
     /////////
 
     // out << pack_sta->Track << endl << ginfo.Track << endl;
@@ -4229,34 +3840,39 @@ void *thread_mci (void *params)
         {
             //out << "UDP packet MCI " << endl;
             case_mci ();
-            case_mci_svetofor();
+            //case_mci_svetofor();
             case_mci_cop();
-            #ifdef _RC_CHEAT_H
+#ifdef _RC_CHEAT_H
             antcht.mci();
-            #endif
+#endif
 
-            #ifdef _RC_PIZZA_H
+#ifdef _RC_PIZZA_H
             pizza.pizza_mci();
-            #endif
+#endif
 
-            #ifdef _RC_ENERGY_H
+#ifdef _RC_ENERGY_H
             nrg.energy_mci();
-            #endif
+#endif
 
-            #ifdef _RC_STREET_H
+#ifdef _RC_STREET_H
             if (street.IfInited)
                 street.street_mci();
-            #endif
+#endif
 
-            #ifdef _RC_LEVEL_H
+#ifdef _RC_LIGHT_H
+            if (lgh.IfInited)
+                lgh.mci();
+#endif
+
+#ifdef _RC_LEVEL_H
             if (dl.inited == 1)
                 dl.mci();
-            #endif
+#endif
 
-            #ifdef _RC_TAXI_H
+#ifdef _RC_TAXI_H
             if (taxi.inited == 1)
                 taxi.taxi_mci();
-            #endif
+#endif
 
 
             //bank.bank_mci();
@@ -4343,13 +3959,13 @@ void *thread_save (void *params)
                     save_car(&ginfo.players[j]);
                     save_user_cars(&ginfo.players[j]);
                     save_user_fines(&ginfo.players[j]);
-                    #ifdef _RC_ENERGY_H
+#ifdef _RC_ENERGY_H
                     nrg.energy_save(ginfo.players[j].UCID);
-                    #endif
+#endif
                     bank.bank_save(ginfo.players[j].UCID);
-                    #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
                     dl.save(ginfo.players[j].UCID);
-                    #endif
+#endif
 
                     send_mtc(ginfo.players[j].UCID,msg.GetMessage(ginfo.players[j].UCID,3000));
                 }
@@ -4437,173 +4053,12 @@ void *thread_work (void *params)
     return 0;
 };
 
-void *thread_svet1(void* params)
-{
-    out << "\tthread \"Svetofor 1\" started" << endl;
-    for (;;)
-    {
-        int svtime = time(&stime)%40;
-        //out << "svtime = " << svtime << endl;
-
-        if (svtime < 10)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^2Х";
-        }
-        else if (svtime == 10)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^0Х";
-        }
-        else if (svtime == 11)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^2Х";
-        }
-        else if (svtime == 12)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^0Х";
-        }
-        else if (svtime == 13)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^2Х";
-        }
-        else if (svtime == 14)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^0Х";
-        }
-        else if (svtime == 15)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^2Х";
-        }
-        else if (svtime == 16)
-        {
-            signal1="^C^0Х";
-            signal2="^C^0Х";
-            signal3="^C^0Х";
-        }
-        else if ((svtime > 16) and (svtime < 20))
-        {
-            signal1="^C^0Х";
-            signal2="^C^3Х";
-            signal3="^C^0Х";
-        }
-        else if ((svtime >= 20) and (svtime < 37))
-        {
-            signal1="^C^1Х";
-            signal2="^C^0Х";
-            signal3="^C^0Х";
-        }
-        else if ((svtime >= 37))
-        {
-            signal1="^C^1Х";
-            signal2="^C^3Х";
-            signal3="^C^0Х";
-        }
-
-
-        Sleep(1000);
-    }
-    return 0;
-}
-
-void *thread_svet2( void* params)
-{
-    out << "\tthread \"Svetofor 2\" started" << endl;
-    for (;;)
-    {
-        int svtime = (time(&stime)+20)%40;
-        //out << "svtime = " << svtime << endl;
-
-        if (svtime < 10)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^2Х";
-        }
-        else if (svtime == 10)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^0Х";
-        }
-        else if (svtime == 11)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^2Х";
-        }
-        else if (svtime == 12)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^0Х";
-        }
-        else if (svtime == 13)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^2Х";
-        }
-        else if (svtime == 14)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^0Х";
-        }
-        else if (svtime == 15)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^2Х";
-        }
-        else if (svtime == 16)
-        {
-            signal11="^C^0Х";
-            signal12="^C^0Х";
-            signal13="^C^0Х";
-        }
-        else if ((svtime > 16) and (svtime < 20))
-        {
-            signal11="^C^0Х";
-            signal12="^C^3Х";
-            signal13="^C^0Х";
-        }
-        else if ((svtime >= 20) and (svtime < 37))
-        {
-            signal11="^C^1Х";
-            signal12="^C^0Х";
-            signal13="^C^0Х";
-        }
-        else if ((svtime >= 37))
-        {
-            signal11="^C^1Х";
-            signal12="^C^3Х";
-            signal13="^C^0Х";
-        }
-
-
-        Sleep(1000);
-    }
-    return 0;
-}
-
 
 DWORD WINAPI ThreadMain(void *CmdLine)
 {
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
+    sprintf(IS_PRODUCT_NAME,"^3RCruise %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
 
     pthread_mutex_init(&RCmutex, NULL);
 
@@ -4640,8 +4095,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     pthread_t btn_tid; // Thread ID
     pthread_t work_tid; // Thread ID
     pthread_t save_tid; // Thread ID
-    pthread_t svet1_tid; // Thread ID
-    pthread_t svet2_tid; // Thread ID
 
     out << "Cruise started" << endl;
     out << "Start threads :" << endl;
@@ -4663,40 +4116,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         return 0;
     }
     Sleep(1000);
-    if (pthread_create(&svet1_tid,NULL,thread_svet1,NULL) < 0)
-    {
-        printf("Can't start `thread_svet1` Thread\n");
-        return 0;
-    }
-    Sleep(1000);
-    if (pthread_create(&svet2_tid,NULL,thread_svet2,NULL) < 0)
-    {
-        printf("Can't start `thread_svet2` Thread\n");
-        return 0;
-    }
-    Sleep(1000);
-    #ifdef _RC_PIZZA_H
-    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg);
-    #endif
-    msg.init(RootDir,&insim);
-    #ifdef _RC_ENERGY_H
-    nrg.init(RootDir,&nrg,&insim,&msg,&bank);
-    #endif
-    bank.init(RootDir,&insim,&msg,&bank);
-    #ifdef _RC_LEVEL_H
-    dl.init(RootDir,&insim,&msg);
-    #endif
-    #ifdef _RC_CHEAT_H
-    antcht.init(RootDir,&antcht,&insim,&msg,&bank);
-    #endif
 
-    #ifdef _RC_STREET_H
-    street.init(RootDir,&insim,&msg);
-    #endif
+    init_classes();
 
-    #ifdef _RC_TAXI_H
-    taxi.init(RootDir,&insim,&msg,&bank,&dl,&street);
-    #endif
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
@@ -4796,28 +4218,32 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             break;
         }
 
-        #ifdef _RC_ENERGY_H
+#ifdef _RC_ENERGY_H
         nrg.next_packet();
-        #endif
-        #ifdef _RC_PIZZA_H
+#endif
+#ifdef _RC_PIZZA_H
         pizza.next_packet();
-        #endif
+#endif
         bank.next_packet();
-        #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
         dl.next_packet();
-        #endif
+#endif
 
-        #ifdef _RC_CHEAT_H
+#ifdef _RC_CHEAT_H
         antcht.next_packet();
-        #endif
+#endif
 
-        #ifdef _RC_STREET_H
+#ifdef _RC_STREET_H
         street.next_packet();
-        #endif
+#endif
 
-        #ifdef _RC_TAXI_H
+#ifdef _RC_LIGHT_H
+        lgh.next_packet();
+#endif
+
+#ifdef _RC_TAXI_H
         taxi.next_packet();
-        #endif
+#endif
 
 
     }
@@ -5065,7 +4491,7 @@ int main(int argc, char* argv[])
 
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
-   SYSTEMTIME sm;
+    SYSTEMTIME sm;
     GetLocalTime(&sm);
 
     char log[MAX_PATH];
@@ -5153,13 +4579,13 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
                 save_car(&ginfo.players[j]);
                 save_user_cars(&ginfo.players[j]);
                 save_user_fines(&ginfo.players[j]);
-                #ifdef _RC_ENERGY_H
+#ifdef _RC_ENERGY_H
                 nrg.energy_save(ginfo.players[j].UCID);
-                #endif
+#endif
                 bank.bank_save(ginfo.players[j].UCID);
-                #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
                 dl.save(ginfo.players[j].UCID);
-                #endif
+#endif
                 Sleep(500);
             }
         }

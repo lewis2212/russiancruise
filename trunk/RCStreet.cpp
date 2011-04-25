@@ -14,7 +14,7 @@ RCStreet::~RCStreet()
 
 int RCStreet::init(char *dir, void *CInSim, void *Message)
 {
-    cout << "Init Streets" << endl;
+    //cout << "Init Streets" << endl;
     IfInited = false;
     strcpy(RootDir,dir); //  опируем путь до программы
 
@@ -33,8 +33,14 @@ int RCStreet::init(char *dir, void *CInSim, void *Message)
         return -1;
     }
 
+    IfInited = true;
+    return 0;
+}
+
+void RCStreet::readconfig(char *Track)
+{
     char file[255];
-    sprintf(file,"%sdata\\RCStreet\\tracks\\%s.txt",RootDir,"SO4");
+    sprintf(file,"%sdata\\RCStreet\\tracks\\%s.txt",RootDir,Track);
 
 
     HANDLE fff;
@@ -43,7 +49,7 @@ int RCStreet::init(char *dir, void *CInSim, void *Message)
     if (fff == INVALID_HANDLE_VALUE)
     {
         cout << "Can't find " << file << endl;
-        return -1;
+        return;
     }
     FindClose(fff);
 
@@ -55,40 +61,52 @@ int RCStreet::init(char *dir, void *CInSim, void *Message)
 
         char str[128];
         readf.getline(str,128);
-        cout << str << endl;
+        //cout << str << endl;
 
         if (strlen(str) > 0)
         {
+            if (strcmp(str,"#Street")==0)
+            {
+                /**
+                название
+                ограничен скорости.
+                кол. точек
+                ...точки....
+                */
+                //онул€ем позицию
+                ZeroMemory(&Street[i],sizeof(streets));
+            // читаем название улицы
+            readf.getline(str,128);
+            sprintf(Street[i].Street,"^C^7%s",str);
 
-            char * street;
-            char * node1;
-            char * node2;
-            char * speed;
-            street = strtok (str,";");
-            node1 = strtok (NULL,";");
-            node2 = strtok (NULL,";");
-            speed = strtok (NULL,";");
+            readf.getline(str,128);
+            Street[i].SpeedLimit = atoi(str);
 
+            // читаем количество точек
+            readf.getline(str,128);
+            Street[i].PointCount = atoi(str);
 
-            ZeroMemory(&Street[i],sizeof(streets));
-            strcpy(Street[i].Street,"^C^7");
-            strcat(Street[i].Street,street);
-            Street[i].NodeBeg = atoi(node1);
-            Street[i].NodeEnd = atoi(node2);
-            Street[i].SpeedLimit = atoi(speed);
+            // объ€вл€ем массих точек ’ and Y
+            Street[i].StreetX = new int[Street[i].PointCount];
+            Street[i].StreetY = new int[Street[i].PointCount];
+
+            for (int k=0; k<Street[i].PointCount; k++)
+            {
+                readf.getline(str,128);
+
+                Street[i].StreetX[k] = atoi(strtok (str,";"));
+                Street[i].StreetY[k] = atoi(strtok (NULL,";"));
+            }
 
             i++;
+            }
 
         } // if strlen > 0
 
     } //while readf.good()
     StreetNums = i;
 
-
-
     readf.close();
-    IfInited = true;
-    return 0;
 }
 
 void RCStreet::next_packet()
@@ -140,7 +158,7 @@ void RCStreet::street_cnl ()
     {
         if (players[i].UCID == pack_cnl->UCID)
         {
-            memset(&players[i],0,sizeof(struct Player));
+            memset(&players[i],0,sizeof(struct StrPlayer));
             break;
         }
     }
@@ -181,12 +199,15 @@ void RCStreet::street_mci ()
             {
                 /** streets  **/
 
-                int Node = pack_mci->Info[i].Node;
+                int X = pack_mci->Info[i].X/65536;
+                int Y = pack_mci->Info[i].Y/65536;
+
 
 
                 for (int g=0; g<StreetNums; g++)
                 {
-                    if (Node >= Street[g].NodeBeg and Node <= Street[g].NodeEnd )
+                    if(Check_Pos(Street[g].PointCount,Street[g].StreetX,Street[g].StreetY,X,Y))
+                        //if (Node >= Street[g].NodeBeg and Node <= Street[g].NodeEnd )
                     {
                         if (players[j].StreetNum != g)
                         {
@@ -329,7 +350,7 @@ void RCStreet::street_pll()
     }
 }
 
-void RCStreet::btn_street (struct Player *splayer)
+void RCStreet::btn_street (struct StrPlayer *splayer)
 {
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
@@ -407,33 +428,38 @@ void RCStreet::send_bfn (byte UCID, byte ClickID)
     insim->send_packet(&pack);
 }
 
-char *RCStreet::CurentStreet (byte UCID)
-{
-    for (int i=0;i<MAX_PLAYERS;i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            return Street[players[i].StreetNum].Street;
-        }
-    }
-    return "";
-}
+
 int RCStreet::CurentStreetNum(byte UCID)
 {
-    for (int i=0;i<MAX_PLAYERS;i++)
+    for (int i=0; i<MAX_PLAYERS; i++)
     {
         if (players[i].UCID == UCID)
         {
+            // printf("RCStreet: CurentStreetNum for %s == %d\n",players[i].UName,players[i].StreetNum);
             return players[i].StreetNum;
         }
     }
     return -1;
 }
-int RCStreet::CurentStreetInfo(void *StreetInfo, int StreetNum)
+int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 {
-    if (memcpy(StreetInfo,&Street[StreetNum],sizeof(streets)))
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (memcpy(StreetInfo,&Street[players[i].StreetNum],sizeof(streets)))
+                return 1;
+        }
+    }
+
+    return -1;
+}
+
+int RCStreet::CurentStreetInfoByNum(void *StreetInfo, int StrNum)
+{
+    if (memcpy(StreetInfo,&Street[StrNum],sizeof(streets)))
         return 1;
-    return 0;
+    return -1;
 }
 int RCStreet::StreetCount()
 {

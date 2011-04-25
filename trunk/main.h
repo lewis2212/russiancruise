@@ -84,7 +84,8 @@ using namespace std;
 #include "RCDrivingLicense.h"
 //#include "RCAntCheat.h"
 #include "RCStreet.h"
-#include "RCTaxi.h"
+#include "RCLight.h"
+//#include "RCTaxi.h"
 
 //#include "sqlite/SQLite.h"
 
@@ -93,13 +94,12 @@ using namespace std;
 
 
 
-#define IS_PRODUCT_NAME "Cruise v1.1.11"
 #define MAX_CARS 30
 #define MAX_FINES 100
 
 
 /*** GLOBAL ***/
-
+char IS_PRODUCT_NAME[16];
 
 char* siren = "^0";
 
@@ -237,10 +237,6 @@ struct player
     int     FloodTime;
     /** Work **/
     int     WorkTime;			// время за которое он должен доставить товар
-    /** NPL Hack **/
-    int     NPLTime;
-    int     HackTime;
-    int     NPLHack;
 };
 
 
@@ -290,13 +286,16 @@ int read_cop(struct player *splayer);
 
 void send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Msg, Msg,strlen(Msg));
-    insim.send_packet(&pack_mtc);
+    if (!insim.send_mtc(&pack_mtc,errmsg))
+    cout << errmsg << endl;
 };
 
 void send_mst (char* Text)
@@ -330,211 +329,6 @@ void send_bfn (byte UCID, byte ClickID)
 *
 ******************************************************************/
 
-const char* signal1 ="^0•";
-const char* signal2 ="^0•";
-const char* signal3 ="^0•";
-const char* signal11 ="^0•";
-const char* signal12 ="^0•";
-const char* signal13 ="^0•";
 
-
-void btn_svetofor1 (struct player *splayer)
-{
-
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.BStyle = 32;
-    pack.TypeIn = 0;
-
-    pack.ClickID = 190;
-    pack.L = 92;
-    pack.T = 15;
-    pack.W = 16;
-    pack.H = 40;
-    insim.send_packet(&pack);
-
-    pack.BStyle = 16;
-    pack.ClickID = 191;
-    pack.L = 93;
-    pack.T = 16;
-    pack.W = 14;
-    pack.H = 38;
-    insim.send_packet(&pack);
-
-
-
-    pack.BStyle = 1;
-    pack.ClickID = 192;
-    pack.L = 85;
-    pack.T = 10;
-    pack.W = 30;
-    pack.H = 30;
-    strcpy(pack.Text,signal1);
-    insim.send_packet(&pack);
-
-
-    pack.ClickID = 193;
-    pack.T = 10+10;
-    strcpy(pack.Text,signal2);
-    insim.send_packet(&pack);
-
-    pack.ClickID = 194;
-    pack.T = 10+20;
-    strcpy(pack.Text,signal3);
-    insim.send_packet(&pack);
-}
-
-void btn_svetofor2 (struct player *splayer)
-{
-
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.BStyle = 32;
-    pack.TypeIn = 0;
-
-    pack.ClickID = 190;
-    pack.L = 92;
-    pack.T = 15;
-    pack.W = 16;
-    pack.H = 40;
-    insim.send_packet(&pack);
-
-    pack.BStyle = 16;
-    pack.ClickID = 191;
-    pack.L = 93;
-    pack.T = 16;
-    pack.W = 14;
-    pack.H = 38;
-    insim.send_packet(&pack);
-
-
-
-    pack.BStyle = 1;
-    pack.ClickID = 192;
-    pack.L = 85;
-    pack.T = 10;
-    pack.W = 30;
-    pack.H = 30;
-    strcpy(pack.Text,signal11);
-    insim.send_packet(&pack);
-
-
-    pack.ClickID = 193;
-    pack.T = 10+10;
-    strcpy(pack.Text,signal12);
-    insim.send_packet(&pack);
-
-    pack.ClickID = 194;
-    pack.T = 10+20;
-    strcpy(pack.Text,signal13);
-    insim.send_packet(&pack);
-}
-
-
-void btn_svetofor3 (struct player *splayer)
-{
-
-    struct IS_BTN pack_btn;
-    memset(&pack_btn, 0, sizeof(struct IS_BTN));
-    pack_btn.Size = sizeof(struct IS_BTN);
-    pack_btn.Type = ISP_BTN;
-    pack_btn.ReqI = 1;
-    pack_btn.UCID = splayer->UCID;
-    pack_btn.Inst = 0;
-    pack_btn.BStyle = 32;
-    pack_btn.TypeIn = 0;
-    /**** telo1 **/
-    pack_btn.ClickID = 195;
-    pack_btn.L = 148;
-    pack_btn.T = 110;
-    pack_btn.W = 8;
-    pack_btn.H = 20;
-    strcpy(pack_btn.Text,"");
-    insim.send_packet(&pack_btn);
-    /**********/
-
-
-    pack_btn.BStyle = 1;
-    pack_btn.ClickID = 196;
-    pack_btn.L = 144;
-    pack_btn.T = 107;
-    pack_btn.W = 16;
-    pack_btn.H = 16;
-    strcpy(pack_btn.Text,signal1);
-    insim.send_packet(&pack_btn);
-
-
-    pack_btn.ClickID = 197;
-    pack_btn.T = 112;
-    strcpy(pack_btn.Text,signal2);
-    insim.send_packet(&pack_btn);
-
-    pack_btn.ClickID = 198;
-    pack_btn.T = 117;
-    strcpy(pack_btn.Text,signal3);
-    insim.send_packet(&pack_btn);
-    /********************************/
-    pack_btn.BStyle = 32;
-    /**** telo 2 *******/
-    pack_btn.ClickID = 199;
-    pack_btn.L = 157;
-    pack_btn.T = 110;
-    pack_btn.W = 8;
-    pack_btn.H = 20;
-    strcpy(pack_btn.Text,"");
-    insim.send_packet(&pack_btn);
-    /*************************/
-    pack_btn.BStyle = 1;
-
-    pack_btn.ClickID = 200;
-    pack_btn.L = 153;
-    pack_btn.T = 107;
-    pack_btn.W = 16;
-    pack_btn.H = 16;
-    strcpy(pack_btn.Text,signal11);
-    insim.send_packet(&pack_btn);
-
-
-    pack_btn.ClickID = 201;
-    pack_btn.T = 112;
-    strcpy(pack_btn.Text,signal12);
-    insim.send_packet(&pack_btn);
-
-    pack_btn.ClickID = 202;
-    pack_btn.T = 117;
-    strcpy(pack_btn.Text,signal13);
-    insim.send_packet(&pack_btn);
-};
-
-void clear_svetofor(struct player *splayer)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.ReqI = 0;
-    pack.SubT = 0;
-    pack.UCID = splayer->UCID;
-    pack.ClickID = 190;
-    insim.send_packet(&pack);
-    pack.ClickID = 191;
-    insim.send_packet(&pack);
-    pack.ClickID = 192;
-    insim.send_packet(&pack);
-    pack.ClickID = 193;
-    insim.send_packet(&pack);
-    pack.ClickID = 194;
-    insim.send_packet(&pack);
-};
 
 #endif

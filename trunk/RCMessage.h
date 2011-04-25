@@ -22,7 +22,7 @@ class RCMessage
 {
 private:
 
-CInsim  *insim;
+    CInsim  *insim;
 
     char RootDir[MAX_PATH];
 
@@ -44,6 +44,8 @@ public:
     RCMessage::~RCMessage();
 
     int init(char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
+    void readconfig(char *Track);
+
     void next_packet();
 
     void save(byte UCID);

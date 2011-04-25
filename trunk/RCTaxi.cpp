@@ -12,13 +12,13 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * street)
+int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet)
 {
-    strcpy(RootDir,dir); // РљРѕРїРёСЂСѓРµРј РїСѓС‚СЊ РґРѕ РїСЂРѕРіСЂР°РјРјС‹
+    strcpy(RootDir,dir); // Копируем путь до программы
 
 
-    insim = (CInsim *)CInSim; // РџСЂРёСЃРІР°РёРІР°РµРј СѓРєР°Р·Р°С‚РµР»СЋ РѕР±Р»Р°СЃС‚СЊ РїР°РјСЏС‚Рё
-    if(!insim) // РџСЂРѕРІРµСЂСЏРµРј РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ
+    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    if(!insim) // Проверяем на существование
     {
         printf ("Can't struct CInsim class");
         return -1;
@@ -32,25 +32,27 @@ int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, vo
     }
 
     bank = (RCBank *)Bank;
-    if(!msg)
+    if(!bank)
     {
         printf ("Can't struct RCBank class");
         return -1;
     }
 
     dl = (RCDL *)RCdl;
-    if(!msg)
+    if(!dl)
     {
         printf ("Can't struct RCDL class");
         return -1;
     }
 
-    street = (RCStreet *)street;
-    if(!msg)
+    street = (RCStreet *)STreet;
+    if(!street)
     {
         printf ("Can't struct RCStreet class");
         return -1;
     }
+
+    accept_time = time(&acctime) + 60;
 
     inited = 1;
 
@@ -71,7 +73,7 @@ void RCTaxi::readconfig(char *Track)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("Can't find \n%s",file);
+        printf ("RCTaxi: Can't find \n%s",file);
         return;
     }
     FindClose(fff);
@@ -140,16 +142,16 @@ void RCTaxi::readconfig(char *Track)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("Can't find file \n %s",file);
+        printf ("RCTaxi: Can't find file \n %s",file);
         return;
     }
     FindClose(fff);
 
     HANDLE  hFile;
 
-    //! РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
+    //! открываем файл для чтения
     hFile = CreateFile(file, GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
-    //! РїСЂРѕРІРµСЂСЏРµРј РЅР° СѓСЃРїРµС€РЅРѕРµ РѕС‚РєСЂС‹С‚РёРµ
+    //! проверяем на успешное открытие
     DWORD  dwBytesRead;
     if (hFile == INVALID_HANDLE_VALUE)
     {
@@ -176,7 +178,7 @@ void RCTaxi::readconfig(char *Track)
             break;
     }
 
-    /** Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ С„Р°Р№Р»Р° **/
+    /** закрываем дескриптор файла **/
     CloseHandle(hFile);
 
     //readpth
@@ -223,34 +225,55 @@ void RCTaxi::next_packet()
 
 void RCTaxi::accept_user()
 {
+    //cout << accept_time - time(&acctime) << endl;
     if ( accept_time >= time(&acctime))
         return;
-    //srand(time(&ptime));
+
+    printf("RCTaxi: accept function\n");
+
     //int r = rand()%3 + 1;
     int taxi_time = 600/(NumP+1);
     accept_time += taxi_time;
 
     for (int i=0; i< 32; i++)
     {
-        if ((players[i].Work == 1) and (players[i].WorkAccept == 0))
+        if ((players[i].Work == 1) and (players[i].WorkNow == 1) and (players[i].WorkAccept == 0))
         {
             // accept player
+            printf("RCTaxi: found %s\n",players[i].UName);
 
             int CurStreet = street->CurentStreetNum(players[i].UCID);
             int DestStreet = 0;
             srand(time(NULL));
-
-            while (DestStreet == CurStreet)
+            bool ok = true;
+            while (ok)
+            {
                 DestStreet = rand()%(street->StreetCount());
+                cout << DestStreet << endl;
+
+                if (DestStreet != CurStreet)
+                    ok = false;
+            }
+
+            printf("RCTaxi: street == %d\n",DestStreet);
 
             struct streets StreetInfo;
             memset(&StreetInfo,0,sizeof(streets));
-            if (!street->CurentStreetInfo(&StreetInfo,DestStreet))
-                return;
 
-            int DestNode = rand()%(StreetInfo.NodeEnd) + (StreetInfo.NodeBeg);
+            if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
+            {
+                /* int DestNode = rand()%(StreetInfo.NodeEnd) + (StreetInfo.NodeBeg);
+                 printf("RCTaxi: dest node == %d\n",DestNode);
+                 players[i].WorkNodeDestinaion = DestNode;
+                 players[i].WorkStreetDestinaion = DestStreet;
 
-            players[i].WorkNodeDestinaion = DestNode;
+                 memset(&StreetInfo,0,sizeof(streets));
+                 street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
+
+                 char Msg[96];
+                 sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+                 send_mtc(players[i].UCID,Msg);*/
+            }
 
         }
     }
@@ -270,6 +293,7 @@ void RCTaxi::taxi_cnl ()
         {
             save_user(&players[i]);
             memset(&players[i],0,sizeof(struct TaxiPlayer));
+            NumP --;
             break;
         }
     }
@@ -301,40 +325,69 @@ void RCTaxi::taxi_mci ()
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
 
-    for (int i = 0; i < pack_mci->NumC; i++) // РїСЂРѕРіРѕРЅ РїРѕ РІСЃРµРјСѓ РјР°СЃСЃРёРІСѓ pack_mci->Info[i]
+    for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
 
     {
-        for (int j =0; j < MAX_PLAYERS; j++) // РїСЂРѕРіРѕРЅ РїРѕ РІСЃРµРјСѓ РјР°СЃСЃРёРІСѓ players[j]
+        for (int j =0; j < MAX_PLAYERS; j++) // прогон по всему массиву players[j]
         {
 
-            if (pack_mci->Info[i].PLID == players[j].PLID) // СЃС‚Р°СЂР°СЏ Р·Р°РїР»Р°С‚РєР° ( and players[j].PLID != 0 and players[j].UCID != 0)
+            if (pack_mci->Info[i].PLID == players[j].PLID) // старая заплатка ( and players[j].PLID != 0 and players[j].UCID != 0)
             {
                 /** DO SOME CODE **/
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
 
-                // Р•СЃР»Рё РёРіСЂРѕРє РЅР°С…РѕРґРёС‚СЃСЏ РІ Р·РѕРЅРµ РїСЂРёРµРјР° РЅР° СЂР°Р±РѕС‚Сѓ, РІС‹РІРѕРґРёРј РІРѕСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ РІ С‡Р°С‚
+                // Если игрок находится в зоне приема на работу, выводим воспомогательные сообщения в чат
 
                 int TX[4] = {-465,-465,-480,-480};
                 int TY[4] = {450,420,420,450};
                 if (Check_Pos(4,TX,TY,X,Y))
                 {
-                    cout << "in work place" << endl;
+                    //cout << "in work place" << endl;
                     if (players[j].InZone == 0)
                     {
                         players[j].InZone = 1;
-                        send_mtc(players[j].UCID,"Taxi Radriges");
-                        send_mtc(players[j].UCID,"!deal");
-                        send_mtc(players[j].UCID,"!undeal");
-                        send_mtc(players[j].UCID,"!workstart");
-                        send_mtc(players[j].UCID,"!workend");
+                        send_mtc(players[j].UCID,"^3Taxi Radriges");
+                        send_mtc(players[j].UCID,"^2!deal");
+                        send_mtc(players[j].UCID,"^2!undeal");
+                        send_mtc(players[j].UCID,"^2!workstart");
+                        send_mtc(players[j].UCID,"^2!workend");
                     }
                 }
                 else
                 {
                     if (players[j].InZone == 1)
-                    players[j].InZone = 0;
+                        players[j].InZone = 0;
+                }
+
+                /** player drive on dest street **/
+
+                if (players[j].WorkStreetDestinaion == street->CurentStreetNum(players[j].UCID))
+                {
+                    if (players[j].OnStreet == false)
+                    {
+                        printf("RCTaxi: %s drove to the street\n", players[j].UName);
+                        players[j].OnStreet = true;
+                        /** вычисляем растояние до точки остановки **/
+                        printf("RCTaxi: Calculate the distance\n");
+                        int des_X = nodes[players[j].WorkNodeDestinaion].centre_X;
+                        int des_Y = nodes[players[j].WorkNodeDestinaion].centre_Y;
+                        printf("RCTaxi: Dest. Node X=%d, Y=%d\n",des_X,des_Y);
+
+                        float Dist = sqrtf(pow(X-des_X,2)+pow(Y-des_Y,2));
+
+                        printf("RCTaxi: Dest. Distance = %1.2f\n",Dist);
+
+                        char MSG[96];
+                        sprintf(MSG,"^C^7Остановитесь через %3.0f метров.",Dist);
+                        //send_mtc(players[j].UCID,MSG);
+
+                    }
+                }
+                else
+                {
+                    players[j].OnStreet = false;
                 }
 
 
@@ -380,7 +433,12 @@ void RCTaxi::taxi_mso ()
     strcpy(Message,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
 
+    if (strncmp(Message, "!save", strlen("!save")) == 0 )
+    {
+        /** DO SOME CODE **/
+        save_user(&players[i]);
 
+    }
     if (strncmp(Message, "!deal", strlen("!deal")) == 0 )
     {
         /** DO SOME CODE **/
@@ -408,7 +466,7 @@ void RCTaxi::taxi_mso ()
         /** DO SOME CODE **/
         if (players[i].Work ==0)
         {
-            send_mtc(players[i].UCID,"Ti uze ne rabotaew");
+            send_mtc(players[i].UCID,"Ti uze prinyat na rabotu");
             return;
         }
 
@@ -419,11 +477,37 @@ void RCTaxi::taxi_mso ()
     if (strncmp(Message, "!workstart", strlen("!workstart")) == 0 )
     {
         /** DO SOME CODE **/
+        if (players[i].Work ==0)
+        {
+            send_mtc(players[i].UCID,"Ti dolzen ustroet'sya");
+            return;
+        }
+        if (players[i].WorkNow ==1)
+        {
+            send_mtc(players[i].UCID,"Ti uze rabotaesh");
+            return;
+        }
+        players[i].WorkNow = 1;
+        send_mtc(players[i].UCID,"Rabota na4ata");
+
     }
 
     if (strncmp(Message, "!workend", strlen("!workend")) == 0 )
     {
         /** DO SOME CODE **/
+        if (players[i].Work ==0)
+        {
+            send_mtc(players[i].UCID,"Ti dolzen ustroet'sya");
+            return;
+        }
+        if (players[i].WorkNow ==0)
+        {
+            send_mtc(players[i].UCID,"Ti uze ne rabotaesh");
+            return;
+        }
+        players[i].WorkNow = 0;
+        send_mtc(players[i].UCID,"Rabota zakon4ena");
+
     }
 
 }
@@ -464,6 +548,8 @@ void RCTaxi::taxi_ncn()
     players[i].UCID = pack_ncn->UCID;
 
     read_user(&players[i]);
+
+    NumP ++;
 
     /** DO SOME CODE **/
 
@@ -545,12 +631,13 @@ void RCTaxi::read_user(struct TaxiPlayer *splayer)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf("Can't find %s\n Create File for user",file);
+        printf("RCTaxi: Can't find %s\nRCTaxi: Create File for user %s",file,splayer->UName);
         // create
         splayer->Work= 0;
         splayer->FiredPenalty= 0;
         splayer->PenaltyCount = 0;
         splayer->PassCount = 0;
+        save_user(splayer);
     }
     else
     {

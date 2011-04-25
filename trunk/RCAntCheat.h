@@ -34,18 +34,10 @@ struct Player
     byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
 
-    int		X;			// X map (65536 = 1 metre)
-    int		Y;			// Y map (65536 = 1 metre)
-    int		Z;			// Z alt (65536 = 1 metre)
-    float	Speed;		// speed (m/s)
-    float   Acelerate;
-    float   MaxAcelerate4060;
-    float   MaxAcelerate6080;
-    float   MaxAcelerate80100;
-    float   MaxAcelerate100;
-
-    int     CheatTime;
-    int     CheatCount;
+    /** NPL Hack **/
+    int     NPLTime;
+    int     HackTime;
+    int     NPLHack;
 };
 
 
