@@ -353,21 +353,21 @@ void RCEnergy::energy_cnl ()
 void RCEnergy::energy_save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
-     for (int i = 0; i< MAX_PLAYERS; i++)
+    for (int i = 0; i< MAX_PLAYERS; i++)
     {
         if (players[i].UCID == UCID)
         {
 
-    char file[255];
+            char file[255];
 
-    strcpy(file,RootDir);
-    strcat(file,"data\\RCEnergy\\");
-    strcat(file,players[i].UName);
-    strcat(file,".txt");
+            strcpy(file,RootDir);
+            strcat(file,"data\\RCEnergy\\");
+            strcat(file,players[i].UName);
+            strcat(file,".txt");
 
-    ofstream writef (file,ios::out);
-    writef << "Energy=" << players[i].Energy << endl;
-    writef.close();
+            ofstream writef (file,ios::out);
+            writef << "Energy=" << players[i].Energy << endl;
+            writef.close();
         }
     }
 

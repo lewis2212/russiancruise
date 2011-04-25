@@ -13,17 +13,27 @@
 // NOTE : This text file was written with a TAB size equal to 4 spaces.
 
 
-// INSIM VERSION NUMBER (updated for version 0.5X)
+// INSIM VERSION NUMBER (updated for version 0.5Z30)
 // ====================
 
-const int INSIM_VERSION = 4;
+const int INSIM_VERSION = 5;
 
 
-// CHANGES in version 0.5Z (compatible so no change to INSIM_VERSION)
+// CHANGES
 // =======
+
+// Version 0.5Z (compatible so no change to INSIM_VERSION)
 
 // NLP / MCI packets are now output at regular intervals
 // CCI_LAG bit added to the CompCar structure
+
+// Version 0.5Z30 (INSIM_VERSION increased to 5)
+
+// IS_CON (CONtact) reports contact between two cars (if ISF_CON is enabled)
+// IS_MTC (Msg To Connection) now has a variable length (up to 128 characters)
+// IS_MTC can be sent to all (UCID = 255) and sound effect can be specified
+// ISS_SHIFTU_HIGH is no longer used (no distinction between high and low view)
+// FIX : Clutch axis / button was not reported after a change in Controls screen
 
 
 // TYPES : (all multi-byte types are PC style - lowest byte first)
@@ -83,7 +93,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
     word	Flags;		// Bit flags for options (see below)
 
     byte	Sp0;		// 0
-    byte	Prefix;		// Special host GetMessage prefix character
+    byte	Prefix;		// Special host message prefix character
     word	Interval;	// Time in ms between NLP or MCI (0 = none)
 
     char	Admin[16];	// Admin password (if set in LFS)
@@ -108,6 +118,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
 #define ISF_MSO_COLS	8	// bit 3 : keep colours in MSO text
 #define ISF_NLP			16	// bit 4 : receive NLP packets
 #define ISF_MCI			32	// bit 5 : receive MCI packets
+#define ISF_CON			64	// bit 6 : receive CON packets
 
 // In most cases you should not set both ISF_NLP and ISF_MCI flags
 // because all IS_NLP information is included in the IS_MCI packet.
@@ -120,7 +131,7 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
 
 // NOTE 4) Prefix field, if set when initialising InSim on a host :
 
-// GetMessages typed with this prefix will be sent to your InSim program
+// Messages typed with this prefix will be sent to your InSim program
 // on the host (in IS_MSO) and not displayed on anyone's screen.
 
 
@@ -140,10 +151,10 @@ enum // the second byte of any packet is one of these
     ISP_SCC,		//  8 - instruction		: set car camera
     ISP_CPP,		//  9 - both ways		: cam pos pack
     ISP_ISM,		// 10 - info			: start multiplayer
-    ISP_MSO,		// 11 - info			: GetMessage out
-    ISP_III,		// 12 - info			: hidden /i GetMessage
-    ISP_MST,		// 13 - instruction		: type GetMessage or /command
-    ISP_MTC,		// 14 - instruction		: GetMessage to a connection
+    ISP_MSO,		// 11 - info			: message out
+    ISP_III,		// 12 - info			: hidden /i message
+    ISP_MST,		// 13 - instruction		: type message or /command
+    ISP_MTC,		// 14 - instruction		: message to a connection
     ISP_MOD,		// 15 - instruction		: set screen mode
     ISP_VTN,		// 16 - info			: vote notification
     ISP_RST,		// 17 - info			: race start
@@ -168,8 +179,8 @@ enum // the second byte of any packet is one of these
     ISP_REO,		// 36 - both ways		: reorder (info or instruction)
     ISP_NLP,		// 37 - info			: node and lap packet
     ISP_MCI,		// 38 - info			: multi car info
-    ISP_MSX,		// 39 - instruction		: type GetMessage
-    ISP_MSL,		// 40 - instruction		: GetMessage to local computer
+    ISP_MSX,		// 39 - instruction		: type message
+    ISP_MSL,		// 40 - instruction		: message to local computer
     ISP_CRS,		// 41 - info			: car reset
     ISP_BFN,		// 42 - both ways		: delete buttons / receive button requests
     ISP_AXI,		// 43 - info			: autocross layout information
@@ -179,6 +190,7 @@ enum // the second byte of any packet is one of these
     ISP_BTT,		// 47 - info			: sent after typing into a button
     ISP_RIP,		// 48 - both ways		: replay information packet
     ISP_SSH,		// 49 - both ways		: screenshot
+    ISP_CON,		// 50 - info			: contact (collision report)
 };
 
 enum // the fourth byte of an IS_TINY packet is one of these
@@ -188,7 +200,7 @@ enum // the fourth byte of an IS_TINY packet is one of these
     TINY_CLOSE,		//  2 - instruction		: close insim
     TINY_PING,		//  3 - ping request	: external progam requesting a reply
     TINY_REPLY,		//  4 - ping reply		: reply to a ping request
-    TINY_VTC,		//  5 - info			: vote cancelled
+    TINY_VTC,		//  5 - both ways		: game vote cancel (info or request)
     TINY_SCP,		//  6 - info request	: send camera pos
     TINY_SST,		//  7 - info request	: send state info
     TINY_GTH,		//  8 - info request	: get time in hundredths (i.e. SMALL_RTP)
@@ -363,8 +375,8 @@ struct IS_STA // STAte
 #define ISS_REPLAY			2		// in SPR
 #define ISS_PAUSED			4		// paused
 #define ISS_SHIFTU			8		// SHIFT+U mode
-#define ISS_SHIFTU_HIGH		16		// HIGH view
-#define ISS_SHIFTU_FOLLOW	32		// following car
+#define ISS_16				16		// UNUSED
+#define ISS_SHIFTU_FOLLOW	32		// FOLLOW view
 #define ISS_SHIFTU_NO_OPT	64		// SHIFT+U buttons hidden
 #define ISS_SHOW_2D			128		// showing 2d display
 #define ISS_FRONT_END		256		// entry screen
@@ -384,7 +396,6 @@ struct IS_STA // STAte
 
 // These states can be set by a special packet :
 
-// ISS_SHIFTU_FOLLOW	- following car
 // ISS_SHIFTU_NO_OPT	- SHIFT+U buttons hidden
 // ISS_SHOW_2D			- showing 2d display
 // ISS_MPSPEEDUP		- multiplayer speedup option
@@ -402,7 +413,7 @@ struct IS_SFP // State Flags Pack
     byte	Sp3;		// spare
 };
 
-// Other states must be set by using keypresses or GetMessages (see below)
+// Other states must be set by using keypresses or messages (see below)
 
 
 // SCREEN MODE
@@ -430,17 +441,17 @@ struct IS_MOD // MODe : send to LFS to change screen mode
 // If Width and Height are both zero, LFS will switch to windowed mode.
 
 
-// TEXT GetMessageS AND KEY PRESSES
+// TEXT MESSAGES AND KEY PRESSES
 // ==============================
 
-// You can send 64-byte text GetMessages to LFS as if the user had typed them in.
-// GetMessages that appear on LFS screen (up to 128 bytes) are reported to the
+// You can send 64-byte text messages to LFS as if the user had typed them in.
+// Messages that appear on LFS screen (up to 128 bytes) are reported to the
 // external program.  You can also send simulated keypresses to LFS.
 
-// GetMessageS OUT (FROM LFS)
+// MESSAGES OUT (FROM LFS)
 // ------------
 
-struct IS_MSO // MSg Out - system GetMessages and user GetMessages
+struct IS_MSO // MSg Out - system messages and user messages
 {
     byte	Size;		// 136
     byte	Type;		// ISP_MSO
@@ -459,16 +470,16 @@ struct IS_MSO // MSg Out - system GetMessages and user GetMessages
 
 enum
 {
-    MSO_SYSTEM,			// 0 - system GetMessage
-    MSO_USER,			// 1 - normal visible user GetMessage
-    MSO_PREFIX,			// 2 - hidden GetMessage starting with special prefix (see ISI)
-    MSO_O,				// 3 - hidden GetMessage typed on local pc with /o command
+    MSO_SYSTEM,			// 0 - system message
+    MSO_USER,			// 1 - normal visible user message
+    MSO_PREFIX,			// 2 - hidden message starting with special prefix (see ISI)
+    MSO_O,				// 3 - hidden message typed on local pc with /o command
     MSO_NUM
 };
 
-// NOTE : Typing "/o GetMessage" into LFS will send an IS_MSO with UserType = MSO_O
+// NOTE : Typing "/o MESSAGE" into LFS will send an IS_MSO with UserType = MSO_O
 
-struct IS_III // InsIm Info - /i GetMessage from user to host's InSim
+struct IS_III // InsIm Info - /i message from user to host's InSim
 {
     byte	Size;		// 72
     byte	Type;		// ISP_III
@@ -483,10 +494,10 @@ struct IS_III // InsIm Info - /i GetMessage from user to host's InSim
     char	Msg[64];
 };
 
-// GetMessageS IN (TO LFS)
+// MESSAGES IN (TO LFS)
 // -----------
 
-struct IS_MST // MSg Type - send to LFS to type GetMessage or command
+struct IS_MST // MSg Type - send to LFS to type message or command
 {
     byte	Size;		// 68
     byte	Type;		// ISP_MST
@@ -506,38 +517,38 @@ struct IS_MSX // MSg eXtended - like MST but longer (not for commands)
     char	Msg[96];	// last byte must be zero
 };
 
-struct IS_MSL // MSg Local - GetMessage to appear on local computer only
+struct IS_MSL // MSg Local - message to appear on local computer only
 {
     byte	Size;		// 132
     byte	Type;		// ISP_MSL
     byte	ReqI;		// 0
-    byte	Sound;		// sound effect (see GetMessage Sounds below)
+    byte	Sound;		// sound effect (see Message Sounds below)
 
     char	Msg[128];	// last byte must be zero
 };
 
-struct IS_MTC // Msg To Connection - hosts only - send to a connection or a player
+struct IS_MTC // Msg To Connection - hosts only - send to a connection / a player / all
 {
-    byte	Size;		// 72
+    byte	Size;		// 8 + TEXT_SIZE (TEXT_SIZE = 4, 8, 12... 128)
     byte	Type;		// ISP_MTC
     byte	ReqI;		// 0
-    byte	Zero;
+    byte	Sound;		// sound effect (see Message Sounds below)
 
-    byte	UCID;		// connection's unique id (0 = host)
+    byte	UCID;		// connection's unique id (0 = host / 255 = all)
     byte	PLID;		// player's unique id (if zero, use UCID)
     byte	Sp2;
     byte	Sp3;
 
-    char	Msg[64];	// last byte must be zero
+    char	Msg[128]; // up to 128 characters of text - last byte must be zero
 };
 
-// GetMessage Sounds (for Sound byte)
+// Message Sounds (for Sound byte)
 
 enum
 {
     SND_SILENT,
-    SND_GetMessage,
-    SND_SYSGetMessage,
+    SND_MESSAGE,
+    SND_SYSMESSAGE,
     SND_INVALIDKEY,
     SND_ERROR,
     SND_NUM
@@ -1013,8 +1024,8 @@ struct IS_RES // RESult (qualify or confirmed finish)
 // You can send one to LFS before a race start, to specify the starting order.
 // It may be a good idea to avoid conflict by using /start=fixed (LFS setting).
 // Alternatively, you can leave the LFS setting, but make sure you send your IS_REO
-// AFTER you receive the IS_VTA.  LFS does its default grid reordering at the same time
-// as it sends the IS_VTA (VoTe Action) and you can override this by sending an IS_REO.
+// AFTER you receive the SMALL_VTA (VoTe Action).  LFS does its default grid reordering at
+// the same time as it sends the SMALL_VTA and you can override this by sending an IS_REO.
 
 struct IS_REO // REOrder (when race restarts after qualifying)
 {
@@ -1259,7 +1270,7 @@ struct IS_AXO // AutoX Object
 
 // To receive IS_NLP or IS_MCI packets at a specified interval :
 
-// 1) Set the Interval field in the IS_ISI (InSimInit) packet (50, 60, 70... 8000 ms)
+// 1) Set the Interval field in the IS_ISI (InSimInit) packet (40, 50, 60... 8000 ms)
 // 2) Set one of the flags ISF_NLP or ISF_MCI in the IS_ISI packet
 
 // If ISF_NLP flag is set, one IS_NLP packet is sent...
@@ -1296,7 +1307,7 @@ struct CompCar // Car info in 28 bytes - there is an array of these in the MCI (
     int		Y;			// Y map (65536 = 1 metre)
     int		Z;			// Z alt (65536 = 1 metre)
     word	Speed;		// speed (32768 = 100 m/s)
-    word	Direction;	// direction of car's motion : 0 = world y direction, 32768 = 180 deg
+    word	Direction;	// car's motion if Speed > 0 : 0 = world y direction, 32768 = 180 deg
     word	Heading;	// direction of forward axis : 0 = world y direction, 32768 = 180 deg
     short	AngVel;		// signed, rate of change of heading : (16384 = 360 deg/s)
 };
@@ -1328,7 +1339,46 @@ struct IS_MCI // Multi Car Info - if more than 8 in race then more than one of t
 
 // ReqI : 0
 // SubT : SMALL_NLI		(Node Lap Interval)
-// UVal : interval      (0 means stop, otherwise time interval : 50, 60, 70... 8000 ms)
+// UVal : interval      (0 means stop, otherwise time interval : 40, 50, 60... 8000 ms)
+
+
+// CONTACT - reports contacts between two cars if the closing speed is above 0.25 m/s
+// =======
+
+struct CarContact // Info about one car in a contact - two of these in the IS_CON (below)
+{
+    byte	PLID;
+    byte	Info;		// like Info byte in CompCar (CCI_BLUE / CCI_YELLOW / CCI_LAG)
+    byte	Sp2;		// spare
+    char	Steer;		// front wheel steer in degrees (right positive)
+
+    byte	ThrBrk;		// high 4 bits : throttle    / low 4 bits : brake (0 to 15)
+    byte	CluHan;		// high 4 bits : clutch      / low 4 bits : handbrake (0 to 15)
+    byte	GearSp;		// high 4 bits : gear (15=R) / low 4 bits : spare
+    byte	Speed;		// m/s
+
+    byte	Direction;	// car's motion if Speed > 0 : 0 = world y direction, 128 = 180 deg
+    byte	Heading;	// direction of forward axis : 0 = world y direction, 128 = 180 deg
+    char	AccelF;		// m/s^2 longitudinal acceleration (forward positive)
+    char	AccelR;		// m/s^2 lateral acceleration (right positive)
+
+    short	X;			// position (1 metre = 16)
+    short	Y;			// position (1 metre = 16)
+};
+
+struct IS_CON // CONtact - between two cars (A and B are sorted by PLID)
+{
+    byte	Size;		// 40
+    byte	Type;		// ISP_CON
+    byte	ReqI;		// 0
+    byte	Zero;
+
+    word	SpClose;	// high 4 bits : reserved / low 12 bits : closing speed (10 = 1 m/s)
+    word	Time;		// looping time stamp (hundredths - time since reset - like TINY_GTH)
+
+    CarContact	A;
+    CarContact	B;
+};
 
 
 // CAR POSITION PACKETS (Initialising OutSim from InSim - See "OutSim" below)
@@ -1387,7 +1437,7 @@ struct IS_SCC // Set Car Camera - Simplified camera packet (not SHIFT+U mode)
     byte	ReqI;		// 0
     byte	Zero;
 
-    byte	ViewPLID;	// UniqueID of player to view
+    byte	ViewPLID;	// Unique ID of player to view
     byte	InGameCam;	// InGameCam (as reported in StatePack)
     byte	Sp2;
     byte	Sp3;
@@ -1421,21 +1471,18 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 
     float	FOV;		// 4-byte float : FOV in degrees
 
-    word	Time;		// Time to get there (0 means instant + reset)
+    word	Time;		// Time in ms to get there (0 means instant)
     word	Flags;		// ISS state flags (see below)
 };
 
 // The ISS state flags that can be set are :
 
 // ISS_SHIFTU			- in SHIFT+U mode
-// ISS_SHIFTU_HIGH		- HIGH view
-// ISS_SHIFTU_FOLLOW	- following car
+// ISS_SHIFTU_FOLLOW	- FOLLOW view
 // ISS_VIEW_OVERRIDE	- override user view
 
 // On receiving this packet, LFS will set up the camera to match the values in the packet,
 // including switching into or out of SHIFT+U mode depending on the ISS_SHIFTU flag.
-
-// If ISS_SHIFTU is not set, then ViewPLID and InGameCam will be used.
 
 // If ISS_VIEW_OVERRIDE is set, the in-car view Heading Pitch and Roll will be taken
 // from the values in this packet.  Otherwise normal in game control will be used.
@@ -1695,7 +1742,7 @@ struct IS_BTN // BuTtoN - button header - followed by 0 to 240 characters
 // Text in the IS_BTN packet.  If the first character of IS_BTN's Text field is zero, LFS will read
 // the caption up to the second zero.  The visible button text then follows that second zero.
 
-// Text : 0-65-66-0 would display button text "AB" and no caption
+// Text : 65-66-67-0 would display button text "ABC" and no caption
 
 // Text : 0-65-66-67-0-68-69-70-71-0-0-0 would display button text "DEFG" and caption "ABC"
 

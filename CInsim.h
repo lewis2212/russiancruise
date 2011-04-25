@@ -67,6 +67,8 @@ typedef struct
 
 #include "insim.h"
 
+#include <iostream>
+
 // Includes for Windows (uses winsock2)
 #ifdef CIS_WINDOWS
 #include <winsock2.h>
@@ -140,6 +142,7 @@ public:
     void* get_packet();                 // Returns a pointer to the current packet. Must be casted
     int send_packet(void* packet);      // Sends a packet to the host
     int send_button(void* button);      // Sends a variable sized button to the host
+    bool send_mtc(void* s_mst, char *errmsg); //  Send a variable sized message to connect
     int udp_next_packet();              // (UDP) Gets next packet ready into "char udp_packet[]"
     char udp_peek_packet();             // (UDP) Returns the type of the current packet
     void* udp_get_packet();             // (UDP) Returns a pointer to the current packet. Must be casted

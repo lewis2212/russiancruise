@@ -340,23 +340,23 @@ void RCDL::save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
 
-     for (int i = 0; i< MAX_PLAYERS; i++)
+    for (int i = 0; i< MAX_PLAYERS; i++)
     {
         if (players[i].UCID == UCID)
         {
 
-    char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"data\\RCDrivingLicense\\");
-    strcat(file,players[i].UName);
-    strcat(file,".txt");
+            char file[255];
+            strcpy(file,RootDir);
+            strcat(file,"data\\RCDrivingLicense\\");
+            strcat(file,players[i].UName);
+            strcat(file,".txt");
 
-    ofstream writef (file,ios::out);
-    writef << "LVL=" << players[i].LVL << endl;
-    writef << "Skill=" << players[i].Skill << endl;
-    writef.close();
+            ofstream writef (file,ios::out);
+            writef << "LVL=" << players[i].LVL << endl;
+            writef << "Skill=" << players[i].Skill << endl;
+            writef.close();
 
-    break;
+            break;
 
         }
     }

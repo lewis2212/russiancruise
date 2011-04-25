@@ -19,7 +19,7 @@ char* RCMessage::GetMessage(byte UCID, int MsgID)
         if (players[i].UCID == UCID)
         {
             if (players[i].LangID == 0)
-            return "^1LangID == 0";
+                return "^1LangID == 0";
 
             //printf("%s LangID=%d MsgID=%d\n",players[i].UName,players[i].LangID,MsgID);
 
@@ -44,6 +44,11 @@ int RCMessage::init(char *dir, void *CInSim)
         return -1;
     }
 
+    return 0;
+}
+
+void RCMessage::readconfig(char *Track)
+{
     char file[255];
     strcpy(file,RootDir);
     //strcat(file,"misc\\mysql.cfg");
@@ -55,7 +60,7 @@ int RCMessage::init(char *dir, void *CInSim)
     if (fff == INVALID_HANDLE_VALUE)
     {
         cout << "Can't find " << file << endl;
-        return -1;
+        return;
     }
     FindClose(fff);
 
@@ -72,7 +77,7 @@ int RCMessage::init(char *dir, void *CInSim)
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
 
-            //memset(&GetMessage[atoi(id)],0,sizeof(GetMessage));
+            memset(&MsgArray[1][atoi(id)],0,sizeof(MsgArray[1][atoi(id)]));
             strncpy(MsgArray[1][atoi(id)], mesage,strlen(mesage));
             //cout << "id = " << id << "message = " << message[1][atoi(id)] << endl;
             //send_mst(MsgArray[1][atoi(id)]);
@@ -91,7 +96,7 @@ int RCMessage::init(char *dir, void *CInSim)
     if (fff == INVALID_HANDLE_VALUE)
     {
         cout << "Can't find " << file << endl;
-        return -1;
+        return;
     }
     FindClose(fff);
 
@@ -117,7 +122,6 @@ int RCMessage::init(char *dir, void *CInSim)
         }
     }
     readf2.close();
-    return 0;
 }
 
 
@@ -329,20 +333,20 @@ void RCMessage::save (byte UCID)
 {
     // Find player and set the whole player struct he was using to 0
 
-     for (int i = 0; i< MAX_PLAYERS; i++)
+    for (int i = 0; i< MAX_PLAYERS; i++)
     {
         if (players[i].UCID == UCID)
         {
 
-    char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[i].UName);
-    //printf(file);
+            char file[MAX_PATH];
+            sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[i].UName);
+            //printf(file);
 
-    ofstream writef (file,ios::out);
-    writef << "LangID=" << players[i].LangID << endl;
-    writef.close();
+            ofstream writef (file,ios::out);
+            writef << "LangID=" << players[i].LangID << endl;
+            writef.close();
 
-    break;
+            break;
 
         }
     }

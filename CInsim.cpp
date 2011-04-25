@@ -572,6 +572,41 @@ int CInsim::send_button(void* s_button)
     return 0;
 }
 
+/**
+* Send a variable sized message to connect
+*/
+bool CInsim::send_mtc(void* s_mst, char *errmsg)
+{
+    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mst;
+
+    int text_len = strlen(pack_mtc->Msg);
+    int text2send;
+
+    if (text_len == 0)
+    {
+        strcpy(errmsg,"strlen == 0");
+        return false;
+    }
+    else if (text_len > 127)
+    {
+        strcpy(errmsg,"strlen > 127");
+        return false;
+    }
+
+    text2send = text_len + 4 - text_len%4;
+
+    pack_mtc->Size = 8 + text2send;
+
+    pthread_mutex_lock (&ismutex);
+    if (send(sock, (const char *)pack_mtc, pack_mtc->Size, 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
+        strcpy(errmsg,"can't send mtc");
+        return false;
+    }
+    pthread_mutex_unlock (&ismutex);
+    return true;
+}
 
 /**
 * Other functions!!!

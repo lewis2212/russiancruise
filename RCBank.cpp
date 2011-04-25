@@ -3,6 +3,7 @@ using namespace std;
 #include "RCBank.h"
 
 time_t  btime;
+pthread_t bid; // Thread ID
 
 void *bankthread (void *arg)
 {
@@ -98,13 +99,9 @@ bool RCBank::RemFrBank(int Cash)
 
 int RCBank::init(char *dir,void *CInSim, void *GetMessage,void *Bank)
 {
-    pthread_t tid; // Thread ID
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
-    pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 
-    if (pthread_create(&tid,&attr,bankthread,Bank) < 0)
+    pthread_cancel(bid);
+    if (pthread_create(&bid,NULL,bankthread,Bank) < 0)
         return -1;
 
     strcpy(RootDir,dir);

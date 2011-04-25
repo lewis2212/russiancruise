@@ -1,6 +1,7 @@
 #ifndef _RC_TAXI_H // Проверка, чтобы файл подключался один раз
 #define _RC_TAXI_H
 
+#include <math.h>       // sqrt pow
 #include <stdio.h>      //
 #include <iostream>     //
 #include <time.h>       // для работы с временем и рандомом
@@ -36,12 +37,15 @@ struct TaxiPlayer
     /** Work **/
     char    WorkDest[96];           // destination text
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
+    int     WorkStreetDestinaion;
     int     WorkNodeDestinaion;     // Номер нода трассы, куда надо доставить
     int     WorkTime;			    // Время за которое он должен доставить товар
 
     byte    InZone;
+    bool    OnStreet;
+    bool    InPasZone;
     byte    WorkNow;
-    byte    Work;
+    int     Work;
     int     FiredPenalty;
     int     PenaltyCount;
     int     PassCount;
@@ -52,7 +56,7 @@ struct TaxiPlayer
 // Описание класса Такси
 class RCTaxi
 {
-    private:
+private:
     // Переменные и функции, доступные только самому классу
     time_t  acctime;
     int     accept_time;
@@ -61,7 +65,7 @@ class RCTaxi
 
     void accept_user();
 
-    public:
+public:
     // Переменные и функции, доступные для всех
 
     RCTaxi::RCTaxi();   // Конструктор класса (обязательно)
@@ -81,7 +85,7 @@ class RCTaxi
     struct PTH_NODES nodes[2000];
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * street);
+    int init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
     byte inited;
 
     void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"

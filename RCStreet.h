@@ -14,7 +14,7 @@
 
 // Задаем структуру игрока
 
-struct Player
+struct StrPlayer
 {
     struct  CompCar Info;
     char    UName[24];             // Username
@@ -24,7 +24,15 @@ struct Player
     int     StreetNum;
 };
 
-
+struct streets
+{
+    char    Street[50];
+    word    PointCount;
+    int     *StreetX;
+    int     *StreetY;
+    int     SpeedLimit;
+};
+/*
 struct streets
 {
     char    Street[50];
@@ -33,12 +41,12 @@ struct streets
     int     SpeedLimit;
 };
 
-
+*/
 
 // Описание класса Такси
 class RCStreet
 {
-    private:
+private:
     // Переменные и функции, доступные только самому классу
 
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
@@ -47,9 +55,10 @@ class RCStreet
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    struct  Player players[32];     // Структура игроков
+    struct  StrPlayer players[32];     // Структура игроков
     byte    StreetNums;                          // Count of streets
     struct  streets Street[30];              // Array of streets
+    // struct  streets2 Street2[30];              // Array of streets
 
     // функции-повторители основных фунцкий ядра
     void street_ncn();   // Новый игрок зашел на сервер
@@ -65,9 +74,9 @@ class RCStreet
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
 
-    void btn_street(struct Player *splayer);
+    void btn_street(struct StrPlayer *splayer);
 
-    public:
+public:
     // Переменные и функции, доступные для всех
 
     RCStreet::RCStreet();   // Конструктор класса (обязательно)
@@ -75,9 +84,9 @@ class RCStreet
 
 
     bool IfInited;
-    char *CurentStreet (byte UCID);
     int CurentStreetNum(byte UCID);
-    int CurentStreetInfo(void *StreetInfo, int StreetNum);
+    int CurentStreetInfo(void *StreetInfo, byte UCID);
+    int CurentStreetInfoByNum(void *StreetInfo, int StrNum);
     int StreetCount();
 
 
@@ -86,15 +95,10 @@ class RCStreet
     int init(char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
-    //void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
 
     void street_mci();   // Пакет с данными о координатах и т.д.
     void next_packet(); // Функция переборки типа пакета
-
-
-
-    // Функции-утилиты
-    int check_pos (struct Player *splayer); //+
 
 };
 #endif // #define _RC_STREET_H

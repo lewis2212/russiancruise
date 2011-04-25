@@ -77,12 +77,6 @@ private:
     u_int   Capital;
     int     NumCars;
 
-
-
-
-    pthread_t tid; // Thread ID
-    pthread_attr_t attr;
-
     char RootDir[MAX_PATH];
 
 
