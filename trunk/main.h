@@ -282,7 +282,7 @@ void read_car();
 void read_fines();
 int read_cop(struct player *splayer);
 
-
+char errmsg[64];
 
 void send_mtc (byte UCID,char* Msg)
 {
@@ -293,9 +293,9 @@ void send_mtc (byte UCID,char* Msg)
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Msg, Msg,strlen(Msg));
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
     if (!insim.send_mtc(&pack_mtc,errmsg))
-    cout << errmsg << endl;
+        cout << errmsg << endl;
 };
 
 void send_mst (char* Text)
@@ -305,7 +305,7 @@ void send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strncpy(pack_mst.Msg,Text,strlen(Text));
-    insim.send_packet(&pack_mst);
+    insim.send_packet(&pack_mst,errmsg);
 };
 
 
@@ -317,7 +317,7 @@ void send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 };
 
 

@@ -71,6 +71,7 @@ public:
     RCTaxi::RCTaxi();   // Конструктор класса (обязательно)
     RCTaxi::~RCTaxi();  // Деструктор класса (обязательно)
 
+    char errmsg[64];
     CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank

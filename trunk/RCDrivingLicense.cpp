@@ -462,7 +462,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.W = 35;
     pack.H = 8;
     strcat(pack.Text,"");
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
     // LVL
     pack.ClickID = 231;
     pack.BStyle = 64;
@@ -472,7 +472,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.H = 4;
     //int life = 100;
     sprintf(pack.Text,"^7^CDrive Level: %d", splayer->LVL);
-    insim->send_button(&pack);
+    insim->send_button(&pack,errmsg);
 
     pack.ClickID = 232;
     pack.BStyle = 64;
@@ -482,7 +482,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.H = 4;
     //int life = 100;
     sprintf(pack.Text,"^7^CSkill");
-    insim->send_button(&pack);
+    insim->send_button(&pack,errmsg);
 
     pack.ClickID = 233;
     pack.BStyle = 1;
@@ -517,19 +517,21 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
 
     }
 
-    insim->send_button(&pack);
+    insim->send_button(&pack,errmsg);
 
 }
 
 void RCDL::send_mtc (byte UCID,char* Msg)
 {
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 };
 
 void RCDL::send_mst (char* Text)
@@ -539,7 +541,7 @@ void RCDL::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 };
 
 
@@ -551,5 +553,5 @@ void RCDL::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 };

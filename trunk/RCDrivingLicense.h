@@ -37,6 +37,7 @@ class RCDL
 private:
     char RootDir[MAX_PATH];
 
+    char errmsg[64];
     CInsim  *insim;
     RCMessage *msg;
 

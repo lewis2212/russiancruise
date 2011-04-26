@@ -588,13 +588,16 @@ void RCLight::pll()
 
 void RCLight::send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 }
 
 void RCLight::send_mst (char* Text)
@@ -604,7 +607,7 @@ void RCLight::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 }
 
 void RCLight::send_bfn (byte UCID, byte ClickID)
@@ -615,7 +618,7 @@ void RCLight::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }
 
 void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
@@ -636,7 +639,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.T = 15;
     pack.W = 16;
     pack.H = 40;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.BStyle = 16;
     pack.ClickID = 191;
@@ -644,7 +647,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.T = 16;
     pack.W = 14;
     pack.H = 38;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
 
 
@@ -655,18 +658,18 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.W = 30;
     pack.H = 30;
     strcpy(pack.Text,signal1);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
 
     pack.ClickID = 193;
     pack.T = 10+10;
     strcpy(pack.Text,signal2);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.ClickID = 194;
     pack.T = 10+20;
     strcpy(pack.Text,signal3);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }
 
 void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
@@ -687,7 +690,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.T = 15;
     pack.W = 16;
     pack.H = 40;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.BStyle = 16;
     pack.ClickID = 191;
@@ -695,7 +698,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.T = 16;
     pack.W = 14;
     pack.H = 38;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
 
 
@@ -706,18 +709,18 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.W = 30;
     pack.H = 30;
     strcpy(pack.Text,signal11);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
 
     pack.ClickID = 193;
     pack.T = 10+10;
     strcpy(pack.Text,signal12);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.ClickID = 194;
     pack.T = 10+20;
     strcpy(pack.Text,signal13);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }
 
 void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
@@ -739,7 +742,7 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 8;
     pack_btn.H = 20;
     strcpy(pack_btn.Text,"");
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
     /**********/
 
 
@@ -750,18 +753,18 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 16;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal1);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
 
 
     pack_btn.ClickID = 197;
     pack_btn.T = 112;
     strcpy(pack_btn.Text,signal2);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
 
     pack_btn.ClickID = 198;
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal3);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
     /********************************/
     pack_btn.BStyle = 32;
     /**** telo 2 *******/
@@ -771,7 +774,7 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 8;
     pack_btn.H = 20;
     strcpy(pack_btn.Text,"");
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
     /*************************/
     pack_btn.BStyle = 1;
 
@@ -781,16 +784,16 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 16;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal11);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
 
 
     pack_btn.ClickID = 201;
     pack_btn.T = 112;
     strcpy(pack_btn.Text,signal12);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
 
     pack_btn.ClickID = 202;
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal13);
-    insim->send_packet(&pack_btn);
+    insim->send_packet(&pack_btn,errmsg);
 }

@@ -140,9 +140,14 @@ public:
     int next_packet();                  // Gets next packet ready into "char packet[]"
     char peek_packet();                 // Returns the type of the current packet
     void* get_packet();                 // Returns a pointer to the current packet. Must be casted
-    int send_packet(void* packet);      // Sends a packet to the host
-    int send_button(void* button);      // Sends a variable sized button to the host
-    bool send_mtc(void* s_mst, char *errmsg); //  Send a variable sized message to connect
+    /** Send packet without error protection **/
+    bool send_packet(void* packet);      // Sends a packet to the host
+    bool send_button(void* button);      // Sends a variable sized button to the host
+    bool send_mtc(void* s_mtc); //  Send a variable sized message to connect
+    /** Send packet with error protection **/
+    bool send_packet(void* packet, char *errmsg);      // Sends a packet to the host
+    bool send_button(void* button, char *errmsg);      // Sends a variable sized button to the host
+    bool send_mtc(void* s_mtc, char *errmsg); //  Send a variable sized message to connect
     int udp_next_packet();              // (UDP) Gets next packet ready into "char udp_packet[]"
     char udp_peek_packet();             // (UDP) Returns the type of the current packet
     void* udp_get_packet();             // (UDP) Returns a pointer to the current packet. Must be casted

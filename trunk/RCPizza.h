@@ -92,6 +92,7 @@ public:
     struct Store PStore;
     struct  pizza_info TrackInf;
 
+    char errmsg[64];
     CInsim      *insim;
     RCMessage   *msg;
     RCBank      *bank;
