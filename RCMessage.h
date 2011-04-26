@@ -22,6 +22,7 @@ class RCMessage
 {
 private:
 
+    char errmsg[64];
     CInsim  *insim;
 
     char RootDir[MAX_PATH];

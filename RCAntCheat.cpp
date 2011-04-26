@@ -331,7 +331,8 @@ void RCAntCheat::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strncpy(pack_mst.Msg,Text,strlen(Text));
-    insim->send_packet(&pack_mst);
+    if (!insim->send_packet(&pack_mst,errmsg))
+        cout << errmsg << endl;
 }
 
 void RCAntCheat::send_mtc (byte UCID,char* Msg)
@@ -341,8 +342,9 @@ void RCAntCheat::send_mtc (byte UCID,char* Msg)
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Msg, Msg,strlen(Msg));
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 }
 
 void RCAntCheat::pitlane (char* UName)
@@ -352,7 +354,7 @@ void RCAntCheat::pitlane (char* UName)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     sprintf(pack_mst.Msg,"/pitlane %s",UName);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 }
 void RCAntCheat::cheat(struct  Player *splayer)
 {

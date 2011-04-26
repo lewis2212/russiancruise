@@ -588,7 +588,7 @@ void btn_main (struct player *splayer)
     pack.W = 126;
     pack.H = 150;
     strcpy(pack.Text,"");
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
     /* background */
 
@@ -600,7 +600,7 @@ void btn_main (struct player *splayer)
     pack.W = 126;
     pack.H = 20;
     strcpy(pack.Text,"^7RUSSIAN CRUISE");
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
     /* Title */
 
@@ -612,7 +612,7 @@ void btn_main (struct player *splayer)
     pack.W = 124;
     pack.H = 118;
     strcpy(pack.Text,"");
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
 
     /* background #2 */
@@ -662,14 +662,14 @@ void btn_info (struct player *splayer, int b_type)
     pack.W = 16;
     pack.H = 8;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,200));
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
 
     pack.BStyle = 32+8;
     pack.ClickID = 106;
     pack.L += 17;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,201));
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
 
 
@@ -678,7 +678,7 @@ void btn_info (struct player *splayer, int b_type)
     pack.L += 17;
     pack.W = 20;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,202));
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
     Sleep(100);
     /* Tabs */
 
@@ -695,7 +695,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_button(&pack);
+            insim.send_button(&pack,errmsg);
         }
 
         for (int i=11; i<19; i++)
@@ -707,7 +707,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_button(&pack);
+            insim.send_button(&pack,errmsg);
         }
 
     } // if (type == 1)
@@ -728,7 +728,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.ClickID = 110 + g;
             pack.T += 9;
             strcpy(pack.Text,about_text[g]);
-            insim.send_packet(&pack);
+            insim.send_packet(&pack,errmsg);
             Sleep(100);
         }
     }
@@ -748,7 +748,7 @@ void btn_info (struct player *splayer, int b_type)
                 pack.H = 6;
                 pack.ClickID = 110 + fineID;
                 sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo.fines[i].id,ginfo.fines[i].name,ginfo.fines[i].cash);
-                insim.send_button(&pack);
+                insim.send_button(&pack,errmsg);
             }
 
         }
@@ -762,7 +762,7 @@ void btn_info (struct player *splayer, int b_type)
     pack.W = 8;
     pack.H = 8;
     strcpy(pack.Text,"^1[X]");
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 }
 
 
@@ -794,7 +794,7 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,402));
     else
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,403));
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 
 }
 
@@ -834,7 +834,7 @@ void btn_sirena(struct player *splayer)
         pack.H = 1;
 
     strcpy(pack.Text,siren);
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 }
 
 void btn_pogonya(struct player *splayer)
@@ -854,7 +854,7 @@ void btn_pogonya(struct player *splayer)
     pack.W = 100;
     pack.H = 30;
     strcpy(pack.Text,splayer->PogonyaReason);
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 }
 
 void btn_work (struct player *splayer)
@@ -889,7 +889,7 @@ void btn_work (struct player *splayer)
     if (sec < 10)
         strcat(pack.Text,"0");
     strcat(pack.Text,sec_c);
-    insim.send_packet(&pack);
+    insim.send_packet(&pack,errmsg);
 
 }
 
@@ -968,13 +968,13 @@ void case_btc ()
                     pack_btn.H = 4;
                     pack_btn.ClickID = 36;
                     strcpy(pack_btn.Text,msg.GetMessage(ginfo.players[i].UCID,1000));
-                    insim.send_packet(&pack_btn);
+                    insim.send_packet(&pack_btn,errmsg);
 
-                    pack_btn.TypeIn = 64-24-14;
+                    pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 37;
                     strcpy(pack_btn.Text, msg.GetMessage(ginfo.players[i].UCID,1001));
-                    insim.send_packet(&pack_btn);
+                    insim.send_packet(&pack_btn,errmsg);
 
                     // cop buttons
                     if (ginfo.players[i].cop != 0)
@@ -984,28 +984,28 @@ void case_btc ()
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
                         strcpy(pack_btn.Text, msg.GetMessage(ginfo.players[i].UCID,1002));
-                        insim.send_packet(&pack_btn);
+                        insim.send_packet(&pack_btn,errmsg);
 
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 2;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 39;
                         strcpy(pack_btn.Text, msg.GetMessage(ginfo.players[i].UCID,1003));
-                        insim.send_packet(&pack_btn);
+                        insim.send_packet(&pack_btn,errmsg);
 
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 0;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
                         strcpy(pack_btn.Text, msg.GetMessage(ginfo.players[i].UCID,1004));
-                        insim.send_packet(&pack_btn);
+                        insim.send_packet(&pack_btn,errmsg);
 
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 0;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 41;
                         strcpy(pack_btn.Text, msg.GetMessage(ginfo.players[i].UCID,1005));
-                        insim.send_packet(&pack_btn);
+                        insim.send_packet(&pack_btn,errmsg);
                     }
                 }
             }
@@ -1347,7 +1347,7 @@ void case_btt ()
 
                                 char money[96];
                                 itoa(atoi(pack_btt->Text),money,10);
-                                char Msg[64];
+                                char Msg[120];
                                 strcpy(Msg,"^1| ");
                                 strcat(Msg,ginfo.players[i].PName);
                                 strcat(Msg,msg.GetMessage(ginfo.players[i].UCID,1100));
@@ -1382,12 +1382,15 @@ void case_btt ()
                         if (strlen(pack_btt->Text) > 0)
                         {
                             out << ginfo.players[i].UName << " send " << pack_btt->Text << " to "  << ginfo.players[g].UName << endl;
-                            char Msg[64];
+                            char Msg[127];
                             strcpy(Msg,msg.GetMessage(ginfo.players[g].UCID,1103));
                             strcat(Msg,ginfo.players[i].PName);
-                            strcat(Msg,": ");
-                            strcat(Msg,pack_btt->Text);
+                            strcat(Msg,": ^1");
+                            int len = strlen(Msg);
+                            int can = (127-len);
+                            strncat(Msg,pack_btt->Text,can);
                             send_mtc(ginfo.players[g].UCID,Msg);
+
                         } // if atoi(pack_btt->Text) > 0
                         break;
                     }

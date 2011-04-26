@@ -51,6 +51,7 @@ private:
 
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
+    char errmsg[64];
     CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank

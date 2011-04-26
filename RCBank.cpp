@@ -399,7 +399,7 @@ void RCBank::btn_cash (int i)
         strcpy(pack.Text,"^1");
     strcat(pack.Text,cash);
     strcat(pack.Text,"^7 RUR.");
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     if (strcmp(players[i].UName,"denis-takumi") == 0)
     {
@@ -418,7 +418,7 @@ void RCBank::btn_cash (int i)
             strcpy(pack.Text,"^1");
         strcat(pack.Text,cash);
         strcat(pack.Text,"^7 RUR.");
-        insim->send_packet(&pack);
+        insim->send_packet(&pack,errmsg);
     }
 }
 
@@ -525,13 +525,16 @@ int RCBank::check_pos(struct BankPlayer *splayer)
 
 void RCBank::send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 };
 
 void RCBank::send_mst (char* Text)
@@ -541,7 +544,7 @@ void RCBank::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 };
 
 
@@ -553,7 +556,7 @@ void RCBank::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 };
 
 

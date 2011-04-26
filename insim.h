@@ -539,7 +539,7 @@ struct IS_MTC // Msg To Connection - hosts only - send to a connection / a playe
     byte	Sp2;
     byte	Sp3;
 
-    char	Msg[128]; // up to 128 characters of text - last byte must be zero
+    char	Text[128]; // up to 128 characters of text - last byte must be zero
 };
 
 // Message Sounds (for Sound byte)

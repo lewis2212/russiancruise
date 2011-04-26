@@ -227,7 +227,8 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
     memcpy(isi_p.Admin, admin, 16);
 
     // Send the initialization packet
-    if(send_packet(&isi_p) < 0)
+    char errmsg[64];
+    if(!send_packet(&isi_p,errmsg))
     {
         if (using_udp)
         {
@@ -322,8 +323,7 @@ int CInsim::isclose()
     struct IS_TINY cl_packet;
     cl_packet.ReqI = 0;
     cl_packet.SubT = TINY_CLOSE;
-
-    if (send_packet(&cl_packet) < 0)
+    if (!send_packet(&cl_packet))
         return -1;
 
     if (using_udp)
@@ -429,7 +429,7 @@ int CInsim::next_packet()
             keepalive.SubT = TINY_NONE;
 
             // Send it back
-            if (send_packet(&keepalive) < 0)
+            if (!send_packet(&keepalive))
                 return -1;
         }
     }
@@ -528,27 +528,38 @@ void* CInsim::udp_get_packet()
     return udp_packet;
 }
 
-
 /**
 * Send a packet
 */
-int CInsim::send_packet(void* s_packet)
+bool CInsim::send_packet(void* s_packet)
 {
+    byte Type = *((unsigned char*)s_packet+1);
+    switch(Type)
+    {
+        case ISP_BTN:
+        return send_button(s_packet);
+        break;
+
+        case ISP_MTC:
+        return send_mtc(s_packet);
+        break;
+    }
+
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
-        return -1;
+        return false;
     }
     pthread_mutex_unlock (&ismutex);
-    return 0;
+    return true;
 }
 
 
 /**
 * Send a variable sized button
 */
-int CInsim::send_button(void* s_button)
+bool CInsim::send_button(void* s_button)
 {
     struct IS_BTN *pack_btn = (struct IS_BTN*)s_button;
 
@@ -566,20 +577,120 @@ int CInsim::send_button(void* s_button)
     if (send(sock, (const char *)pack_btn, pack_btn->Size, 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
-        return -1;
+        return false;
     }
     pthread_mutex_unlock (&ismutex);
-    return 0;
+    return true;
 }
 
 /**
 * Send a variable sized message to connect
 */
-bool CInsim::send_mtc(void* s_mst, char *errmsg)
+bool CInsim::send_mtc(void* s_mtc)
 {
-    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mst;
+    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
 
-    int text_len = strlen(pack_mtc->Msg);
+    int text_len = strlen(pack_mtc->Text);
+    int text2send;
+
+    if (text_len == 0)
+    {
+        return false;
+    }
+    else if (text_len > 127)
+    {
+        return false;
+    }
+
+    text2send = text_len + 4 - text_len%4;
+
+    pack_mtc->Size = 8 + text2send;
+
+    pthread_mutex_lock (&ismutex);
+    if (send(sock, (const char *)pack_mtc, pack_mtc->Size, 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
+        return false;
+    }
+    pthread_mutex_unlock (&ismutex);
+    return true;
+}
+
+/**
+* Error protection
+*/
+
+/**
+* Send a packet
+*/
+bool CInsim::send_packet(void* s_packet, char *errmsg)
+{
+    byte Type = *((unsigned char*)s_packet+1);
+    switch(Type)
+    {
+        case ISP_BTN:
+        return send_button(s_packet,errmsg);
+        break;
+
+        case ISP_MTC:
+        return send_mtc(s_packet,errmsg);
+        break;
+    }
+
+    pthread_mutex_lock (&ismutex);
+    if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
+        strcpy(errmsg,"Can't send packet");
+        return false;
+    }
+    pthread_mutex_unlock (&ismutex);
+    return true;
+}
+
+
+/**
+* Send a variable sized button
+*/
+bool CInsim::send_button(void* s_button, char *errmsg)
+{
+    struct IS_BTN *pack_btn = (struct IS_BTN*)s_button;
+
+    int text_len = strlen(pack_btn->Text);
+    int text2send;
+
+    if (text_len > 127)
+    {
+        strcpy(errmsg,"strlen > 127");
+        return false;
+    }
+
+    if (text_len == 0)
+        text2send = 0;
+    else
+        text2send = (1+((text_len-1)/4))*4;
+
+    pack_btn->Size = 12 + text2send;
+
+    pthread_mutex_lock (&ismutex);
+    if (send(sock, (const char *)pack_btn, pack_btn->Size, 0) < 0)
+    {
+        pthread_mutex_unlock (&ismutex);
+        strcpy(errmsg,"can't send mtc");
+        return false;
+    }
+    pthread_mutex_unlock (&ismutex);
+    return true;
+}
+
+/**
+* Send a variable sized message to connect
+*/
+bool CInsim::send_mtc(void* s_mtc, char *errmsg)
+{
+    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+
+    int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -607,6 +718,10 @@ bool CInsim::send_mtc(void* s_mst, char *errmsg)
     pthread_mutex_unlock (&ismutex);
     return true;
 }
+
+/**
+* !Error protection
+*/
 
 /**
 * Other functions!!!

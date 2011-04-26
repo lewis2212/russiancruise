@@ -75,30 +75,30 @@ void RCStreet::readconfig(char *Track)
                 */
                 //онул€ем позицию
                 ZeroMemory(&Street[i],sizeof(streets));
-            // читаем название улицы
-            readf.getline(str,128);
-            sprintf(Street[i].Street,"^C^7%s",str);
-
-            readf.getline(str,128);
-            Street[i].SpeedLimit = atoi(str);
-
-            // читаем количество точек
-            readf.getline(str,128);
-            Street[i].PointCount = atoi(str);
-
-            // объ€вл€ем массих точек ’ and Y
-            Street[i].StreetX = new int[Street[i].PointCount];
-            Street[i].StreetY = new int[Street[i].PointCount];
-
-            for (int k=0; k<Street[i].PointCount; k++)
-            {
+                // читаем название улицы
                 readf.getline(str,128);
+                sprintf(Street[i].Street,"^C^7%s",str);
 
-                Street[i].StreetX[k] = atoi(strtok (str,";"));
-                Street[i].StreetY[k] = atoi(strtok (NULL,";"));
-            }
+                readf.getline(str,128);
+                Street[i].SpeedLimit = atoi(str);
 
-            i++;
+                // читаем количество точек
+                readf.getline(str,128);
+                Street[i].PointCount = atoi(str);
+
+                // объ€вл€ем массих точек ’ and Y
+                Street[i].StreetX = new int[Street[i].PointCount];
+                Street[i].StreetY = new int[Street[i].PointCount];
+
+                for (int k=0; k<Street[i].PointCount; k++)
+                {
+                    readf.getline(str,128);
+
+                    Street[i].StreetX[k] = atoi(strtok (str,";"));
+                    Street[i].StreetY[k] = atoi(strtok (NULL,";"));
+                }
+
+                i++;
             }
 
         } // if strlen > 0
@@ -367,7 +367,7 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.W = 33;
     pack.H = 6;
     strcpy(pack.Text,Street[splayer->StreetNum].Street);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.BStyle = 64;
     pack.ClickID = 51;
@@ -376,7 +376,7 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.W = 80;
     pack.H = 80;
     strcpy(pack.Text,"^1Х");
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.ClickID = 52;
     pack.L = 35;
@@ -384,7 +384,7 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.W = 61;
     pack.H = 61;
     strcpy(pack.Text,"^7Х");
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
     pack.ClickID = 53;
     pack.BStyle = 1;
@@ -393,18 +393,21 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.W = 15;
     pack.H = 14;
     sprintf(pack.Text,"^0%d",Street[splayer->StreetNum].SpeedLimit);
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }
 
 void RCStreet::send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 }
 
 void RCStreet::send_mst (char* Text)
@@ -414,7 +417,7 @@ void RCStreet::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 }
 
 void RCStreet::send_bfn (byte UCID, byte ClickID)
@@ -425,7 +428,7 @@ void RCStreet::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }
 
 

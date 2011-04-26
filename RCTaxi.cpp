@@ -698,13 +698,16 @@ void RCTaxi::save_user(struct TaxiPlayer *splayer)
 
 void RCTaxi::send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 }
 
 void RCTaxi::send_mst (char* Text)
@@ -714,7 +717,7 @@ void RCTaxi::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 }
 
 void RCTaxi::send_bfn (byte UCID, byte ClickID)
@@ -725,5 +728,5 @@ void RCTaxi::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 }

@@ -45,17 +45,18 @@ struct Player
 // Описание класса Такси
 class RCAntCheat
 {
-    private:
+private:
     // Переменные и функции, доступные только самому классу
 
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
-    public:
+public:
     // Переменные и функции, доступные для всех
 
     RCAntCheat::RCAntCheat();   // Конструктор класса (обязательно)
     RCAntCheat::~RCAntCheat();  // Деструктор класса (обязательно)
 
+    char errmsg[64];
     CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank

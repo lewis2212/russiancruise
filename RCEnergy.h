@@ -54,6 +54,7 @@ public:
     RCEnergy::RCEnergy();
     RCEnergy::~RCEnergy();
 
+    char errmsg[64];
     CInsim      *insim;
     RCMessage   *msg;
     RCBank      *bank;

@@ -613,7 +613,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     pack.W = 35;
     pack.H = 4;
     strcat(pack.Text,"");
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 
 
     pack.ClickID = 209;
@@ -631,7 +631,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
         strcpy(pack.Text,"^1");
     }
     strcat(pack.Text,msg->GetMessage(splayer->UCID,100));
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
     //
     pack.ClickID = 208;
     pack.BStyle = 64;
@@ -669,7 +669,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
 
     }
 
-    insim->send_button(&pack);
+    insim->send_button(&pack,errmsg);
 
 }
 /*
@@ -742,13 +742,16 @@ int RCEnergy::check_pos(struct EnergyPlayer *splayer)
 
 void RCEnergy::send_mtc (byte UCID,char* Msg)
 {
+    char errmsg[64];
+    ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strcpy(pack_mtc.Msg, Msg);
-    insim->send_packet(&pack_mtc);
+    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    if (!insim->send_mtc(&pack_mtc,errmsg))
+        cout << errmsg << endl;
 };
 
 void RCEnergy::send_mst (char* Text)
@@ -758,7 +761,7 @@ void RCEnergy::send_mst (char* Text)
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst);
+    insim->send_packet(&pack_mst,errmsg);
 };
 
 
@@ -770,5 +773,5 @@ void RCEnergy::send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    insim->send_packet(&pack,errmsg);
 };

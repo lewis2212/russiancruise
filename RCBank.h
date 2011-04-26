@@ -66,6 +66,7 @@ public:
     RCBank::RCBank();
     RCBank::~RCBank();
 
+    char errmsg[64];
     CInsim  *insim;
     RCMessage *msg;
 
