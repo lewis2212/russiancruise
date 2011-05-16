@@ -19,7 +19,7 @@ struct place
 };
 
 bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
-
+/*
 struct PTH
 {
     char    LFSPTH[6];              // do not read file if no match
@@ -41,5 +41,5 @@ struct PTH_NODES
     float   limit_right;         // outer limit
     float   drive_left;          // road limit
     float   drive_right;         // road limit
-};
+};*/
 #endif

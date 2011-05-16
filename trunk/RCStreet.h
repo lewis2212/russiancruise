@@ -32,16 +32,7 @@ struct streets
     int     *StreetY;
     int     SpeedLimit;
 };
-/*
-struct streets
-{
-    char    Street[50];
-    word    NodeBeg;
-    word    NodeEnd;
-    int     SpeedLimit;
-};
 
-*/
 
 // Описание класса Такси
 class RCStreet

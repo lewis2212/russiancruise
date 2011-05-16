@@ -82,10 +82,10 @@ using namespace std;
 #include "RCEnergy.h"
 #include "RCBank.h"
 #include "RCDrivingLicense.h"
-//#include "RCAntCheat.h"
+#include "RCAntCheat.h"
 #include "RCStreet.h"
 #include "RCLight.h"
-//#include "RCTaxi.h"
+#include "RCTaxi.h"
 
 //#include "sqlite/SQLite.h"
 
@@ -209,11 +209,10 @@ struct player
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
     int     Action;
-    //byte    Bonus_key;
-    int     Bonus_laps;
-    byte    Bonus_s1;
-    byte    Bonus_s2;
-    byte    Bonus_s3;
+    /*** bonus ***/
+    float   Bonus_dist;
+    int     Bonus_count;
+    /******************/
     char    Lang[4];
     byte    lang_id;
     byte    Svetofor;
@@ -294,8 +293,7 @@ void send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim.send_mtc(&pack_mtc,errmsg))
-        cout << errmsg << endl;
+    insim.send_packet(&pack_mtc);
 };
 
 void send_mst (char* Text)

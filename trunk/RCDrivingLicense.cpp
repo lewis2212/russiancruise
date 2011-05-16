@@ -41,7 +41,7 @@ bool    RCDL::AddSkill(byte UCID)
     {
         if (players[i].UCID == UCID)
         {
-            players[i].Skill += 800;
+            players[i].Skill += 500*players[i].LVL/2;
             return true;
         }
     }
@@ -54,7 +54,7 @@ bool    RCDL::RemSkill(byte UCID)
     {
         if (players[i].UCID == UCID)
         {
-            players[i].Skill -= 1000;
+            players[i].Skill -= 1000*players[i].LVL/2;
             return true;
         }
     }
@@ -454,70 +454,21 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.UCID = splayer->UCID;
     pack.Inst = 0;
     pack.TypeIn = 0;
-    // BG
+    // LVL
     pack.ClickID = 230;
-    pack.BStyle = 32;
+    pack.BStyle = 32+64;
     pack.L = 100;
     pack.T = 5;
     pack.W = 35;
-    pack.H = 8;
-    strcat(pack.Text,"");
-    insim->send_packet(&pack,errmsg);
-    // LVL
-    pack.ClickID = 231;
-    pack.BStyle = 64;
-    pack.L = 101;
-    pack.T = 5;
-    pack.W = 33;
     pack.H = 4;
     //int life = 100;
-    sprintf(pack.Text,"^7^CDrive Level: %d", splayer->LVL);
-    insim->send_button(&pack,errmsg);
-
-    pack.ClickID = 232;
-    pack.BStyle = 64;
-    pack.L = 101;
-    pack.T = 9;
-    pack.W = 33;
-    pack.H = 4;
-    //int life = 100;
-    sprintf(pack.Text,"^7^CSkill");
-    insim->send_button(&pack,errmsg);
-
-    pack.ClickID = 233;
-    pack.BStyle = 1;
-    pack.L = 107;
-    pack.T = 10;
-    pack.W = 26;
-    pack.H = 2;
-
     float nextlvl = (pow(splayer->LVL,2)*0.5+100)*1000;
+    int skl = int((splayer->Skill/nextlvl)*100);
+    sprintf(pack.Text,"^7^CDrive Level: ^2%d ^7Skill: ^2%d%%", splayer->LVL,skl);
+    insim->send_packet(&pack);
 
     char Text[64];
-    int skl = int((splayer->Skill/nextlvl)*100);
-
-    sprintf(Text,"^C^4| %s ^7РїРµСЂРµС€РµР» РЅР° %d СѓСЂРѕРІРµРЅСЊ",splayer->PName, splayer->LVL);
-
-    int sklend = 100 - skl;
-    strcpy(pack.Text,"^2");
-
-    for (int i=0; i< skl; i++)
-    {
-        strcat(pack.Text,"||");
-    }
-
-    if (sklend > 0)
-    {
-        strcat(pack.Text,"^7");
-
-        for (int i=0; i<sklend; i++)
-        {
-            strcat(pack.Text,"||");
-        }
-
-    }
-
-    insim->send_button(&pack,errmsg);
+    sprintf(Text,"^C^4| %s ^7перешел на %d уровень",splayer->PName, splayer->LVL);
 
 }
 
@@ -530,7 +481,7 @@ void RCDL::send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_mtc(&pack_mtc,errmsg))
+    if (!insim->send_packet(&pack_mtc,errmsg))
         cout << errmsg << endl;
 };
 

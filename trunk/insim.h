@@ -542,6 +542,21 @@ struct IS_MTC // Msg To Connection - hosts only - send to a connection / a playe
     char	Text[128]; // up to 128 characters of text - last byte must be zero
 };
 
+struct IS_MTC_4 // Msg To Connection - hosts only - send to a connection or a player
+{
+	byte	Size;		// 72
+	byte	Type;		// ISP_MTC
+	byte	ReqI;		// 0
+	byte	Zero;
+
+	byte	UCID;		// connection's unique id (0 = host)
+	byte	PLID;		// player's unique id (if zero, use UCID)
+	byte	Sp2;
+	byte	Sp3;
+
+	char	Text[64];	// last byte must be zero
+};
+
 // Message Sounds (for Sound byte)
 
 enum

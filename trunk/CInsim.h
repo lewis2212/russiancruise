@@ -128,6 +128,13 @@ private:
     fd_set udp_readfd, udp_exceptfd;        // (for NLP and MCI packets via UDP) File descriptor watches
     pthread_mutex_t ismutex;                // Mutex var used for send_packet() method
 
+    byte INSIM_VERSION;
+    bool send_button(void* button);      // Sends a variable sized button to the host
+    bool send_mtc(void* s_mtc); //  Send a variable sized message to connect
+
+    bool send_button(void* button, char *errmsg);      // Sends a variable sized button to the host
+    bool send_mtc(void* s_mtc, char *errmsg); //  Send a variable sized message to connect
+
 public:
     CInsim();                               // Constructor
     ~CInsim();                              // Destructor
@@ -142,12 +149,9 @@ public:
     void* get_packet();                 // Returns a pointer to the current packet. Must be casted
     /** Send packet without error protection **/
     bool send_packet(void* packet);      // Sends a packet to the host
-    bool send_button(void* button);      // Sends a variable sized button to the host
-    bool send_mtc(void* s_mtc); //  Send a variable sized message to connect
     /** Send packet with error protection **/
     bool send_packet(void* packet, char *errmsg);      // Sends a packet to the host
-    bool send_button(void* button, char *errmsg);      // Sends a variable sized button to the host
-    bool send_mtc(void* s_mtc, char *errmsg); //  Send a variable sized message to connect
+
     int udp_next_packet();              // (UDP) Gets next packet ready into "char udp_packet[]"
     char udp_peek_packet();             // (UDP) Returns the type of the current packet
     void* udp_get_packet();             // (UDP) Returns a pointer to the current packet. Must be casted

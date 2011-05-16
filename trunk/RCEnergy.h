@@ -80,6 +80,8 @@ public:
     void energy_save(byte UCID);
     void btn_energy (struct EnergyPlayer *splayer);
 
+    int GetEnergy(byte UCID);
+
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);
     void send_mtc (byte UCID,char* Msg);
