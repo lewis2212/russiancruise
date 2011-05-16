@@ -287,6 +287,7 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         {
         case ISP_VER:                     // It was, get it!
             memcpy(pack_ver, (struct IS_VER*)get_packet(), sizeof(struct IS_VER));
+            INSIM_VERSION = pack_ver->InSimVer;
             break;
         default:                          // It wasn't, something went wrong. Quit
             if (isclose() < 0)
@@ -533,17 +534,20 @@ void* CInsim::udp_get_packet()
 */
 bool CInsim::send_packet(void* s_packet)
 {
-    byte Type = *((unsigned char*)s_packet+1);
-    switch(Type)
-    {
+    //if (INSIM_VERSION == 5)
+    //{
+        byte Type = *((unsigned char*)s_packet+1);
+        switch(Type)
+        {
         case ISP_BTN:
-        return send_button(s_packet);
-        break;
+            return send_button(s_packet);
+            break;
 
         case ISP_MTC:
-        return send_mtc(s_packet);
-        break;
-    }
+            return send_mtc(s_packet);
+            break;
+        }
+    //}
 
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
@@ -588,9 +592,10 @@ bool CInsim::send_button(void* s_button)
 */
 bool CInsim::send_mtc(void* s_mtc)
 {
-    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
-
-    int text_len = strlen(pack_mtc->Text);
+    if (INSIM_VERSION == 5)
+    {
+        struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+        int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -603,11 +608,19 @@ bool CInsim::send_mtc(void* s_mtc)
     }
 
     text2send = text_len + 4 - text_len%4;
-
     pack_mtc->Size = 8 + text2send;
 
+    }
+    else
+    {
+        struct IS_MTC_4 *pack_mtc = (struct IS_MTC_4*)s_mtc;
+         pack_mtc->Size = sizeof(IS_MTC_4);
+    }
+
+    printf("Size == %d\n",*((unsigned char*)s_mtc));
+
     pthread_mutex_lock (&ismutex);
-    if (send(sock, (const char *)pack_mtc, pack_mtc->Size, 0) < 0)
+    if (send(sock, (const char *)s_mtc,*((unsigned char*)s_mtc), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
         return false;
@@ -625,17 +638,20 @@ bool CInsim::send_mtc(void* s_mtc)
 */
 bool CInsim::send_packet(void* s_packet, char *errmsg)
 {
-    byte Type = *((unsigned char*)s_packet+1);
-    switch(Type)
-    {
+    //if (INSIM_VERSION == 5)
+   // {
+        byte Type = *((unsigned char*)s_packet+1);
+        switch(Type)
+        {
         case ISP_BTN:
-        return send_button(s_packet,errmsg);
-        break;
+            return send_button(s_packet,errmsg);
+            break;
 
         case ISP_MTC:
-        return send_mtc(s_packet,errmsg);
-        break;
-    }
+            return send_mtc(s_packet,errmsg);
+            break;
+        }
+   // }
 
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
@@ -688,9 +704,11 @@ bool CInsim::send_button(void* s_button, char *errmsg)
 */
 bool CInsim::send_mtc(void* s_mtc, char *errmsg)
 {
-    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+    if (INSIM_VERSION == 5)
+    {
+        struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
 
-    int text_len = strlen(pack_mtc->Text);
+        int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -705,11 +723,21 @@ bool CInsim::send_mtc(void* s_mtc, char *errmsg)
     }
 
     text2send = text_len + 4 - text_len%4;
-
     pack_mtc->Size = 8 + text2send;
 
+    }
+    else
+    {
+         struct IS_MTC_4 *pack_mtc = (struct IS_MTC_4*)s_mtc;
+          pack_mtc->Size = sizeof(IS_MTC_4);
+    }
+
+
+
+    printf("Size == %d\n",*((unsigned char*)s_mtc));
+
     pthread_mutex_lock (&ismutex);
-    if (send(sock, (const char *)pack_mtc, pack_mtc->Size, 0) < 0)
+    if (send(sock, (const char *)s_mtc,*((unsigned char*)s_mtc), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
         strcpy(errmsg,"can't send mtc");

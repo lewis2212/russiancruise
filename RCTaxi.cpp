@@ -125,65 +125,34 @@ void RCTaxi::readconfig(char *Track)
                 }
             }
 
+            if (strncmp(str,"/points",5)==0)
+            {
+                readf.getline(str,128);
+                int count = atoi(str);
+                PointCount = count;
+
+                Points = new Taxi_points[PointCount];
+
+                for (int i=0 ; i<PointCount; i++)
+                {
+                    readf.getline(str,128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str,",");
+                    Y = strtok (NULL,",");
+                    Points[i].X = atoi(X);
+                    Points[i].Y = atoi(Y);
+
+                    printf("X= %d Y= %d\n",Points[i].X,Points[i].Y);
+                }
+            }
+
 
 
         } // if strlen > 0
     } //while readf.good()
 
     readf.close();
-
-    /** READ PTH FILE **/
-
-    sprintf(file,"%sdata\\RCTaxi\\pth\\%s.pth",RootDir,Track);
-    //cout << file << endl;
-
-
-
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        printf ("RCTaxi: Can't find file \n %s",file);
-        return;
-    }
-    FindClose(fff);
-
-    HANDLE  hFile;
-
-    //! открываем файл дл€ чтени€
-    hFile = CreateFile(file, GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
-    //! провер€ем на успешное открытие
-    DWORD  dwBytesRead;
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        printf("Create file failed. \nThe last error code: %d\n",(int)GetLastError());
-        return;
-    }
-
-    if ( !ReadFile(hFile,&pth,sizeof(PTH),&dwBytesRead,(LPOVERLAPPED)NULL) )
-    {
-        cerr << "Read \"PTH Header\" failed." << endl;
-        return;
-    }
-
-
-    for (int j = 0; j < pth.num_nodes; j++)
-    {
-        if ( !ReadFile(hFile,&nodes[j],sizeof(PTH_NODES),&dwBytesRead,(LPOVERLAPPED)NULL) )
-        {
-            cerr << "Read \"PTH Nodes[" << j << "]\" failed." << endl;
-            return;
-        }
-
-        if (dwBytesRead == 0)
-            break;
-    }
-
-    /** закрываем дескриптор файла **/
-    CloseHandle(hFile);
-
-    //readpth
-
-
 }
 
 void RCTaxi::next_packet()
@@ -259,12 +228,36 @@ void RCTaxi::accept_user()
 
             struct streets StreetInfo;
             memset(&StreetInfo,0,sizeof(streets));
-
+            int DestPoint = 0;
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
-                /* int DestNode = rand()%(StreetInfo.NodeEnd) + (StreetInfo.NodeBeg);
-                 printf("RCTaxi: dest node == %d\n",DestNode);
-                 players[i].WorkNodeDestinaion = DestNode;
+                for (int z=0;z<StreetInfo.PointCount;z++)
+                {
+                    printf("RCTaxi: StreetInfo.X[] = %d  StreetInfo.Y[] = %d\n",StreetInfo.StreetX[z],StreetInfo.StreetY[z]);
+                }
+                ok = true;
+               /* while (ok)
+                {
+                    DestPoint = rand()%PointCount;
+                    printf("RCTaxi: test dest point == %d\n",DestPoint);
+
+                    if (Check_Pos(StreetInfo.PointCount,StreetInfo.StreetX,StreetInfo.StreetY,Points[DestPoint].X,Points[DestPoint].Y))
+                        ok = false;
+
+                    Sleep(1000);
+                }*/
+
+                for (int x=0;x<PointCount;x++)
+                {
+                    printf("RCTaxi: Points[].X = %d  Points[].Y = %d\n",Points[x].X,Points[x].Y);
+                    if (Check_Pos(StreetInfo.PointCount,StreetInfo.StreetX,StreetInfo.StreetY,Points[x].X,Points[x].Y))
+                    {
+                        printf("TRUUUUUUUUUUUUUEEEEEEEEEEEEEEEE\n");
+                    }
+                }
+
+                 printf("RCTaxi: dest point == %d\n",DestPoint);
+                 players[i].WorkPointDestinaion = DestPoint;
                  players[i].WorkStreetDestinaion = DestStreet;
 
                  memset(&StreetInfo,0,sizeof(streets));
@@ -272,7 +265,7 @@ void RCTaxi::accept_user()
 
                  char Msg[96];
                  sprintf(Msg,"^C^7«аберите клиента на %s ",StreetInfo.Street);
-                 send_mtc(players[i].UCID,Msg);*/
+                 send_mtc(players[i].UCID,Msg);
             }
 
         }
@@ -362,8 +355,9 @@ void RCTaxi::taxi_mci ()
                 }
 
                 /** player drive on dest street **/
-
-                if (players[j].WorkStreetDestinaion == street->CurentStreetNum(players[j].UCID))
+                if (players[j].WorkNow == 1)
+                {
+                    if (players[j].WorkStreetDestinaion == street->CurentStreetNum(players[j].UCID))
                 {
                     if (players[j].OnStreet == false)
                     {
@@ -371,9 +365,9 @@ void RCTaxi::taxi_mci ()
                         players[j].OnStreet = true;
                         /** вычисл€ем расто€ние до точки остановки **/
                         printf("RCTaxi: Calculate the distance\n");
-                        int des_X = nodes[players[j].WorkNodeDestinaion].centre_X;
-                        int des_Y = nodes[players[j].WorkNodeDestinaion].centre_Y;
-                        printf("RCTaxi: Dest. Node X=%d, Y=%d\n",des_X,des_Y);
+                        int des_X = Points[players[j].WorkPointDestinaion].X;
+                        int des_Y = Points[players[j].WorkPointDestinaion].Y;
+                        printf("RCTaxi: Dest. Point X=%d, Y=%d\n",des_X,des_Y);
 
                         float Dist = sqrtf(pow(X-des_X,2)+pow(Y-des_Y,2));
 
@@ -389,8 +383,40 @@ void RCTaxi::taxi_mci ()
                 {
                     players[j].OnStreet = false;
                 }
+                }
 
+                if (players[j].Start == 1)
+                {
 
+                    bool newPoint = true;
+                    for (int f=0; f<200; f++)
+                    {
+                        if (Points[f].Id != 0)
+                        {
+                            float Dist = sqrt(pow((X-Points[f].X),2)+pow((Y-Points[f].Y),2));
+
+                            if (Dist < 100)
+                                newPoint = false;
+                        }
+                    }
+
+                    if (newPoint == true)
+                    {
+                        for (int f=0; f<200; f++)
+                        {
+                            if (Points[f].Id == 0)
+                            {
+                                Points[f].Id = 1;
+                                Points[f].X = X;
+                                Points[f].Y = Y;
+
+                                send_mst("^7Added new point;");
+                                break;
+                            }
+                        }
+                    }
+
+                }
 
 
                 /** NOTE: don't use break **/
@@ -507,6 +533,28 @@ void RCTaxi::taxi_mso ()
         }
         players[i].WorkNow = 0;
         send_mtc(players[i].UCID,"Rabota zakon4ena");
+
+    }
+    if (strncmp(Message, "!start", strlen("!start")) == 0 )
+    {
+        /** DO SOME CODE **/
+        if (players[i].Start ==0)
+        {
+            players[i].Start =1;
+        }
+        else
+        {
+            players[i].Start =0;
+
+            ofstream readf("PoInTs.txt",ios::out);
+            for (int f=0;f<200;f++)
+            {
+                if (Points[f].Id != 0)
+                {
+                    readf << Points[f].X << "," << Points[f].Y << endl;
+                }
+            }
+        }
 
     }
 
@@ -706,7 +754,7 @@ void RCTaxi::send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_mtc(&pack_mtc,errmsg))
+    if (!insim->send_packet(&pack_mtc,errmsg))
         cout << errmsg << endl;
 }
 

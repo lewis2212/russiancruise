@@ -5,6 +5,8 @@
 int ok = 1;
 struct global_info ginfo;
 
+struct IS_VER pack_ver;
+
 #ifdef _RC_PIZZA_H
 RCPizza pizza;
 #endif
@@ -41,17 +43,17 @@ RCTaxi  taxi;
 
 void init_classes()
 {
-#ifdef _RC_PIZZA_H
-    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg);
-#endif
     msg.init(RootDir,&insim);
+    bank.init(RootDir,&insim,&msg,&bank);
+
 #ifdef _RC_ENERGY_H
     nrg.init(RootDir,&nrg,&insim,&msg,&bank);
 #endif
-    bank.init(RootDir,&insim,&msg,&bank);
+
 #ifdef _RC_LEVEL_H
     dl.init(RootDir,&insim,&msg);
 #endif
+
 #ifdef _RC_CHEAT_H
     antcht.init(RootDir,&antcht,&insim,&msg,&bank);
 #endif
@@ -62,6 +64,10 @@ void init_classes()
 
 #ifdef _RC_LIGHT_H
     lgh.init(RootDir,&insim,&msg);
+#endif
+
+#ifdef _RC_PIZZA_H
+    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg,&dl);
 #endif
 
 #ifdef _RC_TAXI_H
@@ -83,7 +89,7 @@ void readconfigs()
 
 
 #ifdef _RC_CHEAT_H
-    antcht.readconfig(ginfo.Track);
+   // antcht.readconfig(ginfo.Track);
 #endif
 
 #ifdef _RC_STREET_H
@@ -624,7 +630,7 @@ void btn_info (struct player *splayer, int b_type)
     btn_main(splayer);
 
     char info_text[5][100];
-    strncpy(info_text[0], "^7RUSSIAN CRUISE",99);
+    sprintf(info_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
     strncpy(info_text[1], "^C^7 Добро пожаловать, ",99);
     strncpy(info_text[2], "^C^7 Деньги: ^2",99);
     strncpy(info_text[3], "^C^7   тут жизненный статус",99);
@@ -634,7 +640,7 @@ void btn_info (struct player *splayer, int b_type)
 
 
     char about_text[10][100];
-    strncpy(about_text[0], "^7RUSSIAN CRUISE v 1.1.9",99);
+    sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
     strncpy(about_text[1], "^C^7Developer: Kostin Denis",99);
     strncpy(about_text[2], "^C^7ICQ: 5518182",99);
     strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
@@ -695,7 +701,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_button(&pack,errmsg);
+            insim.send_packet(&pack,errmsg);
         }
 
         for (int i=11; i<19; i++)
@@ -707,7 +713,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.H = 6;
             pack.ClickID = 110 + i;
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo.car[i].car,(int)ginfo.car[i].cash,(int)ginfo.car[i].sell);
-            insim.send_button(&pack,errmsg);
+            insim.send_packet(&pack,errmsg);
         }
 
     } // if (type == 1)
@@ -748,7 +754,7 @@ void btn_info (struct player *splayer, int b_type)
                 pack.H = 6;
                 pack.ClickID = 110 + fineID;
                 sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo.fines[i].id,ginfo.fines[i].name,ginfo.fines[i].cash);
-                insim.send_button(&pack,errmsg);
+                insim.send_packet(&pack,errmsg);
             }
 
         }
@@ -782,7 +788,7 @@ void btn_panel (struct player *splayer)
     pack.ClickID = 54;
     pack.BStyle = 32;
     pack.L = 85;
-    pack.T = 5;
+    pack.T = 1;
     pack.W = 15;
     pack.H = 8;
 
@@ -1682,7 +1688,7 @@ void case_mci ()
 
             {
 
-                int Node = pack_mci->Info[i].Node;
+                //int Node = pack_mci->Info[i].Node;
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
@@ -1712,7 +1718,9 @@ void case_mci ()
 
                 if ((abs((int)Dist) > 10) and (S>30))
                 {
-                    ginfo.players[j].Distance += abs((int)Dist);
+                    ginfo.players[j].Distance += (int)Dist;
+                    /** Bonus **/
+                    ginfo.players[j].Bonus_dist += Dist;
 
                     if (S<150)
                         //bank.players[j].Cash += abs((int)Dist)/10;
@@ -1726,48 +1734,19 @@ void case_mci ()
 
                 /** Bonus **/
 
-                if ( (Node <= ginfo.Node_Split1+5) and (Node >= ginfo.Node_Split1-5) and (ginfo.Node_Split1 != 0) )
+
+
+
+
+                if (ginfo.players[j].Bonus_dist > 5000)
                 {
-                    if (ginfo.players[j].Bonus_s1 == 0)
-                    {
-                        ginfo.players[j].Bonus_s1 = 1;
-                    }
-                }
+                    ginfo.players[j].Bonus_dist -= 5000;
 
-                else if ( (Node <= ginfo.Node_Split2+5) and (Node >= ginfo.Node_Split2-5) and (ginfo.Node_Split2 != 0) )
-                {
-                    if (ginfo.players[j].Bonus_s2 == 0)
-                    {
-                        ginfo.players[j].Bonus_s2 = 1;
-                    }
-
-                }
-
-                else if ( (Node <= ginfo.Node_Split3+5) and (Node >= ginfo.Node_Split3-5) and (ginfo.Node_Split3 != 0) )
-                {
-                    if (ginfo.players[j].Bonus_s3 == 0)
-                    {
-                        ginfo.players[j].Bonus_s3 = 1;
-                    }
-                }
-
-
-                if ((Node <= ginfo.Node_Finish+5) and (Node >= ginfo.Node_Finish-5) and (ginfo.Node_Finish != 0))
-
-                {
-                    int sum = ginfo.players[j].Bonus_s1 + ginfo.players[j].Bonus_s2 + ginfo.players[j].Bonus_s3;
-                    if(sum == ginfo.Splits_Count)
-                    {
-
-                        int bonus = 100+(50*(ginfo.players[j].Bonus_laps));
-                        ginfo.players[j].Bonus_laps +=1;
-                        //ginfo.players[j].Bonus_key = 0;
-                        ginfo.players[j].Bonus_s1 = 0;
-                        ginfo.players[j].Bonus_s2 = 0;
-                        ginfo.players[j].Bonus_s3 = 0;
-
+                        int bonus = 100+(50*(ginfo.players[j].Bonus_count));
+                        ginfo.players[j].Bonus_count +=1;
 
                         bank.AddCash(ginfo.players[j].UCID,bonus);
+                        //dl.AddSkill(ginfo.players[j].UCID);
                         //bank.BankFond -= bonus;
 
                         char bonus_c[64];
@@ -1777,8 +1756,7 @@ void case_mci ()
                         strcat(bonus_c,bonus_ic);
                         strcat(bonus_c," ^7RUR.");
                         send_mtc(ginfo.players[j].UCID,bonus_c);
-                    }
-                    //
+
                 }
 
 
@@ -3369,89 +3347,84 @@ void case_vtn ()
 }
 
 
-int core_connect()
+int core_connect(void *pack_ver)
 {
-    struct IS_VER pack_ver;
-    memset(&pack_ver,0,sizeof(struct IS_VER));
+    memset(pack_ver,0,sizeof(struct IS_VER));
+    struct IS_VER *pack_v = (IS_VER*)pack_ver;
 
-    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN, &pack_ver, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
+    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN,pack_v, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
     {
         out << "\n * Error during initialization * " << endl;
         return -1;
     }
-    else
-    {
-
-        strcpy(ginfo.Product,pack_ver.Product);
-
-        struct IS_TINY pack_requests;
-        memset(&pack_requests, 0, sizeof(struct IS_TINY));
-        pack_requests.Size = sizeof(struct IS_TINY);
-        pack_requests.Type = ISP_TINY;
-        pack_requests.ReqI = 1;
-
-        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
-
-        pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
-        insim.send_packet(&pack_requests);
-        //out << "Connections request packet sent!" << endl;
-
-        pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
-        //out << "Player info request packet sent!" << endl;
 
 
-        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
+    strcpy(ginfo.Product,pack_v->Product);
 
-        return 1;
-    }
+    struct IS_TINY pack_requests;
+    memset(&pack_requests, 0, sizeof(struct IS_TINY));
+    pack_requests.Size = sizeof(struct IS_TINY);
+    pack_requests.Type = ISP_TINY;
+    pack_requests.ReqI = 1;
+
+    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
+
+    pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
+    insim.send_packet(&pack_requests);
+    out << "Connections request packet sent!" << endl;
+
+    pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
+    out << "Player info request packet sent!" << endl;
 
 
+    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
+
+    return 1;
 }
 
-int core_reconnect()
+int core_reconnect(void *pack_ver)
 {
     insim.isclose();
 
     out << "wait 1 minute and reconnect \n";
     Sleep (60000);
 
-    struct IS_VER pack_ver;
-    memset(&pack_ver,0,sizeof(struct IS_VER));
-    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN, &pack_ver, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
+
+    memset(pack_ver,0,sizeof(struct IS_VER));
+    struct IS_VER *pack_v = (IS_VER*)pack_ver;
+
+    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN, pack_v, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
     {
         out << "\n * Error during initialization * " << endl;
         return -1;
     }
-    else
-    {
 
-        strcpy(ginfo.Product,pack_ver.Product);
+    strcpy(ginfo.Product,pack_v->Product);
 
-        struct IS_TINY pack_requests;
-        memset(&pack_requests, 0, sizeof(struct IS_TINY));
-        pack_requests.Size = sizeof(struct IS_TINY);
-        pack_requests.Type = ISP_TINY;
-        pack_requests.ReqI = 1;
+    struct IS_TINY pack_requests;
+    memset(&pack_requests, 0, sizeof(struct IS_TINY));
+    pack_requests.Size = sizeof(struct IS_TINY);
+    pack_requests.Type = ISP_TINY;
+    pack_requests.ReqI = 1;
 
-        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
+    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
 
-        pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
-        insim.send_packet(&pack_requests);
-        //out << "Connections request packet sent!" << endl;
+    pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
+    insim.send_packet(&pack_requests);
+    //out << "Connections request packet sent!" << endl;
 
-        pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
-        //out << "Player info request packet sent!" << endl;
+    pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
+    //out << "Player info request packet sent!" << endl;
 
-        pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
-        insim.send_packet(&pack_requests);
+    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+    insim.send_packet(&pack_requests);
 
-        return 1;
-    }
+    return 1;
 }
 
 void read_track(struct player *splayer)
@@ -3928,7 +3901,7 @@ void *thread_btn (void *params)
                             min = time2/60;
                             sec = time2%60;
                             sprintf(pack.Text,"%s ^2(^1%d:%d^2)",ginfo.players[j].PName,min,sec);
-                            insim.send_button(&pack);
+                            insim.send_packet(&pack);
                             pack.T +=4;
                             pack.ClickID ++;
 
@@ -4086,14 +4059,24 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     read_cfg();
 
-    if (core_connect()<0)
+
+    if (core_connect(&pack_ver)<0)
     {
         for (;;)
         {
-            if (core_reconnect()>0)
+            if (core_reconnect(&pack_ver)>0)
                 break;
         }
     }
+
+    if (pack_ver.InSimVer != 5)
+    {
+        cout << "INSIM VER != 5" << endl;
+        out << "INSIM VER != 5" << endl;
+        //return 0;
+    }
+
+
     pthread_t mci_tid; // Thread ID
     pthread_t btn_tid; // Thread ID
     pthread_t work_tid; // Thread ID
@@ -4144,7 +4127,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             //out<< error_ch;
             for (;;)
             {
-                if (core_reconnect()>0)
+                if (core_reconnect(&pack_ver)>0)
                     break;
             }
 

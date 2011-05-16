@@ -14,7 +14,7 @@ void *nrg_thread_btn (void *energy)
 
     int ok = 1;
 
-    printf("\tthread \"Buttons\" started\n");
+    printf("\tthread \"Energy button\" started\n");
     while (ok > 0)
     {
         for (int i=0; i<MAX_PLAYERS; i++)
@@ -342,7 +342,7 @@ void RCEnergy::energy_cnl ()
                 //players[i].cash += 500;
             }
 
-            energy_save(i);
+            energy_save(players[i].UCID);
 
             memset(&players[i],0,sizeof(struct EnergyPlayer));
             break;
@@ -589,7 +589,7 @@ void RCEnergy::energy_mso ()
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0 )
     {
         //cout << players[i].UName << " send !save" << endl;
-        energy_save(i);
+        energy_save(players[i].UCID);
 
     }
 
@@ -636,40 +636,28 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     pack.ClickID = 208;
     pack.BStyle = 64;
     pack.L = 107;
-    pack.T = 2;
+    pack.T = 1;
     pack.W = 26;
-    pack.H = 2;
+    pack.H = 4;
     //int life = 100;
-    strcpy(pack.Text,"^7");
+    //strcpy(pack.Text,"^7");
 
     int nrg = splayer->Energy/50 ;
 
-    int nrgend = 200 - splayer->Energy/50;
+    //int nrgend = 200 - splayer->Energy/50;
 
     if (nrg <= 40 and nrg > 0)
-        strcat(pack.Text,"^1");
+        strcpy(pack.Text,"^1");
     else if (nrg <= 140 and nrg > 40)
-        strcat(pack.Text,"^3");
+        strcpy(pack.Text,"^3");
     else
-        strcat(pack.Text,"^2");
+        strcpy(pack.Text,"^2");
 
-    for (int i=0; i< nrg; i++)
-    {
-        strcat(pack.Text,"|");
-    }
+        float nrg2 = (splayer->Energy)*100/10000;
 
-    if (nrgend > 0)
-    {
-        strcat(pack.Text,"^7");
+        sprintf(pack.Text+2,"%1.0f%%",nrg2);
 
-        for (int i=0; i<nrgend; i++)
-        {
-            strcat(pack.Text,"|");
-        }
-
-    }
-
-    insim->send_button(&pack,errmsg);
+    insim->send_packet(&pack);
 
 }
 /*
@@ -750,9 +738,9 @@ void RCEnergy::send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_mtc(&pack_mtc,errmsg))
+    if (!insim->send_packet(&pack_mtc,errmsg))
         cout << errmsg << endl;
-};
+}
 
 void RCEnergy::send_mst (char* Text)
 {
@@ -762,7 +750,7 @@ void RCEnergy::send_mst (char* Text)
     pack_mst.Type = ISP_MST;
     strcpy(pack_mst.Msg,Text);
     insim->send_packet(&pack_mst,errmsg);
-};
+}
 
 
 void RCEnergy::send_bfn (byte UCID, byte ClickID)
@@ -774,4 +762,16 @@ void RCEnergy::send_bfn (byte UCID, byte ClickID)
     pack.UCID = UCID;
     pack.ClickID = ClickID;
     insim->send_packet(&pack,errmsg);
-};
+}
+
+int RCEnergy::GetEnergy(byte UCID)
+{
+    for (int i=0; i<32;i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            return (players[i].Energy*100/10000);
+        }
+    }
+    return 0;
+}

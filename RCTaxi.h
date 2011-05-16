@@ -23,6 +23,14 @@ struct Taxi_info
     int     YShop[10];
 };
 
+struct Taxi_points
+{
+    byte    Id;
+    int     X;
+    int     Y;
+};
+
+
 // Задаем структуру игрока
 
 struct TaxiPlayer
@@ -38,7 +46,7 @@ struct TaxiPlayer
     char    WorkDest[96];           // destination text
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkStreetDestinaion;
-    int     WorkNodeDestinaion;     // Номер нода трассы, куда надо доставить
+    int     WorkPointDestinaion;     // Номер точки трассы, куда надо доставить
     int     WorkTime;			    // Время за которое он должен доставить товар
 
     byte    InZone;
@@ -49,6 +57,9 @@ struct TaxiPlayer
     int     FiredPenalty;
     int     PenaltyCount;
     int     PassCount;
+
+
+    byte Start;
 };
 
 
@@ -79,11 +90,14 @@ public:
     RCStreet    *street;
 
     struct  Taxi_info TrackInf;
+    int PointCount;
+    struct  Taxi_points *Points;
+
     struct  place zone;
     struct  TaxiPlayer players[32];     // Структура игроков
 
-    struct PTH pth;
-    struct PTH_NODES nodes[2000];
+    /*struct PTH pth;
+    struct PTH_NODES nodes[2000];*/
 
     // Основные функции класса
     int init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);

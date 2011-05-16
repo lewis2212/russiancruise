@@ -343,8 +343,7 @@ void RCAntCheat::send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_mtc(&pack_mtc,errmsg))
-        cout << errmsg << endl;
+    insim->send_packet(&pack_mtc,errmsg);
 }
 
 void RCAntCheat::pitlane (char* UName)

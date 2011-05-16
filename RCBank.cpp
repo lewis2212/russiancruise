@@ -386,7 +386,7 @@ void RCBank::btn_cash (int i)
     pack.BStyle = 32;
     //
     pack.ClickID = 162;
-    pack.L = 85;
+    pack.L = 70;
     pack.T = 1;
     pack.W = 15;
     pack.H = 4;
@@ -405,7 +405,7 @@ void RCBank::btn_cash (int i)
     {
         pack.ClickID = 163;
         pack.L = 65;
-        pack.T = 1;
+        pack.T = 5;
         pack.W = 20;
         pack.H = 4;
 
@@ -533,7 +533,7 @@ void RCBank::send_mtc (byte UCID,char* Msg)
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
     strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_mtc(&pack_mtc,errmsg))
+    if (!insim->send_packet(&pack_mtc,errmsg))
         cout << errmsg << endl;
 };
 
