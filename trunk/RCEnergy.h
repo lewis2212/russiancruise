@@ -28,7 +28,7 @@ struct EnergyPlayer
     byte    PLID;                  // PLayer ID
     byte    Zone;
     /** Energy **/
-    int     Energy; // Energy xD
+    int     Energy; // Energy xD from 0 to 10000
     time_t  EnergyTime;
 };
 
@@ -50,6 +50,26 @@ private:
 
     char RootDir[MAX_PATH];
 
+    void ncn();
+    void npl();
+    void plp();
+    void pll();
+    void cnl();
+    void crp();
+    void mso();
+    //! HIT CONTROL
+    void con();
+    void obh();
+    void hlv();
+
+    void send_bfn(byte UCID, byte ClickID);
+    void send_mst (char* Text);
+    void send_mtc (byte UCID,char* Msg);
+    void btn_work (struct BankPlayer *splayer);
+
+    // Функции-утилиты
+    int check_pos (struct EnergyPlayer *splayer); //+
+
 public:
     RCEnergy::RCEnergy();
     RCEnergy::~RCEnergy();
@@ -66,29 +86,13 @@ public:
     void readconfig(char *Track);
     // функции-повторители основных фунцкий ядра
     void next_packet();
-    void energy_ncn();
-    void energy_npl();
-    void energy_plp();
-    void energy_pll();
-    void energy_cnl();
-    void energy_crp();
-    void energy_mci();
-    void energy_mso();
-
-
-    // функции
+    void mci();
     void energy_save(byte UCID);
     void btn_energy (struct EnergyPlayer *splayer);
 
     int GetEnergy(byte UCID);
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
-    void btn_work (struct BankPlayer *splayer);
 
-    // Функции-утилиты
-    int check_pos (struct EnergyPlayer *splayer); //+
 
 };
 

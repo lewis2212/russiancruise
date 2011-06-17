@@ -6,6 +6,7 @@ int ok = 1;
 struct global_info ginfo;
 
 struct IS_VER pack_ver;
+word	isf_flag;
 
 #ifdef _RC_PIZZA_H
 RCPizza pizza;
@@ -356,7 +357,7 @@ void read_user_cars(struct player *splayer)
 
                 strcpy(splayer->cars[i].car,car);
                 splayer->cars[i].tuning = atoi(tun);
-                splayer->cars[i].dist = atoi(dis);
+                splayer->cars[i].dist = atof(dis);
 
                 i++;
             }
@@ -464,63 +465,46 @@ void help_cmds (struct player *splayer,int h_type)
         {
             if (strlen(splayer->cars[i].car)>0)
             {
-                //int     id;
-                char    car[4];
                 int     tune;
-                char    dist[16];
                 char    Text[64];
 
-                strcpy(car , splayer->cars[i].car);
                 tune = splayer->cars[i].tuning;
-                itoa(splayer->cars[i].dist,dist,10);
 
-
-                strcpy( Text, "^1| ^C^2");
-                strcat( Text,car);
-                strcat( Text," ^3");
-                int dist_i = atoi(dist)/1000;
-                char dist_c[12];
-                itoa(dist_i,dist_c,10);
-                strcat(Text,dist_c);
-                strcat( Text,"^7 km (");
+                char Tun[30];
 
                 int tune2 = 45;
                 if (tune&1)
                 {
-                    strcat( Text,"^2E");
+                    strcpy( Tun,"^2E");
                     tune2 -= 15;
                 }
                 else
                 {
-                    strcat( Text,"^1E");
+                    strcpy( Tun,"^1E");
                 }
 
                 if (tune&2)
                 {
-                    strcat( Text," ^2T");
+                    strcat( Tun," ^2T");
                     tune2 -= 20;
                 }
                 else
                 {
-                    strcat( Text," ^1T");
+                    strcat( Tun," ^1T");
                 }
 
                 if (tune&4)
                 {
-                    strcat( Text," ^2W");
+                    strcat( Tun," ^2W");
                     tune2 -= 10;
                 }
                 else
                 {
-                    strcat( Text," ^1W");
+                    strcat( Tun," ^1W");
                 }
 
-                strcat( Text,"^7)(^3");
 
-                char intake[16];
-                itoa(tune2,intake,10);
-                strcat( Text,intake);
-                strcat( Text,"%^7)");
+                sprintf(Text,"^1| ^C^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)",splayer->cars[i].car,splayer->cars[i].dist/1000,Tun,tune2);
                 send_mtc(splayer->UCID,Text);
             }
         }
@@ -800,7 +784,19 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,402));
     else
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,403));
-    insim.send_packet(&pack,errmsg);
+    insim.send_packet(&pack);
+
+        //
+    pack.ClickID = 55;
+    pack.L = 70;
+    pack.T = 5;
+    pack.W = 15;
+    pack.H = 4;
+
+    sprintf(pack.Text,"^2%4.3f Km.",splayer->Distance/1000);
+
+
+    insim.send_packet(&pack);
 
 }
 
@@ -909,6 +905,15 @@ void case_bfn ()
     {
         if (ginfo.players[i].UCID == pack_bfn->UCID)
         {
+            time_t now;
+            time(&now);
+
+            if((now - ginfo.players[i].LastBFN) < 10){
+            send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто жать кнопки");
+            return;
+        }
+
+        ginfo.players[i].LastBFN = now;
             if (ginfo.players[i].bfn == 0)
             {
                 ginfo.players[i].bfn = 1;
@@ -1248,6 +1253,7 @@ void case_btc ()
             /** info buttons **/
             if (pack_btc->ClickID == 149)
             {
+                ginfo.players[i].bfn=0;
                 for (int j=159; j>0; j--)
                 {
                     send_bfn(pack_btc->UCID,j);
@@ -2027,6 +2033,14 @@ void case_mso ()
     //!save
     if (strncmp(Msg, "!save", 5) == 0)
     {
+        time_t now;
+        time(&now);
+
+        if((now - ginfo.players[i].LastSave) < 5*3600){
+            send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто сохраняться");
+            return;
+        }
+        ginfo.players[i].LastSave = now;
         out << ginfo.players[i].UName << " send !save" << endl;
         save_car(&ginfo.players[i]);
         Sleep(500);
@@ -2147,63 +2161,47 @@ void case_mso ()
         {
             if (strlen(ginfo.players[i].cars[j].car)>0)
             {
-                //int     id;
-                char    car[4];
+
                 int     tune;
-                char    dist[16];
                 char    Text[64];
 
-                strcpy(car , ginfo.players[i].cars[j].car);
                 tune = ginfo.players[i].cars[j].tuning;
-                itoa(ginfo.players[i].cars[j].dist,dist,10);
 
-
-                strcpy( Text, "/msg ^2");
-                strcat( Text,car);
-                strcat( Text," ^3");
-                int dist_i = atoi(dist)/1000;
-                char dist_c[12];
-                itoa(dist_i,dist_c,10);
-                strcat(Text,dist_c);
-                strcat( Text,"^7 km (");
+                char Tun[30];
 
                 int tune2 = 45;
                 if (tune&1)
                 {
-                    strcat( Text,"^2E");
+                    strcpy( Tun,"^2E");
                     tune2 -= 15;
                 }
                 else
                 {
-                    strcat( Text,"^1E");
+                    strcpy( Tun,"^1E");
                 }
 
                 if (tune&2)
                 {
-                    strcat( Text," ^2T");
+                    strcat( Tun," ^2T");
                     tune2 -= 20;
                 }
                 else
                 {
-                    strcat( Text," ^1T");
+                    strcat( Tun," ^1T");
                 }
 
                 if (tune&4)
                 {
-                    strcat( Text," ^2W");
+                    strcat( Tun," ^2W");
                     tune2 -= 10;
                 }
                 else
                 {
-                    strcat( Text," ^1W");
+                    strcat( Tun," ^1W");
                 }
 
-                strcat( Text,"^7)(^3");
 
-                char intake[16];
-                itoa(tune2,intake,10);
-                strcat( Text,intake);
-                strcat( Text,"%^7)");
+                sprintf(Text,"/msg ^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)",ginfo.players[i].cars[j].car,ginfo.players[i].cars[j].dist/1000,Tun,tune2);
                 send_mst(Text);
             }
         }
@@ -2988,6 +2986,9 @@ void case_npl ()
                 }
 
 
+
+
+
                 char Text[64];
                 strcpy(Text, "/spec ");
                 strcat (Text, ginfo.players[i].UName);
@@ -3172,17 +3173,19 @@ void case_pla ()
                 if (count > 10)
                 {
                     ginfo.players[i].PLID = 0;
-                    char Text[64];
+                    char Text[48];
                     strcpy(Text, "/spec ");
                     strcat (Text, ginfo.players[i].UName);
                     send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,3400));
                     send_mst(Text);
                 }
 
+
             }
             break;
         }
     }
+
 }
 
 void case_pll ()
@@ -3250,6 +3253,7 @@ void case_plp ()
             ginfo.players[i].Info.Y = 0;
             ginfo.players[i].Info.Z = 0;
             ginfo.players[i].Penalty =0;
+
 
             ginfo.players[i].cop = 0;
 
@@ -3324,19 +3328,12 @@ void case_vtn ()
 {
     struct IS_VTN *pack_vtn = (struct IS_VTN *)insim.get_packet();
 
-    struct IS_TINY pack;
-    memset(&pack, 0, sizeof(struct IS_TINY));
-    pack.Size = sizeof(struct IS_TINY);
-    pack.Type = ISP_TINY;
-    pack.ReqI = 1;
-    pack.SubT = TINY_VTC;
-    insim.send_packet(&pack);
-
     for (int i=0; i<MAX_PLAYERS; i++)
     {
         if (ginfo.players[i].UCID == pack_vtn->UCID)
         {
             send_mst(msg.GetMessage(ginfo.players[i].UCID,2900));
+            send_mst("/cv");
             break;
         }
     }
@@ -3352,7 +3349,7 @@ int core_connect(void *pack_ver)
     memset(pack_ver,0,sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
 
-    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN,pack_v, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
+    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN,pack_v, '!', isf_flag,500, ginfo.UDPPORT) < 0)
     {
         out << "\n * Error during initialization * " << endl;
         return -1;
@@ -3396,7 +3393,7 @@ int core_reconnect(void *pack_ver)
     memset(pack_ver,0,sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
 
-    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN, pack_v, '!', ISF_MCI + ISF_MSO_COLS,500, ginfo.UDPPORT) < 0)
+    if (insim.init (ginfo.IP, ginfo.TCPPORT, IS_PRODUCT_NAME,ginfo.ADMIN, pack_v, '!', isf_flag,500, ginfo.UDPPORT) < 0)
     {
         out << "\n * Error during initialization * " << endl;
         return -1;
@@ -3827,7 +3824,7 @@ void *thread_mci (void *params)
 #endif
 
 #ifdef _RC_ENERGY_H
-            nrg.energy_mci();
+            nrg.mci();
 #endif
 
 #ifdef _RC_STREET_H
@@ -4404,6 +4401,8 @@ int core_uninstall_service(char* param[])
 // главная функция приложения
 int main(int argc, char* argv[])
 {
+
+	isf_flag = ISF_MCI + ISF_MSO_COLS + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
 
     int need = 92;

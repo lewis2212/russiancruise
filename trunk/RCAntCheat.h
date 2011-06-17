@@ -38,6 +38,7 @@ struct Player
     int     NPLTime;
     int     HackTime;
     int     NPLHack;
+    bool    NPL;
 };
 
 
@@ -79,6 +80,8 @@ public:
     void crp();   // Игрок переименовался
     void mci();   // Пакет с данными о координатах и т.д.
     void mso();   // Игрок отправил сообщение
+    void reo();
+    void pla();
 
     void send_bfn(byte UCID, byte ClickID);
     void send_mst (char* Text);

@@ -403,32 +403,40 @@ void RCLight::mci ()
                 {
                     if(Check_Pos(Light[g].PointCount,Light[g].X,Light[g].Y,X,Y))
                     {
-                        int H1 = Light[g].Heading-80;
-                        int H2 = Light[g].Heading+80;
+                        int HR = Light[g].Heading-80;
+                        int HL = Light[g].Heading+80;
 
+						char Text[64];
+						sprintf(Text,"in zone");
+						//send_mtc(255,Text);
 
-
-                        if (H2 > 360)
-                            H2 -= 360;
-
-                        //a printf("Heading = %d\n",H);
-
-                        if (H1 < 0)
+                        if (HR < 0)
                         {
-                            H1 = 360 - H1;
-                            if ((H > H1) or (H < H2))
+                            HR = 360 + HR;
+                            if ((H > HR) or (H < HL))
                             {
                                 players[j].Light = Light[g].ID;
                                 SvetKey = Light[g].ID;
                             }
                         }
-
-
-                        if ((H > H1) and (H < H2))
+                        else if (HL > 359)
                         {
-                            players[j].Light = Light[g].ID;
-                            SvetKey = Light[g].ID;
+                        	HL -= 359;
+                        	if ((H > HR) or (H < HL))
+                            {
+                                players[j].Light = Light[g].ID;
+                                SvetKey = Light[g].ID;
+                            }
                         }
+                        else
+                        {
+                        	if ((H > HR) and (H < HL))
+							{
+								players[j].Light = Light[g].ID;
+								SvetKey = Light[g].ID;
+							}
+                        }
+
 
                     }
                 }

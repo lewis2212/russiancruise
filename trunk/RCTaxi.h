@@ -2,6 +2,7 @@
 #define _RC_TAXI_H
 
 #include <math.h>       // sqrt pow
+#include <time.h>       // random
 #include <stdio.h>      //
 #include <iostream>     //
 #include <time.h>       // для работы с временем и рандомом
@@ -26,6 +27,7 @@ struct Taxi_info
 struct Taxi_points
 {
     byte    Id;
+    int     StreetId;
     int     X;
     int     Y;
 };
@@ -58,8 +60,10 @@ struct TaxiPlayer
     int     PenaltyCount;
     int     PassCount;
 
+    int		PassStress; // from 0 to 10000
 
-    byte Start;
+
+    byte 	Start;
 };
 
 
@@ -75,6 +79,25 @@ private:
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
     void accept_user();
+    void accept_user2(byte UCID);
+    void taxi_done(TaxiPlayer *splayer);
+
+    void taxi_ncn();   // Новый игрок зашел на сервер
+    void taxi_npl();   // Игрок вышел из боксов
+    void taxi_plp();   // Игрок ушел в боксы
+    void taxi_pll();   // Игрок ушел в зрители
+    void taxi_cnl();   // Игрок ушел с сервера
+    void taxi_crp();   // Игрок переименовался
+    void taxi_mso();   // Игрок отправил сообщение
+    void con();   // Игрок отправил сообщение
+    void obh();   // Игрок отправил сообщение
+
+    void send_bfn(byte UCID, byte ClickID);
+    void send_mst (char* Text);
+    void send_mtc (byte UCID,char* Msg);
+
+    void read_user(struct TaxiPlayer *splayer);
+    void save_user(struct TaxiPlayer *splayer);
 
 public:
     // Переменные и функции, доступные для всех
@@ -107,21 +130,9 @@ public:
 
     // функции-повторители основных фунцкий ядра
     void next_packet(); // Функция переборки типа пакета
-    void taxi_ncn();   // Новый игрок зашел на сервер
-    void taxi_npl();   // Игрок вышел из боксов
-    void taxi_plp();   // Игрок ушел в боксы
-    void taxi_pll();   // Игрок ушел в зрители
-    void taxi_cnl();   // Игрок ушел с сервера
-    void taxi_crp();   // Игрок переименовался
+
     void taxi_mci();   // Пакет с данными о координатах и т.д.
-    void taxi_mso();   // Игрок отправил сообщение
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
-
-    void read_user(struct TaxiPlayer *splayer);
-    void save_user(struct TaxiPlayer *splayer);
 
     // Функции-утилиты
     // int check_pos (struct PizzaPlayer *splayer); //+
