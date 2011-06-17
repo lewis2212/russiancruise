@@ -75,6 +75,13 @@ void RCAntCheat::next_packet()
         mso();
         break;
 
+    case ISP_PLA:
+        pla();
+        break;
+    case ISP_REO:
+        reo();
+        break;
+
     }
 }
 
@@ -225,6 +232,7 @@ void RCAntCheat::npl()
     {
         if (players[i].UCID == pack_npl->UCID)
         {
+            players[i].NPL = 1;
             players[i].PLID = pack_npl->PLID;
             strcpy(players[i].CName,pack_npl->CName);
 
@@ -255,7 +263,7 @@ void RCAntCheat::npl()
                 players[i].NPLHack = 0;
                 strcpy(Text, "/kick ");
                 strcat (Text, players[i].UName);
-                send_mst("/msg ^1Hack detect");
+                send_mtc(players[i].UCID,"^1Hack detect");
                 send_mst(Text);
                 return;
 
@@ -296,6 +304,7 @@ void RCAntCheat::plp()
             // NOTE: speed
 
             players[i].PLID = 0;
+            players[i].NPL = 0;
             /** DO SOME CODE **/
             break;
         }
@@ -318,10 +327,68 @@ void RCAntCheat::pll()
             // NOTE: speed
 
             players[i].PLID = 0;
+            players[i].NPL = 0;
             /** DO SOME CODE **/
             break;
         }
     }
+}
+
+void RCAntCheat::pla ()
+{
+    //int i;
+
+    //struct IS_PLA *pack_pla = (struct IS_PLA*)insim->get_packet();
+
+    // Find player and set his PLID to 0
+    struct IS_TINY pack_requests;
+    memset(&pack_requests, 0, sizeof(struct IS_TINY));
+    pack_requests.Size = sizeof(struct IS_TINY);
+    pack_requests.Type = ISP_TINY;
+    pack_requests.ReqI = 1;
+    pack_requests.SubT = TINY_REO;      //
+    insim->send_packet(&pack_requests);
+
+
+
+
+}
+
+void RCAntCheat::reo ()
+{
+    //int i;
+
+    struct IS_REO *pack = (struct IS_REO*)insim->get_packet();
+
+    // Find player and set his PLID to 0
+
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID != 0)
+        {
+            int j = 0;
+            while (j < pack->NumP)
+            {
+                if (players[i].PLID == pack->PLID[j])
+                break;
+
+                ++j;
+            }
+
+            if (j == pack->NumP)
+            {
+                char Text[48];
+                sprintf(Text,"/spec %s",players[i].UName);
+                send_mst(Text);
+                sprintf(Text,"/msg %s ^1have wrong PLID",players[i].UName);
+                send_mst(Text);
+            }
+
+        }
+    }
+
+
+
 }
 
 void RCAntCheat::send_mst (char* Text)

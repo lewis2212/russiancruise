@@ -138,31 +138,44 @@ void RCEnergy::next_packet()
     switch (insim->peek_packet())
     {
     case ISP_MSO:
-        energy_mso();
+        mso();
         break;
 
     case ISP_NPL:
-        energy_npl();
+        npl();
         break;
 
     case ISP_NCN:
-        energy_ncn();
+        ncn();
         break;
 
     case ISP_CNL:
-        energy_cnl();
+        cnl();
         break;
 
     case ISP_PLL:
-        energy_pll();
+        pll();
         break;
 
     case ISP_PLP:
-        energy_plp();
+        plp();
         break;
 
     case ISP_CPR:
-        energy_crp();
+        crp();
+        break;
+
+
+    case ISP_CON:
+        con();
+        break;
+
+    case ISP_OBH:
+        obh();
+        break;
+
+    case ISP_HLV:
+        hlv();
         break;
 
 
@@ -171,9 +184,9 @@ void RCEnergy::next_packet()
 
 }
 
-void RCEnergy::energy_ncn()
+void RCEnergy::ncn()
 {
-    printf("New player connect\n");
+    //printf("New player connect\n");
     int i;
 
     struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
@@ -254,7 +267,7 @@ void RCEnergy::energy_ncn()
 
 }
 
-void RCEnergy::energy_npl()
+void RCEnergy::npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -290,7 +303,7 @@ void RCEnergy::energy_npl()
     }
 }
 
-void RCEnergy::energy_plp()
+void RCEnergy::plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -308,7 +321,7 @@ void RCEnergy::energy_plp()
     }
 }
 
-void RCEnergy::energy_pll()
+void RCEnergy::pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -326,7 +339,7 @@ void RCEnergy::energy_pll()
     }
 }
 
-void RCEnergy::energy_cnl ()
+void RCEnergy::cnl ()
 {
     int i;
 
@@ -377,7 +390,7 @@ void RCEnergy::energy_save (byte UCID)
 
 
 
-void RCEnergy::energy_crp()
+void RCEnergy::crp()
 {
     int i;
 
@@ -395,7 +408,7 @@ void RCEnergy::energy_crp()
     }
 }
 
-void RCEnergy::energy_mci ()
+void RCEnergy::mci ()
 {
 
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -477,6 +490,10 @@ void RCEnergy::energy_mci ()
                 {
                     players[j].Energy = 10000;
                 }
+				else if (players[j].Energy < 0 )
+                {
+                    players[j].Energy = 0;
+                }
 
                 if (X1==0 and Y1==0 and Z1==0)
                 {
@@ -517,7 +534,7 @@ void RCEnergy::energy_mci ()
 }
 
 
-void RCEnergy::energy_mso ()
+void RCEnergy::mso ()
 {
     int i;
 
@@ -653,9 +670,9 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     else
         strcpy(pack.Text,"^2");
 
-        float nrg2 = (splayer->Energy)*100/10000;
+    float nrg2 = (splayer->Energy)*100/10000;
 
-        sprintf(pack.Text+2,"%1.0f%%",nrg2);
+    sprintf(pack.Text+2,"%1.1f%%",nrg2);
 
     insim->send_packet(&pack);
 
@@ -766,7 +783,7 @@ void RCEnergy::send_bfn (byte UCID, byte ClickID)
 
 int RCEnergy::GetEnergy(byte UCID)
 {
-    for (int i=0; i<32;i++)
+    for (int i=0; i<32; i++)
     {
         if (players[i].UCID == UCID)
         {
@@ -774,4 +791,102 @@ int RCEnergy::GetEnergy(byte UCID)
         }
     }
     return 0;
+}
+
+
+void RCEnergy::con()
+{
+    printf("Car contact\n");
+
+
+    struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
+
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_con->A.PLID)
+        {
+            players[i].Energy -= 10 * pack_con->SpClose;
+            char Text[128];
+            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+           //send_mtc(players[i].UCID,Text);
+
+            break;
+        }
+    }
+
+    for (int j=0; j<MAX_PLAYERS; j++)
+    {
+        if (players[j].PLID == pack_con->B.PLID)
+        {
+            players[j].Energy -= 10 * pack_con->SpClose;
+            char Text[128];
+            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+            //send_mtc(players[j].UCID,Text);
+
+            break;
+        }
+    }
+
+
+
+}
+
+void RCEnergy::obh()
+{
+    printf("Car obj contact\n");
+    //int i;
+
+    struct IS_OBH *pack_obh = (struct IS_OBH*)insim->get_packet();
+
+    printf("pack_obh->SpClose = %1.1f\n",(float)pack_obh->SpClose/10);
+    printf("pack_obh->C.Speed = %d\n",pack_obh->C.Speed);
+
+    if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
+    {
+        for (int i=0; i<MAX_PLAYERS; i++)
+        {
+            if (players[i].PLID == pack_obh->PLID)
+            {
+                players[i].Energy -=  pack_obh->SpClose;
+                char Text[128];
+                sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_obh->SpClose/100);
+                //send_mtc(players[i].UCID,Text);
+
+                break;
+            }
+        }
+    }
+
+
+}
+
+void RCEnergy::hlv()
+{
+    printf("HLV\n");
+    //int i;
+
+    struct IS_HLV *pack_hlv = (struct IS_HLV*)insim->get_packet();
+
+    printf("pack_hlv->HLV = %d\n",pack_hlv->HLVC);
+    printf("pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_hlv->PLID)
+        {
+            char Text[128];
+            sprintf(Text,"pack_hlv->HLV = %d\n",pack_hlv->HLVC);
+           // send_mtc(players[i].UCID,Text);
+
+            sprintf(Text,"pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
+            //send_mtc(players[i].UCID,Text);
+
+            sprintf(Text,"100/(pack_hlv->Head -  Dir)= %d\n",255/(pack_hlv->C.Heading - pack_hlv->C.Direction));
+           // send_mtc(players[i].UCID,Text);
+            break;
+        }
+    }
+
+
+
+
 }

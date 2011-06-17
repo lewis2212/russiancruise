@@ -138,12 +138,16 @@ void RCTaxi::readconfig(char *Track)
                     readf.getline(str,128);
                     char * X;
                     char * Y;
+                    char * StrId;
                     X = strtok (str,",");
                     Y = strtok (NULL,",");
+                    StrId = strtok (NULL,",");
+
                     Points[i].X = atoi(X);
                     Points[i].Y = atoi(Y);
+                    Points[i].StreetId = atoi(StrId);
 
-                    printf("X= %d Y= %d\n",Points[i].X,Points[i].Y);
+                    // printf("X= %d Y= %d StrId = %d\n",Points[i].X,Points[i].Y,Points[i].StreetId);
                 }
             }
 
@@ -188,6 +192,14 @@ void RCTaxi::next_packet()
         taxi_crp();
         break;
 
+    case ISP_CON:
+        con();
+        break;
+
+    case ISP_OBH:
+        obh();
+        break;
+
 
     }
 }
@@ -213,60 +225,108 @@ void RCTaxi::accept_user()
 
             int CurStreet = street->CurentStreetNum(players[i].UCID);
             int DestStreet = 0;
+            int DestPoint = 0;
+
             srand(time(NULL));
             bool ok = true;
+
             while (ok)
             {
-                DestStreet = rand()%(street->StreetCount());
-                cout << DestStreet << endl;
-
-                if (DestStreet != CurStreet)
+                DestPoint = rand()%PointCount;
+                printf("RCTaxi: test dest point == %d\n",DestPoint);
+                if (Points[DestPoint].StreetId != CurStreet)
                     ok = false;
+
+                Sleep(100);
             }
+
+            DestStreet  =  Points[DestPoint].StreetId;
+
 
             printf("RCTaxi: street == %d\n",DestStreet);
 
             struct streets StreetInfo;
             memset(&StreetInfo,0,sizeof(streets));
-            int DestPoint = 0;
+
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
-                for (int z=0;z<StreetInfo.PointCount;z++)
-                {
-                    printf("RCTaxi: StreetInfo.X[] = %d  StreetInfo.Y[] = %d\n",StreetInfo.StreetX[z],StreetInfo.StreetY[z]);
-                }
-                ok = true;
-               /* while (ok)
-                {
-                    DestPoint = rand()%PointCount;
-                    printf("RCTaxi: test dest point == %d\n",DestPoint);
 
-                    if (Check_Pos(StreetInfo.PointCount,StreetInfo.StreetX,StreetInfo.StreetY,Points[DestPoint].X,Points[DestPoint].Y))
-                        ok = false;
+                printf("RCTaxi: dest point == %d\n",DestPoint);
+                players[i].WorkPointDestinaion = DestPoint;
+                players[i].WorkStreetDestinaion = DestStreet;
 
-                    Sleep(1000);
-                }*/
+                memset(&StreetInfo,0,sizeof(streets));
+                street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
-                for (int x=0;x<PointCount;x++)
-                {
-                    printf("RCTaxi: Points[].X = %d  Points[].Y = %d\n",Points[x].X,Points[x].Y);
-                    if (Check_Pos(StreetInfo.PointCount,StreetInfo.StreetX,StreetInfo.StreetY,Points[x].X,Points[x].Y))
-                    {
-                        printf("TRUUUUUUUUUUUUUEEEEEEEEEEEEEEEE\n");
-                    }
-                }
-
-                 printf("RCTaxi: dest point == %d\n",DestPoint);
-                 players[i].WorkPointDestinaion = DestPoint;
-                 players[i].WorkStreetDestinaion = DestStreet;
-
-                 memset(&StreetInfo,0,sizeof(streets));
-                 street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
-
-                 char Msg[96];
-                 sprintf(Msg,"^C^7«аберите клиента на %s ",StreetInfo.Street);
-                 send_mtc(players[i].UCID,Msg);
+                char Msg[96];
+                sprintf(Msg,"^C^7«аберите клиента на %s ",StreetInfo.Street);
+                send_mtc(players[i].UCID,Msg);
+                players[i].WorkAccept = 1;
             }
+
+            break;
+
+        }
+    }
+}
+
+void RCTaxi::accept_user2(byte UCID)
+{
+    //cout << accept_time - time(&acctime) << endl;
+
+
+
+
+    for (int i=0; i< 32; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            // accept player
+
+
+            int CurStreet = street->CurentStreetNum(players[i].UCID);
+            int DestStreet = 0;
+            int DestPoint = 0;
+
+            srand(time(NULL));
+            bool ok = true;
+
+            while (ok)
+            {
+                DestPoint = rand()%PointCount;
+                printf("RCTaxi: test dest point == %d\n",DestPoint);
+                if (Points[DestPoint].StreetId != CurStreet)
+                    ok = false;
+
+                Sleep(100);
+            }
+
+            DestStreet  =  Points[DestPoint].StreetId;
+
+
+            printf("RCTaxi: street == %d\n",DestStreet);
+
+            struct streets StreetInfo;
+            memset(&StreetInfo,0,sizeof(streets));
+
+            if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
+            {
+
+                printf("RCTaxi: dest point == %d\n",DestPoint);
+                players[i].WorkPointDestinaion = DestPoint;
+                players[i].WorkStreetDestinaion = DestStreet;
+
+                memset(&StreetInfo,0,sizeof(streets));
+                street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
+
+                char Msg[96];
+                sprintf(Msg,"^C^7ќтвези мен€ на %s ",StreetInfo.Street);
+                send_mtc(players[i].UCID,Msg);
+                players[i].WorkAccept = 2;
+                players[i].PassStress = rand()%7500;
+            }
+
+            break;
 
         }
     }
@@ -330,6 +390,7 @@ void RCTaxi::taxi_mci ()
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
+                int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
                 // ≈сли игрок находитс€ в зоне приема на работу, выводим воспомогательные сообщени€ в чат
 
@@ -355,68 +416,127 @@ void RCTaxi::taxi_mci ()
                 }
 
                 /** player drive on dest street **/
-                if (players[j].WorkNow == 1)
+                if (players[j].WorkNow == 1 and players[j].WorkAccept != 0)
                 {
                     if (players[j].WorkStreetDestinaion == street->CurentStreetNum(players[j].UCID))
-                {
-                    if (players[j].OnStreet == false)
                     {
-                        printf("RCTaxi: %s drove to the street\n", players[j].UName);
-                        players[j].OnStreet = true;
-                        /** вычисл€ем расто€ние до точки остановки **/
-                        printf("RCTaxi: Calculate the distance\n");
                         int des_X = Points[players[j].WorkPointDestinaion].X;
                         int des_Y = Points[players[j].WorkPointDestinaion].Y;
-                        printf("RCTaxi: Dest. Point X=%d, Y=%d\n",des_X,des_Y);
-
+                        /** вычисл€ем расто€ние до точки остановки **/
                         float Dist = sqrtf(pow(X-des_X,2)+pow(Y-des_Y,2));
 
-                        printf("RCTaxi: Dest. Distance = %1.2f\n",Dist);
-
-                        char MSG[96];
-                        sprintf(MSG,"^C^7ќстановитесь через %3.0f метров.",Dist);
-                        //send_mtc(players[j].UCID,MSG);
-
-                    }
-                }
-                else
-                {
-                    players[j].OnStreet = false;
-                }
-                }
-
-                if (players[j].Start == 1)
-                {
-
-                    bool newPoint = true;
-                    for (int f=0; f<200; f++)
-                    {
-                        if (Points[f].Id != 0)
+                        if (players[j].OnStreet == false)
                         {
-                            float Dist = sqrt(pow((X-Points[f].X),2)+pow((Y-Points[f].Y),2));
+                            players[j].OnStreet = true;
 
-                            if (Dist < 100)
-                                newPoint = false;
+                            char MSG[96];
+                            sprintf(MSG,"^C^7ќстановитесь через %3.0f метров.",(Dist-(int)Dist%10));
+                            send_mtc(players[j].UCID,MSG);
+
+                        }
+
+                        /**    **/
+                        if ((Dist < 100) and (Speed < 5))
+                        {
+                            if (players[j].WorkAccept == 1)
+                                accept_user2(players[j].UCID);
+                            else if (players[j].WorkAccept == 2)
+                                taxi_done(&players[j]);
                         }
                     }
-
-                    if (newPoint == true)
+                    else
                     {
-                        for (int f=0; f<200; f++)
-                        {
-                            if (Points[f].Id == 0)
-                            {
-                                Points[f].Id = 1;
-                                Points[f].X = X;
-                                Points[f].Y = Y;
-
-                                send_mst("^7Added new point;");
-                                break;
-                            }
-                        }
+                        players[j].OnStreet = false;
                     }
 
+                    if (players[j].WorkAccept == 2)
+                    {
+                        int X = pack_mci->Info[i].X/65536;
+                        int Y = pack_mci->Info[i].Y/65536;
+                        int Z = pack_mci->Info[i].Z/65536;
+                        int D = pack_mci->Info[i].Direction/182;
+                        int H = pack_mci->Info[i].Heading/182;
+
+                        int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
+
+                        int A = pack_mci->Info[i].AngVel*360/16384;
+
+                        int X1 = players[j].Info.X/65536;
+                        int Y1 = players[j].Info.Y/65536;
+                        int Z1 = players[j].Info.Z/65536;
+                        int D1 = players[j].Info.Direction/182;
+                        int H1 = players[j].Info.Heading/182;
+                        int S1 = ((int)players[j].Info.Speed*360)/(32768);
+                        int A1 = players[j].Info.AngVel*360/16384;
+
+
+                        long dA = A-A1;
+                        long dS = S-S1;
+                        long dD = abs((int)(sin(D)*100))-abs((int)(sin(D1)*100));
+                        long dH = abs((int)(sin(H)*100))-abs((int)(sin(H1)*100));
+
+                        //int K = int(sqrt(abs((dD-dH)*(1+dA)*dS))/32);
+                        int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
+
+
+
+                        players[j].PassStress += K;
+
+
+                        if (X1==0 and Y1==0 and Z1==0)
+                        {
+                            X1=X;
+                            Y1=Y;
+                            Z1=Z;
+                        }
+
+
+                        players[j].Info.X = pack_mci->Info[i].X;
+                        players[j].Info.Y = pack_mci->Info[i].Y;
+                        players[j].Info.Node = pack_mci->Info[i].Node;
+                        players[j].Info.Direction = pack_mci->Info[i].Direction;
+                        players[j].Info.Heading = pack_mci->Info[i].Heading;
+                        players[j].Info.Speed = pack_mci->Info[i].Speed;
+                        players[j].Info.AngVel = pack_mci->Info[i].AngVel;
+                    }
+
+
                 }
+
+
+                /* if (players[j].Start == 1)
+                 {
+
+                     bool newPoint = true;
+                     for (int f=0; f<200; f++)
+                     {
+                         if (Points[f].Id != 0)
+                         {
+                             float Dist = sqrt(pow((X-Points[f].X),2)+pow((Y-Points[f].Y),2));
+
+                             if (Dist < 100)
+                                 newPoint = false;
+                         }
+                     }
+
+                     if (newPoint == true)
+                     {
+                         for (int f=0; f<200; f++)
+                         {
+                             if (Points[f].Id == 0)
+                             {
+                                 Points[f].Id = 1;
+                                 Points[f].StreetId = street->CurentStreetNum(players[j].UCID);
+                                 Points[f].X = X;
+                                 Points[f].Y = Y;
+                                 PointCount ++;
+                                 send_mst("^7Added new point;");
+                                 break;
+                             }
+                         }
+                     }
+
+                 }*/
 
 
                 /** NOTE: don't use break **/
@@ -547,11 +667,12 @@ void RCTaxi::taxi_mso ()
             players[i].Start =0;
 
             ofstream readf("PoInTs.txt",ios::out);
-            for (int f=0;f<200;f++)
+            readf << PointCount << endl;
+            for (int f=0; f<200; f++)
             {
                 if (Points[f].Id != 0)
                 {
-                    readf << Points[f].X << "," << Points[f].Y << endl;
+                    readf << Points[f].X << "," << Points[f].Y << "," << Points[f].StreetId << endl;
                 }
             }
         }
@@ -777,4 +898,80 @@ void RCTaxi::send_bfn (byte UCID, byte ClickID)
     pack.UCID = UCID;
     pack.ClickID = ClickID;
     insim->send_packet(&pack,errmsg);
+}
+
+void RCTaxi::taxi_done(TaxiPlayer *splayer)
+{
+    splayer->WorkAccept = 0;
+    splayer->WorkPointDestinaion = 0;
+    splayer->WorkStreetDestinaion = 0;
+    bank->AddCash(splayer->UCID,800);
+    dl->AddSkill(splayer->UCID);
+    send_mtc(splayer->UCID,"^C^7 лиент доставлен");
+}
+
+void RCTaxi::con()
+{
+    printf("Car contact\n");
+
+
+    struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
+
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_con->A.PLID)
+        {
+            //players[i].Energy -= 10 * pack_con->SpClose;
+            char Text[128];
+            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+            //send_mtc(players[i].UCID,Text);
+
+            break;
+        }
+    }
+
+    for (int j=0; j<MAX_PLAYERS; j++)
+    {
+        if (players[j].PLID == pack_con->B.PLID)
+        {
+            //players[j].Energy -= 10 * pack_con->SpClose;
+            char Text[128];
+            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+            //send_mtc(players[j].UCID,Text);
+
+            break;
+        }
+    }
+
+
+
+}
+
+void RCTaxi::obh()
+{
+    printf("Car obj contact\n");
+    //int i;
+
+    struct IS_OBH *pack_obh = (struct IS_OBH*)insim->get_packet();
+
+    printf("pack_obh->SpClose = %1.1f\n",(float)pack_obh->SpClose/10);
+    printf("pack_obh->C.Speed = %d\n",pack_obh->C.Speed);
+
+    if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
+    {
+        for (int i=0; i<MAX_PLAYERS; i++)
+        {
+            if (players[i].PLID == pack_obh->PLID)
+            {
+                //players[i].Energy -=  pack_obh->SpClose;
+                char Text[128];
+                sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_obh->SpClose/100);
+                //send_mtc(players[i].UCID,Text);
+
+                break;
+            }
+        }
+    }
+
+
 }

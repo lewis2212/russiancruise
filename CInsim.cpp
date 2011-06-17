@@ -592,10 +592,9 @@ bool CInsim::send_button(void* s_button)
 */
 bool CInsim::send_mtc(void* s_mtc)
 {
-    if (INSIM_VERSION == 5)
-    {
-        struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
-        int text_len = strlen(pack_mtc->Text);
+
+	struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+	int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -610,14 +609,9 @@ bool CInsim::send_mtc(void* s_mtc)
     text2send = text_len + 4 - text_len%4;
     pack_mtc->Size = 8 + text2send;
 
-    }
-    else
-    {
-        struct IS_MTC_4 *pack_mtc = (struct IS_MTC_4*)s_mtc;
-         pack_mtc->Size = sizeof(IS_MTC_4);
-    }
 
-    printf("Size == %d\n",*((unsigned char*)s_mtc));
+
+    //printf("Size == %d\n",*((unsigned char*)s_mtc));
 
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_mtc,*((unsigned char*)s_mtc), 0) < 0)
@@ -704,11 +698,9 @@ bool CInsim::send_button(void* s_button, char *errmsg)
 */
 bool CInsim::send_mtc(void* s_mtc, char *errmsg)
 {
-    if (INSIM_VERSION == 5)
-    {
-        struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
 
-        int text_len = strlen(pack_mtc->Text);
+	struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+	int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -725,16 +717,10 @@ bool CInsim::send_mtc(void* s_mtc, char *errmsg)
     text2send = text_len + 4 - text_len%4;
     pack_mtc->Size = 8 + text2send;
 
-    }
-    else
-    {
-         struct IS_MTC_4 *pack_mtc = (struct IS_MTC_4*)s_mtc;
-          pack_mtc->Size = sizeof(IS_MTC_4);
-    }
 
 
 
-    printf("Size == %d\n",*((unsigned char*)s_mtc));
+    //printf("Size == %d\n",*((unsigned char*)s_mtc));
 
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_mtc,*((unsigned char*)s_mtc), 0) < 0)

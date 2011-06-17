@@ -77,14 +77,14 @@ using namespace std;
 #include <time.h>
 
 #include "CInsim.h"
-#include "RCPizza.h"
+//#include "RCPizza.h"
 #include "RCMessage.h"
 #include "RCEnergy.h"
-#include "RCBank.h"
-#include "RCDrivingLicense.h"
-#include "RCAntCheat.h"
+//#include "RCBank.h"
+//#include "RCDrivingLicense.h"
+//#include "RCAntCheat.h"
 #include "RCStreet.h"
-#include "RCLight.h"
+//#include "RCLight.h"
 #include "RCTaxi.h"
 
 //#include "sqlite/SQLite.h"
@@ -138,7 +138,7 @@ struct user_car
 {
     char    car[6];
     int     tuning;
-    int     dist;
+    float     dist;
 };
 struct user_fine
 {
@@ -236,6 +236,9 @@ struct player
     int     FloodTime;
     /** Work **/
     int     WorkTime;			// время за которое он должен доставить товар
+
+    time_t  LastSave;
+    time_t  LastBFN;
 };
 
 

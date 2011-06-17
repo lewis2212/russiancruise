@@ -404,8 +404,8 @@ void RCBank::btn_cash (int i)
     if (strcmp(players[i].UName,"denis-takumi") == 0)
     {
         pack.ClickID = 163;
-        pack.L = 65;
-        pack.T = 5;
+        pack.L = 50;
+        pack.T = 1;
         pack.W = 20;
         pack.H = 4;
 
