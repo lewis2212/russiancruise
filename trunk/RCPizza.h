@@ -14,6 +14,7 @@
 #include "RCBank.h"
 #include "RCEnergy.h"
 #include "RCDrivingLicense.h"
+#include "RCTaxi.h"
 
 #include "tools.h"
 
@@ -99,14 +100,15 @@ public:
     RCMessage   *msg;
     RCBank      *bank;
     RCEnergy    *nrg;
-    #ifdef _RC_LEVEL_H
+#ifdef _RC_LEVEL_H
     RCDL        *dl;
-    #endif
+#endif
+
 
     struct  place zone;
     struct  PizzaPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
+    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
     void readconfig(char *Track);
     void deal(struct PizzaPlayer *splayer);
@@ -133,6 +135,8 @@ public:
 
     // Функции-утилиты
     int check_pos (struct PizzaPlayer *splayer); //+
+
+    bool IfWork(byte UCID);
 
 };
 

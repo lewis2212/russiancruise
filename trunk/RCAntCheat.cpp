@@ -370,7 +370,7 @@ void RCAntCheat::reo ()
             while (j < pack->NumP)
             {
                 if (players[i].PLID == pack->PLID[j])
-                break;
+                    break;
 
                 ++j;
             }

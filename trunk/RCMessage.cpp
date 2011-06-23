@@ -282,7 +282,7 @@ void RCMessage::mso()
 
     }
 
-    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
+    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^CСЏР·С‹Рє", 7) == 0 ))
     {
         cout << players[i].UName << " send !lang" << endl;
 

@@ -406,9 +406,9 @@ void RCLight::mci ()
                         int HR = Light[g].Heading-80;
                         int HL = Light[g].Heading+80;
 
-						char Text[64];
-						sprintf(Text,"in zone");
-						//send_mtc(255,Text);
+                        char Text[64];
+                        sprintf(Text,"in zone");
+                        //send_mtc(255,Text);
 
                         if (HR < 0)
                         {
@@ -421,8 +421,8 @@ void RCLight::mci ()
                         }
                         else if (HL > 359)
                         {
-                        	HL -= 359;
-                        	if ((H > HR) or (H < HL))
+                            HL -= 359;
+                            if ((H > HR) or (H < HL))
                             {
                                 players[j].Light = Light[g].ID;
                                 SvetKey = Light[g].ID;
@@ -430,11 +430,11 @@ void RCLight::mci ()
                         }
                         else
                         {
-                        	if ((H > HR) and (H < HL))
-							{
-								players[j].Light = Light[g].ID;
-								SvetKey = Light[g].ID;
-							}
+                            if ((H > HR) and (H < HL))
+                            {
+                                players[j].Light = Light[g].ID;
+                                SvetKey = Light[g].ID;
+                            }
                         }
 
 
@@ -463,6 +463,64 @@ void RCLight::mci ()
 
 
                 /**  steets **/
+
+                 /** pit wrong route **/
+
+                int pit1x[10] = {200,184,196,210};
+                int pit1y[10] = {230,288,290,234};
+                int pit2x[10] = {234,245,245,241,234,223};
+                int pit2y[10] = {-37,-37,-46,-72,-120,119};
+
+				//printf ("test wrong route\n");
+                if (Check_Pos(4,pit1x,pit1y,X,Y))
+                {
+                	 //send_mst("in zone");
+                    if( (H < 190+90) and (H > 190-90) )
+					{
+						if (players[j].WrongWay == 1)
+						{
+							players[j].WrongWay =0;
+							send_bfn(players[j].UCID,203);
+							send_bfn(players[j].UCID,204);
+						}
+					}
+                    else
+                    {
+                    	if (players[j].WrongWay == 0)
+                    	players[j].WrongWay =1;
+                        btn_wrong_way(players[j].UCID);
+                       // send_mst("wrong way");
+                    }
+                }
+                else if (Check_Pos(6,pit2x,pit2y,X,Y))
+                {
+                	 //send_mst("in zone");
+                    if( (H < 190+90) and (H > 190-90) )
+					{
+						if (players[j].WrongWay == 1)
+						{
+							players[j].WrongWay =0;
+							send_bfn(players[j].UCID,203);
+							send_bfn(players[j].UCID,204);
+						}
+					}
+                    else
+                    {
+                    	if (players[j].WrongWay == 0)
+                    	players[j].WrongWay =1;
+                        btn_wrong_way(players[j].UCID);
+                       // send_mst("wrong way");
+                    }
+                }
+                else
+                {
+                	if (players[j].WrongWay == 1)
+                	{
+                		players[j].WrongWay =0;
+                		send_bfn(players[j].UCID,203);
+                		send_bfn(players[j].UCID,204);
+                	}
+                }
 
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
@@ -804,4 +862,33 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal13);
     insim->send_packet(&pack_btn,errmsg);
+}
+
+void RCLight::btn_wrong_way(byte UCID)
+{
+	struct IS_BTN pack_btn;
+    memset(&pack_btn, 0, sizeof(struct IS_BTN));
+    pack_btn.Size = sizeof(struct IS_BTN);
+    pack_btn.Type = ISP_BTN;
+    pack_btn.ReqI = 1;
+    pack_btn.UCID = UCID;
+    pack_btn.Inst = 0;
+    pack_btn.BStyle = 0;
+    pack_btn.TypeIn = 0;
+    /**** telo1 **/
+    pack_btn.ClickID = 203;
+    pack_btn.L = 0;
+    pack_btn.T = 0;
+    pack_btn.W = 200;
+    pack_btn.H = 200;
+    strcpy(pack_btn.Text,"^1•");
+    insim->send_packet(&pack_btn,errmsg);
+    pack_btn.ClickID = 204;
+    pack_btn.L = 25;
+    pack_btn.T = 26;
+    pack_btn.W = 150;
+    pack_btn.H = 150;
+    strcpy(pack_btn.Text,"^7-");
+    insim->send_packet(&pack_btn,errmsg);
+    /**********/
 }

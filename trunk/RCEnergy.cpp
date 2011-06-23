@@ -131,7 +131,7 @@ void RCEnergy::readconfig(char *Track)
     readf.close();
 }
 
-/** функции-повторители основных фунцкий ядра **/
+/** С„СѓРЅРєС†РёРё-РїРѕРІС‚РѕСЂРёС‚РµР»Рё РѕСЃРЅРѕРІРЅС‹С… С„СѓРЅС†РєРёР№ СЏРґСЂР° **/
 
 void RCEnergy::next_packet()
 {
@@ -490,7 +490,7 @@ void RCEnergy::mci ()
                 {
                     players[j].Energy = 10000;
                 }
-				else if (players[j].Energy < 0 )
+                else if (players[j].Energy < 0 )
                 {
                     players[j].Energy = 0;
                 }
@@ -808,7 +808,7 @@ void RCEnergy::con()
             players[i].Energy -= 10 * pack_con->SpClose;
             char Text[128];
             sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
-           //send_mtc(players[i].UCID,Text);
+            //send_mtc(players[i].UCID,Text);
 
             break;
         }
@@ -875,13 +875,13 @@ void RCEnergy::hlv()
         {
             char Text[128];
             sprintf(Text,"pack_hlv->HLV = %d\n",pack_hlv->HLVC);
-           // send_mtc(players[i].UCID,Text);
+            // send_mtc(players[i].UCID,Text);
 
             sprintf(Text,"pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
             //send_mtc(players[i].UCID,Text);
 
             sprintf(Text,"100/(pack_hlv->Head -  Dir)= %d\n",255/(pack_hlv->C.Heading - pack_hlv->C.Direction));
-           // send_mtc(players[i].UCID,Text);
+            // send_mtc(players[i].UCID,Text);
             break;
         }
     }

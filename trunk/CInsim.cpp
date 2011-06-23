@@ -536,17 +536,17 @@ bool CInsim::send_packet(void* s_packet)
 {
     //if (INSIM_VERSION == 5)
     //{
-        byte Type = *((unsigned char*)s_packet+1);
-        switch(Type)
-        {
-        case ISP_BTN:
-            return send_button(s_packet);
-            break;
+    byte Type = *((unsigned char*)s_packet+1);
+    switch(Type)
+    {
+    case ISP_BTN:
+        return send_button(s_packet);
+        break;
 
-        case ISP_MTC:
-            return send_mtc(s_packet);
-            break;
-        }
+    case ISP_MTC:
+        return send_mtc(s_packet);
+        break;
+    }
     //}
 
     pthread_mutex_lock (&ismutex);
@@ -593,8 +593,8 @@ bool CInsim::send_button(void* s_button)
 bool CInsim::send_mtc(void* s_mtc)
 {
 
-	struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
-	int text_len = strlen(pack_mtc->Text);
+    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+    int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
@@ -633,19 +633,19 @@ bool CInsim::send_mtc(void* s_mtc)
 bool CInsim::send_packet(void* s_packet, char *errmsg)
 {
     //if (INSIM_VERSION == 5)
-   // {
-        byte Type = *((unsigned char*)s_packet+1);
-        switch(Type)
-        {
-        case ISP_BTN:
-            return send_button(s_packet,errmsg);
-            break;
+    // {
+    byte Type = *((unsigned char*)s_packet+1);
+    switch(Type)
+    {
+    case ISP_BTN:
+        return send_button(s_packet,errmsg);
+        break;
 
-        case ISP_MTC:
-            return send_mtc(s_packet,errmsg);
-            break;
-        }
-   // }
+    case ISP_MTC:
+        return send_mtc(s_packet,errmsg);
+        break;
+    }
+    // }
 
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
@@ -699,8 +699,8 @@ bool CInsim::send_button(void* s_button, char *errmsg)
 bool CInsim::send_mtc(void* s_mtc, char *errmsg)
 {
 
-	struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
-	int text_len = strlen(pack_mtc->Text);
+    struct IS_MTC *pack_mtc = (struct IS_MTC*)s_mtc;
+    int text_len = strlen(pack_mtc->Text);
     int text2send;
 
     if (text_len == 0)
