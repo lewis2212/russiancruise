@@ -12,7 +12,7 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet)
+int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
 
@@ -52,6 +52,8 @@ int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, vo
         return -1;
     }
 
+
+
     accept_time = time(&acctime) + 60;
 
     inited = 1;
@@ -62,7 +64,7 @@ int RCTaxi::init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, vo
 
 void RCTaxi::readconfig(char *Track)
 {
-    //cout << "RCTaxi::readconfig\n" ;
+    cout << "RCTaxi::readconfig\n" ;
     char file[MAX_PATH];
     sprintf(file,"%sdata\\RCTaxi\\tracks\\%s.txt",RootDir,Track);
     //cout << file << endl;
@@ -157,6 +159,130 @@ void RCTaxi::readconfig(char *Track)
     } //while readf.good()
 
     readf.close();
+
+    //char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCTaxi\\dialog.txt",RootDir);
+    //cout << file << endl;
+
+
+    HANDLE ff;
+    // WIN32_FIND_DATA fd;
+    ff = FindFirstFile(file,&fd);
+    if (ff == INVALID_HANDLE_VALUE)
+    {
+        printf ("RCTaxi: Can't find \n%s",file);
+        return;
+    }
+    FindClose(ff);
+
+    ifstream read (file,ios::in);
+
+
+    while (read.good())
+    {
+        char str[128];
+        read.getline(str,128);
+        //cout << str << endl;
+
+        if (strncmp(str,"#con",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialContCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Cont[i],str);
+                   // send_mtc(255,Dialog_Cont[i]);
+                }
+            }
+
+		if (strncmp(str,"#obh",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialObhCount = count;
+
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    memset(&Dialog_Obh[i],0,128);
+                    strcpy(Dialog_Obh[i],str);
+                    //send_mtc(255,Dialog_Obh[i]);
+                }
+            }
+
+		if (strncmp(str,"#dist",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialDistCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Dist[i],str);
+                    cout << Dialog_Dist[i] << endl;
+                }
+            }
+
+		if (strncmp(str,"#done",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialDoneCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Done[i],str);
+                }
+            }
+
+		if (strncmp(str,"#past",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialPastCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Past[i],str);
+                }
+            }
+
+		if (strncmp(str,"#needstop",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialStopCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Stop[i],str);
+                }
+            }
+
+		if (strncmp(str,"#exit",5)==0)
+            {
+                read.getline(str,128);
+                int count = atoi(str);
+                DialExitCount = count;
+
+                for (int i=0 ; i<count; i++)
+                {
+                    read.getline(str,128);
+                    strcpy(Dialog_Exit[i],str);
+                }
+            }
+
+
+
+    }
 }
 
 void RCTaxi::next_packet()
@@ -259,7 +385,7 @@ void RCTaxi::accept_user()
                 street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
                 char Msg[96];
-                sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+                sprintf(Msg,"^6|^C^7 Заберите клиента на %s ",StreetInfo.Street);
                 send_mtc(players[i].UCID,Msg);
                 players[i].WorkAccept = 1;
             }
@@ -320,10 +446,10 @@ void RCTaxi::accept_user2(byte UCID)
                 street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
                 char Msg[96];
-                sprintf(Msg,"^C^7Отвези меня на %s ",StreetInfo.Street);
+                sprintf(Msg,"^6|^C^7 Отвези меня на %s ",StreetInfo.Street);
                 send_mtc(players[i].UCID,Msg);
                 players[i].WorkAccept = 2;
-                players[i].PassStress = rand()%7500;
+                players[i].PassStress = rand()%750;
             }
 
             break;
@@ -402,11 +528,11 @@ void RCTaxi::taxi_mci ()
                     if (players[j].InZone == 0)
                     {
                         players[j].InZone = 1;
-                        send_mtc(players[j].UCID,"^3Taxi Radriges");
-                        send_mtc(players[j].UCID,"^2!deal");
-                        send_mtc(players[j].UCID,"^2!undeal");
-                        send_mtc(players[j].UCID,"^2!workstart");
-                        send_mtc(players[j].UCID,"^2!workend");
+                        send_mtc(players[j].UCID,"^6| ^3Taxi Radriges");
+                        send_mtc(players[j].UCID,"^6| ^2!deal - ^CУстроиться");
+                        send_mtc(players[j].UCID,"^6| ^2!undeal - ^CУволиться");
+                        send_mtc(players[j].UCID,"^6| ^2!workstart - ^CНачать работу");
+                        send_mtc(players[j].UCID,"^6| ^2!workend - ^CЗакончить работу");
                     }
                 }
                 else
@@ -430,18 +556,47 @@ void RCTaxi::taxi_mci ()
                             players[j].OnStreet = true;
 
                             char MSG[96];
-                            sprintf(MSG,"^C^7Остановитесь через %3.0f метров.",(Dist-(int)Dist%10));
+                            sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров.",(Dist-(int)Dist%10));
                             send_mtc(players[j].UCID,MSG);
 
                         }
 
                         /**    **/
-                        if ((Dist < 100) and (Speed < 5))
+                        if (Dist < 50)
                         {
-                            if (players[j].WorkAccept == 1)
-                                accept_user2(players[j].UCID);
-                            else if (players[j].WorkAccept == 2)
-                                taxi_done(&players[j]);
+                            if (players[j].WorkAccept == 2)
+                            {
+                                if (players[j].InPasZone != 1)
+                                {
+                                    players[j].InPasZone = 1;
+                                    /// NOTE: ADD PHRASE!
+                                    srand ( time(NULL) );
+                                    send_mtc(players[j].UCID,Dialog_Dist[rand()%DialDistCount]); // send random dialog phrase
+                                }
+                            }
+
+                            if (Speed < 5)
+                            {
+                                if (players[j].WorkAccept == 1)
+                                    accept_user2(players[j].UCID);
+                                else if (players[j].WorkAccept == 2)
+                                    taxi_done(&players[j]);
+                            }
+
+                        }
+                        else
+                        {
+                            if (players[j].WorkAccept == 2)
+                            {
+                                if (players[j].InPasZone == 1)
+                                {
+                                    players[j].InPasZone = 0;
+                                    players[j].PassStress += 10;
+                                    /// NOTE: ADD PHRASE!
+                                    srand ( time(NULL) );
+                                    send_mtc(players[j].UCID,Dialog_Past[rand()%DialPastCount]); // send random dialog phrase
+                                }
+                            }
                         }
                     }
                     else
@@ -482,6 +637,9 @@ void RCTaxi::taxi_mci ()
 
                         players[j].PassStress += K;
 
+                        if (players[j].PassStress > 1000)
+                        players[j].PassStress = 1000;
+
 
                         if (X1==0 and Y1==0 and Z1==0)
                         {
@@ -498,6 +656,27 @@ void RCTaxi::taxi_mci ()
                         players[j].Info.Heading = pack_mci->Info[i].Heading;
                         players[j].Info.Speed = pack_mci->Info[i].Speed;
                         players[j].Info.AngVel = pack_mci->Info[i].AngVel;
+
+                        btn_stress(&players[j]);
+
+                        if (players[j].PassStress > 800)
+                        {
+                        	if (players[j].StressOverCount == 0)
+                        	{
+                        		srand ( time(NULL) );
+                        		send_mtc(players[j].UCID,Dialog_Stop[rand()%DialStopCount]); // send random dialog phrase
+                        	}
+
+                        	players[j].StressOverCount ++;
+
+                        	if (players[j].StressOverCount >= 20)
+                        	players[j].StressOverCount = 0;
+
+                        	if (Speed < 5)
+                            {
+                            	taxi_done(&players[j])                            	;
+                            }
+                        }
                     }
 
 
@@ -553,6 +732,7 @@ void RCTaxi::taxi_mci ()
 
 void RCTaxi::taxi_mso ()
 {
+
     int i;
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
@@ -575,6 +755,7 @@ void RCTaxi::taxi_mso ()
         }
     }
 
+
     char Message[96];
     strcpy(Message,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
@@ -585,12 +766,20 @@ void RCTaxi::taxi_mso ()
         save_user(&players[i]);
 
     }
-    if (strncmp(Message, "!deal", strlen("!deal")) == 0 )
+    if (players[i].InZone == 1)
     {
+    	if (strncmp(Message, "!deal", strlen("!deal")) == 0 )
+    {
+
+        if (dl->GetLVL(players[i].UCID) < 20)
+        {
+            send_mtc(players[i].UCID,"^6| ^C^7Маловат ты еще. Нужен уровень выше 20.");
+            return;
+        }
         /** DO SOME CODE **/
         if (players[i].Work !=0)
         {
-            send_mtc(players[i].UCID,"Ti uze rabotaew");
+            send_mtc(players[i].UCID,"^6| ^C^7Мозги мне не канифоль! Ты уже работаешь тут.");
             return;
         }
 
@@ -598,11 +787,11 @@ void RCTaxi::taxi_mso ()
         int nowtime = time(&nt);
         if (players[i].FiredPenalty > nowtime)
         {
-            send_mtc(players[i].UCID,"uvolen do 'tut vremya'");
+            send_mtc(players[i].UCID,"^6| ^C^7Уволен до 'tut vremya'");
             return;
         }
 
-        send_mtc(players[i].UCID,"Ti prinyat");
+        send_mtc(players[i].UCID,"^6| ^C^7Ты принят");
         players[i].Work = 1;
 
     }
@@ -612,11 +801,11 @@ void RCTaxi::taxi_mso ()
         /** DO SOME CODE **/
         if (players[i].Work ==0)
         {
-            send_mtc(players[i].UCID,"Ti uze prinyat na rabotu");
+            send_mtc(players[i].UCID,"^6| ^C^7Слушай, А! Ты и так уже тут не работаешь.");
             return;
         }
 
-        send_mtc(players[i].UCID,"dogovor rastorgnut");
+        send_mtc(players[i].UCID,"^6| ^C^7Уходишь от нас? Ну и ступай отсюда, другово найду.");
         players[i].Work = 0;
     }
 
@@ -625,16 +814,16 @@ void RCTaxi::taxi_mso ()
         /** DO SOME CODE **/
         if (players[i].Work ==0)
         {
-            send_mtc(players[i].UCID,"Ti dolzen ustroet'sya");
+            send_mtc(players[i].UCID,"^6| ^C^7Эй, еще не работаешь тут, а уже рвешься кататься!");
             return;
         }
         if (players[i].WorkNow ==1)
         {
-            send_mtc(players[i].UCID,"Ti uze rabotaesh");
+            send_mtc(players[i].UCID,"^6| ^C^7Голову мне не морочь, ты и так уже на вахте.");
             return;
         }
         players[i].WorkNow = 1;
-        send_mtc(players[i].UCID,"Rabota na4ata");
+        send_mtc(players[i].UCID,"^6| ^C^7Все, иди работать.");
 
     }
 
@@ -643,18 +832,20 @@ void RCTaxi::taxi_mso ()
         /** DO SOME CODE **/
         if (players[i].Work ==0)
         {
-            send_mtc(players[i].UCID,"Ti dolzen ustroet'sya");
+            send_mtc(players[i].UCID,"^6| ^C^7Эй, еще не работаешь тут, а уже увольняешься!");
             return;
         }
         if (players[i].WorkNow ==0)
         {
-            send_mtc(players[i].UCID,"Ti uze ne rabotaesh");
+            send_mtc(players[i].UCID,"^6| ^C^7Я тебя уже отпустил домой.");
             return;
         }
         players[i].WorkNow = 0;
-        send_mtc(players[i].UCID,"Rabota zakon4ena");
+        send_mtc(players[i].UCID,"^6| ^C^7Зделал дело, вымой тело.");
 
     }
+    }
+
     if (strncmp(Message, "!start", strlen("!start")) == 0 )
     {
         /** DO SOME CODE **/
@@ -902,17 +1093,38 @@ void RCTaxi::send_bfn (byte UCID, byte ClickID)
 
 void RCTaxi::taxi_done(TaxiPlayer *splayer)
 {
+    //send_mtc(splayer->UCID,"^C^7Клиент доставлен");
+    send_bfn(splayer->UCID,206);
+    //NOTE: ADD SLOVA
+    if (splayer->PassStress <= 800)
+    {
+    	splayer->PassCount++;
+    	srand ( time(NULL) );
+    	send_mtc(splayer->UCID,Dialog_Done[rand()%DialDoneCount]); // send random dialog phrase
+
+    	char Text[128];
+		sprintf(Text,"^6|^C^7 Вы заработали %d ^2RUR.\n",(1000 - splayer->PassStress/2));
+		send_mtc(splayer->UCID,Text);
+		bank->AddCash(splayer->UCID,(1000 - splayer->PassStress/2));
+		dl->AddSkill(splayer->UCID);
+    }
+    else
+    {
+    	srand ( time(NULL) );
+		send_mtc(splayer->UCID,Dialog_Exit[rand()%DialExitCount]); // send random dialog phrase
+    }
+
     splayer->WorkAccept = 0;
     splayer->WorkPointDestinaion = 0;
     splayer->WorkStreetDestinaion = 0;
-    bank->AddCash(splayer->UCID,800);
-    dl->AddSkill(splayer->UCID);
-    send_mtc(splayer->UCID,"^C^7Клиент доставлен");
+    splayer->StressOverCount = 0;
+    splayer->PassStress = 0;
+
 }
 
 void RCTaxi::con()
 {
-    printf("Car contact\n");
+    // printf("Car contact\n");
 
 
     struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
@@ -921,11 +1133,14 @@ void RCTaxi::con()
     {
         if (players[i].PLID == pack_con->A.PLID)
         {
-            //players[i].Energy -= 10 * pack_con->SpClose;
-            char Text[128];
-            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
-            //send_mtc(players[i].UCID,Text);
+            if (players[i].WorkAccept == 2)
+            {
+                players[i].PassStress += 10 * pack_con->SpClose;
+                //NOTE: ADD SLOVA
+                srand ( time(NULL) );
+                send_mtc(players[i].UCID,Dialog_Cont[rand()%DialContCount]); // send random dialog phrase
 
+            }
             break;
         }
     }
@@ -934,11 +1149,13 @@ void RCTaxi::con()
     {
         if (players[j].PLID == pack_con->B.PLID)
         {
-            //players[j].Energy -= 10 * pack_con->SpClose;
-            char Text[128];
-            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
-            //send_mtc(players[j].UCID,Text);
-
+            if (players[j].WorkAccept == 2)
+            {
+                players[j].PassStress += 10 * pack_con->SpClose;
+                //NOTE: ADD SLOVA
+                srand ( time(NULL) );
+                send_mtc(players[j].UCID,Dialog_Cont[rand()%DialContCount]); // send random dialog phrase
+            }
             break;
         }
     }
@@ -949,29 +1166,95 @@ void RCTaxi::con()
 
 void RCTaxi::obh()
 {
-    printf("Car obj contact\n");
-    //int i;
+
 
     struct IS_OBH *pack_obh = (struct IS_OBH*)insim->get_packet();
 
-    printf("pack_obh->SpClose = %1.1f\n",(float)pack_obh->SpClose/10);
-    printf("pack_obh->C.Speed = %d\n",pack_obh->C.Speed);
 
-    if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
+    for (int i=0; i<MAX_PLAYERS; i++)
     {
-        for (int i=0; i<MAX_PLAYERS; i++)
+        if (players[i].PLID == pack_obh->PLID)
         {
-            if (players[i].PLID == pack_obh->PLID)
+            if (players[i].WorkAccept == 2)
             {
-                //players[i].Energy -=  pack_obh->SpClose;
-                char Text[128];
-                sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_obh->SpClose/100);
-                //send_mtc(players[i].UCID,Text);
-
-                break;
+                if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
+                {
+                    players[i].PassStress +=  pack_obh->SpClose;
+                }
+                else
+                {
+                    players[i].PassStress +=  pack_obh->SpClose/10;
+                }
+                //NOTE: ADD SLOVA
+				srand ( time(NULL) );
+                //cout << rand()%DialObhCount << endl;
+                send_mtc(players[i].UCID,Dialog_Obh[rand()%DialObhCount]); // send random dialog phrase
             }
+            break;
         }
     }
 
 
+
+}
+
+void RCTaxi::btn_stress(struct TaxiPlayer *splayer)
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = splayer->UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+
+    //strcat(pack.Text,msg->GetMessage[0][100]);
+
+    //
+    pack.ClickID = 206;
+    pack.BStyle = 32+64;
+    pack.L = 1;
+    pack.T = 125;
+    pack.W = 48;
+    pack.H = 4;
+    //int life = 100;
+    strcpy(pack.Text,"");
+
+    //cout << "nrg = " << splayer->PassStress/10 << endl;
+
+    for (int i=1; i<=splayer->PassStress/10; i++) // 1000 / 10 = 100
+    {
+        if (i == 1)
+            strcat(pack.Text,"^2");
+        if (i == 30)
+            strcat(pack.Text,"^3");
+        if (i == 80)
+            strcat(pack.Text,"^1");
+
+        strcat(pack.Text,"||");
+    }
+    strcat(pack.Text,"^8");
+    for (int i=0; i<(100-splayer->PassStress/10); i++)
+    {
+        strcat(pack.Text,"||");
+    }
+
+    insim->send_packet(&pack);
+}
+
+bool RCTaxi::IfWork (byte UCID)
+{
+	for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID ==UCID)
+        {
+            //cout << "Msg: " << pack_mso->Msg << endl;
+            if (players[i].Work != 0)
+            return true;
+
+            break;
+        }
+    }
+    return false;
 }

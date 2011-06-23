@@ -54,7 +54,7 @@ buttons ClickId's:
 
 190-202 svetofor
 
-203-205 СЃРёСЂРµРЅР°
+203-205 сирена
 
 210 - pizza clock
 211 - pizza action
@@ -77,20 +77,17 @@ using namespace std;
 #include <time.h>
 
 #include "CInsim.h"
-//#include "RCPizza.h"
+#include "RCPizza.h"
 #include "RCMessage.h"
 #include "RCEnergy.h"
-//#include "RCBank.h"
-//#include "RCDrivingLicense.h"
-//#include "RCAntCheat.h"
+#include "RCBank.h"
+#include "RCDrivingLicense.h"
+#include "RCAntCheat.h"
 #include "RCStreet.h"
-//#include "RCLight.h"
+#include "RCLight.h"
 #include "RCTaxi.h"
 
 //#include "sqlite/SQLite.h"
-
-
-
 
 
 
@@ -110,7 +107,7 @@ int     chek_users =0;
 
 CInsim insim;
 
-ofstream  out;   // РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р» РґР»СЏ РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
+ofstream  out;   // выходной файл для протокола работы сервиса
 
 char RootDir[MAX_PATH];
 char ServiceName[64];
@@ -132,6 +129,7 @@ struct cars
     char            car[6];
     unsigned long   cash;
     unsigned long   sell;
+    unsigned		PLC;
 };
 
 struct user_car
@@ -204,7 +202,7 @@ struct player
     byte    BID;
     byte    BID2;
     byte    bfn;
-    //float   cash;       // Р”РµРЅСЊРіРё
+    //float   cash;       // Деньги
     float   Distance;
     byte    Zone;
     byte    Shop; // NO DELETE!!!!
@@ -219,14 +217,14 @@ struct player
     /** COP **/
     byte    cop;
     byte    radar;
-    byte    sirena;         // РєРѕРїРѕРІСЃРєРёР№ РІС‹РєР»СЋС‡Р°С‚РµР»СЊ СЃРёСЂРµРЅС‹
-    byte    sirenaOnOff;    // РїРѕСЃС‚Р°СЏРЅРЅР°СЏ Р·Р°РїРёСЃСЊ РїРѕР»РѕР¶РµРЅРёСЏ СЃРёСЂРµРЅС‹ Сѓ РґСѓС…РѕРІ
-    byte    sirenaKey;      // РѕРїСЂРµРґРµР»СЏРµРј РІРєР»СЋС‡РёС‚СЊ РёР»Рё РІС‹РєР»СЋС‡РёС‚СЊ СЃРёСЂРµРЅСѓ Сѓ РґСѓС…РѕРІ
-    int     sirenaSize;      // СЂР°Р·РјРµСЂ РєРЅРѕРїРєРё
+    byte    sirena;         // коповский выключатель сирены
+    byte    sirenaOnOff;    // постаянная запись положения сирены у духов
+    byte    sirenaKey;      // определяем включить или выключить сирену у духов
+    int     sirenaSize;      // размер кнопки
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
-    byte    Penalty;        // Р•СЃР»Рё РїСЂРµРІС‹СЃРёР» СЃРєРѕСЂРѕСЃС‚СЊ РІ РїРёС‚Р°С…
+    byte    Penalty;        // Если превысил скорость в питах
     /** Energy **/
     //int     Energy; // Energy xD
     //time_t  EnergyTime;
@@ -235,10 +233,12 @@ struct player
     int     FloodCount;
     int     FloodTime;
     /** Work **/
-    int     WorkTime;			// РІСЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РѕРЅ РґРѕР»Р¶РµРЅ РґРѕСЃС‚Р°РІРёС‚СЊ С‚РѕРІР°СЂ
+    int     WorkTime;			// время за которое он должен доставить товар
 
     time_t  LastSave;
     time_t  LastBFN;
+
+    unsigned PLC;
 };
 
 
@@ -320,6 +320,18 @@ void send_bfn (byte UCID, byte ClickID)
     pack.ClickID = ClickID;
     insim.send_packet(&pack,errmsg);
 };
+
+void send_plc (byte UCID, unsigned PLC)
+{
+
+	struct IS_PLC pack;
+    memset(&pack, 0, sizeof(struct IS_PLC));
+    pack.Size = sizeof(struct IS_PLC);
+    pack.Type = ISP_PLC;
+    pack.UCID = UCID;
+    pack.Cars = PLC;
+    insim.send_packet(&pack,errmsg);
+}
 
 
 

@@ -68,11 +68,11 @@ void init_classes()
 #endif
 
 #ifdef _RC_PIZZA_H
-    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg,&dl);
+    pizza.init(RootDir,&pizza,&insim,&msg,&bank,&nrg,&dl, &taxi);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi.init(RootDir,&insim,&msg,&bank,&dl,&street);
+    taxi.init(RootDir,&insim,&msg,&bank,&dl,&street,&pizza);
 #endif
 }
 
@@ -90,7 +90,7 @@ void readconfigs()
 
 
 #ifdef _RC_CHEAT_H
-   // antcht.readconfig(ginfo.Track);
+    // antcht.readconfig(ginfo.Track);
 #endif
 
 #ifdef _RC_STREET_H
@@ -359,6 +359,16 @@ void read_user_cars(struct player *splayer)
                 splayer->cars[i].tuning = atoi(tun);
                 splayer->cars[i].dist = atof(dis);
 
+                for (int c=0; c<MAX_CARS; c++)
+                {
+                	if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
+                	{
+                		splayer->PLC += ginfo.car[c].PLC;
+                		break;
+                	}
+
+                }
+
                 i++;
             }
         }
@@ -368,7 +378,18 @@ void read_user_cars(struct player *splayer)
             splayer->cars[i].tuning = 0;
             splayer->cars[i].dist = 0;
             send_mtc(splayer->UCID,"^C^1| ^7 Вам сделан подарок в виде автомобиля ^2UF1");
+            for (int c=0; c<MAX_CARS; c++)
+                {
+                	if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
+                	{
+                		splayer->PLC += ginfo.car[c].PLC;
+                		break;
+                	}
+
+                }
         }
+
+        send_plc(splayer->UCID,splayer->PLC);
     }
     FindClose(fff);
 
@@ -705,7 +726,6 @@ void btn_info (struct player *splayer, int b_type)
     if (b_type == 2)
     {
 
-
     }
 
     if (b_type == 3)
@@ -786,7 +806,7 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,403));
     insim.send_packet(&pack);
 
-        //
+    //
     pack.ClickID = 55;
     pack.L = 70;
     pack.T = 5;
@@ -908,12 +928,13 @@ void case_bfn ()
             time_t now;
             time(&now);
 
-            if((now - ginfo.players[i].LastBFN) < 10){
-            send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто жать кнопки");
-            return;
-        }
+            if((now - ginfo.players[i].LastBFN) < 10)
+            {
+                send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто жать кнопки");
+                return;
+            }
 
-        ginfo.players[i].LastBFN = now;
+            ginfo.players[i].LastBFN = now;
             if (ginfo.players[i].bfn == 0)
             {
                 ginfo.players[i].bfn = 1;
@@ -1748,41 +1769,21 @@ void case_mci ()
                 {
                     ginfo.players[j].Bonus_dist -= 5000;
 
-                        int bonus = 100+(50*(ginfo.players[j].Bonus_count));
-                        ginfo.players[j].Bonus_count +=1;
+                    int bonus = 100+(50*(ginfo.players[j].Bonus_count));
+                    ginfo.players[j].Bonus_count +=1;
 
-                        bank.AddCash(ginfo.players[j].UCID,bonus);
-                        //dl.AddSkill(ginfo.players[j].UCID);
-                        //bank.BankFond -= bonus;
+                    bank.AddCash(ginfo.players[j].UCID,bonus);
+                    //dl.AddSkill(ginfo.players[j].UCID);
+                    //bank.BankFond -= bonus;
 
-                        char bonus_c[64];
-                        strcpy(bonus_c,msg.GetMessage(ginfo.players[j].UCID,1500));
-                        char bonus_ic[5];
-                        itoa(bonus,bonus_ic,10);
-                        strcat(bonus_c,bonus_ic);
-                        strcat(bonus_c," ^7RUR.");
-                        send_mtc(ginfo.players[j].UCID,bonus_c);
+                    char bonus_c[64];
+                    strcpy(bonus_c,msg.GetMessage(ginfo.players[j].UCID,1500));
+                    char bonus_ic[5];
+                    itoa(bonus,bonus_ic,10);
+                    strcat(bonus_c,bonus_ic);
+                    strcat(bonus_c," ^7RUR.");
+                    send_mtc(ginfo.players[j].UCID,bonus_c);
 
-                }
-
-
-
-
-
-                /** pit wrong route **/
-
-                int pit1x[10] = {119,163,196,209,206,190,154,111};
-                int pit1y[10] = {460,340,288,230,230,290,340,460};
-                int Hed = pack_mci->Info[i].Heading/(32768/180);
-
-                if (Check_Pos(8,pit1x,pit1y,X,Y))
-                {
-                    if( (Hed < 190+90) and (Hed > 190-90) )
-                        continue;
-                    else
-                    {
-                        // vivod zhaka kirpich
-                    }
                 }
 
 
@@ -2036,7 +2037,8 @@ void case_mso ()
         time_t now;
         time(&now);
 
-        if((now - ginfo.players[i].LastSave) < 5*3600){
+        if((now - ginfo.players[i].LastSave) < 5*3600)
+        {
             send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто сохраняться");
             return;
         }
@@ -2526,6 +2528,9 @@ void case_mso ()
                 bank.RemCash(ginfo.players[i].UCID,ginfo.car[CarID].cash);
                 bank.AddToBank(ginfo.car[CarID].cash);
 
+                ginfo.players[i].PLC += ginfo.car[CarID].PLC;
+                send_plc(ginfo.players[i].UCID, ginfo.players[i].PLC);
+
                 SYSTEMTIME sm;
                 GetLocalTime(&sm);
                 char log[MAX_PATH];
@@ -2590,6 +2595,10 @@ void case_mso ()
         {
             if (strcmp(ginfo.players[i].cars[k].car,ginfo.car[j].car) == 0)
             {
+				char msg[64];
+                sprintf(msg,"^C^2|^7 Вы продали %s",id);
+                send_mtc(ginfo.players[i].UCID,msg);
+
                 strcpy(ginfo.players[i].cars[k].car,"");
                 ginfo.players[i].cars[k].tuning=0;
                 ginfo.players[i].cars[k].dist=0;
@@ -2604,6 +2613,10 @@ void case_mso ()
 
                 bank.AddCash(ginfo.players[i].UCID,ginfo.car[j].sell);
                 bank.RemFrBank(ginfo.car[j].sell);
+
+
+                ginfo.players[i].PLC -= ginfo.car[j].PLC;
+                send_plc(ginfo.players[i].UCID, ginfo.players[i].PLC);
 
                 break;
             }
@@ -3538,9 +3551,11 @@ void read_car()
                 char * id;
                 char * car;
                 char * cash;
+                char * PLC;
                 id = strtok (str,";");
                 car = strtok (NULL,";");
                 cash = strtok (NULL,";");
+                PLC = strtok (NULL,";");
 
                 i = atoi(id);
                 memset(&ginfo.car[i],0,sizeof(struct cars));
@@ -3548,6 +3563,7 @@ void read_car()
                 strcpy(ginfo.car[i].car, car);
                 ginfo.car[i].cash =atoi(cash);
                 ginfo.car[i].sell= ginfo.car[i].cash*8/10;
+                ginfo.car[i].PLC =atoi(PLC);
             }
 
 
@@ -4402,7 +4418,7 @@ int core_uninstall_service(char* param[])
 int main(int argc, char* argv[])
 {
 
-	isf_flag = ISF_MCI + ISF_MSO_COLS + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
+    isf_flag = ISF_MCI + ISF_MSO_COLS + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
 
     int need = 92;

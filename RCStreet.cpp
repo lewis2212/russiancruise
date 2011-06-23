@@ -366,7 +366,7 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.T = 158;
     pack.W = 33;
     pack.H = 6;
-    strcpy(pack.Text,Street[splayer->StreetNum].Street);
+    strcpy(pack.Text,Street[splayer->StreetNum].Street); // 50 chars
     insim->send_packet(&pack,errmsg);
 
     pack.BStyle = 64;
