@@ -1790,11 +1790,11 @@ void case_mci ()
                 /** Zones (PitSave, shop, etc) **/
 
 
-                if (Check_Pos(ginfo.players[j].TrackInf.PitCount,ginfo.players[j].TrackInf.XPit,ginfo.players[j].TrackInf.YPit,X,Y))
+                if (Check_Pos(ginfo.TrackInf.PitCount,ginfo.TrackInf.XPit,ginfo.TrackInf.YPit,X,Y))
                 {
                     ginfo.players[j].Zone = 1;
                 }
-                else if (Check_Pos(ginfo.players[j].TrackInf.ShopCount,ginfo.players[j].TrackInf.XShop,ginfo.players[j].TrackInf.YShop,X,Y))
+                else if (Check_Pos(ginfo.TrackInf.ShopCount,ginfo.TrackInf.XShop,ginfo.TrackInf.YShop,X,Y))
                 {
                     ginfo.players[j].Zone = 2;
                 }
@@ -2996,6 +2996,8 @@ void case_npl ()
                 {
                     send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,1301));
                     ginfo.players[i].cop = 1;
+                    dl.Lock(ginfo.players[i].UCID);
+                    nrg.Lock(ginfo.players[i].UCID);
                 }
 
 
@@ -3220,6 +3222,8 @@ void case_pll ()
             ginfo.players[i].Penalty =0;
 
             ginfo.players[i].cop = 0;
+            dl.Unlock(ginfo.players[i].UCID);
+            nrg.Unlock(ginfo.players[i].UCID);
 
             save_car(&ginfo.players[i]);
 
@@ -3269,6 +3273,8 @@ void case_plp ()
 
 
             ginfo.players[i].cop = 0;
+            dl.Unlock(ginfo.players[i].UCID);
+            nrg.Unlock(ginfo.players[i].UCID);
 
             save_car(&ginfo.players[i]);
 
@@ -3304,28 +3310,6 @@ void case_rst ()
     out << "Race Start Packet" << endl;
 
     strcpy(ginfo.Track, pack_rst->Track);
-
-
-
-    ginfo.Splits_Count = 0;
-
-    if (pack_rst->Split1 <= pack_rst->NumNodes)
-    {
-        ginfo.Node_Split1 = pack_rst->Split1;
-        ginfo.Splits_Count +=1;
-    }
-    if (pack_rst->Split2 <= pack_rst->NumNodes)
-    {
-        ginfo.Node_Split2 = pack_rst->Split2;
-        ginfo.Splits_Count +=1;
-    }
-    if (pack_rst->Split3 <= pack_rst->NumNodes)
-    {
-        ginfo.Node_Split3 = pack_rst->Split3;
-        ginfo.Splits_Count +=1;
-    }
-
-    ginfo.Node_Finish = pack_rst->Finish;
 
     readconfigs();
     /////////
@@ -3475,8 +3459,8 @@ void read_track(struct player *splayer)
             {
                 readf.getline(str,128);
                 int count = atoi(str);
-                memset(&splayer->TrackInf,0,sizeof(track_info));
-                splayer->TrackInf.PitCount = count;
+                memset(&ginfo.TrackInf,0,sizeof(track_info));
+                ginfo.TrackInf.PitCount = count;
 
                 for (int i=0 ; i<count; i++)
                 {
@@ -3485,8 +3469,8 @@ void read_track(struct player *splayer)
                     char * Y;
                     X = strtok (str,";");
                     Y = strtok (NULL,";");
-                    splayer->TrackInf.XPit[i] = atoi(X);
-                    splayer->TrackInf.YPit[i] = atoi(Y);
+                    ginfo.TrackInf.XPit[i] = atoi(X);
+                    ginfo.TrackInf.YPit[i] = atoi(Y);
                 }
 
             }
@@ -3495,7 +3479,7 @@ void read_track(struct player *splayer)
             {
                 readf.getline(str,128);
                 int count = atoi(str);
-                splayer->TrackInf.ShopCount = count;
+                ginfo.TrackInf.ShopCount = count;
 
                 for (int i=0 ; i<count; i++)
                 {
@@ -3504,8 +3488,8 @@ void read_track(struct player *splayer)
                     char * Y;
                     X = strtok (str,";");
                     Y = strtok (NULL,";");
-                    splayer->TrackInf.XShop[i] = atoi(X);
-                    splayer->TrackInf.YShop[i] = atoi(Y);
+                    ginfo.TrackInf.XShop[i] = atoi(X);
+                    ginfo.TrackInf.YShop[i] = atoi(Y);
                 }
             }
 

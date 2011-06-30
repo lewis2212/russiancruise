@@ -362,38 +362,12 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.TypeIn = 0;
     pack.BStyle = 1;
     pack.ClickID = 50;
-    pack.L = 10;
+    pack.L = 5;
     pack.T = 158;
-    pack.W = 33;
+    pack.W = 60;
     pack.H = 6;
-    strcpy(pack.Text,Street[splayer->StreetNum].Street); // 50 chars
-    insim->send_packet(&pack,errmsg);
-
-    pack.BStyle = 64;
-    pack.ClickID = 51;
-    pack.L = 30;
-    pack.T = 130;
-    pack.W = 80;
-    pack.H = 80;
-    strcpy(pack.Text,"^1•");
-    insim->send_packet(&pack,errmsg);
-
-    pack.ClickID = 52;
-    pack.L = 35;
-    pack.T = 140;
-    pack.W = 61;
-    pack.H = 61;
-    strcpy(pack.Text,"^7•");
-    insim->send_packet(&pack,errmsg);
-
-    pack.ClickID = 53;
-    pack.BStyle = 1;
-    pack.L = 44;
-    pack.T = 166;
-    pack.W = 15;
-    pack.H = 14;
-    sprintf(pack.Text,"^0%d",Street[splayer->StreetNum].SpeedLimit);
-    insim->send_packet(&pack,errmsg);
+    sprintf(pack.Text, "%s ^2(^1%d ^C^7κμ/χ^2)",Street[splayer->StreetNum].Street,Street[splayer->StreetNum].SpeedLimit);
+    insim->send_packet(&pack);
 }
 
 void RCStreet::send_mtc (byte UCID,char* Msg)

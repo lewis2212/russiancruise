@@ -41,8 +41,11 @@ bool    RCDL::AddSkill(byte UCID)
     {
         if (players[i].UCID == UCID)
         {
-            players[i].Skill += 500*players[i].LVL/2;
-            return true;
+        	if (!Islocked(UCID))
+        	{
+				players[i].Skill += 500*players[i].LVL/2;
+				return true;
+        	}
         }
     }
     return false;
@@ -54,8 +57,53 @@ bool    RCDL::RemSkill(byte UCID)
     {
         if (players[i].UCID == UCID)
         {
-            players[i].Skill -= 1000*players[i].LVL/2;
+        	if (!Islocked(UCID))
+        	{
+        		players[i].Skill -= 1000*players[i].LVL/2;
+				return true;
+        	}
+
+        }
+    }
+    return false;
+}
+
+bool    RCDL::Lock(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Lock = 1;
             return true;
+        }
+    }
+    return false;
+}
+
+bool    RCDL::Unlock(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Lock = 0;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool    RCDL::Islocked(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (players[i].Lock == 1)
+            return true;
+            else
+            return false;
         }
     }
     return false;

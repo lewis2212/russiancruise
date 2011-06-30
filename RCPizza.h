@@ -20,6 +20,7 @@
 
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
+
 struct pizza_info
 {
     int     ShopCount;
@@ -88,7 +89,7 @@ public:
 
     bool    ShopAccepted;
     int     CarsInWork;
-    int     Next;
+    //int     Next;
 
     int NumP;
     int ginfo_time;

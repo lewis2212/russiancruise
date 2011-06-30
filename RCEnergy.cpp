@@ -455,6 +455,7 @@ void RCEnergy::mci ()
 
                 if ((players[j].Energy > 5) and (S > 5))
                 {
+                	if (!Islocked(players[i].UCID))
                     players[j].Energy -= K;
                     //cout << "nrg = " << players[j].Energy << endl;
                 }
@@ -796,7 +797,7 @@ int RCEnergy::GetEnergy(byte UCID)
 
 void RCEnergy::con()
 {
-    printf("Car contact\n");
+    //printf("Car contact\n");
 
 
     struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
@@ -805,9 +806,10 @@ void RCEnergy::con()
     {
         if (players[i].PLID == pack_con->A.PLID)
         {
+        	if (!Islocked(players[i].UCID))
             players[i].Energy -= 10 * pack_con->SpClose;
-            char Text[128];
-            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+            //char Text[128];
+            //sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
             //send_mtc(players[i].UCID,Text);
 
             break;
@@ -818,9 +820,10 @@ void RCEnergy::con()
     {
         if (players[j].PLID == pack_con->B.PLID)
         {
+        	if (!Islocked(players[j].UCID))
             players[j].Energy -= 10 * pack_con->SpClose;
-            char Text[128];
-            sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
+            //char Text[128];
+            //sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_con->SpClose/10);
             //send_mtc(players[j].UCID,Text);
 
             break;
@@ -833,13 +836,13 @@ void RCEnergy::con()
 
 void RCEnergy::obh()
 {
-    printf("Car obj contact\n");
+    //printf("Car obj contact\n");
     //int i;
 
     struct IS_OBH *pack_obh = (struct IS_OBH*)insim->get_packet();
 
-    printf("pack_obh->SpClose = %1.1f\n",(float)pack_obh->SpClose/10);
-    printf("pack_obh->C.Speed = %d\n",pack_obh->C.Speed);
+    //printf("pack_obh->SpClose = %1.1f\n",(float)pack_obh->SpClose/10);
+    //printf("pack_obh->C.Speed = %d\n",pack_obh->C.Speed);
 
     if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
     {
@@ -847,9 +850,10 @@ void RCEnergy::obh()
         {
             if (players[i].PLID == pack_obh->PLID)
             {
+            	if (!Islocked(players[i].UCID))
                 players[i].Energy -=  pack_obh->SpClose;
-                char Text[128];
-                sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_obh->SpClose/100);
+                //char Text[128];
+                //sprintf(Text,"^1| ^7Lost ^1%1.1f%% ^7power",(float)pack_obh->SpClose/100);
                 //send_mtc(players[i].UCID,Text);
 
                 break;
@@ -862,25 +866,25 @@ void RCEnergy::obh()
 
 void RCEnergy::hlv()
 {
-    printf("HLV\n");
+    //printf("HLV\n");
     //int i;
 
     struct IS_HLV *pack_hlv = (struct IS_HLV*)insim->get_packet();
 
-    printf("pack_hlv->HLV = %d\n",pack_hlv->HLVC);
-    printf("pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
+    //printf("pack_hlv->HLV = %d\n",pack_hlv->HLVC);
+    //printf("pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
     for (int i=0; i<MAX_PLAYERS; i++)
     {
         if (players[i].PLID == pack_hlv->PLID)
         {
-            char Text[128];
-            sprintf(Text,"pack_hlv->HLV = %d\n",pack_hlv->HLVC);
+            //char Text[128];
+            //sprintf(Text,"pack_hlv->HLV = %d\n",pack_hlv->HLVC);
             // send_mtc(players[i].UCID,Text);
 
-            sprintf(Text,"pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
+            //sprintf(Text,"pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
             //send_mtc(players[i].UCID,Text);
 
-            sprintf(Text,"100/(pack_hlv->Head -  Dir)= %d\n",255/(pack_hlv->C.Heading - pack_hlv->C.Direction));
+            //sprintf(Text,"100/(pack_hlv->Head -  Dir)= %d\n",255/(pack_hlv->C.Heading - pack_hlv->C.Direction));
             // send_mtc(players[i].UCID,Text);
             break;
         }
@@ -889,4 +893,45 @@ void RCEnergy::hlv()
 
 
 
+}
+
+bool    RCEnergy::Lock(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Lock = 1;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool    RCEnergy::Unlock(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            players[i].Lock = 0;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool    RCEnergy::Islocked(byte UCID)
+{
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (players[i].Lock == 1)
+            return true;
+            else
+            return false;
+        }
+    }
+    return false;
 }

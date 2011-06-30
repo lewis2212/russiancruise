@@ -30,6 +30,8 @@ struct EnergyPlayer
     /** Energy **/
     int     Energy; // Energy xD from 0 to 10000
     time_t  EnergyTime;
+
+    bool	Lock;
 };
 
 struct energy_info
@@ -91,8 +93,9 @@ public:
     void btn_energy (struct EnergyPlayer *splayer);
 
     int GetEnergy(byte UCID);
-
-
+    bool    Lock(byte UCID);
+    bool    Unlock(byte UCID);
+    bool    Islocked(byte UCID);
 
 };
 

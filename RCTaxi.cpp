@@ -224,7 +224,7 @@ void RCTaxi::readconfig(char *Track)
                 {
                     read.getline(str,128);
                     strcpy(Dialog_Dist[i],str);
-                    cout << Dialog_Dist[i] << endl;
+                   // cout << Dialog_Dist[i] << endl;
                 }
             }
 
@@ -783,13 +783,13 @@ void RCTaxi::taxi_mso ()
             return;
         }
 
-        time_t nt;
+        /**time_t nt;
         int nowtime = time(&nt);
         if (players[i].FiredPenalty > nowtime)
         {
             send_mtc(players[i].UCID,"^6| ^C^7Уволен до 'tut vremya'");
             return;
-        }
+        }**/
 
         send_mtc(players[i].UCID,"^6| ^C^7Ты принят");
         players[i].Work = 1;
@@ -1180,15 +1180,16 @@ void RCTaxi::obh()
                 if((pack_obh->Index > 45 and pack_obh->Index < 125) or (pack_obh->Index > 140))
                 {
                     players[i].PassStress +=  pack_obh->SpClose;
+                    //NOTE: ADD SLOVA
+					srand ( time(NULL) );
+					//cout << rand()%DialObhCount << endl;
+					send_mtc(players[i].UCID,Dialog_Obh[rand()%DialObhCount]); // send random dialog phrase
                 }
                 else
                 {
                     players[i].PassStress +=  pack_obh->SpClose/10;
                 }
-                //NOTE: ADD SLOVA
-				srand ( time(NULL) );
-                //cout << rand()%DialObhCount << endl;
-                send_mtc(players[i].UCID,Dialog_Obh[rand()%DialObhCount]); // send random dialog phrase
+
             }
             break;
         }
