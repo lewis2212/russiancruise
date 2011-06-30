@@ -192,7 +192,7 @@ void RCMessage::ncn()
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf("Can't find %s\n Create File for user",file);
-        players[i].LangID = 1;
+        players[i].LangID = 2;
         save(players[i].UCID);
     }
     else

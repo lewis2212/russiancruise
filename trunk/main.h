@@ -186,7 +186,7 @@ struct player
     int     str_count;                          // Count of streets
     byte    StreetNum;
 
-    struct  track_info TrackInf;             // Where PitBox and Shop
+
 
     //char    GetMessage[20000][64];    // GetMessages !!!!!!!!!!!!!!!!!
     char    UName[24];             // Username
@@ -261,14 +261,10 @@ struct global_info
     int     WordsCount;
     char    Words[100][32];
     /**  **/
+    struct  track_info TrackInf;             // Where PitBox and Shop
 
     /** IS_STA **/
     /** IS_RST **/
-    word	Node_Finish;		// node index - finish line
-    word	Node_Split1;		// node index - split 1 byte = 1
-    word	Node_Split2;		// node index - split 2 byte = 2
-    word	Node_Split3;		// node index - split 3 byte = 4
-    int     Splits_Count;       // split1(1) + split2(2) + split3(4) = max 7
     char    Track[6];                          // Current track (for streets)
     char    Product[6];                        // DEMO or S1 or S2
     /** insim **/

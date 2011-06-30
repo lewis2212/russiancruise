@@ -27,6 +27,7 @@ struct DLPlayer
     u_int     LVL;
     u_int     Skill;
     byte    mcicount;
+    bool 	Lock;
 };
 
 
@@ -74,6 +75,9 @@ public:
     int     GetSkill(byte UCID);
     bool    AddSkill(byte UCID);
     bool    RemSkill(byte UCID);
+    bool    Lock(byte UCID);
+    bool    Unlock(byte UCID);
+    bool    Islocked(byte UCID);
 
     byte inited;
 

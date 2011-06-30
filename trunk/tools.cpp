@@ -22,3 +22,8 @@ bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
     }
     return oddNodes;
 }
+
+int Distance (int X, int Y, int X1, int Y1)
+{
+	return (int)sqrt((pow(X-X1,2))+(pow(Y-Y1,2)));
+}
