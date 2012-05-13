@@ -12,7 +12,7 @@ RCStreet::~RCStreet()
 
 }
 
-int RCStreet::init(char *dir, void *CInSim, void *Message)
+int RCStreet::init(const char *dir, void *CInSim, void *Message)
 {
     //cout << "Init Streets" << endl;
     IfInited = false;
@@ -37,7 +37,7 @@ int RCStreet::init(char *dir, void *CInSim, void *Message)
     return 0;
 }
 
-void RCStreet::readconfig(char *Track)
+void RCStreet::readconfig(const char *Track)
 {
     char file[255];
     sprintf(file,"%sdata\\RCStreet\\tracks\\%s.txt",RootDir,Track);
@@ -370,7 +370,7 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     insim->send_packet(&pack);
 }
 
-void RCStreet::send_mtc (byte UCID,char* Msg)
+void RCStreet::send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -384,7 +384,7 @@ void RCStreet::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 }
 
-void RCStreet::send_mst (char* Text)
+void RCStreet::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

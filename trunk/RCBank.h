@@ -63,8 +63,8 @@ private:
     void send_mtc (byte UCID,char* Msg);
 
 public:
-    RCBank::RCBank();
-    RCBank::~RCBank();
+    RCBank();
+    ~RCBank();
 
     char errmsg[64];
     CInsim  *insim;
@@ -83,8 +83,8 @@ public:
 
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *GetMessage,void *Bank);
-    void readconfig(char *Track);
+    int init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
+    void readconfig(const char *Track);
     void bank_save(byte UCID);
     // функции-повторители основных фунцкий ядра
     void next_packet();

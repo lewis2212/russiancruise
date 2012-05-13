@@ -235,7 +235,7 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init(char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank,void *Energy,void *DrLic, void *Taxi)
+int RCPizza::init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank,void *Energy,void *DrLic, void *Taxi)
 {
     strcpy(RootDir,dir);
 
@@ -499,7 +499,7 @@ void RCPizza::done(struct PizzaPlayer *splayer)
     }
 
 }
-void RCPizza::undeal(struct PizzaPlayer *splayer, char *Reason)
+void RCPizza::undeal(struct PizzaPlayer *splayer,const char *Reason)
 {
 
     //cout << "true" << endl;
@@ -520,7 +520,7 @@ void RCPizza::undeal(struct PizzaPlayer *splayer, char *Reason)
 
 }
 
-void RCPizza::readconfig(char *Track)
+void RCPizza::readconfig(const char *Track)
 {
     //cout << "RCPizza::readconfig\n" ;
     char file[MAX_PATH];
@@ -1107,8 +1107,8 @@ void RCPizza::btn_work (struct PizzaPlayer *splayer)
     min = time2/60;
     sec = time2%60;
 
-    itoa(min,min_c,10);
-    itoa(sec,sec_c,10);
+    sprintf(min_c,"%d",min);
+    sprintf(sec_c,"%d",sec);
 
     strcpy(pack.Text,"^2");
     strcat(pack.Text,min_c);
@@ -1165,7 +1165,7 @@ int RCPizza::check_pos(struct PizzaPlayer *splayer)
     return 0;
 }
 
-void RCPizza::send_mtc (byte UCID,char* Msg)
+void RCPizza::send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -1179,7 +1179,7 @@ void RCPizza::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 };
 
-void RCPizza::send_mst (char* Text)
+void RCPizza::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

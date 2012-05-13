@@ -63,16 +63,16 @@ private:
     void street_mso();   // Игрок отправил сообщение
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
 
     void btn_street(struct StrPlayer *splayer);
 
 public:
     // Переменные и функции, доступные для всех
 
-    RCStreet::RCStreet();   // Конструктор класса (обязательно)
-    RCStreet::~RCStreet();  // Деструктор класса (обязательно)
+    RCStreet();   // Конструктор класса (обязательно)
+    ~RCStreet();  // Деструктор класса (обязательно)
 
 
     bool IfInited;
@@ -84,10 +84,10 @@ public:
 
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
+    int init(const char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
-    void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
     void street_mci();   // Пакет с данными о координатах и т.д.
     void next_packet(); // Функция переборки типа пакета

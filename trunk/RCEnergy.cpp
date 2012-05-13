@@ -42,7 +42,7 @@ RCEnergy::~RCEnergy()
 
 }
 
-int RCEnergy::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank)
+int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank)
 {
     strcpy(RootDir,dir);
 
@@ -77,7 +77,7 @@ int RCEnergy::init(char *dir,void *classname,void *CInSim, void *Message,void *B
 }
 
 
-void RCEnergy::readconfig(char *Track)
+void RCEnergy::readconfig(const char *Track)
 {
     char file[255];
     strcpy(file,RootDir);
@@ -746,7 +746,7 @@ int RCEnergy::check_pos(struct EnergyPlayer *splayer)
     return 0;
 }
 
-void RCEnergy::send_mtc (byte UCID,char* Msg)
+void RCEnergy::send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -760,7 +760,7 @@ void RCEnergy::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 }
 
-void RCEnergy::send_mst (char* Text)
+void RCEnergy::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

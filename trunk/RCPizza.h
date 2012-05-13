@@ -84,8 +84,8 @@ private:
 
 
 public:
-    RCPizza::RCPizza();
-    RCPizza::~RCPizza();
+    RCPizza();
+    ~RCPizza();
 
     bool    ShopAccepted;
     int     CarsInWork;
@@ -109,11 +109,11 @@ public:
     struct  place zone;
     struct  PizzaPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
+    int init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
-    void readconfig(char *Track);
+    void readconfig(const char *Track);
     void deal(struct PizzaPlayer *splayer);
-    void undeal(struct PizzaPlayer *splayer, char *Reason);
+    void undeal(struct PizzaPlayer *splayer,const char *Reason);
     void take (struct PizzaPlayer *splayer);
     void done (struct PizzaPlayer *splayer);
 
@@ -129,8 +129,8 @@ public:
     void pizza_mso();
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
     void btn_work (struct PizzaPlayer *splayer);
     void btn_destination(struct PizzaPlayer *splayer);
 

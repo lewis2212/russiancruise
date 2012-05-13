@@ -74,6 +74,8 @@ class RCTaxi
 {
 private:
     // Переменные и функции, доступные только самому классу
+    string  GameTrack;
+
     time_t  acctime;
     int     accept_time;
     int     NumP;
@@ -110,7 +112,11 @@ private:
 
     struct  Taxi_info TrackInf;
     int PointCount;
-    struct  Taxi_points *Points;
+
+
+    struct  Taxi_points *Points; // Рабочая строчка
+    struct  Taxi_points PointsAdd[256]; //Для добавления точек
+
 
     struct  place zone;
     struct  TaxiPlayer players[32];     // Структура игроков
@@ -132,19 +138,21 @@ private:
     void obh();   // Игрок отправил сообщение
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mst (string Text);
+    void send_mtc (byte UCID,const char* Msg);
 
     void read_user(struct TaxiPlayer *splayer);
     void save_user(struct TaxiPlayer *splayer);
 
     void btn_stress(struct TaxiPlayer *splayer);
+    void btn_Dist(struct TaxiPlayer *splayer, const char* Text);
 
 public:
     // Переменные и функции, доступные для всех
 
-    RCTaxi::RCTaxi();   // Конструктор класса (обязательно)
-    RCTaxi::~RCTaxi();  // Деструктор класса (обязательно)
+    RCTaxi();   // Конструктор класса (обязательно)
+    ~RCTaxi();  // Деструктор класса (обязательно)
 
     char errmsg[64];
 
@@ -157,10 +165,10 @@ public:
     struct PTH_NODES nodes[2000];*/
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
+    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
     byte inited;
 
-    void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
     // функции-повторители основных фунцкий ядра
     void next_packet(); // Функция переборки типа пакета

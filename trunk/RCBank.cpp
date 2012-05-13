@@ -97,7 +97,7 @@ bool RCBank::RemFrBank(int Cash)
     return true;
 }
 
-int RCBank::init(char *dir,void *CInSim, void *GetMessage,void *Bank)
+int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
 {
 
     pthread_cancel(bid);
@@ -392,7 +392,7 @@ void RCBank::btn_cash (int i)
     pack.H = 4;
 
     char cash[10];
-    itoa((int)players[i].Cash,cash,10);
+    sprintf(cash,"%d",(int)players[i].Cash);
     if (players[i].Cash > 0)
         strcpy(pack.Text,"^2");
     else
@@ -422,7 +422,7 @@ void RCBank::btn_cash (int i)
     }
 }
 
-void RCBank::readconfig(char *Track)
+void RCBank::readconfig(const char *Track)
 {
     char file[255];
     strcpy(file,RootDir);
