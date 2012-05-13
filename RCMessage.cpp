@@ -33,7 +33,7 @@ char* RCMessage::GetMessage(byte UCID, int MsgID)
 
 
 
-int RCMessage::init(char *dir, void *CInSim)
+int RCMessage::init(const char *dir, void *CInSim)
 {
     strcpy(RootDir,dir);
 
@@ -47,7 +47,7 @@ int RCMessage::init(char *dir, void *CInSim)
     return 0;
 }
 
-void RCMessage::readconfig(char *Track)
+void RCMessage::readconfig(const char *Track)
 {
     char file[255];
     strcpy(file,RootDir);
@@ -353,7 +353,7 @@ void RCMessage::save (byte UCID)
 
 }
 
-void RCMessage::send_mtc (byte UCID,char* Msg)
+void RCMessage::send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -367,7 +367,7 @@ void RCMessage::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 };
 
-void RCMessage::send_mst (char* Text)
+void RCMessage::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

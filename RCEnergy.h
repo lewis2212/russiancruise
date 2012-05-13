@@ -65,16 +65,16 @@ private:
     void hlv();
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
     void btn_work (struct BankPlayer *splayer);
 
     // Функции-утилиты
     int check_pos (struct EnergyPlayer *splayer); //+
 
 public:
-    RCEnergy::RCEnergy();
-    RCEnergy::~RCEnergy();
+    RCEnergy();
+    ~RCEnergy();
 
     char errmsg[64];
     CInsim      *insim;
@@ -84,8 +84,8 @@ public:
     struct  place zone;
     struct  EnergyPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
-    void readconfig(char *Track);
+    int init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
+    void readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
     void next_packet();
     void mci();

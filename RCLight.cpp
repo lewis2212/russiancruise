@@ -199,7 +199,7 @@ RCLight::~RCLight()
     pthread_detach(svet2_tid);
 }
 
-int RCLight::init(char *dir, void *CInSim, void *Message)
+int RCLight::init(const char *dir, void *CInSim, void *Message)
 {
     //cout << "Init Streets" << endl;
     IfInited = false;
@@ -226,7 +226,7 @@ int RCLight::init(char *dir, void *CInSim, void *Message)
     return 0;
 }
 
-void RCLight::readconfig(char *Track)
+void RCLight::readconfig(const char *Track)
 {
     //cout << "Init Streets" << endl;
 
@@ -652,7 +652,7 @@ void RCLight::pll()
     }
 }
 
-void RCLight::send_mtc (byte UCID,char* Msg)
+void RCLight::send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -666,7 +666,7 @@ void RCLight::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 }
 
-void RCLight::send_mst (char* Text)
+void RCLight::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

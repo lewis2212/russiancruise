@@ -54,8 +54,8 @@ private:
 public:
     // Переменные и функции, доступные для всех
 
-    RCAntCheat::RCAntCheat();   // Конструктор класса (обязательно)
-    RCAntCheat::~RCAntCheat();  // Деструктор класса (обязательно)
+    RCAntCheat();   // Конструктор класса (обязательно)
+    ~RCAntCheat();  // Деструктор класса (обязательно)
 
     char errmsg[64];
     CInsim      *insim; // Переменная-указатель на класс CInsim
@@ -84,9 +84,9 @@ public:
     void pla();
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
-    void pitlane(char *UName);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
+    void pitlane(const char *UName);
     void cheat(struct  Player *splayer);
 
 

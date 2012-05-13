@@ -98,7 +98,7 @@ using namespace std;
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
 
-char* siren = "^0";
+const char* siren = "^0";
 
 
 
@@ -282,7 +282,7 @@ int read_cop(struct player *splayer);
 
 char errmsg[64];
 
-void send_mtc (byte UCID,char* Msg)
+void send_mtc (byte UCID,const char* Msg)
 {
     char errmsg[64];
     ZeroMemory(&errmsg,64);
@@ -295,7 +295,7 @@ void send_mtc (byte UCID,char* Msg)
     insim.send_packet(&pack_mtc);
 };
 
-void send_mst (char* Text)
+void send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

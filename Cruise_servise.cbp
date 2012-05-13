@@ -35,12 +35,13 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
+			<Add option="-Wno-parentheses" />
 		</Compiler>
 		<Linker>
 			<Add option="-l wsock32" />
-			<Add library="libpthreadGC2.a" />
+			<Add library="D:\RussianCruise\libpthreadGC2.a" />
 		</Linker>
 		<Unit filename="4ernovik.txt" />
 		<Unit filename="CInsim.cpp" />

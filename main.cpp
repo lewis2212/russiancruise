@@ -550,10 +550,10 @@ void help_cmds (struct player *splayer,int h_type)
                 int fine_id = splayer->fines[i].fine_id;
                 // int fine_date = atoi(row[2));
                 char num[3];
-                itoa(fine_id,num,10);
+                sprintf(num,"%d",fine_id);
 
                 char pay[5];
-                itoa(ginfo.fines[fine_id].cash,pay,10);
+                sprintf(pay,"%d",ginfo.fines[fine_id].cash);
 
                 strcpy(Text,"^2| ^7ID = ");
                 strcat( Text,num);
@@ -896,21 +896,14 @@ void btn_work (struct player *splayer)
     pack.W = 10;
     pack.H = 8;
 
-    char min_c[3];
-    char sec_c[3];
+
     int time2 = splayer->WorkTime - time(&stime);
     int min;
     int sec;
     min = time2/60;
     sec = time2%60;
-    itoa(min,min_c,10);
-    itoa(sec,sec_c,10);
-    strcpy(pack.Text,"^2");
-    strcat(pack.Text,min_c);
-    strcat(pack.Text,":");
-    if (sec < 10)
-        strcat(pack.Text,"0");
-    strcat(pack.Text,sec_c);
+    sprintf(pack.Text,"^2%d:%d",min,sec);
+
     insim.send_packet(&pack,errmsg);
 
 }
@@ -961,24 +954,11 @@ void case_btc ()
         if (ginfo.players[i].UCID == pack_btc->UCID)
         {
 
-            char day[3];
-            char month[3];
-            char year[3];
+
             SYSTEMTIME sm;
             GetLocalTime(&sm);
-            itoa(sm.wDay,day,10);
-            itoa(sm.wMonth,month,10);
-            itoa(sm.wYear,year,10);
             char log[255];
-            strcpy(log,RootDir);
-            strcat(log,"logs\\shop\\shop");
-            strcat(log,"(");
-            strcat(log,day);
-            strcat(log,".");
-            strcat(log,month);
-            strcat(log,".");
-            strcat(log,year);
-            strcat(log,").txt");
+            sprintf(log,"%slogs\\shop\\shop(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
 
             if (pack_btc->ClickID<=32)
             {
@@ -1332,29 +1312,13 @@ void case_btt ()
     struct IS_BTT *pack_btt = (struct IS_BTT*)insim.get_packet();
 
     //out << (int)pack_btt->ClickID << endl;
-    char day[3];
-    char month[3];
-    char year[3];
     SYSTEMTIME sm;
     GetLocalTime(&sm);
-    itoa(sm.wDay,day,10);
-    itoa(sm.wMonth,month,10);
-    itoa(sm.wYear,year,10);
 
     char send_c[255];
-    strcpy(send_c,RootDir);
-    strcat(send_c,"logs\\sends\\send.txt");
-
+    sprintf(send_c,"%slogs\\sends\\send(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
     char fine_c[255];
-    strcpy(fine_c,RootDir);
-    strcat(fine_c,"logs\\fines\\fine");
-    strcat(fine_c,"(");
-    strcat(fine_c,day);
-    strcat(fine_c,".");
-    strcat(fine_c,month);
-    strcat(fine_c,".");
-    strcat(fine_c,year);
-    strcat(fine_c,").txt");
+    sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
 
 
     int i;
@@ -1378,14 +1342,9 @@ void case_btt ()
                                 bank.AddCash(ginfo.players[g].UCID,atoi(pack_btt->Text));
 
 
-                                char money[96];
-                                itoa(atoi(pack_btt->Text),money,10);
+
                                 char Msg[120];
-                                strcpy(Msg,"^1| ");
-                                strcat(Msg,ginfo.players[i].PName);
-                                strcat(Msg,msg.GetMessage(ginfo.players[i].UCID,1100));
-                                strcat(Msg,money);
-                                strcat(Msg," RUR.");
+                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo.players[i].PName,msg.GetMessage(ginfo.players[i].UCID,1100),atoi(pack_btt->Text));
                                 send_mtc(ginfo.players[g].UCID,Msg);
 
                                 ofstream readf (send_c,ios::app);
@@ -1777,11 +1736,7 @@ void case_mci ()
                     //bank.BankFond -= bonus;
 
                     char bonus_c[64];
-                    strcpy(bonus_c,msg.GetMessage(ginfo.players[j].UCID,1500));
-                    char bonus_ic[5];
-                    itoa(bonus,bonus_ic,10);
-                    strcat(bonus_c,bonus_ic);
-                    strcat(bonus_c," ^7RUR.");
+                    sprintf(bonus_c,"%s%d ^7RUR.",msg.GetMessage(ginfo.players[j].UCID,1500),bonus);
                     send_mtc(ginfo.players[j].UCID,bonus_c);
 
                 }
@@ -1905,14 +1860,8 @@ void case_mci_cop ()
                                     {
                                         // speed > SpeedLimit + 10
                                         char text[64];
-                                        strcpy(text,"^2| ");
-                                        strcat(text,ginfo.players[g].PName);
-                                        strcat(text,msg.GetMessage(ginfo.players[g].UCID,1704));
-                                        char speed[3];
                                         int Speed2 = Speed - StreetInfo.SpeedLimit;
-                                        itoa(Speed2,speed,10);
-                                        strcat(text,speed);
-                                        strcat(text,msg.GetMessage(ginfo.players[j].UCID,1705));
+                                        sprintf(text,"^2| %s%s%d%s",ginfo.players[g].PName,msg.GetMessage(ginfo.players[g].UCID,1704),Speed2,msg.GetMessage(ginfo.players[j].UCID,1705));
                                         send_mtc(ginfo.players[j].UCID,text);
 
                                         if (ginfo.players[g].Pogonya == 0)
@@ -2777,12 +2726,11 @@ void case_mso ()
 
 
 
-        char Msg2[96];
-        strcpy(Msg2,strupr(Msg));
+
 
         for (int j=0; j< ginfo.WordsCount; j++)
         {
-            if (strstr(Msg2,strupr(ginfo.Words[j])))
+            if (strstr(Msg,ginfo.Words[j]))
             {
                 send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2005));
 
@@ -3654,10 +3602,7 @@ void read_cfg()
     out << "Read Server Config" << endl;
     //out <<  << endl;
     char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"misc\\");
-    strcat(file,ServiceName);
-    strcat(file,".cfg");
+    sprintf(file,"%smisc\\%s.cfg",RootDir,ServiceName);
 
     HANDLE fff;
     WIN32_FIND_DATA fd;

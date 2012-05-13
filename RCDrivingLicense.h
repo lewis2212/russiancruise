@@ -58,15 +58,15 @@ private:
     // функции-повторители основных фунцкий ядра
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
 
     // Функции-утилиты
     int check_pos (struct BankPlayer *splayer); //+
 
 public:
-    RCDL::RCDL();
-    RCDL::~RCDL();
+    RCDL();
+    ~RCDL();
 
     //
     void save(byte UCID);
@@ -86,7 +86,7 @@ public:
 
     struct  DLPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *GetMessage);
+    int init(const char *dir,void *CInSim, void *GetMessage);
 };
 
 #endif

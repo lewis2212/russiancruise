@@ -391,7 +391,7 @@ void RCAntCheat::reo ()
 
 }
 
-void RCAntCheat::send_mst (char* Text)
+void RCAntCheat::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));
@@ -402,7 +402,7 @@ void RCAntCheat::send_mst (char* Text)
         cout << errmsg << endl;
 }
 
-void RCAntCheat::send_mtc (byte UCID,char* Msg)
+void RCAntCheat::send_mtc (byte UCID,const char* Msg)
 {
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
@@ -413,7 +413,7 @@ void RCAntCheat::send_mtc (byte UCID,char* Msg)
     insim->send_packet(&pack_mtc,errmsg);
 }
 
-void RCAntCheat::pitlane (char* UName)
+void RCAntCheat::pitlane (const char* UName)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

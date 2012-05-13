@@ -62,8 +62,8 @@ private:
     void mso();   // Игрок отправил сообщение
 
     void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
     void btn_svetofor1 (struct LghPlayer *splayer);
     void btn_svetofor2 (struct LghPlayer *splayer);
     void btn_svetofor3 (struct LghPlayer *splayer);
@@ -73,18 +73,18 @@ private:
 public:
     // Переменные и функции, доступные для всех
 
-    RCLight::RCLight();   // Конструктор класса (обязательно)
-    RCLight::~RCLight();  // Деструктор класса (обязательно)
+    RCLight();   // Конструктор класса (обязательно)
+    ~RCLight();  // Деструктор класса (обязательно)
 
 
     bool IfInited;
 
 
     // Основные функции класса
-    int init(char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
+    int init(const char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
-    void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
     void mci();   // Пакет с данными о координатах и т.д.
     void next_packet(); // Функция переборки типа пакета

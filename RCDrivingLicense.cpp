@@ -109,7 +109,7 @@ bool    RCDL::Islocked(byte UCID)
     return false;
 }
 
-int RCDL::init(char *dir,void *CInSim, void *GetMessage)
+int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
 {
     strcpy(RootDir,dir);
 
@@ -467,8 +467,8 @@ void RCDL::mci()
                     players[j].LVL ++;
                     players[j].Skill = 0;
                     char Msg[64];
-                    sprintf(Msg,"User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-                    //send_mst(Msg);
+                    sprintf(Msg,"^5| ^8^C%s ^1Get new Level = ^3%d",players[j].UName, players[j].LVL);
+                    send_mst(Msg);
                 }
 
                 /** buttons **/
@@ -520,7 +520,7 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
 
 }
 
-void RCDL::send_mtc (byte UCID,char* Msg)
+void RCDL::send_mtc (byte UCID,const char* Msg)
 {
     ZeroMemory(&errmsg,64);
     struct IS_MTC pack_mtc;
@@ -533,7 +533,7 @@ void RCDL::send_mtc (byte UCID,char* Msg)
         cout << errmsg << endl;
 };
 
-void RCDL::send_mst (char* Text)
+void RCDL::send_mst (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));

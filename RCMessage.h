@@ -35,17 +35,17 @@ private:
     void cnl();
     void mso();
 
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void send_mst (const char* Text);
+    void send_mtc (byte UCID,const char* Msg);
 
 
 
 public:
-    RCMessage::RCMessage();
-    RCMessage::~RCMessage();
+    RCMessage();
+    ~RCMessage();
 
-    int init(char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
-    void readconfig(char *Track);
+    int init(const char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
+    void readconfig(const char *Track);
 
     void next_packet();
 
