@@ -274,7 +274,7 @@ struct global_info
     char    ADMIN[10];                         // Admin pass (for InSim IS_III)
 };
 
-void read_track(struct player *splayer);
+void read_track();
 void read_lang(struct player *splayer);
 void read_car();
 void read_fines();
