@@ -651,7 +651,7 @@ void btn_info (struct player *splayer, int b_type)
     strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
     strncpy(about_text[4], "^7",99);
     strncpy(about_text[5], "^C^7More information",99);
-    strncpy(about_text[6], "^C^7http://russiancruise.ucoz.ru/",99);
+    strncpy(about_text[6], "^C^7http://vk.com/russiancruise",99);
     strncpy(about_text[7], "^7",99);
     strncpy(about_text[8], "^C^7        Thanks:",99);
     strncpy(about_text[9], "^C^3        repeat, NOSE, etc",99);
@@ -2677,7 +2677,7 @@ void case_mso ()
                 strcpy(pack_btn.Text, ginfo.players[j].PName);
                 insim.send_packet(&pack_btn);
                 pack_btn.T += 4;
-                Sleep(100);
+                //Sleep(100);
             }
 
         }
@@ -2909,7 +2909,6 @@ void case_ncn ()
     read_user_cars(&ginfo.players[i]);
     read_user_fines(&ginfo.players[i]);
     //read_lang(&ginfo.players[i]);
-    read_track(&ginfo.players[i]);
     out <<  "******************************" << endl;
 
     //help_cmds(&ginfo.players[i],1);
@@ -3265,7 +3264,7 @@ void case_rst ()
 
     read_fines();
     /////////
-
+    read_track();
     // out << pack_sta->Track << endl << ginfo.Track << endl;
 };
 
@@ -3369,7 +3368,7 @@ int core_reconnect(void *pack_ver)
     return 1;
 }
 
-void read_track(struct player *splayer)
+void read_track()
 {
     char file[255];
     strcpy(file,RootDir);
