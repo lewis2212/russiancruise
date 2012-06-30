@@ -600,7 +600,7 @@ void btn_main (struct player *splayer)
     pack.H = 150;
     strcpy(pack.Text,"");
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
     /* background */
 
     /* Title */
@@ -612,7 +612,7 @@ void btn_main (struct player *splayer)
     pack.H = 20;
     strcpy(pack.Text,"^7RUSSIAN CRUISE");
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
     /* Title */
 
     /* background #2 */
@@ -624,7 +624,7 @@ void btn_main (struct player *splayer)
     pack.H = 118;
     strcpy(pack.Text,"");
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
 
     /* background #2 */
 
@@ -674,14 +674,14 @@ void btn_info (struct player *splayer, int b_type)
     pack.H = 8;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,200));
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
 
     pack.BStyle = 32+8;
     pack.ClickID = 106;
     pack.L += 17;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,201));
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
 
 
     pack.BStyle = 32+8;
@@ -690,7 +690,7 @@ void btn_info (struct player *splayer, int b_type)
     pack.W = 20;
     strcpy(pack.Text,msg.GetMessage(splayer->UCID,202));
     insim.send_packet(&pack,errmsg);
-    Sleep(100);
+    //Sleep(100);
     /* Tabs */
 
 
@@ -739,7 +739,7 @@ void btn_info (struct player *splayer, int b_type)
             pack.T += 9;
             strcpy(pack.Text,about_text[g]);
             insim.send_packet(&pack,errmsg);
-            Sleep(100);
+            //Sleep(100);
         }
     }
 
@@ -1025,7 +1025,7 @@ void case_btc ()
             {
                 for (int j=0; j<50; j++)
                     send_bfn(ginfo.players[i].UCID,j);
-                Sleep(100);
+                //Sleep(100);
             }
 
             if (pack_btc->ClickID==40)
@@ -1258,7 +1258,7 @@ void case_btc ()
                 for (int j=159; j>0; j--)
                 {
                     send_bfn(pack_btc->UCID,j);
-                    Sleep(10);
+                    //Sleep(10);
                 }
             }
 
@@ -1303,7 +1303,7 @@ void case_btc ()
         } // if UCID
     }// for
     pthread_mutex_unlock (&RCmutex);
-    Sleep(100);
+    //Sleep(100);
 }
 
 void case_btt ()
@@ -1497,7 +1497,7 @@ void case_btt ()
         }
     }
     pthread_mutex_unlock (&RCmutex);
-    Sleep(100);
+    //Sleep(100);
 }
 
 
@@ -1760,11 +1760,10 @@ void case_mci ()
 
                 ginfo.players[j].Info.X = pack_mci->Info[i].X;
                 ginfo.players[j].Info.Y = pack_mci->Info[i].Y;
-                ginfo.players[j].Info.Node = pack_mci->Info[i].Node;
-                ginfo.players[j].Info.Direction = pack_mci->Info[i].Direction;
-                ginfo.players[j].Info.Heading = pack_mci->Info[i].Heading;
+                ginfo.players[j].Info.Z = pack_mci->Info[i].Z;
+
                 ginfo.players[j].Info.Speed = pack_mci->Info[i].Speed;
-                ginfo.players[j].Info.AngVel = pack_mci->Info[i].AngVel;
+
                 //btn_svetofor3(&ginfo.players[i]);
 
             } // if pack_mci->Info[i].PLID == ginfo.players[j].PLID
@@ -1817,9 +1816,6 @@ void case_mci_cop ()
                             //printf("dX=%d ; dY=%d \n",dX,dY);
                             if (ginfo.players[g].Pogonya == 1)
                             {
-
-
-
                                 //printf("COP - %s CRIM - %s dX=%d dY=%d; \n",ginfo.players[j].UName,ginfo.players[g].UName,dX,dY);
 
                                 if ( (Rast < 10) and (ginfo.players[g].cop != 1))
@@ -1964,7 +1960,6 @@ void case_mso ()
         for (int j=159; j>0; j--)
         {
             send_bfn(ginfo.players[i].UCID,j);
-            Sleep(10);
         }
         btn_info(&ginfo.players[i],1);
     }
@@ -1994,13 +1989,10 @@ void case_mso ()
         ginfo.players[i].LastSave = now;
         out << ginfo.players[i].UName << " send !save" << endl;
         save_car(&ginfo.players[i]);
-        Sleep(500);
         save_user_cars(&ginfo.players[i]);
         save_user_fines(&ginfo.players[i]);
 
         bank.bank_save(ginfo.players[i].UCID);
-
-        Sleep(500);
         send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,3000));
 
     }

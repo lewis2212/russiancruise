@@ -158,12 +158,6 @@ struct track_info
 
 struct CompCar2 // Car info in 28 bytes - there is an array of these in the MCI (below)
 {
-    word	Node;		// current path node
-    word	Lap;		// current lap
-    byte	PLID;		// player's unique id
-    byte	Position;	// current race position : 0 = unknown, 1 = leader, etc...
-    byte	Info;		// flags and other info - see below
-    byte	Sp3;
     int		X;			// X map (65536 = 1 metre)
     int		Y;			// Y map (65536 = 1 metre)
     int		Z;			// Z alt (65536 = 1 metre)
@@ -171,9 +165,6 @@ struct CompCar2 // Car info in 28 bytes - there is an array of these in the MCI 
     int		Y2;			// Y map (65536 = 1 metre)
     int		Z2;			// Z alt (65536 = 1 metre)
     word	Speed;		// speed (32768 = 100 m/s)
-    word	Direction;	// direction of car's motion : 0 = world y direction, 32768 = 180 deg
-    word	Heading;	// direction of forward axis : 0 = world y direction, 32768 = 180 deg
-    short	AngVel;		// signed, rate of change of heading : (16384 = 360 deg/s)
 };
 
 
