@@ -19,7 +19,7 @@ char* RCMessage::GetMessage(byte UCID, int MsgID)
         if (players[i].UCID == UCID)
         {
             if (players[i].LangID == 0)
-                return "^1LangID == 0";
+                return (char*)("^1LangID == 0");
 
             //printf("%s LangID=%d MsgID=%d\n",players[i].UName,players[i].LangID,MsgID);
 
@@ -28,7 +28,7 @@ char* RCMessage::GetMessage(byte UCID, int MsgID)
             return MsgArray[players[i].LangID][MsgID];
         }
     }
-    return "^1User Not Found";
+    return (char*)("^1User Not Found");
 }
 
 
