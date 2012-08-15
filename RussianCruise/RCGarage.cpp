@@ -1,7 +1,7 @@
 
 void save_user_cars (struct player *splayer)
 {
-    out <<splayer->UName << " save cars_info" << endl;
+    //out <<splayer->UName << " save cars_info" << endl;
 
     char file[255];
     strcpy(file,RootDir);

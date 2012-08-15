@@ -24,4 +24,10 @@ struct player
     struct user_fine fines[MAX_FINES];
 };
 
+class RCPolice: public RCBaseClass
+{
+    private:
+    public:
+};
+
 #endif

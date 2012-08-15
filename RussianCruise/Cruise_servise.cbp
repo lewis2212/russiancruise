@@ -34,10 +34,12 @@
 			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
 			<Add option="-Wno-parentheses" />
+			<Add directory="src" />
 		</Compiler>
 		<Linker>
 			<Add option="-l wsock32" />
 			<Add library=".\addons\pthread\lib\x86\libpthreadGC2.a" />
+			<Add directory="include" />
 		</Linker>
 		<Unit filename="4ernovik.txt" />
 		<Unit filename="CInsim.cpp" />
@@ -46,12 +48,16 @@
 		<Unit filename="RCAntCheat.h" />
 		<Unit filename="RCBank.cpp" />
 		<Unit filename="RCBank.h" />
+		<Unit filename="RCBaseClass.cpp" />
+		<Unit filename="RCBaseClass.h" />
 		<Unit filename="RCDrivingLicense.cpp" />
 		<Unit filename="RCDrivingLicense.h" />
 		<Unit filename="RCEnergy.cpp" />
 		<Unit filename="RCEnergy.h" />
 		<Unit filename="RCLight.cpp" />
 		<Unit filename="RCLight.h" />
+		<Unit filename="RCMain.cpp" />
+		<Unit filename="RCMain.h" />
 		<Unit filename="RCMessage.cpp" />
 		<Unit filename="RCMessage.h" />
 		<Unit filename="RCPizza.cpp" />
@@ -62,12 +68,9 @@
 		<Unit filename="RCStreet.h" />
 		<Unit filename="RCTaxi.cpp" />
 		<Unit filename="RCTaxi.h" />
-		<Unit filename="RCclasses.h" />
 		<Unit filename="Release note.txt" />
 		<Unit filename="TODO.txt" />
 		<Unit filename="insim.h" />
-		<Unit filename="main.cpp" />
-		<Unit filename="main.h" />
 		<Unit filename="pthread.h" />
 		<Unit filename="tools.cpp" />
 		<Unit filename="tools.h" />

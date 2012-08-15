@@ -1,18 +1,18 @@
-﻿v. 1.1.3 at 10.05.10
+﻿v. 1.1.3 от 10.05.10
         - круиз работает в 2 режимах. консоль и сервис(служба)
         - so4 pit+ shop+ cafe+ work+ points++
         - add cop system (!pay !sirena !users++)
         - check nickname when player work cop
         - забирать заказ из пиццирии можно не дожидаясь вызова
 
-v 1.1.4 at 17.05.10
+v 1.1.4 от 17.05.10
         - delete skin system
         - fix bugs
 
-v 1.1.5 at 19.05.10
+v 1.1.5 от 19.05.10
         - !radar for on/off radar (auto off if Speed > 5 km/h)
         - !trans show all cash transactions of player (if !trans user => show all cash transactions of player and user)
-v 1.1.6 at 12.11.10
+v 1.1.6 от 12.11.10
         - Update CInsim 0.3 to 0.6 (use POSIX threads)
         - Пицца перенесена в отдельный незявисимый класс RCPizza
         - Сообщения перенесены в класс RCMessage, тем самым программа занимает в оперативной памяти не более 3 Мб вместо 43 Мб
@@ -82,7 +82,9 @@ v 1.2.2
 v 1.2.3
 	- У ментов замораживаются уровни и энергия
 
-
+v 1.2.4
+    - Уменьшение скила,рпри оплате штрафов
+    - Увеличение скила при уходе от погони
 
 TODO:
 

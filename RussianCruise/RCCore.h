@@ -141,8 +141,8 @@ class RCCore
     char    Product[6];                        // DEMO or S1 or S2
 
     public:
-    RCCore::RCCore();
-    RCCore::~RCCore();
+    RCCore();
+    ~RCCore();
 
     CInsim      *insim;
     RCMessage   *msg;

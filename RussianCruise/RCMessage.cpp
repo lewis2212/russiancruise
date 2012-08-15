@@ -21,10 +21,6 @@ char* RCMessage::GetMessage(byte UCID, int MsgID)
             if (players[i].LangID == 0)
                 return (char*)("^1LangID == 0");
 
-            //printf("%s LangID=%d MsgID=%d\n",players[i].UName,players[i].LangID,MsgID);
-
-            //strncpy(MSG,MsgArray[players[i].LangID][MsgID],strlen(MsgArray[players[i].LangID][MsgID]));
-            //sprintf(MSG,"STRLEN = %d\n",strlen(MsgArray[players[i].LangID][MsgID]));
             return MsgArray[players[i].LangID][MsgID];
         }
     }
@@ -124,27 +120,7 @@ void RCMessage::readconfig(const char *Track)
     readf2.close();
 }
 
-
-void RCMessage::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_NCN:
-        ncn();
-        break;
-
-    case ISP_CNL:
-        cnl();
-        break;
-
-    case ISP_MSO:
-        mso();
-        break;
-
-    }
-}
-
-void RCMessage::ncn()
+void RCMessage::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -224,7 +200,7 @@ void RCMessage::ncn()
 
 }
 
-void RCMessage::cnl()
+void RCMessage::insim_cnl()
 {
     int i;
 
@@ -244,7 +220,7 @@ void RCMessage::cnl()
     }
 }
 
-void RCMessage::mso()
+void RCMessage::insim_mso()
 {
     int i;
 
@@ -352,29 +328,3 @@ void RCMessage::save (byte UCID)
     }
 
 }
-
-void RCMessage::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-};
-
-void RCMessage::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-};
-
-

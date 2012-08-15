@@ -10,8 +10,9 @@
 #include <windows.h>
 #include <math.h>
 
+#include "RCBaseClass.h"
 #include "tools.h"
-#include "CInsim.h"
+#include "RCBaseClass.h"
 #include "RCMessage.h"
 
 
@@ -33,33 +34,29 @@ struct DLPlayer
 
 
 
-class RCDL
+class RCDL:public RCBaseClass
 {
 private:
     char RootDir[MAX_PATH];
 
     char errmsg[64];
-    CInsim  *insim;
     RCMessage *msg;
 
     // функции-повторители основных фунцкий ядра
-    void ncn();
-    void npl();
-    void plp();
-    void pll();
-    void cnl();
-    void crp();
-    void mso();
+    void insim_ncn();
+    void insim_npl();
+    void insim_plp();
+    void insim_pll();
+    void insim_cnl();
+    void insim_crp();
+    void insim_mso();
+    void insim_con();
 
     //
 
     void btn_dl(struct DLPlayer *splayer);
 
-    // функции-повторители основных фунцкий ядра
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
 
     // Функции-утилиты
     int check_pos (struct BankPlayer *splayer); //+
@@ -81,8 +78,7 @@ public:
 
     byte inited;
 
-    void next_packet();
-    void mci();
+    void insim_mci();
 
     struct  DLPlayer players[32];     // Array of players
     // Основные функции класса

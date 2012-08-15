@@ -11,8 +11,8 @@
 #include <time.h>
 #include <windows.h>
 
+#include "RCBaseClass.h"
 #include "tools.h"
-#include "CInsim.h"
 #include "RCMessage.h"
 #include "RCBank.h"
 
@@ -42,7 +42,7 @@ struct energy_info
 };
 
 
-class RCEnergy
+class RCEnergy:public RCBaseClass
 {
 private:
     pthread_t tid; // Thread ID
@@ -52,22 +52,17 @@ private:
 
     char RootDir[MAX_PATH];
 
-    void ncn();
-    void npl();
-    void plp();
-    void pll();
-    void cnl();
-    void crp();
-    void mso();
+    void insim_ncn();
+    void insim_npl();
+    void insim_plp();
+    void insim_pll();
+    void insim_cnl();
+    void insim_crp();
+    void insim_mso();
     //! HIT CONTROL
-    void con();
-    void obh();
-    void hlv();
+    void insim_con();
+    void insim_obh();
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
-    void btn_work (struct BankPlayer *splayer);
 
     // Функции-утилиты
     int check_pos (struct EnergyPlayer *splayer); //+
@@ -76,23 +71,23 @@ public:
     RCEnergy();
     ~RCEnergy();
 
-    char errmsg[64];
-    CInsim      *insim;
     RCMessage   *msg;
     RCBank      *bank;
 
     struct  place zone;
     struct  EnergyPlayer players[32];     // Array of players
     // Основные функции класса
-    int init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
-    void readconfig(const char *Track);
+    int     init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
+    void    readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
-    void next_packet();
-    void mci();
-    void energy_save(byte UCID);
-    void btn_energy (struct EnergyPlayer *splayer);
 
-    int GetEnergy(byte UCID);
+    void    insim_mci();
+
+    void    energy_save(byte UCID);
+    void    btn_energy (struct EnergyPlayer *splayer);
+
+
+    int     GetEnergy(byte UCID);
     bool    Lock(byte UCID);
     bool    Unlock(byte UCID);
     bool    Islocked(byte UCID);
