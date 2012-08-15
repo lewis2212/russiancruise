@@ -2,7 +2,7 @@ using namespace std;
 
 #include "RCAntCheat.h"
 
-struct CarAcl anticheat[3];
+
 
 RCAntCheat::RCAntCheat()
 {
@@ -42,50 +42,50 @@ int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void 
 
     return 0;
 }
-
+/*
 void RCAntCheat::next_packet()
 {
     switch (insim->peek_packet())
     {
     case ISP_NPL:
-        npl();
+        insim_npl();
         break;
 
     case ISP_NCN:
-        ncn();
+        insim_ncn();
         break;
 
     case ISP_CNL:
-        cnl();
+        insim_cnl();
         break;
 
     case ISP_PLL:
-        pll();
+        insim_pll();
         break;
 
     case ISP_PLP:
-        plp();
+        insim_plp();
         break;
 
     case ISP_CPR:
-        crp();
+        insim_crp();
         break;
 
     case ISP_MSO:
-        mso();
+        insim_mso();
         break;
 
     case ISP_PLA:
-        pla();
+        insim_pla();
         break;
     case ISP_REO:
-        reo();
+        insim_reo();
         break;
 
     }
 }
-
-void RCAntCheat::cnl ()
+*/
+void RCAntCheat::insim_cnl ()
 {
     int i;
 
@@ -102,7 +102,7 @@ void RCAntCheat::cnl ()
     }
 }
 
-void RCAntCheat::crp()
+void RCAntCheat::insim_crp()
 {
     int i;
 
@@ -121,7 +121,7 @@ void RCAntCheat::crp()
     }
 }
 
-void RCAntCheat::mci ()
+void RCAntCheat::insim_mci ()
 {
     //cout << "mci" << endl;
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -133,12 +133,32 @@ void RCAntCheat::mci ()
         for (int j =0; j < MAX_PLAYERS; j++) // прогон по всему массиву players[j]
         {
 
-            if (pack_mci->Info[i].PLID == players[j].PLID) // старая заплатка ( and players[j].PLID != 0 and players[j].UCID != 0)
+            if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
             {
                 /** DO SOME CODE **/
+                if ((players[j].InPit == false) and  (players[j].ReadyForMCI == true))
+                {
+                    int d = (Distance(pack_mci->Info[i].X,
+                                     pack_mci->Info[i].Y,
+                                     players[j].Info.X,
+                                     players[j].Info.Y))/65536;
 
+                    if (d > 70)
+                    {
+                        char Text[64];
+                        sprintf(Text, "%s is using teleport", players[i].UName);
+                        //send_mtc(players[i].UCID,"^1Hack detect");
+                        //send_mst(Text);
+                    }
 
+                }
+                else
+                {
+                    players[j].InPit = false;
+                }
 
+                players[j].Info.X = pack_mci->Info[i].X;
+                players[j].Info.Y = pack_mci->Info[i].Y;
 
                 /** NOTE: don't use break **/
             } // if pack_mci->Info[i].PLID == players[j].PLID
@@ -146,7 +166,7 @@ void RCAntCheat::mci ()
     }
 }
 
-void RCAntCheat::mso ()
+void RCAntCheat::insim_mso ()
 {
     int i;
 
@@ -181,7 +201,7 @@ void RCAntCheat::mso ()
 }
 
 
-void RCAntCheat::ncn()
+void RCAntCheat::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -220,7 +240,7 @@ void RCAntCheat::ncn()
 
 }
 
-void RCAntCheat::npl()
+void RCAntCheat::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -281,6 +301,8 @@ void RCAntCheat::npl()
                 return;
             }
 
+            players[i].ReadyForMCI = true;
+
             /*******    ********/
             /** DO SOME CODE **/
             break;
@@ -288,7 +310,7 @@ void RCAntCheat::npl()
     }
 }
 
-void RCAntCheat::plp()
+void RCAntCheat::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -306,12 +328,16 @@ void RCAntCheat::plp()
             players[i].PLID = 0;
             players[i].NPL = 0;
             /** DO SOME CODE **/
+
+            memset(&players[i].Info,0,sizeof(CompCar));
+            players[i].InPit = true;
+             players[i].ReadyForMCI = false;
             break;
         }
     }
 }
 
-void RCAntCheat::pll()
+void RCAntCheat::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -329,12 +355,15 @@ void RCAntCheat::pll()
             players[i].PLID = 0;
             players[i].NPL = 0;
             /** DO SOME CODE **/
+            memset(&players[i].Info,0,sizeof(CompCar));
+            players[i].InPit = true;
+             players[i].ReadyForMCI = false;
             break;
         }
     }
 }
 
-void RCAntCheat::pla ()
+void RCAntCheat::insim_pla ()
 {
     //int i;
 
@@ -354,7 +383,7 @@ void RCAntCheat::pla ()
 
 }
 
-void RCAntCheat::reo ()
+void RCAntCheat::insim_reo ()
 {
     //int i;
 
@@ -391,27 +420,6 @@ void RCAntCheat::reo ()
 
 }
 
-void RCAntCheat::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strncpy(pack_mst.Msg,Text,strlen(Text));
-    if (!insim->send_packet(&pack_mst,errmsg))
-        cout << errmsg << endl;
-}
-
-void RCAntCheat::send_mtc (byte UCID,const char* Msg)
-{
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    insim->send_packet(&pack_mtc,errmsg);
-}
 
 void RCAntCheat::pitlane (const char* UName)
 {

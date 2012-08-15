@@ -2,12 +2,12 @@ using namespace std;
 
 #include "RCLight.h"
 
-char* signal1 ="^0•";
-char* signal2 ="^0•";
-char* signal3 ="^0•";
-char* signal11 ="^0•";
-char* signal12 ="^0•";
-char* signal13 ="^0•";
+const char* signal1 ="^0•";
+const char* signal2 ="^0•";
+const char* signal3 ="^0•";
+const char* signal11 ="^0•";
+const char* signal12 ="^0•";
+const char* signal13 ="^0•";
 
 time_t sstime;
 
@@ -24,69 +24,69 @@ void *thread_svet1(void* params)
 
         if (svtime < 10)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^2•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^2•";
         }
         else if (svtime == 10)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^0•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^0•";
         }
         else if (svtime == 11)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^2•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^2•";
         }
         else if (svtime == 12)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^0•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^0•";
         }
         else if (svtime == 13)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^2•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^2•";
         }
         else if (svtime == 14)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^0•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^0•";
         }
         else if (svtime == 15)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^2•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^2•";
         }
         else if (svtime == 16)
         {
-            signal1="^C^0•";
-            signal2="^C^0•";
-            signal3="^C^0•";
+            signal1="^0•";
+            signal2="^0•";
+            signal3="^0•";
         }
         else if ((svtime > 16) and (svtime < 20))
         {
-            signal1="^C^0•";
-            signal2="^C^3•";
-            signal3="^C^0•";
+            signal1="^0•";
+            signal2="^3•";
+            signal3="^0•";
         }
         else if ((svtime >= 20) and (svtime < 37))
         {
-            signal1="^C^1•";
-            signal2="^C^0•";
-            signal3="^C^0•";
+            signal1="^1•";
+            signal2="^0•";
+            signal3="^0•";
         }
         else if ((svtime >= 37))
         {
-            signal1="^C^1•";
-            signal2="^C^3•";
-            signal3="^C^0•";
+            signal1="^1•";
+            signal2="^3•";
+            signal3="^0•";
         }
 
 
@@ -105,69 +105,69 @@ void *thread_svet2( void* params)
 
         if (svtime < 10)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^2•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^2•";
         }
         else if (svtime == 10)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^0•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^0•";
         }
         else if (svtime == 11)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^2•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^2•";
         }
         else if (svtime == 12)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^0•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^0•";
         }
         else if (svtime == 13)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^2•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^2•";
         }
         else if (svtime == 14)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^0•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^0•";
         }
         else if (svtime == 15)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^2•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^2•";
         }
         else if (svtime == 16)
         {
-            signal11="^C^0•";
-            signal12="^C^0•";
-            signal13="^C^0•";
+            signal11="^0•";
+            signal12="^0•";
+            signal13="^0•";
         }
         else if ((svtime > 16) and (svtime < 20))
         {
-            signal11="^C^0•";
-            signal12="^C^3•";
-            signal13="^C^0•";
+            signal11="^0•";
+            signal12="^3•";
+            signal13="^0•";
         }
         else if ((svtime >= 20) and (svtime < 37))
         {
-            signal11="^C^1•";
-            signal12="^C^0•";
-            signal13="^C^0•";
+            signal11="^1•";
+            signal12="^0•";
+            signal13="^0•";
         }
         else if ((svtime >= 37))
         {
-            signal11="^C^1•";
-            signal12="^C^3•";
-            signal13="^C^0•";
+            signal11="^1•";
+            signal12="^3•";
+            signal13="^0•";
         }
 
 
@@ -199,7 +199,24 @@ RCLight::~RCLight()
     pthread_detach(svet2_tid);
 }
 
-int RCLight::init(const char *dir, void *CInSim, void *Message)
+bool RCLight::SetLight3(byte UCID,bool Key)
+{
+     for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (players[i].Light3 and !Key)
+            {
+                for (int f=190; f < 203; f++)
+                    send_bfn(players[i].UCID,f);
+            }
+
+            players[i].Light3 = Key;
+        }
+    }
+}
+
+int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
 {
     //cout << "Init Streets" << endl;
     IfInited = false;
@@ -217,6 +234,13 @@ int RCLight::init(const char *dir, void *CInSim, void *Message)
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
+        return -1;
+    }
+
+    dl = (RCDL *)RCDLic;
+    if(!dl)
+    {
+        printf ("Can't struct RCDL class");
         return -1;
     }
 
@@ -303,45 +327,8 @@ void RCLight::readconfig(const char *Track)
     return;
 }
 
-void RCLight::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_MSO:
-        mso();
-        break;
 
-
-    case ISP_NPL:
-        npl();
-        break;
-
-    case ISP_NCN:
-        ncn();
-        break;
-
-    case ISP_CNL:
-        cnl();
-        break;
-
-    case ISP_PLL:
-        pll();
-        break;
-
-    case ISP_PLP:
-        plp();
-        break;
-
-    case ISP_CPR:
-        crp();
-        break;
-
-
-    }
-}
-
-
-void RCLight::cnl ()
+void RCLight::insim_cnl ()
 {
     int i;
 
@@ -358,7 +345,7 @@ void RCLight::cnl ()
     }
 }
 
-void RCLight::crp()
+void RCLight::insim_crp()
 {
     int i;
 
@@ -376,7 +363,7 @@ void RCLight::crp()
     }
 }
 
-void RCLight::mci ()
+void RCLight::insim_mci ()
 {
     //cout << "Street_mci" << endl;
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -396,6 +383,8 @@ void RCLight::mci ()
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
                 int H = pack_mci->Info[i].Heading/182;
+                int D = pack_mci->Info[i].Direction/182;
+                int S = pack_mci->Info[i].Speed*360/32768;
 
                 int SvetKey = 0;
 
@@ -456,10 +445,30 @@ void RCLight::mci ()
                         for (int f=190; f < 203; f++)
                             send_bfn(players[j].UCID,f);
 
-                        players[j].Light = 0;
+
+
+
+                        //send_mst(Text);
+
+                       /* if ((players[j].Light == 1) and (strcmp("^1•",signal1)==0))
+                        {
+                            //if (S > 10)
+                            //dl->RemSkill(players[j].UCID);
+                        }
+
+                        if ((players[j].Light == 2) and (strcmp("^1•",signal11)==0))
+                        {
+                            //if (S > 10)
+                            //dl->RemSkill(players[j].UCID);
+                        }*/
+
+                         players[j].Light = 0;
                         //out << "clear svetofor" << endl;
                     }
                 }
+
+                if (players[j].Light3)
+                    btn_svetofor3(&players[j]);
 
 
                 /**  steets **/
@@ -489,6 +498,10 @@ void RCLight::mci ()
                     	if (players[j].WrongWay == 0)
                     	players[j].WrongWay =1;
                         btn_wrong_way(players[j].UCID);
+                        if (S > 10)
+                            dl->RemSkill(players[j].UCID);
+
+
                        // send_mst("wrong way");
                     }
                 }
@@ -509,6 +522,9 @@ void RCLight::mci ()
                     	if (players[j].WrongWay == 0)
                     	players[j].WrongWay =1;
                         btn_wrong_way(players[j].UCID);
+                        if (S > 10)
+                            dl->RemSkill(players[j].UCID);
+
                        // send_mst("wrong way");
                     }
                 }
@@ -527,7 +543,7 @@ void RCLight::mci ()
     }
 }
 
-void RCLight::mso ()
+void RCLight::insim_mso ()
 {
     int i;
 
@@ -561,8 +577,7 @@ void RCLight::mso ()
 
 }
 
-
-void RCLight::ncn()
+void RCLight::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -599,7 +614,7 @@ void RCLight::ncn()
 
 }
 
-void RCLight::npl()
+void RCLight::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -616,7 +631,7 @@ void RCLight::npl()
     }
 }
 
-void RCLight::plp()
+void RCLight::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -634,7 +649,7 @@ void RCLight::plp()
     }
 }
 
-void RCLight::pll()
+void RCLight::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -650,41 +665,6 @@ void RCLight::pll()
             break;
         }
     }
-}
-
-void RCLight::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-}
-
-void RCLight::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-}
-
-void RCLight::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
 }
 
 void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
@@ -705,7 +685,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.T = 15;
     pack.W = 16;
     pack.H = 40;
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
     pack.BStyle = 16;
     pack.ClickID = 191;
@@ -713,7 +693,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.T = 16;
     pack.W = 14;
     pack.H = 38;
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
 
 
@@ -724,18 +704,18 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.W = 30;
     pack.H = 30;
     strcpy(pack.Text,signal1);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
 
     pack.ClickID = 193;
     pack.T = 10+10;
     strcpy(pack.Text,signal2);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
     pack.ClickID = 194;
     pack.T = 10+20;
     strcpy(pack.Text,signal3);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 }
 
 void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
@@ -756,7 +736,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.T = 15;
     pack.W = 16;
     pack.H = 40;
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
     pack.BStyle = 16;
     pack.ClickID = 191;
@@ -764,7 +744,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.T = 16;
     pack.W = 14;
     pack.H = 38;
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
 
 
@@ -775,18 +755,18 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.W = 30;
     pack.H = 30;
     strcpy(pack.Text,signal11);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
 
     pack.ClickID = 193;
     pack.T = 10+10;
     strcpy(pack.Text,signal12);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
     pack.ClickID = 194;
     pack.T = 10+20;
     strcpy(pack.Text,signal13);
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 }
 
 void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
@@ -808,7 +788,7 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 8;
     pack_btn.H = 20;
     strcpy(pack_btn.Text,"");
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
     /**********/
 
 
@@ -819,18 +799,18 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 16;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal1);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
 
 
     pack_btn.ClickID = 197;
     pack_btn.T = 112;
     strcpy(pack_btn.Text,signal2);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
 
     pack_btn.ClickID = 198;
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal3);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
     /********************************/
     pack_btn.BStyle = 32;
     /**** telo 2 *******/
@@ -840,7 +820,7 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 8;
     pack_btn.H = 20;
     strcpy(pack_btn.Text,"");
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
     /*************************/
     pack_btn.BStyle = 1;
 
@@ -850,18 +830,18 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.W = 16;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal11);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
 
 
     pack_btn.ClickID = 201;
     pack_btn.T = 112;
     strcpy(pack_btn.Text,signal12);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
 
     pack_btn.ClickID = 202;
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal13);
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
 }
 
 void RCLight::btn_wrong_way(byte UCID)
@@ -882,13 +862,14 @@ void RCLight::btn_wrong_way(byte UCID)
     pack_btn.W = 200;
     pack_btn.H = 200;
     strcpy(pack_btn.Text,"^1•");
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
     pack_btn.ClickID = 204;
     pack_btn.L = 25;
     pack_btn.T = 26;
     pack_btn.W = 150;
     pack_btn.H = 150;
     strcpy(pack_btn.Text,"^7-");
-    insim->send_packet(&pack_btn,errmsg);
+    insim->send_packet(&pack_btn);
     /**********/
 }
+

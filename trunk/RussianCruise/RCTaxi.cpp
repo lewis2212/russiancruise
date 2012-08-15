@@ -286,50 +286,6 @@ void RCTaxi::readconfig(const char *Track)
     }
 }
 
-void RCTaxi::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_MSO:
-        taxi_mso();
-        break;
-
-
-    case ISP_NPL:
-        taxi_npl();
-        break;
-
-    case ISP_NCN:
-        taxi_ncn();
-        break;
-
-    case ISP_CNL:
-        taxi_cnl();
-        break;
-
-    case ISP_PLL:
-        taxi_pll();
-        break;
-
-    case ISP_PLP:
-        taxi_plp();
-        break;
-
-    case ISP_CPR:
-        taxi_crp();
-        break;
-
-    case ISP_CON:
-        con();
-        break;
-
-    case ISP_OBH:
-        obh();
-        break;
-
-
-    }
-}
 
 void RCTaxi::accept_user()
 {
@@ -460,7 +416,7 @@ void RCTaxi::accept_user2(byte UCID)
 }
 
 
-void RCTaxi::taxi_cnl ()
+void RCTaxi::insim_cnl ()
 {
     int i;
 
@@ -479,7 +435,7 @@ void RCTaxi::taxi_cnl ()
     }
 }
 
-void RCTaxi::taxi_crp()
+void RCTaxi::insim_crp()
 {
     int i;
 
@@ -498,8 +454,9 @@ void RCTaxi::taxi_crp()
     }
 }
 
-void RCTaxi::taxi_mci ()
+void RCTaxi::insim_mci ()
 {
+    if(!insim)return;/**dont work if insim is NULL**/
     //cout << "taxi_mci" << endl;
     float Dist;
     char d[96];
@@ -759,7 +716,7 @@ void RCTaxi::taxi_mci ()
     /** thread **/
 }
 
-void RCTaxi::taxi_mso ()
+void RCTaxi::insim_mso ()
 {
 
     int i;
@@ -906,7 +863,7 @@ void RCTaxi::taxi_mso ()
 }
 
 
-void RCTaxi::taxi_ncn()
+void RCTaxi::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -949,7 +906,7 @@ void RCTaxi::taxi_ncn()
 
 }
 
-void RCTaxi::taxi_npl()
+void RCTaxi::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -968,7 +925,7 @@ void RCTaxi::taxi_npl()
     }
 }
 
-void RCTaxi::taxi_plp()
+void RCTaxi::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -988,7 +945,7 @@ void RCTaxi::taxi_plp()
     }
 }
 
-void RCTaxi::taxi_pll()
+void RCTaxi::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -1089,40 +1046,6 @@ void RCTaxi::save_user(struct TaxiPlayer *splayer)
 }
 
 
-void RCTaxi::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-}
-
-void RCTaxi::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-}
-
-void RCTaxi::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-}
 
 void RCTaxi::taxi_done(TaxiPlayer *splayer)
 {
@@ -1156,7 +1079,7 @@ void RCTaxi::taxi_done(TaxiPlayer *splayer)
 
 }
 
-void RCTaxi::con()
+void RCTaxi::insim_con()
 {
     // printf("Car contact\n");
 
@@ -1198,7 +1121,7 @@ void RCTaxi::con()
 
 }
 
-void RCTaxi::obh()
+void RCTaxi::insim_obh()
 {
 
 

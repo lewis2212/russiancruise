@@ -7,7 +7,8 @@
 #include <time.h>
 #include <fstream>
 #include <windows.h>
-#include "CInsim.h"
+
+#include "RCBaseClass.h"
 
 #include "tools.h"
 
@@ -18,12 +19,9 @@ struct MPlayer
     int LangID;
 };
 
-class RCMessage
+class RCMessage:public RCBaseClass
 {
 private:
-
-    char errmsg[64];
-    CInsim  *insim;
 
     char RootDir[MAX_PATH];
 
@@ -31,14 +29,9 @@ private:
 
     struct MPlayer players[MAX_PLAYERS];
 
-    void ncn();
-    void cnl();
-    void mso();
-
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
-
-
+    void insim_ncn();
+    void insim_cnl();
+    void insim_mso();
 
 public:
     RCMessage();
@@ -46,8 +39,6 @@ public:
 
     int init(const char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
     void readconfig(const char *Track);
-
-    void next_packet();
 
     void save(byte UCID);
 

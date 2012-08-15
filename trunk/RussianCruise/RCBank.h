@@ -9,8 +9,8 @@
 #include <time.h>
 #include <windows.h>
 
+#include "RCBaseClass.h"
 #include "tools.h"
-#include "CInsim.h"
 #include "RCMessage.h"
 
 
@@ -36,7 +36,7 @@ struct Bank_info
 };
 
 
-class RCBank
+class RCBank:public RCBaseClass
 {
 private:
 
@@ -48,19 +48,13 @@ private:
 
     char RootDir[MAX_PATH];
 
-    void bank_ncn();
-    void bank_npl();
-    void bank_plp();
-    void bank_pll();
-    void bank_cnl();
-    void bank_crp();
-    void bank_mci();
-    void bank_mso();
-
-
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (char* Text);
-    void send_mtc (byte UCID,char* Msg);
+    void insim_ncn();
+    void insim_npl();
+    void insim_plp();
+    void insim_pll();
+    void insim_cnl();
+    void insim_crp();
+    void insim_mci();
 
 public:
     RCBank();
@@ -87,7 +81,7 @@ public:
     void readconfig(const char *Track);
     void bank_save(byte UCID);
     // функции-повторители основных фунцкий ядра
-    void next_packet();
+
     void btn_cash(int i);
 
 

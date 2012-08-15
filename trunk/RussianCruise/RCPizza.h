@@ -9,7 +9,8 @@
 #include <time.h>
 #include <windows.h>
 
-#include "CInsim.h"
+#include "RCBaseClass.h"
+
 #include "RCMessage.h"
 #include "RCBank.h"
 #include "RCEnergy.h"
@@ -73,7 +74,7 @@ struct  Store
     float    Cheese; // 560000 rur/t
 };
 
-class RCPizza
+class RCPizza:public RCBaseClass
 {
 private:
 
@@ -97,7 +98,7 @@ public:
     struct  pizza_info TrackInf;
 
     char errmsg[64];
-    CInsim      *insim;
+    //CInsim      *insim;
     RCMessage   *msg;
     RCBank      *bank;
     RCEnergy    *nrg;
@@ -118,19 +119,17 @@ public:
     void done (struct PizzaPlayer *splayer);
 
     // функции-повторители основных фунцкий ядра
-    void next_packet();
-    void pizza_ncn(); //+
-    void pizza_npl(); //+
-    void pizza_plp(); //+
-    void pizza_pll(); //+
-    void pizza_cnl(); //+
-    void pizza_crp(); //+
-    void pizza_mci();
-    void pizza_mso();
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
+    void insim_ncn(); //+
+    void insim_npl(); //+
+    void insim_plp(); //+
+    void insim_pll(); //+
+    void insim_cnl(); //+
+    void insim_crp(); //+
+    void insim_mci();
+    void insim_mso();
+
+
     void btn_work (struct PizzaPlayer *splayer);
     void btn_destination(struct PizzaPlayer *splayer);
 

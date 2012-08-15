@@ -43,7 +43,14 @@ bool    RCDL::AddSkill(byte UCID)
         {
         	if (!Islocked(UCID))
         	{
-				players[i].Skill += 500*players[i].LVL/2;
+				players[i].Skill += 250*players[i].LVL;
+
+				char Text[64];
+                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
+                float skl = (players[i].LVL*250/nextlvl)*100;
+                sprintf(Text,"^2 + ^3%2.3f%% ^7Skill",skl);
+                send_mtc(players[i].UCID,Text);
+
 				return true;
         	}
         }
@@ -59,7 +66,17 @@ bool    RCDL::RemSkill(byte UCID)
         {
         	if (!Islocked(UCID))
         	{
-        		players[i].Skill -= 1000*players[i].LVL/2;
+        	    if (players[i].Skill < 500*players[i].LVL)
+                    players[i].Skill = 0;
+        	    else
+                    players[i].Skill -= 500*players[i].LVL;
+
+                char Text[64];
+                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
+                float skl = (players[i].LVL*500/nextlvl)*100;
+                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill",skl);
+                send_mtc(players[i].UCID,Text);
+
 				return true;
         	}
 
@@ -132,42 +149,7 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
     return 0;
 }
 
-void RCDL::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_NPL:
-        npl();
-        break;
-
-    case ISP_NCN:
-        ncn();
-        break;
-
-    case ISP_CNL:
-        cnl();
-        break;
-
-    case ISP_PLL:
-        pll();
-        break;
-
-    case ISP_PLP:
-        plp();
-        break;
-
-    case ISP_CPR:
-        crp();
-        break;
-
-    case ISP_MSO:
-        mso();
-        break;
-
-    }
-}
-
-void RCDL::ncn()
+void RCDL::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -255,7 +237,7 @@ void RCDL::ncn()
 
 }
 
-void RCDL::npl()
+void RCDL::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -272,7 +254,7 @@ void RCDL::npl()
     }
 }
 
-void RCDL::plp()
+void RCDL::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -291,7 +273,7 @@ void RCDL::plp()
     }
 }
 
-void RCDL::pll()
+void RCDL::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -310,7 +292,7 @@ void RCDL::pll()
     }
 }
 
-void RCDL::cnl()
+void RCDL::insim_cnl()
 {
     int i;
 
@@ -330,7 +312,7 @@ void RCDL::cnl()
     }
 }
 
-void RCDL::crp()
+void RCDL::insim_crp()
 {
     int i;
 
@@ -348,7 +330,7 @@ void RCDL::crp()
     }
 }
 
-void RCDL::mso()
+void RCDL::insim_mso()
 {
     int i;
 
@@ -411,7 +393,38 @@ void RCDL::save (byte UCID)
 
 }
 
-void RCDL::mci()
+void RCDL::insim_con()
+{
+    //printf("Car contact\n");
+
+    struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
+/*
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_con->A.PLID)
+        {
+        	if (!Islocked(players[i].UCID))
+                RemSkill(players[i].UCID);
+            break;
+        }
+    }
+
+    for (int i=0; i<MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_con->B.PLID)
+        {
+        	if (!Islocked(players[i].UCID))
+                RemSkill(players[i].UCID);
+            break;
+        }
+    }
+
+*/
+
+}
+
+
+void RCDL::insim_mci()
 {
     //cout << "pizza_mci" << endl;
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -454,7 +467,7 @@ void RCDL::mci()
                 //cout << Skill << endl;
                 if ((abs((int)Skill) > 10) and (S>30))
                 {
-                    players[j].Skill += abs((int)Skill);
+                    players[j].Skill += abs((int)(Skill*1.5f));
                     memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
                 }
 
@@ -467,7 +480,7 @@ void RCDL::mci()
                     players[j].LVL ++;
                     players[j].Skill = 0;
                     char Msg[64];
-                    sprintf(Msg,"^5| ^8^C%s ^1Get new Level = ^3%d",players[j].UName, players[j].LVL);
+                    sprintf(Msg,"/msg^5| ^8^C%s ^1Get new Level = ^3%d",players[j].PName, players[j].LVL);
                     send_mst(Msg);
                 }
 
@@ -519,38 +532,3 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     sprintf(Text,"^C^4| %s ^7перешел на %d уровень",splayer->PName, splayer->LVL);
 
 }
-
-void RCDL::send_mtc (byte UCID,const char* Msg)
-{
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-};
-
-void RCDL::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-};
-
-
-void RCDL::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-};

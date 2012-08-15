@@ -131,60 +131,9 @@ void RCEnergy::readconfig(const char *Track)
     readf.close();
 }
 
-/** функции-повторители основных фунцкий ядра **/
-
-void RCEnergy::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_MSO:
-        mso();
-        break;
-
-    case ISP_NPL:
-        npl();
-        break;
-
-    case ISP_NCN:
-        ncn();
-        break;
-
-    case ISP_CNL:
-        cnl();
-        break;
-
-    case ISP_PLL:
-        pll();
-        break;
-
-    case ISP_PLP:
-        plp();
-        break;
-
-    case ISP_CPR:
-        crp();
-        break;
 
 
-    case ISP_CON:
-        con();
-        break;
-
-    case ISP_OBH:
-        obh();
-        break;
-
-    case ISP_HLV:
-        hlv();
-        break;
-
-
-    }
-
-
-}
-
-void RCEnergy::ncn()
+void RCEnergy::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -267,7 +216,7 @@ void RCEnergy::ncn()
 
 }
 
-void RCEnergy::npl()
+void RCEnergy::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -303,7 +252,7 @@ void RCEnergy::npl()
     }
 }
 
-void RCEnergy::plp()
+void RCEnergy::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -321,7 +270,7 @@ void RCEnergy::plp()
     }
 }
 
-void RCEnergy::pll()
+void RCEnergy::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -339,7 +288,7 @@ void RCEnergy::pll()
     }
 }
 
-void RCEnergy::cnl ()
+void RCEnergy::insim_cnl ()
 {
     int i;
 
@@ -390,7 +339,7 @@ void RCEnergy::energy_save (byte UCID)
 
 
 
-void RCEnergy::crp()
+void RCEnergy::insim_crp()
 {
     int i;
 
@@ -408,7 +357,7 @@ void RCEnergy::crp()
     }
 }
 
-void RCEnergy::mci ()
+void RCEnergy::insim_mci ()
 {
 
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -535,7 +484,7 @@ void RCEnergy::mci ()
 }
 
 
-void RCEnergy::mso ()
+void RCEnergy::insim_mso ()
 {
     int i;
 
@@ -631,7 +580,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     pack.W = 35;
     pack.H = 4;
     strcat(pack.Text,"");
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
 
 
     pack.ClickID = 209;
@@ -649,7 +598,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
         strcpy(pack.Text,"^1");
     }
     strcat(pack.Text,msg->GetMessage(splayer->UCID,100));
-    insim->send_packet(&pack,errmsg);
+    insim->send_packet(&pack);
     //
     pack.ClickID = 208;
     pack.BStyle = 64;
@@ -678,61 +627,7 @@ void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
     insim->send_packet(&pack);
 
 }
-/*
-void RCEnergy::btn_energy (struct EnergyPlayer *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    //
-    pack.ClickID = 209;
-    pack.BStyle = 32;
-    pack.L = 92;
-    pack.T = 5;
-    pack.W = 8;
-    pack.H = 4;
-    if (splayer->Zone == 3)
-    {
-        strcpy(pack.Text,"^2");
-    }
-    else
-    {
-        strcpy(pack.Text,"^3");
-    }
-    strcat(pack.Text,msg->GetMessage[0][100]);
-    insim->send_packet(&pack);
-    //
-    pack.ClickID = 208;
-    pack.BStyle = 32+64;
-    pack.L = 100;
-    pack.T = 5;
-    pack.W = 48;
-    pack.H = 4;
-    //int life = 100;
-    strcpy(pack.Text,"");
 
-    //cout << "nrg = " << splayer->Energy/100 << endl;
-
-    for (int i=1; i<=splayer->Energy/100; i++)
-    {
-        if (i == 1)
-            strcat(pack.Text,"^1");
-        if (i == 20)
-            strcat(pack.Text,"^3");
-        if (i == 70)
-            strcat(pack.Text,"^2");
-
-        strcat(pack.Text,"|");
-    }
-
-    insim->send_packet(&pack);
-}
-*/
 int RCEnergy::check_pos(struct EnergyPlayer *splayer)
 {
     int PLX = splayer->Info.X/65536;
@@ -746,41 +641,6 @@ int RCEnergy::check_pos(struct EnergyPlayer *splayer)
     return 0;
 }
 
-void RCEnergy::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-}
-
-void RCEnergy::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-}
-
-
-void RCEnergy::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-}
 
 int RCEnergy::GetEnergy(byte UCID)
 {
@@ -795,7 +655,7 @@ int RCEnergy::GetEnergy(byte UCID)
 }
 
 
-void RCEnergy::con()
+void RCEnergy::insim_con()
 {
     //printf("Car contact\n");
 
@@ -834,7 +694,7 @@ void RCEnergy::con()
 
 }
 
-void RCEnergy::obh()
+void RCEnergy::insim_obh()
 {
     //printf("Car obj contact\n");
     //int i;
@@ -864,36 +724,7 @@ void RCEnergy::obh()
 
 }
 
-void RCEnergy::hlv()
-{
-    //printf("HLV\n");
-    //int i;
 
-    struct IS_HLV *pack_hlv = (struct IS_HLV*)insim->get_packet();
-
-    //printf("pack_hlv->HLV = %d\n",pack_hlv->HLVC);
-    //printf("pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
-    for (int i=0; i<MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == pack_hlv->PLID)
-        {
-            //char Text[128];
-            //sprintf(Text,"pack_hlv->HLV = %d\n",pack_hlv->HLVC);
-            // send_mtc(players[i].UCID,Text);
-
-            //sprintf(Text,"pack_hlv->C.Speed = %d\n",pack_hlv->C.Speed);
-            //send_mtc(players[i].UCID,Text);
-
-            //sprintf(Text,"100/(pack_hlv->Head -  Dir)= %d\n",255/(pack_hlv->C.Heading - pack_hlv->C.Direction));
-            // send_mtc(players[i].UCID,Text);
-            break;
-        }
-    }
-
-
-
-
-}
 
 bool    RCEnergy::Lock(byte UCID)
 {

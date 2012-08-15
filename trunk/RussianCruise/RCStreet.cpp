@@ -109,45 +109,9 @@ void RCStreet::readconfig(const char *Track)
     readf.close();
 }
 
-void RCStreet::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_MSO:
-        street_mso();
-        break;
 
 
-    case ISP_NPL:
-        street_npl();
-        break;
-
-    case ISP_NCN:
-        street_ncn();
-        break;
-
-    case ISP_CNL:
-        street_cnl();
-        break;
-
-    case ISP_PLL:
-        street_pll();
-        break;
-
-    case ISP_PLP:
-        street_plp();
-        break;
-
-    case ISP_CPR:
-        street_crp();
-        break;
-
-
-    }
-}
-
-
-void RCStreet::street_cnl ()
+void RCStreet::insim_cnl ()
 {
     int i;
 
@@ -164,7 +128,7 @@ void RCStreet::street_cnl ()
     }
 }
 
-void RCStreet::street_crp()
+void RCStreet::insim_crp()
 {
     int i;
 
@@ -182,8 +146,9 @@ void RCStreet::street_crp()
     }
 }
 
-void RCStreet::street_mci ()
+void RCStreet::insim_mci ()
 {
+    if(!insim)return;/**dont work if insim is NULL**/
     //cout << "Street_mci" << endl;
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
@@ -225,7 +190,7 @@ void RCStreet::street_mci ()
     }
 }
 
-void RCStreet::street_mso ()
+void RCStreet::insim_mso ()
 {
     int i;
 
@@ -260,7 +225,7 @@ void RCStreet::street_mso ()
 }
 
 
-void RCStreet::street_ncn()
+void RCStreet::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -297,7 +262,7 @@ void RCStreet::street_ncn()
 
 }
 
-void RCStreet::street_npl()
+void RCStreet::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -314,7 +279,7 @@ void RCStreet::street_npl()
     }
 }
 
-void RCStreet::street_plp()
+void RCStreet::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -332,7 +297,7 @@ void RCStreet::street_plp()
     }
 }
 
-void RCStreet::street_pll()
+void RCStreet::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -362,49 +327,13 @@ void RCStreet::btn_street (struct StrPlayer *splayer)
     pack.TypeIn = 0;
     pack.BStyle = 1;
     pack.ClickID = 50;
-    pack.L = 5;
-    pack.T = 158;
+    pack.L = 140;
+    pack.T = 1;
     pack.W = 60;
     pack.H = 6;
     sprintf(pack.Text, "%s ^2(^1%d ^C^7κμ/χ^2)",Street[splayer->StreetNum].Street,Street[splayer->StreetNum].SpeedLimit);
     insim->send_packet(&pack);
 }
-
-void RCStreet::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-}
-
-void RCStreet::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-}
-
-void RCStreet::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-}
-
 
 int RCStreet::CurentStreetNum(byte UCID)
 {
@@ -418,6 +347,7 @@ int RCStreet::CurentStreetNum(byte UCID)
     }
     return -1;
 }
+
 int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 {
     for (int i=0; i<MAX_PLAYERS; i++)
@@ -438,11 +368,8 @@ int RCStreet::CurentStreetInfoByNum(void *StreetInfo, int StrNum)
         return 1;
     return -1;
 }
+
 int RCStreet::StreetCount()
 {
     return StreetNums;
 }
-
-
-
-

@@ -97,11 +97,8 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                 {
 
 
-                    if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
+                    if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType != 0) and (piz->players[i].WorkAccept == 0))
                     {
-                       // if (n == piz->Next)
-                        //{
-                            //cout << piz->players[i].UName << " accepted\n";
 
                             /** прогон пользователей на предмет заказа **/
                             int j = 0;
@@ -125,17 +122,11 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                                     piz->players[j].Pizza = 2;
 
                                     break; // чтобы оповещал только одного игрока
-
-                                    // дебаг
-                                    //char Text[64];
-                                    //sprintf(Text,"%s -> %s ",piz->players[i].UName,piz->players[j].UName);
-                                    //piz->send_mst(Text);
                                 }
 
                             }
                             break;
-                       // }
-                        //n++;
+
                     }
                 }
 
@@ -195,7 +186,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 
                     if ( (piz->players[i].UCID !=0)
-                            and (piz->players[i].WorkType == WK_PIZZA)
+                            and (piz->players[i].WorkType != 0)
                             and (piz->players[i].WorkAccept == 0))
                     {
                         cout << piz->players[i].UName << " accepted for shop\n";
@@ -210,7 +201,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                         piz->players[i].WorkTime = worktime+60*6;
                         piz->ShopAccepted = true;
                         break; // чтобы оповещал только одного игрока
-                    }
+                    } else { cout << " no allowed users for accept\n";}
 
                 }
             }
@@ -613,47 +604,8 @@ void RCPizza::readconfig(const char *Track)
 
 }
 
-/** функции-повторители основных фунцкий ядра **/
 
-void RCPizza::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_MSO:
-        pizza_mso();
-        break;
-
-
-    case ISP_NPL:
-        pizza_npl();
-        break;
-
-    case ISP_NCN:
-        pizza_ncn();
-        break;
-
-    case ISP_CNL:
-        pizza_cnl();
-        break;
-
-    case ISP_PLL:
-        pizza_pll();
-        break;
-
-    case ISP_PLP:
-        pizza_plp();
-        break;
-
-    case ISP_CPR:
-        pizza_crp();
-        break;
-
-
-    }
-}
-
-
-void RCPizza::pizza_ncn()
+void RCPizza::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -693,7 +645,7 @@ void RCPizza::pizza_ncn()
 
 }
 
-void RCPizza::pizza_npl()
+void RCPizza::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -713,7 +665,7 @@ void RCPizza::pizza_npl()
     }
 }
 
-void RCPizza::pizza_plp()
+void RCPizza::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -733,7 +685,7 @@ void RCPizza::pizza_plp()
     }
 }
 
-void RCPizza::pizza_pll()
+void RCPizza::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -753,7 +705,7 @@ void RCPizza::pizza_pll()
     }
 }
 
-void RCPizza::pizza_cnl ()
+void RCPizza::insim_cnl ()
 {
     int i;
 
@@ -764,11 +716,6 @@ void RCPizza::pizza_cnl ()
     {
         if (players[i].UCID == pack_cnl->UCID)
         {
-            if (pack_cnl->Reason != LEAVR_DISCO)
-            {
-                //players[i].cash += 500;
-            }
-
             if (players[i].WorkType == WK_PIZZA)
                 CarsInWork --;
 
@@ -796,7 +743,7 @@ void RCPizza::pizza_cnl ()
 
 }
 
-void RCPizza::pizza_crp()
+void RCPizza::insim_crp()
 {
     int i;
 
@@ -814,8 +761,9 @@ void RCPizza::pizza_crp()
     }
 }
 
-void RCPizza::pizza_mci ()
+void RCPizza::insim_mci ()
 {
+    if(!insim)return;/**dont work if insim is NULL**/
     //cout << "pizza_mci" << endl;
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
@@ -945,7 +893,7 @@ void RCPizza::pizza_mci ()
     }
 }
 
-void RCPizza::pizza_mso ()
+void RCPizza::insim_mso ()
 {
     int i;
 
@@ -992,7 +940,7 @@ void RCPizza::pizza_mso ()
         {
             if (players[j].WorkType == WK_PIZZA)
             {
-                sprintf(Text,"%s",players[j].PName);
+                sprintf(Text,"%s Accept = %d Count = %d",players[j].PName, players[j].WorkAccept, players[j].WorkCountDone);
                 send_mtc(players[i].UCID,Text);
             }
 
@@ -1165,42 +1113,6 @@ int RCPizza::check_pos(struct PizzaPlayer *splayer)
     return 0;
 }
 
-void RCPizza::send_mtc (byte UCID,const char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-};
-
-void RCPizza::send_mst (const char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-};
-
-
-void RCPizza::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-};
-
 bool RCPizza::IfWork (byte UCID)
 {
 	for (int i=0; i < MAX_PLAYERS; i++)
@@ -1216,5 +1128,3 @@ bool RCPizza::IfWork (byte UCID)
     }
     return false;
 }
-
-

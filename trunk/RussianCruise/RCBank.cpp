@@ -123,40 +123,8 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
     return 0;
 }
 
-/** Функции повторители основного ядра  **/
 
-void RCBank::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_NPL:
-        bank_npl();
-        break;
-
-    case ISP_NCN:
-        bank_ncn();
-        break;
-
-    case ISP_CNL:
-        bank_cnl();
-        break;
-
-    case ISP_PLL:
-        bank_pll();
-        break;
-
-    case ISP_PLP:
-        bank_plp();
-        break;
-
-    case ISP_CPR:
-        bank_crp();
-        break;
-
-    }
-}
-
-void RCBank::bank_ncn()
+void RCBank::insim_ncn()
 {
     //printf("New player connect\n");
     int i;
@@ -247,7 +215,7 @@ void RCBank::bank_ncn()
 
 
 
-void RCBank::bank_npl()
+void RCBank::insim_npl()
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
@@ -265,7 +233,7 @@ void RCBank::bank_npl()
     }
 }
 
-void RCBank::bank_plp()
+void RCBank::insim_plp()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -283,7 +251,7 @@ void RCBank::bank_plp()
     }
 }
 
-void RCBank::bank_pll()
+void RCBank::insim_pll()
 {
     //cout << "player leaves race" << endl;
     int i;
@@ -301,7 +269,7 @@ void RCBank::bank_pll()
     }
 }
 
-void RCBank::bank_cnl ()
+void RCBank::insim_cnl ()
 {
     int i;
 
@@ -355,7 +323,7 @@ void RCBank::bank_save (byte UCID)
 
 }
 
-void RCBank::bank_crp()
+void RCBank::insim_crp()
 {
     int i;
 
@@ -522,41 +490,3 @@ int RCBank::check_pos(struct BankPlayer *splayer)
 
     return 0;
 }
-
-void RCBank::send_mtc (byte UCID,char* Msg)
-{
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    if (!insim->send_packet(&pack_mtc,errmsg))
-        cout << errmsg << endl;
-};
-
-void RCBank::send_mst (char* Text)
-{
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
-    insim->send_packet(&pack_mst,errmsg);
-};
-
-
-void RCBank::send_bfn (byte UCID, byte ClickID)
-{
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack,errmsg);
-};
-
-

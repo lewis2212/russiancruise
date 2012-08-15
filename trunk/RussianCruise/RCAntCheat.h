@@ -15,18 +15,10 @@
 
 // Задаем структуру игрока
 
-struct CarAcl
-{
-    char    CName[4];
-    float   MaxAcelerate4060;
-    float   MaxAcelerate6080;
-    float   MaxAcelerate80100;
-    float   MaxAcelerate100;
-    float   MaxSpeed;
-};
-
 struct Player
 {
+    bool    InPit;
+    bool    ReadyForMCI;
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
@@ -44,7 +36,7 @@ struct Player
 
 
 // Описание класса Такси
-class RCAntCheat
+class RCAntCheat:public RCBaseClass
 {
 private:
     // Переменные и функции, доступные только самому классу
@@ -58,7 +50,7 @@ public:
     ~RCAntCheat();  // Деструктор класса (обязательно)
 
     char errmsg[64];
-    CInsim      *insim; // Переменная-указатель на класс CInsim
+    //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
@@ -71,21 +63,18 @@ public:
     //void readconfig(char *Track); // Чтение данных о точках "Пункт назначения"
 
     // функции-повторители основных фунцкий ядра
-    void next_packet(); // Функция переборки типа пакета
-    void ncn();   // Новый игрок зашел на сервер
-    void npl();   // Игрок вышел из боксов
-    void plp();   // Игрок ушел в боксы
-    void pll();   // Игрок ушел в зрители
-    void cnl();   // Игрок ушел с сервера
-    void crp();   // Игрок переименовался
-    void mci();   // Пакет с данными о координатах и т.д.
-    void mso();   // Игрок отправил сообщение
-    void reo();
-    void pla();
+    //void next_packet(); // Функция переборки типа пакета
+    void insim_ncn();   // Новый игрок зашел на сервер
+    void insim_npl();   // Игрок вышел из боксов
+    void insim_plp();   // Игрок ушел в боксы
+    void insim_pll();   // Игрок ушел в зрители
+    void insim_cnl();   // Игрок ушел с сервера
+    void insim_crp();   // Игрок переименовался
+    void insim_mci();   // Пакет с данными о координатах и т.д.
+    void insim_mso();   // Игрок отправил сообщение
+    void insim_reo();
+    void insim_pla();
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
     void pitlane(const char *UName);
     void cheat(struct  Player *splayer);
 

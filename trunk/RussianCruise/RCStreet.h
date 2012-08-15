@@ -6,7 +6,7 @@
 #include <time.h>       //
 #include <windows.h>    //
 
-#include "CInsim.h"     // Insim
+#include "RCBaseClass.h"
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
 
@@ -35,7 +35,7 @@ struct streets
 
 
 // Описание класса Такси
-class RCStreet
+class RCStreet:public RCBaseClass
 {
 private:
     // Переменные и функции, доступные только самому классу
@@ -43,7 +43,7 @@ private:
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
     char errmsg[64];
-    CInsim      *insim; // Переменная-указатель на класс CInsim
+
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
@@ -53,18 +53,14 @@ private:
     // struct  streets2 Street2[30];              // Array of streets
 
     // функции-повторители основных фунцкий ядра
-    void street_ncn();   // Новый игрок зашел на сервер
-    void street_npl();   // Игрок вышел из боксов
-    void street_plp();   // Игрок ушел в боксы
-    void street_pll();   // Игрок ушел в зрители
-    void street_cnl();   // Игрок ушел с сервера
-    void street_crp();   // Игрок переименовался
+    void insim_ncn();   // Новый игрок зашел на сервер
+    void insim_npl();   // Игрок вышел из боксов
+    void insim_plp();   // Игрок ушел в боксы
+    void insim_pll();   // Игрок ушел в зрители
+    void insim_cnl();   // Игрок ушел с сервера
+    void insim_crp();   // Игрок переименовался
+    void insim_mso();   // Игрок отправил сообщение
 
-    void street_mso();   // Игрок отправил сообщение
-
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mtc (byte UCID,const char* Msg);
 
     void btn_street(struct StrPlayer *splayer);
 
@@ -89,8 +85,6 @@ public:
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
-    void street_mci();   // Пакет с данными о координатах и т.д.
-    void next_packet(); // Функция переборки типа пакета
-
+    void insim_mci();   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H

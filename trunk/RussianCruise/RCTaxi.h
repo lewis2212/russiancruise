@@ -7,7 +7,7 @@
 #include <time.h>       // для работы с временем и рандомом
 #include <windows.h>    // не помню для чего но ингда нужно
 
-#include "CInsim.h"     // Insim
+#include "RCBaseClass.h"
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
 
@@ -70,7 +70,7 @@ struct TaxiPlayer
 
 
 // Описание класса Такси
-class RCTaxi
+class RCTaxi: public RCBaseClass
 {
 private:
     // Переменные и функции, доступные только самому классу
@@ -103,7 +103,7 @@ private:
     char 	Dialog_Exit[11][128];
 
 
-    CInsim      *insim; // Переменная-указатель на класс CInsim
+    //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
@@ -127,20 +127,16 @@ private:
     void accept_user2(byte UCID);
     void taxi_done(TaxiPlayer *splayer);
 
-    void taxi_ncn();   // Новый игрок зашел на сервер
-    void taxi_npl();   // Игрок вышел из боксов
-    void taxi_plp();   // Игрок ушел в боксы
-    void taxi_pll();   // Игрок ушел в зрители
-    void taxi_cnl();   // Игрок ушел с сервера
-    void taxi_crp();   // Игрок переименовался
-    void taxi_mso();   // Игрок отправил сообщение
-    void con();   // Игрок отправил сообщение
-    void obh();   // Игрок отправил сообщение
+    void insim_ncn();   // Новый игрок зашел на сервер
+    void insim_npl();   // Игрок вышел из боксов
+    void insim_plp();   // Игрок ушел в боксы
+    void insim_pll();   // Игрок ушел в зрители
+    void insim_cnl();   // Игрок ушел с сервера
+    void insim_crp();   // Игрок переименовался
+    void insim_mso();   // Игрок отправил сообщение
+    void insim_con();   // Игрок отправил сообщение
+    void insim_obh();   // Игрок отправил сообщение
 
-    void send_bfn(byte UCID, byte ClickID);
-    void send_mst (const char* Text);
-    void send_mst (string Text);
-    void send_mtc (byte UCID,const char* Msg);
 
     void read_user(struct TaxiPlayer *splayer);
     void save_user(struct TaxiPlayer *splayer);
@@ -154,15 +150,6 @@ public:
     RCTaxi();   // Конструктор класса (обязательно)
     ~RCTaxi();  // Деструктор класса (обязательно)
 
-    char errmsg[64];
-
-
-
-
-
-
-    /*struct PTH pth;
-    struct PTH_NODES nodes[2000];*/
 
     // Основные функции класса
     int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
@@ -171,9 +158,9 @@ public:
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
     // функции-повторители основных фунцкий ядра
-    void next_packet(); // Функция переборки типа пакета
+    //void next_packet(); // Функция переборки типа пакета
 
-    void taxi_mci();   // Пакет с данными о координатах и т.д.
+    void insim_mci();   // Пакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
 
 
