@@ -452,14 +452,14 @@ void RCLight::insim_mci ()
 
                        /* if ((players[j].Light == 1) and (strcmp("^1•",signal1)==0))
                         {
-                            //if (S > 10)
-                            //dl->RemSkill(players[j].UCID);
+                            if (S > 10)
+                            dl->RemSkill(players[j].UCID);
                         }
 
                         if ((players[j].Light == 2) and (strcmp("^1•",signal11)==0))
                         {
-                            //if (S > 10)
-                            //dl->RemSkill(players[j].UCID);
+                            if (S > 10)
+                            dl->RemSkill(players[j].UCID);
                         }*/
 
                          players[j].Light = 0;
@@ -475,10 +475,13 @@ void RCLight::insim_mci ()
 
                  /** pit wrong route **/
 
-                int pit1x[10] = {200,184,196,210};
-                int pit1y[10] = {230,288,290,234};
-                int pit2x[10] = {234,245,245,241,234,223};
-                int pit2y[10] = {-37,-37,-46,-72,-120,119};
+                int pit1x[10] = {210,200,190,200};
+                int pit1y[10] = {233,230,277,281};
+
+                int pit2x[10] = {242,231,234,245};
+                int pit2y[10] = {-71,-69,-36,-36};
+
+
 
 				//printf ("test wrong route\n");
                 if (Check_Pos(4,pit1x,pit1y,X,Y))

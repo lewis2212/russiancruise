@@ -343,6 +343,7 @@ void RCTaxi::accept_user()
 
                 char Msg[96];
                 sprintf(Msg,"^6|^C^7 «аберите клиента на %s ",StreetInfo.Street);
+                btn_information(players[i].UCID,Msg);
                 send_mtc(players[i].UCID,Msg);
                 players[i].WorkAccept = 1;
             }
@@ -405,8 +406,9 @@ void RCTaxi::accept_user2(byte UCID)
                 char Msg[96];
                 sprintf(Msg,"^6|^C^7 ќтвези мен€ на %s ",StreetInfo.Street);
                 send_mtc(players[i].UCID,Msg);
+                btn_information(players[i].UCID,Msg);
                 players[i].WorkAccept = 2;
-                players[i].PassStress = rand()%750;
+                players[i].PassStress = rand()%500;
             }
 
             break;
@@ -478,9 +480,9 @@ void RCTaxi::insim_mci ()
                 int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
                 // ≈сли игрок находитс€ в зоне приема на работу, выводим воспомогательные сообщени€ в чат
-                int TX[4];
-                int TY[4];
-
+                int TX[4] = {-465,-465,-480,-480};
+                int TY[4] = {450,420,420,450};
+/*
                 if(GameTrack == "SO4X")
                 {
                     TX = {-465,-465,-480,-480};
@@ -496,6 +498,7 @@ void RCTaxi::insim_mci ()
                     TX = {-465,-465,-480,-480};
                     TY = {450,420,420,450};
                 }
+*/
 
                 if (Check_Pos(4,TX,TY,X,Y))
                 {
@@ -832,9 +835,9 @@ void RCTaxi::insim_mso ()
         }
     }
 
-    if ((strncmp(Message, "!start", strlen("!start")) == 0 ) and (strncmp(players[i].UName, "denis-takumi", strlen("denis-takumi")) == 0 ))
+    if ((strncmp(Message, "!start_points", strlen("!start_points")) == 0 ) and (strncmp(players[i].UName, "denis-takumi", strlen("denis-takumi")) == 0 ))
     {
-        /** DO SOME CODE **/
+
         if (players[i].Start ==0)
         {
             players[i].Start =1;
@@ -1064,6 +1067,7 @@ void RCTaxi::taxi_done(TaxiPlayer *splayer)
         send_mtc(splayer->UCID,Text);
         bank->AddCash(splayer->UCID,(1000 - splayer->PassStress/2));
         dl->AddSkill(splayer->UCID);
+        btn_information_clear(splayer->UCID);
     }
     else
     {

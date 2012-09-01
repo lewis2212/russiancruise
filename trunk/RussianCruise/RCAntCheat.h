@@ -13,6 +13,16 @@
 
 #include "tools.h"      // Check_Pos  etc.
 
+struct track_inf
+{
+    int     PitCount;
+    int     XPit[10];
+    int     YPit[10];
+    int     ShopCount;
+    int     XShop[10];
+    int     YShop[10];
+};
+
 // Задаем структуру игрока
 
 struct Player
@@ -25,7 +35,8 @@ struct Player
     byte    UCID;                  // Connection ID
     byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
-
+    /** TELEPORT **/
+    float   Distance;
     /** NPL Hack **/
     int     NPLTime;
     int     HackTime;
@@ -50,6 +61,7 @@ public:
     ~RCAntCheat();  // Деструктор класса (обязательно)
 
     char errmsg[64];
+    struct  track_inf TrackInf;             // Where PitBox and Shop
     //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank

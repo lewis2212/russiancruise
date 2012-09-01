@@ -61,7 +61,6 @@ public:
     ~RCBank();
 
     char errmsg[64];
-    CInsim  *insim;
     RCMessage *msg;
 
 

@@ -69,7 +69,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                 if (piz->players[i].WorkAccept != 0)
                 {
                     piz->btn_work(&piz->players[i]);
-                    piz->btn_destination(&piz->players[i]);
+                    piz->btn_information(piz->players[i].UCID,piz->players[i].WorkDest);
                 }
 
 
@@ -485,7 +485,7 @@ void RCPizza::done(struct PizzaPlayer *splayer)
         splayer->WorkCountDone ++;
         send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4300));
         send_bfn(splayer->UCID,210);
-        send_bfn(splayer->UCID,211);
+        btn_information_clear(splayer->UCID);
         splayer->WorkZone =0;
     }
 
@@ -1070,29 +1070,6 @@ void RCPizza::btn_work (struct PizzaPlayer *splayer)
 
 }
 
-void RCPizza::btn_destination (struct PizzaPlayer *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 211;
-    pack.BStyle = 32;
-    pack.L = 85;
-    pack.T = 15;
-    pack.W = 50;
-    pack.H = 4;
-
-    strcpy(pack.Text,splayer->WorkDest);
-
-
-    insim->send_packet(&pack,errmsg);
-
-}
 // функции-утилиты
 
 int RCPizza::check_pos(struct PizzaPlayer *splayer)
