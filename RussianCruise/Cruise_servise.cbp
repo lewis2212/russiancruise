@@ -14,6 +14,7 @@
 				<Option parameters="CruiseS1 comsole" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++0x" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -31,13 +32,16 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
 			<Add option="-Wno-parentheses" />
+			<Add option="-static" />
+			<Add option="-static-libgcc" />
 			<Add directory="src" />
 		</Compiler>
 		<Linker>
 			<Add option="-l wsock32" />
+			<Add option="-static" />
+			<Add option="-static-libgcc" />
 			<Add library=".\addons\pthread\lib\x86\libpthreadGC2.a" />
 			<Add directory="include" />
 		</Linker>

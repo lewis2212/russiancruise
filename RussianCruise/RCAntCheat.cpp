@@ -136,29 +136,38 @@ void RCAntCheat::insim_mci ()
             if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
             {
                 /** DO SOME CODE **/
-                if ((players[j].InPit == false) and  (players[j].ReadyForMCI == true))
-                {
-                    int d = (Distance(pack_mci->Info[i].X,
-                                     pack_mci->Info[i].Y,
-                                     players[j].Info.X,
-                                     players[j].Info.Y))/65536;
 
-                    if (d > 70)
+                    int X = pack_mci->Info[i].X/65536;
+                    int Y = pack_mci->Info[i].Y/65536;
+
+                    int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
+
+                    int lastX = players[j].Info.X;
+                    int lastY = players[j].Info.Y;
+
+                    int lastSpeed = ((int)players[j].Info.Speed*360)/(32768);
+
+                    float d = Distance(X, Y, lastX, lastY);
+
+                    players[j].Distance += d;
+
+                    if (Check_Pos(TrackInf.PitCount,TrackInf.XPit,TrackInf.YPit,X,Y))
                     {
+                        players[j].Distance = 0;
+                    }
+
+                    if (players[j].Distance > 200)
+                    {
+                         players[j].Distance -= 200;
+
                         char Text[64];
-                        sprintf(Text, "%s is using teleport", players[i].UName);
+                        sprintf(Text, "!%s is using teleport", players[i].UName);
                         //send_mtc(players[i].UCID,"^1Hack detect");
                         //send_mst(Text);
                     }
 
-                }
-                else
-                {
-                    players[j].InPit = false;
-                }
 
-                players[j].Info.X = pack_mci->Info[i].X;
-                players[j].Info.Y = pack_mci->Info[i].Y;
+                    memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(struct CompCar));
 
                 /** NOTE: don't use break **/
             } // if pack_mci->Info[i].PLID == players[j].PLID
@@ -176,6 +185,32 @@ void RCAntCheat::insim_mso ()
     if (pack_mso->UCID == 0)
     {
         //cout << "(Chat message by host: " << pack_mso->Msg + ((unsigned char)pack_mso->TextStart) << ")" << endl;
+        if (pack_mso->UserType == MSO_SYSTEM)
+        {
+            char msg[128];
+            strcpy(msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+            if (strstr(msg,"vote for")== NULL)
+                return;
+
+            char * user = strtok (msg," ");
+
+            if (!user)
+                return;
+
+            for (int i=0; i<MAX_PLAYERS;i++ )
+            {
+                if (strcmp(user,players[i].PName)==0)
+                {
+                    sprintf(msg,"/kick %s",players[i].UName);
+                    send_mst(msg);
+                    return;
+                }
+            }
+
+            return;
+
+        }
+
         return;
 
     }

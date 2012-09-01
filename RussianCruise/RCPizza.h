@@ -129,9 +129,8 @@ public:
     void insim_mci();
     void insim_mso();
 
-
     void btn_work (struct PizzaPlayer *splayer);
-    void btn_destination(struct PizzaPlayer *splayer);
+
 
     // Функции-утилиты
     int check_pos (struct PizzaPlayer *splayer); //+
