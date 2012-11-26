@@ -62,9 +62,6 @@ struct TaxiPlayer
 
     int		PassStress; // from 0 to 1000
     int		StressOverCount;
-
-
-    byte 	Start;
 };
 
 
@@ -79,7 +76,6 @@ private:
     time_t  acctime;
     int     accept_time;
     int     NumP;
-    char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
     int		DialContCount;
     char 	Dialog_Cont[11][128];
@@ -115,8 +111,8 @@ private:
 
 
     struct  Taxi_points *Points; // Рабочая строчка
-    struct  Taxi_points PointsAdd[256]; //Для добавления точек
-
+    struct  Taxi_points PointsAdd[2048]; //Для добавления точек
+    bool    StartPointsAdd;
 
     struct  place zone;
     struct  TaxiPlayer players[32];     // Структура игроков

@@ -216,7 +216,7 @@ bool RCLight::SetLight3(byte UCID,bool Key)
     }
 }
 
-int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
+int RCLight::init(const char *dir, void *CInSim, void *Message)
 {
     //cout << "Init Streets" << endl;
     IfInited = false;
@@ -237,12 +237,12 @@ int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
         return -1;
     }
 
-    dl = (RCDL *)RCDLic;
+   /* dl = (RCDL *)RCDLic;
     if(!dl)
     {
         printf ("Can't struct RCDL class");
         return -1;
-    }
+    }*/
 
     IfInited = true;
 
@@ -253,7 +253,7 @@ int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
 void RCLight::readconfig(const char *Track)
 {
     //cout << "Init Streets" << endl;
-
+    strcpy(TrackName, Track);
     char file[255];
     sprintf(file,"%sdata\\RCLight\\tracks\\%s.txt",RootDir,Track);
 
@@ -445,23 +445,6 @@ void RCLight::insim_mci ()
                         for (int f=190; f < 203; f++)
                             send_bfn(players[j].UCID,f);
 
-
-
-
-                        //send_mst(Text);
-
-                       /* if ((players[j].Light == 1) and (strcmp("^1•",signal1)==0))
-                        {
-                            if (S > 10)
-                            dl->RemSkill(players[j].UCID);
-                        }
-
-                        if ((players[j].Light == 2) and (strcmp("^1•",signal11)==0))
-                        {
-                            if (S > 10)
-                            dl->RemSkill(players[j].UCID);
-                        }*/
-
                          players[j].Light = 0;
                         //out << "clear svetofor" << endl;
                     }
@@ -474,72 +457,75 @@ void RCLight::insim_mci ()
                 /**  steets **/
 
                  /** pit wrong route **/
-
-                int pit1x[10] = {210,200,190,200};
-                int pit1y[10] = {233,230,277,281};
-
-                int pit2x[10] = {242,231,234,245};
-                int pit2y[10] = {-71,-69,-36,-36};
-
-
-
-				//printf ("test wrong route\n");
-                if (Check_Pos(4,pit1x,pit1y,X,Y))
+                if (strstr(TrackName,"SO4X"))
                 {
-                	 //send_mst("in zone");
-                    if( (H < 190+90) and (H > 190-90) )
-					{
-						if (players[j].WrongWay == 1)
-						{
-							players[j].WrongWay =0;
-							send_bfn(players[j].UCID,203);
-							send_bfn(players[j].UCID,204);
-						}
-					}
+                    int pit1x[10] = {210,200,190,200};
+                    int pit1y[10] = {233,230,277,281};
+
+                    int pit2x[10] = {242,231,234,245};
+                    int pit2y[10] = {-71,-69,-36,-36};
+
+
+
+                    //printf ("test wrong route\n");
+                    if (Check_Pos(4,pit1x,pit1y,X,Y))
+                    {
+                         //send_mst("in zone");
+                        if( (H < 190+90) and (H > 190-90) )
+                        {
+                            if (players[j].WrongWay == 1)
+                            {
+                                players[j].WrongWay =0;
+                                send_bfn(players[j].UCID,203);
+                                send_bfn(players[j].UCID,204);
+                            }
+                        }
+                        else
+                        {
+                            if (players[j].WrongWay == 0)
+                            players[j].WrongWay =1;
+                            btn_wrong_way(players[j].UCID);
+                            //if (S > 10)
+                                //dl->RemSkill(players[j].UCID);
+
+
+                           // send_mst("wrong way");
+                        }
+                    }
+                    else if (Check_Pos(6,pit2x,pit2y,X,Y))
+                    {
+                         //send_mst("in zone");
+                        if( (H < 190+90) and (H > 190-90) )
+                        {
+                            if (players[j].WrongWay == 1)
+                            {
+                                players[j].WrongWay =0;
+                                send_bfn(players[j].UCID,203);
+                                send_bfn(players[j].UCID,204);
+                            }
+                        }
+                        else
+                        {
+                            if (players[j].WrongWay == 0)
+                            players[j].WrongWay =1;
+                            btn_wrong_way(players[j].UCID);
+                            //if (S > 10)
+                                //dl->RemSkill(players[j].UCID);
+
+                           // send_mst("wrong way");
+                        }
+                    }
                     else
                     {
-                    	if (players[j].WrongWay == 0)
-                    	players[j].WrongWay =1;
-                        btn_wrong_way(players[j].UCID);
-                        if (S > 10)
-                            dl->RemSkill(players[j].UCID);
-
-
-                       // send_mst("wrong way");
+                        if (players[j].WrongWay == 1)
+                        {
+                            players[j].WrongWay =0;
+                            send_bfn(players[j].UCID,203);
+                            send_bfn(players[j].UCID,204);
+                        }
                     }
-                }
-                else if (Check_Pos(6,pit2x,pit2y,X,Y))
-                {
-                	 //send_mst("in zone");
-                    if( (H < 190+90) and (H > 190-90) )
-					{
-						if (players[j].WrongWay == 1)
-						{
-							players[j].WrongWay =0;
-							send_bfn(players[j].UCID,203);
-							send_bfn(players[j].UCID,204);
-						}
-					}
-                    else
-                    {
-                    	if (players[j].WrongWay == 0)
-                    	players[j].WrongWay =1;
-                        btn_wrong_way(players[j].UCID);
-                        if (S > 10)
-                            dl->RemSkill(players[j].UCID);
 
-                       // send_mst("wrong way");
-                    }
-                }
-                else
-                {
-                	if (players[j].WrongWay == 1)
-                	{
-                		players[j].WrongWay =0;
-                		send_bfn(players[j].UCID,203);
-                		send_bfn(players[j].UCID,204);
-                	}
-                }
+                }// if SO4X
 
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }

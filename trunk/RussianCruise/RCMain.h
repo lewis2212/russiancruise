@@ -156,35 +156,15 @@ struct track_info
     int     YShop[10];
 };
 
-struct CompCar2 // Car info in 28 bytes - there is an array of these in the MCI (below)
-{
-    int		X;			// X map (65536 = 1 metre)
-    int		Y;			// Y map (65536 = 1 metre)
-    int		Z;			// Z alt (65536 = 1 metre)
-    int		X2;			// X map (65536 = 1 metre)
-    int		Y2;			// Y map (65536 = 1 metre)
-    int		Z2;			// Z alt (65536 = 1 metre)
-    word	Speed;		// speed (32768 = 100 m/s)
-};
-
-
 struct player
 {
-    struct  CompCar2 Info;
+    struct CompCar Info;
     struct user_car cars[MAX_CARS];
     struct user_fine fines[MAX_FINES];
 
-    int     str_count;                          // Count of streets
-    byte    StreetNum;
-
-
-
-    //char    GetMessage[20000][64];    // GetMessages !!!!!!!!!!!!!!!!!
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    //char    Cars[256];             // Avalible Cars
     char    CName[4];              // Car Name
-    char    SName[16];             // Car Skin Name
     int     CTune;                 // Car Tuning
     byte    SetF;
     byte    H_TRes;
@@ -193,9 +173,9 @@ struct player
     byte    BID;
     byte    BID2;
     byte    bfn;
-    //float   cash;       // Деньги
     float   Distance;
     byte    Zone;
+    bool    Pitlane;
     byte    Shop; // NO DELETE!!!!
     int     Action;
     /*** bonus ***/
@@ -216,9 +196,6 @@ struct player
     char    PogonyaReason[64];
     int     StopTime;
     byte    Penalty;        // Если превысил скорость в питах
-    /** Energy **/
-    //int     Energy; // Energy xD
-    //time_t  EnergyTime;
     /** Flood **/
     char    Msg[96];
     int     FloodCount;

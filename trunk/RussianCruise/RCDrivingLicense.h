@@ -25,9 +25,9 @@ struct DLPlayer
     char    PName[24];             // Player name
     byte    UCID;                  // Connection ID
     byte    PLID;                  // PLayer ID
-    u_int     LVL;
-    u_int     Skill;
-    byte    mcicount;
+    u_int   LVL;
+    u_int   Skill;
+    u_int   mcicount;
     bool 	Lock;
 };
 
@@ -52,13 +52,8 @@ private:
     void insim_mso();
     void insim_con();
 
-    //
-
     void btn_dl(struct DLPlayer *splayer);
 
-
-
-    // Функции-утилиты
     int check_pos (struct BankPlayer *splayer); //+
 
 public:
@@ -66,7 +61,7 @@ public:
     ~RCDL();
 
     //
-    void save(byte UCID);
+    void    save(byte UCID);
 
     int     GetLVL(byte UCID);
     int     GetSkill(byte UCID);
@@ -76,9 +71,9 @@ public:
     bool    Unlock(byte UCID);
     bool    Islocked(byte UCID);
 
-    byte inited;
+    byte    inited;
 
-    void insim_mci();
+    void    insim_mci();
 
     struct  DLPlayer players[32];     // Array of players
     // Основные функции класса

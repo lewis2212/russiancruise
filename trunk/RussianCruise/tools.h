@@ -20,8 +20,10 @@ struct place
     struct  square point[40]; // Destination points. See Bellow
 };
 
-bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
+namespace tools {
 
-int Distance (int X, int Y, int X1, int Y1);
+    bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
+    float Distance (int X, int Y, int X1, int Y1);
 
+}
 #endif

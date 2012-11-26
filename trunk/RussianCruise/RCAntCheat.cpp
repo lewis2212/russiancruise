@@ -42,49 +42,7 @@ int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void 
 
     return 0;
 }
-/*
-void RCAntCheat::next_packet()
-{
-    switch (insim->peek_packet())
-    {
-    case ISP_NPL:
-        insim_npl();
-        break;
 
-    case ISP_NCN:
-        insim_ncn();
-        break;
-
-    case ISP_CNL:
-        insim_cnl();
-        break;
-
-    case ISP_PLL:
-        insim_pll();
-        break;
-
-    case ISP_PLP:
-        insim_plp();
-        break;
-
-    case ISP_CPR:
-        insim_crp();
-        break;
-
-    case ISP_MSO:
-        insim_mso();
-        break;
-
-    case ISP_PLA:
-        insim_pla();
-        break;
-    case ISP_REO:
-        insim_reo();
-        break;
-
-    }
-}
-*/
 void RCAntCheat::insim_cnl ()
 {
     int i;
@@ -142,6 +100,19 @@ void RCAntCheat::insim_mci ()
 
                     int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
+                    int lastX = players[j].Info.X/65536;
+                    int lastY = players[j].Info.Y/65536;
+
+                    int lastSpeed = ((int)players[j].Info.Speed*360)/(32768);
+
+                    float d = Distance(X, Y, lastX, lastY);
+
+                    if (Check_Pos(TrackInf.PitCount,TrackInf.XPit,TrackInf.YPit,X,Y))
+                    int X = pack_mci->Info[i].X/65536;
+                    int Y = pack_mci->Info[i].Y/65536;
+
+                    int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
+
                     int lastX = players[j].Info.X;
                     int lastY = players[j].Info.Y;
 
@@ -153,7 +124,16 @@ void RCAntCheat::insim_mci ()
 
                     if (Check_Pos(TrackInf.PitCount,TrackInf.XPit,TrackInf.YPit,X,Y))
                     {
-                        players[j].Distance = 0;
+<<<<<<< .mine                        d = 0;
+                    }
+
+                    if (d > 500)
+                    {
+                        //char Text[64];
+                        //sprintf(Text, "/kick %s", players[j].UName);
+                        //btn_information(players[j].UCID,Text);
+                        //send_mtc(players[j].UCID,"^1Hack detect");
+=======                        players[j].Distance = 0;
                     }
 
                     if (players[j].Distance > 200)
@@ -163,7 +143,15 @@ void RCAntCheat::insim_mci ()
                         char Text[64];
                         sprintf(Text, "!%s is using teleport", players[i].UName);
                         //send_mtc(players[i].UCID,"^1Hack detect");
-                        //send_mst(Text);
+>>>>>>> .theirs                        //send_mst(Text);
+
+                        SYSTEMTIME sm;
+                        GetLocalTime(&sm);
+                        char log[MAX_PATH];
+                        sprintf(log,"%slogs\\cop\\teleport(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+                        //ofstream readf (log,ios::app);
+                        //readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[j].UName << " was TP to " << d << "metres" << endl;
+                        //readf.close();
                     }
 
 

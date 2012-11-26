@@ -1,4 +1,4 @@
-#include "main.h"
+#include "RCMain.h"
 #include "version.h"
 #include "tools.h"
 
@@ -227,91 +227,7 @@ void save_user_fines (struct player *splayer)
 
     writef.close();
 }
-/**
-void save_user (struct player *splayer)
-{
-    out <<splayer->UName << " save user_info" << endl;
 
-    char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"data\\users\\");
-    strcat(file,splayer->UName);
-    strcat(file,".txt");
-
-    ofstream writef (file,ios::out);
-    writef << 1 << endl;
-    writef << splayer->cash << ";"
-    // << splayer->Energy << ";"
-    << splayer->Cars << ";"
-    << splayer->Lang << ";"
-    << endl;
-    writef.close();
-
-    save_user_cars(splayer);
-    save_user_fines(splayer);
-}
-**/
-/**
-void read_user (struct player *splayer)
-{
-    char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"data\\users\\");
-    strcat(file,splayer->UName);
-    strcat(file,".txt");
-
-    ifstream readf (file,ios::in);
-    char key[2];
-    readf.getline(key,2);
-    if (atoi(key) > 0)
-    {
-        char data[128];
-        readf.getline(data,128);
-        int L2 = strlen(data);
-        char *cash;
-        char cashf[24];
-        char *energy;
-        char *car;
-        char *lang;
-
-        cash = strtok(data,";");
-        energy = strtok(NULL,";");
-        car = strtok(NULL,";");
-
-        int L = strlen(cash) + strlen(energy) + strlen(car) + 3;
-        //out << "L = " << L << "L2 = " << L2 << endl;
-        if (L == L2)
-            lang="rus";
-        else
-            lang = strtok(NULL,";");
-
-
-        //memcpy(&cashf,&cash,strlen(cash));
-        strcpy(cashf,cash);
-        splayer->cash = atof(cashf);
-        //splayer->Energy = atoi(energy);
-        strcpy(splayer->Cars,car);
-        strcpy(splayer->Lang,lang);
-    }
-    else
-    {
-        splayer->cash = 1000;
-        //splayer->Energy = 10000;
-        strcpy(splayer->Cars,"XFG ");
-        strcpy(splayer->Lang,"rus");
-
-
-        save_user(splayer);
-        save_user_cars(splayer);
-        save_user_fines(splayer);
-    }
-    if (strcmp(splayer->Lang,"eng") == 0)
-    {
-        splayer->lang_id = 1;
-    }
-    readf.close();
-}
-**/
 void read_user_cars(struct player *splayer)
 {
     char file[255];
@@ -361,11 +277,11 @@ void read_user_cars(struct player *splayer)
 
                 for (int c=0; c<MAX_CARS; c++)
                 {
-                	if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
-                	{
-                		splayer->PLC += ginfo.car[c].PLC;
-                		break;
-                	}
+                    if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
+                    {
+                        splayer->PLC += ginfo.car[c].PLC;
+                        break;
+                    }
 
                 }
 
@@ -379,14 +295,14 @@ void read_user_cars(struct player *splayer)
             splayer->cars[i].dist = 0;
             send_mtc(splayer->UCID,"^C^1| ^7 Вам сделан подарок в виде автомобиля ^2UF1");
             for (int c=0; c<MAX_CARS; c++)
+            {
+                if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
                 {
-                	if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
-                	{
-                		splayer->PLC += ginfo.car[c].PLC;
-                		break;
-                	}
-
+                    splayer->PLC += ginfo.car[c].PLC;
+                    break;
                 }
+
+            }
         }
 
         send_plc(splayer->UCID,splayer->PLC);
@@ -694,7 +610,6 @@ void btn_info (struct player *splayer, int b_type)
     /* Tabs */
 
 
-
     if (b_type == 1)
     {
         for (int i=2; i<9; i++)
@@ -974,8 +889,8 @@ void case_btc ()
                     pack_btn.UCID = ginfo.players[i].UCID;              // UCID of the player that will receive the button
                     pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
                     pack_btn.TypeIn = 16;
-                    pack_btn.L = 147;
-                    pack_btn.T = 1;
+                    pack_btn.L = 49;
+                    pack_btn.T = 175;
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 36;
@@ -1047,6 +962,7 @@ void case_btc ()
                             strcat(Text,msg.GetMessage(ginfo.players[g].UCID,1007));
                             strcat(Text,ginfo.players[g].PName);
                             send_mst(Text);
+                            nrg.Lock(ginfo.players[g].UCID);
                         }
                         break;
                     }
@@ -1079,6 +995,7 @@ void case_btc ()
                             strcat(Text,msg.GetMessage(ginfo.players[g].UCID,1008));
                             strcat(Text,ginfo.players[g].PName);
                             send_mst(Text);
+                            nrg.Unlock(ginfo.players[g].UCID);
                         }
                         break;
                     }
@@ -1316,7 +1233,7 @@ void case_btt ()
     GetLocalTime(&sm);
 
     char send_c[255];
-    sprintf(send_c,"%slogs\\sends\\send(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+    sprintf(send_c,"%slogs\\sends\\send.txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
     char fine_c[255];
     sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
 
@@ -1614,15 +1531,12 @@ void case_cpr ()
 }
 
 
-
-
 void case_flg ()
 {
     int i;
 
     struct IS_FLG *pack_flg = (struct IS_FLG*)insim.get_packet();
 
-    // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
         if (ginfo.players[i].PLID == pack_flg->PLID)
@@ -1631,34 +1545,22 @@ void case_flg ()
         }
     }
 }
-/**
+
 void case_lap ()
 {
-    out << "IS_LAP\n";
+
     struct IS_LAP *pack_lap = (struct IS_LAP*)insim.get_packet();
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (ginfo.players[i].PLID == pack_lap->PLID)
         {
-
-
-            int bonus = 100+(50*(pack_lap->LapsDone-1));
-            bank.players[i].Cash += bonus;
-            char bonus_c[64];
-            strcpy(bonus_c,msg.GetMessage(ginfo.players[i].UCID,1500));
-            char bonus_ic[5];
-            itoa(bonus,bonus_ic,10);
-            strcat(bonus_c,bonus_ic);
-            strcat(bonus_c," ^7RUR.");
-            send_mtc(ginfo.players[i].UCID,bonus_c);
-
             break;
         }
 
     }
 }
-**/
+
 void case_mci ()
 {
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim.udp_get_packet();
@@ -1678,44 +1580,38 @@ void case_mci ()
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
-                int Z = pack_mci->Info[i].Z/65536;
 
                 int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
 
 
-                int X1 = ginfo.players[j].Info.X2/65536;
-                int Y1 = ginfo.players[j].Info.Y2/65536;
-                int Z1 = ginfo.players[j].Info.Z2/65536;
+                int LastX = ginfo.players[j].Info.X/65536;
+                int LastY = ginfo.players[j].Info.Y/65536;
 
-                if (X1==0 and Y1==0 and Z1==0)
+                if (LastX==0 and LastY==0)
                 {
-                    X1=X;
-                    Y1=Y;
-                    Z1=Z;
-                    ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
-                    ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
-                    ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
-
-                    ginfo.players[j].StreetNum = 250;
+                    LastX=X;
+                    LastY=Y;
                 }
 
-                float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
+                float Dist = tools::Distance(X,Y,LastX,LastY);
 
                 if ((abs((int)Dist) > 10) and (S>30))
                 {
-                    ginfo.players[j].Distance += (int)Dist;
+                    ginfo.players[j].Distance += Dist;
                     /** Bonus **/
                     ginfo.players[j].Bonus_dist += Dist;
 
-                    if (S<150)
-                        //bank.players[j].Cash += abs((int)Dist)/10;
-                        bank.AddCash(ginfo.players[j].UCID,abs((int)Dist)/10);
-                    //bank.BankFond -= abs((int)Dist)/10;
+                    //начисляем деньги только до 20 уровня
+                    if(dl.GetLVL(ginfo.players[j].UCID) < 20)
+                    {
+                        if (S<150)
+                        {
+                            bank.AddCash(ginfo.players[j].UCID,abs((int)Dist)/10);
+                            bank.RemFrBank(abs((int)Dist)/100);
+                        }
 
-                    ginfo.players[j].Info.X2 = pack_mci->Info[i].X;
-                    ginfo.players[j].Info.Y2 = pack_mci->Info[i].Y;
-                    ginfo.players[j].Info.Z2 = pack_mci->Info[i].Z;
+                    }
                 }
 
                 /** Bonus **/
@@ -1745,11 +1641,11 @@ void case_mci ()
                 /** Zones (PitSave, shop, etc) **/
 
 
-                if (Check_Pos(ginfo.TrackInf.PitCount,ginfo.TrackInf.XPit,ginfo.TrackInf.YPit,X,Y))
+                if (ginfo.players[j].Pitlane)
                 {
                     ginfo.players[j].Zone = 1;
                 }
-                else if (Check_Pos(ginfo.TrackInf.ShopCount,ginfo.TrackInf.XShop,ginfo.TrackInf.YShop,X,Y))
+                else if (tools::Check_Pos(ginfo.TrackInf.ShopCount,ginfo.TrackInf.XShop,ginfo.TrackInf.YShop,X,Y))
                 {
                     ginfo.players[j].Zone = 2;
                 }
@@ -1758,13 +1654,14 @@ void case_mci ()
                     ginfo.players[j].Zone = 0;
                 }
 
-                ginfo.players[j].Info.X = pack_mci->Info[i].X;
-                ginfo.players[j].Info.Y = pack_mci->Info[i].Y;
-                ginfo.players[j].Info.Z = pack_mci->Info[i].Z;
+                if (ginfo.players[j].Svetofor == 1)
+                {
+                    char TEST[64];
+                    sprintf(TEST,"X=%d Y=%d H=%d",X,Y,pack_mci->Info[i].Heading/182);
+                    pizza.btn_information(ginfo.players[j].UCID,TEST);
+                }
+                memcpy(&ginfo.players[j].Info, &pack_mci->Info[i],sizeof(CompCar));
 
-                ginfo.players[j].Info.Speed = pack_mci->Info[i].Speed;
-
-                //btn_svetofor3(&ginfo.players[i]);
 
             } // if pack_mci->Info[i].PLID == ginfo.players[j].PLID
         }
@@ -1785,6 +1682,7 @@ void case_mci_cop ()
 
             {
                 int S = ginfo.players[j].Info.Speed*360/32768;
+                /** автоотключение радара **/
                 if (S < 5)
                     ginfo.players[j].StopTime ++;
                 else
@@ -1826,6 +1724,7 @@ void case_mci_cop ()
                                     {
                                         //send_mst("/rcm ^C^1ВЫ АРЕСТОВАНЫ");
                                         ginfo.players[g].Pogonya = 2;
+                                        nrg.Unlock(ginfo.players[g].UCID);
                                         strcpy(ginfo.players[g].PogonyaReason,msg.GetMessage(ginfo.players[g].UCID,1701));
                                         char Text[96];
                                         strcpy(Text,"/msg ^2| ");
@@ -1872,6 +1771,7 @@ void case_mci_cop ()
                                             strcat(Text,msg.GetMessage(ginfo.players[g].UCID,1007));
                                             strcat(Text,ginfo.players[g].PName);
                                             send_mst(Text);
+                                            nrg.Lock(ginfo.players[g].UCID);
                                         }
                                     }
                                 }
@@ -1889,10 +1789,14 @@ void case_mci_cop ()
                                 {
                                     ginfo.players[g].sirenaOnOff = 0;
                                 }
+                                ginfo.players[j].sirenaKey = 1;
+                                ginfo.players[j].sirenaOnOff = 1;
+                                ginfo.players[j].sirenaSize = 0;
                             }
                             else
                             {
                                 ginfo.players[g].sirenaOnOff = 0;
+                                ginfo.players[j].sirenaOnOff = 0;
                             }
 
                         }
@@ -1908,6 +1812,7 @@ void case_mci_cop ()
 
                 if ( ginfo.players[j].sirenaOnOff == 1)
                     btn_sirena(&ginfo.players[j]);
+
 
                 if ((ginfo.players[j].Pogonya == 0) and (strlen(ginfo.players[j].PogonyaReason) > 1))
                 {
@@ -2536,7 +2441,7 @@ void case_mso ()
         {
             if (strcmp(ginfo.players[i].cars[k].car,ginfo.car[j].car) == 0)
             {
-				char msg[64];
+                char msg[64];
                 sprintf(msg,"^C^2|^7 Вы продали %s",id);
                 send_mtc(ginfo.players[i].UCID,msg);
 
@@ -2611,6 +2516,19 @@ void case_mso ()
 
         readconfigs();
     }
+
+    if (strncmp(Msg, "!debug", 7) == 0)
+    {
+        out << ginfo.players[i].UName << " send !reload" << endl;
+        if (ginfo.players[i].Svetofor == 0)
+            ginfo.players[i].Svetofor = 1;
+        else
+        {
+            pizza.btn_information_clear(ginfo.players[i].UCID);
+            ginfo.players[i].Svetofor = 0;
+        }
+
+    }
     //!evo
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
     {
@@ -2645,7 +2563,7 @@ void case_mso ()
     {
         ginfo.players[i].Action = 1;
 
-        for(int h=0; h<240; h++)
+        for(int h=0; h<50; h++)
         {
             send_bfn(ginfo.players[i].UCID,h);
         }
@@ -2657,10 +2575,11 @@ void case_mso ()
         pack_btn.ReqI = ginfo.players[i].UCID;              // Must be non-zero, I'll just use UCID
         pack_btn.UCID = ginfo.players[i].UCID;              // UCID of the player that will receive the button
         pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
-        pack_btn.L = 172;
-        pack_btn.T = 1;
+        pack_btn.L = 1;
+        pack_btn.T = 191;
         pack_btn.W = 24;
         pack_btn.H = 4;
+        int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
         {
             if (ginfo.players[j].UCID!=0 and ginfo.players[j].cop == 0)
@@ -2668,12 +2587,19 @@ void case_mso ()
                 pack_btn.ClickID = ginfo.players[j].BID;
                 strcpy(pack_btn.Text, ginfo.players[j].PName);
                 insim.send_packet(&pack_btn);
-                pack_btn.T += 4;
+                pack_btn.T -= 4;
                 //Sleep(100);
+                if (col == 16)
+                {
+                    pack_btn.L += 24;
+                    pack_btn.T = 191;
+                }
+                col++;
             }
 
         }
         pack_btn.ClickID = 34;
+        pack_btn.T = 195;
         strcpy(pack_btn.Text,msg.GetMessage(ginfo.players[i].UCID,2003));
         insim.send_packet(&pack_btn);
 
@@ -2726,8 +2652,8 @@ void case_mso ()
             {
                 send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2005));
 
-                bank.RemCash(ginfo.players[i].UCID,1000);
-                bank.AddToBank(1000);
+                bank.RemCash(ginfo.players[i].UCID,5000);
+                bank.AddToBank(5000);
             }
 
         }
@@ -2802,7 +2728,6 @@ void case_mso_cop ()
 
     if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^Cштрафы", 9) == 0 ))
     {
-        out << ginfo.players[i].UName << " send !fines" << endl;
         help_cmds(&ginfo.players[i],3);
     }
 
@@ -2840,9 +2765,22 @@ void case_mso_cop ()
             {
                 ginfo.players[i].fines[j].fine_id = 0;
                 ginfo.players[i].fines[j].fine_date = 0;
+
                 bank.RemCash(ginfo.players[i].UCID,ginfo.fines[id_i].cash);
-                bank.AddToBank(ginfo.fines[id_i].cash);
+
+                int cop = 0;
+                for (int k=0; k<MAX_PLAYERS; k++)
+                {
+                    if (ginfo.players[k].cop == 1)
+                    {
+                        bank.AddCash(ginfo.players[k].UCID,(ginfo.fines[id_i].cash)*0.05);
+                        cop++;
+                    }
+                }
+
+                bank.AddToBank((ginfo.fines[id_i].cash)-((ginfo.fines[id_i].cash)*0.05)*cop);
                 send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2106));
+                dl.RemSkill(ginfo.players[i].UCID);
                 break;
             }
             if (j == MAX_FINES)
@@ -2851,6 +2789,102 @@ void case_mso_cop ()
             }
         }
 
+    }
+
+    if (strncmp(Msg, "!kick", 4) == 0 )
+    {
+        char user[16];
+        strcpy(user,Msg+5);
+
+        if(strlen(user)>0)
+        {
+            if (ginfo.players[i].cop == 1)
+            {
+                char Kick[64];
+                sprintf(Kick,"/kick %s",user);
+                send_mst(Kick);
+
+                SYSTEMTIME sm;
+                GetLocalTime(&sm);
+                char log[MAX_PATH];
+                sprintf(log,"%slogs\\cop\\kick(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+                ofstream readf (log,ios::app);
+                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo.players[i].UName << " kick " << user << endl;
+                readf.close();
+            }
+        }
+    }
+
+    /** Привязываю на чeбуратора **/
+    if ((strcmp(ginfo.players[i].UName,"buratino")==0)or (strcmp(ginfo.players[i].UName,"denis-takumi")==0))
+    {
+        char file[255];
+        sprintf(file,"%smisc\\cops.txt",RootDir);
+        FILE *f;
+        char line[32];
+        if (strncmp(Msg, "!cop_add", 8) == 0 )
+        {
+            char param[16];
+            strcpy(param,Msg+9);
+            printf("%s\n",param);
+            if(strlen(param)>0)
+            {
+                f= fopen(file,"a");
+                fputs("\n",f);
+                fputs(param,f);
+                fclose(f);
+            }
+        }
+
+        if (strncmp(Msg, "!cop_del", 8) == 0 )
+        {
+            char param[16];
+            strcpy(param,Msg+9);
+            printf("%s\n",param);
+            if(strlen(param)>0)
+            {
+                char cops[40][32];
+                memset(&cops,0,40*32);
+
+                f = fopen(file,"r+");
+                int j = 0;
+                while (!feof(f))
+                {
+                    memset(&line,0,32);
+                    fgets(line,32,f);
+                    if (strlen(line) >0)
+                        strncpy(cops[j++],line,32);
+                }
+                fseek(f,0,SEEK_SET);
+                for(j=0; j<40; j++)
+                {
+                    printf("%s\n",cops[j]);
+
+                        if (strncmp(cops[j],param,strlen(param)) != 0)
+                        {
+                            fputs(cops[j],f);
+                        }
+
+
+                }
+                fclose(f);
+
+            }
+        }
+        if (strncmp(Msg, "!cop_list", 9) == 0 )
+        {
+            f = fopen(file,"r");
+            while (!feof(f))
+            {
+                memset(&line,0,32);
+                fgets(line,32,f);
+                if (strlen(line) >0)
+                    send_mst(line);
+            }
+            fclose(f);
+
+
+        }
     }
 
 }
@@ -2923,6 +2957,7 @@ void case_npl ()
             // out << "Core.dll: find user " << ginfo.players[i].UName << endl;
             if (pack_npl->PType != 6)
             {
+                memset(&ginfo.players[i].Info,0,sizeof(CompCar));
 
                 if (IfCop(&ginfo.players[i]) == 1)
                 {
@@ -2937,6 +2972,8 @@ void case_npl ()
                     ginfo.players[i].cop = 1;
                     dl.Lock(ginfo.players[i].UCID);
                     nrg.Lock(ginfo.players[i].UCID);
+                    //nrg.Lock(ginfo.players[i].UCID);
+                    lgh.SetLight3(ginfo.players[i].UCID,true);
                 }
 
 
@@ -3108,6 +3145,7 @@ void case_pla ()
         {
             if (pack_pla->Fact == PITLANE_EXIT)
             {
+                ginfo.players[i].Pitlane = false;
                 if (ginfo.players[i].Penalty != 0)
                 {
                     char Text[64];
@@ -3128,13 +3166,16 @@ void case_pla ()
                 {
                     ginfo.players[i].PLID = 0;
                     char Text[48];
-                    strcpy(Text, "/spec ");
-                    strcat (Text, ginfo.players[i].UName);
+                    sprintf(Text, "/pitlane %s",ginfo.players[i].UName);
                     send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,3400));
                     send_mst(Text);
                 }
 
 
+            }
+            else
+            {
+                ginfo.players[i].Pitlane = true;
             }
             break;
         }
@@ -3155,14 +3196,14 @@ void case_pll ()
         if (ginfo.players[i].PLID == pack_pll->PLID)
         {
             ginfo.players[i].PLID = 0;
-            ginfo.players[i].Info.X = 0;
-            ginfo.players[i].Info.Y = 0;
-            ginfo.players[i].Info.Z = 0;
+            memset(&ginfo.players[i].Info,0,sizeof(CompCar));
             ginfo.players[i].Penalty =0;
 
             ginfo.players[i].cop = 0;
             dl.Unlock(ginfo.players[i].UCID);
             nrg.Unlock(ginfo.players[i].UCID);
+            //nrg.Unlock(ginfo.players[i].UCID);
+            lgh.SetLight3(ginfo.players[i].UCID,false);
 
             save_car(&ginfo.players[i]);
 
@@ -3214,6 +3255,9 @@ void case_plp ()
             ginfo.players[i].cop = 0;
             dl.Unlock(ginfo.players[i].UCID);
             nrg.Unlock(ginfo.players[i].UCID);
+            //nrg.Unlock(ginfo.players[i].UCID);
+            lgh.SetLight3(ginfo.players[i].UCID,false);
+
 
             save_car(&ginfo.players[i]);
 
@@ -3383,12 +3427,12 @@ void read_track()
 
     ifstream readf (file,ios::in);
 
+    memset(&ginfo.TrackInf,0,sizeof(track_info));
 
     while (readf.good())
     {
         char str[128];
         readf.getline(str,128);
-
 
         if (strstr(str,"//")) {}
         if (strlen(str) > 0)
@@ -3398,7 +3442,7 @@ void read_track()
             {
                 readf.getline(str,128);
                 int count = atoi(str);
-                memset(&ginfo.TrackInf,0,sizeof(track_info));
+
                 ginfo.TrackInf.PitCount = count;
 
                 for (int i=0 ; i<count; i++)
@@ -3436,6 +3480,8 @@ void read_track()
     } //while readf.good()
 
     readf.close();
+
+    memcpy(&antcht.TrackInf,&ginfo.TrackInf,sizeof(struct track_info));
 }
 
 
@@ -3552,8 +3598,7 @@ void read_fines()
 int read_cop(struct player *splayer)
 {
     char file[255];
-    strcpy(file,RootDir);
-    strcat(file,"misc\\cops.txt");
+    sprintf(file,"%smisc\\cops.txt",RootDir);
     //strcat(file,"tracks\\.txt");
 
     HANDLE fff;
@@ -3636,101 +3681,6 @@ void read_cfg()
         }
     }
 }
-/**
-void read_lang(struct player *splayer)
-{
-    char file[255];
-    strcpy(file,RootDir);
-    //strcat(file,"misc\\mysql.cfg");
-    strcat(file,"lang\\");
-    strcat(file,splayer->Lang);
-    strcat(file,".txt");
-
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        out << "Can't find " << file << endl;
-        return;
-    }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
-    while (readf.good())
-    {
-        char str[128];
-        readf.getline(str,128);
-        if (strlen(str) > 6)
-        {
-            char * id;
-            char * mesage;
-
-            id = strtok (str,"\"");
-            mesage = strtok (NULL,"\"");
-
-            // out << "id = " << id << "GetMessage = " << mesage << endl;
-
-            //memset(&GetMessage[atoi(id)],0,sizeof(GetMessage));
-            strcpy(msg.GetMessage(splayer->UCID,atoi(id)], mesage);
-
-        }
-    }
-}
-**/
-
-void chek_users1()
-{
-    /* char file[64] = "";
-     strcpy(file,"users.log");
-     ifstream readf (file,ios::in);
-     int i=0;
-     for ( int f=0;f<=ginfo.NUsers;f++)
-     strcpy(ginfo.players2[f].UName,"");
-
-     ginfo.NUsers =0;
-     while (!readf.eof())
-     {
-     readf >> ginfo.players2[i].UName;
-     ginfo.NUsers = i+1;
-     i++;
-     }
-
-     for (int i = 0; i  <= MAX_PLAYERS; i++)
-
-    {
-        for (int j =0; j<= ginfo.NUsers; j++)
-             {
-                 if (ginfo.players[i].UCID !=0 and strcmp(ginfo.players2[j].UName , ginfo.players[i].UName) == 0)
-
-                             {
-                                out <<ginfo.players[i].UName <<endl;
-                                 ginfo.players[i].Mode =1;
-                                 break;
-                             }
-                             else{
-                             ginfo.players[i].Mode =0;
-                             }
-             }
-    }
-
-    for (int g=0; g<MAX_PLAYERS;g++)
-    {
-        if(ginfo.players[g].UCID !=0 and  ginfo.players[g].Mode == 0)
-        {
-        spec(&ginfo.players[g));
-        struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = ginfo.players[g].UCID;
-    strcpy(pack_mtc.Msg,"^C^7Вы не включили программу клиент");
-    insim.send_packet(&pack_mtc);
-
-        }
-    }
-    chek_users =0;*/
-}
 
 /*********************************************/
 
@@ -3752,35 +3702,35 @@ void *thread_mci (void *params)
             //case_mci_svetofor();
             case_mci_cop();
 #ifdef _RC_CHEAT_H
-            antcht.mci();
+            antcht.insim_mci();
 #endif
 
 #ifdef _RC_PIZZA_H
-            pizza.pizza_mci();
+            pizza.insim_mci();
 #endif
 
 #ifdef _RC_ENERGY_H
-            nrg.mci();
+            nrg.insim_mci();
 #endif
 
 #ifdef _RC_STREET_H
             if (street.IfInited)
-                street.street_mci();
+                street.insim_mci();
 #endif
 
 #ifdef _RC_LIGHT_H
             if (lgh.IfInited)
-                lgh.mci();
+                lgh.insim_mci();
 #endif
 
 #ifdef _RC_LEVEL_H
             if (dl.inited == 1)
-                dl.mci();
+                dl.insim_mci();
 #endif
 
 #ifdef _RC_TAXI_H
             if (taxi.inited == 1)
-                taxi.taxi_mci();
+                taxi.insim_mci();
 #endif
 
 
@@ -3818,11 +3768,12 @@ void *thread_btn (void *params)
                     pack.TypeIn = 0;
                     pack.ClickID = 60;
                     pack.BStyle = 32;
-                    pack.L = 172;
-                    pack.T = 130;
-                    pack.W = 24;
+                    pack.L = 73;
+                    pack.T = 191;
+                    pack.W = 50;
                     pack.H = 4;
 
+                    streets StreetInfo;
 
                     for (int j=0; j<MAX_PLAYERS; j++)
                     {
@@ -3831,11 +3782,16 @@ void *thread_btn (void *params)
                             int time2 = ginfo.players[j].WorkTime - time(&stime);
                             int min;
                             int sec;
-                            min = time2/60;
+                            min = (time2/60)%60;
                             sec = time2%60;
-                            sprintf(pack.Text,"%s ^2(^1%d:%d^2)",ginfo.players[j].PName,min,sec);
+
+                            float D = tools::Distance(ginfo.players[i].Info.X,ginfo.players[i].Info.Y,ginfo.players[j].Info.X,ginfo.players[j].Info.Y)/65536;
+
+                            street.CurentStreetInfo(&StreetInfo,ginfo.players[j].UCID);
+
+                            sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo.players[j].PName,StreetInfo.Street,D,min,sec);
                             insim.send_packet(&pack);
-                            pack.T +=4;
+                            pack.T -=4;
                             pack.ClickID ++;
 
                         }
@@ -3893,11 +3849,7 @@ void *thread_work (void *params)
 {
     out << "\tthread \"Work\" started" << endl;
     Sleep(10000);
-    //pizza.init(&pizza,&insim,&msg,&bank,&nrg);
-    //pizza.readconfig(ginfo.Track);
 
-    //int RCPizza_time = time(&stime);
-    //out << RCPizza_time << endl;
 
     while (ok > 0)
     {
@@ -3920,42 +3872,17 @@ void *thread_work (void *params)
                         strcat(Text,msg.GetMessage(ginfo.players[i].UCID,1706));
                         send_mst(Text);
                         ginfo.players[i].Pogonya = 0;
+                        nrg.Unlock(ginfo.players[i].UCID);
+
+                        dl.AddSkill(ginfo.players[i].UCID);
+                        dl.AddSkill(ginfo.players[i].UCID);
+                        dl.AddSkill(ginfo.players[i].UCID);
 
                     }
                 }
 
             }
         } // конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль
-        /*
-                 if ( ginfo_time <= time(&stime))
-                 {
-                srand(time(&stime));
-                int r = rand()%3 + 1;
-                RCPizza_time += 600/(ginfo.NumP+1);
-                //out << r << endl;
-                //out << ginfo_time - time(&stime) << endl;
-
-                for (int i = 0; i<32; i++)
-                {
-
-
-                if ( (ginfo.players[i].UCID !=0) and (ginfo.players[i].WorkType == WK_RCPizza) and (ginfo.players[i].WorkAccept == 0))
-                {
-                out << ginfo.players[i].UName << " accepted\n";
-                send_mtc(ginfo.players[i].UCID,"^C^3| ^7Поступил заказ на пиццу");
-                send_mtc(ginfo.players[i].UCID,"^C^3| ^7Подъедте к пиццерии и отвезите заказ");
-                ginfo.players[i].WorkAccept =1;
-                ginfo.players[i].WorkPlayerAccept =0;
-                ginfo.players[i].WorkZone =0;
-                int worktime = time(&stime);
-                ginfo.players[i].WorkTime = worktime+60*6;
-                 break; // чтобы оповещал только одного игрока
-                }
-
-                }
-                }
-                */
-
 
         Sleep(1000);
     }
@@ -3967,7 +3894,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 {
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
-    sprintf(IS_PRODUCT_NAME,"^3RCruise %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
+    sprintf(IS_PRODUCT_NAME,"^3RC-%d.%d.%d:%d",AutoVersion::RC_MAJOR,AutoVersion::RC_MINOR,AutoVersion::RC_BUILD,AutoVersion::RC_BUILDS_COUNT);
 
     pthread_mutex_init(&RCmutex, NULL);
 
@@ -4539,4 +4466,17 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
 
     return;
 }
+
+class AllPlatforms
+{
+public:
+    int common();
+};
+
+class PlatformA : public AllPlatforms
+{
+public:
+    int specific();
+};
+
 

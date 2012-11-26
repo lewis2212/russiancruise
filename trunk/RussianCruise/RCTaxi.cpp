@@ -500,7 +500,9 @@ void RCTaxi::insim_mci ()
                 }
 */
 
-                if (Check_Pos(4,TX,TY,X,Y))
+                //if (Check_Pos(4,TX,TY,X,Y))
+
+                if(Check_Pos(4,zone.dealX,zone.dealY,X,Y))
                 {
                     //cout << "in work place" << endl;
                     if (players[j].InZone == 0)
@@ -672,7 +674,7 @@ void RCTaxi::insim_mci ()
                 }
 
 
-                 if (players[j].Start == 1)
+                 if (StartPointsAdd == true)
                  {
 
                      bool newPoint = true;
@@ -680,7 +682,7 @@ void RCTaxi::insim_mci ()
                      {
                          if (PointsAdd[f].Id != 0)
                          {
-                             float Dist = sqrt(pow((X-PointsAdd[f].X),2)+pow((Y-PointsAdd[f].Y),2));
+                             float Dist = Distance(X,Y,PointsAdd[f].X,PointsAdd[f].Y);
 
                              if (Dist < 100)
                                  newPoint = false;
@@ -698,7 +700,9 @@ void RCTaxi::insim_mci ()
                                  PointsAdd[f].X = X;
                                  PointsAdd[f].Y = Y;
                                  PointCount ++;
-                                 send_mst("^7Added new point;");
+                                 char MSG[64];
+                                 sprintf(MSG,"^7Added new point [%d]{%d,%d}",PointCount,X,Y);
+                                 send_mst(MSG);
                                  break;
                              }
                          }
@@ -838,9 +842,10 @@ void RCTaxi::insim_mso ()
     if ((strncmp(Message, "!start_points", strlen("!start_points")) == 0 ) and (strncmp(players[i].UName, "denis-takumi", strlen("denis-takumi")) == 0 ))
     {
 
-        if (players[i].Start ==0)
+        if (StartPointsAdd ==0)
         {
-            players[i].Start =1;
+            StartPointsAdd =1;
+            PointCount = 0;
             for (int f=0; f<200; f++)
             {
                 PointsAdd[f].Id = 0;
@@ -848,7 +853,7 @@ void RCTaxi::insim_mso ()
         }
         else
         {
-            players[i].Start =0;
+            StartPointsAdd =0;
 
             ofstream readf("PoInTs.txt",ios::out);
             readf << PointCount << endl;

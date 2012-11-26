@@ -201,7 +201,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                         piz->players[i].WorkTime = worktime+60*6;
                         piz->ShopAccepted = true;
                         break; // чтобы оповещал только одного игрока
-                    } else { cout << " no allowed users for accept\n";}
+                    }
 
                 }
             }
@@ -217,7 +217,6 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 RCPizza::RCPizza()
 {
-
 
 }
 

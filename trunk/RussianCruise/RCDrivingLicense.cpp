@@ -441,29 +441,25 @@ void RCDL::insim_mci()
             {
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
-                int Z = pack_mci->Info[i].Z/65536;
-
-
 
                 int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
                 int X1 = players[j].Info.X/65536;
                 int Y1 = players[j].Info.Y/65536;
-                int Z1 = players[j].Info.Z/65536;
+
 
                 //cout << X1 << endl;
 
-                if (X1==0 and Y1==0 and Z1==0)
+                if (X1==0 and Y1==0)
                 {
                     X1=X;
                     Y1=Y;
-                    Z1=Z;
                     memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
                 }
 
                 //cout << X1 << endl;
 
-                float Skill = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
+                float Skill = Distance(X,Y,X1,Y1);
                 //cout << Skill << endl;
                 if ((abs((int)Skill) > 10) and (S>30))
                 {
@@ -487,17 +483,13 @@ void RCDL::insim_mci()
                 /** buttons **/
 
                 //printf("User:%s LVL=%d \tSkill=%d \n",players[j].UName, players[j].LVL, players[j].Skill);
-                if (players[j].mcicount == 10)
+                if (players[j].mcicount > 10)
                 {
                     btn_dl(&players[j]);
                     players[j].mcicount = 0;
                 }
                 else
-                {
-                    players[j].mcicount ++;
-                }
-
-
+                    players[j].mcicount += 1;
 
             }
         }

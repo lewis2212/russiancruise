@@ -172,7 +172,6 @@ void RCStreet::insim_mci ()
                 for (int g=0; g<StreetNums; g++)
                 {
                     if(Check_Pos(Street[g].PointCount,Street[g].StreetX,Street[g].StreetY,X,Y))
-                        //if (Node >= Street[g].NodeBeg and Node <= Street[g].NodeEnd )
                     {
                         if (players[j].StreetNum != g)
                         {
@@ -275,6 +274,7 @@ void RCStreet::insim_npl()
         if (players[i].UCID == pack_npl->UCID)
         {
             players[i].PLID = pack_npl->PLID;
+            players[i].StreetNum = 250;
         }
     }
 }
