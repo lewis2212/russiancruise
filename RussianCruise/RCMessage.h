@@ -14,35 +14,35 @@
 
 struct MPlayer
 {
-    byte UCID;
-    char UName[24];
-    int LangID;
+	byte UCID;
+	char UName[24];
+	int LangID;
 };
 
 class RCMessage:public RCBaseClass
 {
 private:
 
-    char RootDir[MAX_PATH];
+	char RootDir[MAX_PATH];
 
-    char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
+	char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
 
-    struct MPlayer players[MAX_PLAYERS];
+	struct MPlayer players[MAX_PLAYERS];
 
-    void insim_ncn();
-    void insim_cnl();
-    void insim_mso();
+	void insim_ncn();
+	void insim_cnl();
+	void insim_mso();
 
 public:
-    RCMessage();
-    ~RCMessage();
+	RCMessage();
+	~RCMessage();
 
-    int init(const char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
-    void readconfig(const char *Track);
+	int init(const char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
+	void readconfig(const char *Track);
 
-    void save(byte UCID);
+	void save(byte UCID);
 
-    char* GetMessage(byte UCID, int MsgID);
+	char* GetMessage(byte UCID, int MsgID);
 
 }; // this method is not good but better when old method.
 

@@ -7,8 +7,8 @@
 	<File name="CInsim.h" open="0" top="0" tabpos="0">
 		<Cursor position="3170" topLine="3" />
 	</File>
-	<File name="RCAntCheat.cpp" open="0" top="0" tabpos="21">
-		<Cursor position="4408" topLine="0" />
+	<File name="RCAntCheat.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="2757" topLine="92" />
 	</File>
 	<File name="RCAntCheat.h" open="0" top="0" tabpos="22">
 		<Cursor position="2313" topLine="48" />
@@ -25,7 +25,7 @@
 	<File name="RCBaseClass.h" open="0" top="0" tabpos="11">
 		<Cursor position="1195" topLine="17" />
 	</File>
-	<File name="RCDrivingLicense.cpp" open="1" top="1" tabpos="2">
+	<File name="RCDrivingLicense.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="9584" topLine="450" />
 	</File>
 	<File name="RCDrivingLicense.h" open="1" top="0" tabpos="5">
@@ -41,7 +41,7 @@
 		<Cursor position="13812" topLine="313" />
 	</File>
 	<File name="RCLight.h" open="1" top="0" tabpos="4">
-		<Cursor position="2730" topLine="46" />
+		<Cursor position="2730" topLine="42" />
 	</File>
 	<File name="RCMain.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="997" topLine="33" />
