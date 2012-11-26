@@ -108,23 +108,8 @@ void RCAntCheat::insim_mci ()
                     float d = Distance(X, Y, lastX, lastY);
 
                     if (Check_Pos(TrackInf.PitCount,TrackInf.XPit,TrackInf.YPit,X,Y))
-                    int X = pack_mci->Info[i].X/65536;
-                    int Y = pack_mci->Info[i].Y/65536;
-
-                    int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
-                    int lastX = players[j].Info.X;
-                    int lastY = players[j].Info.Y;
-
-                    int lastSpeed = ((int)players[j].Info.Speed*360)/(32768);
-
-                    float d = Distance(X, Y, lastX, lastY);
-
-                    players[j].Distance += d;
-
-                    if (Check_Pos(TrackInf.PitCount,TrackInf.XPit,TrackInf.YPit,X,Y))
                     {
-<<<<<<< .mine                        d = 0;
+                        d = 0;
                     }
 
                     if (d > 500)
@@ -133,17 +118,7 @@ void RCAntCheat::insim_mci ()
                         //sprintf(Text, "/kick %s", players[j].UName);
                         //btn_information(players[j].UCID,Text);
                         //send_mtc(players[j].UCID,"^1Hack detect");
-=======                        players[j].Distance = 0;
-                    }
-
-                    if (players[j].Distance > 200)
-                    {
-                         players[j].Distance -= 200;
-
-                        char Text[64];
-                        sprintf(Text, "!%s is using teleport", players[i].UName);
-                        //send_mtc(players[i].UCID,"^1Hack detect");
->>>>>>> .theirs                        //send_mst(Text);
+                       //send_mst(Text);
 
                         SYSTEMTIME sm;
                         GetLocalTime(&sm);
