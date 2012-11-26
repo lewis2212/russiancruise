@@ -4,30 +4,30 @@
 
 struct fine
 {
-    int     id;
-    char    name[64];
-    int     cash;
+	int     id;
+	char    name[64];
+	int     cash;
 };
 
 struct user_fine
 {
-    int     fine_id;
-    int     fine_date;
+	int     fine_id;
+	int     fine_date;
 };
 
 // struct  fine fines[100];                 // Array of fines (for cops)
 
 struct player
 {
-    struct  CompCar2 Info;
+	struct  CompCar2 Info;
 
-    struct user_fine fines[MAX_FINES];
+	struct user_fine fines[MAX_FINES];
 };
 
 class RCPolice: public RCBaseClass
 {
-    private:
-    public:
+	private:
+	public:
 };
 
 #endif

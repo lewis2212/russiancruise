@@ -46,7 +46,7 @@ buttons ClickId's:
 80-99 - tuning
 100 149 - info panel
 {
-    100 - 102 main bg;
+	100 - 102 main bg;
 }
 150 - 160 - shop
 
@@ -125,121 +125,121 @@ pthread_mutex_t RCmutex;                // Mutex var used for send_packet() meth
 
 struct cars
 {
-    int             id;
-    char            car[6];
-    unsigned long   cash;
-    unsigned long   sell;
-    unsigned		PLC;
+	int             id;
+	char            car[6];
+	unsigned long   cash;
+	unsigned long   sell;
+	unsigned		PLC;
 };
 
 struct user_car
 {
-    char    car[6];
-    int     tuning;
-    float     dist;
+	char    car[6];
+	int     tuning;
+	float     dist;
 };
 struct user_fine
 {
-    int     fine_id;
-    int     fine_date;
+	int     fine_id;
+	int     fine_date;
 };
 
 
 
 struct track_info
 {
-    int     PitCount;
-    int     XPit[10];
-    int     YPit[10];
-    int     ShopCount;
-    int     XShop[10];
-    int     YShop[10];
+	int     PitCount;
+	int     XPit[10];
+	int     YPit[10];
+	int     ShopCount;
+	int     XShop[10];
+	int     YShop[10];
 };
 
 struct player
 {
-    struct CompCar Info;
-    struct user_car cars[MAX_CARS];
-    struct user_fine fines[MAX_FINES];
+	struct CompCar Info;
+	struct user_car cars[MAX_CARS];
+	struct user_fine fines[MAX_FINES];
 
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    char    CName[4];              // Car Name
-    int     CTune;                 // Car Tuning
-    byte    SetF;
-    byte    H_TRes;
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // Player ID
-    byte    BID;
-    byte    BID2;
-    byte    bfn;
-    float   Distance;
-    byte    Zone;
-    bool    Pitlane;
-    byte    Shop; // NO DELETE!!!!
-    int     Action;
-    /*** bonus ***/
-    float   Bonus_dist;
-    int     Bonus_count;
-    /******************/
-    char    Lang[4];
-    byte    lang_id;
-    byte    Svetofor;
-    /** COP **/
-    byte    cop;
-    byte    radar;
-    byte    sirena;         // коповский выключатель сирены
-    byte    sirenaOnOff;    // поста€нна€ запись положени€ сирены у духов
-    byte    sirenaKey;      // определ€ем включить или выключить сирену у духов
-    int     sirenaSize;      // размер кнопки
-    byte    Pogonya;
-    char    PogonyaReason[64];
-    int     StopTime;
-    byte    Penalty;        // ≈сли превысил скорость в питах
-    /** Flood **/
-    char    Msg[96];
-    int     FloodCount;
-    int     FloodTime;
-    /** Work **/
-    int     WorkTime;			// врем€ за которое он должен доставить товар
+	char    UName[24];             // Username
+	char    PName[24];             // Player name
+	char    CName[4];              // Car Name
+	int     CTune;                 // Car Tuning
+	byte    SetF;
+	byte    H_TRes;
+	byte    UCID;                  // Connection ID
+	byte    PLID;                  // Player ID
+	byte    BID;
+	byte    BID2;
+	byte    bfn;
+	float   Distance;
+	byte    Zone;
+	bool    Pitlane;
+	byte    Shop; // NO DELETE!!!!
+	int     Action;
+	/*** bonus ***/
+	float   Bonus_dist;
+	int     Bonus_count;
+	/******************/
+	char    Lang[4];
+	byte    lang_id;
+	byte    Svetofor;
+	/** COP **/
+	byte    cop;
+	byte    radar;
+	byte    sirena;         // коповский выключатель сирены
+	byte    sirenaOnOff;    // поста€нна€ запись положени€ сирены у духов
+	byte    sirenaKey;      // определ€ем включить или выключить сирену у духов
+	int     sirenaSize;      // размер кнопки
+	byte    Pogonya;
+	char    PogonyaReason[64];
+	int     StopTime;
+	byte    Penalty;        // ≈сли превысил скорость в питах
+	/** Flood **/
+	char    Msg[96];
+	int     FloodCount;
+	int     FloodTime;
+	/** Work **/
+	int     WorkTime;			// врем€ за которое он должен доставить товар
 
-    time_t  LastSave;
-    time_t  LastBFN;
+	time_t  LastSave;
+	time_t  LastBFN;
 
-    unsigned PLC;
+	unsigned PLC;
 };
 
 
 struct fine
 {
-    int     id;
-    char    name[64];
-    int     cash;
+	int     id;
+	char    name[64];
+	int     cash;
 };
 
 struct global_info
 {
-    struct  player players[MAX_PLAYERS];     // Array of players
-    byte    Sp1;
-    struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
-    byte    Sp2;
-    struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
-    byte    Sp3;
-    /** Bad words **/
-    int     WordsCount;
-    char    Words[100][32];
-    /**  **/
-    struct  track_info TrackInf;             // Where PitBox and Shop
+	struct  player players[MAX_PLAYERS];     // Array of players
+	byte    Sp1;
+	struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
+	byte    Sp2;
+	struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
+	byte    Sp3;
+	/** Bad words **/
+	int     WordsCount;
+	char    Words[100][32];
+	/**  **/
+	struct  track_info TrackInf;             // Where PitBox and Shop
 
-    /** IS_STA **/
-    /** IS_RST **/
-    char    Track[6];                          // Current track (for streets)
-    char    Product[6];                        // DEMO or S1 or S2
-    /** insim **/
-    char    IP[16];                            // IP port for connect (for InSim IS_III)
-    word    TCPPORT;                           // TCP port (for InSim IS_III)
-    word    UDPPORT;                           // UDP port for mci packets (for InSim IS_III)
-    char    ADMIN[10];                         // Admin pass (for InSim IS_III)
+	/** IS_STA **/
+	/** IS_RST **/
+	char    Track[6];                          // Current track (for streets)
+	char    Product[6];                        // DEMO or S1 or S2
+	/** insim **/
+	char    IP[16];                            // IP port for connect (for InSim IS_III)
+	word    TCPPORT;                           // TCP port (for InSim IS_III)
+	word    UDPPORT;                           // UDP port for mci packets (for InSim IS_III)
+	char    ADMIN[10];                         // Admin pass (for InSim IS_III)
 };
 
 void read_track();
@@ -252,49 +252,49 @@ char errmsg[64];
 
 void send_mtc (byte UCID,const char* Msg)
 {
-    char errmsg[64];
-    ZeroMemory(&errmsg,64);
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    insim.send_packet(&pack_mtc);
+	char errmsg[64];
+	ZeroMemory(&errmsg,64);
+	struct IS_MTC pack_mtc;
+	memset(&pack_mtc, 0, sizeof(struct IS_MTC));
+	pack_mtc.Size = sizeof(struct IS_MTC);
+	pack_mtc.Type = ISP_MTC;
+	pack_mtc.UCID = UCID;
+	strncpy(pack_mtc.Text, Msg,strlen(Msg));
+	insim.send_packet(&pack_mtc);
 };
 
 void send_mst (const char* Text)
 {
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    strncpy(pack_mst.Msg,Text,strlen(Text));
-    insim.send_packet(&pack_mst,errmsg);
+	struct IS_MST pack_mst;
+	memset(&pack_mst, 0, sizeof(struct IS_MST));
+	pack_mst.Size = sizeof(struct IS_MST);
+	pack_mst.Type = ISP_MST;
+	strncpy(pack_mst.Msg,Text,strlen(Text));
+	insim.send_packet(&pack_mst,errmsg);
 };
 
 
 void send_bfn (byte UCID, byte ClickID)
 {
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim.send_packet(&pack,errmsg);
+	struct IS_BFN pack;
+	memset(&pack, 0, sizeof(struct IS_BFN));
+	pack.Size = sizeof(struct IS_BFN);
+	pack.Type = ISP_BFN;
+	pack.UCID = UCID;
+	pack.ClickID = ClickID;
+	insim.send_packet(&pack,errmsg);
 };
 
 void send_plc (byte UCID, unsigned PLC)
 {
 
 	struct IS_PLC pack;
-    memset(&pack, 0, sizeof(struct IS_PLC));
-    pack.Size = sizeof(struct IS_PLC);
-    pack.Type = ISP_PLC;
-    pack.UCID = UCID;
-    pack.Cars = PLC;
-    insim.send_packet(&pack,errmsg);
+	memset(&pack, 0, sizeof(struct IS_PLC));
+	pack.Size = sizeof(struct IS_PLC);
+	pack.Type = ISP_PLC;
+	pack.UCID = UCID;
+	pack.Cars = PLC;
+	insim.send_packet(&pack,errmsg);
 }
 
 

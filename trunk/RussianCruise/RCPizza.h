@@ -24,118 +24,118 @@ void *pizzathread(void *arg);// Поток предназначен для то�
 
 struct pizza_info
 {
-    int     ShopCount;
-    int     XShop[10];
-    int     YShop[10];
+	int     ShopCount;
+	int     XShop[10];
+	int     YShop[10];
 };
 
 struct PizzaPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
-    char    CName[4];              // Car Name
-    byte    Zone;
-    byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
-    /** Work **/
-    char    WorkDest[96];       // destination text
-    byte    WorkType;
-    byte    WorkZone;
-    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
-    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
-    byte    WorkDestinaion;		// номер точки доставки
-    int     WorkTime;			// время за которое он должен доставить товар
-    int     WorkCountDone;
+	struct  CompCar Info;
+	char    UName[24];             // Username
+	char    PName[24];             // Player name
+	byte    UCID;                  // Connection ID
+	byte    PLID;                  // PLayer ID
+	char    CName[4];              // Car Name
+	byte    Zone;
+	byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
+	/** Work **/
+	char    WorkDest[96];       // destination text
+	byte    WorkType;
+	byte    WorkZone;
+	byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
+	byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
+	byte    WorkDestinaion;		// номер точки доставки
+	int     WorkTime;			// время за которое он должен доставить товар
+	int     WorkCountDone;
 };
 
 
 
 enum
 {
-    WK_NULL = 0,
-    WK_PIZZA = 1,
+	WK_NULL = 0,
+	WK_PIZZA = 1,
 };
 
 struct  Store
 {
-    /**
-    *   Одна порция пиццы - 1 кг муки 0.6 кг вода, 0.9 томатов, 0.4 сыра
-    *   Себестоимость за порцию = 12+ 9 +72 +224 = 317 руб
-    *   Окончательная цена 552 руб
-    *   оплата за изготовление 235 руб
-    *   оплата за доставку 248 руб.
-    **/
-    // all max = 1000 (1000kg)
-    float    Muka; // 12000 rur/t.
-    float    Voda; // 10000 rur/t
-    float    Ovoshi; // 80000 rur/t
-    float    Cheese; // 560000 rur/t
+	/**
+	*   Одна порция пиццы - 1 кг муки 0.6 кг вода, 0.9 томатов, 0.4 сыра
+	*   Себестоимость за порцию = 12+ 9 +72 +224 = 317 руб
+	*   Окончательная цена 552 руб
+	*   оплата за изготовление 235 руб
+	*   оплата за доставку 248 руб.
+	**/
+	// all max = 1000 (1000kg)
+	float    Muka; // 12000 rur/t.
+	float    Voda; // 10000 rur/t
+	float    Ovoshi; // 80000 rur/t
+	float    Cheese; // 560000 rur/t
 };
 
 class RCPizza:public RCBaseClass
 {
 private:
 
-    u_int   Capital;
-    int     NumCars;
+	u_int   Capital;
+	int     NumCars;
 
-    char RootDir[MAX_PATH];
+	char RootDir[MAX_PATH];
 
 
 public:
-    RCPizza();
-    ~RCPizza();
+	RCPizza();
+	~RCPizza();
 
-    bool    ShopAccepted;
-    int     CarsInWork;
-    //int     Next;
+	bool    ShopAccepted;
+	int     CarsInWork;
+	//int     Next;
 
-    int NumP;
-    int ginfo_time;
-    struct Store PStore;
-    struct  pizza_info TrackInf;
+	int NumP;
+	int ginfo_time;
+	struct Store PStore;
+	struct  pizza_info TrackInf;
 
-    char errmsg[64];
-    //CInsim      *insim;
-    RCMessage   *msg;
-    RCBank      *bank;
-    RCEnergy    *nrg;
+	char errmsg[64];
+	//CInsim      *insim;
+	RCMessage   *msg;
+	RCBank      *bank;
+	RCEnergy    *nrg;
 #ifdef _RC_LEVEL_H
-    RCDL        *dl;
+	RCDL        *dl;
 #endif
 
 
-    struct  place zone;
-    struct  PizzaPlayer players[32];     // Array of players
-    // Основные функции класса
-    int init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
-    // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
-    void readconfig(const char *Track);
-    void deal(struct PizzaPlayer *splayer);
-    void undeal(struct PizzaPlayer *splayer,const char *Reason);
-    void take (struct PizzaPlayer *splayer);
-    void done (struct PizzaPlayer *splayer);
+	struct  place zone;
+	struct  PizzaPlayer players[32];     // Array of players
+	// Основные функции класса
+	int init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
+	// Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
+	void readconfig(const char *Track);
+	void deal(struct PizzaPlayer *splayer);
+	void undeal(struct PizzaPlayer *splayer,const char *Reason);
+	void take (struct PizzaPlayer *splayer);
+	void done (struct PizzaPlayer *splayer);
 
-    // функции-повторители основных фунцкий ядра
+	// функции-повторители основных фунцкий ядра
 
-    void insim_ncn(); //+
-    void insim_npl(); //+
-    void insim_plp(); //+
-    void insim_pll(); //+
-    void insim_cnl(); //+
-    void insim_crp(); //+
-    void insim_mci();
-    void insim_mso();
+	void insim_ncn(); //+
+	void insim_npl(); //+
+	void insim_plp(); //+
+	void insim_pll(); //+
+	void insim_cnl(); //+
+	void insim_crp(); //+
+	void insim_mci();
+	void insim_mso();
 
-    void btn_work (struct PizzaPlayer *splayer);
+	void btn_work (struct PizzaPlayer *splayer);
 
 
-    // Функции-утилиты
-    int check_pos (struct PizzaPlayer *splayer); //+
+	// Функции-утилиты
+	int check_pos (struct PizzaPlayer *splayer); //+
 
-    bool IfWork(byte UCID);
+	bool IfWork(byte UCID);
 
 };
 
