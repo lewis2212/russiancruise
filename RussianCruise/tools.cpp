@@ -2,7 +2,7 @@
 
 
 
-bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
+bool tools::Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
 {
 
     int      i, j=polySides-1 ;
@@ -22,7 +22,7 @@ bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
     return oddNodes;
 }
 
-int Distance (int X, int Y, int X1, int Y1)
+float tools::Distance (int X, int Y, int X1, int Y1)
 {
-	return (int)sqrt((pow(X-X1,2))+(pow(Y-Y1,2)));
+	return sqrt((pow(X-X1,2))+(pow(Y-Y1,2)));
 }

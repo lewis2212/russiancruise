@@ -43,7 +43,7 @@ private:
     // Переменные и функции, доступные только самому классу
 
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
-
+    char TrackName[5];
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCDL        *dl;
 
@@ -80,7 +80,7 @@ public:
 
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
+    int init(const char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
     // Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"

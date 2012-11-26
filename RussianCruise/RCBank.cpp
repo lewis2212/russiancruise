@@ -229,6 +229,8 @@ void RCBank::insim_npl()
         {
             players[i].PLID = pack_npl->PLID;
             //strcpy(players[i].CName ,pack_npl->CName);
+            if (players[i].Cash > 5000000)
+                players[i].Cash = 5000000;
         }
     }
 }

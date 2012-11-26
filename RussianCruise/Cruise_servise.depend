@@ -1,0 +1,617 @@
+# depslib dependency file v1.0
+1344891160 source:f:\rapidsvn\rucruise\russiancruise\cinsim.cpp
+	"CInsim.h"
+
+1342165874 f:\rapidsvn\rucruise\russiancruise\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1342165866 f:\rapidsvn\rucruise\russiancruise\insim.h
+
+1342165882 f:\rapidsvn\rucruise\russiancruise\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<setjmp.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1344987814 source:f:\rapidsvn\rucruise\russiancruise\rcantcheat.cpp
+	"RCAntCheat.h"
+
+1344987815 f:\rapidsvn\rucruise\russiancruise\rcantcheat.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"CInsim.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344991622 f:\rapidsvn\rucruise\russiancruise\rcmessage.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<fstream>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+
+1342165900 f:\rapidsvn\rucruise\russiancruise\tools.h
+	<math.h>
+
+1345230353 f:\rapidsvn\rucruise\russiancruise\rcbank.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+
+1344990015 source:f:\rapidsvn\rucruise\russiancruise\rcbank.cpp
+	"RCBank.h"
+
+1345033488 source:f:\rapidsvn\rucruise\russiancruise\rcdrivinglicense.cpp
+	"RCDrivingLicense.h"
+
+1345033295 f:\rapidsvn\rucruise\russiancruise\rcdrivinglicense.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCBaseClass.h"
+	"RCMessage.h"
+
+1344991102 source:f:\rapidsvn\rucruise\russiancruise\rcenergy.cpp
+	"RCEnergy.h"
+
+1344991092 f:\rapidsvn\rucruise\russiancruise\rcenergy.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344986633 source:f:\rapidsvn\rucruise\russiancruise\rclight.cpp
+	"RCLight.h"
+
+1344986708 f:\rapidsvn\rucruise\russiancruise\rclight.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCDrivingLicense.h"
+	"tools.h"
+
+1345227479 source:f:\rapidsvn\rucruise\russiancruise\rcpizza.cpp
+	"RCPizza.h"
+
+1345227846 f:\rapidsvn\rucruise\russiancruise\rcpizza.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCEnergy.h"
+	"RCDrivingLicense.h"
+	"RCTaxi.h"
+	"tools.h"
+
+1344984385 f:\rapidsvn\rucruise\russiancruise\rctaxi.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCStreet.h"
+	"RCPizza.h"
+	"tools.h"
+
+1344991625 f:\rapidsvn\rucruise\russiancruise\rcstreet.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344976885 source:f:\rapidsvn\rucruise\russiancruise\rcpolice.cpp
+
+1344991625 source:f:\rapidsvn\rucruise\russiancruise\rcstreet.cpp
+	"RCStreet.h"
+
+1345230811 source:f:\rapidsvn\rucruise\russiancruise\rctaxi.cpp
+	"RCTaxi.h"
+
+1344888518 source:f:\rapidsvn\rucruise\russiancruise\main.cpp
+	"main.h"
+	"version.h"
+	"tools.h"
+
+1344887189 f:\rapidsvn\rucruise\russiancruise\main.h
+	<math.h>
+	<windows.h>
+	<time.h>
+	"CInsim.h"
+	"RCPizza.h"
+	"RCMessage.h"
+	"RCEnergy.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCAntCheat.h"
+	"RCStreet.h"
+	"RCLight.h"
+	"RCTaxi.h"
+
+1344886072 f:\rapidsvn\rucruise\russiancruise\version.h
+
+1342165842 source:f:\rapidsvn\rucruise\russiancruise\tools.cpp
+	"tools.h"
+
+1344991303 source:f:\rapidsvn\rucruise\russiancruise\rcmessage.cpp
+	"RCMessage.h"
+
+1345227748 source:f:\rapidsvn\rucruise\russiancruise\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1345227749 f:\rapidsvn\rucruise\russiancruise\rcbaseclass.h
+	"CInsim.h"
+
+1345230045 source:f:\rapidsvn\rucruise\russiancruise\rcmain.cpp
+	"RCMain.h"
+	"version.h"
+	"tools.h"
+
+1344887189 f:\rapidsvn\rucruise\russiancruise\rcmain.h
+	<math.h>
+	<windows.h>
+	<time.h>
+	"CInsim.h"
+	"RCPizza.h"
+	"RCMessage.h"
+	"RCEnergy.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCAntCheat.h"
+	"RCStreet.h"
+	"RCLight.h"
+	"RCTaxi.h"
+
+1344891160 source:e:\rapidsvn\rucruise\russiancruise\cinsim.cpp
+	"CInsim.h"
+
+1342165874 e:\rapidsvn\rucruise\russiancruise\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1342165866 e:\rapidsvn\rucruise\russiancruise\insim.h
+
+1342165882 e:\rapidsvn\rucruise\russiancruise\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<setjmp.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1345572734 source:e:\rapidsvn\rucruise\russiancruise\rcantcheat.cpp
+	"RCAntCheat.h"
+
+1345571441 e:\rapidsvn\rucruise\russiancruise\rcantcheat.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"CInsim.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344991622 e:\rapidsvn\rucruise\russiancruise\rcmessage.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<fstream>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+
+1345398101 e:\rapidsvn\rucruise\russiancruise\rcbaseclass.h
+	"CInsim.h"
+
+1342165900 e:\rapidsvn\rucruise\russiancruise\tools.h
+	<math.h>
+
+1345230353 e:\rapidsvn\rucruise\russiancruise\rcbank.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+
+1344990015 source:e:\rapidsvn\rucruise\russiancruise\rcbank.cpp
+	"RCBank.h"
+
+1345400659 source:e:\rapidsvn\rucruise\russiancruise\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1345033488 source:e:\rapidsvn\rucruise\russiancruise\rcdrivinglicense.cpp
+	"RCDrivingLicense.h"
+
+1345033295 e:\rapidsvn\rucruise\russiancruise\rcdrivinglicense.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCBaseClass.h"
+	"RCMessage.h"
+
+1344991102 source:e:\rapidsvn\rucruise\russiancruise\rcenergy.cpp
+	"RCEnergy.h"
+
+1344991092 e:\rapidsvn\rucruise\russiancruise\rcenergy.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1345575372 source:e:\rapidsvn\rucruise\russiancruise\rclight.cpp
+	"RCLight.h"
+
+1344986708 e:\rapidsvn\rucruise\russiancruise\rclight.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCDrivingLicense.h"
+	"tools.h"
+
+1345571505 source:e:\rapidsvn\rucruise\russiancruise\rcmain.cpp
+	"RCMain.h"
+	"version.h"
+	"tools.h"
+
+1344887189 e:\rapidsvn\rucruise\russiancruise\rcmain.h
+	<math.h>
+	<windows.h>
+	<time.h>
+	"CInsim.h"
+	"RCPizza.h"
+	"RCMessage.h"
+	"RCEnergy.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCAntCheat.h"
+	"RCStreet.h"
+	"RCLight.h"
+	"RCTaxi.h"
+
+1345227846 e:\rapidsvn\rucruise\russiancruise\rcpizza.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCEnergy.h"
+	"RCDrivingLicense.h"
+	"RCTaxi.h"
+	"tools.h"
+
+1344984385 e:\rapidsvn\rucruise\russiancruise\rctaxi.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCStreet.h"
+	"RCPizza.h"
+	"tools.h"
+
+1344991625 e:\rapidsvn\rucruise\russiancruise\rcstreet.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344886072 e:\rapidsvn\rucruise\russiancruise\version.h
+
+1344991303 source:e:\rapidsvn\rucruise\russiancruise\rcmessage.cpp
+	"RCMessage.h"
+
+1345400660 source:e:\rapidsvn\rucruise\russiancruise\rcpizza.cpp
+	"RCPizza.h"
+
+1344976885 source:e:\rapidsvn\rucruise\russiancruise\rcpolice.cpp
+
+1344991625 source:e:\rapidsvn\rucruise\russiancruise\rcstreet.cpp
+	"RCStreet.h"
+
+1345400663 source:e:\rapidsvn\rucruise\russiancruise\rctaxi.cpp
+	"RCTaxi.h"
+
+1342165842 source:e:\rapidsvn\rucruise\russiancruise\tools.cpp
+	"tools.h"
+
+1344891160 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\cinsim.cpp
+	"CInsim.h"
+
+1342165874 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1342165866 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\insim.h
+
+1342165882 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<setjmp.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1353178448 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcantcheat.cpp
+	"RCAntCheat.h"
+
+1345571441 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcantcheat.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"CInsim.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1344991622 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcmessage.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<fstream>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+
+1347118581 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+
+1346583158 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\tools.h
+	<math.h>
+
+1345230353 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcbank.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+
+1346441530 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcbank.cpp
+	"RCBank.h"
+
+1346433094 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1353186760 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcdrivinglicense.cpp
+	"RCDrivingLicense.h"
+
+1353186760 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcdrivinglicense.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCBaseClass.h"
+	"RCMessage.h"
+
+1344991102 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcenergy.cpp
+	"RCEnergy.h"
+
+1344991092 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcenergy.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1353184751 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rclight.cpp
+	"RCLight.h"
+
+1353184715 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rclight.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCDrivingLicense.h"
+	"tools.h"
+
+1353184726 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcmain.cpp
+	"RCMain.h"
+	"version.h"
+	"tools.h"
+
+1347120787 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcmain.h
+	<math.h>
+	<windows.h>
+	<time.h>
+	"CInsim.h"
+	"RCPizza.h"
+	"RCMessage.h"
+	"RCEnergy.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCAntCheat.h"
+	"RCStreet.h"
+	"RCLight.h"
+	"RCTaxi.h"
+
+1345227846 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcpizza.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCEnergy.h"
+	"RCDrivingLicense.h"
+	"RCTaxi.h"
+	"tools.h"
+
+1347098643 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rctaxi.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCStreet.h"
+	"RCPizza.h"
+	"tools.h"
+
+1344991625 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcstreet.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1346532084 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\version.h
+
+1344991303 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcmessage.cpp
+	"RCMessage.h"
+
+1347122569 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcpizza.cpp
+	"RCPizza.h"
+
+1347123061 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcpolice.cpp
+
+1346581908 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcstreet.cpp
+	"RCStreet.h"
+
+1346583158 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\tools.cpp
+	"tools.h"
+
+1346529803 source:c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rctaxi.cpp
+	"RCTaxi.h"
+
+1347120638 c:\users\user\desktop\rapidsvn\rucruise\russiancruise\rcpolice.h
+	"RCBaseClass.h"
+
