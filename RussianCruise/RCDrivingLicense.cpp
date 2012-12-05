@@ -476,7 +476,7 @@ void RCDL::insim_mci()
 					players[j].LVL ++;
 					players[j].Skill = 0;
 					char Msg[64];
-					sprintf(Msg,"/msg^5| ^8^C%s ^1Get new Level = ^3%d",players[j].PName, players[j].LVL);
+					sprintf(Msg,"/msg ^5| ^8^C%s ^1Get new Level = ^3%d",players[j].PName, players[j].LVL);
 					send_mst(Msg);
 				}
 
@@ -521,6 +521,6 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
 	insim->send_packet(&pack);
 
 	char Text[64];
-	sprintf(Text,"^C^4| %s ^7РїРµСЂРµС€РµР» РЅР° %d СѓСЂРѕРІРµРЅСЊ",splayer->PName, splayer->LVL);
+	sprintf(Text,"^C^4| %s ^7перешел на %d уровень",splayer->PName, splayer->LVL);
 
 }

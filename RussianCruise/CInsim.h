@@ -36,7 +36,7 @@
 #ifndef _CINSIM_H
 #define _CINSIM_H
 
-#define MAX_PLAYERS 32
+#define MAX_PLAYERS 50
 
 
 typedef unsigned char byte;
