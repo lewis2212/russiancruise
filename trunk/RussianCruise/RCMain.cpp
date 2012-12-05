@@ -1575,15 +1575,13 @@ void case_mci ()
 			if (pack_mci->Info[i].PLID == ginfo.players[j].PLID and ginfo.players[j].PLID != 0 and ginfo.players[j].UCID != 0)
 
 			{
-
-				//int Node = pack_mci->Info[i].Node;
+				struct streets StreetInfo;
+				street.CurentStreetInfo(&StreetInfo,ginfo.players[j].UCID);
 
 				int X = pack_mci->Info[i].X/65536;
 				int Y = pack_mci->Info[i].Y/65536;
 
 				int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
-
 
 				int LastX = ginfo.players[j].Info.X/65536;
 				int LastY = ginfo.players[j].Info.Y/65536;
@@ -1603,22 +1601,24 @@ void case_mci ()
 					ginfo.players[j].Bonus_dist += Dist;
 
 					//начисляем деньги только до 20 уровня
-					if(dl.GetLVL(ginfo.players[j].UCID) < 20)
-					{
-						if (S<150)
+					if(dl.GetLVL(ginfo.players[j].UCID) < 20){
+
+						if (S <= StreetInfo.SpeedLimit)
 						{
+							if ( dl.Islocked( ginfo.players[j].UCID ) )
+								dl.Unlock( ginfo.players[j].UCID );
+
 							bank.AddCash(ginfo.players[j].UCID,abs((int)Dist)/10);
 							bank.RemFrBank(abs((int)Dist)/100);
+						} else {
+							if ( !( dl.Islocked( ginfo.players[j].UCID ) ) )
+							dl.Lock( ginfo.players[j].UCID );
 						}
 
 					}
 				}
 
 				/** Bonus **/
-
-
-
-
 
 				if (ginfo.players[j].Bonus_dist > 5000)
 				{
@@ -1637,9 +1637,7 @@ void case_mci ()
 
 				}
 
-
 				/** Zones (PitSave, shop, etc) **/
-
 
 				if (ginfo.players[j].Pitlane)
 				{

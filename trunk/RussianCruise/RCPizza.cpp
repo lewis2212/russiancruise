@@ -167,10 +167,6 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 				}
 			}
-			else
-			{
-				cout << "malo productov" << endl;
-			}
 		}
 
 		/*** проверка склада на наличие продуктов, и если не хватает то просить работника зказать продукты ***/
@@ -606,19 +602,12 @@ void RCPizza::readconfig(const char *Track)
 
 void RCPizza::insim_ncn()
 {
-	//printf("New player connect\n");
 	int i;
 
 	struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-	//cout << "ReqI = " << (int)pack_ncn->ReqI << endl;
-
-
 	if (pack_ncn->UCID == 0)
-	{
-		//cout << "(Host connected, not adding him to array...)" << endl << endl;
 		return;
-	}
 
 
 
@@ -628,19 +617,12 @@ void RCPizza::insim_ncn()
 
 
 	if (i == MAX_PLAYERS)
-	{
-		//cout << "NO MORE PEOPLE ALLOWED!!!" << endl << endl;
-		return;
-	}
+	 return;
 
 	// Copy all the player data we need into the players[] array
 	strcpy(players[i].UName, pack_ncn->UName);
 	strcpy(players[i].PName, pack_ncn->PName);
 	players[i].UCID = pack_ncn->UCID;
-
-	//cout << players[i].UName << endl;
-	//cout << players[i].PName << endl;
-	//cout << (int)players[i].UCID << endl;
 
 }
 
@@ -658,7 +640,6 @@ void RCPizza::insim_npl()
 		{
 			players[i].PLID = pack_npl->PLID;
 			strcpy(players[i].CName ,pack_npl->CName);
-			printf("Pizza Car = %s\n",players[i].CName);
 			NumP ++;
 		}
 	}
@@ -666,18 +647,15 @@ void RCPizza::insim_npl()
 
 void RCPizza::insim_plp()
 {
-	//cout << "player leaves race" << endl;
 	int i;
 
 	struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
 
-	// Find player and set his PLID to 0
 	for (i=0; i < MAX_PLAYERS; i++)
 	{
 		if (players[i].PLID == pack_plp->PLID)
 		{
 			players[i].PLID = 0;
-
 			NumP --;
 			break;
 		}
@@ -686,18 +664,15 @@ void RCPizza::insim_plp()
 
 void RCPizza::insim_pll()
 {
-	//cout << "player leaves race" << endl;
 	int i;
 
 	struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
 
-	// Find player and set his PLID to 0
 	for (i=0; i < MAX_PLAYERS; i++)
 	{
 		if (players[i].PLID == pack_pll->PLID)
 		{
 			players[i].PLID = 0;
-
 			NumP --;
 			break;
 		}
@@ -715,7 +690,10 @@ void RCPizza::insim_cnl ()
 	{
 		if (players[i].UCID == pack_cnl->UCID)
 		{
-			if (players[i].WorkType == WK_PIZZA)
+			if ( players[i].WorkAccept == 3 )
+				ShopAccepted = false;
+
+			if ( players[i].WorkType == WK_PIZZA )
 				CarsInWork --;
 
 			memset(&players[i],0,sizeof(struct PizzaPlayer));
