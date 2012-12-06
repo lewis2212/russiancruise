@@ -3321,7 +3321,6 @@ void case_vtn ()
 
 }
 
-
 int core_connect(void *pack_ver)
 {
 	memset(pack_ver,0,sizeof(struct IS_VER));

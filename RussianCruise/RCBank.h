@@ -9,6 +9,9 @@
 #include <time.h>
 #include <windows.h>
 
+//#include "mysql/include/my_global.h"
+#include "mysql/include/mysql.h"
+
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCMessage.h"
@@ -23,7 +26,7 @@ struct BankPlayer
 	char    PName[24];             // Player name
 	byte    UCID;                  // Connection ID
 	byte    PLID;                  // PLayer ID
-	float   Cash;
+	double   Cash;
 	//char    CName[4];              // Car Name
 	byte    Zone;
 };
@@ -40,11 +43,19 @@ class RCBank:public RCBaseClass
 {
 private:
 
+	// Дескриптор соединения
+	MYSQL	cruisedb;
+	// Дескриптор результирующей таблицы
+	MYSQL_RES *res;
+	// Массив полей текущей строки
+	MYSQL_ROW row;
+
+
 	struct  Bank_info TrackInf;
 	struct  BankPlayer players[32];     // Array of players
 	struct  place zone;
 
-	float BankFond;
+	double BankFond;
 
 	char RootDir[MAX_PATH];
 

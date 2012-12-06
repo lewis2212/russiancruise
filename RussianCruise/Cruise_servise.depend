@@ -649,14 +649,15 @@
 	<sched.h>
 	<sys/types.h>
 
-1354648951 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
+1354822753 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
 	"RCBank.h"
 
-1353958013 d:\backup\cpp\rucruise\russiancruise\rcbank.h
+1354821989 d:\backup\cpp\rucruise\russiancruise\rcbank.h
 	<stdio.h>
 	<iostream>
 	<time.h>
 	<windows.h>
+	"mysql/include/mysql.h"
 	"RCBaseClass.h"
 	"tools.h"
 	"RCMessage.h"
@@ -684,7 +685,7 @@
 1353958069 source:d:\backup\cpp\rucruise\russiancruise\rcbaseclass.cpp
 	"RCBaseClass.h"
 
-1353958061 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
+1354653290 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
 	"RCDrivingLicense.h"
 
 1353958002 d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.h
@@ -713,15 +714,16 @@
 	"RCBank.h"
 	"tools.h"
 
-1354389144 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
+1354811977 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
 	"RCMain.h"
 	"version.h"
 	"tools.h"
 
-1354388894 d:\backup\cpp\rucruise\russiancruise\rcmain.h
+1354816180 d:\backup\cpp\rucruise\russiancruise\rcmain.h
 	<math.h>
 	<windows.h>
 	<time.h>
+	"mysql/include/mysql.h"
 	"CInsim.h"
 	"RCPizza.h"
 	"RCMessage.h"
@@ -815,4 +817,67 @@
 
 1353958041 source:d:\backup\cpp\rucruise\russiancruise\rctaxi.cpp
 	"RCTaxi.h"
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"typelib.h"
+	"my_list.h"
+	"my_alloc.h"
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysql_version.h
+	<custom_conf.h>
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysql_com.h
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysql_time.h
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\typelib.h
+	"my_alloc.h"
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\my_alloc.h
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\my_list.h
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\my_global.h
+	<os2.h>
+	<config-win.h>
+	<config-os2.h>
+	<my_config.h>
+	<config-netware.h>
+	<my_config.h>
+	<sys/types.h>
+	<thread.h>
+	<pthread.h>
+	<pthread.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<math.h>
+	<limits.h>
+	<float.h>
+	<fenv.h>
+	<sys/types.h>
+	<fcntl.h>
+	<sys/timeb.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	<unistd.h>
+	<alloca.h>
+	<asm/atomic.h>
+	<errno.h>
+	<crypt.h>
+	<assert.h>
+	<sys/stream.h>
+	<my_attribute.h>
+	<my_dbug.h>
+	<sys/socket.h>
+
+1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysqld_error.h
 
