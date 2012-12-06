@@ -76,6 +76,9 @@ using namespace std;
 #include <windows.h>
 #include <time.h>
 
+//#include "mysql/include/my_global.h"
+#include "mysql/include/mysql.h"
+
 #include "CInsim.h"
 #include "RCPizza.h"
 #include "RCMessage.h"

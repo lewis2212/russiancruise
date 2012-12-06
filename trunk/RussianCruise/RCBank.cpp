@@ -36,7 +36,7 @@ RCBank::RCBank()
 
 RCBank::~RCBank()
 {
-
+	mysql_close(&cruisedb);
 }
 
 byte RCBank::GetPlayerUCID (int i)
@@ -120,6 +120,21 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
 		return -1;
 	}
 
+	if(!mysql_init(&cruisedb)){
+		printf("Error: can't create MySQL-descriptor\n");
+		return -1;
+	}
+
+	mysql_options( &cruisedb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+
+	if(!mysql_real_connect( &cruisedb , "underground.tiera.cc", "cruise", "cruise", "cruise", 3310, NULL, 0)){
+		printf("Error: can't connect to MySQL server\n");
+		return -1;
+	}
+	else{
+		printf("Success: connected to MySQL server\n");
+	}
+
 	return 0;
 }
 
@@ -158,6 +173,54 @@ void RCBank::insim_ncn()
 	strcpy(players[i].PName, pack_ncn->PName);
 	players[i].UCID = pack_ncn->UCID;
 
+	char query[128];
+	sprintf(query,"SELECT cash FROM bank WHERE username='%s' LIMIT 1;",pack_ncn->UName);
+
+	if( mysql_ping( &cruisedb ) != 0 ){
+		printf("Error: connection with MySQL server was lost\n");
+		// произвести кик пользователя чтоль
+	}
+
+	if( mysql_query( &cruisedb , query) != 0 ){
+		printf("Error: MySQL Query\n");
+		// произвести кик пользователя чтоль
+	}
+
+	res = mysql_store_result(&cruisedb);
+	if(res == NULL)
+		printf("Error: can't get the result description\n");
+
+	if(mysql_num_rows(res) > 0)
+	{
+		// В цикле перебираем все записи
+		// результирующей таблицы
+		row = mysql_fetch_row(res);
+		// Выводим результат в стандартный поток
+		printf("%s\n", row[0]);
+
+	}
+	else
+	{
+		printf("Can't find %s\n Create user\n",pack_ncn->UName);
+
+		sprintf(query,"INSERT INTO bank (username) VALUES ('%s');",pack_ncn->UName);
+
+		if( mysql_ping( &cruisedb ) != 0 ){
+			printf("Error: connection with MySQL server was lost\n");
+			// произвести кик пользователя чтоль
+		}
+
+		if( mysql_query( &cruisedb , query) != 0 ){
+			printf("Error: MySQL Query\n");
+			// произвести кик пользователя чтоль
+		}
+
+		players[i].Cash = 1000;
+		bank_save(players[i].UCID);
+
+	}
+
+
 	char file[MAX_PATH];
 	strcpy(file,RootDir);
 	strcat(file,"data\\RCBank\\");
@@ -173,7 +236,7 @@ void RCBank::insim_ncn()
 	fff = FindFirstFile(file,&fd);
 	if (fff == INVALID_HANDLE_VALUE)
 	{
-		printf("Can't find %s\n Create File for user",file);
+		printf("Can't find %s\n Create File for user \n",file);
 		players[i].Cash = 1000;
 		bank_save(players[i].UCID);
 	}
@@ -197,20 +260,11 @@ void RCBank::insim_ncn()
 			}
 		}
 
-
 		readf.close();
 	}
 	FindClose(fff);
 
-
-
 	return ;
-
-
-
-	//cout << players[i].UName << endl;
-	//cout << players[i].PName << endl;
-	//cout << (int)players[i].UCID << endl;
 }
 
 
@@ -301,6 +355,21 @@ void RCBank::bank_save (byte UCID)
 	{
 		if (players[i].UCID == UCID)
 		{
+
+			char query[128];
+			sprintf(query,"UPDATE bank SET cash = %f WHERE username='%s'" , players[i].Cash, players[i].UName);
+
+			if( mysql_ping( &cruisedb ) != 0 ){
+				printf("Bank Error: connection with MySQL server was lost\n");
+				// произвести кик пользователя чтоль
+			}
+
+			if( mysql_query( &cruisedb , query) != 0 ){
+				printf("Bank Error: MySQL Query Save\n");
+				// произвести кик пользователя чтоль
+			}
+
+			printf("Bank Log: Affected rows = %d\n", mysql_affected_rows(&cruisedb) );
 
 			char file[255];
 			strcpy(file,RootDir);
