@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="CInsim.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="14745" topLine="464" />
 	</File>
 	<File name="CInsim.h" open="1" top="0" tabpos="11">
-		<Cursor position="1658" topLine="3" />
+		<Cursor position="1655" topLine="20" />
 	</File>
 	<File name="RCAntCheat.cpp" open="1" top="0" tabpos="4">
 		<Cursor position="2757" topLine="92" />
@@ -14,10 +14,10 @@
 		<Cursor position="2313" topLine="48" />
 	</File>
 	<File name="RCBank.cpp" open="1" top="0" tabpos="13">
-		<Cursor position="4923" topLine="270" />
+		<Cursor position="7019" topLine="345" />
 	</File>
-	<File name="RCBank.h" open="0" top="0" tabpos="19">
-		<Cursor position="747" topLine="0" />
+	<File name="RCBank.h" open="1" top="0" tabpos="14">
+		<Cursor position="1156" topLine="28" />
 	</File>
 	<File name="RCBaseClass.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="3811" topLine="0" />
@@ -25,8 +25,8 @@
 	<File name="RCBaseClass.h" open="0" top="0" tabpos="11">
 		<Cursor position="1195" topLine="17" />
 	</File>
-	<File name="RCDrivingLicense.cpp" open="1" top="1" tabpos="7">
-		<Cursor position="8764" topLine="434" />
+	<File name="RCDrivingLicense.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="8764" topLine="431" />
 	</File>
 	<File name="RCDrivingLicense.h" open="1" top="0" tabpos="8">
 		<Cursor position="1340" topLine="31" />
@@ -44,10 +44,10 @@
 		<Cursor position="2730" topLine="42" />
 	</File>
 	<File name="RCMain.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="36915" topLine="1664" />
+		<Cursor position="61555" topLine="2141" />
 	</File>
 	<File name="RCMain.h" open="1" top="0" tabpos="10">
-		<Cursor position="3933" topLine="171" />
+		<Cursor position="904" topLine="39" />
 	</File>
 	<File name="RCMessage.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="112" topLine="0" />
@@ -85,11 +85,11 @@
 	<File name="TODO.txt" open="0" top="0" tabpos="14">
 		<Cursor position="748" topLine="0" />
 	</File>
-	<File name="insim.h" open="0" top="0" tabpos="7">
-		<Cursor position="42510" topLine="1368" />
+	<File name="insim.h" open="1" top="1" tabpos="16">
+		<Cursor position="40805" topLine="1368" />
 	</File>
-	<File name="tools.cpp" open="0" top="0" tabpos="24">
-		<Cursor position="174" topLine="0" />
+	<File name="tools.cpp" open="1" top="0" tabpos="15">
+		<Cursor position="271" topLine="0" />
 	</File>
 	<File name="tools.h" open="0" top="0" tabpos="20">
 		<Cursor position="659" topLine="0" />

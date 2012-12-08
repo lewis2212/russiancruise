@@ -18,7 +18,8 @@
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="CruiseS1 comsole" />
+				<Option parameters="CruiseS2 console" />
+				<Option host_application="bin\Debug\Cruise_servise.exe" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -36,6 +37,7 @@
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
 			<Add library=".\addons\pthread\lib\x86\libpthreadGC2.a" />
+			<Add library=".\mysql\lib\debug\libmysql.lib" />
 			<Add directory="include" />
 		</Linker>
 		<Unit filename="4ernovik.txt" />
