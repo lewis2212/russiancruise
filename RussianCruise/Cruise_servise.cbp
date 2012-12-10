@@ -26,6 +26,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-march=i386" />
 			<Add option="-fexceptions" />
 			<Add option="-Wno-parentheses" />
 			<Add option="-static" />

@@ -185,21 +185,21 @@ void read_words()
 
 void save_user_cars (struct player *splayer)
 {
-    out <<splayer->UName << " save cars_info" << endl;
+    char sql[128];
 
-    char file[255];
-    sprintf(file,"%sdata\\RCGarage\\%s.txt", RootDir, splayer->UName);
+	if( mysql_ping( &cruisedb ) != 0 )
+		printf("Bank Error: connection with MySQL server was lost\n");
 
-    ofstream writef (file,ios::out);
     for (int i = 0; i < MAX_CARS; i++)
     {
         if (strlen(splayer->cars[i].car)>0)
         {
-            writef << splayer->cars[i].car << ";" << splayer->cars[i].tuning << ";" << splayer->cars[i].dist << endl;
+            sprintf(sql,"UPDATE garage SET tuning = %d dist = %d WHERE username = '%s' AND car = '%s';", splayer->cars[i].tuning , splayer->cars[i].dist ,splayer->UName , splayer->cars[i].car );
+
+            if( mysql_query( &cruisedb , query) != 0 )
+                printf("Bank Error: MySQL Query Save\n");
         }
     }
-
-    writef.close();
 }
 
 void save_user_fines (struct player *splayer)
@@ -223,77 +223,69 @@ void save_user_fines (struct player *splayer)
 
 void read_user_cars(struct player *splayer)
 {
-    char file[255];
-    sprintf(file,"%sdata\\RCGarage\\%s.txt", RootDir, splayer->UName);
+	char query[128];
+    sprintf(query,"SELECT car, tuning, dist FROM garage WHERE username='%s';",pack_ncn->UName);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    if( mysql_ping( &cruisedb ) != 0 )
     {
-        out << "Can't find " << file << endl;
+        printf("Error: connection with MySQL server was lost\n");
+        // произвести кик пользователя чтоль
+    }
+
+    if( mysql_query( &cruisedb , query) != 0 )
+    {
+        printf("Error: MySQL Query\n");
+        // произвести кик пользователя чтоль
+    }
+
+    res = mysql_store_result(&cruisedb);
+    if(res == NULL)
+        printf("Error: can't get the result description\n");
+
+    if( mysql_num_rows( res ) > 0 )
+    {
+    	int i = 0;
+        while ( ( row = mysql_fetch_row( result ) ) )
+		{
+			strcpy(splayer->cars[i].car,car);
+			splayer->cars[i].tuning = atoi(tun);
+			splayer->cars[i].dist = atof(dis);
+
+			for (int c=0; c<MAX_CARS; c++)
+			{
+				if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
+				{
+					splayer->PLC += ginfo.car[c].PLC;
+					break;
+				}
+			}
+			i++;
+		}
+
+    }
+    else
+    {
+        printf("Can't find %s\n Create user\n",pack_ncn->UName);
+
+        sprintf(query,"INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');",pack_ncn->UName);
+
+        if( mysql_ping( &cruisedb ) != 0 )
+        {
+            printf("Error: connection with MySQL server was lost\n");
+        }
+
+        if( mysql_query( &cruisedb , query) != 0 )
+        {
+            printf("Error: MySQL Query\n");
+        }
+
         strcpy(splayer->cars[0].car,"UF1");
         splayer->cars[0].tuning = 0;
         splayer->cars[0].dist = 0;
         save_user_cars(splayer);
+
     }
-    else
-    {
-        ifstream readf (file,ios::in);
-        int i=0;
-        bool UF1 = false;
-        while (readf.good())
-        {
-            char str[128];
-            readf.getline(str,128);
-
-            if (strlen(str) > 0)
-            {
-                char *car;
-                char *tun;
-                char *dis;
-
-                car = strtok(str,";");
-                tun = strtok(NULL,";");
-                dis = strtok(NULL,";");
-
-                if (strncmp(car,"UF1",3)==0)
-                    UF1 = true;
-
-                strcpy(splayer->cars[i].car,car);
-                splayer->cars[i].tuning = atoi(tun);
-                splayer->cars[i].dist = atof(dis);
-
-                for (int c=0; c<MAX_CARS; c++)
-                {
-                    if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
-                    {
-                        splayer->PLC += ginfo.car[c].PLC;
-                        break;
-                    }
-                }
-                i++;
-            }
-        }
-
-        if (!UF1)
-        {
-            strcpy(splayer->cars[i].car,"UF1");
-            splayer->cars[i].tuning = 0;
-            splayer->cars[i].dist = 0;
-            send_mtc(splayer->UCID,"^C^1| ^7 Вам сделан подарок в виде автомобиля ^2UF1");
-            for (int c=0; c<MAX_CARS; c++)
-            {
-                if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
-                {
-                    splayer->PLC += ginfo.car[c].PLC;
-                    break;
-                }
-            }
-        }
         send_plc(splayer->UCID,splayer->PLC);
-    }
-    FindClose(fff);
 }
 
 void read_user_fines(struct player *splayer)
@@ -2005,6 +1997,10 @@ void case_mso ()
                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo.players[i].UName << " buy car " << id << endl;
                 readf.close();
 
+                char sql[128];
+				sprintf(sql,"INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo.players[i].UName , id );
+				mysql_query( &cruisedb , sql );
+
                 break;
             }
 
@@ -2081,6 +2077,10 @@ void case_mso ()
 
                 ginfo.players[i].PLC -= ginfo.car[j].PLC;
                 send_plc(ginfo.players[i].UCID, ginfo.players[i].PLC);
+
+                char sql[128];
+				sprintf(sql,"DELETE FROM garage  WHERE  username = '%s' AND  car = '%s';", ginfo.players[i].UName , id );
+				mysql_query( &cruisedb , sql );
 
                 break;
             }
@@ -3392,6 +3392,20 @@ void *thread_work (void *params)
 
 DWORD WINAPI ThreadMain(void *CmdLine)
 {
+
+	if(!mysql_init(&cruisedb))
+    {
+        printf("RCMain Error: can't create MySQL-descriptor\n");
+        return -1;
+    }
+
+    mysql_options( &cruisedb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+
+    while( !mysql_real_connect( &cruisedb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) )
+    {
+        printf("RCMain Error: can't connect to MySQL server\n");
+    }
+
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
     sprintf(IS_PRODUCT_NAME,"^3RC-%d.%d.%d:%d",AutoVersion::RC_MAJOR,AutoVersion::RC_MINOR,AutoVersion::RC_BUILD,AutoVersion::RC_BUILDS_COUNT);

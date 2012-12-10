@@ -108,33 +108,28 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
     insim = (CInsim *)CInSim;
     if(!insim)
     {
-        cout << "Can't struct CInsim class" << endl;;
+        cout << "RCBank Error: Can't struct CInsim class" << endl;;
         return -1;
     }
 
     msg = (RCMessage *)GetMessage;
     if(!msg)
     {
-        cout << "Can't struct RCMessage class" << endl;
+        cout << "RCBank Error: Can't struct RCMessage class" << endl;
         return -1;
     }
 
     if(!mysql_init(&cruisedb))
     {
-        printf("Error: can't create MySQL-descriptor\n");
+        printf("RCBank Error: can't create MySQL-descriptor\n");
         return -1;
     }
 
     mysql_options( &cruisedb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    if(!mysql_real_connect( &cruisedb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0))
+    while( !mysql_real_connect( &cruisedb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) )
     {
-        printf("Error: can't connect to MySQL server\n");
-        return -1;
-    }
-    else
-    {
-        printf("Success: connected to MySQL server\n");
+        printf("RCBank Error: can't connect to MySQL server\n");
     }
 
     return 0;
