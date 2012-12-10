@@ -103,6 +103,12 @@ char IS_PRODUCT_NAME[16];
 
 const char* siren = "^0";
 
+// Дескриптор соединения
+MYSQL	cruisedb;
+// Дескриптор результирующей таблицы
+MYSQL_RES *res;
+// Массив полей текущей строки
+MYSQL_ROW row;
 
 
 time_t  stime;
