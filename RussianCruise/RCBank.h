@@ -9,7 +9,6 @@
 #include <time.h>
 #include <windows.h>
 
-//#include "mysql/include/my_global.h"
 #include "mysql/include/mysql.h"
 
 #include "RCBaseClass.h"
@@ -44,17 +43,16 @@ class RCBank:public RCBaseClass
 private:
 
     // Дескриптор соединения
-    MYSQL	cruisedb;
+    MYSQL	rcbankDB;
     // Дескриптор результирующей таблицы
-    MYSQL_RES *res;
+    MYSQL_RES *rcbankRes;
     // Массив полей текущей строки
-    MYSQL_ROW row;
+    MYSQL_ROW rcbankRow;
 
 
     struct  Bank_info TrackInf;
     struct  BankPlayer players[32];     // Array of players
     struct  place zone;
-
     double BankFond;
 
     char RootDir[MAX_PATH];
@@ -65,7 +63,6 @@ private:
     void insim_pll();
     void insim_cnl();
     void insim_crp();
-    void insim_mci();
 
 public:
     RCBank();
@@ -73,8 +70,6 @@ public:
 
     char errmsg[64];
     RCMessage *msg;
-
-
 
     bool AddToBank(int Cash);
     bool RemFrBank(int Cash);
@@ -84,27 +79,17 @@ public:
     int  GetCash(byte UCID);
     byte GetPlayerUCID (int i);
 
-
-
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
+    int init(const char *dir,void *CInSim, void *GetMessage, void *dbconn);
     void readconfig(const char *Track);
     void bank_save(byte UCID);
-    // функции-повторители основных фунцкий ядра
 
     void btn_cash(int i);
 
-
-
-
-
-
-    // функции-повторители основных фунцкий ядра
-
+    void insim_mci();
 
     // Функции-утилиты
-    int check_pos (struct BankPlayer *splayer); //+
-
+    int check_pos (struct BankPlayer *splayer);
 };
 
 #endif

@@ -2,52 +2,52 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="CInsim.cpp" open="1" top="0" tabpos="20">
-		<Cursor position="1799" topLine="23" />
+		<Cursor position="4677" topLine="77" />
 	</File>
 	<File name="CInsim.h" open="1" top="0" tabpos="11">
-		<Cursor position="4483" topLine="82" />
+		<Cursor position="4308" topLine="85" />
 	</File>
 	<File name="RCAntCheat.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="867" topLine="0" />
+		<Cursor position="2373" topLine="75" />
 	</File>
 	<File name="RCAntCheat.h" open="1" top="0" tabpos="27">
 		<Cursor position="2313" topLine="21" />
 	</File>
 	<File name="RCBank.cpp" open="1" top="0" tabpos="13">
-		<Cursor position="7429" topLine="274" />
+		<Cursor position="1696" topLine="57" />
 	</File>
 	<File name="RCBank.h" open="1" top="0" tabpos="14">
-		<Cursor position="839" topLine="19" />
+		<Cursor position="191" topLine="0" />
 	</File>
 	<File name="RCBaseClass.cpp" open="1" top="0" tabpos="23">
-		<Cursor position="3280" topLine="130" />
+		<Cursor position="3858" topLine="179" />
 	</File>
 	<File name="RCBaseClass.h" open="1" top="0" tabpos="24">
-		<Cursor position="924" topLine="0" />
+		<Cursor position="340" topLine="0" />
 	</File>
 	<File name="RCDrivingLicense.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="2955" topLine="91" />
+		<Cursor position="3075" topLine="128" />
 	</File>
 	<File name="RCDrivingLicense.h" open="1" top="0" tabpos="9">
-		<Cursor position="1340" topLine="18" />
+		<Cursor position="982" topLine="0" />
 	</File>
 	<File name="RCEnergy.cpp" open="1" top="0" tabpos="18">
-		<Cursor position="12359" topLine="436" />
+		<Cursor position="282" topLine="0" />
 	</File>
 	<File name="RCEnergy.h" open="1" top="0" tabpos="19">
-		<Cursor position="693" topLine="0" />
+		<Cursor position="248" topLine="0" />
 	</File>
 	<File name="RCLight.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="15062" topLine="529" />
+		<Cursor position="12279" topLine="389" />
 	</File>
 	<File name="RCLight.h" open="1" top="0" tabpos="4">
 		<Cursor position="2618" topLine="30" />
 	</File>
 	<File name="RCMain.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="65827" topLine="1987" />
+		<Cursor position="90185" topLine="3383" />
 	</File>
 	<File name="RCMain.h" open="1" top="0" tabpos="2">
-		<Cursor position="1594" topLine="72" />
+		<Cursor position="2447" topLine="132" />
 	</File>
 	<File name="RCMessage.cpp" open="1" top="0" tabpos="25">
 		<Cursor position="4952" topLine="172" />
@@ -56,7 +56,7 @@
 		<Cursor position="846" topLine="0" />
 	</File>
 	<File name="RCPizza.cpp" open="1" top="0" tabpos="12">
-		<Cursor position="23497" topLine="683" />
+		<Cursor position="337" topLine="0" />
 	</File>
 	<File name="RCPizza.h" open="1" top="0" tabpos="29">
 		<Cursor position="2471" topLine="37" />
@@ -68,7 +68,7 @@
 		<Cursor position="322" topLine="0" />
 	</File>
 	<File name="RCStreet.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="5880" topLine="193" />
+		<Cursor position="5880" topLine="0" />
 	</File>
 	<File name="RCStreet.h" open="1" top="0" tabpos="7">
 		<Cursor position="705" topLine="0" />
@@ -98,6 +98,6 @@
 		<Cursor position="530" topLine="0" />
 	</File>
 	<File name="version.h" open="1" top="0" tabpos="32">
-		<Cursor position="595" topLine="0" />
+		<Cursor position="867" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

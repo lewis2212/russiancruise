@@ -2,32 +2,6 @@ using namespace std;
 
 #include "RCBank.h"
 
-time_t  btime;
-pthread_t bid; // Thread ID
-
-void *bankthread (void *arg)
-{
-    RCBank *bnk = (RCBank *)arg; //struct our RCBank class in thread
-    if(!bnk)
-    {
-        printf ("Can't start bankthread");
-        return 0;
-    }
-
-    cout << "\tthread \"Bank\" started" << endl;
-
-    for (;;)
-    {
-        for (int i=0; i<MAX_PLAYERS; i++)
-        {
-            if (bnk->GetPlayerUCID(i) != 0)
-                bnk->btn_cash(i);
-        }
-        Sleep(2000);
-    }
-}
-
-
 RCBank::RCBank()
 {
 
@@ -35,7 +9,7 @@ RCBank::RCBank()
 
 RCBank::~RCBank()
 {
-    mysql_close(&cruisedb);
+    mysql_close( &rcbankDB );
 }
 
 byte RCBank::GetPlayerUCID (int i)
@@ -96,12 +70,8 @@ bool RCBank::RemFrBank(int Cash)
     return true;
 }
 
-int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
+int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
 {
-
-    pthread_cancel(bid);
-    if (pthread_create(&bid,NULL,bankthread,Bank) < 0)
-        return -1;
 
     strcpy(RootDir,dir);
 
@@ -119,19 +89,20 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage,void *Bank)
         return -1;
     }
 
-    if(!mysql_init(&cruisedb))
+    if(!mysql_init( &rcbankDB))
     {
         printf("RCBank Error: can't create MySQL-descriptor\n");
         return -1;
     }
 
-    mysql_options( &cruisedb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    mysql_options( &rcbankDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( !mysql_real_connect( &cruisedb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) )
+    if( mysql_real_connect( &rcbankDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
     {
         printf("RCBank Error: can't connect to MySQL server\n");
+        return 0;
     }
-
+	printf("RCBank Success: Connected to MySQL server\n");
     return 0;
 }
 
@@ -160,29 +131,29 @@ void RCBank::insim_ncn()
     char query[128];
     sprintf(query,"SELECT cash FROM bank WHERE username='%s' LIMIT 1;",pack_ncn->UName);
 
-    if( mysql_ping( &cruisedb ) != 0 )
+    if( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
         // произвести кик пользователя чтоль
     }
 
-    if( mysql_query( &cruisedb , query) != 0 )
+    if( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error: MySQL Query\n");
         // произвести кик пользователя чтоль
     }
 
-    res = mysql_store_result(&cruisedb);
-    if(res == NULL)
+    rcbankRes = mysql_store_result( &rcbankDB );
+    if(rcbankRes == NULL)
         printf("Error: can't get the result description\n");
 
-    if(mysql_num_rows(res) > 0)
+    if(mysql_num_rows( rcbankRes ) > 0)
     {
         // В цикле перебираем все записи
         // результирующей таблицы
-        row = mysql_fetch_row(res);
+        rcbankRow = mysql_fetch_row( rcbankRes );
         // Выводим результат в стандартный поток
-        players[i].Cash = atof( row[0] );
+        players[i].Cash = atof( rcbankRow[0] );
 
     }
     else
@@ -191,13 +162,13 @@ void RCBank::insim_ncn()
 
         sprintf(query,"INSERT INTO bank (username) VALUES ('%s');",pack_ncn->UName);
 
-        if( mysql_ping( &cruisedb ) != 0 )
+        if( mysql_ping( &rcbankDB ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
             // произвести кик пользователя чтоль
         }
 
-        if( mysql_query( &cruisedb , query) != 0 )
+        if( mysql_query( &rcbankDB , query) != 0 )
         {
             printf("Error: MySQL Query\n");
             // произвести кик пользователя чтоль
@@ -207,6 +178,8 @@ void RCBank::insim_ncn()
         bank_save(players[i].UCID);
 
     }
+
+    mysql_free_result( rcbankRes );
 
     return ;
 }
@@ -301,26 +274,25 @@ void RCBank::bank_save (byte UCID)
         {
 
             char query[128];
-            /* User */
             sprintf(query,"UPDATE bank SET cash = %f WHERE username='%s'" , players[i].Cash, players[i].UName);
 
-            if( mysql_ping( &cruisedb ) != 0 )
+            if( mysql_ping( &rcbankDB ) != 0 )
                 printf("Bank Error: connection with MySQL server was lost\n");
 
-            if( mysql_query( &cruisedb , query) != 0 )
+            if( mysql_query( &rcbankDB , query) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
 
-            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows(&cruisedb) );
+            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
             /* Capital */
             sprintf(query,"UPDATE bank SET cash = %f WHERE username='_RC_Bank_Capital_'" , BankFond);
 
-            if( mysql_ping( &cruisedb ) != 0 )
+            if( mysql_ping( &rcbankDB ) != 0 )
                 printf("Bank Error: connection with MySQL server was lost\n");
 
-            if( mysql_query( &cruisedb , query) != 0 )
+            if( mysql_query( &rcbankDB , query) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
 
-            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows(&cruisedb) );
+            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
         }
     }
@@ -345,6 +317,23 @@ void RCBank::insim_crp()
             break;
         }
     }
+}
+
+void RCBank::insim_mci()
+{
+	struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
+
+	for (int i = 0; i < pack_mci->NumC; i++)
+    {
+        for (int j =0; j < MAX_PLAYERS; j++)        {
+
+            if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
+            {
+            	btn_cash(j);
+            }
+        }
+    }
+
 }
 
 void RCBank::btn_cash (int i)
@@ -401,29 +390,31 @@ void RCBank::readconfig(const char *Track)
     char query[128];
     sprintf(query,"SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
 
-    if( mysql_ping( &cruisedb ) != 0 )
+    if( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
     }
 
-    if( mysql_query( &cruisedb , query) != 0 )
+    if( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error: MySQL Query\n");
     }
 
-    res = mysql_store_result(&cruisedb);
-    if(res == NULL)
+    rcbankRes = mysql_store_result( &rcbankDB );
+    if(rcbankRes == NULL)
         printf("Error: can't get the result description\n");
 
-    if(mysql_num_rows(res) > 0)
+    if(mysql_num_rows( rcbankRes ) > 0)
     {
-        row = mysql_fetch_row(res);
-        BankFond = atof( row[0] );
+        rcbankRow = mysql_fetch_row( rcbankRes );
+        BankFond = atof( rcbankRow[0] );
     }
     else
     {
         BankFond = 0;
     }
+
+	mysql_free_result( rcbankRes );
 }
 
 
@@ -433,7 +424,6 @@ int RCBank::check_pos(struct BankPlayer *splayer)
 {
     int PLX = splayer->Info.X/65536;
     int PLY = splayer->Info.Y/65536;
-
     if (Check_Pos(4,zone.dealX,zone.dealY,PLX,PLY))
         return 1;
 

@@ -14,7 +14,6 @@ void *nrg_thread_btn (void *energy)
 
     int ok = 1;
 
-    printf("\tthread \"Energy button\" started\n");
     while (ok > 0)
     {
         for (int i=0; i<MAX_PLAYERS; i++)
@@ -34,7 +33,7 @@ RCEnergy::RCEnergy()
 
 RCEnergy::~RCEnergy()
 {
-
+	mysql_close( &rcNrgDB );
 }
 
 int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank)
@@ -61,12 +60,28 @@ int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,v
         printf ("Can't struct RCMessage class");
         return -1;
     }
+
     bank = (RCBank *)Bank;
     if(!msg)
     {
         printf ("Can't struct RCBank class");
         return -1;
     }
+
+	if(!mysql_init( &rcNrgDB))
+    {
+        printf("RCEnergy Error: can't create MySQL-descriptor\n");
+        return -1;
+    }
+
+    mysql_options( &rcNrgDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+
+    if( mysql_real_connect( &rcNrgDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    {
+        printf("RCEnergy Error: can't connect to MySQL server\n");
+        return 0;
+    }
+	printf("RCEnergy Success: Connected to MySQL server\n");
 
     return 0;
 }
@@ -142,35 +157,55 @@ void RCEnergy::insim_ncn()
     strcpy(players[i].PName, pack_ncn->PName);
     players[i].UCID = pack_ncn->UCID;
 
-    char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCEnergy\\%s.txt", RootDir, players[i].UName);
+	char query[128];
+    sprintf(query,"SELECT energy FROM energy WHERE username='%s' LIMIT 1;",pack_ncn->UName);
 
-    // Try Find New File
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    if( mysql_ping( &rcNrgDB ) != 0 )
     {
-        players[i].Energy = 10000;
-        energy_save(i);
+        printf("Error: connection with MySQL server was lost\n");
+        // произвести кик пользователя чтоль
+    }
+
+    if( mysql_query( &rcNrgDB , query) != 0 )
+    {
+        printf("Error: MySQL Query\n");
+        // произвести кик пользователя чтоль
+    }
+
+    rcNrgRes = mysql_store_result( &rcNrgDB );
+    if(rcNrgRes == NULL)
+        printf("Error: can't get the result description\n");
+
+    if(mysql_num_rows( rcNrgRes ) > 0)
+    {
+        rcNrgRow = mysql_fetch_row( rcNrgRes );
+        players[i].Energy = atof( rcNrgRow[0] );
     }
     else
     {
-        ifstream readf (file,ios::in);
+        printf("Can't find %s\n Create user\n",pack_ncn->UName);
 
-        while (readf.good())
+        sprintf(query,"INSERT INTO energy (username) VALUES ('%s');",pack_ncn->UName);
+
+        if( mysql_ping( &rcNrgDB ) != 0 )
         {
-            char str[128];
-            readf.getline(str,128);
-            if (strlen(str) > 0)
-            {
-                if (strncmp("Energy=",str,7)==0)
-                    players[i].Energy = atoi(str+7);
-            }
+            printf("Error: connection with MySQL server was lost\n");
+            // произвести кик пользователя чтоль
         }
-        readf.close();
+
+        if( mysql_query( &rcNrgDB , query) != 0 )
+        {
+            printf("Error: MySQL Query\n");
+            // произвести кик пользователя чтоль
+        }
+
+        players[i].Energy = 10000;
+        energy_save(players[i].UCID);
+
     }
-    FindClose(fff);
+
+    mysql_free_result( rcNrgRes );
+
 }
 
 void RCEnergy::insim_npl()
@@ -261,13 +296,16 @@ void RCEnergy::energy_save (byte UCID)
     {
         if (players[i].UCID == UCID)
         {
+			char query[128];
+            sprintf(query,"UPDATE energy SET energy = %d WHERE username='%s'" , players[i].Energy, players[i].UName);
 
-            char file[255];
-            sprintf(file,"%sdata\\RCEnergy\\%s.txt", RootDir, players[i].UName);
+            if( mysql_ping( &rcNrgDB ) != 0 )
+                printf("Bank Error: connection with MySQL server was lost\n");
 
-            ofstream writef (file,ios::out);
-            writef << "Energy=" << players[i].Energy << endl;
-            writef.close();
+            if( mysql_query( &rcNrgDB , query) != 0 )
+                printf("Bank Error: MySQL Query Save\n");
+
+            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcNrgDB ) );
         }
     }
 
@@ -337,7 +375,6 @@ void RCEnergy::insim_mci ()
                     if (!Islocked(players[i].UCID))
                         players[j].Energy -= K;
                 }
-
 
                 if (Check_Pos(TrackInf.CafeCount,TrackInf.XCafe,TrackInf.YCafe,X,Y))
                     players[j].Zone = 3;
@@ -524,7 +561,6 @@ int RCEnergy::check_pos(struct EnergyPlayer *splayer)
 {
     int PLX = splayer->Info.X/65536;
     int PLY = splayer->Info.Y/65536;
-
     if (Check_Pos(4,zone.dealX,zone.dealY,PLX,PLY))
     {
         return 1;

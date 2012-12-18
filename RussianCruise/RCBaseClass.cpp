@@ -189,19 +189,24 @@ bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float 
 
     int      i, j=polySides-1 ;
     bool  oddNodes=false     ;
-
-    for (i=0; i<polySides; i++)
-    {
-        if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
-        {
-            if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
-            {
-                oddNodes=!oddNodes;
-            }
-        }
-        j=i;
-    }
+	try{
+		for (i=0; i<polySides; i++)
+		{
+			if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
+			{
+				if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
+				{
+					oddNodes=!oddNodes;
+				}
+			}
+			j=i;
+		}
+	}
+	catch(...){
+		tools::log("Check_Pos Exeption\n");
+	}
     return oddNodes;
+
 }
 
 int RCBaseClass::Distance (int X, int Y, int X1, int Y1)

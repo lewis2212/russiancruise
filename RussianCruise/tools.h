@@ -2,6 +2,7 @@
 #define _RC_TOOLS_H
 
 #include <math.h>
+#include <windows.h>
 
 typedef unsigned char byte;
 
@@ -19,5 +20,10 @@ struct place
     int     NumPoints;      // Count of Destination points/ Need for random
     struct  square point[40]; // Destination points.
 };
+
+namespace tools {
+
+	void log(const char *text);
+}
 
 #endif

@@ -16,7 +16,6 @@ pthread_t svet2_tid; // Thread ID
 
 void *thread_svet1(void* params)
 {
-    cout << "\tthread \"Svetofor 1\" started" << endl;
     for (;;)
     {
         int svtime = time(&sstime)%40;
@@ -96,7 +95,6 @@ void *thread_svet1(void* params)
 
 void *thread_svet2( void* params)
 {
-    cout << "\tthread \"Svetofor 2\" started" << endl;
     for (;;)
     {
         int svtime = (time(&sstime)+20)%40;
@@ -448,7 +446,7 @@ void RCLight::insim_mci ()
                     if (Check_Pos(4,pit1x,pit1y,X,Y))
                     {
                         //send_mst("in zone");
-                        if( (H < 190+90) and (H > 190-90) )
+                        if( (D < 190+90) and (D > 190-90) )
                         {
                             if (players[j].WrongWay == 1)
                             {
@@ -470,8 +468,7 @@ void RCLight::insim_mci ()
                     }
                     else if (Check_Pos(6,pit2x,pit2y,X,Y))
                     {
-                        //send_mst("in zone");
-                        if( (H < 190+90) and (H > 190-90) )
+                        if( (D < 190+90) and (D > 190-90) )
                         {
                             if (players[j].WrongWay == 1)
                             {

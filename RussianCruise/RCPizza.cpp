@@ -16,8 +16,6 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
         return 0;
     }
 
-    cout << "\tthread \"Pizza\" started" << endl;
-
     int ok = 1;
     piz->ShopAccepted = false;
 
@@ -679,7 +677,6 @@ void RCPizza::insim_mci ()
                 memcpy(&players[j].Info, &pack_mci->Info[i], sizeof(struct CompCar) );
 
                 // проверка если юзер попал в зону доставки и скорость равна нулю
-
                 if (check_pos(&players[j]) == 1)
                 {
                     if (players[j].Zone != 4 )
@@ -818,7 +815,6 @@ void RCPizza::insim_mso ()
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!deal", 5) == 0 )
     {
 
-
         if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
         {
             if (dl->GetLVL(players[i].UCID) > 19)
@@ -848,6 +844,7 @@ void RCPizza::insim_mso ()
 
     if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!take", 5) == 0)
     {
+
         if (check_pos(&players[i]) == 1)
             take(&players[i]);
     }

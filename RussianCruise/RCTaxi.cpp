@@ -417,7 +417,6 @@ void RCTaxi::insim_mci ()
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
                 int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
                 if(Check_Pos(4,zone.dealX,zone.dealY,X,Y))
                 {
                     //cout << "in work place" << endl;

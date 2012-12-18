@@ -10,6 +10,8 @@
 #include <windows.h>
 #include <math.h>
 
+#include "mysql/include/mysql.h"
+
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCBaseClass.h"
@@ -37,6 +39,14 @@ struct DLPlayer
 class RCDL:public RCBaseClass
 {
 private:
+
+		// Дескриптор соединения
+    MYSQL	rcDLDB;
+    // Дескриптор результирующей таблицы
+    MYSQL_RES *rcDLRes;
+    // Массив полей текущей строки
+    MYSQL_ROW rcDLRow;
+
     char RootDir[MAX_PATH];
 
     char errmsg[64];
@@ -53,7 +63,6 @@ private:
     void insim_con();
 
     void btn_dl(struct DLPlayer *splayer);
-
     int check_pos (struct BankPlayer *splayer); //+
 
 public:
