@@ -145,6 +145,21 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
 
     inited = 1;
 
+    if(!mysql_init( &rcDLDB))
+    {
+        printf("RCDL Error: can't create MySQL-descriptor\n");
+        return -1;
+    }
+
+    mysql_options( &rcDLDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+
+    if( mysql_real_connect( &rcDLDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    {
+        printf("RCDL Error: can't connect to MySQL server\n");
+        return 0;
+    }
+	printf("RCDL Success: Connected to MySQL server\n");
+
     return 0;
 }
 
@@ -169,42 +184,55 @@ void RCDL::insim_ncn()
     strcpy(players[i].PName, pack_ncn->PName);
     players[i].UCID = pack_ncn->UCID;
 
-    char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCDrivingLicense\\%s.txt", RootDir, players[i].UName);
+	char query[128];
+    sprintf(query,"SELECT lvl,skill FROM dl WHERE username='%s' LIMIT 1;",pack_ncn->UName);
 
-    // Try Find New File
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    if( mysql_ping( &rcDLDB ) != 0 )
     {
-        printf("Can't find %s\n Create File for user",file);
-        players[i].LVL = 0;
-        save(players[i].UCID);
+        printf("Error: connection with MySQL server was lost\n");
+        // произвести кик пользователя чтоль
+    }
+
+    if( mysql_query( &rcDLDB , query) != 0 )
+    {
+        printf("Error: MySQL Query\n");
+        // произвести кик пользователя чтоль
+    }
+
+    rcDLRes = mysql_store_result( &rcDLDB );
+    if(rcDLRes == NULL)
+        printf("Error: can't get the result description\n");
+
+    if(mysql_num_rows( rcDLRes ) > 0)
+    {
+        rcDLRow = mysql_fetch_row( rcDLRes );
+        players[i].LVL = atof( rcDLRow[0] );
+        players[i].Skill = atof( rcDLRow[1] );
     }
     else
     {
-        ifstream readf (file,ios::in);
+        printf("Can't find %s\n Create user\n",pack_ncn->UName);
 
-        while (readf.good())
+        sprintf(query,"INSERT INTO dl (username) VALUES ('%s');",pack_ncn->UName);
+
+        if( mysql_ping( &rcDLDB ) != 0 )
         {
-            char str[128];
-            readf.getline(str,128);
-            if (strlen(str) > 0)
-            {
-                // Get Cash
-                if (strncmp("LVL=",str,4)==0)
-                    players[i].LVL = atoi(str+4);
-
-                if (strncmp("Skill=",str,6)==0)
-                    players[i].Skill = atoi(str+6);
-                // Get Credits
-                // Get Deposits
-            }
+            printf("Error: connection with MySQL server was lost\n");
+            // произвести кик пользователя чтоль
         }
-        readf.close();
+
+        if( mysql_query( &rcDLDB , query) != 0 )
+        {
+            printf("Error: MySQL Query\n");
+            // произвести кик пользователя чтоль
+        }
+
+        players[i].LVL = 0;
+        save(players[i].UCID);
+
     }
-    FindClose(fff);
+
+    mysql_free_result( rcDLRes );
 }
 
 void RCDL::insim_npl()
@@ -314,14 +342,16 @@ void RCDL::save (byte UCID)
     {
         if (players[i].UCID == UCID)
         {
+        	char query[128];
+            sprintf(query,"UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[i].LVL , players[i].Skill, players[i].UName);
 
-            char file[255];
-            sprintf(file,"%sdata\\RCDrivingLicense\\%s.txt", RootDir, players[i].UName);
+            if( mysql_ping( &rcDLDB ) != 0 )
+                printf("Bank Error: connection with MySQL server was lost\n");
 
-            ofstream writef (file,ios::out);
-            writef << "LVL=" << players[i].LVL << endl;
-            writef << "Skill=" << players[i].Skill << endl;
-            writef.close();
+            if( mysql_query( &rcDLDB , query) != 0 )
+                printf("Bank Error: MySQL Query Save\n");
+
+            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
 
             break;
         }

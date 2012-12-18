@@ -11,6 +11,8 @@
 #include <time.h>
 #include <windows.h>
 
+#include "mysql/include/mysql.h"
+
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCMessage.h"
@@ -45,6 +47,14 @@ struct energy_info
 class RCEnergy:public RCBaseClass
 {
 private:
+
+	// Дескриптор соединения
+    MYSQL	rcNrgDB;
+    // Дескриптор результирующей таблицы
+    MYSQL_RES *rcNrgRes;
+    // Массив полей текущей строки
+    MYSQL_ROW rcNrgRow;
+
     pthread_t tid; // Thread ID
     pthread_attr_t attr;
     time_t nrgtime;

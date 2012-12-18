@@ -11,7 +11,15 @@
 				<Option object_output="obj\Release\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="CruiseS1 comsole" />
+				<Option parameters="CruiseS2 console" />
+				<Option host_application="bin\Release\Cruise_servise.exe" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-O" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
 			</Target>
 			<Target title="Debug">
 				<Option output="bin\Debug\Cruise_servise" prefix_auto="1" extension_auto="1" />

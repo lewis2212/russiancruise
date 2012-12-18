@@ -45,7 +45,7 @@ RCTaxi  taxi;
 void init_classes()
 {
     msg.init(RootDir,&insim);
-    bank.init(RootDir,&insim,&msg,&bank);
+    bank.init(RootDir,&insim,&msg,&rcMaindb);
 
 #ifdef _RC_ENERGY_H
     nrg.init(RootDir,&nrg,&insim,&msg,&bank);
@@ -185,18 +185,17 @@ void read_words()
 
 void save_user_cars (struct player *splayer)
 {
-    char sql[128];
+	char sql[128];
 
-	if( mysql_ping( &cruisedb ) != 0 )
+	if( mysql_ping( &rcMaindb ) != 0 )
 		printf("Bank Error: connection with MySQL server was lost\n");
 
     for (int i = 0; i < MAX_CARS; i++)
     {
-        if (strlen(splayer->cars[i].car)>0)
+        if ( strlen( splayer->cars[i].car ) > 0 )
         {
-            sprintf(sql,"UPDATE garage SET tuning = %d dist = %d WHERE username = '%s' AND car = '%s';", splayer->cars[i].tuning , splayer->cars[i].dist ,splayer->UName , splayer->cars[i].car );
-
-            if( mysql_query( &cruisedb , query) != 0 )
+            sprintf(sql,"UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", splayer->cars[i].tuning , splayer->cars[i].dist , splayer->cars[i].car , splayer->UName );
+            if( mysql_query( &rcMaindb , sql) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
         }
     }
@@ -224,32 +223,32 @@ void save_user_fines (struct player *splayer)
 void read_user_cars(struct player *splayer)
 {
 	char query[128];
-    sprintf(query,"SELECT car, tuning, dist FROM garage WHERE username='%s';",pack_ncn->UName);
+    sprintf(query,"SELECT car, tuning, dist FROM garage WHERE username='%s';",splayer->UName);
 
-    if( mysql_ping( &cruisedb ) != 0 )
+    if( mysql_ping( &rcMaindb ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
         // произвести кик пользователя чтоль
     }
 
-    if( mysql_query( &cruisedb , query) != 0 )
+    if( mysql_query( &rcMaindb , query) != 0 )
     {
         printf("Error: MySQL Query\n");
         // произвести кик пользователя чтоль
     }
 
-    res = mysql_store_result(&cruisedb);
-    if(res == NULL)
+    rcMainRes = mysql_store_result(&rcMaindb);
+    if(rcMainRes == NULL)
         printf("Error: can't get the result description\n");
 
-    if( mysql_num_rows( res ) > 0 )
+    if( mysql_num_rows( rcMainRes ) > 0 )
     {
     	int i = 0;
-        while ( ( row = mysql_fetch_row( result ) ) )
+        while ( ( rcMainRow = mysql_fetch_row( rcMainRes ) ) )
 		{
-			strcpy(splayer->cars[i].car,car);
-			splayer->cars[i].tuning = atoi(tun);
-			splayer->cars[i].dist = atof(dis);
+			strcpy(splayer->cars[i].car,rcMainRow[0]);
+			splayer->cars[i].tuning = atoi( rcMainRow[1] );
+			splayer->cars[i].dist = atof( rcMainRow[2] );
 
 			for (int c=0; c<MAX_CARS; c++)
 			{
@@ -265,16 +264,16 @@ void read_user_cars(struct player *splayer)
     }
     else
     {
-        printf("Can't find %s\n Create user\n",pack_ncn->UName);
+        printf("Can't find %s\n Create user\n",splayer->UName);
 
-        sprintf(query,"INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');",pack_ncn->UName);
+        sprintf(query,"INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');",splayer->UName);
 
-        if( mysql_ping( &cruisedb ) != 0 )
+        if( mysql_ping( &rcMaindb ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
         }
 
-        if( mysql_query( &cruisedb , query) != 0 )
+        if( mysql_query( &rcMaindb , query) != 0 )
         {
             printf("Error: MySQL Query\n");
         }
@@ -282,9 +281,21 @@ void read_user_cars(struct player *splayer)
         strcpy(splayer->cars[0].car,"UF1");
         splayer->cars[0].tuning = 0;
         splayer->cars[0].dist = 0;
+
+        for (int c=0; c<MAX_CARS; c++)
+		{
+			if (strncmp(splayer->cars[0].car,ginfo.car[c].car,3)==0)
+			{
+				splayer->PLC += ginfo.car[c].PLC;
+				break;
+			}
+		}
+
+
         save_user_cars(splayer);
 
     }
+    mysql_free_result( rcMainRes );
         send_plc(splayer->UCID,splayer->PLC);
 }
 
@@ -415,12 +426,12 @@ void help_cmds (struct player *splayer,int h_type)
             if (splayer->fines[i].fine_id > 0)
             {
                 char Text[64];
-                // row[0] = username
-                // row[1] = fine_id
-                // row[2] = fine_date
+                // rcMainRow[0] = username
+                // rcMainRow[1] = fine_id
+                // rcMainRow[2] = fine_date
 
                 int fine_id = splayer->fines[i].fine_id;
-                // int fine_date = atoi(row[2));
+                // int fine_date = atoi(rcMainRow[2));
 
                 sprintf(Text,"^2| ^7ID = %d. %.64s ^3(^2%d RUR.^3)", fine_id , ginfo.fines[fine_id].name , ginfo.fines[fine_id].cash );
                 send_mtc(splayer->UCID,Text);
@@ -1273,7 +1284,7 @@ void case_mci ()
                     LastX=X;
                     LastY=Y;
                 }
-                float Dist = RCBaseClass::Distance(X,Y,LastX,LastY);
+                float Dist = dl.Distance(X,Y,LastX,LastY);
 
                 if ((abs((int)Dist) > 10) and (S>30))
                 {
@@ -1322,12 +1333,11 @@ void case_mci ()
                 }
 
                 /** Zones (PitSave, shop, etc) **/
-
                 if (ginfo.players[j].Pitlane)
                 {
                     ginfo.players[j].Zone = 1;
                 }
-                else if (RCBaseClass::Check_Pos(ginfo.TrackInf.ShopCount,ginfo.TrackInf.XShop,ginfo.TrackInf.YShop,X,Y))
+                else if (dl.Check_Pos(ginfo.TrackInf.ShopCount,ginfo.TrackInf.XShop,ginfo.TrackInf.YShop,X,Y))
                 {
                     ginfo.players[j].Zone = 2;
                 }
@@ -1359,7 +1369,6 @@ void case_mci_cop ()
         for (int j =0; j < MAX_PLAYERS; j++)
         {
             if (pack_mci->Info[i].PLID == ginfo.players[j].PLID and ginfo.players[j].PLID != 0 and ginfo.players[j].UCID != 0)
-
             {
                 int S = ginfo.players[j].Info.Speed*360/32768;
                 /** автоотключение радара **/
@@ -1386,7 +1395,7 @@ void case_mci_cop ()
                             int X1 = ginfo.players[j].Info.X/65536;
                             int Y1 = ginfo.players[j].Info.Y/65536;
 
-                            int Rast = RCBaseClass::Distance( X, Y, X1, Y1);
+                            int Rast = dl.Distance( X, Y, X1, Y1);
 
                             if (ginfo.players[g].Pogonya == 1)
                             {
@@ -1998,8 +2007,8 @@ void case_mso ()
                 readf.close();
 
                 char sql[128];
-				sprintf(sql,"INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo.players[i].UName , id );
-				mysql_query( &cruisedb , sql );
+				sprintf(sql,"INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo.players[i].UName , ginfo.car[CarID].car );
+				mysql_query( &rcMaindb , sql );
 
                 break;
             }
@@ -2079,9 +2088,8 @@ void case_mso ()
                 send_plc(ginfo.players[i].UCID, ginfo.players[i].PLC);
 
                 char sql[128];
-				sprintf(sql,"DELETE FROM garage  WHERE  username = '%s' AND  car = '%s';", ginfo.players[i].UName , id );
-				mysql_query( &cruisedb , sql );
-
+				sprintf(sql,"DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", ginfo.players[i].UName , ginfo.car[j].car );
+				mysql_query( &rcMaindb , sql );
                 break;
             }
 
@@ -3215,6 +3223,11 @@ void *thread_mci (void *params)
         case_mci ();
         //case_mci_svetofor();
         case_mci_cop();
+
+#ifdef _RC_BANK_H
+        bank.insim_mci();
+#endif
+
 #ifdef _RC_CHEAT_H
         antcht.insim_mci();
 #endif
@@ -3253,7 +3266,6 @@ void *thread_mci (void *params)
 
 void *thread_btn (void *params)
 {
-    out << "\tthread \"Buttons\" started" << endl;
     while (ok > 0)
     {
         for (int i=0; i<MAX_PLAYERS; i++)
@@ -3291,7 +3303,7 @@ void *thread_btn (void *params)
                             min = (time2/60)%60;
                             sec = time2%60;
 
-                            float D = RCBaseClass::Distance(ginfo.players[i].Info.X,ginfo.players[i].Info.Y,ginfo.players[j].Info.X,ginfo.players[j].Info.Y)/65536;
+                            float D = dl.Distance(ginfo.players[i].Info.X,ginfo.players[i].Info.Y,ginfo.players[j].Info.X,ginfo.players[j].Info.Y)/65536;
 
                             street.CurentStreetInfo(&StreetInfo,ginfo.players[j].UCID);
 
@@ -3313,7 +3325,6 @@ void *thread_btn (void *params)
 
 void *thread_save (void *params)
 {
-    out << "\tthread \"Backup saving\" started" << endl;
     SYSTEMTIME sm; //time_t seconds;
     while (ok > 0)
     {
@@ -3350,7 +3361,6 @@ void *thread_save (void *params)
 
 void *thread_work (void *params)
 {
-    out << "\tthread \"Work\" started" << endl;
     Sleep(10000);
 
     while (ok > 0)
@@ -3369,7 +3379,7 @@ void *thread_work (void *params)
                         send_bfn(ginfo.players[i].UCID,210);
 
                         char Text[64];
-                        sprintf( Text , "/msg ^2|" , ginfo.players[i].PName , msg.GetMessage(ginfo.players[i].UCID,1706) );
+                        sprintf( Text , "/msg ^2|%s %s" , ginfo.players[i].PName , msg.GetMessage(ginfo.players[i].UCID,1706) );
 
                         send_mst(Text);
                         ginfo.players[i].Pogonya = 0;
@@ -3393,19 +3403,20 @@ void *thread_work (void *params)
 DWORD WINAPI ThreadMain(void *CmdLine)
 {
 
-	if(!mysql_init(&cruisedb))
+	if(!mysql_init(&rcMaindb))
     {
         printf("RCMain Error: can't create MySQL-descriptor\n");
         return -1;
     }
 
-    mysql_options( &cruisedb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( !mysql_real_connect( &cruisedb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) )
+    if( mysql_real_connect( &rcMaindb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
     {
         printf("RCMain Error: can't connect to MySQL server\n");
+        return 0;
     }
-
+	printf("RCMain Success: Connected to MySQL server\n");
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
     sprintf(IS_PRODUCT_NAME,"^3RC-%d.%d.%d:%d",AutoVersion::RC_MAJOR,AutoVersion::RC_MINOR,AutoVersion::RC_BUILD,AutoVersion::RC_BUILDS_COUNT);
@@ -3770,7 +3781,6 @@ int main(int argc, char* argv[])
 
     strncpy(RootDir,argv[0],d+1);
     strcpy(ServiceName,argv[1]);
-
     if (strcmp(argv[argc-1],"install") == 0 )
     {
         core_install_service(argv);
@@ -3791,8 +3801,8 @@ int main(int argc, char* argv[])
         sprintf(log,"%slogs\\%s(%d.%d.%d).log",RootDir,ServiceName,sm.wDay,sm.wMonth,sm.wYear);
 
         out.open(log);
-        out << RootDir << endl;
-        out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
+       // tools::log(RootDir);
+        //tools::log ("Main Thead started. Wait 2 minuts while all services are started.\n");
 
         CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
@@ -3916,7 +3926,7 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
         ok=0;
         // записываем конечное значение счетчика
         //out << "Count = " << nCount << endl;
-        out << "The service is finished." << endl << flush;
+        tools::log( "The service is finished." );
         // закрываем файл
 
         // устанавливаем состояние остановки
