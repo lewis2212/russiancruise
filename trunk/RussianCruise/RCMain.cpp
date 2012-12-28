@@ -126,22 +126,13 @@ int IfCop (struct player *splayer)
     strcpy(PlayerName,splayer->PName);
 
     int COP = 0;
-
     if (
-        ((strncmp("^4[^C^7ДПС^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ДПC^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7дпс^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7дпc^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ГАИ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7гаи^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ГAИ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7гaи^4]",PlayerName,13)==0))
-        && (splayer->cop != 1)
+        ( regex_match (PlayerName , regex("(^(\^\d)?\[(\^C)?(\^\d)?(Р”|Рґ|Р“|Рі)(Рџ|Рї|Рђ|Р°|A|a)(РЎ|СЃ|C|c|c|Р|Рё)(\^\d)?\]") ) )  &&
+        (splayer->cop != 1)
     )
     {
         COP += 1;
     }
-
     if ( read_cop(splayer) > 0)
     {
         COP += 2;
@@ -228,13 +219,13 @@ void read_user_cars(struct player *splayer)
     if( mysql_ping( &rcMaindb ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
+        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
     }
 
     if( mysql_query( &rcMaindb , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
+        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
     }
 
     rcMainRes = mysql_store_result(&rcMaindb);
@@ -249,7 +240,12 @@ void read_user_cars(struct player *splayer)
 			strcpy(splayer->cars[i].car,rcMainRow[0]);
 			splayer->cars[i].tuning = atoi( rcMainRow[1] );
 			splayer->cars[i].dist = atof( rcMainRow[2] );
+            /** map<> **/
+			splayer->cars2[ rcMainRow[0] ].tuning = atoi( rcMainRow[1] );
+			splayer->cars2[ rcMainRow[0] ].dist = atof( rcMainRow[2] );
+            splayer->PLC += ginfo.car2[ rcMainRow[0] ].PLC;
 
+            splayer->PLC = 0;
 			for (int c=0; c<MAX_CARS; c++)
 			{
 				if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
@@ -502,10 +498,10 @@ void btn_info (struct player *splayer, int b_type)
 
     char info_text[5][100];
     sprintf(info_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
-    strncpy(info_text[1], "^C^7 Добро пожаловать, ",99);
-    strncpy(info_text[2], "^C^7 Деньги: ^2",99);
-    strncpy(info_text[3], "^C^7   тут жизненный статус",99);
-    strncpy(info_text[4], "^C^7Доступные автомобили:",99);
+    strncpy(info_text[1], "^C^7 Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ, ",99);
+    strncpy(info_text[2], "^C^7 Р”РµРЅСЊРіРё: ^2",99);
+    strncpy(info_text[3], "^C^7   С‚СѓС‚ Р¶РёР·РЅРµРЅРЅС‹Р№ СЃС‚Р°С‚СѓСЃ",99);
+    strncpy(info_text[4], "^C^7Р”РѕСЃС‚СѓРїРЅС‹Рµ Р°РІС‚РѕРјРѕР±РёР»Рё:",99);
 
     char about_text[10][100];
     sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
@@ -785,7 +781,7 @@ void case_bfn ()
 
             if((now - ginfo.players[i].LastBFN) < 10)
             {
-                send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто жать кнопки");
+                send_mtc(ginfo.players[i].UCID,"^1^CРќРµР»СЊР·СЏ С‚Р°Рє С‡Р°СЃС‚Рѕ Р¶Р°С‚СЊ РєРЅРѕРїРєРё");
                 return;
             }
 
@@ -1184,6 +1180,7 @@ void case_cnl ()
             save_user_fines(&ginfo.players[i]);
 
             out << ginfo.players[i].UName << " left server" << endl;
+            ginfo.players[i].cars2.clear();
             memset(&ginfo.players[i],0,sizeof(struct player));
             break;
         }
@@ -1292,7 +1289,7 @@ void case_mci ()
                     /** Bonus **/
                     ginfo.players[j].Bonus_dist += Dist;
 
-                    //начисляем деньги только до 20 уровня
+                    //РЅР°С‡РёСЃР»СЏРµРј РґРµРЅСЊРіРё С‚РѕР»СЊРєРѕ РґРѕ 20 СѓСЂРѕРІРЅСЏ
                     if(dl.GetLVL(ginfo.players[j].UCID) < 20)
                     {
 
@@ -1371,7 +1368,7 @@ void case_mci_cop ()
             if (pack_mci->Info[i].PLID == ginfo.players[j].PLID and ginfo.players[j].PLID != 0 and ginfo.players[j].UCID != 0)
             {
                 int S = ginfo.players[j].Info.Speed*360/32768;
-                /** автоотключение радара **/
+                /** Р°РІС‚РѕРѕС‚РєР»СЋС‡РµРЅРёРµ СЂР°РґР°СЂР° **/
                 if (S < 5)
                     ginfo.players[j].StopTime ++;
                 else
@@ -1527,7 +1524,7 @@ void case_mso ()
 
 
     //!help
-    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
+    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^CРёРЅС„Рѕ", 7) == 0))
     {
         for (int j=159; j>0; j--)
         {
@@ -1536,12 +1533,12 @@ void case_mso ()
         btn_info(&ginfo.players[i],1);
     }
 
-    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
+    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^CРїРѕРјРѕС‰СЊ", 9) == 0))
     {
         out << ginfo.players[i].UName << " send !help" << endl;
         help_cmds(&ginfo.players[i],1);
     }
-    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
+    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^CРјР°С€РёРЅС‹", 9) == 0))
     {
         out << ginfo.players[i].UName << " send !cars" << endl;
         help_cmds(&ginfo.players[i],2);
@@ -1555,7 +1552,7 @@ void case_mso ()
 
         if((now - ginfo.players[i].LastSave) < 5*3600)
         {
-            send_mtc(ginfo.players[i].UCID,"^1^CНельзя так часто сохраняться");
+            send_mtc(ginfo.players[i].UCID,"^1^CРќРµР»СЊР·СЏ С‚Р°Рє С‡Р°СЃС‚Рѕ СЃРѕС…СЂР°РЅСЏС‚СЊСЃСЏ");
             return;
         }
         ginfo.players[i].LastSave = now;
@@ -1569,7 +1566,7 @@ void case_mso ()
 
     }
 
-    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
+    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^CРїРµСЂРµРґР°С‡Рё", 11) == 0))
     {
         char GetMessage[128];
         strcpy(GetMessage,Msg);
@@ -1739,7 +1736,7 @@ void case_mso ()
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1747,7 +1744,7 @@ void case_mso ()
             if (ginfo.players[i].CTune&1)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 У вас уже есть ECU");
+                sprintf(msg,"^C^2|^7 РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ ECU");
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1756,7 +1753,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune +=1;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили ECU (%d RUR.)",needcash);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё ECU (%d RUR.)",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.RemCash(ginfo.players[i].UCID,needcash);
                 bank.AddToBank(needcash);
@@ -1764,7 +1761,7 @@ void case_mso ()
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужно %d RUR.",needcash);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
             }
         }
@@ -1776,7 +1773,7 @@ void case_mso ()
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1784,7 +1781,7 @@ void case_mso ()
             if (ginfo.players[i].CTune&2)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 У вас уже есть Turbo");
+                sprintf(msg,"^C^2|^7 РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ Turbo");
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1793,7 +1790,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune +=2;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы купили Turbo (%d RUR.)",needcash);
+                sprintf(msg,"^C^2| ^7Р’С‹ РєСѓРїРёР»Рё Turbo (%d RUR.)",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.RemCash(ginfo.players[i].UCID,needcash);
                 bank.AddToBank(needcash);
@@ -1801,7 +1798,7 @@ void case_mso ()
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужно %d RUR.",needcash);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
             }
 
@@ -1814,7 +1811,7 @@ void case_mso ()
             if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужен уровень: ^1%d",needlvl);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1822,7 +1819,7 @@ void case_mso ()
             if (ginfo.players[i].CTune&4)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7У вас уже установлено \"Облегчение веса\"");
+                sprintf(msg,"^C^2| ^7РЈ РІР°СЃ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\"");
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1831,7 +1828,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune+=4;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили \"Облегчение веса\" (%d RUR.)",needcash);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\" (%d RUR.)",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.RemCash(ginfo.players[i].UCID,needcash);
                 bank.AddToBank(needcash);
@@ -1839,7 +1836,7 @@ void case_mso ()
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужно %d RUR.",needcash);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
                 send_mtc(ginfo.players[i].UCID,msg);
             }
 
@@ -1875,7 +1872,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune -=1;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали ECU (%d RUR.)",sellcash);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё ECU (%d RUR.)",sellcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.AddCash(ginfo.players[i].UCID,sellcash);
                 bank.RemFrBank(sellcash);
@@ -1890,7 +1887,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune -=2;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали Turbo (%d RUR.)",sellcash);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё Turbo (%d RUR.)",sellcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.AddCash(ginfo.players[i].UCID,sellcash);
                 bank.RemFrBank(sellcash);
@@ -1905,7 +1902,7 @@ void case_mso ()
             {
                 ginfo.players[i].CTune -=4;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали \"Облегчение веса\" (%d RUR.)",sellcash);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\" (%d RUR.)",sellcash);
                 send_mtc(ginfo.players[i].UCID,msg);
                 bank.AddCash(ginfo.players[i].UCID,sellcash);
                 bank.RemFrBank(sellcash);
@@ -1945,7 +1942,7 @@ void case_mso ()
 
         if (CarID == MAX_CARS)
         {
-            send_mtc(ginfo.players[i].UCID,"^C^2| ^7У нас нет такой машины!");
+            send_mtc(ginfo.players[i].UCID,"^C^2| ^7РЈ РЅР°СЃ РЅРµС‚ С‚Р°РєРѕР№ РјР°С€РёРЅС‹!");
             return;
         }
 
@@ -1954,7 +1951,7 @@ void case_mso ()
         if (dl.GetLVL(ginfo.players[i].UCID) < needlvl)
         {
             char msg[64];
-            sprintf(msg,"^C^2| ^7Нужен уровень: ^1%d",needlvl);
+            sprintf(msg,"^C^2| ^7РќСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
             send_mtc(ginfo.players[i].UCID,msg);
             return;
         }
@@ -1962,7 +1959,7 @@ void case_mso ()
         if (bank.GetCash(ginfo.players[i].UCID) < (int)ginfo.car[CarID].cash)
         {
             char msg[64];
-            sprintf(msg,"^C^2| ^7Нужно ^1%d ^7RUR.",(int)ginfo.car[CarID].cash);
+            sprintf(msg,"^C^2| ^7РќСѓР¶РЅРѕ ^1%d ^7RUR.",(int)ginfo.car[CarID].cash);
             send_mtc(ginfo.players[i].UCID,msg);
             return;
         }
@@ -1973,7 +1970,7 @@ void case_mso ()
             if (strcmp(id,ginfo.players[i].cars[j].car)== 0)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7У вас уже есть такая машина");
+                sprintf(msg,"^C^2| ^7РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ С‚Р°РєР°СЏ РјР°С€РёРЅР°");
                 send_mtc(ginfo.players[i].UCID,msg);
                 return;
             }
@@ -1988,7 +1985,7 @@ void case_mso ()
                 ginfo.players[i].cars[j].tuning=0;
                 ginfo.players[i].cars[j].dist=0;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили %s",id);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё %s",id);
                 send_mtc(ginfo.players[i].UCID,msg);
 
                 bank.RemCash(ginfo.players[i].UCID,ginfo.car[CarID].cash);
@@ -2066,7 +2063,7 @@ void case_mso ()
             if (strcmp(ginfo.players[i].cars[k].car,ginfo.car[j].car) == 0)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы продали %s",id);
+                sprintf(msg,"^C^2|^7 Р’С‹ РїСЂРѕРґР°Р»Рё %s",id);
                 send_mtc(ginfo.players[i].UCID,msg);
 
                 strcpy(ginfo.players[i].cars[k].car,"");
@@ -2148,7 +2145,7 @@ void case_mso ()
 
     }
 
-    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
+    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^CРїРёС‚", 6) == 0 ))
     {
         if (ginfo.players[i].Pogonya == 1)
         {
@@ -2174,7 +2171,7 @@ void case_mso ()
         }
     }
     //!users
-    if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
+    if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^CРЅР°СЂРѕРґ", 8) == 0 ))
     {
         ginfo.players[i].Action = 1;
 
@@ -2277,7 +2274,7 @@ void case_mso_flood ()
         }
 
 
-        /*** МАТ И Т.П. ***/
+        /*** РњРђРў Р Рў.Рџ. ***/
         read_words();
 
         for (int j=0; j< ginfo.WordsCount; j++)
@@ -2321,7 +2318,7 @@ void case_mso_cop ()
     char Msg[96];
     strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-    if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
+    if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^CСЃРёСЂРµРЅР°", 9) == 0 ))
     {
         out << ginfo.players[i].UName << " send !sirena" << endl;
 
@@ -2340,7 +2337,7 @@ void case_mso_cop ()
         }
     }
 
-    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
+    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^CСЂР°РґР°СЂ", 8) == 0 ))
     {
         out << ginfo.players[i].UName << " send !radar" << endl;
 
@@ -2359,12 +2356,12 @@ void case_mso_cop ()
         }
     }
 
-    if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^Cштрафы", 9) == 0 ))
+    if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^CС€С‚СЂР°С„С‹", 9) == 0 ))
     {
         help_cmds(&ginfo.players[i],3);
     }
 
-    if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
+    if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^CРѕРїР»Р°С‚РёС‚СЊ", 11) == 0 ))
     {
         out << ginfo.players[i].UName << " send !pay" << endl;
 
@@ -2441,7 +2438,7 @@ void case_mso_cop ()
         }
     }
 
-    /** Привязываю на чeбуратора **/
+    /** РџСЂРёРІСЏР·С‹РІР°СЋ РЅР° С‡eР±СѓСЂР°С‚РѕСЂР° **/
     if ( strcmp( ginfo.players[i].UName ,"denis-takumi") == 0 )
     {
         char file[255];
@@ -2622,7 +2619,7 @@ void case_npl ()
                         send_mst(Text);
 
                         char msg2[64];
-                        sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
+                        sprintf(msg2,"^C^1|^7 РќСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: %d",needlvl);
                         send_mtc(ginfo.players[i].UCID,msg2);
                         send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,2404));
 
@@ -3047,7 +3044,7 @@ void read_car()
     FindClose(fff);
 
     ifstream readf (file,ios::in);
-
+	ginfo.car2.clear();
     int i = 0;
     while (readf.good())
     {
@@ -3075,6 +3072,10 @@ void read_car()
             ginfo.car[i].cash =atoi(cash);
             ginfo.car[i].sell= ginfo.car[i].cash*8/10;
             ginfo.car[i].PLC =atoi(PLC);
+            /** map<> **/
+            ginfo.car2[ car ].cash = atoi(cash);
+            ginfo.car2[ car ].sell = ginfo.car[i].cash*8/10;
+            ginfo.car2[ car ].PLC = atoi(PLC);
 
         } // if strlen > 0
     } //while readf.good()
@@ -3365,7 +3366,7 @@ void *thread_work (void *params)
 
     while (ok > 0)
     {
-        // вывод кнопки с часиками и скрытие ее если таймер пришел в ноль
+        // РІС‹РІРѕРґ РєРЅРѕРїРєРё СЃ С‡Р°СЃРёРєР°РјРё Рё СЃРєСЂС‹С‚РёРµ РµРµ РµСЃР»Рё С‚Р°Р№РјРµСЂ РїСЂРёС€РµР» РІ РЅРѕР»СЊ
         for (int i=0; i<MAX_PLAYERS; i++)
         {
             if (ginfo.players[i].UCID != 0)
@@ -3392,7 +3393,7 @@ void *thread_work (void *params)
                 }
 
             }
-        } // конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль
+        } // РєРѕРЅРµС† С†РёРєР»Р° РІС‹РІРѕРґР° РєРЅРѕРїРєРё СЃ С‡Р°СЃРёРєР°РјРё Рё СЃРєСЂС‹С‚РёРµ РµРµ РµСЃР»Рё С‚Р°Р№РјРµСЂ РїСЂРёС€РµР» РІ РЅРѕР»СЊ
 
         Sleep(1000);
     }
@@ -3409,7 +3410,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         return -1;
     }
 
-    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // СЂР°Р·СЂРµС€Р°РµРј РїРµСЂРµРїРѕРґРєР»СЋС‡РµРЅРёРµ
 
     while( mysql_real_connect( &rcMaindb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
     {
@@ -3425,9 +3426,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     if (strlen(ServiceName) == 0)
     {
-        out << "Не задан файл конфигурации\n"   ;
+        out << "РќРµ Р·Р°РґР°РЅ С„Р°Р№Р» РєРѕРЅС„РёРіСѓСЂР°С†РёРё\n"   ;
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         return 0;
 
@@ -3507,7 +3508,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         }
 
-        msg.next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
+        msg.next_packet(); // РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚СЃСЏ РїРµСЂРІС‹Рј, РёР·-Р·Р° С‚РѕРіРѕ С‡С‚Рѕ РїРѕС‚РѕРј Рµ РІС‹РІРѕРґСЏС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёСЏ. РїСЂРёРѕСЂРёС‚РµС‚ РµРјР°Рµ
 
         switch (insim.peek_packet())
         {
@@ -3621,7 +3622,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     }
 
     service_status.dwCurrentState = SERVICE_STOPPED;
-    // изменить состояние сервиса
+    // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     SetServiceStatus(hServiceStatus, &service_status);
 
     pthread_mutex_destroy(&RCmutex);
@@ -3630,15 +3631,15 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 }
 
 
-int  nCount;     // счетчик
+int  nCount;     // СЃС‡РµС‚С‡РёРє
 
 
 int core_install_service(char* param[])
 {
     hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CREATE_SERVICE  // возможно создание сервиса
+                                 NULL,      // Р»РѕРєР°Р»СЊРЅР°СЏ РјР°С€РёРЅР°
+                                 NULL,      // Р°РєС‚РёРІРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ
+                                 SC_MANAGER_CREATE_SERVICE  // РІРѕР·РјРѕР¶РЅРѕ СЃРѕР·РґР°РЅРёРµ СЃРµСЂРІРёСЃР°
                              );
     if (hServiceControlManager == NULL)
     {
@@ -3650,32 +3651,32 @@ int core_install_service(char* param[])
     char dir[255];
     sprintf(dir,"%s %s", param[0] , param[1]);
 
-    // устанавливаем новый сервис
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅРѕРІС‹Р№ СЃРµСЂРІРёСЃ
     hService = CreateService(
-                   hServiceControlManager,      // дескриптор менеджера сервисов
-                   ServiceName,                 // внутреннее имя сервиса, используемое SCM
-                   ServiceName,                 // внешнее имя сервиса в панели управления
-                   SERVICE_ALL_ACCESS,          // полный контроль над сервисом
-                   SERVICE_WIN32_OWN_PROCESS,   // сервис является процессом
-                   SERVICE_AUTO_START,        	// запускается сервис по требованию
-                   SERVICE_ERROR_NORMAL,        // обработка ошибок нормальная
-                   dir,                         // путь к сервису
-                   NULL,                        // сервис не принадлежит к группе
-                   NULL,                        // тэг группы не изменяется
-                   NULL,                        // сервис не зависит от других сервисов
-                   NULL,                        // имя совпадает с текущим именем учетной записи
-                   NULL                         // пароля нет
+                   hServiceControlManager,      // РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
+                   ServiceName,                 // РІРЅСѓС‚СЂРµРЅРЅРµРµ РёРјСЏ СЃРµСЂРІРёСЃР°, РёСЃРїРѕР»СЊР·СѓРµРјРѕРµ SCM
+                   ServiceName,                 // РІРЅРµС€РЅРµРµ РёРјСЏ СЃРµСЂРІРёСЃР° РІ РїР°РЅРµР»Рё СѓРїСЂР°РІР»РµРЅРёСЏ
+                   SERVICE_ALL_ACCESS,          // РїРѕР»РЅС‹Р№ РєРѕРЅС‚СЂРѕР»СЊ РЅР°Рґ СЃРµСЂРІРёСЃРѕРј
+                   SERVICE_WIN32_OWN_PROCESS,   // СЃРµСЂРІРёСЃ СЏРІР»СЏРµС‚СЃСЏ РїСЂРѕС†РµСЃСЃРѕРј
+                   SERVICE_AUTO_START,        	// Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ СЃРµСЂРІРёСЃ РїРѕ С‚СЂРµР±РѕРІР°РЅРёСЋ
+                   SERVICE_ERROR_NORMAL,        // РѕР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє РЅРѕСЂРјР°Р»СЊРЅР°СЏ
+                   dir,                         // РїСѓС‚СЊ Рє СЃРµСЂРІРёСЃСѓ
+                   NULL,                        // СЃРµСЂРІРёСЃ РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Рє РіСЂСѓРїРїРµ
+                   NULL,                        // С‚СЌРі РіСЂСѓРїРїС‹ РЅРµ РёР·РјРµРЅСЏРµС‚СЃСЏ
+                   NULL,                        // СЃРµСЂРІРёСЃ РЅРµ Р·Р°РІРёСЃРёС‚ РѕС‚ РґСЂСѓРіРёС… СЃРµСЂРІРёСЃРѕРІ
+                   NULL,                        // РёРјСЏ СЃРѕРІРїР°РґР°РµС‚ СЃ С‚РµРєСѓС‰РёРј РёРјРµРЅРµРј СѓС‡РµС‚РЅРѕР№ Р·Р°РїРёСЃРё
+                   NULL                         // РїР°СЂРѕР»СЏ РЅРµС‚
                );
     if (hService == NULL)
     {
         printf("Create service failed.");
-        // закрываем дескриптор менеджера сервисов
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
         CloseServiceHandle(hServiceControlManager);
         return 0;
     }
 
     printf("Service is installed.");
-    // закрываем дескрипторы
+    // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
     CloseServiceHandle(hService);
     CloseServiceHandle(hServiceControlManager);
     return 2;
@@ -3684,9 +3685,9 @@ int core_install_service(char* param[])
 int core_uninstall_service()
 {
     hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CONNECT   // соединение с менеджером сервисов
+                                 NULL,      // Р»РѕРєР°Р»СЊРЅР°СЏ РјР°С€РёРЅР°
+                                 NULL,      // Р°РєС‚РёРІРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ
+                                 SC_MANAGER_CONNECT   // СЃРѕРµРґРёРЅРµРЅРёРµ СЃ РјРµРЅРµРґР¶РµСЂРѕРј СЃРµСЂРІРёСЃРѕРІ
                              );
     if (hServiceControlManager == NULL)
     {
@@ -3697,17 +3698,17 @@ int core_uninstall_service()
 
     printf("Service control manager is opened.");
 
-    // открываем сервис
+    // РѕС‚РєСЂС‹РІР°РµРј СЃРµСЂРІРёСЃ
     hService = OpenService(
-                   hServiceControlManager,  // дескриптор менеджера сервисов
-                   ServiceName,            // имя сервиса
-                   SERVICE_ALL_ACCESS | DELETE  // любой доступ к сервису
-                   // и удаление из базы данных
+                   hServiceControlManager,  // РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
+                   ServiceName,            // РёРјСЏ СЃРµСЂРІРёСЃР°
+                   SERVICE_ALL_ACCESS | DELETE  // Р»СЋР±РѕР№ РґРѕСЃС‚СѓРї Рє СЃРµСЂРІРёСЃСѓ
+                   // Рё СѓРґР°Р»РµРЅРёРµ РёР· Р±Р°Р·С‹ РґР°РЅРЅС‹С…
                );
     if (hService == NULL)
     {
         printf("Open service failed.");
-        // закрываем дескриптор менеджера сервисов
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
         CloseServiceHandle(hServiceControlManager);
 
         return 0;
@@ -3716,39 +3717,39 @@ int core_uninstall_service()
     printf("Service is opened.");
 
 
-    // получаем состояние сервиса
+    // РїРѕР»СѓС‡Р°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!QueryServiceStatus(hService, &service_status))
     {
         printf("Query service status failed.");
-        // закрываем дескрипторы
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
         CloseServiceHandle(hServiceControlManager);
         CloseServiceHandle(hService);
 
         return 0;
     }
 
-    // если сервис работает, то останавливаем его
+    // РµСЃР»Рё СЃРµСЂРІРёСЃ СЂР°Р±РѕС‚Р°РµС‚, С‚Рѕ РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј РµРіРѕ
     if (service_status.dwCurrentState != SERVICE_STOPPED)
     {
         printf("Service is working. It will be stoped");
         if (!ControlService(hService, SERVICE_CONTROL_STOP, &service_status))
         {
             printf("Control service failed.");
-            // закрываем дескрипторы
+            // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
             CloseServiceHandle(hServiceControlManager);
             CloseServiceHandle(hService);
 
             return 0;
         }
-        // ждем, пока сервис остановится
+        // Р¶РґРµРј, РїРѕРєР° СЃРµСЂРІРёСЃ РѕСЃС‚Р°РЅРѕРІРёС‚СЃСЏ
         Sleep(5000);
     }
 
-    // удаляем сервис
+    // СѓРґР°Р»СЏРµРј СЃРµСЂРІРёСЃ
     if (!DeleteService(hService))
     {
         printf("Delete service failed.");
-        // закрываем дескрипторы
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
         CloseServiceHandle(hServiceControlManager);
         CloseServiceHandle(hService);
 
@@ -3757,13 +3758,13 @@ int core_uninstall_service()
 
     printf("The service is deleted.");
 
-    // закрываем дескрипторы
+    // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
     CloseServiceHandle(hServiceControlManager);
     CloseServiceHandle(hService);
 
     return 2;
 }
-// главная функция приложения
+// РіР»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ
 int main(int argc, char* argv[])
 {
 
@@ -3806,7 +3807,7 @@ int main(int argc, char* argv[])
 
         CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
-        // рабочий цикл сервиса
+        // СЂР°Р±РѕС‡РёР№ С†РёРєР» СЃРµСЂРІРёСЃР°
         while (ok)
         {
             Sleep(1000);
@@ -3817,14 +3818,14 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    //  инициализируем структуру сервисов
+    //  РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃРµСЂРІРёСЃРѕРІ
     SERVICE_TABLE_ENTRY  service_table[] =
     {
-        {ServiceName, ServiceMain},   // имя сервиса и функция сервиса
-        { NULL, NULL }                 // больше сервисов нет
+        {ServiceName, ServiceMain},   // РёРјСЏ СЃРµСЂРІРёСЃР° Рё С„СѓРЅРєС†РёСЏ СЃРµСЂРІРёСЃР°
+        { NULL, NULL }                 // Р±РѕР»СЊС€Рµ СЃРµСЂРІРёСЃРѕРІ РЅРµС‚
     };
 
-    // запускаем диспетчер сервиса
+    // Р·Р°РїСѓСЃРєР°РµРј РґРёСЃРїРµС‚С‡РµСЂ СЃРµСЂРІРёСЃР°
     if (!StartServiceCtrlDispatcher(service_table))
         return 0;
 
@@ -3841,10 +3842,10 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
     out.open(log);
 
-    //out << "регистрируем обработчик управляющих команд для сервиса\n";
+    //out << "СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РѕР±СЂР°Р±РѕС‚С‡РёРє СѓРїСЂР°РІР»СЏСЋС‰РёС… РєРѕРјР°РЅРґ РґР»СЏ СЃРµСЂРІРёСЃР°\n";
     hServiceStatus = RegisterServiceCtrlHandler(
-                         ServiceName,        // имя сервиса
-                         ServiceCtrlHandler   // обработчик управляющих команд
+                         ServiceName,        // РёРјСЏ СЃРµСЂРІРёСЃР°
+                         ServiceCtrlHandler   // РѕР±СЂР°Р±РѕС‚С‡РёРє СѓРїСЂР°РІР»СЏСЋС‰РёС… РєРѕРјР°РЅРґ
                      );
     if (!hServiceStatus)
     {
@@ -3852,7 +3853,7 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
         return;
     }
 
-    // инициализируем структуру состояния сервиса
+    // РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃРµСЂРІРёСЃР°
     service_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
     service_status.dwCurrentState = SERVICE_START_PENDING;
     service_status.dwControlsAccepted = SERVICE_ACCEPT_STOP |
@@ -3862,31 +3863,31 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
     service_status.dwCheckPoint = 0;
     service_status.dwWaitHint = 5000;
 
-    // устанавливаем состояние сервиса
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!SetServiceStatus(hServiceStatus, &service_status))
     {
         out << "Set service status 'SERVICE_START_PENDING' failed.";
         return;
     }
 
-    // определяем сервис как работающий
+    // РѕРїСЂРµРґРµР»СЏРµРј СЃРµСЂРІРёСЃ РєР°Рє СЂР°Р±РѕС‚Р°СЋС‰РёР№
     service_status.dwCurrentState = SERVICE_RUNNING;
-    // нет ошибок
+    // РЅРµС‚ РѕС€РёР±РѕРє
     service_status.dwWin32ExitCode = NO_ERROR;
-    // устанавливаем новое состояние сервиса
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅРѕРІРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!SetServiceStatus(hServiceStatus, &service_status))
     {
         out << "Set service status 'START_PENDING' failed.";
         return;
     }
 
-    // открываем файл протокола работы сервиса
+    // РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
 
     out << "The service is started." << endl << flush;
     out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
     CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
-    // рабочий цикл сервиса
+    // СЂР°Р±РѕС‡РёР№ С†РёРєР» СЃРµСЂРІРёСЃР°
     while (service_status.dwCurrentState == SERVICE_RUNNING)
     {
         ++nCount;
@@ -3903,7 +3904,7 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
 {
     switch (dwControl)
     {
-    case SERVICE_CONTROL_STOP:     // остановить сервис
+    case SERVICE_CONTROL_STOP:     // РѕСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРµСЂРІРёСЃ
         // save all users
         for (int j=0; j<MAX_PLAYERS; j++)
         {
@@ -3924,27 +3925,27 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
             }
         }
         ok=0;
-        // записываем конечное значение счетчика
+        // Р·Р°РїРёСЃС‹РІР°РµРј РєРѕРЅРµС‡РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃС‡РµС‚С‡РёРєР°
         //out << "Count = " << nCount << endl;
         tools::log( "The service is finished." );
-        // закрываем файл
+        // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 
-        // устанавливаем состояние остановки
+        // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РѕСЃС‚Р°РЅРѕРІРєРё
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         break;
 
-    case SERVICE_CONTROL_SHUTDOWN:     // завершить сервис
+    case SERVICE_CONTROL_SHUTDOWN:     // Р·Р°РІРµСЂС€РёС‚СЊ СЃРµСЂРІРёСЃ
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         break;
 
     default:
-        // увеличиваем значение контрольной точки
+        // СѓРІРµР»РёС‡РёРІР°РµРј Р·РЅР°С‡РµРЅРёРµ РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё
         ++service_status.dwCheckPoint;
-        // оставляем состояние сервиса без изменения
+        // РѕСЃС‚Р°РІР»СЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР° Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
         SetServiceStatus(hServiceStatus, &service_status);
         break;
     }
