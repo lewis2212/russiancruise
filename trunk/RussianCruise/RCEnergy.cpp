@@ -76,10 +76,10 @@ int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,v
 
     mysql_options( &rcNrgDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    if( mysql_real_connect( &rcNrgDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    while( mysql_real_connect( &rcNrgDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
     {
         printf("RCEnergy Error: can't connect to MySQL server\n");
-        return 0;
+        Sleep(60000);
     }
 	printf("RCEnergy Success: Connected to MySQL server\n");
 
