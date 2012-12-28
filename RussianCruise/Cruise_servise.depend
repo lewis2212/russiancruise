@@ -887,3 +887,239 @@
 
 1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysqld_error.h
 
+1356672855 source:c:\documents and settings\dkostin\Рабочий стол\rucru\cinsim.cpp
+	"CInsim.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\insim.h
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<setjmp.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcantcheat.cpp
+	"RCAntCheat.h"
+
+1356672855 c:\documents and settings\dkostin\Рабочий стол\rucru\rcantcheat.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"CInsim.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rcmessage.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<fstream>
+	<windows.h>
+	"RCBaseClass.h"
+	"tools.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+	"tools.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\tools.h
+	<math.h>
+	<windows.h>
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rcbank.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"mysql/include/mysql.h"
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"typelib.h"
+	"my_list.h"
+	"my_alloc.h"
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\mysql_version.h
+	<custom_conf.h>
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\mysql_com.h
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\mysql_time.h
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\typelib.h
+	"my_alloc.h"
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\my_alloc.h
+
+1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\my_list.h
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcbank.cpp
+	"RCBank.h"
+
+1356672855 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcdrivinglicense.cpp
+	"RCDrivingLicense.h"
+
+1356672853 c:\documents and settings\dkostin\Рабочий стол\rucru\rcdrivinglicense.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<math.h>
+	"mysql/include/mysql.h"
+	"RCBaseClass.h"
+	"tools.h"
+	"RCBaseClass.h"
+	"RCMessage.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcenergy.cpp
+	"RCEnergy.h"
+
+1356672855 c:\documents and settings\dkostin\Рабочий стол\rucru\rcenergy.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"mysql/include/mysql.h"
+	"RCBaseClass.h"
+	"tools.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1356672855 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rclight.cpp
+	"RCLight.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rclight.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCDrivingLicense.h"
+	"tools.h"
+
+1356704053 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.cpp
+	"RCMain.h"
+	"version.h"
+	"tools.h"
+
+1356705716 c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.h
+	<math.h>
+	<windows.h>
+	<time.h>
+	<regex>
+	<map>
+	"mysql/include/mysql.h"
+	"CInsim.h"
+	"RCPizza.h"
+	"RCMessage.h"
+	"RCEnergy.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCAntCheat.h"
+	"RCStreet.h"
+	"RCLight.h"
+	"RCTaxi.h"
+
+1356672855 c:\documents and settings\dkostin\Рабочий стол\rucru\rcpizza.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCEnergy.h"
+	"RCDrivingLicense.h"
+	"RCTaxi.h"
+	"tools.h"
+
+1356672853 c:\documents and settings\dkostin\Рабочий стол\rucru\rctaxi.h
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"RCDrivingLicense.h"
+	"RCStreet.h"
+	"RCPizza.h"
+	"tools.h"
+
+1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rcstreet.h
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	"RCBaseClass.h"
+	"RCMessage.h"
+	"RCBank.h"
+	"tools.h"
+
+1356673769 c:\documents and settings\dkostin\Рабочий стол\rucru\version.h
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcmessage.cpp
+	"RCMessage.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcpizza.cpp
+	"RCPizza.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcpolice.cpp
+
+1356672855 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcstreet.cpp
+	"RCStreet.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rctaxi.cpp
+	"RCTaxi.h"
+
+1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\tools.cpp
+	"tools.h"
+	<stdio.h>
+

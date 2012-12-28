@@ -75,6 +75,8 @@ using namespace std;
 #include <math.h>
 #include <windows.h>
 #include <time.h>
+#include <regex>
+#include <map>
 
 //#include "mysql/include/my_global.h"
 #include "mysql/include/mysql.h"
@@ -170,6 +172,7 @@ struct player
     struct CompCar Info;
     struct user_car cars[MAX_CARS];
     struct user_fine fines[MAX_FINES];
+    map <string, user_car> cars2;
 
     char    UName[24];             // Username
     char    PName[24];             // Player name
@@ -232,6 +235,7 @@ struct global_info
     byte    Sp1;
     struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
     byte    Sp2;
+    map<string,cars> car2;
     struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
     byte    Sp3;
     /** Bad words **/
