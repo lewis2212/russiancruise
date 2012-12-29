@@ -150,6 +150,27 @@ int IfCop (struct player *splayer)
     return COP;
 }
 
+user_car AddUserCar(const char *car = "UF1", float dist =0, int tuning = 0)
+{
+	user_car c;
+	strcpy(c.car, car);
+	c.dist = dist;
+	c.tuning = tuning;
+	return c;
+}
+
+cars AddCar(int id = 0, const char *car = "UF1", int cash =0, int sell = 0, unsigned PLC = 0)
+{
+	cars c;
+	c.id = id;
+	strcpy(c.car, car);
+	c.cash = cash;
+	c.sell = sell;
+	c.PLC = PLC;
+	return c;
+}
+
+
 
 void read_words()
 {
@@ -250,15 +271,14 @@ void read_user_cars(struct player *splayer)
 			splayer->cars[i].tuning = atoi( rcMainRow[1] );
 			splayer->cars[i].dist = atof( rcMainRow[2] );
             /** map<> **/
-			splayer->cars2[ rcMainRow[0] ].tuning = atoi( rcMainRow[1] );
-			splayer->cars2[ rcMainRow[0] ].dist = atof( rcMainRow[2] );
-            splayer->PLC += ginfo.car2[ rcMainRow[0] ].PLC;
+			//splayer->cars2[ rcMainRow[0] ] = AddUserCar( rcMainRow[0], atof( rcMainRow[1] ), atoi( rcMainRow[2] ) );
+            //splayer->PLC += ginfo.car2[ rcMainRow[0] ].PLC;
 
 			for (int c=0; c<MAX_CARS; c++)
 			{
 				if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
 				{
-					//splayer->PLC += ginfo.car[c].PLC;
+					splayer->PLC += ginfo.car[c].PLC;
 					break;
 				}
 			}
@@ -2725,8 +2745,7 @@ void case_pla ()
                 if (ginfo.players[i].Penalty != 0)
                 {
                     char Text[64];
-                    strcpy(Text, "/p_clear ");
-                    strcat (Text, ginfo.players[i].UName);
+                    sprintf(Text, "/p_clear %s",ginfo.players[i].UName);
                     send_mst(Text);
                 }
                 int count = 0;
@@ -2738,8 +2757,7 @@ void case_pla ()
 
                 if (count > 10)
                 {
-                    ginfo.players[i].PLID = 0;
-                    char Text[48];
+                    char Text[64];
                     sprintf(Text, "/pitlane %s",ginfo.players[i].UName);
                     send_mtc(ginfo.players[i].UCID,msg.GetMessage(ginfo.players[i].UCID,3400));
                     send_mst(Text);
@@ -3081,9 +3099,7 @@ void read_car()
             ginfo.car[i].sell= ginfo.car[i].cash*8/10;
             ginfo.car[i].PLC =atoi(PLC);
             /** map<> **/
-            ginfo.car2[ car ].cash = atoi(cash);
-            ginfo.car2[ car ].sell = ginfo.car[i].cash*8/10;
-            ginfo.car2[ car ].PLC = atoi(PLC);
+           // ginfo.car2[ car ] = AddCar(i ,car, atoi(cash), atoi(cash)*8/10 , atoi(PLC) );
 
         } // if strlen > 0
     } //while readf.good()
