@@ -958,9 +958,11 @@
 	<exception>
 	"tools.h"
 
-1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\tools.h
+1356759447 c:\documents and settings\dkostin\Рабочий стол\rucru\tools.h
 	<math.h>
 	<windows.h>
+	<iostream>
+	<fstream>
 
 1356672854 c:\documents and settings\dkostin\Рабочий стол\rucru\rcbank.h
 	<stdio.h>
@@ -997,13 +999,13 @@
 
 1356672841 c:\documents and settings\dkostin\Рабочий стол\rucru\mysql\include\my_list.h
 
-1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcbank.cpp
+1356759447 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcbank.cpp
 	"RCBank.h"
 
 1356672855 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcbaseclass.cpp
 	"RCBaseClass.h"
 
-1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcdrivinglicense.cpp
+1356759447 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcdrivinglicense.cpp
 	"RCDrivingLicense.h"
 
 1356672853 c:\documents and settings\dkostin\Рабочий стол\rucru\rcdrivinglicense.h
@@ -1018,7 +1020,7 @@
 	"RCBaseClass.h"
 	"RCMessage.h"
 
-1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcenergy.cpp
+1356759447 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcenergy.cpp
 	"RCEnergy.h"
 
 1356672855 c:\documents and settings\dkostin\Рабочий стол\rucru\rcenergy.h
@@ -1047,16 +1049,15 @@
 	"RCDrivingLicense.h"
 	"tools.h"
 
-1356704053 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.cpp
+1356766974 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.cpp
 	"RCMain.h"
 	"version.h"
 	"tools.h"
 
-1356705716 c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.h
+1356765657 c:\documents and settings\dkostin\Рабочий стол\rucru\rcmain.h
 	<math.h>
 	<windows.h>
 	<time.h>
-	<regex>
 	<map>
 	"mysql/include/mysql.h"
 	"CInsim.h"
@@ -1123,7 +1124,8 @@
 1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\rctaxi.cpp
 	"RCTaxi.h"
 
-1356672854 source:c:\documents and settings\dkostin\Рабочий стол\rucru\tools.cpp
+1356759447 source:c:\documents and settings\dkostin\Рабочий стол\rucru\tools.cpp
 	"tools.h"
 	<stdio.h>
+	<string.h>
 

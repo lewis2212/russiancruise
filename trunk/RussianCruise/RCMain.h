@@ -133,26 +133,27 @@ pthread_mutex_t RCmutex;                // Mutex var used for send_packet() meth
 
 
 
-struct cars
+typedef struct cars
 {
     int             id;
     char            car[6];
     unsigned long   cash;
     unsigned long   sell;
     unsigned		PLC;
-};
+} _cars;
 
-struct user_car
+typedef struct user_car
 {
     char    car[6];
     int     tuning;
     float     dist;
-};
-struct user_fine
+} _user_car;
+
+typedef struct user_fine
 {
     int     fine_id;
     int     fine_date;
-};
+} _user_fine;
 
 
 
@@ -169,7 +170,7 @@ struct track_info
 struct player
 {
     struct CompCar Info;
-    struct user_car cars[MAX_CARS];
+    user_car cars[MAX_CARS];
     struct user_fine fines[MAX_FINES];
     map <string, user_car> cars2;
 
