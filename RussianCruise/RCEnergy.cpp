@@ -76,7 +76,12 @@ int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,v
 
     mysql_options( &rcNrgDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( mysql_real_connect( &rcNrgDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    mysqlConf conf;
+	char path[MAX_PATH];
+	sprintf(path,"%smisc\\mysql.cfg",RootDir);
+	tools::read_mysql(path, &conf);
+
+    while( mysql_real_connect( &rcNrgDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCEnergy Error: can't connect to MySQL server\n");
         Sleep(60000);

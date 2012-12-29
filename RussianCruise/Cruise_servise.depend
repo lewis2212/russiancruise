@@ -649,7 +649,7 @@
 	<sched.h>
 	<sys/types.h>
 
-1355850872 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
+1356721286 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
 	"RCBank.h"
 
 1355418748 d:\backup\cpp\rucruise\russiancruise\rcbank.h
@@ -672,9 +672,11 @@
 	<exception>
 	"tools.h"
 
-1355851536 d:\backup\cpp\rucruise\russiancruise\tools.h
+1356721146 d:\backup\cpp\rucruise\russiancruise\tools.h
 	<math.h>
 	<windows.h>
+	<iostream>
+	<fstream>
 
 1354993031 d:\backup\cpp\rucruise\russiancruise\rcmessage.h
 	<stdio.h>
@@ -688,7 +690,7 @@
 1355846358 source:d:\backup\cpp\rucruise\russiancruise\rcbaseclass.cpp
 	"RCBaseClass.h"
 
-1355638811 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
+1356721286 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
 	"RCDrivingLicense.h"
 
 1355846915 d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.h
@@ -703,7 +705,7 @@
 	"RCBaseClass.h"
 	"RCMessage.h"
 
-1355850872 source:d:\backup\cpp\rucruise\russiancruise\rcenergy.cpp
+1356721286 source:d:\backup\cpp\rucruise\russiancruise\rcenergy.cpp
 	"RCEnergy.h"
 
 1355418748 d:\backup\cpp\rucruise\russiancruise\rcenergy.h
@@ -719,15 +721,16 @@
 	"RCBank.h"
 	"tools.h"
 
-1355851504 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
+1356726084 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
 	"RCMain.h"
 	"version.h"
 	"tools.h"
 
-1355251468 d:\backup\cpp\rucruise\russiancruise\rcmain.h
+1356725094 d:\backup\cpp\rucruise\russiancruise\rcmain.h
 	<math.h>
 	<windows.h>
 	<time.h>
+	<map>
 	"mysql/include/mysql.h"
 	"CInsim.h"
 	"RCPizza.h"
@@ -798,7 +801,7 @@
 	"RCDrivingLicense.h"
 	"tools.h"
 
-1354993031 d:\backup\cpp\rucruise\russiancruise\version.h
+1356713068 d:\backup\cpp\rucruise\russiancruise\version.h
 
 1354993031 source:d:\backup\cpp\rucruise\russiancruise\rcmessage.cpp
 	"RCMessage.h"
@@ -811,9 +814,10 @@
 1355850872 source:d:\backup\cpp\rucruise\russiancruise\rcstreet.cpp
 	"RCStreet.h"
 
-1355846358 source:d:\backup\cpp\rucruise\russiancruise\tools.cpp
+1356721171 source:d:\backup\cpp\rucruise\russiancruise\tools.cpp
 	"tools.h"
 	<stdio.h>
+	<string.h>
 
 1355850871 source:d:\backup\cpp\rucruise\russiancruise\rcantcheat.cpp
 	"RCAntCheat.h"

@@ -3,6 +3,8 @@
 
 #include <math.h>
 #include <windows.h>
+#include <iostream>
+#include <fstream>
 
 typedef unsigned char byte;
 
@@ -21,9 +23,19 @@ struct place
     struct  square point[40]; // Destination points.
 };
 
+struct mysqlConf
+{
+	char 	host[64];
+	int		port;
+	char 	user[64];
+	char 	password[64];
+	char 	database[64];
+};
+
 namespace tools {
 
 	void log(const char *text);
+	void read_mysql(const char *path ,mysqlConf *conf);
 }
 
 #endif

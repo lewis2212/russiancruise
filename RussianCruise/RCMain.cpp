@@ -126,13 +126,22 @@ int IfCop (struct player *splayer)
     strcpy(PlayerName,splayer->PName);
 
     int COP = 0;
-    if (
-        ( regex_match (PlayerName , regex("(^(\^\d)?\[(\^C)?(\^\d)?(Д|д|Г|г)(П|п|А|а|A|a)(С|с|C|c|c|И|и)(\^\d)?\]") ) )  &&
-        (splayer->cop != 1)
+
+     if (
+        ((strncmp("^4[^C^7ДПС^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ДПC^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7дпс^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7дпc^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ГАИ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7гаи^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ГAИ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7гaи^4]",PlayerName,13)==0))
+        && (splayer->cop != 1)
     )
     {
         COP += 1;
     }
+
     if ( read_cop(splayer) > 0)
     {
         COP += 2;
@@ -245,12 +254,11 @@ void read_user_cars(struct player *splayer)
 			splayer->cars2[ rcMainRow[0] ].dist = atof( rcMainRow[2] );
             splayer->PLC += ginfo.car2[ rcMainRow[0] ].PLC;
 
-            splayer->PLC = 0;
 			for (int c=0; c<MAX_CARS; c++)
 			{
 				if (strncmp(splayer->cars[i].car,ginfo.car[c].car,3)==0)
 				{
-					splayer->PLC += ginfo.car[c].PLC;
+					//splayer->PLC += ginfo.car[c].PLC;
 					break;
 				}
 			}
@@ -3412,7 +3420,12 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( mysql_real_connect( &rcMaindb , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+	mysqlConf conf;
+	char path[MAX_PATH];
+	sprintf(path,"%smisc\\mysql.cfg",RootDir);
+	tools::read_mysql(path, &conf);
+
+    while( mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCMain Error: can't connect to MySQL server\n");
         Sleep(60000);

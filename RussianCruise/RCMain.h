@@ -75,7 +75,6 @@ using namespace std;
 #include <math.h>
 #include <windows.h>
 #include <time.h>
-#include <regex>
 #include <map>
 
 //#include "mysql/include/my_global.h"
