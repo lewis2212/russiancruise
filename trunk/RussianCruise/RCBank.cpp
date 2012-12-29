@@ -97,7 +97,12 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
 
     mysql_options( &rcbankDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( mysql_real_connect( &rcbankDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    mysqlConf conf;
+	char path[MAX_PATH];
+	sprintf(path,"%smisc\\mysql.cfg",RootDir);
+	tools::read_mysql(path, &conf);
+
+    while( mysql_real_connect( &rcbankDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCBank Error: can't connect to MySQL server\n");
         Sleep(60000);

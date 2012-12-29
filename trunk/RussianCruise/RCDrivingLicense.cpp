@@ -153,7 +153,12 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
 
     mysql_options( &rcDLDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
-    while( mysql_real_connect( &rcDLDB , "localhost", "cruise", "cruise", "cruise", 3310, NULL, 0) == false )
+    mysqlConf conf;
+	char path[MAX_PATH];
+	sprintf(path,"%smisc\\mysql.cfg",RootDir);
+	tools::read_mysql(path, &conf);
+
+    while( mysql_real_connect( &rcDLDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCDL Error: can't connect to MySQL server\n");
         Sleep(60000);
