@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="CInsim.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="141" topLine="0" />
+	</File>
+	<File name="CInsim.h" open="0" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="RCBaseClass.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2120" topLine="138" />
+	</File>
+	<File name="RCBaseClass.h" open="0" top="0" tabpos="5">
+		<Cursor position="1449" topLine="0" />
+	</File>
+	<File name="RCQuest.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="RCQuest.h" open="1" top="1" tabpos="2">
+		<Cursor position="152" topLine="1" />
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="4087" topLine="164" />
+	</File>
+	<File name="main.h" open="0" top="0" tabpos="6">
+		<Cursor position="169" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

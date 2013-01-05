@@ -1,0 +1,84 @@
+# depslib dependency file v1.0
+1357234906 source:d:\backup\cpp\clear_cruise\cinsim.cpp
+	"CInsim.h"
+
+1354993031 d:\backup\cpp\clear_cruise\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1354993031 d:\backup\cpp\clear_cruise\insim.h
+
+1357335162 source:d:\backup\cpp\clear_cruise\main.cpp
+	"main.h"
+
+1357335162 d:\backup\cpp\clear_cruise\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+
+1357377027 source:c:\users\werwer\desktop\one\main.cpp
+	"main.h"
+
+1357380400 c:\users\werwer\desktop\one\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+	"RCQuest.h"
+
+1354993032 c:\users\werwer\desktop\one\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1357372785 c:\users\werwer\desktop\one\insim.h
+
+1357234908 source:c:\users\werwer\desktop\one\cinsim.cpp
+	"CInsim.h"
+
+1357371355 source:c:\users\werwer\desktop\one\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1357371348 c:\users\werwer\desktop\one\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+
+1357371155 source:c:\users\werwer\desktop\one\rcquest.cpp
+	"RCQuest.h"
+
+1357378066 c:\users\werwer\desktop\one\rcquest.h
+	"RCBaseClass.h"
+
