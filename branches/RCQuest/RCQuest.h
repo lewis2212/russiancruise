@@ -1,9 +1,9 @@
-//#ifndef _RCQUEST_H
+#ifndef _RCQUEST_H
 #define _RCQUEST_H
 
 #include "RCBaseClass.h"
 
-
+// тут описание всех методов и свойств класса
 class RCQuest:public RCBaseClass
 {
     public:
@@ -22,8 +22,4 @@ class RCQuest:public RCBaseClass
         void    insim_mso();    // Игрок отправил сообщение
 };
 
-//};
-
-
-
-
+#endif

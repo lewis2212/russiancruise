@@ -82,3 +82,102 @@
 1357378066 c:\users\werwer\desktop\one\rcquest.h
 	"RCBaseClass.h"
 
+1357371355 source:c:\users\werwer\desktop\one Ч копи€\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1357371348 c:\users\werwer\desktop\one Ч копи€\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+
+1354993032 c:\users\werwer\desktop\one Ч копи€\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1357372785 c:\users\werwer\desktop\one Ч копи€\insim.h
+
+1357401940 source:c:\users\werwer\desktop\one Ч копи€\rcquest.cpp
+	"RCQuest.h"
+
+1357402819 c:\users\werwer\desktop\one Ч копи€\rcquest.h
+	"RCBaseClass.h"
+
+1357377027 source:c:\users\werwer\desktop\one Ч копи€\main.cpp
+	"main.h"
+
+1357380400 c:\users\werwer\desktop\one Ч копи€\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+	"RCQuest.h"
+
+1357234908 source:c:\users\werwer\desktop\one Ч копи€\cinsim.cpp
+	"CInsim.h"
+
+1357371355 source:d:\developments\cruisequests\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1357371348 d:\developments\cruisequests\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+
+1354993032 d:\developments\cruisequests\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1357372785 d:\developments\cruisequests\insim.h
+
+1357377027 source:d:\developments\cruisequests\main.cpp
+	"main.h"
+
+1357380400 d:\developments\cruisequests\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+	"RCQuest.h"
+
+1357402819 d:\developments\cruisequests\rcquest.h
+	"RCBaseClass.h"
+
+1357234908 source:d:\developments\cruisequests\cinsim.cpp
+	"CInsim.h"
+
