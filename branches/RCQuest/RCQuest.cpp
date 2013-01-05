@@ -5,8 +5,7 @@ RCQuest::RCQuest(){}
 
 RCQuest::~RCQuest(){}
 
-
-
+// обработчик события когда на сервер заходит новый пользователь
 void RCQuest::insim_ncn()
 {
 
