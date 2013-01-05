@@ -184,3 +184,51 @@
 1357412637 source:d:\developments\cruisequests\rcquest.cpp
 	"RCQuest.h"
 
+1357420580 source:c:\users\паха\desktop\новая папка\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1357420580 c:\users\паха\desktop\новая папка\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+
+1357420580 c:\users\паха\desktop\новая папка\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1357420580 c:\users\паха\desktop\новая папка\insim.h
+
+1357420746 source:c:\users\паха\desktop\новая папка\main.cpp
+	"main.h"
+
+1357420580 c:\users\паха\desktop\новая папка\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+	"RCQuest.h"
+
+1357420746 c:\users\паха\desktop\новая папка\rcquest.h
+	"RCBaseClass.h"
+
+1357420580 source:c:\users\паха\desktop\новая папка\cinsim.cpp
+	"CInsim.h"
+

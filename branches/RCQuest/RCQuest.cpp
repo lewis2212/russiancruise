@@ -17,7 +17,8 @@ void RCQuest::init(const char* RootDir, void *insim)
         return;
     }
 
-}
+}// привет
+
 
 // обработчик события когда на сервер заходит новый пользователь
 void RCQuest::insim_ncn()
