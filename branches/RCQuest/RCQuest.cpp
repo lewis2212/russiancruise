@@ -38,6 +38,6 @@ void RCQuest::insim_crp()
 
 void RCQuest::insim_mso()
 {
-
+	// тут я добавил коментарий который надо будет потом удалить
 }
 
