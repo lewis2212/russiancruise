@@ -232,3 +232,54 @@
 1357420580 source:c:\users\паха\desktop\новая папка\cinsim.cpp
 	"CInsim.h"
 
+1357415543 source:d:\backup\cpp\rcquest\cinsim.cpp
+	"CInsim.h"
+
+1357415543 d:\backup\cpp\rcquest\cinsim.h
+	"insim.h"
+	<iostream>
+	<winsock2.h>
+	<stdio.h>
+	<string.h>
+	"pthread.h"
+	<stdio.h>
+	<pthread.h>
+	<limits.h>
+	<string.h>
+	<netdb.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+
+1357415543 d:\backup\cpp\rcquest\insim.h
+
+1357474433 source:d:\backup\cpp\rcquest\rcbaseclass.cpp
+	"RCBaseClass.h"
+
+1357474420 d:\backup\cpp\rcquest\rcbaseclass.h
+	"CInsim.h"
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<windows.h>
+	<exception>
+
+1357471807 source:d:\backup\cpp\rcquest\main.cpp
+	"main.h"
+
+1357471370 d:\backup\cpp\rcquest\main.h
+	<fstream>
+	<math.h>
+	<windows.h>
+	<time.h>
+	"Cinsim.h"
+	"RCQuest.h"
+
+1357474500 d:\backup\cpp\rcquest\rcquest.h
+	"RCBaseClass.h"
+
+1357474483 source:d:\backup\cpp\rcquest\rcquest.cpp
+	"RCQuest.h"
+

@@ -21,9 +21,8 @@ void RCQuest::init(const char* RootDir, void *insim)
 
 
 // обработчик события когда на сервер заходит новый пользователь
-void RCQuest::insim_ncn()
+void RCQuest::insim_ncn( struct IS_NCN *packet )
 {
-	struct IS_NCN *packet = (struct IS_NCN*)insim->get_packet();
 
 	if( packet->UCID == 0 )
 	return;
@@ -37,31 +36,29 @@ void RCQuest::insim_ncn()
 
 	if( i == MAX_PLAYERS )
 		return;
-
+printf("UCID = %d UName = %s\n", packet->UCID, packet->UName);
 	players[i].UCID = packet->UCID;
 	strcpy(players[i].UName, packet->UName);
 	strcpy(players[i].PName, packet->PName);
 }
 
-void RCQuest::insim_npl()
+void RCQuest::insim_npl( struct IS_NPL *packet )
 {
  // тут идет обработка данных когда игрок вышел из питов
 }
 
-void RCQuest::insim_plp()
+void RCQuest::insim_plp( struct IS_PLP *packet )
 {
 
 }
 
-void RCQuest::insim_pll()
+void RCQuest::insim_pll( struct IS_PLL *packet )
 {
 
 }
 
-void RCQuest::insim_cnl()
+void RCQuest::insim_cnl( struct IS_CNL *packet )
 {
-	struct IS_CNL *packet = (struct IS_CNL*)insim->get_packet();
-
 	for(int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if( players[i].UCID == packet->UCID )
@@ -71,12 +68,12 @@ void RCQuest::insim_cnl()
 	}
 }
 
-void RCQuest::insim_crp()
+void RCQuest::insim_cpr( struct IS_CPR *packet )
 {
 
 }
 
-void RCQuest::insim_mso()
+void RCQuest::insim_mso( struct IS_MSO *packet )
 {
 	// тут я добавилkgfdhghdfkgjhdfет потом удалить
 }

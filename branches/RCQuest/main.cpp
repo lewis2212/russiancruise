@@ -19,7 +19,7 @@ void init_classes()
 {
 
 #ifdef _RC_QUEST_H
-	quest.init(RootDir, &insim);
+	quest.init(RootDir, insim);
 #endif
 
 }
