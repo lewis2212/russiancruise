@@ -133,10 +133,10 @@
 1357234908 source:c:\users\werwer\desktop\one Ч копи€\cinsim.cpp
 	"CInsim.h"
 
-1357371355 source:d:\developments\cruisequests\rcbaseclass.cpp
+1357467851 source:d:\developments\cruisequests\rcbaseclass.cpp
 	"RCBaseClass.h"
 
-1357371348 d:\developments\cruisequests\rcbaseclass.h
+1357467851 d:\developments\cruisequests\rcbaseclass.h
 	"CInsim.h"
 	<math.h>
 	<stdio.h>
@@ -164,7 +164,7 @@
 
 1357372785 d:\developments\cruisequests\insim.h
 
-1357409756 source:d:\developments\cruisequests\main.cpp
+1357467851 source:d:\developments\cruisequests\main.cpp
 	"main.h"
 
 1357409657 d:\developments\cruisequests\main.h
@@ -175,13 +175,13 @@
 	"Cinsim.h"
 	"RCQuest.h"
 
-1357411621 d:\developments\cruisequests\rcquest.h
+1357575519 d:\developments\cruisequests\rcquest.h
 	"RCBaseClass.h"
 
 1357234908 source:d:\developments\cruisequests\cinsim.cpp
 	"CInsim.h"
 
-1357412637 source:d:\developments\cruisequests\rcquest.cpp
+1357576059 source:d:\developments\cruisequests\rcquest.cpp
 	"RCQuest.h"
 
 1357420580 source:c:\users\паха\desktop\нова€ папка\rcbaseclass.cpp

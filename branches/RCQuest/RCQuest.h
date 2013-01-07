@@ -38,6 +38,7 @@ class RCQuest:public RCBaseClass
 			void    insim_cnl( struct IS_CNL* packet );		// Игрок ушел с сервера
 			void    insim_cpr( struct IS_CPR* packet );		// Игрок переименовался
 			void    insim_mso( struct IS_MSO* packet );		// Игрок отправил сообщение
+			void    insim_mci( struct IS_MCI *packet );
 };
 
 #endif

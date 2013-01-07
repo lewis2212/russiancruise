@@ -44,19 +44,41 @@ printf("UCID = %d UName = %s\n", packet->UCID, packet->UName);
 
 void RCQuest::insim_npl( struct IS_NPL *packet )
 {
- // тут идет обработка данных когда игрок вышел из питов
+    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == pack_npl->UCID)
+        {
+            players[i].PLID = pack_npl->PLID;
+            break;
+        }
+    }
 }
-
 void RCQuest::insim_plp( struct IS_PLP *packet )
 {
-
+    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_plp->PLID)
+        {
+            players[i].PLID = 0;
+            break;
+        }
+    }
 }
 
 void RCQuest::insim_pll( struct IS_PLL *packet )
 {
-
+    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == pack_pll->PLID)
+        {
+            players[i].PLID = 0;
+            break;
+        }
+    }
 }
-
 void RCQuest::insim_cnl( struct IS_CNL *packet )
 {
 	for(int i = 0; i < MAX_PLAYERS; i++)
@@ -70,16 +92,32 @@ void RCQuest::insim_cnl( struct IS_CNL *packet )
 
 void RCQuest::insim_cpr( struct IS_CPR *packet )
 {
-
+    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == pack_cpr->UCID)
+        {
+            strcpy(players[i].PName, pack_cpr->PName);
+            break;
+        }
+    }
 }
-
 void RCQuest::insim_mso( struct IS_MSO *packet )
 {
-	// тут я добавилkgfdhghdfkgjhdfет потом удалить
+    int i;
+    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+    if (pack_mso->UCID == 0)
+        return;
+    for (i=0; i < MAX_PLAYERS; i++)
+        if (players[i].UCID == pack_mso->UCID)
+            break;
 }
-
-void RCQuest::insim_mci()
+void RCQuest::insim_mci(struct IS_MCI *packet)
 {
 
-}
+    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
+    for (int i = 0; i < packet->NumC; i++)
+        for (int j =0; j < MAX_PLAYERS; j++)
+		break;
+}

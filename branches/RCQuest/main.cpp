@@ -162,7 +162,7 @@ void *thread_mci (void *params)
 			continue;
 
 		#ifdef _RC_QUEST_H
-		quest.insim_mci();
+		//quest.insim_mci();
 		#endif
 
 	}
