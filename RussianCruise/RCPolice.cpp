@@ -409,12 +409,12 @@ void case_mso_cop ()
 {
 	int i;
 
-	struct IS_MSO *pack_mso = (struct IS_MSO*)insim.get_packet();
+	struct IS_MSO *packet = (struct IS_MSO*)insim.get_packet();
 
 	// The chat message is sent by the host, don't do anything
-	if (pack_mso->UCID == 0)
+	if (packet->UCID == 0)
 	{
-		// out << "(Chat message by host: " << pack_mso->Msg + ((unsigned char)pack_mso->TextStart) << ")" << endl;
+		// out << "(Chat message by host: " << packet->Msg + ((unsigned char)packet->TextStart) << ")" << endl;
 		return;
 
 	}
@@ -422,14 +422,14 @@ void case_mso_cop ()
 	// Find the player that wrote in the chat
 	for (i=0; i < MAX_PLAYERS; i++)
 	{
-		if (ginfo.players[i].UCID == pack_mso->UCID)
+		if (ginfo.players[i].UCID == packet->UCID)
 		{
-			//  out << "Msg: " << pack_mso->Msg << endl;
+			//  out << "Msg: " << packet->Msg << endl;
 			break;
 		}
 	}
 	char Msg[96];
-	strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+	strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
 
 	if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
 	{
@@ -528,18 +528,18 @@ void RCCore::case_cpr ()
 {
 	int i;
 
-	struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
 	// Find player and set his PLID to 0
 	for (i=0; i < MAX_PLAYERS; i++)
 	{
-		if (players[i].UCID == pack_cpr->UCID)
+		if (players[i].UCID == packet->UCID)
 		{
-			cout << players[i].PName << " rename to " << pack_cpr->PName << endl;
-			strcpy(players[i].PName, pack_cpr->PName);
+			cout << players[i].PName << " rename to " << packet->PName << endl;
+			strcpy(players[i].PName, packet->PName);
 			// убираем ЛФС коды ^1 ^C ^L ^7 и т.д.
 			char PlayerName[32];
-			strcpy(PlayerName,pack_cpr->PName);
+			strcpy(PlayerName,packet->PName);
 			char * pch;
 			while (pch = strstr(PlayerName,"^"))
 			{

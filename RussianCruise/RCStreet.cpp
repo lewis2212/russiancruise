@@ -108,16 +108,16 @@ void RCStreet::readconfig(const char *Track)
 
 
 
-void RCStreet::insim_cnl ()
+void RCStreet::insim_cnl( struct IS_CNL* packet )
 {
     int i;
 
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             memset(&players[i],0,sizeof(struct StrPlayer));
             break;
@@ -125,19 +125,19 @@ void RCStreet::insim_cnl ()
     }
 }
 
-void RCStreet::insim_crp()
+void RCStreet::insim_cpr( struct IS_CPR* packet )
 {
     int i;
 
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
 
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -179,22 +179,22 @@ void RCStreet::insim_mci ()
     }
 }
 
-void RCStreet::insim_mso ()
+void RCStreet::insim_mso( struct IS_MSO* packet )
 {
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    if (pack_mso->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 }
 
 
-void RCStreet::insim_ncn()
+void RCStreet::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
 
@@ -206,32 +206,32 @@ void RCStreet::insim_ncn()
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 }
 
-void RCStreet::insim_npl()
+void RCStreet::insim_npl( struct IS_NPL* packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
+            players[i].PLID = packet->PLID;
             players[i].StreetNum = 250;
         }
     }
 }
 
-void RCStreet::insim_plp()
+void RCStreet::insim_plp( struct IS_PLP* packet)
 {
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -239,13 +239,13 @@ void RCStreet::insim_plp()
     }
 }
 
-void RCStreet::insim_pll()
+void RCStreet::insim_pll( struct IS_PLL* packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;

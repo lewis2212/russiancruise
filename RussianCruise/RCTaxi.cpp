@@ -369,13 +369,13 @@ void RCTaxi::accept_user2(byte UCID)
 }
 
 
-void RCTaxi::insim_cnl ()
+void RCTaxi::insim_cnl( struct IS_CNL* packet )
 {
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             save_user(&players[i]);
             memset(&players[i],0,sizeof(struct TaxiPlayer));
@@ -385,15 +385,15 @@ void RCTaxi::insim_cnl ()
     }
 }
 
-void RCTaxi::insim_crp()
+void RCTaxi::insim_cpr( struct IS_CPR* packet )
 {
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -620,22 +620,19 @@ void RCTaxi::insim_mci ()
     /** thread **/
 }
 
-void RCTaxi::insim_mso ()
+void RCTaxi::insim_mso( struct IS_MSO* packet )
 {
-
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
-
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
     char Message[96];
-    strcpy(Message,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+    strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
 
 
     if (strncmp(Message, "!save", strlen("!save")) == 0 )
@@ -739,13 +736,11 @@ void RCTaxi::insim_mso ()
 }
 
 
-void RCTaxi::insim_ncn()
+void RCTaxi::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
-
-    if (pack_ncn->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -756,36 +751,33 @@ void RCTaxi::insim_ncn()
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
     read_user(&players[i]);
 
     NumP ++;
 }
 
-void RCTaxi::insim_npl()
+void RCTaxi::insim_npl( struct IS_NPL* packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
+            players[i].PLID = packet->PLID;
             break;
         }
     }
 }
 
-void RCTaxi::insim_plp()
+void RCTaxi::insim_plp( struct IS_PLP* packet)
 {
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -793,13 +785,12 @@ void RCTaxi::insim_plp()
     }
 }
 
-void RCTaxi::insim_pll()
+void RCTaxi::insim_pll( struct IS_PLL* packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -809,7 +800,6 @@ void RCTaxi::insim_pll()
 
 void RCTaxi::read_user(struct TaxiPlayer *splayer)
 {
-
     char file[MAX_PATH];
     sprintf(file,"%sdata\\RCTaxi\\users\\%s.txt",RootDir,splayer->UName);
 
@@ -900,7 +890,7 @@ void RCTaxi::taxi_done(TaxiPlayer *splayer)
 
 }
 
-void RCTaxi::insim_con()
+void RCTaxi::insim_con( struct IS_CON* packet )
 {
     struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
 
@@ -935,7 +925,7 @@ void RCTaxi::insim_con()
     }
 }
 
-void RCTaxi::insim_obh()
+void RCTaxi::insim_obh( struct IS_OBH* packet )
 {
 
 

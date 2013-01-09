@@ -314,13 +314,13 @@ void RCLight::readconfig(const char *Track)
 }
 
 
-void RCLight::insim_cnl ()
+void RCLight::insim_cnl( struct IS_CNL* packet )
 {
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             memset(&players[i],0,sizeof(struct LghPlayer));
             break;
@@ -328,16 +328,16 @@ void RCLight::insim_cnl ()
     }
 }
 
-void RCLight::insim_crp()
+void RCLight::insim_cpr( struct IS_CPR* packet )
 {
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
 
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -503,31 +503,31 @@ void RCLight::insim_mci ()
     }
 }
 
-void RCLight::insim_mso ()
+void RCLight::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
 
     // The chat message is sent by the host, don't do anything
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
 
 }
 
-void RCLight::insim_ncn()
+void RCLight::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -538,33 +538,33 @@ void RCLight::insim_ncn()
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
 
 }
 
-void RCLight::insim_npl()
+void RCLight::insim_npl( struct IS_NPL* packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
+            players[i].PLID = packet->PLID;
         }
     }
 }
 
-void RCLight::insim_plp()
+void RCLight::insim_plp( struct IS_PLP* packet)
 {
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -572,13 +572,13 @@ void RCLight::insim_plp()
     }
 }
 
-void RCLight::insim_pll()
+void RCLight::insim_pll( struct IS_PLL* packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;

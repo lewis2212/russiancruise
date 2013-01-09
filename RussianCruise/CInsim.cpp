@@ -352,13 +352,13 @@ int CInsim::isclose()
 */
 int CInsim::next_packet()
 {
-    unsigned char oldp_size, p_size;
+    byte oldp_size, p_size;
     bool alive = true;
 
     while (alive)                                               // Keep the connection alive!
     {
         alive = false;
-        oldp_size = (unsigned char)*lbuf.buffer;
+        oldp_size = (byte)*lbuf.buffer;
 
         if ((lbuf.bytes > 0) && (lbuf.bytes >= oldp_size))         // There's an old packet in the local buffer, skip it
         {
@@ -372,7 +372,7 @@ int CInsim::next_packet()
             lbuf.bytes = gbuf.bytes;
         }
 
-        p_size = (unsigned char)*lbuf.buffer;
+        p_size = (byte)*lbuf.buffer;
 
         while ((lbuf.bytes < p_size) || (lbuf.bytes < 1))       // Read until we have a full packet
         {
@@ -505,7 +505,7 @@ int CInsim::udp_next_packet()
             return -1;
     }
 
-    memcpy(udp_packet, udp_lbuf.buffer, (unsigned char)*udp_lbuf.buffer);
+    memcpy(udp_packet, udp_lbuf.buffer, (byte)*udp_lbuf.buffer);
 
     return 0;
 }
@@ -533,9 +533,8 @@ void* CInsim::udp_get_packet()
 */
 bool CInsim::send_packet(void* s_packet)
 {
-    //if (INSIM_VERSION == 5)
-    //{
-    byte Type = *((unsigned char*)s_packet+1);
+
+    byte Type = *((byte*)s_packet+1);
     switch(Type)
     {
     case ISP_BTN:
@@ -546,10 +545,9 @@ bool CInsim::send_packet(void* s_packet)
         return send_mtc(s_packet);
         break;
     }
-    //}
 
     pthread_mutex_lock (&ismutex);
-    if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
+    if (send(sock, (const char *)s_packet, *((byte*)s_packet), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
         return false;
@@ -610,10 +608,10 @@ bool CInsim::send_mtc(void* s_mtc)
 
 
 
-    //printf("Size == %d\n",*((unsigned char*)s_mtc));
+    //printf("Size == %d\n",*((byte*)s_mtc));
 
     pthread_mutex_lock (&ismutex);
-    if (send(sock, (const char *)s_mtc,*((unsigned char*)s_mtc), 0) < 0)
+    if (send(sock, (const char *)s_mtc,*((byte*)s_mtc), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
         return false;

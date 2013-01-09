@@ -53,13 +53,13 @@ private:
     // struct  streets2 Street2[30];              // Array of streets
 
     // функции-повторители основных фунцкий ядра
-    void insim_ncn();   // Новый игрок зашел на сервер
-    void insim_npl();   // Игрок вышел из боксов
-    void insim_plp();   // Игрок ушел в боксы
-    void insim_pll();   // Игрок ушел в зрители
-    void insim_cnl();   // Игрок ушел с сервера
-    void insim_crp();   // Игрок переименовался
-    void insim_mso();   // Игрок отправил сообщение
+    void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void insim_plp( struct IS_PLP* packet);   // Игрок ушел в боксы
+    void insim_pll( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void insim_cnl( struct IS_CNL* packet );   // Игрок ушел с сервера
+    void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
+    void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
 
 
     void btn_street(struct StrPlayer *splayer);

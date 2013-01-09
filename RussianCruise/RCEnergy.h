@@ -62,16 +62,16 @@ private:
 
     char RootDir[MAX_PATH];
 
-    void insim_ncn();
-    void insim_npl();
-    void insim_plp();
-    void insim_pll();
-    void insim_cnl();
-    void insim_crp();
-    void insim_mso();
+    void insim_ncn( struct IS_NCN* packet );
+    void insim_npl( struct IS_NPL* packet );
+    void insim_plp( struct IS_PLP* packet);
+    void insim_pll( struct IS_PLL* packet );
+    void insim_cnl( struct IS_CNL* packet );
+    void insim_cpr( struct IS_CPR* packet );
+    void insim_mso( struct IS_MSO* packet );
     //! HIT CONTROL
-    void insim_con();
-    void insim_obh();
+    void insim_con( struct IS_CON* packet );
+    void insim_obh( struct IS_OBH* packet );
 
 
     // Функции-утилиты

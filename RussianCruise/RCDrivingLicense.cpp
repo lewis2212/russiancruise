@@ -168,13 +168,13 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
     return 0;
 }
 
-void RCDL::insim_ncn()
+void RCDL::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -185,12 +185,12 @@ void RCDL::insim_ncn()
         return;
 
     // Copy all the player data we need into the players[] array
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
 	char query[128];
-    sprintf(query,"SELECT lvl,skill FROM dl WHERE username='%s' LIMIT 1;",pack_ncn->UName);
+    sprintf(query,"SELECT lvl,skill FROM dl WHERE username='%s' LIMIT 1;",packet->UName);
 
     if( mysql_ping( &rcDLDB ) != 0 )
     {
@@ -216,9 +216,9 @@ void RCDL::insim_ncn()
     }
     else
     {
-        printf("Can't find %s\n Create user\n",pack_ncn->UName);
+        printf("Can't find %s\n Create user\n",packet->UName);
 
-        sprintf(query,"INSERT INTO dl (username) VALUES ('%s');",pack_ncn->UName);
+        sprintf(query,"INSERT INTO dl (username) VALUES ('%s');",packet->UName);
 
         if( mysql_ping( &rcDLDB ) != 0 )
         {
@@ -240,43 +240,28 @@ void RCDL::insim_ncn()
     mysql_free_result( rcDLRes );
 }
 
-void RCDL::insim_npl()
+void RCDL::insim_npl( struct IS_NPL* packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
+            players[i].PLID = packet->PLID;
             break;
         }
     }
 }
 
-void RCDL::insim_plp()
+void RCDL::insim_plp( struct IS_PLP* packet)
 {
 
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
-        {
-            players[i].PLID = 0;
-            memset(&players[i].Info,0,sizeof(CompCar));
-            break;
-        }
-    }
-}
-
-void RCDL::insim_pll()
-{
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             memset(&players[i].Info,0,sizeof(CompCar));
@@ -285,15 +270,30 @@ void RCDL::insim_pll()
     }
 }
 
-void RCDL::insim_cnl()
+void RCDL::insim_pll( struct IS_PLL* packet )
+{
+
+
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].PLID == packet->PLID)
+        {
+            players[i].PLID = 0;
+            memset(&players[i].Info,0,sizeof(CompCar));
+            break;
+        }
+    }
+}
+
+void RCDL::insim_cnl( struct IS_CNL* packet )
 {
     int i;
 
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             save(players[i].UCID);
             memset(&players[i],0,sizeof(struct DLPlayer));
@@ -302,39 +302,39 @@ void RCDL::insim_cnl()
     }
 }
 
-void RCDL::insim_crp()
+void RCDL::insim_cpr( struct IS_CPR* packet )
 {
     int i;
 
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
 }
 
-void RCDL::insim_mso()
+void RCDL::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
 
     // The chat GetMessage is sent by the host, don't do anything
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0 )
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
         save(players[i].UCID);
 
 }
@@ -364,7 +364,7 @@ void RCDL::save (byte UCID)
 
 }
 
-void RCDL::insim_con()
+void RCDL::insim_con( struct IS_CON* packet )
 {
     struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
     /*

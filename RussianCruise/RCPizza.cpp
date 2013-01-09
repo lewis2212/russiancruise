@@ -534,13 +534,13 @@ void RCPizza::readconfig(const char *Track)
 }
 
 
-void RCPizza::insim_ncn()
+void RCPizza::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -550,36 +550,36 @@ void RCPizza::insim_ncn()
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
 }
 
-void RCPizza::insim_npl()
+void RCPizza::insim_npl( struct IS_NPL* packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
-            strcpy(players[i].CName ,pack_npl->CName);
+            players[i].PLID = packet->PLID;
+            strcpy(players[i].CName ,packet->CName);
             NumP ++;
         }
     }
 }
 
-void RCPizza::insim_plp()
+void RCPizza::insim_plp( struct IS_PLP* packet)
 {
     int i;
 
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             NumP --;
@@ -588,15 +588,15 @@ void RCPizza::insim_plp()
     }
 }
 
-void RCPizza::insim_pll()
+void RCPizza::insim_pll( struct IS_PLL* packet )
 {
     int i;
 
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             NumP --;
@@ -605,13 +605,13 @@ void RCPizza::insim_pll()
     }
 }
 
-void RCPizza::insim_cnl ()
+void RCPizza::insim_cnl( struct IS_CNL* packet )
 {
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             if ( players[i].WorkAccept == 3 )
                 ShopAccepted = false;
@@ -643,16 +643,16 @@ void RCPizza::insim_cnl ()
 
 }
 
-void RCPizza::insim_crp()
+void RCPizza::insim_cpr( struct IS_CPR* packet )
 {
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
 
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -766,22 +766,22 @@ void RCPizza::insim_mci ()
     }
 }
 
-void RCPizza::insim_mso ()
+void RCPizza::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
 
     // The chat GetMessage is sent by the host, don't do anything
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!pstat", 6) == 0 )
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0 )
     {
         //cout << players[i].UName << " send !deal" << endl;
         char Text[64];
@@ -812,7 +812,7 @@ void RCPizza::insim_mso ()
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!deal", 5) == 0 )
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!deal", 5) == 0 )
     {
 
         if ((check_pos(&players[i]) == 1) and (players[i].WorkType == 0))
@@ -835,14 +835,14 @@ void RCPizza::insim_mso ()
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!undeal", 7) == 0 )
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!undeal", 7) == 0 )
     {
         if ((check_pos(&players[i]) == 1) and (players[i].WorkType == WK_PIZZA))
             undeal(&players[i],msg->GetMessage(players[i].UCID,2200));
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!take", 5) == 0)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!take", 5) == 0)
     {
 
         if (check_pos(&players[i]) == 1)
@@ -850,7 +850,7 @@ void RCPizza::insim_mso ()
     }
 
     //!pizza
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!tofu", 5) == 0)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!tofu", 5) == 0)
     {
         if (nrg->GetEnergy(players[i].UCID) > 80)
         {

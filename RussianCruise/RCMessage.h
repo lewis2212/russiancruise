@@ -29,9 +29,9 @@ private:
 
     struct MPlayer players[MAX_PLAYERS];
 
-    void insim_ncn();
-    void insim_cnl();
-    void insim_mso();
+    void insim_ncn( struct IS_NCN* packet );
+    void insim_cnl( struct IS_CNL* packet );
+    void insim_mso( struct IS_MSO* packet );
 
 public:
     RCMessage();

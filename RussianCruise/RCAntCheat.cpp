@@ -43,14 +43,14 @@ int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void 
     return 0;
 }
 
-void RCAntCheat::insim_cnl ()
+void RCAntCheat::insim_cnl( struct IS_CNL* packet )
 {
     int i;
 
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             memset(&players[i],0,sizeof(struct Player));
             break;
@@ -58,17 +58,15 @@ void RCAntCheat::insim_cnl ()
     }
 }
 
-void RCAntCheat::insim_crp()
+void RCAntCheat::insim_cpr( struct IS_CPR* packet )
 {
     int i;
 
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
-
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -117,32 +115,32 @@ void RCAntCheat::insim_mci ()
     }
 }
 
-void RCAntCheat::insim_mso ()
+void RCAntCheat::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
 
     // The chat message is sent by the host, don't do anything
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
     }
 }
 
 
-void RCAntCheat::insim_ncn()
+void RCAntCheat::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -153,26 +151,26 @@ void RCAntCheat::insim_ncn()
         return;
 
     // Copy all the player data we need into the players[] array
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 }
 
-void RCAntCheat::insim_npl()
+void RCAntCheat::insim_npl( struct IS_NPL* packet )
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
 
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     // Find player using UCID and update his PLID
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             players[i].NPL = 1;
-            players[i].PLID = pack_npl->PLID;
-            strcpy(players[i].CName,pack_npl->CName);
+            players[i].PLID = packet->PLID;
+            strcpy(players[i].CName,packet->CName);
 
 
             /*****   Hack Detect ***/
@@ -207,7 +205,7 @@ void RCAntCheat::insim_npl()
 
             }
 
-            if (strlen(pack_npl->CName) < 3)
+            if (strlen(packet->CName) < 3)
             {
                 strcpy(Text, "/kick ");
                 strcat (Text, players[i].UName);
@@ -223,13 +221,13 @@ void RCAntCheat::insim_npl()
     }
 }
 
-void RCAntCheat::insim_plp()
+void RCAntCheat::insim_plp( struct IS_PLP* packet)
 {
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             players[i].NPL = 0;
@@ -242,13 +240,13 @@ void RCAntCheat::insim_plp()
     }
 }
 
-void RCAntCheat::insim_pll()
+void RCAntCheat::insim_pll( struct IS_PLL* packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             players[i].NPL = 0;
@@ -261,7 +259,7 @@ void RCAntCheat::insim_pll()
     }
 }
 
-void RCAntCheat::insim_pla ()
+void RCAntCheat::insim_pla( struct IS_PLA* packet )
 {
 
     struct IS_TINY pack_requests;
@@ -273,24 +271,24 @@ void RCAntCheat::insim_pla ()
     insim->send_packet(&pack_requests);
 }
 
-void RCAntCheat::insim_reo ()
+void RCAntCheat::insim_reo( struct IS_REO* packet )
 {
-    struct IS_REO *pack = (struct IS_REO*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].PLID != 0)
         {
             int j = 0;
-            while (j < pack->NumP)
+            while (j < packet->NumP)
             {
-                if (players[i].PLID == pack->PLID[j])
+                if (players[i].PLID == packet->PLID[j])
                     break;
 
                 ++j;
             }
 
-            if (j == pack->NumP)
+            if (j == packet->NumP)
             {
                 char Text[48];
                 sprintf(Text,"/spec %s",players[i].UName);

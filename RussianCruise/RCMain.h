@@ -80,7 +80,7 @@ using namespace std;
 //#include "mysql/include/my_global.h"
 #include "mysql/include/mysql.h"
 
-#include "CInsim.h"
+#include "Cinsim.h"
 #include "RCPizza.h"
 #include "RCMessage.h"
 #include "RCEnergy.h"
@@ -115,7 +115,7 @@ MYSQL_ROW rcMainRow;
 time_t  stime;
 int     chek_users =0;
 
-CInsim insim;
+CInsim *insim;
 
 ofstream  out;   // выходной файл дл€ протокола работы сервиса
 
@@ -209,7 +209,7 @@ struct player
     int     StopTime;
     byte    Penalty;        // ≈сли превысил скорость в питах
     /** Flood **/
-    char    Msg[96];
+    char    Msg[128];
     int     FloodCount;
     int     FloodTime;
     /** Work **/
@@ -229,13 +229,14 @@ struct fine
     int     cash;
 };
 
-struct global_info
+class GlobalInfo
 {
+	public:
     struct  player players[MAX_PLAYERS];     // Array of players
     byte    Sp1;
     struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
     byte    Sp2;
-    map<string,cars> car2;
+    map < string , cars > carMap;
     struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
     byte    Sp3;
     /** Bad words **/
@@ -260,6 +261,7 @@ void read_lang(struct player *splayer);
 void read_car();
 void read_fines();
 int read_cop(struct player *splayer);
+void read_words();
 
 
 void send_mtc (byte UCID,const char* Msg)
@@ -269,8 +271,8 @@ void send_mtc (byte UCID,const char* Msg)
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
-    insim.send_packet(&pack_mtc);
+    sprintf( pack_mtc.Text, "%.127s\0", Msg );
+    insim->send_packet(&pack_mtc);
 };
 
 void send_mst (const char* Text)
@@ -279,8 +281,8 @@ void send_mst (const char* Text)
     memset(&pack_mst, 0, sizeof(struct IS_MST));
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
-    strncpy(pack_mst.Msg,Text,strlen(Text));
-    insim.send_packet(&pack_mst);
+    sprintf( pack_mst.Msg, "%.63s\0", Text );
+    insim->send_packet(&pack_mst);
 };
 
 
@@ -292,7 +294,7 @@ void send_bfn (byte UCID, byte ClickID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = ClickID;
-    insim.send_packet(&pack);
+    insim->send_packet(&pack);
 };
 
 void send_plc (byte UCID, unsigned PLC)
@@ -304,18 +306,6 @@ void send_plc (byte UCID, unsigned PLC)
     pack.Type = ISP_PLC;
     pack.UCID = UCID;
     pack.Cars = PLC;
-    insim.send_packet(&pack);
+    insim->send_packet(&pack);
 }
-
-
-
-/******************************************************************
-*
-*               SVETOFOR ODNAKO
-*
-*
-******************************************************************/
-
-
-
 #endif
