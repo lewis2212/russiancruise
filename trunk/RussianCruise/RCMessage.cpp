@@ -101,13 +101,13 @@ void RCMessage::readconfig(const char *Track)
     readf2.close();
 }
 
-void RCMessage::insim_ncn()
+void RCMessage::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
@@ -118,8 +118,8 @@ void RCMessage::insim_ncn()
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    players[i].UCID = packet->UCID;
 
     /** read file **/
 
@@ -161,16 +161,16 @@ void RCMessage::insim_ncn()
     FindClose(fff);
 }
 
-void RCMessage::insim_cnl()
+void RCMessage::insim_cnl( struct IS_CNL* packet )
 {
     int i;
 
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             /** save file**/
             save(players[i].UCID);
@@ -181,22 +181,22 @@ void RCMessage::insim_cnl()
     }
 }
 
-void RCMessage::insim_mso()
+void RCMessage::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
 
     char Msg[96];
-    strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+    strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
 
     // The chat GetMessage is sent by the host, don't do anything
-    if (pack_mso->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
 

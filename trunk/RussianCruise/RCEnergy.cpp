@@ -142,11 +142,11 @@ void RCEnergy::readconfig(const char *Track)
 
 
 
-void RCEnergy::insim_ncn()
+void RCEnergy::insim_ncn( struct IS_NCN* packet )
 {
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
-    if (pack_ncn->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     int i;
@@ -158,12 +158,12 @@ void RCEnergy::insim_ncn()
         return;
 
     // Copy all the player data we need into the players[] array
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
 	char query[128];
-    sprintf(query,"SELECT energy FROM energy WHERE username='%s' LIMIT 1;",pack_ncn->UName);
+    sprintf(query,"SELECT energy FROM energy WHERE username='%s' LIMIT 1;",packet->UName);
 
     if( mysql_ping( &rcNrgDB ) != 0 )
     {
@@ -188,9 +188,9 @@ void RCEnergy::insim_ncn()
     }
     else
     {
-        printf("Can't find %s\n Create user\n",pack_ncn->UName);
+        printf("Can't find %s\n Create user\n",packet->UName);
 
-        sprintf(query,"INSERT INTO energy (username) VALUES ('%s');",pack_ncn->UName);
+        sprintf(query,"INSERT INTO energy (username) VALUES ('%s');",packet->UName);
 
         if( mysql_ping( &rcNrgDB ) != 0 )
         {
@@ -213,23 +213,23 @@ void RCEnergy::insim_ncn()
 
 }
 
-void RCEnergy::insim_npl()
+void RCEnergy::insim_npl( struct IS_NPL* packet )
 {
     int i;
 
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     // Find player using UCID and update his PLID
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
 
             char Text[64];
             strcpy(Text, "/spec ");
             strcat (Text, players[i].UName);
 
-            players[i].PLID = pack_npl->PLID;
+            players[i].PLID = packet->PLID;
             players[i].EnergyTime = time(&nrgtime);
 
             if ( players[i].Energy < 500 )
@@ -246,17 +246,17 @@ void RCEnergy::insim_npl()
     }
 }
 
-void RCEnergy::insim_plp()
+void RCEnergy::insim_plp( struct IS_PLP* packet)
 {
     //cout << "player leaves race" << endl;
     int i;
 
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -264,14 +264,14 @@ void RCEnergy::insim_plp()
     }
 }
 
-void RCEnergy::insim_pll()
+void RCEnergy::insim_pll( struct IS_PLL* packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -279,13 +279,13 @@ void RCEnergy::insim_pll()
     }
 }
 
-void RCEnergy::insim_cnl ()
+void RCEnergy::insim_cnl( struct IS_CNL* packet )
 {
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     for (int i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
             energy_save(players[i].UCID);
 
@@ -320,18 +320,18 @@ void RCEnergy::energy_save (byte UCID)
 
 
 
-void RCEnergy::insim_crp()
+void RCEnergy::insim_cpr( struct IS_CPR* packet )
 {
     int i;
 
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -435,20 +435,20 @@ void RCEnergy::insim_mci ()
 }
 
 
-void RCEnergy::insim_mso ()
+void RCEnergy::insim_mso( struct IS_MSO* packet )
 {
     int i;
 
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    if (pack_mso->UCID == 0)
+
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
+        if (players[i].UCID == packet->UCID)
             break;
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!coffee", 7) == 0)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!coffee", 7) == 0)
     {
         //out << players[i].UName << " send !coffee" << endl;
         if (((players[i].Zone == 1) and (players[i].Energy < 500)) or (players[i].Zone == 3))
@@ -472,7 +472,7 @@ void RCEnergy::insim_mso ()
     }
 
     //!redbule
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!redbull", 8) == 0)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!redbull", 8) == 0)
     {
         //out << players[i].UName << " send !redbull" << endl;
         if (((players[i].Zone == 1) and (players[i].Energy < 500)) or (players[i].Zone == 3))
@@ -495,7 +495,7 @@ void RCEnergy::insim_mso ()
 
     }
 
-    if (strncmp(pack_mso->Msg + ((unsigned char)pack_mso->TextStart), "!save", 5) == 0 )
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
         energy_save(players[i].UCID);
 
 }
@@ -588,7 +588,7 @@ int RCEnergy::GetEnergy(byte UCID)
 }
 
 
-void RCEnergy::insim_con()
+void RCEnergy::insim_con( struct IS_CON* packet )
 {
     //printf("Car contact\n");
 
@@ -621,7 +621,7 @@ void RCEnergy::insim_con()
 
 }
 
-void RCEnergy::insim_obh()
+void RCEnergy::insim_obh( struct IS_OBH* packet )
 {
 
 

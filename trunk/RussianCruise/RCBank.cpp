@@ -4,12 +4,13 @@ using namespace std;
 
 RCBank::RCBank()
 {
-
+	//players = new BankPlayer[MAX_PLAYERS];
 }
 
 RCBank::~RCBank()
 {
     mysql_close( &rcbankDB );
+    //delete[] players;
 }
 
 byte RCBank::GetPlayerUCID (int i)
@@ -95,7 +96,7 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
         return -1;
     }
 
-    mysql_options( &rcbankDB , MYSQL_OPT_RECONNECT, "true" ); // СЂР°Р·СЂРµС€Р°РµРј РїРµСЂРµРїРѕРґРєР»СЋС‡РµРЅРёРµ
+    mysql_options( &rcbankDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
     mysqlConf conf;
 	char path[MAX_PATH];
@@ -112,40 +113,39 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
 }
 
 
-void RCBank::insim_ncn()
+void RCBank::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
-
-    if (pack_ncn->UCID == 0)
+    if (packet->UCID == 0)
         return;
 
     for (i=0; i<MAX_PLAYERS; i++)
-        if (players[i].UCID == 0)
+	{
+		 if ( players[i].UCID == 0 )
             break;
-
+	}
 
     if (i == MAX_PLAYERS)
         return;
 
-    strcpy(players[i].UName, pack_ncn->UName);
-    strcpy(players[i].PName, pack_ncn->PName);
-    players[i].UCID = pack_ncn->UCID;
+    strcpy(players[i].UName, packet->UName);
+    strcpy(players[i].PName, packet->PName);
+    players[i].UCID = packet->UCID;
 
     char query[128];
-    sprintf(query,"SELECT cash FROM bank WHERE username='%s' LIMIT 1;",pack_ncn->UName);
+    sprintf(query,"SELECT cash FROM bank WHERE username='%s' LIMIT 1;",packet->UName);
 
     if( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
+        // произвести кик пользователя чтоль
     }
 
     if( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
+        // произвести кик пользователя чтоль
     }
 
     rcbankRes = mysql_store_result( &rcbankDB );
@@ -154,29 +154,29 @@ void RCBank::insim_ncn()
 
     if(mysql_num_rows( rcbankRes ) > 0)
     {
-        // Р’ С†РёРєР»Рµ РїРµСЂРµР±РёСЂР°РµРј РІСЃРµ Р·Р°РїРёСЃРё
-        // СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ С‚Р°Р±Р»РёС†С‹
+        // В цикле перебираем все записи
+        // результирующей таблицы
         rcbankRow = mysql_fetch_row( rcbankRes );
-        // Р’С‹РІРѕРґРёРј СЂРµР·СѓР»СЊС‚Р°С‚ РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє
+        // Выводим результат в стандартный поток
         players[i].Cash = atof( rcbankRow[0] );
 
     }
     else
     {
-        printf("Can't find %s\n Create user\n",pack_ncn->UName);
+        printf("Can't find %s\n Create user\n",packet->UName);
 
-        sprintf(query,"INSERT INTO bank (username) VALUES ('%s');",pack_ncn->UName);
+        sprintf(query,"INSERT INTO bank (username) VALUES ('%s');",packet->UName);
 
         if( mysql_ping( &rcbankDB ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
-            // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
+            // произвести кик пользователя чтоль
         }
 
         if( mysql_query( &rcbankDB , query) != 0 )
         {
             printf("Error: MySQL Query\n");
-            // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
+            // произвести кик пользователя чтоль
         }
 
         players[i].Cash = 1000;
@@ -191,37 +191,37 @@ void RCBank::insim_ncn()
 
 
 
-void RCBank::insim_npl()
+void RCBank::insim_npl( struct IS_NPL* packet )
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
 
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
+
 
     // Find player using UCID and update his PLID
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_npl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            players[i].PLID = pack_npl->PLID;
-            //strcpy(players[i].CName ,pack_npl->CName);
+            players[i].PLID = packet->PLID;
+            //strcpy(players[i].CName ,packet->CName);
             if (players[i].Cash > 5000000)
                 players[i].Cash = 5000000;
         }
     }
 }
 
-void RCBank::insim_plp()
+void RCBank::insim_plp( struct IS_PLP* packet)
 {
     //cout << "player leaves race" << endl;
     int i;
 
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_plp->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -229,17 +229,17 @@ void RCBank::insim_plp()
     }
 }
 
-void RCBank::insim_pll()
+void RCBank::insim_pll( struct IS_PLL* packet )
 {
     //cout << "player leaves race" << endl;
     int i;
 
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].PLID == pack_pll->PLID)
+        if (players[i].PLID == packet->PLID)
         {
             players[i].PLID = 0;
             break;
@@ -247,18 +247,18 @@ void RCBank::insim_pll()
     }
 }
 
-void RCBank::insim_cnl ()
+void RCBank::insim_cnl( struct IS_CNL* packet )
 {
     int i;
 
-    struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
+
 
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cnl->UCID)
+        if (players[i].UCID == packet->UCID)
         {
-            if (pack_cnl->Reason != LEAVR_DISCO)
+            if (packet->Reason != LEAVR_DISCO)
             {
                 //players[i].cash += 500;
             }
@@ -306,19 +306,19 @@ void RCBank::bank_save (byte UCID)
 
 }
 
-void RCBank::insim_crp()
+void RCBank::insim_cpr( struct IS_CPR* packet )
 {
     int i;
 
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
+
 
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
-        if (players[i].UCID == pack_cpr->UCID)
+        if (players[i].UCID == packet->UCID)
         {
 
-            strcpy(players[i].PName, pack_cpr->PName);
+            strcpy(players[i].PName, packet->PName);
             break;
         }
     }
@@ -423,7 +423,7 @@ void RCBank::readconfig(const char *Track)
 }
 
 
-// С„СѓРЅРєС†РёРё-СѓС‚РёР»РёС‚С‹
+// функции-утилиты
 
 int RCBank::check_pos(struct BankPlayer *splayer)
 {

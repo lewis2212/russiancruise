@@ -18,7 +18,7 @@
 
 
 
-struct BankPlayer
+typedef struct BankPlayer
 {
     struct  CompCar Info;
     char    UName[24];             // Username
@@ -28,7 +28,7 @@ struct BankPlayer
     double   Cash;
     //char    CName[4];              // Car Name
     byte    Zone;
-};
+} _BankPlayer;
 
 struct Bank_info
 {
@@ -51,18 +51,18 @@ private:
 
 
     struct  Bank_info TrackInf;
-    struct  BankPlayer players[32];     // Array of players
+    BankPlayer players[MAX_PLAYERS];     // Array of players
     struct  place zone;
     double BankFond;
 
     char RootDir[MAX_PATH];
 
-    void insim_ncn();
-    void insim_npl();
-    void insim_plp();
-    void insim_pll();
-    void insim_cnl();
-    void insim_crp();
+    void insim_ncn( struct IS_NCN* packet );
+    void insim_npl( struct IS_NPL* packet );
+    void insim_plp( struct IS_PLP* packet);
+    void insim_pll( struct IS_PLL* packet );
+    void insim_cnl( struct IS_CNL* packet );
+    void insim_cpr( struct IS_CPR* packet );
 
 public:
     RCBank();
