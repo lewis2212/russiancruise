@@ -2425,6 +2425,7 @@ void case_mso_cop ()
                     if (ginfo->players[k].cop == 1)
                     {
                         bank.AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05);
+						dl.AddSkill( ginfo->players[k].UCID );
                         cop++;
                     }
                 }
