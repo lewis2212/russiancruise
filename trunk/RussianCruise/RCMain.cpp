@@ -816,9 +816,7 @@ void case_btc ()
     pthread_mutex_lock (&RCmutex);
     struct IS_BTC *pack_btc = (struct IS_BTC*)insim->get_packet();
 
-    cout << (int)pack_btc->ClickID << endl;
-    int i;
-    for (i=0; i < MAX_PLAYERS; i++)
+    for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (ginfo->players[i].UCID == pack_btc->UCID)
         {
@@ -826,7 +824,9 @@ void case_btc ()
             GetLocalTime(&sm);
             char log[255];
             sprintf(log,"%slogs\\shop\\shop(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-
+			/**
+			Пользователь кликнул по другому пользователю
+			*/
             if (pack_btc->ClickID<=32)
             {
                 ginfo->players[i].BID2 =  pack_btc->ClickID;
@@ -883,12 +883,19 @@ void case_btc ()
                     }
                 }
             }
+
+            /**
+            Скрыть кнопки с пользователями
+            */
             if (pack_btc->ClickID==34)
             {
                 for (int j=0; j<50; j++)
                     send_bfn(ginfo->players[i].UCID,j);
             }
 
+			/**
+			Включаем погоню
+			*/
             if (pack_btc->ClickID==40)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -905,6 +912,12 @@ void case_btc ()
                             sprintf(Text,"/msg ^2| %s %s", msg.GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
                             send_mst(Text);
                             nrg.Lock(ginfo->players[g].UCID);
+
+                            char fine_c[255];
+							sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+							ofstream readf (fine_c,ios::app);
+							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " begin pursuit to "  << ginfo->players[g].UName << endl;
+							readf.close();
                         }
                         break;
                     }
@@ -915,11 +928,14 @@ void case_btc ()
                     {
                         for (int k=60; k<79; k++)
                             send_bfn(ginfo->players[g].UCID,k);
-
                     }
                 }
 
             }
+
+            /**
+            Выключаем погоню
+            */
             if (pack_btc->ClickID==41)
             {
 
@@ -950,15 +966,14 @@ void case_btc ()
                 }
             }
 
-            /** info buttons **/
+            /**
+            Информационные кнопки
+            **/
             if (pack_btc->ClickID == 149)
             {
                 ginfo->players[i].bfn=0;
                 for (int j=159; j>0; j--)
-                {
                     send_bfn(pack_btc->UCID,j);
-                    //Sleep(10);
-                }
             }
 
             if (pack_btc->ClickID == 103)
@@ -990,8 +1005,10 @@ void case_btc ()
 
                 btn_info(&ginfo->players[i],4);
             }
-            /** info buttons **/
 
+			/**
+			Не помню. Возможно на удаление
+			*/
             if (pack_btc->ClickID == 200)
             {
                 for (int j=0; j<5; j++)
@@ -1023,7 +1040,10 @@ void case_btt ()
     {
         if (ginfo->players[i].UCID == pack_btt->UCID)
         {
-            if (pack_btt->ClickID==36) // send cash
+        	/**
+        	Пользователь передает деньги
+        	*/
+            if (pack_btt->ClickID==36)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
@@ -1054,10 +1074,12 @@ void case_btt ()
                         break;
                     }
                 }//for
-
             }
 
-            else if (pack_btt->ClickID == 37) // send privat GetMessage
+			/**
+			Пользователь передает сообщение
+			*/
+            if (pack_btt->ClickID == 37)
             {
 
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -1079,9 +1101,12 @@ void case_btt ()
                         break;
                     }
                 }//for
-
             }
-            else if (pack_btt->ClickID==38)
+
+            /**
+            Пользователь выписывает штраф
+            */
+            if (pack_btt->ClickID==38)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
@@ -1129,9 +1154,12 @@ void case_btt ()
                         break;
                     }
                 }//for
-
             }
-            else if (pack_btt->ClickID==39)
+
+            /**
+            Пользователь отменяет штраф
+            */
+            if (pack_btt->ClickID==39)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
@@ -1176,7 +1204,6 @@ void case_btt ()
                         break;
                     }
                 }//for
-
             }
         }
     }
