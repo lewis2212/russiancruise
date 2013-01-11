@@ -58,6 +58,33 @@ bool    RCDL::AddSkill(byte UCID)
     return false;
 }
 
+bool    RCDL::AddSkill(byte UCID, float coef)
+{
+	if (coef < 0)
+		return false;
+
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (!Islocked(UCID))
+            {
+                players[i].Skill += (250*players[i].LVL)*coef;
+
+                char Text[64];
+                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
+                float skl = (players[i].LVL*250/nextlvl)*100*coef;
+                sprintf(Text,"^2 + ^3%2.3f%% ^7Skill",skl);
+                printf("^2 + ^3%2.3f%% ^7Skill",skl);
+                send_mtc(players[i].UCID,Text);
+
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool    RCDL::RemSkill(byte UCID)
 {
     for (int i = 0; i< MAX_PLAYERS; i++)
@@ -75,6 +102,35 @@ bool    RCDL::RemSkill(byte UCID)
                 float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
                 float skl = (players[i].LVL*500/nextlvl)*100;
                 sprintf(Text,"^1 - ^3%2.3f%% ^7Skill",skl);
+                send_mtc(players[i].UCID,Text);
+
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool    RCDL::RemSkill(byte UCID, float coef)
+{
+	if (coef < 0)
+		return false;
+
+    for (int i = 0; i< MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            if (!Islocked(UCID))
+            {
+                if (players[i].Skill < 500*players[i].LVL)
+                    players[i].Skill = 0;
+                else
+                    players[i].Skill -= 500*players[i].LVL*coef;
+
+                char Text[64];
+                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
+                float skl = (players[i].LVL*500/nextlvl)*100;
+                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill",skl*coef);
                 send_mtc(players[i].UCID,Text);
 
                 return true;

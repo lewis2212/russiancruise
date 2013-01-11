@@ -1446,7 +1446,7 @@ void case_mci_cop ()
                                 {
                                     int S2 = ginfo->players[g].Info.Speed*360/32768;
 
-                                    if ((S2 < 5) and (ginfo->players[g].StopTime > 6))
+                                    if ((S2 < 5) and (ginfo->players[g].StopTime > 4))
                                     {
 
                                         ginfo->players[g].Pogonya = 2;
@@ -1461,7 +1461,9 @@ void case_mci_cop ()
                                     }
                                 }
                             } // pogonya
-
+							/**
+							ÐÀÄÀÐ
+							*/
                             if (ginfo->players[j].radar ==1 )
                             {
                                 if ((Rast < 50 ) and (ginfo->players[g].cop != 1))
@@ -1491,7 +1493,9 @@ void case_mci_cop ()
                                     }
                                 }
                             }
-
+							/**
+							ËÞÑÒÐÀ
+							*/
                             if (ginfo->players[j].sirena ==1)
                             {
                                 if ( (Rast < 120) and (ginfo->players[g].cop != 1) )
@@ -1506,7 +1510,11 @@ void case_mci_cop ()
                                 }
                                 ginfo->players[j].sirenaKey = 1;
                                 ginfo->players[j].sirenaOnOff = 1;
-                                ginfo->players[j].sirenaSize = 0;
+
+                                if ( ginfo->players[j].cop == 1 )
+									ginfo->players[j].sirenaSize = 90;
+								else
+									ginfo->players[j].sirenaSize = 0;
                             }
                             else
                             {
@@ -2424,8 +2432,15 @@ void case_mso_cop ()
                 {
                     if (ginfo->players[k].cop == 1)
                     {
+                    	if (dl.Islocked( ginfo->players[k].UCID )){
+							dl.Unlock( ginfo->players[k].UCID );
+							dl.AddSkill(ginfo->players[k].UCID, 0.05);
+							dl.Lock( ginfo->players[k].UCID );
+                    	}
+                    	else
+							dl.AddSkill(ginfo->players[k].UCID, 0.05);
+
                         bank.AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05);
-						dl.AddSkill( ginfo->players[k].UCID );
                         cop++;
                     }
                 }
@@ -2806,6 +2821,9 @@ void case_pll ()
                 send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2600));
                 send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2601));
 
+				if( nrg.GetEnergy( ginfo->players[i].UCID ) > 10 )
+					dl.RemSkill(ginfo->players[i].UCID,10);
+
                 bank.RemCash(ginfo->players[i].UCID,5000);
                 bank.AddToBank(5000);
             }
@@ -2858,6 +2876,9 @@ void case_plp ()
             {
                 send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2700));
                 send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2701));
+
+				if( nrg.GetEnergy( ginfo->players[i].UCID ) > 10 )
+					dl.RemSkill(ginfo->players[i].UCID,10);
 
                 bank.RemCash(ginfo->players[i].UCID,5000);
                 bank.AddToBank(5000);
@@ -3332,16 +3353,18 @@ void *thread_btn (void *params)
                         if (ginfo->players[j].UCID != 0 and ginfo->players[j].Pogonya != 0)
                         {
                             int time2 = ginfo->players[j].WorkTime - time(&stime);
-                            int min;
-                            int sec;
-                            min = (time2/60)%60;
-                            sec = time2%60;
+                            int min = (time2/60)%60;
+                            int sec = time2%60;
 
                             float D = dl.Distance(ginfo->players[i].Info.X,ginfo->players[i].Info.Y,ginfo->players[j].Info.X,ginfo->players[j].Info.Y)/65536;
 
                             street.CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
+							if ( ginfo->players[j].Pogonya == 1 )
                             sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
+                            else if ( ginfo->players[j].Pogonya == 2 )
+                            sprintf(pack.Text,"%s %s ^1^CÀÐÅÑÒÎÂÀÍ",ginfo->players[j].PName,StreetInfo.Street);
+
                             insim->send_packet(&pack);
                             pack.T -=4;
                             pack.ClickID ++;
@@ -3418,9 +3441,6 @@ void *thread_work (void *params)
                         send_mst(Text);
                         ginfo->players[i].Pogonya = 0;
                         nrg.Unlock(ginfo->players[i].UCID);
-
-                        dl.AddSkill(ginfo->players[i].UCID);
-                        dl.AddSkill(ginfo->players[i].UCID);
                         dl.AddSkill(ginfo->players[i].UCID);
                     }
                 }
