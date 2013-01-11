@@ -39,6 +39,9 @@ bool    RCBank::AddCash(byte UCID, int Cash)
     {
         if (players[i].UCID == UCID)
         {
+        	char Text[96];
+        	sprintf(Text,"^5| ^7^CНа ваш счет поступило: %d ^3RUR.",Cash);
+        	send_mtc(UCID, Text);
             players[i].Cash += Cash;
             return true;
         }
@@ -52,6 +55,9 @@ bool    RCBank::RemCash(byte UCID, int Cash)
     {
         if (players[i].UCID == UCID)
         {
+        	char Text[96];
+        	sprintf(Text,"^5| ^7^CС вашего счета списано: %d ^3RUR.",Cash);
+        	send_mtc(UCID, Text);
             players[i].Cash -= Cash;
             return true;
         }

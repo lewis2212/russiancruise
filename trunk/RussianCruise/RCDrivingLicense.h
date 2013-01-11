@@ -75,7 +75,9 @@ public:
     int     GetLVL(byte UCID);
     int     GetSkill(byte UCID);
     bool    AddSkill(byte UCID);
+    bool    AddSkill(byte UCID, float coef);
     bool    RemSkill(byte UCID);
+    bool    RemSkill(byte UCID, float coef);
     bool    Lock(byte UCID);
     bool    Unlock(byte UCID);
     bool    Islocked(byte UCID);
