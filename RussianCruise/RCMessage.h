@@ -12,6 +12,9 @@
 
 #include "tools.h"
 
+#define LANG_ID_RUS 1
+#define LANG_ID_ENG 2
+
 struct MPlayer
 {
     byte UCID;

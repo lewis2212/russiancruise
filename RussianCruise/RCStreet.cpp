@@ -143,11 +143,8 @@ void RCStreet::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCStreet::insim_mci ()
+void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
 {
-    if(!insim)return;/**dont work if insim is NULL**/
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
 
     for (int i = 0; i < pack_mci->NumC; i++)
     {

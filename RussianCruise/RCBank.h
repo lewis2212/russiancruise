@@ -74,7 +74,7 @@ public:
     bool AddToBank(int Cash);
     bool RemFrBank(int Cash);
 
-    bool AddCash(byte UCID, int Cash);
+    bool AddCash(byte UCID, int Cash,  bool Show);
     bool RemCash(byte UCID, int Cash);
     int  GetCash(byte UCID);
     byte GetPlayerUCID (int i);
@@ -86,7 +86,7 @@ public:
 
     void btn_cash(int i);
 
-    void insim_mci();
+    void insim_mci( struct IS_MCI* packet );
 
     // Функции-утилиты
     int check_pos (struct BankPlayer *splayer);

@@ -649,10 +649,10 @@
 	<sched.h>
 	<sys/types.h>
 
-1357937419 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
+1357988364 source:d:\backup\cpp\rucruise\russiancruise\rcbank.cpp
 	"RCBank.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rcbank.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rcbank.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -662,7 +662,7 @@
 	"tools.h"
 	"RCMessage.h"
 
-1357474420 d:\backup\cpp\rucruise\russiancruise\rcbaseclass.h
+1357987974 d:\backup\cpp\rucruise\russiancruise\rcbaseclass.h
 	"CInsim.h"
 	<math.h>
 	<stdio.h>
@@ -677,7 +677,7 @@
 	<iostream>
 	<fstream>
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rcmessage.h
+1357988511 d:\backup\cpp\rucruise\russiancruise\rcmessage.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -686,13 +686,13 @@
 	"RCBaseClass.h"
 	"tools.h"
 
-1357489423 source:d:\backup\cpp\rucruise\russiancruise\rcbaseclass.cpp
+1357988008 source:d:\backup\cpp\rucruise\russiancruise\rcbaseclass.cpp
 	"RCBaseClass.h"
 
-1357932885 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
+1359233136 source:d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.cpp
 	"RCDrivingLicense.h"
 
-1357931060 d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.h
+1357993588 d:\backup\cpp\rucruise\russiancruise\rcdrivinglicense.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -704,10 +704,10 @@
 	"RCBaseClass.h"
 	"RCMessage.h"
 
-1357484459 source:d:\backup\cpp\rucruise\russiancruise\rcenergy.cpp
+1357988253 source:d:\backup\cpp\rucruise\russiancruise\rcenergy.cpp
 	"RCEnergy.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rcenergy.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rcenergy.h
 	<math.h>
 	<stdio.h>
 	<iostream>
@@ -720,12 +720,12 @@
 	"RCBank.h"
 	"tools.h"
 
-1357936080 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
+1357988148 source:d:\backup\cpp\rucruise\russiancruise\rcmain.cpp
 	"RCMain.h"
 	"version.h"
 	"tools.h"
 
-1357517476 d:\backup\cpp\rucruise\russiancruise\rcmain.h
+1357976133 d:\backup\cpp\rucruise\russiancruise\rcmain.h
 	<math.h>
 	<windows.h>
 	<time.h>
@@ -741,8 +741,9 @@
 	"RCStreet.h"
 	"RCLight.h"
 	"RCTaxi.h"
+	"RCPolice.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rcpizza.h
+1357993446 d:\backup\cpp\rucruise\russiancruise\rcpizza.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -755,7 +756,7 @@
 	"RCTaxi.h"
 	"tools.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rctaxi.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rctaxi.h
 	<math.h>
 	<stdio.h>
 	<iostream>
@@ -769,7 +770,7 @@
 	"RCPizza.h"
 	"tools.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rcstreet.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rcstreet.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -779,7 +780,7 @@
 	"RCBank.h"
 	"tools.h"
 
-1357484059 d:\backup\cpp\rucruise\russiancruise\rcantcheat.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rcantcheat.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -790,7 +791,7 @@
 	"RCBank.h"
 	"tools.h"
 
-1357483380 d:\backup\cpp\rucruise\russiancruise\rclight.h
+1357988211 d:\backup\cpp\rucruise\russiancruise\rclight.h
 	<stdio.h>
 	<iostream>
 	<time.h>
@@ -802,15 +803,16 @@
 
 1357938176 d:\backup\cpp\rucruise\russiancruise\version.h
 
-1357484360 source:d:\backup\cpp\rucruise\russiancruise\rcmessage.cpp
+1357988688 source:d:\backup\cpp\rucruise\russiancruise\rcmessage.cpp
 	"RCMessage.h"
 
-1357484459 source:d:\backup\cpp\rucruise\russiancruise\rcpizza.cpp
+1357993744 source:d:\backup\cpp\rucruise\russiancruise\rcpizza.cpp
 	"RCPizza.h"
 
-1357484348 source:d:\backup\cpp\rucruise\russiancruise\rcpolice.cpp
+1357977491 source:d:\backup\cpp\rucruise\russiancruise\rcpolice.cpp
+	"RCPolice.h"
 
-1357484460 source:d:\backup\cpp\rucruise\russiancruise\rcstreet.cpp
+1357988291 source:d:\backup\cpp\rucruise\russiancruise\rcstreet.cpp
 	"RCStreet.h"
 
 1356721171 source:d:\backup\cpp\rucruise\russiancruise\tools.cpp
@@ -818,13 +820,13 @@
 	<stdio.h>
 	<string.h>
 
-1357484469 source:d:\backup\cpp\rucruise\russiancruise\rcantcheat.cpp
+1357988364 source:d:\backup\cpp\rucruise\russiancruise\rcantcheat.cpp
 	"RCAntCheat.h"
 
-1357484459 source:d:\backup\cpp\rucruise\russiancruise\rclight.cpp
+1358098294 source:d:\backup\cpp\rucruise\russiancruise\rclight.cpp
 	"RCLight.h"
 
-1357490650 source:d:\backup\cpp\rucruise\russiancruise\rctaxi.cpp
+1357988305 source:d:\backup\cpp\rucruise\russiancruise\rctaxi.cpp
 	"RCTaxi.h"
 
 1330700082 d:\backup\cpp\rucruise\russiancruise\mysql\include\mysql.h
@@ -1127,4 +1129,7 @@
 	"tools.h"
 	<stdio.h>
 	<string.h>
+
+1357976625 d:\backup\cpp\rucruise\russiancruise\rcpolice.h
+	"RCBaseClass.h"
 

@@ -33,7 +33,7 @@ int RCBank::GetCash(byte UCID)
     return 0;
 }
 
-bool    RCBank::AddCash(byte UCID, int Cash)
+bool    RCBank::AddCash(byte UCID, int Cash, bool Show = false)
 {
     for (int i = 0; i< MAX_PLAYERS; i++)
     {
@@ -41,7 +41,8 @@ bool    RCBank::AddCash(byte UCID, int Cash)
         {
         	char Text[96];
         	sprintf(Text,"^5| ^7^CНа ваш счет поступило: %d ^3RUR.",Cash);
-        	send_mtc(UCID, Text);
+        	if( Show )
+				send_mtc(UCID, Text);
             players[i].Cash += Cash;
             return true;
         }
@@ -330,10 +331,8 @@ void RCBank::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCBank::insim_mci()
+void RCBank::insim_mci( struct IS_MCI* pack_mci )
 {
-	struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
 	for (int i = 0; i < pack_mci->NumC; i++)
     {
         for (int j =0; j < MAX_PLAYERS; j++)        {
