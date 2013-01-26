@@ -23,10 +23,10 @@
 struct DLPlayer
 {
     struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
     byte    UCID;                  // Connection ID
     byte    PLID;                  // PLayer ID
+    char    UName[32];             // Username
+    char    PName[32];             // Player name
     u_int   LVL;
     u_int   Skill;
     u_int   mcicount;
@@ -55,7 +55,7 @@ private:
     // функции-повторители основных фунцкий ядра
     void insim_ncn( struct IS_NCN* packet );
     void insim_npl( struct IS_NPL* packet );
-    void insim_plp( struct IS_PLP* packet);
+    void insim_plp( struct IS_PLP* packet );
     void insim_pll( struct IS_PLL* packet );
     void insim_cnl( struct IS_CNL* packet );
     void insim_cpr( struct IS_CPR* packet );
@@ -84,7 +84,7 @@ public:
 
     byte    inited;
 
-    void    insim_mci();
+    void    insim_mci( struct IS_MCI* packet );
 
     struct  DLPlayer players[32];     // Array of players
     // Основные функции класса

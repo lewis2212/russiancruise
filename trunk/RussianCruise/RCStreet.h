@@ -55,7 +55,7 @@ private:
     // функции-повторители основных фунцкий ядра
     void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void insim_plp( struct IS_PLP* packet);   // Игрок ушел в боксы
+    void insim_plp( struct IS_PLP* packet );   // Игрок ушел в боксы
     void insim_pll( struct IS_PLL* packet );   // Игрок ушел в зрители
     void insim_cnl( struct IS_CNL* packet );   // Игрок ушел с сервера
     void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
@@ -85,6 +85,6 @@ public:
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
-    void insim_mci();   // Пакет с данными о координатах и т.д.
+    void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H

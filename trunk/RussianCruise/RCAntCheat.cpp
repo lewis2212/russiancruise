@@ -72,10 +72,8 @@ void RCAntCheat::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCAntCheat::insim_mci ()
+void RCAntCheat::insim_mci ( struct IS_MCI* pack_mci )
 {
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
     for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
 
     {

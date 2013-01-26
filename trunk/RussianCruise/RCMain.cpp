@@ -1055,7 +1055,7 @@ void case_btt ()
                             {
                                 out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                                 bank.RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
-                                bank.AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text));
+                                bank.AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
 
                                 char Msg[120];
                                 sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg.GetMessage(ginfo->players[i].UCID,1100),atoi(pack_btt->Text));
@@ -1343,8 +1343,7 @@ void case_mci ()
                         {
                             if ( dl.Islocked( ginfo->players[j].UCID ) )
                                 dl.Unlock( ginfo->players[j].UCID );
-
-                            bank.AddCash(ginfo->players[j].UCID,abs((int)Dist)/10);
+                            bank.AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
                             bank.RemFrBank(abs((int)Dist)/100);
                         }
                         else
@@ -1365,7 +1364,7 @@ void case_mci ()
                     int bonus = 100+(50*(ginfo->players[j].Bonus_count));
                     ginfo->players[j].Bonus_count +=1;
 
-                    bank.AddCash(ginfo->players[j].UCID,bonus);
+                    bank.AddCash(ginfo->players[j].UCID,bonus, true);
                     //dl.AddSkill(ginfo->players[j].UCID);
                     //bank.BankFond -= bonus;
 
@@ -1928,7 +1927,7 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали ECU (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash);
+                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank.RemFrBank(sellcash);
             }
         }
@@ -1943,7 +1942,7 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали Turbo (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash);
+                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank.RemFrBank(sellcash);
             }
         }
@@ -1958,7 +1957,7 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали \"Облегчение веса\" (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash);
+                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank.RemFrBank(sellcash);
             }
         }
@@ -2126,7 +2125,7 @@ void case_mso ()
                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " sell car " << id << endl;
                 readf.close();
 
-                bank.AddCash(ginfo->players[i].UCID,ginfo->car[j].sell);
+                bank.AddCash(ginfo->players[i].UCID,ginfo->car[j].sell, true);
                 bank.RemFrBank(ginfo->car[j].sell);
 
                 ginfo->players[i].PLC -= ginfo->car[j].PLC;
@@ -2170,7 +2169,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
     {
-        send_mst("/msg ^1| ^3Russian Cruise: ^3^CПодана команда на чтение конифигурационных файлов");
+        send_mst("/msg ^1| ^3Russian Cruise: ^3^CПодана команда на чтение файлов");
 
         struct IS_TINY pack_requests;
         memset(&pack_requests, 0, sizeof(struct IS_TINY));
@@ -2440,7 +2439,7 @@ void case_mso_cop ()
                     	else
 							dl.AddSkill(ginfo->players[k].UCID, 0.05);
 
-                        bank.AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05);
+                        bank.AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
                         cop++;
                     }
                 }
@@ -3280,39 +3279,39 @@ void *thread_mci (void *params)
         case_mci_cop();
 
 #ifdef _RC_BANK_H
-        bank.insim_mci();
+        bank.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_CHEAT_H
-        antcht.insim_mci();
+        antcht.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_PIZZA_H
-        pizza.insim_mci();
+        pizza.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_ENERGY_H
-        nrg.insim_mci();
+        nrg.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_STREET_H
         if (street.IfInited)
-            street.insim_mci();
+            street.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LIGHT_H
         if (lgh.IfInited)
-            lgh.insim_mci();
+            lgh.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LEVEL_H
         if (dl.inited == 1)
-            dl.insim_mci();
+            dl.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_TAXI_H
         if (taxi.inited == 1)
-            taxi.insim_mci();
+            taxi.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
     }

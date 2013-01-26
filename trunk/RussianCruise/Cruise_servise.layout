@@ -1,49 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="RCPolice.cpp" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1765" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="RCPolice.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="RCStreet.cpp" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4619" topLine="167" />
-		</Cursor>
-	</File>
-	<File name="RCStreet.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2328" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="RCTaxi.cpp" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="19339" topLine="599" />
-		</Cursor>
-	</File>
-	<File name="RCTaxi.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="914" topLine="28" />
-		</Cursor>
-	</File>
-	<File name="Release note.txt" open="1" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6854" topLine="78" />
-		</Cursor>
-	</File>
 	<File name="RCAntCheat.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6958" topLine="178" />
+			<Cursor1 position="1436" topLine="25" />
 		</Cursor>
 		<Folding>
 			<Collapse line="17" />
 			<Collapse line="61" />
-			<Collapse line="75" />
 		</Folding>
 	</File>
 	<File name="TODO.txt" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -53,17 +17,17 @@
 	</File>
 	<File name="RCAntCheat.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2585" topLine="33" />
+			<Cursor1 position="3252" topLine="42" />
 		</Cursor>
 	</File>
 	<File name="insim.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1268" topLine="462" />
+			<Cursor1 position="18424" topLine="810" />
 		</Cursor>
 	</File>
 	<File name="RCBank.cpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2529" topLine="95" />
+			<Cursor1 position="7993" topLine="310" />
 		</Cursor>
 	</File>
 	<File name="pthread.h" open="0" top="0" tabpos="31" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -73,7 +37,7 @@
 	</File>
 	<File name="RCBank.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1523" topLine="18" />
+			<Cursor1 position="2074" topLine="49" />
 		</Cursor>
 	</File>
 	<File name="tools.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -83,7 +47,7 @@
 	</File>
 	<File name="RCBaseClass.cpp" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="662" topLine="6" />
+			<Cursor1 position="5124" topLine="159" />
 		</Cursor>
 	</File>
 	<File name="tools.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -93,37 +57,37 @@
 	</File>
 	<File name="RCBaseClass.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4170" topLine="22" />
+			<Cursor1 position="585" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="version.h" open="0" top="0" tabpos="32" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="version.h" open="1" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1024" topLine="0" />
+			<Cursor1 position="832" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="RCDrivingLicense.cpp" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="RCDrivingLicense.cpp" open="1" top="1" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11465" topLine="437" />
+			<Cursor1 position="3158" topLine="103" />
 		</Cursor>
 	</File>
 	<File name="RCDrivingLicense.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1510" topLine="31" />
+			<Cursor1 position="569" topLine="6" />
 		</Cursor>
 	</File>
 	<File name="RCEnergy.cpp" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="15925" topLine="590" />
+			<Cursor1 position="7957" topLine="316" />
 		</Cursor>
 	</File>
 	<File name="RCEnergy.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1777" topLine="46" />
+			<Cursor1 position="2392" topLine="61" />
 		</Cursor>
 	</File>
 	<File name="RCLight.cpp" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="19430" topLine="663" />
+			<Cursor1 position="11076" topLine="351" />
 		</Cursor>
 		<Folding>
 			<Collapse line="17" />
@@ -131,22 +95,67 @@
 	</File>
 	<File name="RCLight.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2192" topLine="27" />
+			<Cursor1 position="3378" topLine="46" />
 		</Cursor>
 	</File>
-	<File name="RCMain.cpp" open="1" top="1" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="RCMain.cpp" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="24208" topLine="895" />
+			<Cursor1 position="102341" topLine="3250" />
 		</Cursor>
 	</File>
 	<File name="RCMain.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4169" topLine="17" />
+			<Cursor1 position="3346" topLine="169" />
 		</Cursor>
 	</File>
 	<File name="RCMessage.cpp" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4265" topLine="152" />
+			<Cursor1 position="5323" topLine="214" />
+		</Cursor>
+	</File>
+	<File name="RCMessage.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="254" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="RCPizza.cpp" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13109" topLine="350" />
+		</Cursor>
+	</File>
+	<File name="RCPizza.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="67" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="RCPolice.cpp" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="634" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="RCPolice.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2259" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="RCStreet.cpp" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3438" topLine="122" />
+		</Cursor>
+	</File>
+	<File name="RCStreet.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3493" topLine="44" />
+		</Cursor>
+	</File>
+	<File name="RCTaxi.cpp" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10204" topLine="378" />
+		</Cursor>
+	</File>
+	<File name="RCTaxi.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5226" topLine="121" />
 		</Cursor>
 	</File>
 	<File name="CInsim.cpp" open="1" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -154,27 +163,14 @@
 			<Cursor1 position="15543" topLine="565" />
 		</Cursor>
 	</File>
-	<File name="CInsim.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="CInsim.h" open="1" top="0" tabpos="29" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5501" topLine="103" />
+			<Cursor1 position="5964" topLine="109" />
 		</Cursor>
 	</File>
-	<File name="RCMessage.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Release note.txt" open="1" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="620" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="RCPizza.cpp" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="28705" topLine="697" />
-		</Cursor>
-		<Folding>
-			<Collapse line="10" />
-		</Folding>
-	</File>
-	<File name="RCPizza.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4094" topLine="83" />
+			<Cursor1 position="7908" topLine="87" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -399,14 +399,10 @@ void RCTaxi::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCTaxi::insim_mci ()
+void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 {
-    if(!insim)return;/**dont work if insim is NULL**/
-
     float Dist;
     char d[96];
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
 
     for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
     {
@@ -869,10 +865,10 @@ void RCTaxi::taxi_done(TaxiPlayer *splayer)
         srand ( time(NULL) );
         send_mtc(splayer->UCID,Dialog_Done[rand()%DialDoneCount]); // send random dialog phrase
 
-        char Text[128];
-        sprintf(Text,"^6|^C^7 Вы заработали %d ^2RUR.\n",(1000 - splayer->PassStress/2));
-        send_mtc(splayer->UCID,Text);
-        bank->AddCash(splayer->UCID,(1000 - splayer->PassStress/2));
+        //char Text[128];
+        //sprintf(Text,"^6|^C^7 Вы заработали %d ^2RUR.\n",(1000 - splayer->PassStress/2));
+        //send_mtc(splayer->UCID,Text);
+        bank->AddCash(splayer->UCID,(1000 - splayer->PassStress/2), true);
         dl->AddSkill(splayer->UCID);
         btn_information_clear(splayer->UCID);
     }

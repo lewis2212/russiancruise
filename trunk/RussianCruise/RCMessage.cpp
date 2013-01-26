@@ -66,8 +66,8 @@ void RCMessage::readconfig(const char *Track)
 
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
-            memset(&MsgArray[1][atoi(id)],0,sizeof(MsgArray[1][atoi(id)]));
-            strncpy(MsgArray[1][atoi(id)], mesage,strlen(mesage));
+            memset(&MsgArray[ LANG_ID_RUS ][atoi(id)],0,sizeof(MsgArray[1][atoi(id)]));
+            strncpy(MsgArray[ LANG_ID_RUS ][atoi(id)], mesage,strlen(mesage));
         }
     }
     readf.close();
@@ -93,8 +93,8 @@ void RCMessage::readconfig(const char *Track)
 
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
-            memset(&MsgArray[2][atoi(id)],0,sizeof(MsgArray[2][atoi(id)]));
-            strncpy(MsgArray[2][atoi(id)], mesage,strlen(mesage));
+            memset(&MsgArray[ LANG_ID_ENG ][atoi(id)],0,sizeof(MsgArray[2][atoi(id)]));
+            strncpy(MsgArray[ LANG_ID_ENG ][atoi(id)], mesage,strlen(mesage));
 
         }
     }
@@ -104,8 +104,6 @@ void RCMessage::readconfig(const char *Track)
 void RCMessage::insim_ncn( struct IS_NCN* packet )
 {
     int i;
-
-
 
     if (packet->UCID == 0)
         return;
@@ -134,7 +132,7 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf("Can't find %s\n Create File for user",file);
-        players[i].LangID = 2;
+        players[i].LangID = LANG_ID_RUS;
         save(players[i].UCID);
     }
     else
@@ -164,9 +162,6 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
 void RCMessage::insim_cnl( struct IS_CNL* packet )
 {
     int i;
-
-
-
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -184,9 +179,6 @@ void RCMessage::insim_cnl( struct IS_CNL* packet )
 void RCMessage::insim_mso( struct IS_MSO* packet )
 {
     int i;
-
-
-
     char Msg[96];
     strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
 
@@ -235,11 +227,11 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if (strcmp(id,"eng") == 0)
         {
-            players[i].LangID = 2;
+            players[i].LangID = LANG_ID_ENG;
         }
         else if (strcmp(id,"rus") == 0)
         {
-            players[i].LangID = 1;
+            players[i].LangID = LANG_ID_RUS;
         }
 
     }

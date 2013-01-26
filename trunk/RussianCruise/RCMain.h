@@ -90,14 +90,17 @@ using namespace std;
 #include "RCStreet.h"
 #include "RCLight.h"
 #include "RCTaxi.h"
+#include "RCPolice.h"
 
 //#include "sqlite/SQLite.h"
 
 
 
 #define MAX_CARS 30
-#define MAX_FINES 100
 
+#ifndef _RC_POLICE_H
+#define MAX_FINES 100
+#endif
 
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
@@ -149,13 +152,20 @@ typedef struct user_car
     float     dist;
 } _user_car;
 
+#ifndef _RC_POLICE_H
 typedef struct user_fine
 {
     int     fine_id;
     int     fine_date;
 } _user_fine;
 
-
+struct fine
+{
+    int     id;
+    char    name[64];
+    int     cash;
+};
+#endif
 
 struct track_info
 {
@@ -221,13 +231,6 @@ struct player
     unsigned PLC;
 };
 
-
-struct fine
-{
-    int     id;
-    char    name[64];
-    int     cash;
-};
 
 class GlobalInfo
 {

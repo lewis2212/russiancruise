@@ -180,7 +180,7 @@ void RCBaseClass::insim_mso( struct IS_MSO* packet ){}
 void RCBaseClass::insim_con( struct IS_CON* packet ){}
 void RCBaseClass::insim_obh( struct IS_OBH* packet ){}
 
-void    RCBaseClass::insim_mci()
+void    RCBaseClass::insim_mci( struct IS_MCI* packet )
 {
     if(!insim)return;/**dont work if insim is NULL**/
 }

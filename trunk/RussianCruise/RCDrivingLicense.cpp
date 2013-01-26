@@ -91,17 +91,25 @@ bool    RCDL::RemSkill(byte UCID)
     {
         if (players[i].UCID == UCID)
         {
-            if (!Islocked(UCID))
+            if ( !Islocked( UCID ) )
             {
-                if (players[i].Skill < 500*players[i].LVL)
-                    players[i].Skill = 0;
+                if (players[i].Skill < 500*players[i].LVL){
+
+                    if( players[i].LVL > 0 ){
+						players[i].Skill = ( ( pow( players[i].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[i].LVL - players[i].Skill );
+						players[i].LVL --;
+					}
+					else
+						players[i].Skill = 0;
+
+                }
                 else
                     players[i].Skill -= 500*players[i].LVL;
 
                 char Text[64];
-                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
-                float skl = (players[i].LVL*500/nextlvl)*100;
-                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill",skl);
+                float nextlvl = ( pow( players[i].LVL , 2 ) * 0.5 + 100 ) * 1000;
+                float skl = ( players[i].LVL * 500 / nextlvl ) * 100;
+                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl );
                 send_mtc(players[i].UCID,Text);
 
                 return true;
@@ -120,17 +128,24 @@ bool    RCDL::RemSkill(byte UCID, float coef)
     {
         if (players[i].UCID == UCID)
         {
-            if (!Islocked(UCID))
+            if ( !Islocked( UCID ) )
             {
-                if (players[i].Skill < 500*players[i].LVL)
-                    players[i].Skill = 0;
+                if ( players[i].Skill < 500 * players[i].LVL * coef ){
+
+                    if( players[i].LVL > 0 ){
+						players[i].Skill = ( ( pow( players[i].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[i].LVL * coef - players[i].Skill );
+						players[i].LVL --;
+					}
+					else
+						players[i].Skill = 0;
+                }
                 else
-                    players[i].Skill -= 500*players[i].LVL*coef;
+                    players[i].Skill -= 500 * players[i].LVL * coef;
 
                 char Text[64];
-                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
-                float skl = (players[i].LVL*500/nextlvl)*100;
-                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill",skl*coef);
+                float nextlvl = ( pow( players[i].LVL , 2 ) * 0.5 + 100 ) * 1000;
+                float skl = ( players[i].LVL * 500 / nextlvl ) * 100;
+                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl * coef );
                 send_mtc(players[i].UCID,Text);
 
                 return true;
@@ -449,11 +464,8 @@ void RCDL::insim_con( struct IS_CON* packet )
 }
 
 
-void RCDL::insim_mci()
+void RCDL::insim_mci( struct IS_MCI* pack_mci )
 {
-    //cout << "pizza_mci" << endl;
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
 
     for (int i = 0; i < pack_mci->NumC; i++)
 

@@ -1,8 +1,7 @@
 #ifndef _RC_PIZZA_H
 #define _RC_PIZZA_H
 
-//typedef unsigned char byte;
-//typedef unsigned short word;
+#define PIZZA_WORK_TIME 360
 
 #include <stdio.h>
 #include <iostream>
@@ -122,11 +121,11 @@ public:
 
     void insim_ncn( struct IS_NCN* packet ); //+
     void insim_npl( struct IS_NPL* packet ); //+
-    void insim_plp( struct IS_PLP* packet); //+
+    void insim_plp( struct IS_PLP* packet ); //+
     void insim_pll( struct IS_PLL* packet ); //+
     void insim_cnl( struct IS_CNL* packet ); //+
     void insim_cpr( struct IS_CPR* packet ); //+
-    void insim_mci();
+    void insim_mci( struct IS_MCI* packet );
     void insim_mso( struct IS_MSO* packet );
 
     void btn_work (struct PizzaPlayer *splayer);

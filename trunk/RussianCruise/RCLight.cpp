@@ -343,10 +343,8 @@ void RCLight::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCLight::insim_mci ()
+void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 {
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
     for (int i = 0; i < pack_mci->NumC; i++)
     {
         for (int j =0; j < MAX_PLAYERS; j++)
@@ -437,13 +435,11 @@ void RCLight::insim_mci ()
                     int pit1x[10] = {210,200,190,200};
                     int pit1y[10] = {233,230,277,281};
 
-                    int pit2x[10] = {242,231,234,245};
-                    int pit2y[10] = {-71,-69,-36,-36};
-
-
+                    int pit2x[10] = {229,236,247,239};
+                    int pit2y[10] = {-97,-39,-40,-100};
 
                     //printf ("test wrong route\n");
-                    if (Check_Pos(4,pit1x,pit1y,X,Y))
+                    if ( Check_Pos( 4, pit1x, pit1y, X, Y ) )
                     {
                         //send_mst("in zone");
                         if( (D < 190+90) and (D > 190-90) )
@@ -466,7 +462,7 @@ void RCLight::insim_mci ()
 
                         }
                     }
-                    else if (Check_Pos(6,pit2x,pit2y,X,Y))
+                    else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
                     {
                         if( (D < 190+90) and (D > 190-90) )
                         {

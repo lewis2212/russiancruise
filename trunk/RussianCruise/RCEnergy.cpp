@@ -337,9 +337,8 @@ void RCEnergy::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCEnergy::insim_mci ()
+void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 {
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
     for (int i = 0; i < pack_mci->NumC; i++)
     {

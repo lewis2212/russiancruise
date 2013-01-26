@@ -364,7 +364,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
             int place = rand()%zone.NumPoints;
 
             int worktime = time(&ptime);
-            splayer->WorkTime = worktime+60*6;
+            splayer->WorkTime = worktime + PIZZA_WORK_TIME;
             splayer->WorkDestinaion = place;
             splayer->WorkAccept = 2;
             send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,4200));
@@ -375,7 +375,7 @@ void RCPizza::take(struct PizzaPlayer *splayer)
         else if (splayer->WorkPlayerAccept != 0) // заказал игрок
         {
             int worktime = time(&ptime);
-            splayer->WorkTime = worktime+60*6;
+            splayer->WorkTime = worktime + PIZZA_WORK_TIME;
             splayer->WorkDestinaion = splayer->WorkPlayerAccept;
             splayer->WorkAccept = 2;
             char text[96];
@@ -405,19 +405,13 @@ void RCPizza::done(struct PizzaPlayer *splayer)
     if ((splayer->WorkType == WK_PIZZA) and (splayer->WorkAccept == 2))
     {
         int i;
-        for (i=0; i < MAX_PLAYERS; i++)
-        {
-            if (bank->GetPlayerUCID(i) == splayer->UCID)
-            {
-                break;
-            }
-        }
 
         splayer->WorkDestinaion =0;
         splayer->WorkAccept = 0;
         splayer->WorkPlayerAccept = 0;
-        bank->AddCash(splayer->UCID,248); // цена за доставку 248 руб.
-        Capital += 420;
+        int cash = 248 + 50 * abs( 1 - (splayer->WorkTime - time(&ptime) ) / PIZZA_WORK_TIME );
+        bank->AddCash(splayer->UCID, cash, true); // цена за доставку 248 руб.
+        Capital += 420 - 50 * abs( 1 - (splayer->WorkTime - time(&ptime) ) / PIZZA_WORK_TIME ) ;
 
         dl->AddSkill(splayer->UCID);
 
@@ -658,12 +652,8 @@ void RCPizza::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-void RCPizza::insim_mci ()
+void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
 {
-    if(!insim)return;/**dont work if insim is NULL**/
-
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
     for (int i = 0; i < pack_mci->NumC; i++)
     {
         for (int j =0; j < MAX_PLAYERS; j++)
@@ -769,9 +759,6 @@ void RCPizza::insim_mci ()
 void RCPizza::insim_mso( struct IS_MSO* packet )
 {
     int i;
-
-
-
     // The chat GetMessage is sent by the host, don't do anything
     if (packet->UCID == 0)
         return;
