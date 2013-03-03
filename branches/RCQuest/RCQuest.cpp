@@ -1,4 +1,4 @@
-// òóò óæå ïèøåòñÿ âñÿ ëîãèêà è ðàáîòà ìåòîäîâ
+// Ñ‚ÑƒÑ‚ ÑƒÐ¶Ðµ Ð¿Ð¸ÑˆÐµÑ‚ÑÑ Ð²ÑÑ Ð»Ð¾Ð³Ð¸ÐºÐ° Ð¸ Ñ€Ð°Ð±Ð¾Ñ‚Ð° Ð¼ÐµÑ‚Ð¾Ð´Ð¾Ð²
 #include "RCQuest.h"
 
 RCQuest::RCQuest(){}
@@ -17,10 +17,10 @@ void RCQuest::init(const char* RootDir, void *insim)
         return;
     }
 
-}// ïðèâåò
+}// Ð¿Ñ€Ð¸Ð²ÐµÑ‚
 
 
-// îáðàáîò÷èê ñîáûòèÿ êîãäà íà ñåðâåð çàõîäèò íîâûé ïîëüçîâàòåëü
+// Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ ÐºÐ¾Ð³Ð´Ð° Ð½Ð° ÑÐµÑ€Ð²ÐµÑ€ Ð·Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ Ð½Ð¾Ð²Ñ‹Ð¹ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ
 void RCQuest::insim_ncn( struct IS_NCN *packet )
 {
 
@@ -54,6 +54,7 @@ void RCQuest::insim_npl( struct IS_NPL *packet )
         }
     }
 }
+
 void RCQuest::insim_plp( struct IS_PLP *packet )
 {
     struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
@@ -79,6 +80,7 @@ void RCQuest::insim_pll( struct IS_PLL *packet )
         }
     }
 }
+
 void RCQuest::insim_cnl( struct IS_CNL *packet )
 {
 	for(int i = 0; i < MAX_PLAYERS; i++)
@@ -102,22 +104,34 @@ void RCQuest::insim_cpr( struct IS_CPR *packet )
         }
     }
 }
+
 void RCQuest::insim_mso( struct IS_MSO *packet )
 {
     int i;
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+
     if (pack_mso->UCID == 0)
         return;
+
     for (i=0; i < MAX_PLAYERS; i++)
         if (players[i].UCID == pack_mso->UCID)
             break;
 }
+
 void RCQuest::insim_mci(struct IS_MCI *packet)
 {
 
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
 
     for (int i = 0; i < packet->NumC; i++)
+	{
         for (int j =0; j < MAX_PLAYERS; j++)
-		break;
+		{
+			if( players[j].PLID == packet->Info[i].PLID )
+			{
+				break; // may bad work
+			}
+		}
+	}
+
 }

@@ -5,10 +5,14 @@
 
 #include <math.h>
 #include <stdio.h>      //
-#include <iostream>     //
+#include <iostream>
+#include <fstream>
+#include <ctime>
 #include <time.h>       // для работы с временем и рандомом
 #include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
+
+#include "mysql/include/mysql.h"
 
 //#include "tools.h"
 
@@ -19,7 +23,7 @@ public:
     ~RCBaseClass();
 
     void        next_packet();   // Функция переборки типа пакета
-    void        insim_mci();     // Пакет с данными о координатах и т.д.
+    void        insim_mci( struct IS_MCI* packet );     // Пакет с данными о координатах и т.д.
 
     virtual void send_bfn(byte UCID, byte ClickID);
     virtual void send_mst (const char* Text);

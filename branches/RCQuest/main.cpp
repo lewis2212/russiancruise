@@ -162,7 +162,7 @@ void *thread_mci (void *params)
 			continue;
 
 		#ifdef _RC_QUEST_H
-		//quest.insim_mci();
+            quest.insim_mci( insim->udp_get_packet() );
 		#endif
 
 	}
@@ -204,7 +204,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 		return 0;
 	}
 
-	send_mst("/msg ^C^3Russian Cruise квест");
+	send_mst("/msg ^C^3Russian Cruise РєРІРµСЃС‚");
 
 	init_classes();
 	Sleep(1000);
@@ -241,9 +241,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 }
 
 
-int  nCount;     // счетчик
+int  nCount;     // СЃС‡РµС‚С‡РёРє
 
-// главная функция приложения
+// РіР»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ
 int main(int argc, char* argv[])
 {
 
@@ -267,7 +267,7 @@ int main(int argc, char* argv[])
 
 	CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
-	// рабочий цикл сервиса
+	// СЂР°Р±РѕС‡РёР№ С†РёРєР» СЃРµСЂРІРёСЃР°
 	while (ok)
 	{
 		Sleep(1000);
