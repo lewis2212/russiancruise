@@ -91,6 +91,7 @@ using namespace std;
 #include "RCLight.h"
 #include "RCTaxi.h"
 #include "RCPolice.h"
+#include "RCBanList.h"
 
 //#include "sqlite/SQLite.h"
 

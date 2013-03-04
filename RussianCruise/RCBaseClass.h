@@ -5,10 +5,14 @@
 
 #include <math.h>
 #include <stdio.h>      //
-#include <iostream>     //
+#include <iostream>
+#include <fstream>
+#include <ctime>
 #include <time.h>       // для работы с временем и рандомом
 #include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
+
+#include "mysql/include/mysql.h"
 
 //#include "tools.h"
 

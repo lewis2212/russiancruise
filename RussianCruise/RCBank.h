@@ -1,16 +1,6 @@
 #ifndef _RC_BANK_H
 #define _RC_BANK_H
 
-//typedef unsigned char byte;
-//typedef unsigned short word;
-
-#include <stdio.h>
-#include <iostream>
-#include <time.h>
-#include <windows.h>
-
-#include "mysql/include/mysql.h"
-
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCMessage.h"

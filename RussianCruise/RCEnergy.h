@@ -1,18 +1,6 @@
 #ifndef _RC_ENERGY_H
 #define _RC_ENERGY_H
 
-//typedef unsigned char byte;
-//typedef unsigned short word;
-
-
-#include <math.h>
-#include <stdio.h>
-#include <iostream>
-#include <time.h>
-#include <windows.h>
-
-#include "mysql/include/mysql.h"
-
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCMessage.h"

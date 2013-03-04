@@ -1,17 +1,6 @@
 #ifndef _RC_LEVEL_H
 #define _RC_LEVEL_H
 
-//typedef unsigned char byte;
-//typedef unsigned short word;
-
-#include <stdio.h>
-#include <iostream>
-#include <time.h>
-#include <windows.h>
-#include <math.h>
-
-#include "mysql/include/mysql.h"
-
 #include "RCBaseClass.h"
 #include "tools.h"
 #include "RCBaseClass.h"

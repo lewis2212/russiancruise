@@ -1,13 +1,7 @@
 #ifndef _RC_CHEAT_H // Проверка, чтобы файл подключался один раз
 #define _RC_CHEAT_H
 
-#include <stdio.h>      //
-#include <iostream>     //
-#include <time.h>       // для работы с временем и рандомом
-#include <windows.h>    // не помню для чего но ингда нужно
-#include <math.h>
-
-#include "CInsim.h"     // Insim
+#include "RCBaseClass.h"
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
 

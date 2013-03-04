@@ -42,6 +42,10 @@ RCLight lgh;
 RCTaxi  taxi;
 #endif
 
+#ifdef _RC_BANLIST_H
+RCBanList banlist;
+#endif
+
 void init_classes()
 {
     msg.init(RootDir,insim);
@@ -73,6 +77,10 @@ void init_classes()
 
 #ifdef _RC_TAXI_H
     taxi.init(RootDir,insim,&msg,&bank,&dl,&street,&pizza);
+#endif
+
+#ifdef _RC_BANLIST_H
+	banlist.init(RootDir, insim);
 #endif
 }
 
@@ -2484,7 +2492,7 @@ void case_mso_cop ()
     {
         char file[255];
         sprintf(file,"%smisc\\cops.txt",RootDir);
-        FILE *f;
+
         char line[32];
         if (strncmp(Msg, "!cop_add", 8) == 0 )
         {
@@ -2550,6 +2558,38 @@ void case_mso_cop ()
             }
             rCops.close();
         }
+//!ban#denis-takumi#1
+		if (strncmp(Msg, "!ban", 4) == 0 )
+        {
+        	cout << Msg << endl;
+        	char* com;
+        	char* user;
+        	char* timee;
+
+        	com = strtok(Msg, "#");
+        	user = strtok(NULL, "#");
+        	timee = strtok(NULL, "#");
+
+        	if( !com || !user || !timee )
+				return;
+
+			banlist.addUser( user, time(NULL) + atoi(timee)*24*3600 );
+
+        }
+
+		if (strncmp(Msg, "!unban", 6) == 0 )
+        {
+        	char* com;
+        	char* user;
+
+        	com = strtok(Msg, "#");
+        	user = strtok(NULL, "#");
+
+        	if( !com || !user )
+				return;
+        	banlist.removeUser( user );
+        }
+
     }
 }
 
@@ -3314,6 +3354,7 @@ void *thread_mci (void *params)
             taxi.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
+
     }
     return 0;
 };
@@ -3670,6 +3711,10 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
 #ifdef _RC_TAXI_H
         taxi.next_packet();
+#endif
+
+#ifdef _RC_BANLIST_H
+		banlist.next_packet();
 #endif
     }
 

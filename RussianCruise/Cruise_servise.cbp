@@ -57,6 +57,8 @@
 		<Unit filename="CInsim.h" />
 		<Unit filename="RCAntCheat.cpp" />
 		<Unit filename="RCAntCheat.h" />
+		<Unit filename="RCBanList.cpp" />
+		<Unit filename="RCBanList.h" />
 		<Unit filename="RCBank.cpp" />
 		<Unit filename="RCBank.h" />
 		<Unit filename="RCBaseClass.cpp" />
