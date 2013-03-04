@@ -1,11 +1,6 @@
 #ifndef _RC_STREET_H // Проверка, чтобы файл подключался один раз
 #define _RC_STREET_H
 
-#include <stdio.h>      //
-#include <iostream>     //
-#include <time.h>       //
-#include <windows.h>    //
-
 #include "RCBaseClass.h"
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank

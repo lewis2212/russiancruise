@@ -1,12 +1,6 @@
 #ifndef _RC_TAXI_H // Проверка, чтобы файл подключался один раз
 #define _RC_TAXI_H
 
-#include <math.h>       // sqrt pow
-#include <stdio.h>      //
-#include <iostream>     //
-#include <time.h>       // для работы с временем и рандомом
-#include <windows.h>    // не помню для чего но ингда нужно
-
 #include "RCBaseClass.h"
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
@@ -141,7 +135,6 @@ private:
     void btn_Dist(struct TaxiPlayer *splayer, const char* Text);
 
 public:
-    // Переменные и функции, доступные для всех
 
     RCTaxi();   // Конструктор класса (обязательно)
     ~RCTaxi();  // Деструктор класса (обязательно)
@@ -153,15 +146,10 @@ public:
 
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
-    // функции-повторители основных фунцкий ядра
-    //void next_packet(); // Функция переборки типа пакета
 
     void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
 
-
-    // Функции-утилиты
-    // int check_pos (struct PizzaPlayer *splayer); //+
 
 };
 #endif // #define _RC_TAXI_H

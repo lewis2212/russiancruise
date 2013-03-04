@@ -1,15 +1,7 @@
 #ifndef _RC_PIZZA_H
 #define _RC_PIZZA_H
 
-#define PIZZA_WORK_TIME 360
-
-#include <stdio.h>
-#include <iostream>
-#include <time.h>
-#include <windows.h>
-
 #include "RCBaseClass.h"
-
 #include "RCMessage.h"
 #include "RCBank.h"
 #include "RCEnergy.h"
@@ -17,6 +9,8 @@
 #include "RCTaxi.h"
 
 #include "tools.h"
+
+#define PIZZA_WORK_TIME 360
 
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
