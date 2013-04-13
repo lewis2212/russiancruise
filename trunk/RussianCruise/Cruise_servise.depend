@@ -657,7 +657,7 @@
 	"tools.h"
 	"RCMessage.h"
 
-1360601154 d:\backup\cpp\rucruise\russiancruise\rcbaseclass.h
+1365798507 d:\backup\cpp\rucruise\russiancruise\rcbaseclass.h
 	"CInsim.h"
 	<math.h>
 	<stdio.h>
@@ -667,6 +667,7 @@
 	<time.h>
 	<windows.h>
 	<exception>
+	<map>
 	"mysql/include/mysql.h"
 
 1356721146 d:\backup\cpp\rucruise\russiancruise\tools.h
