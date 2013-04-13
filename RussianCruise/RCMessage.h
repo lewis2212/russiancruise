@@ -30,7 +30,7 @@ private:
 
     char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
 
-    struct MPlayer players[MAX_PLAYERS];
+    struct MPlayer *players;
 
     void insim_ncn( struct IS_NCN* packet );
     void insim_cnl( struct IS_CNL* packet );

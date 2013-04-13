@@ -42,7 +42,7 @@ private:
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    struct  StrPlayer players[32];     // Структура игроков
+    struct  StrPlayer *players;     // Структура игроков
     byte    StreetNums;                          // Count of streets
     struct  streets Street[30];              // Array of streets
     // struct  streets2 Street2[30];              // Array of streets

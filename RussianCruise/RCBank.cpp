@@ -5,13 +5,14 @@ using namespace std;
 
 RCBank::RCBank()
 {
-	//players = new BankPlayer[MAX_PLAYERS];
+	players = new BankPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( BankPlayer ) * MAX_PLAYERS );
 }
 
 RCBank::~RCBank()
 {
     mysql_close( &rcbankDB );
-    //delete[] players;
+    delete[] players;
 }
 
 byte RCBank::GetPlayerUCID (int i)
@@ -86,7 +87,7 @@ bool RCBank::InBank(byte UCID)
     return players[i].InZone;
 }
 
-int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn, void *DL)
+int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *DL)
 {
 
     strcpy(RootDir,dir);
@@ -108,7 +109,7 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn, v
     dl = (RCDL *)DL;
     if(!dl)
     {
-        printf ("Can't struct RCDL class");
+        printf ("RCBank Error: Can't struct RCDL class");
         return -1;
     }
 
@@ -139,7 +140,7 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    if (packet->UCID == 0) 
+    if (packet->UCID == 0)
 		return;
     for (i=0; i<MAX_PLAYERS; i++)
         if ( players[i].UCID == 0 )

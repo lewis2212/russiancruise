@@ -109,7 +109,7 @@ private:
     bool    StartPointsAdd;
 
     struct  place zone;
-    struct  TaxiPlayer players[32];     // Структура игроков
+    struct  TaxiPlayer *players;     // Структура игроков
 
 
 

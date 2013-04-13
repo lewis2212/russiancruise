@@ -6,15 +6,16 @@ using namespace std;
 
 RCAntCheat::RCAntCheat()
 {
-
+	players = new Player[MAX_PLAYERS];
+	memset(players, 0, sizeof( Player ) * MAX_PLAYERS );
 }
 
 RCAntCheat::~RCAntCheat()
 {
-
+	delete[] players;
 }
 
-int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void *Bank)
+int RCAntCheat::init(char *dir,void *CInSim, void *Message)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
 
@@ -30,13 +31,6 @@ int RCAntCheat::init(char *dir,void *classname,void *CInSim, void *Message,void 
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
-        return -1;
-    }
-
-    bank = (RCBank *)Bank;
-    if(!msg)
-    {
-        printf ("Can't struct RCBank class");
         return -1;
     }
 

@@ -38,8 +38,6 @@ struct Player
     bool    NPL;
 };
 
-
-
 // Описание класса Такси
 class RCAntCheat:public RCBaseClass
 {
@@ -49,7 +47,8 @@ private:
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    struct  Player players[ MAX_PLAYERS ];     // Структура игроков
+    //struct  Player players[ MAX_PLAYERS ];     // Структура игроков
+    struct  Player *players;     // Структура игроков
 
     // Переменные и функции, доступные только самому классу
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
@@ -75,7 +74,7 @@ public:
     ~RCAntCheat();  // Деструктор класса (обязательно)
 	struct  track_inf TrackInf;             // Where PitBox and Shop
     // Основные функции класса
-    int init(char *dir,void *classname,void *CInSim, void *Message,void *Bank);    // classname - указатель на класс RCAntCheat.
+    int init(char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCAntCheat.
     void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 
 };

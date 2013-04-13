@@ -1,7 +1,15 @@
 using namespace std;
 #include "RCTaxi.h"
-RCTaxi::RCTaxi(){}
-RCTaxi::~RCTaxi(){}
+RCTaxi::RCTaxi()
+{
+	players = new TaxiPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( TaxiPlayer ) * MAX_PLAYERS );
+}
+
+RCTaxi::~RCTaxi()
+{
+	delete[] players;
+}
 
 int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza)
 {

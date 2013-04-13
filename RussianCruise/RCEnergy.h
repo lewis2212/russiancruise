@@ -73,9 +73,9 @@ public:
     RCBank      *bank;
 
     struct  place zone;
-    struct  EnergyPlayer players[32];     // Array of players
+    struct  EnergyPlayer *players;     // Array of players
     // Основные функции класса
-    int     init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank);
+    int     init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
     void    readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
 

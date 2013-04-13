@@ -7,7 +7,7 @@ RCBanList::RCBanList()
 
 RCBanList::~RCBanList()
 {
-	//dtor
+
 }
 
 int RCBanList::init( const char* dir, void *CInSim )
