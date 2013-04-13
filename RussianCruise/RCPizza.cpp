@@ -150,8 +150,8 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                     {
                         cout << piz->players[i].UName << " accepted for shop\n";
 
-                        piz->send_mtc(piz->players[i].UCID,"^C^3| ^7Заедте в магазин и закажите продукты.");
-                        strcpy(piz->players[i].WorkDest,"^C^7Заедте в магазин и закажите продукты."); // +4 == remove slash
+                        piz->send_mtc(piz->players[i].UCID,"^C^3| ^7Закажите продукты в магазине");
+                        strcpy(piz->players[i].WorkDest,"^C^7Закажите продукты в магазине"); // +4 == remove slash
 
                         piz->players[i].WorkAccept =3;
                         piz->players[i].WorkPlayerAccept =0;
