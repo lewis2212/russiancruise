@@ -11,6 +11,7 @@
 #include <time.h>       // для работы с временем и рандомом
 #include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
+#include <map>
 
 #include "mysql/include/mysql.h"
 

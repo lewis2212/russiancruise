@@ -111,9 +111,6 @@ void RCStreet::readconfig(const char *Track)
 void RCStreet::insim_cnl( struct IS_CNL* packet )
 {
     int i;
-
-
-
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -128,9 +125,6 @@ void RCStreet::insim_cnl( struct IS_CNL* packet )
 void RCStreet::insim_cpr( struct IS_CPR* packet )
 {
     int i;
-
-
-
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -145,7 +139,6 @@ void RCStreet::insim_cpr( struct IS_CPR* packet )
 
 void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
 {
-
     for (int i = 0; i < pack_mci->NumC; i++)
     {
         for (int j =0; j < MAX_PLAYERS; j++)
@@ -156,8 +149,6 @@ void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
-
-
 
                 for (int g=0; g<StreetNums; g++)
                 {
@@ -178,8 +169,6 @@ void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
 
 void RCStreet::insim_mso( struct IS_MSO* packet )
 {
-
-
     if (packet->UCID == 0)
         return;
 }
@@ -189,8 +178,6 @@ void RCStreet::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-
-
     if (packet->UCID == 0)
         return;
 
@@ -198,7 +185,6 @@ void RCStreet::insim_ncn( struct IS_NCN* packet )
     for (i=0; i<MAX_PLAYERS; i++)
         if (players[i].UCID == 0)
             break;
-
 
     if (i == MAX_PLAYERS)
         return;
@@ -210,8 +196,6 @@ void RCStreet::insim_ncn( struct IS_NCN* packet )
 
 void RCStreet::insim_npl( struct IS_NPL* packet )
 {
-
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].UCID == packet->UCID)
@@ -224,8 +208,6 @@ void RCStreet::insim_npl( struct IS_NPL* packet )
 
 void RCStreet::insim_plp( struct IS_PLP* packet)
 {
-
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].PLID == packet->PLID)
@@ -238,8 +220,6 @@ void RCStreet::insim_plp( struct IS_PLP* packet)
 
 void RCStreet::insim_pll( struct IS_PLL* packet )
 {
-
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].PLID == packet->PLID)
