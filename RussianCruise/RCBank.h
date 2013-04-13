@@ -18,11 +18,9 @@ typedef struct BankPlayer
     byte    PLID;                   // PLayer ID
     double   Cash;
     //char    CName[4];             // Car Name
-    byte    Zone;
-
-    bool    InZone;                 //Р·РѕРЅР° Р±Р°РЅРєР°
+    bool    InZone;                 //зона банка
     u_int   Credit;
-    u_int   Date_create;
+    time_t   Date_create;
 
 
 } _BankPlayer;
@@ -39,13 +37,12 @@ class RCBank:public RCBaseClass
 {
 private:
 
-    // Р”РµСЃРєСЂРёРїС‚РѕСЂ СЃРѕРµРґРёРЅРµРЅРёСЏ
+    // Дескриптор соединения
     MYSQL	rcbankDB;
-    // Р”РµСЃРєСЂРёРїС‚РѕСЂ СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ С‚Р°Р±Р»РёС†С‹
+    // Дескриптор результирующей таблицы
     MYSQL_RES *rcbankRes;
-    // РњР°СЃСЃРёРІ РїРѕР»РµР№ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРё
+    // Массив полей текущей строки
     MYSQL_ROW rcbankRow;
-
 
     struct  Bank_info TrackInf;
     BankPlayer players[MAX_PLAYERS];     // Array of players
@@ -80,16 +77,18 @@ public:
     int  GetCash(byte UCID);
     byte GetPlayerUCID (int i);
 
-    // РћСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РєР»Р°СЃСЃР°
+    // Основные функции класса
     int init(const char *dir,void *CInSim, void *GetMessage, void *dbconn, void *DL);
     void readconfig(const char *Track);
     void bank_save(byte UCID);
+
+    void credit_penalty(byte UCID);
 
     void btn_cash(int i);
 
     void insim_mci( struct IS_MCI* packet );
 
-    // Р¤СѓРЅРєС†РёРё-СѓС‚РёР»РёС‚С‹
+    // Функции-утилиты
     int check_pos (struct BankPlayer *splayer);
 };
 
