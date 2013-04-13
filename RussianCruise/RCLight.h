@@ -41,7 +41,10 @@ private:
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCDL        *dl;
 
-    struct  LghPlayer players[32];     // Структура игроков
+    //struct  LghPlayer players[MAX_PLAYERS];     // Структура игроков
+    //struct  LghPlayer *players;     // Структура игроков
+    map< byte, LghPlayer > players;
+
     int     LightsCount;
     struct  Lights Light[30];              // Array of streets
     // struct  streets2 Street2[30];              // Array of streets
@@ -55,10 +58,10 @@ private:
     void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
 
-    void btn_svetofor1 (struct LghPlayer *splayer);
-    void btn_svetofor2 (struct LghPlayer *splayer);
-    void btn_svetofor3 (struct LghPlayer *splayer);
-    void btn_wrong_way (byte UCID);
+    void btn_svetofor1 ( byte UCID );
+    void btn_svetofor2 ( byte UCID );
+    void btn_svetofor3 ( byte UCID );
+    void btn_wrong_way ( byte UCID );
 
 
 public:

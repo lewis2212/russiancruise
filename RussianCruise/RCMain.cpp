@@ -35,7 +35,7 @@ RCStreet  street;
 #endif
 
 #ifdef _RC_LIGHT_H
-RCLight lgh;
+RCLight *lgh;
 #endif
 
 #ifdef _RC_TAXI_H
@@ -48,6 +48,8 @@ RCBanList banlist;
 
 void init_classes()
 {
+	lgh = new RCLight();
+
     msg.init(RootDir,insim);
     bank.init(RootDir,insim,&msg,&rcMaindb,&dl);
 
@@ -68,7 +70,7 @@ void init_classes()
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh.init(RootDir,insim,&msg,&dl);
+    lgh->init(RootDir,insim,&msg,&dl);
 #endif
 
 #ifdef _RC_PIZZA_H
@@ -107,7 +109,7 @@ void readconfigs()
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh.readconfig(ginfo->Track);
+    lgh->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_TAXI_H
@@ -524,15 +526,15 @@ void btn_info (struct player *splayer, int b_type)
 
     char about_text[10][100];
     sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
-    strncpy(about_text[1], "^C^7Developer: Kostin Denis",99);
-    strncpy(about_text[2], "^C^7ICQ: 5518182",99);
-    strncpy(about_text[3], "^C^7Skype: denisko_leva",99);
+    strncpy(about_text[1], "^C^7Developers: Denis Kostin, Alexandr Mochalov",99);
+    strncpy(about_text[2], "^C^7Jabber: denis-kostin@jabber.ru",99);
+    strncpy(about_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru",99);
     strncpy(about_text[4], "^7",99);
     strncpy(about_text[5], "^C^7More information",99);
     strncpy(about_text[6], "^C^7http://vk.com/russiancruise",99);
     strncpy(about_text[7], "^7",99);
     strncpy(about_text[8], "^C^7        Thanks:",99);
-    strncpy(about_text[9], "^C^3        repeat, NOSE, etc",99);
+    strncpy(about_text[9], "^C^3        repeat, nose, D.Matsugin, R.Ratzinger",99);
 
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
@@ -1386,19 +1388,15 @@ void case_mci ()
                 }
 
                 /** Zones (PitSave, shop, etc) **/
-                if(bank.InBank(ginfo->players[j].UCID)) ginfo->players[j].Zone = 4;
+                if(bank.InBank(ginfo->players[j].UCID))
+					ginfo->players[j].Zone = 4;
                 else    if (ginfo->players[j].Pitlane)
-                {
                     ginfo->players[j].Zone = 1;
-                }
                 else if (dl.Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y))
-                {
                     ginfo->players[j].Zone = 2;
-                }
+
                 else
-                {
                     ginfo->players[j].Zone = 0;
-                }
 
                 if (ginfo->players[j].Svetofor == 1)
                 {
@@ -2668,7 +2666,7 @@ void case_npl ()
                     ginfo->players[i].cop = 1;
                     dl.Lock(ginfo->players[i].UCID);
                     nrg.Lock(ginfo->players[i].UCID);
-                    lgh.SetLight3(ginfo->players[i].UCID,true);
+                    lgh->SetLight3(ginfo->players[i].UCID,true);
                 }
 
                 char Text[64];
@@ -2860,7 +2858,7 @@ void case_pll ()
 
             dl.Unlock(ginfo->players[i].UCID);
             nrg.Unlock(ginfo->players[i].UCID);
-            lgh.SetLight3(ginfo->players[i].UCID,false);
+            lgh->SetLight3(ginfo->players[i].UCID,false);
 
             save_car(&ginfo->players[i]);
 
@@ -2915,7 +2913,7 @@ void case_plp ()
 
             dl.Unlock(ginfo->players[i].UCID);
             nrg.Unlock(ginfo->players[i].UCID);
-            lgh.SetLight3(ginfo->players[i].UCID,false);
+            lgh->SetLight3(ginfo->players[i].UCID,false);
 
 
             save_car(&ginfo->players[i]);
@@ -3349,8 +3347,8 @@ void *thread_mci (void *params)
 #endif
 
 #ifdef _RC_LIGHT_H
-        if (lgh.IfInited)
-            lgh.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        if (lgh->IfInited)
+            lgh->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LEVEL_H
@@ -3715,7 +3713,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif
 
 #ifdef _RC_LIGHT_H
-        lgh.next_packet();
+        lgh->next_packet();
 #endif
 
 #ifdef _RC_TAXI_H
@@ -4014,15 +4012,13 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
     switch (dwControl)
     {
     case SERVICE_CONTROL_STOP:     // остановить сервис
+    	send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
+		send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
         // save all users
         for (int j=0; j<MAX_PLAYERS; j++)
         {
-
             if (ginfo->players[j].UCID !=0 )
             {
-            	send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-				send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
-
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
                 save_user_fines(&ginfo->players[j]);

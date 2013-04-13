@@ -39,6 +39,7 @@ protected:
 
     CInsim      *insim;         // Переменная-указатель на класс CInsim
     char        RootDir[MAX_PATH]; // Полный путь до папки с программой
+    std::map< byte, byte >PLIDtoUCID;
 
     virtual void    insim_ver( struct IS_VER* packet );
     virtual void    insim_tiny( struct IS_TINY* packet );
