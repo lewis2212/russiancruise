@@ -139,17 +139,14 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
 {
     int i;
 
-    if (packet->UCID == 0)
-        return;
-
+    if (packet->UCID == 0) 
+		return;
     for (i=0; i<MAX_PLAYERS; i++)
-	{
-		 if ( players[i].UCID == 0 )
-            break;
-	}
+        if ( players[i].UCID == 0 )
+        	break;
 
     if (i == MAX_PLAYERS)
-        return;
+		return;
 
     strcpy(players[i].UName, packet->UName);
     strcpy(players[i].PName, packet->PName);
@@ -210,10 +207,57 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
 
     mysql_free_result( rcbankRes );
 
+    /** credit **/
+    if (players[i].Date_create!=0)
+    {
+        char Text[96];
+        double razn=((double)(players[i].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
+
+        printf("%d",razn);
+
+        if (razn<=4 and razn>0)
+        {
+
+            sprintf(Text,"^1| ^1^CОСТАЛОСЬ^7%3.0f ^1ДНЯ ДО СНЯТИЯ КРЕДИТА!",razn);
+            send_mtc(players[i].UCID, Text);
+        }
+        if (razn==0)
+        {
+            sprintf(Text,"^1| ^1^CСЕГОДНЯ ПОСЛЕДНИЙ ДЕНЬ ДЛЯ ПОГАШЕНИЯ КРЕДИТА!");
+            send_mtc(players[i].UCID, Text);
+            send_mtc(players[i].UCID, Text);
+            send_mtc(players[i].UCID, Text);
+        }
+        if (razn<0) credit_penalty(players[i].UCID);
+    }
+    /** credit **/
+
     return ;
 }
 
+void RCBank::credit_penalty (byte UCID)
+{
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
 
+            char Text[96];
+
+            double razn=((double)(players[i].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
+            int c = (int)abs((ceil(razn)));
+            sprintf(Text,"^1| ^1^CВЫ ПРОСРОЧИЛИ КРЕДИТ!");send_mtc(players[i].UCID, Text);
+            sprintf(Text,"^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день",players[i].Credit*13/10);send_mtc(players[i].UCID, Text);
+
+            RemCash(players[i].UCID,((players[i].Credit)*13/10 + 1000*c)); //отбираем бабки у игрока
+            AddToBank((players[i].Credit)*13/10 + 1000*c); //сдаем в банк
+            players[i].Credit = 0;
+            players[i].Date_create = 0;
+            bank_save(players[i].UCID); //сохраняемся
+
+        }
+    }
+}
 
 void RCBank::insim_npl( struct IS_NPL* packet )
 {
@@ -339,7 +383,6 @@ void RCBank::insim_cpr( struct IS_CPR* packet )
 void RCBank::insim_mso( struct IS_MSO* packet )
 {
     int i;
-    //if (packet->UCID == 0) return;
 
     for (i=0; i < MAX_PLAYERS; i++)
         if (players[i].UCID == packet->UCID) break;
@@ -356,12 +399,12 @@ void RCBank::insim_mso( struct IS_MSO* packet )
         if (strncmp(Message, "!info", strlen("!info")) == 0 )
         {
 
-            send_mtc(players[i].UCID,"^6| ^CИнформация");
+            send_mtc(players[i].UCID,"^5| ^CИнформация");
             if (dl->GetLVL(players[i].UCID)<5) { send_mtc(players[i].UCID,"^1| ^C^7Нужен уровень: ^15"); return;}
             //кредит
-            sprintf(Text,"^6| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr);send_mtc(players[i].UCID, Text);
-            send_mtc(players[i].UCID,"^6| ^C^7Кредит выдается под ^230 % ^7в месяц, на срок не более ^230^7 дней.");
-            send_mtc(players[i].UCID,"^6| ^C^7При досрочном погашении будет снята сумма кредита + процент на текущий день.");
+            sprintf(Text,"^5| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr);send_mtc(players[i].UCID, Text);
+            send_mtc(players[i].UCID,"^5| ^C^7Кредит выдается под ^230 % ^7в месяц, на срок не более ^230^7 дней.");
+            send_mtc(players[i].UCID,"^5| ^C^7При досрочном погашении будет снята полная сумма кредита + процент.");
             //send_mtc(players[i].UCID,"^6| ^C^7При просрочке более чем на ^21 ^7день будет снята сумма кредита + полный процент + штраф.");
         }
 
@@ -371,18 +414,24 @@ void RCBank::insim_mso( struct IS_MSO* packet )
 
             if (players[i].Date_create!=0)
             {
-                sprintf(Text,"^6| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %d",players[i].Credit,players[i].Date_create); send_mtc(players[i].UCID, Text);
-                sprintf(Text,"^6| ^7^CСумма возврата на сегодняшний день: %d ^3RUR^7.",players[i].Credit); send_mtc(players[i].UCID, Text);
-                sprintf(Text,"^6| ^7^CВремя до снятия: ^2%d ^7дней.",players[i].Date_create); send_mtc(players[i].UCID, Text);
+                struct tm * timeinfo;
+                char DateCreate [80];
+                timeinfo = localtime (&players[i].Date_create);
+                strftime (DateCreate,80,"%d.%m.%Y",timeinfo);
+
+                double razn=((double)(players[i].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
+
+                sprintf(Text,"^5| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %s",players[i].Credit,DateCreate); send_mtc(players[i].UCID, Text);
+                sprintf(Text,"^5| ^7^CВремя до снятия: ^2%3.0f ^7дней.",razn); send_mtc(players[i].UCID, Text);
                 return;
             }
 
             strtok (Message," "); strtok (NULL," "); int summ = atoi(strtok (NULL," "));
             if (summ<=0) summ=cr; else if (summ<cr/5 or summ>cr) { sprintf(Text,"^1| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr); send_mtc(players[i].UCID, Text); return; }
 
-            send_mtc(players[i].UCID,"^6| ^CИнформация по оформляемому кредиту");
-            sprintf(Text,"^6| ^7^CЖелаемая сумма: %d ^3RUR^7.",summ);send_mtc(players[i].UCID, Text);
-            sprintf(Text,"^6| ^7^CСумма возврата по истечении ^230 ^7дней: %d ^3RUR^7.",summ*13/10);send_mtc(players[i].UCID, Text);
+            send_mtc(players[i].UCID,"^5| ^CИнформация по оформляемому кредиту");
+            sprintf(Text,"^5| ^7^CЖелаемая сумма: %d ^3RUR^7.",summ);send_mtc(players[i].UCID, Text);
+            sprintf(Text,"^5| ^7^CСумма возврата: %d ^3RUR^7.",summ*13/10);send_mtc(players[i].UCID, Text);
             return;
         }
 
@@ -400,11 +449,9 @@ void RCBank::insim_mso( struct IS_MSO* packet )
                 send_mtc(players[i].UCID,"^1| ^C^7Сумма на вашем счете превышает размер кредита более чем в половину.");
                 return;
             }
-
             //выдаем кредит
-            sprintf(Text,"^6| ^7^CВам выдан кредит на сумму %d ^3RUR^7.",summ); send_mtc(players[i].UCID, Text);
-            players[i].Credit = summ;
-            players[i].Date_create = 10;
+            sprintf(Text,"^5| ^7^CВам выдан кредит на сумму %d ^3RUR^7.",summ); send_mtc(players[i].UCID, Text);
+            players[i].Credit = summ; players[i].Date_create = time(NULL);
 
             RemFrBank(summ); //берем бабки из банка
             AddCash(players[i].UCID,summ,false); //выдаем бабки игроку
@@ -414,15 +461,15 @@ void RCBank::insim_mso( struct IS_MSO* packet )
         if (strncmp(Message, "!repay", strlen("!repay")) == 0 )
         {
             if (players[i].Date_create==0) {send_mtc(players[i].UCID,"^1| ^C^7У вас нет кредитов");return;}
-            int sumReq = players[i].Credit; //сумма с учетом процентов на сегодняшний день
-            if (players[i].Cash<sumReq) {send_mtc(players[i].UCID,"^1| ^C^7На вашем счете недостаточно средств для погашения кредита");return;}
 
-            send_mtc(players[i].UCID, "^6| ^7^CВы погасили кредит.");
+            if (players[i].Cash<players[i].Credit*13/10) {send_mtc(players[i].UCID,"^1| ^C^7На вашем счете недостаточно средств для погашения кредита");return;}
+
+            send_mtc(players[i].UCID, "^5| ^7^CВы погасили кредит.");
             players[i].Credit = 0;
             players[i].Date_create = 0;
 
-            RemCash(players[i].UCID,sumReq); //отбираем бабки у игрока
-            AddToBank(sumReq); //сдаем в банк
+            RemCash(players[i].UCID,players[i].Credit*13/10); //отбираем бабки у игрока
+            AddToBank(players[i].Credit*13/10); //сдаем в банк
             bank_save(players[i].UCID); //сохраняемся
         }
     }
@@ -434,13 +481,6 @@ void RCBank::insim_mci( struct IS_MCI* pack_mci )
         {
             if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
             {
-/*
-                time_t rawtime;
-                struct tm * timeinfo;
-                time (&rawtime);
-                timeinfo = localtime (&rawtime);
-                printf ("%d:%d\n", timeinfo->tm_hour,timeinfo->tm_min);*/
-
                 //баланс игрока
             	btn_cash(j);
 
@@ -452,11 +492,11 @@ void RCBank::insim_mci( struct IS_MCI* pack_mci )
                     {
                         players[j].InZone=true;
 
-                        send_mtc(players[j].UCID,"^6| ^3Bank");
-                        send_mtc(players[j].UCID,"^6| ^2!info - ^CОбщая информация");
-                        send_mtc(players[j].UCID,"^6| ^2!credit info N - ^CРасчет процентов по кредиту на сумму N");
-                        send_mtc(players[j].UCID,"^6| ^2!credit N (!credit 50000) - ^CПолучить кредит на сумму N");
-                        send_mtc(players[j].UCID,"^6| ^2!repay - ^CПогасить кредит");
+                        send_mtc(players[j].UCID,"^5| Bank");
+                        send_mtc(players[j].UCID,"^5| ^7!info - ^2^CОбщая информация");
+                        send_mtc(players[j].UCID,"^5| ^7!credit info N - ^2^CРасчет процентов по кредиту на сумму N");
+                        send_mtc(players[j].UCID,"^5| ^7!credit N (!credit 50000) - ^2^CПолучить кредит на сумму N");
+                        send_mtc(players[j].UCID,"^5| ^7!repay - ^2^CПогасить кредит");
                     }
                 }
                 else if(players[j].InZone) players[j].InZone=false;

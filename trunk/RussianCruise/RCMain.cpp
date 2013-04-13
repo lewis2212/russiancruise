@@ -680,6 +680,8 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,401));
     else if (splayer->Zone== 3)
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,402));
+    else if (splayer->Zone== 4)
+        strcpy(pack.Text,msg.GetMessage(splayer->UCID,404));
     else
         strcpy(pack.Text,msg.GetMessage(splayer->UCID,403));
     insim->send_packet(&pack);
@@ -1384,7 +1386,8 @@ void case_mci ()
                 }
 
                 /** Zones (PitSave, shop, etc) **/
-                if (ginfo->players[j].Pitlane)
+                if(bank.InBank(ginfo->players[j].UCID)) ginfo->players[j].Zone = 4;
+                else    if (ginfo->players[j].Pitlane)
                 {
                     ginfo->players[j].Zone = 1;
                 }
@@ -2176,7 +2179,7 @@ void case_mso ()
         ok=0;
     }
 
-    if (strncmp(Msg, "!reload", 7) == 0 and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
+    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
         send_mst("/msg ^1| ^3Russian Cruise: ^3^CПодана команда на чтение файлов");
 
