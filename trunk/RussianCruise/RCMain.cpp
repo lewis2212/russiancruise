@@ -49,7 +49,7 @@ RCBanList banlist;
 void init_classes()
 {
     msg.init(RootDir,insim);
-    bank.init(RootDir,insim,&msg,&rcMaindb);
+    bank.init(RootDir,insim,&msg,&rcMaindb,&dl);
 
 #ifdef _RC_ENERGY_H
     nrg.init(RootDir,&nrg,insim,&msg,&bank);
@@ -94,8 +94,9 @@ void readconfigs()
     nrg.readconfig(ginfo->Track);
 #endif
 
+#ifdef _RC_BANK_H
     bank.readconfig(ginfo->Track);
-
+#endif
 
 #ifdef _RC_CHEAT_H
     // antcht.readconfig(ginfo->Track);
@@ -1585,7 +1586,7 @@ void case_mso ()
 
 
     //!help
-    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
+    if (((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0)) and !bank.InBank(ginfo->players[i].UCID))
     {
         for (int j=159; j>0; j--)
         {
@@ -2407,6 +2408,7 @@ void case_mso_cop ()
 
     if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
     {
+
         char GetMessage2[96];
         strcpy(GetMessage2,Msg);
 
@@ -2423,6 +2425,9 @@ void case_mso_cop ()
             send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2105));
             return;
         }
+
+        if (bank.InBank(ginfo->players[i].UCID))
+        {
 
         int j=0;
         for (j=0; j<MAX_FINES; j++)
@@ -2461,7 +2466,8 @@ void case_mso_cop ()
             if (j == MAX_FINES)
                 send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2107));
         }
-
+    }
+    else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
     }
 
     if (strncmp(Msg, "!kick", 4) == 0 )

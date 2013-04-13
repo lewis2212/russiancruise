@@ -1,63 +1,30 @@
 using namespace std;
-
 #include "RCTaxi.h"
-
-RCTaxi::RCTaxi()
-{
-
-}
-
-RCTaxi::~RCTaxi()
-{
-
-}
+RCTaxi::RCTaxi(){}
+RCTaxi::~RCTaxi(){}
 
 int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
-
     insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
-    if(!insim) // Проверяем на существование
-    {
-        printf ("Can't struct CInsim class");
-        return -1;
-    }
+    if(!insim){printf ("Can't struct CInsim class");return -1;}// Проверяем на существование
 
     msg = (RCMessage *)Message;
-    if(!msg)
-    {
-        printf ("Can't struct RCMessage class");
-        return -1;
-    }
+    if(!msg){printf ("Can't struct RCMessage class");return -1;}
 
     bank = (RCBank *)Bank;
-    if(!bank)
-    {
-        printf ("Can't struct RCBank class");
-        return -1;
-    }
+    if(!bank){printf ("Can't struct RCBank class");return -1;}
 
     dl = (RCDL *)RCdl;
-    if(!dl)
-    {
-        printf ("Can't struct RCDL class");
-        return -1;
-    }
+    if(!dl){printf ("Can't struct RCDL class");return -1;}
 
     street = (RCStreet *)STreet;
-    if(!street)
-    {
-        printf ("Can't struct RCStreet class");
-        return -1;
-    }
+    if(!street){printf ("Can't struct RCStreet class");return -1;}
 
     accept_time = time(&acctime) + 60;
-
     inited = 1;
-
     return 0;
 }
-
 
 void RCTaxi::readconfig(const char *Track)
 {
@@ -146,6 +113,7 @@ void RCTaxi::readconfig(const char *Track)
     } //while readf.good()
 
     readf.close();
+
     sprintf(file,"%sdata\\RCTaxi\\dialog.txt",RootDir);
 
     HANDLE ff;
@@ -257,18 +225,13 @@ void RCTaxi::readconfig(const char *Track)
                 strcpy(Dialog_Exit[i],str);
             }
         }
-
-
-
     }
 }
 
 
 void RCTaxi::accept_user()
 {
-    if ( accept_time >= time(&acctime))
-        return;
-
+    if ( accept_time >= time(&acctime)) return;
     int taxi_time = 600/(NumP+1);
     accept_time += taxi_time;
 
@@ -276,7 +239,6 @@ void RCTaxi::accept_user()
     {
         if ((players[i].Work == 1) and (players[i].WorkNow == 1) and (players[i].WorkAccept == 0))
         {
-
             int CurStreet = street->CurentStreetNum(players[i].UCID);
             int DestStreet = 0;
             int DestPoint = 0;
@@ -287,9 +249,7 @@ void RCTaxi::accept_user()
             while (ok)
             {
                 DestPoint = rand()%PointCount;
-                if (Points[DestPoint].StreetId != CurStreet)
-                    ok = false;
-
+                if (Points[DestPoint].StreetId != CurStreet) ok = false;
                 Sleep(100);
             }
 
@@ -308,13 +268,12 @@ void RCTaxi::accept_user()
 
                 char Msg[96];
                 sprintf(Msg,"^6|^C^7 Заберите клиента на %s ",StreetInfo.Street);
-                btn_information(players[i].UCID,Msg);
                 send_mtc(players[i].UCID,Msg);
+                sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+                btn_information(players[i].UCID,Msg);
                 players[i].WorkAccept = 1;
             }
-
             break;
-
         }
     }
 }
@@ -357,13 +316,12 @@ void RCTaxi::accept_user2(byte UCID)
                 char Msg[96];
                 sprintf(Msg,"^6|^C^7 Отвези меня на %s ",StreetInfo.Street);
                 send_mtc(players[i].UCID,Msg);
+                sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
                 btn_information(players[i].UCID,Msg);
                 players[i].WorkAccept = 2;
                 players[i].PassStress = rand()%500;
             }
-
             break;
-
         }
     }
 }
@@ -371,8 +329,6 @@ void RCTaxi::accept_user2(byte UCID)
 
 void RCTaxi::insim_cnl( struct IS_CNL* packet )
 {
-
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].UCID == packet->UCID)
@@ -387,8 +343,6 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
 
 void RCTaxi::insim_cpr( struct IS_CPR* packet )
 {
-
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].UCID == packet->UCID)
@@ -426,11 +380,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         send_mtc(players[j].UCID,"^6| ^2!workend - ^CЗакончить работу");
                     }
                 }
-                else
-                {
-                    if (players[j].InZone == 1)
-                        players[j].InZone = 0;
-                }
+                else if (players[j].InZone == 1) players[j].InZone = 0;
 
                 /** player drive on dest street **/
                 if (players[j].WorkNow == 1 and players[j].WorkAccept != 0)
@@ -447,11 +397,9 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         if (players[j].OnStreet == false)
                         {
                             players[j].OnStreet = true;
-
                             char MSG[96];
-                            sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров.",(Dist-(int)Dist%10));
+                            sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров",(Dist-(int)Dist%10));
                             send_mtc(players[j].UCID,MSG);
-
                         }
 
                         if (Dist < 50)
@@ -492,10 +440,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                     }
                     else
                     {
-                        if (players[j].OnStreet = true)
-                        {
-                            send_bfn(players[j].UCID,205);
-                        }
+                        if (players[j].OnStreet = true) send_bfn(players[j].UCID,205);
                         players[j].OnStreet = false;
                     }
 
@@ -519,7 +464,6 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         int S1 = ((int)players[j].Info.Speed*360)/(32768);
                         int A1 = players[j].Info.AngVel*360/16384;
 
-
                         long dA = A-A1;
                         long dS = S-S1;
                         long dD = abs((int)(sin(D)*100))-abs((int)(sin(D1)*100));
@@ -528,13 +472,10 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         //int K = int(sqrt(abs((dD-dH)*(1+dA)*dS))/32);
                         int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
 
-
-
                         players[j].PassStress += K;
 
                         if (players[j].PassStress > 1000)
                             players[j].PassStress = 1000;
-
 
                         if (X1==0 and Y1==0 and Z1==0)
                         {
@@ -604,8 +545,6 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                     }
 
                 }
-
-
                 /** NOTE: don't use break **/
             } // if pack_mci->Info[i].PLID == players[j].PLID
         }
@@ -664,7 +603,7 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
                 return;
             }
 
-            send_mtc(players[i].UCID,"^6| ^C^7Уходишь от нас? Ну и ступай отсюда, другово найду.");
+            send_mtc(players[i].UCID,"^6| ^C^7Уходишь от нас? Ну и ступай отсюда, другого найду.");
             players[i].Work = 0;
         }
 
@@ -744,9 +683,7 @@ void RCTaxi::insim_ncn( struct IS_NCN* packet )
             break;
 
 
-    if (i == MAX_PLAYERS)
-        return;
-
+    if (i == MAX_PLAYERS) return;
     strcpy(players[i].UName, packet->UName);
     strcpy(players[i].PName, packet->PName);
     players[i].UCID = packet->UCID;
@@ -770,7 +707,6 @@ void RCTaxi::insim_npl( struct IS_NPL* packet )
 
 void RCTaxi::insim_plp( struct IS_PLP* packet)
 {
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].PLID == packet->PLID)
@@ -783,7 +719,6 @@ void RCTaxi::insim_plp( struct IS_PLP* packet)
 
 void RCTaxi::insim_pll( struct IS_PLL* packet )
 {
-
     for (int i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].PLID == packet->PLID)
@@ -831,7 +766,6 @@ void RCTaxi::read_user(struct TaxiPlayer *splayer)
 
                 if (strncmp("PassCount=",str,strlen("PassCount="))==0)
                     splayer->PassCount = atoi(str+strlen("PassCount="));
-
             }
         }
         readf.close();
@@ -851,7 +785,6 @@ void RCTaxi::save_user(struct TaxiPlayer *splayer)
     writef << "PassCount=" << splayer->PassCount << endl;
     writef.close();
 }
-
 
 
 void RCTaxi::taxi_done(TaxiPlayer *splayer)
@@ -883,7 +816,6 @@ void RCTaxi::taxi_done(TaxiPlayer *splayer)
     splayer->WorkStreetDestinaion = 0;
     splayer->StressOverCount = 0;
     splayer->PassStress = 0;
-
 }
 
 void RCTaxi::insim_con( struct IS_CON* packet )
@@ -904,7 +836,6 @@ void RCTaxi::insim_con( struct IS_CON* packet )
             break;
         }
     }
-
     for (int j=0; j<MAX_PLAYERS; j++)
     {
         if (players[j].PLID == pack_con->B.PLID)
@@ -923,10 +854,7 @@ void RCTaxi::insim_con( struct IS_CON* packet )
 
 void RCTaxi::insim_obh( struct IS_OBH* packet )
 {
-
-
     struct IS_OBH *pack_obh = (struct IS_OBH*)insim->get_packet();
-
 
     for (int i=0; i<MAX_PLAYERS; i++)
     {
@@ -941,11 +869,7 @@ void RCTaxi::insim_obh( struct IS_OBH* packet )
                     srand ( time(NULL) );
                     send_mtc(players[i].UCID,Dialog_Obh[rand()%DialObhCount]); // send random dialog phrase
                 }
-                else
-                {
-                    players[i].PassStress +=  pack_obh->SpClose/10;
-                }
-
+                else players[i].PassStress +=  pack_obh->SpClose/10;
             }
             break;
         }
@@ -983,11 +907,7 @@ void RCTaxi::btn_stress(struct TaxiPlayer *splayer)
         strcat(pack.Text,"||");
     }
     strcat(pack.Text,"^8");
-    for (int i=0; i<(100-splayer->PassStress/10); i++)
-    {
-        strcat(pack.Text,"||");
-    }
-
+    for (int i=0; i<(100-splayer->PassStress/10); i++) strcat(pack.Text,"||");
     insim->send_packet(&pack);
 }
 

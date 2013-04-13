@@ -2,6 +2,7 @@ using namespace std;
 
 #include "RCBank.h"
 
+
 RCBank::RCBank()
 {
 	//players = new BankPlayer[MAX_PLAYERS];
@@ -78,7 +79,14 @@ bool RCBank::RemFrBank(int Cash)
     return true;
 }
 
-int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
+bool RCBank::InBank(byte UCID)
+{
+    for (int i = 0; i < MAX_PLAYERS; ++i)
+    if ( players[i].UCID == UCID)
+    return players[i].InZone;
+}
+
+int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn, void *DL)
 {
 
     strcpy(RootDir,dir);
@@ -94,6 +102,13 @@ int RCBank::init(const char *dir,void *CInSim, void *GetMessage, void *dbconn)
     if(!msg)
     {
         cout << "RCBank Error: Can't struct RCMessage class" << endl;
+        return -1;
+    }
+
+    dl = (RCDL *)DL;
+    if(!dl)
+    {
+        printf ("Can't struct RCDL class");
         return -1;
     }
 
@@ -143,52 +158,54 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
     char query[128];
     sprintf(query,"SELECT cash FROM bank WHERE username='%s' LIMIT 1;",packet->UName);
 
-    if( mysql_ping( &rcbankDB ) != 0 )
-    {
-        printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
-    }
-
-    if( mysql_query( &rcbankDB , query) != 0 )
-    {
-        printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
-    }
+    if( mysql_ping( &rcbankDB ) != 0 ){printf("Error: connection with MySQL server was lost\n");}
+    if( mysql_query( &rcbankDB , query) != 0 ){printf("Error: MySQL Query\n");}
 
     rcbankRes = mysql_store_result( &rcbankDB );
-    if(rcbankRes == NULL)
-        printf("Error: can't get the result description\n");
+    if(rcbankRes == NULL) printf("Error: can't get the result description\n");
 
     if(mysql_num_rows( rcbankRes ) > 0)
     {
-        // В цикле перебираем все записи
-        // результирующей таблицы
         rcbankRow = mysql_fetch_row( rcbankRes );
-        // Выводим результат в стандартный поток
         players[i].Cash = atof( rcbankRow[0] );
-
     }
     else
     {
         printf("Can't find %s\n Create user\n",packet->UName);
-
         sprintf(query,"INSERT INTO bank (username) VALUES ('%s');",packet->UName);
-
-        if( mysql_ping( &rcbankDB ) != 0 )
-        {
-            printf("Error: connection with MySQL server was lost\n");
-            // произвести кик пользователя чтоль
-        }
-
-        if( mysql_query( &rcbankDB , query) != 0 )
-        {
-            printf("Error: MySQL Query\n");
-            // произвести кик пользователя чтоль
-        }
+        if( mysql_ping( &rcbankDB ) != 0 ){printf("Error: connection with MySQL server was lost\n");}
+        if( mysql_query( &rcbankDB , query) != 0 ){printf("Error: MySQL Query\n");}
 
         players[i].Cash = 1000;
         bank_save(players[i].UCID);
+    }
+    mysql_free_result( rcbankRes );
 
+    /** кредиты **/
+    sprintf(query,"SELECT cash, date_create FROM bank_credits WHERE username='%s' LIMIT 1;",packet->UName);
+
+    if( mysql_ping( &rcbankDB ) != 0 ){printf("Error credits: connection with MySQL server was lost\n");}
+    if( mysql_query( &rcbankDB , query) != 0 ){printf("Error credits: MySQL Query\n");}
+
+    rcbankRes = mysql_store_result( &rcbankDB );
+    if(rcbankRes == NULL) printf("Error credits: can't get the result description\n");
+
+    if(mysql_num_rows( rcbankRes ) > 0)
+    {
+        rcbankRow = mysql_fetch_row( rcbankRes );
+        players[i].Credit = atof( rcbankRow[0] );
+        players[i].Date_create = atof( rcbankRow[1] );
+        //printf("Check user %s, %d, %d\n",packet->UName,players[i].Credit,players[i].Date_create);
+    }
+    else
+    {
+        sprintf(query,"INSERT INTO bank_credits (username,cash,date_create) VALUES ('%s',0,0);",packet->UName);
+        if( mysql_ping( &rcbankDB ) != 0 ){printf("Error credits: connection with MySQL server was lost\n");}
+        if( mysql_query( &rcbankDB , query) != 0 ){printf("Error credits: MySQL Query\n");}
+
+        players[i].Credit = 0;
+        players[i].Date_create = 0;
+        //printf("Create user %s, %d, %d\n",packet->UName,players[i].Credit,players[i].Date_create);
     }
 
     mysql_free_result( rcbankRes );
@@ -202,9 +219,6 @@ void RCBank::insim_npl( struct IS_NPL* packet )
 {
     //cout << "joining race or leaving pits" << endl;
     int i;
-
-
-
     // Find player using UCID and update his PLID
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -222,9 +236,6 @@ void RCBank::insim_plp( struct IS_PLP* packet)
 {
     //cout << "player leaves race" << endl;
     int i;
-
-
-
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -240,9 +251,6 @@ void RCBank::insim_pll( struct IS_PLL* packet )
 {
     //cout << "player leaves race" << endl;
     int i;
-
-
-
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -257,9 +265,6 @@ void RCBank::insim_pll( struct IS_PLL* packet )
 void RCBank::insim_cnl( struct IS_CNL* packet )
 {
     int i;
-
-
-
     // Find player and set the whole player struct he was using to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -295,6 +300,16 @@ void RCBank::bank_save (byte UCID)
                 printf("Bank Error: MySQL Query Save\n");
 
             printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+
+            /* Credit */
+            sprintf(query,"UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'" , players[i].Credit, players[i].Date_create, players[i].UName);
+            if( mysql_ping( &rcbankDB ) != 0 )
+                printf("Credit Error: connection with MySQL server was lost\n");
+            if( mysql_query( &rcbankDB , query) != 0 )
+                printf("Credit Error: MySQL Query Save\n");
+
+            printf("Credit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+
             /* Capital */
             sprintf(query,"UPDATE bank SET cash = %f WHERE username='_RC_Bank_Capital_'" , BankFond);
 
@@ -304,42 +319,147 @@ void RCBank::bank_save (byte UCID)
             if( mysql_query( &rcbankDB , query) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
 
-            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
-
+            printf("Capital Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
         }
     }
-
-
-
 }
 
 void RCBank::insim_cpr( struct IS_CPR* packet )
 {
     int i;
-
-
-
-    // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].UCID == packet->UCID)
         {
+            strcpy(players[i].PName, packet->PName);break;
+        }
+    }
+}
 
-            strcpy(players[i].PName, packet->PName);
-            break;
+void RCBank::insim_mso( struct IS_MSO* packet )
+{
+    int i;
+    //if (packet->UCID == 0) return;
+
+    for (i=0; i < MAX_PLAYERS; i++)
+        if (players[i].UCID == packet->UCID) break;
+
+    char Message[96];
+    strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
+
+    if (players[i].InZone)
+    {
+        char Text[96];
+        //Доступная сумма кредита:
+        int cr = dl->GetLVL(players[i].UCID) * 10000; if (cr>500000) cr = 500000;
+
+        if (strncmp(Message, "!info", strlen("!info")) == 0 )
+        {
+
+            send_mtc(players[i].UCID,"^6| ^CИнформация");
+            if (dl->GetLVL(players[i].UCID)<5) { send_mtc(players[i].UCID,"^1| ^C^7Нужен уровень: ^15"); return;}
+            //кредит
+            sprintf(Text,"^6| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr);send_mtc(players[i].UCID, Text);
+            send_mtc(players[i].UCID,"^6| ^C^7Кредит выдается под ^230 % ^7в месяц, на срок не более ^230^7 дней.");
+            send_mtc(players[i].UCID,"^6| ^C^7При досрочном погашении будет снята сумма кредита + процент на текущий день.");
+            //send_mtc(players[i].UCID,"^6| ^C^7При просрочке более чем на ^21 ^7день будет снята сумма кредита + полный процент + штраф.");
+        }
+
+        if (strncmp(Message, "!credit info", strlen("!credit info")) == 0 )
+        {
+            if (dl->GetLVL(players[i].UCID)<5) { send_mtc(players[i].UCID,"^1| ^C^7Нужен уровень: ^15"); return;}
+
+            if (players[i].Date_create!=0)
+            {
+                sprintf(Text,"^6| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %d",players[i].Credit,players[i].Date_create); send_mtc(players[i].UCID, Text);
+                sprintf(Text,"^6| ^7^CСумма возврата на сегодняшний день: %d ^3RUR^7.",players[i].Credit); send_mtc(players[i].UCID, Text);
+                sprintf(Text,"^6| ^7^CВремя до снятия: ^2%d ^7дней.",players[i].Date_create); send_mtc(players[i].UCID, Text);
+                return;
+            }
+
+            strtok (Message," "); strtok (NULL," "); int summ = atoi(strtok (NULL," "));
+            if (summ<=0) summ=cr; else if (summ<cr/5 or summ>cr) { sprintf(Text,"^1| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr); send_mtc(players[i].UCID, Text); return; }
+
+            send_mtc(players[i].UCID,"^6| ^CИнформация по оформляемому кредиту");
+            sprintf(Text,"^6| ^7^CЖелаемая сумма: %d ^3RUR^7.",summ);send_mtc(players[i].UCID, Text);
+            sprintf(Text,"^6| ^7^CСумма возврата по истечении ^230 ^7дней: %d ^3RUR^7.",summ*13/10);send_mtc(players[i].UCID, Text);
+            return;
+        }
+
+        if (strncmp(Message, "!credit", strlen("!credit")) == 0 )
+        {
+            if (dl->GetLVL(players[i].UCID)<5){send_mtc(players[i].UCID,"^1| ^C^7Нужен уровень: ^15");return;}
+            if (players[i].Date_create!=0){send_mtc(players[i].UCID,"^1| ^C^7У вас уже оформлен кредит (^3!credit info^7)");return;}
+
+            strtok (Message," "); int summ = atoi(strtok (NULL," "));
+            if (summ<cr/5 or summ>cr) { sprintf(Text,"^1| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr); send_mtc(players[i].UCID, Text); return; }
+
+            if (players[i].Cash>(summ*3/2))
+            {
+                send_mtc(players[i].UCID,"^1| ^C^7В выдаче кредита ^1отказано^7.");
+                send_mtc(players[i].UCID,"^1| ^C^7Сумма на вашем счете превышает размер кредита более чем в половину.");
+                return;
+            }
+
+            //выдаем кредит
+            sprintf(Text,"^6| ^7^CВам выдан кредит на сумму %d ^3RUR^7.",summ); send_mtc(players[i].UCID, Text);
+            players[i].Credit = summ;
+            players[i].Date_create = 10;
+
+            RemFrBank(summ); //берем бабки из банка
+            AddCash(players[i].UCID,summ,false); //выдаем бабки игроку
+            bank_save(players[i].UCID); //сохраняемся
+        }
+
+        if (strncmp(Message, "!repay", strlen("!repay")) == 0 )
+        {
+            if (players[i].Date_create==0) {send_mtc(players[i].UCID,"^1| ^C^7У вас нет кредитов");return;}
+            int sumReq = players[i].Credit; //сумма с учетом процентов на сегодняшний день
+            if (players[i].Cash<sumReq) {send_mtc(players[i].UCID,"^1| ^C^7На вашем счете недостаточно средств для погашения кредита");return;}
+
+            send_mtc(players[i].UCID, "^6| ^7^CВы погасили кредит.");
+            players[i].Credit = 0;
+            players[i].Date_create = 0;
+
+            RemCash(players[i].UCID,sumReq); //отбираем бабки у игрока
+            AddToBank(sumReq); //сдаем в банк
+            bank_save(players[i].UCID); //сохраняемся
         }
     }
 }
 
 void RCBank::insim_mci( struct IS_MCI* pack_mci )
 {
-	for (int i = 0; i < pack_mci->NumC; i++)
-    {
-        for (int j =0; j < MAX_PLAYERS; j++)        {
-
+	for (int i = 0; i < pack_mci->NumC; i++){for (int j =0; j < MAX_PLAYERS; j++)
+        {
             if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
             {
+/*
+                time_t rawtime;
+                struct tm * timeinfo;
+                time (&rawtime);
+                timeinfo = localtime (&rawtime);
+                printf ("%d:%d\n", timeinfo->tm_hour,timeinfo->tm_min);*/
+
+                //баланс игрока
             	btn_cash(j);
+
+                //зона банк
+                int X = pack_mci->Info[i].X/65536; int Y = pack_mci->Info[i].Y/65536;
+                if (Check_Pos(TrackInf.BankCount,TrackInf.XBank,TrackInf.YBank,X,Y))
+                {
+                    if (!players[j].InZone)
+                    {
+                        players[j].InZone=true;
+
+                        send_mtc(players[j].UCID,"^6| ^3Bank");
+                        send_mtc(players[j].UCID,"^6| ^2!info - ^CОбщая информация");
+                        send_mtc(players[j].UCID,"^6| ^2!credit info N - ^CРасчет процентов по кредиту на сумму N");
+                        send_mtc(players[j].UCID,"^6| ^2!credit N (!credit 50000) - ^CПолучить кредит на сумму N");
+                        send_mtc(players[j].UCID,"^6| ^2!repay - ^CПогасить кредит");
+                    }
+                }
+                else if(players[j].InZone) players[j].InZone=false;
             }
         }
     }
@@ -397,6 +517,33 @@ void RCBank::btn_cash (int i)
 
 void RCBank::readconfig(const char *Track)
 {
+    cout << "RCBank::readconfig\n" ;
+    char file[MAX_PATH];
+    sprintf(file,"%sdata\\RCBank\\tracks\\%s.txt",RootDir,Track);
+    HANDLE fff;WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE){ printf ("RCBank: Can't find\n%s",file); return; }
+    FindClose(fff);
+    ifstream readf (file,ios::in);
+    while (readf.good())
+    {
+        char str[128];
+        readf.getline(str,128);
+        TrackInf.BankCount = atoi(str);
+        //printf ("%d\n",TrackInf.BankCount);
+        for (int i=0; i<TrackInf.BankCount; i++)
+        {
+            readf.getline(str,128);
+            char * X; char * Y;
+            X = strtok (str,";");
+            Y = strtok (NULL,";");
+            TrackInf.XBank[i] = atoi(X);
+            TrackInf.YBank[i] = atoi(Y);
+            //printf ("%d;%d\n",TrackInf.XBank[i],TrackInf.YBank[i]);
+        }
+    } //while readf.good()
+    readf.close();
+
     char query[128];
     sprintf(query,"SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
 
