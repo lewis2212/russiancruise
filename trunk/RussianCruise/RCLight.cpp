@@ -175,17 +175,13 @@ void *thread_svet2( void* params)
 
 RCLight::RCLight()
 {
-
-
     if (pthread_create(&svet1_tid,NULL,thread_svet1,NULL) < 0)
-    {
         printf("Can't start `thread_svet1` Thread\n");
-    }
+
     Sleep(1000);
     if (pthread_create(&svet2_tid,NULL,thread_svet2,NULL) < 0)
-    {
         printf("Can't start `thread_svet2` Thread\n");
-    }
+
     Sleep(1000);
 }
 
@@ -197,26 +193,19 @@ RCLight::~RCLight()
 
 bool RCLight::SetLight3(byte UCID,bool Key)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if (players[i].Light3 and !Key)
-            {
-                for (int f=190; f < 203; f++)
-                    send_bfn(players[i].UCID,f);
-            }
+	if (players[ UCID ].Light3 and !Key)
+	{
+		for (int f=190; f < 203; f++)
+			send_bfn( UCID ,f);
+	}
 
-            players[i].Light3 = Key;
-        }
-    }
+	players[ UCID ].Light3 = Key;
 }
 
 int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
 {
     IfInited = false;
     strcpy(RootDir,dir); // Копируем путь до программы
-
 
     insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
     if(!insim) // Проверяем на существование
@@ -316,273 +305,199 @@ void RCLight::readconfig(const char *Track)
 
 void RCLight::insim_cnl( struct IS_CNL* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            memset(&players[i],0,sizeof(struct LghPlayer));
-            break;
-        }
-    }
+	players.erase( packet->UCID );
 }
 
 void RCLight::insim_cpr( struct IS_CPR* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-
-            strcpy(players[i].PName, packet->PName);
-            break;
-        }
-    }
+	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
 void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
-            if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
-            {
-                /** streets  **/
+		byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
+		/** streets  **/
 
-                int X = pack_mci->Info[i].X/65536;
-                int Y = pack_mci->Info[i].Y/65536;
-                int H = pack_mci->Info[i].Heading/182;
-                int D = pack_mci->Info[i].Direction/182;
-                int S = pack_mci->Info[i].Speed*360/32768;
+		int X = pack_mci->Info[i].X/65536;
+		int Y = pack_mci->Info[i].Y/65536;
+		int H = pack_mci->Info[i].Heading/182;
+		int D = pack_mci->Info[i].Direction/182;
+		int S = pack_mci->Info[i].Speed*360/32768;
 
-                int SvetKey = 0;
+		int SvetKey = 0;
 
-                for (int g=0; g<LightsCount; g++)
-                {
-                    if(Check_Pos(Light[g].PointCount,Light[g].X,Light[g].Y,X,Y))
-                    {
-                        int HR = Light[g].Heading-80;
-                        int HL = Light[g].Heading+80;
+		for (int g=0; g<LightsCount; g++)
+		{
+			if(Check_Pos(Light[g].PointCount,Light[g].X,Light[g].Y,X,Y))
+			{
+				int HR = Light[g].Heading-80;
+				int HL = Light[g].Heading+80;
 
-                        char Text[64];
-                        sprintf(Text,"in zone");
-                        //send_mtc(255,Text);
+				char Text[64];
+				sprintf(Text,"in zone");
+				//send_mtc(255,Text);
 
-                        if (HR < 0)
-                        {
-                            HR = 360 + HR;
-                            if ((H > HR) or (H < HL))
-                            {
-                                players[j].Light = Light[g].ID;
-                                SvetKey = Light[g].ID;
-                            }
-                        }
-                        else if (HL > 359)
-                        {
-                            HL -= 359;
-                            if ((H > HR) or (H < HL))
-                            {
-                                players[j].Light = Light[g].ID;
-                                SvetKey = Light[g].ID;
-                            }
-                        }
-                        else
-                        {
-                            if ((H > HR) and (H < HL))
-                            {
-                                players[j].Light = Light[g].ID;
-                                SvetKey = Light[g].ID;
-                            }
-                        }
+				if (HR < 0)
+				{
+					HR = 360 + HR;
+					if ((H > HR) or (H < HL))
+					{
+						players[ UCID ].Light = Light[g].ID;
+						SvetKey = Light[g].ID;
+					}
+				}
+				else if (HL > 359)
+				{
+					HL -= 359;
+					if ((H > HR) or (H < HL))
+					{
+						players[ UCID ].Light = Light[g].ID;
+						SvetKey = Light[g].ID;
+					}
+				}
+				else
+				{
+					if ((H > HR) and (H < HL))
+					{
+						players[ UCID ].Light = Light[g].ID;
+						SvetKey = Light[g].ID;
+					}
+				}
 
 
-                    }
-                }
+			}
+		}
 
-                if (SvetKey == 1)
-                {
-                    btn_svetofor1(&players[j]);
-                }
-                else if (SvetKey == 2)
-                {
-                    btn_svetofor2(&players[j]);
-                }
-                else
-                {
-                    if (players[j].Light != 0)
-                    {
-                        for (int f=190; f < 203; f++)
-                            send_bfn(players[j].UCID,f);
+		if (SvetKey == 1)
+		{
+			btn_svetofor1( UCID );
+		}
+		else if (SvetKey == 2)
+		{
+			btn_svetofor2( UCID );
+		}
+		else
+		{
+			if (players[ UCID ].Light != 0)
+			{
+				for (int f=190; f < 203; f++)
+					send_bfn( UCID ,f);
 
-                        players[j].Light = 0;
-                        //out << "clear svetofor" << endl;
-                    }
-                }
+				players[ UCID ].Light = 0;
+				//out << "clear svetofor" << endl;
+			}
+		}
 
-                if (players[j].Light3)
-                    btn_svetofor3(&players[j]);
-
-
-                /**  steets **/
-
-                /** pit wrong route **/
-                if (strstr(TrackName,"SO4X"))
-                {
-                    int pit1x[10] = {210,200,190,200};
-                    int pit1y[10] = {233,230,277,281};
-
-                    int pit2x[10] = {229,236,247,239};
-                    int pit2y[10] = {-97,-39,-40,-100};
-
-                    //printf ("test wrong route\n");
-                    if ( Check_Pos( 4, pit1x, pit1y, X, Y ) )
-                    {
-                        //send_mst("in zone");
-                        if( (D < 190+90) and (D > 190-90) )
-                        {
-                            if (players[j].WrongWay == 1)
-                            {
-                                players[j].WrongWay =0;
-                                send_bfn(players[j].UCID,203);
-                                send_bfn(players[j].UCID,204);
-                            }
-                        }
-                        else
-                        {
-                            if (players[j].WrongWay == 0)
-                                players[j].WrongWay =1;
-                            btn_wrong_way(players[j].UCID);
-                            if (S > 10)
-                                dl->RemSkill(players[j].UCID);
+		if (players[ UCID ].Light3)
+			btn_svetofor3( UCID );
 
 
-                        }
-                    }
-                    else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
-                    {
-                        if( (D < 190+90) and (D > 190-90) )
-                        {
-                            if (players[j].WrongWay == 1)
-                            {
-                                players[j].WrongWay =0;
-                                send_bfn(players[j].UCID,203);
-                                send_bfn(players[j].UCID,204);
-                            }
-                        }
-                        else
-                        {
-                            if (players[j].WrongWay == 0)
-                                players[j].WrongWay =1;
-                            btn_wrong_way(players[j].UCID);
-                            if (S > 10)
-                                dl->RemSkill(players[j].UCID);
-                        }
-                    }
-                    else
-                    {
-                        if (players[j].WrongWay == 1)
-                        {
-                            players[j].WrongWay =0;
-                            send_bfn(players[j].UCID,203);
-                            send_bfn(players[j].UCID,204);
-                        }
-                    }
+		/**  steets **/
 
-                }// if SO4X
+		/** pit wrong route **/
+		if (strstr(TrackName,"SO4X"))
+		{
+			int pit1x[10] = {210,200,190,200};
+			int pit1y[10] = {233,230,277,281};
 
-            } // if pack_mci->Info[i].PLID == players[j].PLID
-        }
+			int pit2x[10] = {229,236,247,239};
+			int pit2y[10] = {-97,-39,-40,-100};
+
+			//printf ("test wrong route\n");
+			if ( Check_Pos( 4, pit1x, pit1y, X, Y ) )
+			{
+				//send_mst("in zone");
+				if( (D < 190+90) and (D > 190-90) )
+				{
+					if (players[ UCID ].WrongWay == 1)
+					{
+						players[ UCID ].WrongWay =0;
+						send_bfn( UCID ,203);
+						send_bfn( UCID ,204);
+					}
+				}
+				else
+				{
+					if (players[ UCID ].WrongWay == 0)
+						players[ UCID ].WrongWay =1;
+					btn_wrong_way( UCID );
+					if (S > 10)
+						dl->RemSkill( UCID );
+
+
+				}
+			}
+			else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
+			{
+				if( (D < 190+90) and (D > 190-90) )
+				{
+					if (players[ UCID ].WrongWay == 1)
+					{
+						players[ UCID ].WrongWay =0;
+						send_bfn( UCID ,203);
+						send_bfn( UCID ,204);
+					}
+				}
+				else
+				{
+					if (players[ UCID ].WrongWay == 0)
+						players[ UCID ].WrongWay =1;
+					btn_wrong_way( UCID );
+					if (S > 10)
+						dl->RemSkill( UCID );
+				}
+			}
+			else
+			{
+				if (players[ UCID ].WrongWay == 1)
+				{
+					players[ UCID ].WrongWay =0;
+					send_bfn( UCID ,203);
+					send_bfn( UCID ,204);
+				}
+			}
+
+		}// if SO4X
+
     }
 }
 
 void RCLight::insim_mso( struct IS_MSO* packet )
 {
-    int i;
-
-
-
-    // The chat message is sent by the host, don't do anything
-    if (packet->UCID == 0)
-        return;
-
-    // Find the player that wrote in the chat
-    for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == packet->UCID)
-            break;
-
 
 }
 
 void RCLight::insim_ncn( struct IS_NCN* packet )
 {
-    int i;
-
-
-
     if (packet->UCID == 0)
         return;
 
-    for (i=0; i<MAX_PLAYERS; i++)
-        if (players[i].UCID == 0)
-            break;
-
-
-    if (i == MAX_PLAYERS)
-        return;
-
-    strcpy(players[i].UName, packet->UName);
-    strcpy(players[i].PName, packet->PName);
-    players[i].UCID = packet->UCID;
-
+    strcpy( players[ packet->UCID ].UName, packet->UName);
+    strcpy( players[ packet->UCID ].PName, packet->PName);
 
 }
 
 void RCLight::insim_npl( struct IS_NPL* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            players[i].PLID = packet->PLID;
-        }
-    }
+	PLIDtoUCID[ packet->PLID ] = packet->UCID ;
+	players[ packet->UCID ].PLID = packet->PLID;
 }
 
 void RCLight::insim_plp( struct IS_PLP* packet)
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == packet->PLID)
-        {
-            players[i].PLID = 0;
-            break;
-        }
-    }
+	players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
+	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCLight::insim_pll( struct IS_PLL* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == packet->PLID)
-        {
-            players[i].PLID = 0;
-            break;
-        }
-    }
+	players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
+	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
+void RCLight::btn_svetofor1 ( byte UCID )
 {
 
     struct IS_BTN pack;
@@ -590,7 +505,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     pack.Size = sizeof(struct IS_BTN);
     pack.Type = ISP_BTN;
     pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
+    pack.UCID = UCID;
     pack.Inst = 0;
     pack.BStyle = 32;
     pack.TypeIn = 0;
@@ -630,7 +545,7 @@ void RCLight::btn_svetofor1 (struct LghPlayer *splayer)
     insim->send_packet(&pack);
 }
 
-void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
+void RCLight::btn_svetofor2 ( byte UCID )
 {
 
     struct IS_BTN pack;
@@ -638,7 +553,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     pack.Size = sizeof(struct IS_BTN);
     pack.Type = ISP_BTN;
     pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
+    pack.UCID = UCID;
     pack.Inst = 0;
     pack.BStyle = 32;
     pack.TypeIn = 0;
@@ -679,7 +594,7 @@ void RCLight::btn_svetofor2 (struct LghPlayer *splayer)
     insim->send_packet(&pack);
 }
 
-void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
+void RCLight::btn_svetofor3 ( byte UCID )
 {
 
     struct IS_BTN pack_btn;
@@ -687,7 +602,7 @@ void RCLight::btn_svetofor3 (struct LghPlayer *splayer)
     pack_btn.Size = sizeof(struct IS_BTN);
     pack_btn.Type = ISP_BTN;
     pack_btn.ReqI = 1;
-    pack_btn.UCID = splayer->UCID;
+    pack_btn.UCID = UCID;
     pack_btn.Inst = 0;
     pack_btn.BStyle = 32;
     pack_btn.TypeIn = 0;
