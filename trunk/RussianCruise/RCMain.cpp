@@ -9,29 +9,29 @@ struct IS_VER pack_ver;
 word	isf_flag;
 
 #ifdef _RC_PIZZA_H
-RCPizza pizza;
+RCPizza *pizza;
 #endif
 
-RCMessage   msg;
+RCMessage *msg;
 
 #ifdef _RC_ENERGY_H
-RCEnergy    nrg;
+RCEnergy *nrg;
 #endif
 
 #ifdef _RC_BANK_H
-RCBank      bank;
+RCBank *bank;
 #endif
 
 #ifdef _RC_LEVEL_H
-RCDL        dl;
+RCDL *dl;
 #endif
 
 #ifdef _RC_CHEAT_H
-RCAntCheat  antcht;
+RCAntCheat  *antcht;
 #endif
 
 #ifdef _RC_STREET_H
-RCStreet  street;
+RCStreet  *street;
 #endif
 
 #ifdef _RC_LIGHT_H
@@ -39,46 +39,83 @@ RCLight *lgh;
 #endif
 
 #ifdef _RC_TAXI_H
-RCTaxi  taxi;
+RCTaxi  *taxi;
 #endif
 
 #ifdef _RC_BANLIST_H
 RCBanList banlist;
 #endif
 
-void init_classes()
+void create_classes()
 {
-	lgh = new RCLight();
-
-    msg.init(RootDir,insim);
-    bank.init(RootDir,insim,&msg,&rcMaindb,&dl);
+    msg = new RCMessage();
+    bank = new RCBank();
 
 #ifdef _RC_ENERGY_H
-    nrg.init(RootDir,&nrg,insim,&msg,&bank);
+    nrg = new RCEnergy();
 #endif
 
 #ifdef _RC_LEVEL_H
-    dl.init(RootDir,insim,&msg);
+    dl = new RCDL();
 #endif
 
 #ifdef _RC_CHEAT_H
-    antcht.init(RootDir,&antcht,insim,&msg,&bank);
+	antcht = new RCAntCheat();
 #endif
 
 #ifdef _RC_STREET_H
-    street.init(RootDir,insim,&msg);
+    street = new RCStreet();
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh->init(RootDir,insim,&msg,&dl);
+    lgh = new RCLight();
 #endif
 
 #ifdef _RC_PIZZA_H
-    pizza.init(RootDir,&pizza,insim,&msg,&bank,&nrg,&dl, &taxi);
+	pizza = new RCPizza();
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi.init(RootDir,insim,&msg,&bank,&dl,&street,&pizza);
+    taxi = new RCTaxi();
+#endif
+
+#ifdef _RC_BANLIST_H
+	//banlist.init(RootDir, insim);
+#endif
+}
+
+void init_classes()
+{
+    msg->init(RootDir,insim);
+
+    bank->init(RootDir, insim, msg, dl);
+
+#ifdef _RC_ENERGY_H
+    nrg->init(RootDir, insim, msg, bank);
+#endif
+
+#ifdef _RC_LEVEL_H
+    dl->init(RootDir, insim, msg);
+#endif
+
+#ifdef _RC_CHEAT_H
+	antcht->init(RootDir,insim, msg);
+#endif
+
+#ifdef _RC_STREET_H
+    street->init(RootDir,insim, msg);
+#endif
+
+#ifdef _RC_LIGHT_H
+    lgh->init(RootDir,insim, msg,dl);
+#endif
+
+#ifdef _RC_PIZZA_H
+	pizza->init(RootDir, pizza, insim, msg, bank, nrg, dl, &taxi);
+#endif
+
+#ifdef _RC_TAXI_H
+    taxi->init(RootDir, insim, msg, bank, dl, street, pizza);
 #endif
 
 #ifdef _RC_BANLIST_H
@@ -89,23 +126,23 @@ void init_classes()
 void readconfigs()
 {
 #ifdef _RC_PIZZA_H
-    pizza.readconfig(ginfo->Track);
+    pizza->readconfig(ginfo->Track);
 #endif
-    msg.readconfig(ginfo->Track);
+    msg->readconfig(ginfo->Track);
 #ifdef _RC_ENERGY_H
-    nrg.readconfig(ginfo->Track);
+    nrg->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_BANK_H
-    bank.readconfig(ginfo->Track);
+    bank->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_CHEAT_H
-    // antcht.readconfig(ginfo->Track);
+    // antcht->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_STREET_H
-    street.readconfig(ginfo->Track);
+    street->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_LIGHT_H
@@ -113,7 +150,7 @@ void readconfigs()
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi.readconfig(ginfo->Track);
+    taxi->readconfig(ginfo->Track);
 #endif
 }
 
@@ -381,11 +418,11 @@ void help_cmds (struct player *splayer,int h_type)
     if (h_type == 1)
     {
         for ( int i = 3200 ; i <= 3218 ; i ++ )
-            send_mtc(splayer->UCID,msg.GetMessage(splayer->UCID,i));
+            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,i));
     }
     if (h_type == 2)
     {
-        send_mtc(splayer->UCID,msg.GetMessage(splayer->UCID,3100));
+        send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,3100));
         for ( int i=0; i<MAX_CARS; i++)
         {
             if (strlen(splayer->cars[i].car)>0)
@@ -459,7 +496,7 @@ void help_cmds (struct player *splayer,int h_type)
 
         if (j == 0)
         {
-            send_mtc(splayer->UCID,msg.GetMessage(splayer->UCID,3102));;
+            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,3102));;
         }
     }
 }
@@ -552,20 +589,20 @@ void btn_info (struct player *splayer, int b_type)
     pack.T = 46;
     pack.W = 16;
     pack.H = 8;
-    strcpy(pack.Text,msg.GetMessage(splayer->UCID,200));
+    strcpy(pack.Text,msg->GetMessage(splayer->UCID,200));
     insim->send_packet(&pack);
 
     pack.BStyle = 32+8;
     pack.ClickID = 106;
     pack.L += 17;
-    strcpy(pack.Text,msg.GetMessage(splayer->UCID,201));
+    strcpy(pack.Text,msg->GetMessage(splayer->UCID,201));
     insim->send_packet(&pack);
 
     pack.BStyle = 32+8;
     pack.ClickID = 105;
     pack.L += 17;
     pack.W = 20;
-    strcpy(pack.Text,msg.GetMessage(splayer->UCID,202));
+    strcpy(pack.Text,msg->GetMessage(splayer->UCID,202));
     insim->send_packet(&pack);
 
     /* Tabs */
@@ -677,15 +714,15 @@ void btn_panel (struct player *splayer)
     pack.H = 8;
 
     if (splayer->Zone== 1)
-        strcpy(pack.Text,msg.GetMessage(splayer->UCID,400));
+        strcpy(pack.Text,msg->GetMessage(splayer->UCID,400));
     else if (splayer->Zone== 2)
-        strcpy(pack.Text,msg.GetMessage(splayer->UCID,401));
+        strcpy(pack.Text,msg->GetMessage(splayer->UCID,401));
     else if (splayer->Zone== 3)
-        strcpy(pack.Text,msg.GetMessage(splayer->UCID,402));
+        strcpy(pack.Text,msg->GetMessage(splayer->UCID,402));
     else if (splayer->Zone== 4)
-        strcpy(pack.Text,msg.GetMessage(splayer->UCID,404));
+        strcpy(pack.Text,msg->GetMessage(splayer->UCID,404));
     else
-        strcpy(pack.Text,msg.GetMessage(splayer->UCID,403));
+        strcpy(pack.Text,msg->GetMessage(splayer->UCID,403));
     insim->send_packet(&pack);
 
     //
@@ -859,13 +896,13 @@ void case_btc ()
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 36;
-                    strcpy(pack_btn.Text,msg.GetMessage(ginfo->players[i].UCID,1000));
+                    strcpy(pack_btn.Text,msg->GetMessage(ginfo->players[i].UCID,1000));
                     insim->send_packet(&pack_btn);
 
                     pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 37;
-                    strcpy(pack_btn.Text, msg.GetMessage(ginfo->players[i].UCID,1001));
+                    strcpy(pack_btn.Text, msg->GetMessage(ginfo->players[i].UCID,1001));
                     insim->send_packet(&pack_btn);
 
                     // cop buttons
@@ -875,23 +912,23 @@ void case_btc ()
                         pack_btn.TypeIn = 2;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
-                        strcpy(pack_btn.Text, msg.GetMessage(ginfo->players[i].UCID,1002));
+                        strcpy(pack_btn.Text, msg->GetMessage(ginfo->players[i].UCID,1002));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.T += 4;
                         pack_btn.ClickID = 39;
-                        strcpy(pack_btn.Text, msg.GetMessage(ginfo->players[i].UCID,1003));
+                        strcpy(pack_btn.Text, msg->GetMessage(ginfo->players[i].UCID,1003));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.TypeIn = 0;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
-                        strcpy(pack_btn.Text, msg.GetMessage(ginfo->players[i].UCID,1004));
+                        strcpy(pack_btn.Text, msg->GetMessage(ginfo->players[i].UCID,1004));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.T += 4;
                         pack_btn.ClickID = 41;
-                        strcpy(pack_btn.Text, msg.GetMessage(ginfo->players[i].UCID,1005));
+                        strcpy(pack_btn.Text, msg->GetMessage(ginfo->players[i].UCID,1005));
                         insim->send_packet(&pack_btn);
                     }
                 }
@@ -920,11 +957,11 @@ void case_btc ()
                             ginfo->players[g].Pogonya = 1;
                             int worktime = time(&stime);
                             ginfo->players[g].WorkTime = worktime+60*6;
-                            strcpy(ginfo->players[g].PogonyaReason,msg.GetMessage(ginfo->players[g].UCID,1006));
+                            strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1006));
                             char Text[96];
-                            sprintf(Text,"/msg ^2| %s %s", msg.GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
+                            sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
                             send_mst(Text);
-                            nrg.Lock(ginfo->players[g].UCID);
+                            nrg->Lock(ginfo->players[g].UCID);
 
                             char fine_c[255];
 							sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
@@ -961,9 +998,9 @@ void case_btc ()
                             ginfo->players[g].Pogonya = 0;
                             send_bfn(ginfo->players[g].UCID,210);
                             char Text[96];
-                            sprintf(Text,"/msg ^2| %s %s", msg.GetMessage(ginfo->players[g].UCID,1008) , ginfo->players[g].PName );
+                            sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(ginfo->players[g].UCID,1008) , ginfo->players[g].PName );
                             send_mst(Text);
-                            nrg.Unlock(ginfo->players[g].UCID);
+                            nrg->Unlock(ginfo->players[g].UCID);
                         }
                         break;
                     }
@@ -1064,14 +1101,14 @@ void case_btt ()
                     {
                         if (atoi(pack_btt->Text) > 0)
                         {
-                            if (bank.GetCash(ginfo->players[i].UCID) > atoi(pack_btt->Text))
+                            if (bank->GetCash(ginfo->players[i].UCID) > atoi(pack_btt->Text))
                             {
                                 out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-                                bank.RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
-                                bank.AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
+                                bank->RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
+                                bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
 
                                 char Msg[120];
-                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg.GetMessage(ginfo->players[i].UCID,1100),atoi(pack_btt->Text));
+                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg->GetMessage(ginfo->players[i].UCID,1100),atoi(pack_btt->Text));
                                 send_mtc(ginfo->players[g].UCID,Msg);
 
                                 ofstream readf (send_c,ios::app);
@@ -1080,8 +1117,8 @@ void case_btt ()
                             }
                             else
                             {
-                                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,1101));
-                                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,1101));
+                                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1101));
+                                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1101));
                             }
                         } // if atoi(pack_btt->Text) > 0
                         break;
@@ -1103,7 +1140,7 @@ void case_btt ()
                         {
                             out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                             char Msg[127];
-                            strcpy(Msg,msg.GetMessage(ginfo->players[g].UCID,1103));
+                            strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1103));
                             strcat(Msg,ginfo->players[i].PName);
                             strcat(Msg,": ^1");
                             int len = strlen(Msg);
@@ -1134,17 +1171,17 @@ void case_btt ()
                                 if( ginfo->fines[j].id == atoi(pack_btt->Text) )
                                 {
                                     char Msg[64];
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[g].UCID,1104));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1104));
                                     send_mtc(ginfo->players[g].UCID,Msg);
                                     strcpy(Msg,"^2| ^7");
                                     strcat(Msg,ginfo->fines[atoi(pack_btt->Text)].name);
                                     send_mtc(ginfo->players[g].UCID,Msg);
 
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[i].UCID,1105));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1105));
                                     send_mtc(ginfo->players[i].UCID,Msg);
                                     send_mtc(ginfo->players[i].UCID,ginfo->fines[atoi(pack_btt->Text)].name);
 
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[i].UCID,1106));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1106));
                                     strcat(Msg,ginfo->players[g].PName);
                                     send_mtc(ginfo->players[i].UCID,Msg);
 
@@ -1187,17 +1224,17 @@ void case_btt ()
                                 if (ginfo->players[g].fines[j].fine_id == atoi(pack_btt->Text))
                                 {
                                     char Msg[64];
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[g].UCID,1107));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1107));
                                     send_mtc(ginfo->players[g].UCID,Msg);
                                     strcpy(Msg,"^2| ");
                                     strcat(Msg,ginfo->fines[atoi(pack_btt->Text)].name);
                                     send_mtc(ginfo->players[g].UCID,Msg);
 
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[i].UCID,1108));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1108));
                                     send_mtc(ginfo->players[i].UCID,Msg);
                                     send_mtc(ginfo->players[i].UCID,ginfo->fines[atoi(pack_btt->Text)].name);
 
-                                    strcpy(Msg,msg.GetMessage(ginfo->players[g].UCID,1106));
+                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1106));
                                     strcat(Msg,ginfo->players[g].PName);
                                     send_mtc(ginfo->players[i].UCID,Msg);
 
@@ -1325,7 +1362,7 @@ void case_mci ()
 
             {
                 struct streets StreetInfo;
-                street.CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
+                street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
                 int X = pack_mci->Info[i].X/65536;
                 int Y = pack_mci->Info[i].Y/65536;
@@ -1340,7 +1377,7 @@ void case_mci ()
                     LastX=X;
                     LastY=Y;
                 }
-                float Dist = dl.Distance(X,Y,LastX,LastY);
+                float Dist = dl->Distance(X,Y,LastX,LastY);
 
                 if ((abs((int)Dist) > 10) and (S>30))
                 {
@@ -1349,20 +1386,20 @@ void case_mci ()
                     ginfo->players[j].Bonus_dist += Dist;
 
                     //начисляем деньги только до 20 уровня
-                    if(dl.GetLVL(ginfo->players[j].UCID) < 20)
+                    if(dl->GetLVL(ginfo->players[j].UCID) < 20)
                     {
 
                         if (S <= StreetInfo.SpeedLimit)
                         {
-                            if ( dl.Islocked( ginfo->players[j].UCID ) )
-                                dl.Unlock( ginfo->players[j].UCID );
-                            bank.AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
-                            bank.RemFrBank(abs((int)Dist)/100);
+                            if ( dl->Islocked( ginfo->players[j].UCID ) )
+                                dl->Unlock( ginfo->players[j].UCID );
+                            bank->AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
+                            bank->RemFrBank(abs((int)Dist)/100);
                         }
                         else
                         {
-                            if ( !( dl.Islocked( ginfo->players[j].UCID ) ) )
-                                dl.Lock( ginfo->players[j].UCID );
+                            if ( !( dl->Islocked( ginfo->players[j].UCID ) ) )
+                                dl->Lock( ginfo->players[j].UCID );
                         }
 
                     }
@@ -1377,22 +1414,22 @@ void case_mci ()
                     int bonus = 100+(50*(ginfo->players[j].Bonus_count));
                     ginfo->players[j].Bonus_count +=1;
 
-                    bank.AddCash(ginfo->players[j].UCID,bonus, true);
-                    //dl.AddSkill(ginfo->players[j].UCID);
-                    //bank.BankFond -= bonus;
+                    bank->AddCash(ginfo->players[j].UCID,bonus, true);
+                    //dl->AddSkill(ginfo->players[j].UCID);
+                    //bank->BankFond -= bonus;
 
                     char bonus_c[64];
-                    sprintf(bonus_c,"%s%d ^7RUR.",msg.GetMessage(ginfo->players[j].UCID,1500),bonus);
+                    sprintf(bonus_c,"%s%d ^7RUR.",msg->GetMessage(ginfo->players[j].UCID,1500),bonus);
                     send_mtc(ginfo->players[j].UCID,bonus_c);
 
                 }
 
                 /** Zones (PitSave, shop, etc) **/
-                if(bank.InBank(ginfo->players[j].UCID))
+                if(bank->InBank(ginfo->players[j].UCID))
 					ginfo->players[j].Zone = 4;
                 else    if (ginfo->players[j].Pitlane)
                     ginfo->players[j].Zone = 1;
-                else if (dl.Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y))
+                else if (dl->Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y))
                     ginfo->players[j].Zone = 2;
 
                 else
@@ -1402,7 +1439,7 @@ void case_mci ()
                 {
                     char TEST[64];
                     sprintf(TEST,"X=%d Y=%d H=%d",X,Y,pack_mci->Info[i].Heading/182);
-                    pizza.btn_information(ginfo->players[j].UCID,TEST);
+                    pizza->btn_information(ginfo->players[j].UCID,TEST);
                 }
                 memcpy(&ginfo->players[j].Info, &pack_mci->Info[i],sizeof(CompCar));
 
@@ -1431,7 +1468,7 @@ void case_mci_cop ()
                     ginfo->players[j].StopTime = 0;
                     if (ginfo->players[j].radar ==1 )
                     {
-                        send_mtc(ginfo->players[j].UCID,msg.GetMessage(ginfo->players[j].UCID,1700));
+                        send_mtc(ginfo->players[j].UCID,msg->GetMessage(ginfo->players[j].UCID,1700));
                         ginfo->players[j].radar = 0;
                     }
                 }
@@ -1447,7 +1484,7 @@ void case_mci_cop ()
                             int X1 = ginfo->players[j].Info.X/65536;
                             int Y1 = ginfo->players[j].Info.Y/65536;
 
-                            int Rast = dl.Distance( X, Y, X1, Y1);
+                            int Rast = dl->Distance( X, Y, X1, Y1);
 
                             if (ginfo->players[g].Pogonya == 1)
                             {
@@ -1459,14 +1496,14 @@ void case_mci_cop ()
                                     {
 
                                         ginfo->players[g].Pogonya = 2;
-                                        nrg.Unlock(ginfo->players[g].UCID);
-                                        strcpy(ginfo->players[g].PogonyaReason,msg.GetMessage(ginfo->players[g].UCID,1701));
+                                        nrg->Unlock(ginfo->players[g].UCID);
+                                        strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1701));
 
                                         char Text[96];
-                                        sprintf(Text,"/msg ^2| %s%s", ginfo->players[g].PName, msg.GetMessage(ginfo->players[j].UCID,1702));
+                                        sprintf(Text,"/msg ^2| %s%s", ginfo->players[g].PName, msg->GetMessage(ginfo->players[j].UCID,1702));
                                         send_mst(Text);
 
-                                        send_mtc(ginfo->players[j].UCID,msg.GetMessage(ginfo->players[j].UCID,1703));
+                                        send_mtc(ginfo->players[j].UCID,msg->GetMessage(ginfo->players[j].UCID,1703));
                                     }
                                 }
                             } // pogonya
@@ -1479,13 +1516,13 @@ void case_mci_cop ()
                                 {
                                     int Speed = ginfo->players[g].Info.Speed*360/32768;
                                     struct streets StreetInfo;
-                                    street.CurentStreetInfo(&StreetInfo,ginfo->players[g].UCID);
+                                    street->CurentStreetInfo(&StreetInfo,ginfo->players[g].UCID);
 
                                     if ((Speed > StreetInfo.SpeedLimit+10) )
                                     {
                                         char text[64];
                                         int Speed2 = Speed - StreetInfo.SpeedLimit;
-                                        sprintf(text,"^2| %s%s%d%s",ginfo->players[g].PName,msg.GetMessage(ginfo->players[g].UCID,1704),Speed2,msg.GetMessage(ginfo->players[j].UCID,1705));
+                                        sprintf(text,"^2| %s%s%d%s",ginfo->players[g].PName,msg->GetMessage(ginfo->players[g].UCID,1704),Speed2,msg->GetMessage(ginfo->players[j].UCID,1705));
                                         send_mtc(ginfo->players[j].UCID,text);
 
                                         if (ginfo->players[g].Pogonya == 0)
@@ -1493,11 +1530,11 @@ void case_mci_cop ()
                                             ginfo->players[g].Pogonya = 1;
                                             int worktime = time(&stime);
                                             ginfo->players[g].WorkTime = worktime+60*6;
-                                            strcpy(ginfo->players[g].PogonyaReason,msg.GetMessage(ginfo->players[g].UCID,1006));
+                                            strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1006));
                                             char Text[96];
-                                            sprintf(Text,"/msg ^2| %s%s", msg.GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
+                                            sprintf(Text,"/msg ^2| %s%s", msg->GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
                                             send_mst(Text);
-                                            nrg.Lock(ginfo->players[g].UCID);
+                                            nrg->Lock(ginfo->players[g].UCID);
                                         }
                                     }
                                 }
@@ -1587,7 +1624,7 @@ void case_mso ()
 
 
     //!help
-    if (((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0)) and !bank.InBank(ginfo->players[i].UCID))
+    if (((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0)) and !bank->InBank(ginfo->players[i].UCID))
     {
         for (int j=159; j>0; j--)
         {
@@ -1624,8 +1661,8 @@ void case_mso ()
         save_user_cars(&ginfo->players[i]);
         save_user_fines(&ginfo->players[i]);
 
-        bank.bank_save(ginfo->players[i].UCID);
-        send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,3000));
+        bank->bank_save(ginfo->players[i].UCID);
+        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,3000));
 
     }
 
@@ -1706,15 +1743,15 @@ void case_mso ()
         sprintf(Text,"/msg ^7 %s",ginfo->players[i].PName);
         send_mst(Text);
 
-        sprintf(Text,"/msg ^7Cash: ^1%d",bank.GetCash(ginfo->players[i].UCID));
+        sprintf(Text,"/msg ^7Cash: ^1%d",bank->GetCash(ginfo->players[i].UCID));
         send_mst(Text);
 #ifdef _RC_LEVEL_H
-        sprintf(Text,"/msg ^7Drive Level: ^1%d",dl.GetLVL(ginfo->players[i].UCID));
+        sprintf(Text,"/msg ^7Drive Level: ^1%d",dl->GetLVL(ginfo->players[i].UCID));
         send_mst(Text);
 
-        float nextlvl = (pow(dl.GetLVL(ginfo->players[i].UCID),2)*0.5+100)*1000;
+        float nextlvl = (pow(dl->GetLVL(ginfo->players[i].UCID),2)*0.5+100)*1000;
 
-        int prog = int(dl.GetSkill(ginfo->players[i].UCID)/nextlvl*100);
+        int prog = int(dl->GetSkill(ginfo->players[i].UCID)/nextlvl*100);
 
         sprintf(Text,"/msg ^7Drive Skill: ^1%d%s",prog,"%");
         send_mst(Text);
@@ -1775,7 +1812,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2000));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2000));
             return;
         }
         char * comand;
@@ -1796,7 +1833,7 @@ void case_mso ()
             int needcash = 5000 + (GetCarID(ginfo->players[i].CName)-1)*1000;
 #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo->players[i].CName)-1)*5+1;
-            if (dl.GetLVL(ginfo->players[i].UCID) < needlvl)
+            if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
                 sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
@@ -1812,14 +1849,14 @@ void case_mso ()
                 return;
             }
 
-            if (bank.GetCash(ginfo->players[i].UCID) >= needcash)
+            if (bank->GetCash(ginfo->players[i].UCID) >= needcash)
             {
                 ginfo->players[i].CTune +=1;
                 char msg[64];
                 sprintf(msg,"^C^2|^7 Вы купили ECU (%d RUR.)",needcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.RemCash(ginfo->players[i].UCID,needcash);
-                bank.AddToBank(needcash);
+                bank->RemCash(ginfo->players[i].UCID,needcash);
+                bank->AddToBank(needcash);
             }
             else
             {
@@ -1833,7 +1870,7 @@ void case_mso ()
             int needcash = 10000 + (GetCarID(ginfo->players[i].CName)-1)*10000;
 #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo->players[i].CName)-1)*5+2;
-            if (dl.GetLVL(ginfo->players[i].UCID) < needlvl)
+            if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
                 sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
@@ -1849,14 +1886,14 @@ void case_mso ()
                 return;
             }
 
-            if (bank.GetCash(ginfo->players[i].UCID) >= needcash)
+            if (bank->GetCash(ginfo->players[i].UCID) >= needcash)
             {
                 ginfo->players[i].CTune +=2;
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы купили Turbo (%d RUR.)",needcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.RemCash(ginfo->players[i].UCID,needcash);
-                bank.AddToBank(needcash);
+                bank->RemCash(ginfo->players[i].UCID,needcash);
+                bank->AddToBank(needcash);
             }
             else
             {
@@ -1871,7 +1908,7 @@ void case_mso ()
             int needcash = 3000 + (GetCarID(ginfo->players[i].CName)-1)*1000;
 #ifdef _RC_LEVEL_H
             int needlvl = (GetCarID(ginfo->players[i].CName)-1)*5+3;
-            if (dl.GetLVL(ginfo->players[i].UCID) < needlvl)
+            if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вам нужен уровень: ^1%d",needlvl);
@@ -1887,14 +1924,14 @@ void case_mso ()
                 return;
             }
 
-            if (bank.GetCash(ginfo->players[i].UCID) >= needcash)
+            if (bank->GetCash(ginfo->players[i].UCID) >= needcash)
             {
                 ginfo->players[i].CTune+=4;
                 char msg[64];
                 sprintf(msg,"^C^2|^7 Вы купили \"Облегчение веса\" (%d RUR.)",needcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.RemCash(ginfo->players[i].UCID,needcash);
-                bank.AddToBank(needcash);
+                bank->RemCash(ginfo->players[i].UCID,needcash);
+                bank->AddToBank(needcash);
             }
             else
             {
@@ -1912,7 +1949,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2000));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2000));
             return;
         }
         char * comand;
@@ -1937,8 +1974,8 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали ECU (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
-                bank.RemFrBank(sellcash);
+                bank->AddCash(ginfo->players[i].UCID,sellcash, true);
+                bank->RemFrBank(sellcash);
             }
         }
 
@@ -1952,8 +1989,8 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали Turbo (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
-                bank.RemFrBank(sellcash);
+                bank->AddCash(ginfo->players[i].UCID,sellcash, true);
+                bank->RemFrBank(sellcash);
             }
         }
 
@@ -1967,8 +2004,8 @@ void case_mso ()
                 char msg[64];
                 sprintf(msg,"^C^2| ^7Вы продали \"Облегчение веса\" (%d RUR.)",sellcash);
                 send_mtc(ginfo->players[i].UCID,msg);
-                bank.AddCash(ginfo->players[i].UCID,sellcash, true);
-                bank.RemFrBank(sellcash);
+                bank->AddCash(ginfo->players[i].UCID,sellcash, true);
+                bank->RemFrBank(sellcash);
             }
         }
     }
@@ -1978,7 +2015,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2000));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2000));
             return;
         }
         char * comand;
@@ -2011,7 +2048,7 @@ void case_mso ()
 
 #ifdef _RC_LEVEL_H
         int needlvl = (CarID-1)*5;
-        if (dl.GetLVL(ginfo->players[i].UCID) < needlvl)
+        if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
         {
             char msg[64];
             sprintf(msg,"^C^2| ^7Нужен уровень: ^1%d",needlvl);
@@ -2019,7 +2056,7 @@ void case_mso ()
             return;
         }
 #endif
-        if (bank.GetCash(ginfo->players[i].UCID) < (int)ginfo->car[CarID].cash)
+        if (bank->GetCash(ginfo->players[i].UCID) < (int)ginfo->car[CarID].cash)
         {
             char msg[64];
             sprintf(msg,"^C^2| ^7Нужно ^1%d ^7RUR.",(int)ginfo->car[CarID].cash);
@@ -2051,8 +2088,8 @@ void case_mso ()
                 sprintf(msg,"^C^2|^7 Вы купили %s",id);
                 send_mtc(ginfo->players[i].UCID,msg);
 
-                bank.RemCash(ginfo->players[i].UCID,ginfo->car[CarID].cash);
-                bank.AddToBank(ginfo->car[CarID].cash);
+                bank->RemCash(ginfo->players[i].UCID,ginfo->car[CarID].cash);
+                bank->AddToBank(ginfo->car[CarID].cash);
 
                 ginfo->players[i].PLC += ginfo->car[CarID].PLC;
                 send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
@@ -2082,7 +2119,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2000));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2000));
             return;
         }
         char * comand;
@@ -2111,7 +2148,7 @@ void case_mso ()
         // if user now  on this car
         if (strcmp(id,ginfo->players[i].CName)==0)
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,1009));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1009));
             return;
         }
 
@@ -2135,8 +2172,8 @@ void case_mso ()
                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " sell car " << id << endl;
                 readf.close();
 
-                bank.AddCash(ginfo->players[i].UCID,ginfo->car[j].sell, true);
-                bank.RemFrBank(ginfo->car[j].sell);
+                bank->AddCash(ginfo->players[i].UCID,ginfo->car[j].sell, true);
+                bank->RemFrBank(ginfo->car[j].sell);
 
                 ginfo->players[i].PLC -= ginfo->car[j].PLC;
                 send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
@@ -2164,13 +2201,13 @@ void case_mso ()
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
                 save_user_fines(&ginfo->players[j]);
-                bank.bank_save(ginfo->players[j].UCID);
+                bank->bank_save(ginfo->players[j].UCID);
 #ifdef _RC_ENERGY_H
-                nrg.energy_save(ginfo->players[j].UCID);
+                nrg->energy_save(ginfo->players[j].UCID);
 #endif
 
 #ifdef _RC_LEVEL_H
-                dl.save(ginfo->players[j].UCID);
+                dl->save(ginfo->players[j].UCID);
 #endif
             }
         }
@@ -2197,7 +2234,7 @@ void case_mso ()
             ginfo->players[i].Svetofor = 1;
         else
         {
-            pizza.btn_information_clear(ginfo->players[i].UCID);
+            pizza->btn_information_clear(ginfo->players[i].UCID);
             ginfo->players[i].Svetofor = 0;
         }
 
@@ -2210,10 +2247,10 @@ void case_mso ()
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
             send_mst(Msg);
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2700));
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2701));
-            bank.RemCash(ginfo->players[i].UCID,5000);
-            bank.AddToBank(5000);
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2700));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2701));
+            bank->RemCash(ginfo->players[i].UCID,5000);
+            bank->AddToBank(5000);
         }
         else
         {
@@ -2222,8 +2259,8 @@ void case_mso ()
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
             send_mst(Msg);
             ginfo->players[i].Zone = 1;
-            bank.RemCash(ginfo->players[i].UCID,250);
-            bank.AddToBank(250);
+            bank->RemCash(ginfo->players[i].UCID,250);
+            bank->AddToBank(250);
 
         }
     }
@@ -2271,7 +2308,7 @@ void case_mso ()
         }
         pack_btn.ClickID = 34;
         pack_btn.T = 195;
-        strcpy(pack_btn.Text,msg.GetMessage(ginfo->players[i].UCID,2003));
+        strcpy(pack_btn.Text,msg->GetMessage(ginfo->players[i].UCID,2003));
         insim->send_packet(&pack_btn);
 
     }
@@ -2317,11 +2354,11 @@ void case_mso_flood ()
 
         if (ginfo->players[i].FloodCount > 4)   //max lines to tolerate
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2004));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2004));
             ginfo->players[i].FloodCount = 0;
 
-            bank.RemCash(ginfo->players[i].UCID,500);
-            bank.AddToBank(500);
+            bank->RemCash(ginfo->players[i].UCID,500);
+            bank->AddToBank(500);
         }
 
 
@@ -2331,10 +2368,10 @@ void case_mso_flood ()
         {
             if (strstr(Msg,ginfo->Words[j]))
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2005));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2005));
 
-                bank.RemCash(ginfo->players[i].UCID,5000);
-                bank.AddToBank(5000);
+                bank->RemCash(ginfo->players[i].UCID,5000);
+                bank->AddToBank(5000);
             }
 
         }
@@ -2372,12 +2409,12 @@ void case_mso_cop ()
         {
             if (ginfo->players[i].sirena ==0 )
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2100));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2100));
                 ginfo->players[i].sirena = 1;
             }
             else
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2101));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2101));
                 ginfo->players[i].sirena = 0;
             }
         }
@@ -2391,12 +2428,12 @@ void case_mso_cop ()
         {
             if (ginfo->players[i].radar ==0 )
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2102));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2102));
                 ginfo->players[i].radar = 1;
             }
             else
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2103));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2103));
                 ginfo->players[i].radar = 0;
             }
         }
@@ -2423,11 +2460,11 @@ void case_mso_cop ()
 
         if ((!id) or (id_i < 1))
         {
-            send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2105));
+            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2105));
             return;
         }
 
-        if (bank.InBank(ginfo->players[i].UCID))
+        if (bank->InBank(ginfo->players[i].UCID))
         {
 
         int j=0;
@@ -2438,34 +2475,34 @@ void case_mso_cop ()
                 ginfo->players[i].fines[j].fine_id = 0;
                 ginfo->players[i].fines[j].fine_date = 0;
 
-                bank.RemCash(ginfo->players[i].UCID,ginfo->fines[id_i].cash);
+                bank->RemCash(ginfo->players[i].UCID,ginfo->fines[id_i].cash);
 
                 int cop = 0;
                 for (int k=0; k<MAX_PLAYERS; k++)
                 {
                     if (ginfo->players[k].cop == 1)
                     {
-                    	if (dl.Islocked( ginfo->players[k].UCID )){
-							dl.Unlock( ginfo->players[k].UCID );
-							dl.AddSkill(ginfo->players[k].UCID, 0.05);
-							dl.Lock( ginfo->players[k].UCID );
+                    	if (dl->Islocked( ginfo->players[k].UCID )){
+							dl->Unlock( ginfo->players[k].UCID );
+							dl->AddSkill(ginfo->players[k].UCID, 0.05);
+							dl->Lock( ginfo->players[k].UCID );
                     	}
                     	else
-							dl.AddSkill(ginfo->players[k].UCID, 0.05);
+							dl->AddSkill(ginfo->players[k].UCID, 0.05);
 
-                        bank.AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
+                        bank->AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
                         cop++;
                     }
                 }
 
-                bank.AddToBank((ginfo->fines[id_i].cash)-((ginfo->fines[id_i].cash)*0.05)*cop);
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2106));
-                dl.RemSkill(ginfo->players[i].UCID);
+                bank->AddToBank((ginfo->fines[id_i].cash)-((ginfo->fines[id_i].cash)*0.05)*cop);
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2106));
+                dl->RemSkill(ginfo->players[i].UCID);
                 break;
             }
 
             if (j == MAX_FINES)
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2107));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2107));
         }
     }
     else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
@@ -2658,14 +2695,14 @@ void case_npl ()
                 {
                     strcpy(Text, "/spec ");
                     strcat (Text, ginfo->players[i].UName);
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,1300));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1300));
                 }
                 else if (IfCop(&ginfo->players[i]) == 3)
                 {
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,1301));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1301));
                     ginfo->players[i].cop = 1;
-                    dl.Lock(ginfo->players[i].UCID);
-                    nrg.Lock(ginfo->players[i].UCID);
+                    dl->Lock(ginfo->players[i].UCID);
+                    nrg->Lock(ginfo->players[i].UCID);
                     lgh->SetLight3(ginfo->players[i].UCID,true);
                 }
 
@@ -2707,7 +2744,7 @@ void case_npl ()
 #ifdef _RC_LEVEL_H
                     int needlvl = (GetCarID(ginfo->players[i].CName)-1)*5;
 
-                    if (dl.GetLVL(ginfo->players[i].UCID) < needlvl)
+                    if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
                     {
                         ginfo->players[i].PLID = 0;
                         ginfo->players[i].Zone = 1;
@@ -2716,13 +2753,13 @@ void case_npl ()
                         char msg2[64];
                         sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
                         send_mtc(ginfo->players[i].UCID,msg2);
-                        send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2404));
+                        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2404));
 
                         char Text2[64];
                         strcpy(Text2,"^1| ^2");
                         for (int k=0; k< MAX_CARS; k++)
                         {
-                            if ((strlen(ginfo->players[i].cars[k].car) != 0) and ((GetCarID(ginfo->players[i].cars[k].car)-1)*5 <= dl.GetLVL(ginfo->players[i].UCID)))
+                            if ((strlen(ginfo->players[i].cars[k].car) != 0) and ((GetCarID(ginfo->players[i].cars[k].car)-1)*5 <= dl->GetLVL(ginfo->players[i].UCID)))
                             {
                                 strcat(Text2,ginfo->players[i].cars[k].car);
                                 strcat(Text2," ");
@@ -2738,14 +2775,14 @@ void case_npl ()
                         send_mst(Text);
 
                         char Texxt[32];
-                        sprintf(Texxt,"%s %d %%",msg.GetMessage(ginfo->players[i].UCID,2400),tune);
+                        sprintf(Texxt,"%s %d %%",msg->GetMessage(ginfo->players[i].UCID,2400),tune);
                         send_mtc(ginfo->players[i].UCID,Texxt);
                     }
 #endif
                 }
                 else
                 {
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2404));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2404));
 
                     help_cmds(&ginfo->players[i],2);
                     ginfo->players[i].Zone = 1;
@@ -2782,7 +2819,7 @@ void case_pen ()
                         ginfo->players[i].fines[j].fine_date = int(time(&stime));
 
                         char Msg[64];
-                        strcpy(Msg,msg.GetMessage(ginfo->players[i].UCID,1104));
+                        strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1104));
                         send_mtc(ginfo->players[i].UCID,Msg);
                         strcpy(Msg,"^2| ^7");
                         strcat(Msg,ginfo->fines[13].name);
@@ -2826,7 +2863,7 @@ void case_pla ()
                 {
                     char Text[64];
                     sprintf(Text, "/pitlane %s",ginfo->players[i].UName);
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,3400));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,3400));
                     send_mst(Text);
                 }
             }
@@ -2856,32 +2893,32 @@ void case_pll ()
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
             ginfo->players[i].Penalty =0;
 
-            dl.Unlock(ginfo->players[i].UCID);
-            nrg.Unlock(ginfo->players[i].UCID);
+            dl->Unlock(ginfo->players[i].UCID);
+            nrg->Unlock(ginfo->players[i].UCID);
             lgh->SetLight3(ginfo->players[i].UCID,false);
 
             save_car(&ginfo->players[i]);
 
             if (ginfo->players[i].Pogonya == 1)
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2600));
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2601));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2600));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2601));
 
-				if( nrg.GetEnergy( ginfo->players[i].UCID ) > 10 )
-					dl.RemSkill(ginfo->players[i].UCID,10);
+				if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+					dl->RemSkill(ginfo->players[i].UCID,10);
 
-                bank.RemCash(ginfo->players[i].UCID,5000);
-                bank.AddToBank(5000);
+                bank->RemCash(ginfo->players[i].UCID,5000);
+                bank->AddToBank(5000);
             }
             else
             {
                 if (ginfo->players[i].Zone != 1)
                 {
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2602));
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2603));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2602));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2603));
 
-                    bank.RemCash(ginfo->players[i].UCID,500);
-                    bank.AddToBank(500);
+                    bank->RemCash(ginfo->players[i].UCID,500);
+                    bank->AddToBank(500);
                 }
             }
             for (int g=0; g<200; g++)
@@ -2911,8 +2948,8 @@ void case_plp ()
             ginfo->players[i].Penalty =0;
 
 
-            dl.Unlock(ginfo->players[i].UCID);
-            nrg.Unlock(ginfo->players[i].UCID);
+            dl->Unlock(ginfo->players[i].UCID);
+            nrg->Unlock(ginfo->players[i].UCID);
             lgh->SetLight3(ginfo->players[i].UCID,false);
 
 
@@ -2920,24 +2957,24 @@ void case_plp ()
 
             if (ginfo->players[i].Pogonya == 1)
             {
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2700));
-                send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2701));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2700));
+                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2701));
 
-				if( nrg.GetEnergy( ginfo->players[i].UCID ) > 10 )
-					dl.RemSkill(ginfo->players[i].UCID,10);
+				if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+					dl->RemSkill(ginfo->players[i].UCID,10);
 
-                bank.RemCash(ginfo->players[i].UCID,5000);
-                bank.AddToBank(5000);
+                bank->RemCash(ginfo->players[i].UCID,5000);
+                bank->AddToBank(5000);
             }
             else
             {
                 if (ginfo->players[i].Zone != 1)
                 {
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2702));
-                    send_mtc(ginfo->players[i].UCID,msg.GetMessage(ginfo->players[i].UCID,2703));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2702));
+                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2703));
 
-                    bank.RemCash(ginfo->players[i].UCID,500);
-                    bank.AddToBank(500);
+                    bank->RemCash(ginfo->players[i].UCID,500);
+                    bank->AddToBank(500);
                 }
             }
 
@@ -2974,7 +3011,7 @@ void case_vtn ()
     {
         if (ginfo->players[i].UCID == pack_vtn->UCID)
         {
-            send_mst(msg.GetMessage(ginfo->players[i].UCID,2900));
+            send_mst(msg->GetMessage(ginfo->players[i].UCID,2900));
             send_mst("/cv");
             break;
         }
@@ -3124,7 +3161,7 @@ void read_track()
 
     readf.close();
 
-    memcpy(&antcht.TrackInf,&ginfo->TrackInf,sizeof(struct track_info));
+    memcpy(&antcht->TrackInf,&ginfo->TrackInf,sizeof(struct track_info));
 }
 
 
@@ -3326,24 +3363,24 @@ void *thread_mci (void *params)
         case_mci_cop();
 
 #ifdef _RC_BANK_H
-        bank.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        bank->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_CHEAT_H
-        antcht.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        antcht->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_PIZZA_H
-        pizza.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        pizza->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_ENERGY_H
-        nrg.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        nrg->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_STREET_H
-        if (street.IfInited)
-            street.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        if (street->IfInited)
+            street->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LIGHT_H
@@ -3352,13 +3389,13 @@ void *thread_mci (void *params)
 #endif
 
 #ifdef _RC_LEVEL_H
-        if (dl.inited == 1)
-            dl.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        if (dl->inited == 1)
+            dl->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_TAXI_H
-        if (taxi.inited == 1)
-            taxi.insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        if (taxi->inited == 1)
+            taxi->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 
@@ -3403,9 +3440,9 @@ void *thread_btn (void *params)
                             int min = (time2/60)%60;
                             int sec = time2%60;
 
-                            float D = dl.Distance(ginfo->players[i].Info.X,ginfo->players[i].Info.Y,ginfo->players[j].Info.X,ginfo->players[j].Info.Y)/65536;
+                            float D = dl->Distance(ginfo->players[i].Info.X,ginfo->players[i].Info.Y,ginfo->players[j].Info.X,ginfo->players[j].Info.Y)/65536;
 
-                            street.CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
+                            street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
 							if ( ginfo->players[j].Pogonya == 1 )
                             sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
@@ -3443,14 +3480,14 @@ void *thread_save (void *params)
                     save_user_cars(&ginfo->players[j]);
                     save_user_fines(&ginfo->players[j]);
 #ifdef _RC_ENERGY_H
-                    nrg.energy_save(ginfo->players[j].UCID);
+                    nrg->energy_save(ginfo->players[j].UCID);
 #endif
-                    bank.bank_save(ginfo->players[j].UCID);
+                    bank->bank_save(ginfo->players[j].UCID);
 #ifdef _RC_LEVEL_H
-                    dl.save(ginfo->players[j].UCID);
+                    dl->save(ginfo->players[j].UCID);
 #endif
 
-                    send_mtc(ginfo->players[j].UCID,msg.GetMessage(ginfo->players[j].UCID,3000));
+                    send_mtc(ginfo->players[j].UCID,msg->GetMessage(ginfo->players[j].UCID,3000));
                 }
             }
 
@@ -3483,12 +3520,12 @@ void *thread_work (void *params)
                         send_bfn(ginfo->players[i].UCID,210);
 
                         char Text[64];
-                        sprintf( Text , "/msg ^2|%s %s" , ginfo->players[i].PName , msg.GetMessage(ginfo->players[i].UCID,1706) );
+                        sprintf( Text , "/msg ^2|%s %s" , ginfo->players[i].PName , msg->GetMessage(ginfo->players[i].UCID,1706) );
 
                         send_mst(Text);
                         ginfo->players[i].Pogonya = 0;
-                        nrg.Unlock(ginfo->players[i].UCID);
-                        dl.AddSkill(ginfo->players[i].UCID);
+                        nrg->Unlock(ginfo->players[i].UCID);
+                        dl->AddSkill(ginfo->players[i].UCID);
                     }
                 }
 
@@ -3590,6 +3627,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     }
     Sleep(1000);
 
+	create_classes();
     init_classes();
 
 
@@ -3614,7 +3652,8 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         }
 
-        msg.next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
+        msg->next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
+        msg->next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
 
         switch (insim->peek_packet())
         {
@@ -3694,22 +3733,22 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         }
 
 #ifdef _RC_ENERGY_H
-        nrg.next_packet();
+        nrg->next_packet();
 #endif
 #ifdef _RC_PIZZA_H
-        pizza.next_packet();
+        pizza->next_packet();
 #endif
-        bank.next_packet();
+        bank->next_packet();
 #ifdef _RC_LEVEL_H
-        dl.next_packet();
+        dl->next_packet();
 #endif
 
 #ifdef _RC_CHEAT_H
-        antcht.next_packet();
+        antcht->next_packet();
 #endif
 
 #ifdef _RC_STREET_H
-        street.next_packet();
+        street->next_packet();
 #endif
 
 #ifdef _RC_LIGHT_H
@@ -3717,7 +3756,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif
 
 #ifdef _RC_TAXI_H
-        taxi.next_packet();
+        taxi->next_packet();
 #endif
 
 #ifdef _RC_BANLIST_H
@@ -4023,11 +4062,11 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
                 save_user_cars(&ginfo->players[j]);
                 save_user_fines(&ginfo->players[j]);
 #ifdef _RC_ENERGY_H
-                nrg.energy_save(ginfo->players[j].UCID);
+                nrg->energy_save(ginfo->players[j].UCID);
 #endif
-                bank.bank_save(ginfo->players[j].UCID);
+                bank->bank_save(ginfo->players[j].UCID);
 #ifdef _RC_LEVEL_H
-                dl.save(ginfo->players[j].UCID);
+                dl->save(ginfo->players[j].UCID);
 #endif
                 Sleep(500);
             }

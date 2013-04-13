@@ -45,7 +45,7 @@ private:
     MYSQL_ROW rcbankRow;
 
     struct  Bank_info TrackInf;
-    BankPlayer players[MAX_PLAYERS];     // Array of players
+    BankPlayer *players;
     struct  place zone;
     double BankFond;
 
@@ -78,7 +78,7 @@ public:
     byte GetPlayerUCID (int i);
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *GetMessage, void *dbconn, void *DL);
+    int init(const char *dir,void *CInSim, void *GetMessage, void *DL);
     void readconfig(const char *Track);
     void bank_save(byte UCID);
 

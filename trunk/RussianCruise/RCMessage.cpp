@@ -4,12 +4,13 @@ using namespace std;
 
 RCMessage::RCMessage()
 {
-
+	players = new MPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( MPlayer ) * MAX_PLAYERS );
 }
 
 RCMessage::~RCMessage()
 {
-
+	delete[] players;
 }
 
 char* RCMessage::GetMessage(byte UCID, int MsgID)

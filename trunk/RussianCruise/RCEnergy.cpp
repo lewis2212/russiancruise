@@ -28,15 +28,17 @@ void *nrg_thread_btn (void *energy)
 
 RCEnergy::RCEnergy()
 {
-
+	players = new EnergyPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( EnergyPlayer ) * MAX_PLAYERS );
 }
 
 RCEnergy::~RCEnergy()
 {
 	mysql_close( &rcNrgDB );
+	delete[] players;
 }
 
-int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank)
+int RCEnergy::init(const char *dir,void *CInSim, void *Message,void *Bank)
 {
     strcpy(RootDir,dir);
 
@@ -44,7 +46,7 @@ int RCEnergy::init(const char *dir,void *classname,void *CInSim, void *Message,v
     pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
     pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
 
-    if (pthread_create(&tid,&attr,nrg_thread_btn,classname) < 0)
+    if (pthread_create(&tid,&attr,nrg_thread_btn,this) < 0)
         return -1;
 
     insim = (CInsim *)CInSim;
@@ -323,9 +325,6 @@ void RCEnergy::energy_save (byte UCID)
 void RCEnergy::insim_cpr( struct IS_CPR* packet )
 {
     int i;
-
-
-
     // Find player and set his PLID to 0
     for (i=0; i < MAX_PLAYERS; i++)
     {

@@ -4,12 +4,13 @@ using namespace std;
 
 RCDL::RCDL()
 {
-
+	players = new DLPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( DLPlayer ) * MAX_PLAYERS );
 }
 
 RCDL::~RCDL()
 {
-
+	delete[] players;
 }
 
 int     RCDL::GetLVL(byte UCID)

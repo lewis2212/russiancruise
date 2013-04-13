@@ -189,6 +189,7 @@ RCLight::~RCLight()
 {
     pthread_detach(svet1_tid);
     pthread_detach(svet2_tid);
+	//delete[] players;
 }
 
 bool RCLight::SetLight3(byte UCID,bool Key)

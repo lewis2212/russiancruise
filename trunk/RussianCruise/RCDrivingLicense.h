@@ -38,8 +38,10 @@ private:
 
     char RootDir[MAX_PATH];
 
-    char errmsg[64];
     RCMessage *msg;
+
+    //struct  DLPlayer players[32];     // Array of players
+    struct  DLPlayer *players;     // Array of players
 
     // функции-повторители основных фунцкий ядра
     void insim_ncn( struct IS_NCN* packet );
@@ -75,7 +77,7 @@ public:
 
     void    insim_mci( struct IS_MCI* packet );
 
-    struct  DLPlayer players[32];     // Array of players
+
     // Основные функции класса
     int init(const char *dir,void *CInSim, void *GetMessage);
 };

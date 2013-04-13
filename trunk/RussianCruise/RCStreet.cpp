@@ -5,11 +5,13 @@ using namespace std;
 RCStreet::RCStreet()
 {
 
+	players = new StrPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( StrPlayer ) * MAX_PLAYERS );
 }
 
 RCStreet::~RCStreet()
 {
-
+	delete[] players;
 }
 
 int RCStreet::init(const char *dir, void *CInSim, void *Message)

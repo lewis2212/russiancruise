@@ -101,7 +101,8 @@ public:
 
 
     struct  place zone;
-    struct  PizzaPlayer players[32];     // Array of players
+    //struct  PizzaPlayer players[32];     // Array of players
+    struct  PizzaPlayer *players;
     // Основные функции класса
     int init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
     // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
@@ -110,6 +111,7 @@ public:
     void undeal(struct PizzaPlayer *splayer,const char *Reason);
     void take (struct PizzaPlayer *splayer);
     void done (struct PizzaPlayer *splayer);
+    void btn_work (struct PizzaPlayer *splayer);
 
     // функции-повторители основных фунцкий ядра
 
@@ -121,9 +123,6 @@ public:
     void insim_cpr( struct IS_CPR* packet ); //+
     void insim_mci( struct IS_MCI* packet );
     void insim_mso( struct IS_MSO* packet );
-
-    void btn_work (struct PizzaPlayer *splayer);
-
 
     // Функции-утилиты
     int check_pos (struct PizzaPlayer *splayer); //+

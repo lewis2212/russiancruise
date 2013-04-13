@@ -12,7 +12,7 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
     RCPizza *piz = (RCPizza *)arg; //struct our RCPizza class in thread
     if(!piz)
     {
-        printf ("Can't start pizzathread");
+        printf ("Can't start pizzathread\n");
         return 0;
     }
 
@@ -75,7 +75,6 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
         if ( piz->ginfo_time <= time(&ptime))
         {
-            cout << "try to send pizza to player" << endl;
             //srand(time(&ptime));
             //int r = rand()%3 + 1;
             int pizza_time = 600/(piz->NumP+1);
@@ -116,8 +115,6 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
                 {
                     if ( (piz->players[i].UCID !=0) and (piz->players[i].WorkType == WK_PIZZA) and (piz->players[i].WorkAccept == 0))
                     {
-                        cout << piz->players[i].UName << " accepted for pizza\n";
-
                         piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2201));
                         piz->send_mtc(piz->players[i].UCID,piz->msg->GetMessage(piz->players[i].UCID,2202));
 
@@ -138,10 +135,8 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
         if ((piz->PStore.Muka < 10) || (piz->PStore.Voda < 10) || (piz->PStore.Ovoshi < 10) || (piz->PStore.Cheese < 10))
         {
-            printf("try to buy products\n");
             if  (piz->ShopAccepted == false)
             {
-                printf("ShopAccepted == false\n");
                 for (int i = 0; i<32; i++)
                 {
                     if ( (piz->players[i].UCID !=0)
@@ -171,12 +166,13 @@ void *pizzathread(void *arg)  // arg == classname from RCPizza::init
 
 RCPizza::RCPizza()
 {
-
+	players = new PizzaPlayer[MAX_PLAYERS];
+	memset(players, 0, sizeof( PizzaPlayer ) * MAX_PLAYERS );
 }
 
 RCPizza::~RCPizza()
 {
-
+	delete[] players;
 }
 
 int RCPizza::init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank,void *Energy,void *DrLic, void *Taxi)
@@ -185,39 +181,39 @@ int RCPizza::init(const char *dir,void *classname,void *CInSim, void *GetMessage
 
     pthread_cancel(tid);
     Sleep (1500);
-    if (pthread_create(&tid,NULL,pizzathread,classname) < 0)
+    if (pthread_create(&tid,NULL,pizzathread,this) < 0)
         return -1;
 
     insim = (CInsim *)CInSim;
     if(!insim)
     {
-        printf ("Can't struct CInsim class");
+        printf ("RCPizza: Can't struct CInsim class");
         return -1;
     }
 
     msg = (RCMessage *)GetMessage;
     if(!msg)
     {
-        printf ("Can't struct RCMessage class");
+        printf ("RCPizza: Can't struct RCMessage class");
         return -1;
     }
     bank = (RCBank *)Bank;
     if(!bank)
     {
-        printf ("Can't struct RCBank class");
+        printf ("RCPizza: Can't struct RCBank class");
         return -1;
     }
     nrg = (RCEnergy *)Energy;
     if(!nrg)
     {
-        printf ("Can't struct RCEnergy class");
+        printf ("RCPizza: Can't struct RCEnergy class");
         return -1;
     }
 
     dl = (RCDL *)DrLic;
     if(!dl)
     {
-        printf ("Can't struct RCDL class");
+        printf ("RCPizza: Can't struct RCDL class");
         return -1;
     }
 
