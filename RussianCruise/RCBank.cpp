@@ -2,6 +2,7 @@ using namespace std;
 
 #include "RCBank.h"
 
+
 RCBank::RCBank()
 {
 	players = new BankPlayer[MAX_PLAYERS];
