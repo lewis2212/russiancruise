@@ -335,6 +335,8 @@ void RCTaxi::accept_user()
 
                 //рисую маршала
                 players[i].HandUp=false; //маршал стоит с опущенной рукой
+
+
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -390,6 +392,8 @@ void RCTaxi::accept_user2(byte UCID)
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
                 //удаляю маршала
+
+
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -404,6 +408,7 @@ void RCTaxi::accept_user2(byte UCID)
                 pacAXM.Size=8+pacAXM.NumO*8;
                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                 insim->send_packet(&pacAXM);
+
 
                 players[i].WorkPointDestinaion = DestPoint;
                 players[i].WorkStreetDestinaion = DestStreet;
@@ -432,6 +437,9 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
         if (players[i].UCID == packet->UCID)
         {
             //удаляю маршалов
+
+
+
             struct IS_AXM pacAXM;
             memset(&pacAXM, 0, sizeof(struct IS_AXM));
             pacAXM.Info[0].Index=255;
@@ -446,6 +454,10 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
             pacAXM.Size=8+pacAXM.NumO*8;
             pacAXM.PMOAction = PMO_DEL_OBJECTS;
             insim->send_packet(&pacAXM);
+
+
+
+
             pacAXM.Info[0].Flags=135;
             insim->send_packet(&pacAXM);
 
@@ -508,7 +520,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         char dd[96];
                         struct streets StreetInfo;
                         memset(&StreetInfo,0,sizeof(streets));
-                        street->CurentStreetInfoByNum(&StreetInfo,street->CurentStreetNum(players[i].UCID));
+                        street->CurentStreetInfoByNum(&StreetInfo,street->CurentStreetNum(players[j].UCID));
                         if (Speed>StreetInfo.SpeedLimit)
                         {
                             if (players[j].spd==5) players[j].spd=0;
@@ -527,7 +539,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         int des_Y = ClientPoints[players[j].WorkPointDestinaion].Y/65536;
                         /** вычисляем растояние до точки остановки **/
                         Dist = Distance(X , Y , des_X , des_Y);
-                        sprintf(d,"^7%4.0f m.",Dist);
+                        sprintf(d," ^7%4.0f ^Cм",Dist);
                         btn_Dist(&players[j],d);
 
                         if (players[j].OnStreet == false)
@@ -554,6 +566,8 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 ddd = ddd/360*256;
 
                                 players[j].HandUp=true;
+
+
                                 struct IS_AXM pacAXM;
                                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                                 pacAXM.Info[0].Index=255;
@@ -568,6 +582,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 pacAXM.Size=8+pacAXM.NumO*8;
                                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                                 insim->send_packet(&pacAXM);
+
 
                                 pacAXM.Info[0].Flags=135;
                                 pacAXM.PMOAction = PMO_ADD_OBJECTS;
@@ -592,6 +607,8 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             if (players[j].HandUp and players[j].WorkAccept == 1)
                             {
                                 players[j].HandUp=false;
+
+
                                 struct IS_AXM pacAXM;
                                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                                 pacAXM.Info[0].Index=255;
@@ -606,6 +623,8 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 pacAXM.Size=8+pacAXM.NumO*8;
                                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                                 insim->send_packet(&pacAXM);
+
+
                                 pacAXM.Info[0].Flags=133;
                                 pacAXM.PMOAction = PMO_ADD_OBJECTS;
                                 insim->send_packet(&pacAXM);
@@ -755,6 +774,8 @@ void RCTaxi::dead_pass(byte UCID)
             if (abs(ClientPoints[players[i].WorkPointDestinaion].X/65536 - players[i].Info.X/65536)<50)
             {
                 //удаляем маршала
+
+
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -838,6 +859,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
 
             players[i].Work = 0;
                 //удаляю маршалов
+
+
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -852,6 +875,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
                 pacAXM.Size=8+pacAXM.NumO*8;
                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                 insim->send_packet(&pacAXM);
+
+
                 pacAXM.Info[0].Flags=135;
                 insim->send_packet(&pacAXM);
         }
@@ -893,6 +918,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
             players[i].PassStress = 0;
 
                 //удаляю маршалов
+
+
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -907,6 +934,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
                 pacAXM.Size=8+pacAXM.NumO*8;
                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                 insim->send_packet(&pacAXM);
+
+
                 pacAXM.Info[0].Flags=135;
                 insim->send_packet(&pacAXM);
         }
@@ -1167,6 +1196,12 @@ void RCTaxi::insim_con( struct IS_CON* packet )
 }
 
 
+/*void RCTaxi::insim_axm( struct IS_AXM* packet )
+{
+    readAxm=true;
+}*/
+
+
 void RCTaxi::insim_obh( struct IS_OBH* packet )
 {
     for (int i=0; i<MAX_PLAYERS; i++)
@@ -1201,7 +1236,7 @@ void RCTaxi::btn_stress(struct TaxiPlayer *splayer)
 
     pack.ClickID = 206;
     pack.BStyle = 32+64;
-    pack.L = 1;
+    pack.L = 9;
     pack.T = 125;
     pack.W = 48;
     pack.H = 4;
@@ -1237,7 +1272,7 @@ void RCTaxi::btn_Dist(struct TaxiPlayer *splayer, const char* Text)
     pack.ClickID = 205;
     pack.BStyle = 32+64;
     pack.L = 1;
-    pack.T = 121;
+    pack.T = 125;
     pack.W = 8;
     pack.H = 4;
 

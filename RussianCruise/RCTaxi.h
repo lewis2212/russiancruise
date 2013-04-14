@@ -109,6 +109,8 @@ private:
     int		DialSpeedCount;
     char 	Dialog_Speed[11][128];
 
+    bool readAxm;
+
 
     //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
@@ -146,6 +148,7 @@ private:
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
     void insim_con( struct IS_CON* packet );   // Игрок отправил сообщение
     void insim_obh( struct IS_OBH* packet );   // Игрок отправил сообщение
+    //void insim_axm( struct IS_AXM* packet );
 
     void read_user(struct TaxiPlayer *splayer);
     void save_user(struct TaxiPlayer *splayer);
