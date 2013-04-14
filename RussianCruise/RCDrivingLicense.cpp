@@ -510,8 +510,8 @@ void RCDL::insim_mci( struct IS_MCI* pack_mci )
                     players[j].LVL ++;
                     players[j].Skill = 0;
                     char Msg[64];
-                    sprintf(Msg,"/msg ^5| ^8^C%s ^1Get new Level = ^3%d",players[j].PName, players[j].LVL);
-                    send_mst(Msg);
+                    sprintf(Msg,"/msg ^5| ^8^C%s ^1Get ^3%d ^1Level",players[j].PName, players[j].LVL);
+                    if (players[j].UCID!=0) send_mst(Msg);
                 }
 
                 /** buttons **/
@@ -523,11 +523,9 @@ void RCDL::insim_mci( struct IS_MCI* pack_mci )
                 }
                 else
                     players[j].mcicount += 1;
-
             }
         }
     }
-
 }
 
 void RCDL::btn_dl(struct DLPlayer *splayer)
