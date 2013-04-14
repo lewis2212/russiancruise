@@ -404,7 +404,7 @@ void RCBank::insim_mso( struct IS_MSO* packet )
             if (dl->GetLVL(players[i].UCID)<5) { send_mtc(players[i].UCID,"^1| ^C^7Нужен уровень: ^15"); return;}
             //кредит
             sprintf(Text,"^5| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7.",cr/5,cr);send_mtc(players[i].UCID, Text);
-            send_mtc(players[i].UCID,"^5| ^C^7Кредит выдается под ^230 % ^7в месяц, на срок не более ^230^7 дней.");
+            send_mtc(players[i].UCID,"^5| ^C^7Кредит выдается под ^230 %^7, на срок не более ^230^7 дней.");
             send_mtc(players[i].UCID,"^5| ^C^7При досрочном погашении будет снята полная сумма кредита + процент.");
             //send_mtc(players[i].UCID,"^6| ^C^7При просрочке более чем на ^21 ^7день будет снята сумма кредита + полный процент + штраф.");
         }
