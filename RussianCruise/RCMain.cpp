@@ -2808,6 +2808,28 @@ void case_pen ()
     {
         if (ginfo->players[i].PLID == pack_pen->PLID)
         {
+            if (pack_pen->Reason == PENR_WRONG_WAY)
+            {
+                for (int j=0; j<MAX_FINES; j++)
+                {
+                    if (ginfo->players[i].fines[j].fine_id == 0)
+                    {
+                        taxi->dead_pass(ginfo->players[i].UCID);
+
+                        ginfo->players[i].fines[j].fine_id = 18;
+                        ginfo->players[i].fines[j].fine_date = int(time(&stime));
+
+                        char Msg[64];
+                        strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1104));
+                        send_mtc(ginfo->players[i].UCID,Msg);
+                        strcpy(Msg,"^2| ^7");
+                        strcat(Msg,ginfo->fines[18].name);
+                        send_mtc(ginfo->players[i].UCID,Msg);
+                        break;
+                    }
+                }
+            }
+
             if((pack_pen->NewPen != 0) and (pack_pen->Reason == PENR_SPEEDING))
             {
                 ginfo->players[i].Penalty = 1;

@@ -26,6 +26,15 @@ struct Taxi_points
     int     Y;
 };
 
+struct Taxi_clients
+{
+    int     X;
+    int     Y;
+    int     Z;
+    int     Dir;
+    int     StreetId;
+};
+
 
 // Задаем структуру игрока
 
@@ -38,7 +47,14 @@ struct TaxiPlayer
     byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
     byte    Zone;
+
     /** Work **/
+    int ClientID;
+    bool HandUp;
+    bool instr;     //заплатка для улиц
+    int spd;
+
+
     char    WorkDest[96];           // destination text
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkStreetDestinaion;
@@ -65,8 +81,6 @@ class RCTaxi: public RCBaseClass
 {
 private:
     // Переменные и функции, доступные только самому классу
-    string  GameTrack;
-
     time_t  acctime;
     int     accept_time;
     int     NumP;
@@ -92,6 +106,9 @@ private:
     int		DialExitCount;
     char 	Dialog_Exit[11][128];
 
+    int		DialSpeedCount;
+    char 	Dialog_Speed[11][128];
+
 
     //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
@@ -102,10 +119,13 @@ private:
 
     struct  Taxi_info TrackInf;
     int PointCount;
+    int ClientCount;
 
 
     struct  Taxi_points *Points; // Рабочая строчка
     struct  Taxi_points PointsAdd[2048]; //Для добавления точек
+
+    struct  Taxi_clients ClientPoints[2048];
     bool    StartPointsAdd;
 
     struct  place zone;
@@ -127,7 +147,6 @@ private:
     void insim_con( struct IS_CON* packet );   // Игрок отправил сообщение
     void insim_obh( struct IS_OBH* packet );   // Игрок отправил сообщение
 
-
     void read_user(struct TaxiPlayer *splayer);
     void save_user(struct TaxiPlayer *splayer);
 
@@ -144,6 +163,7 @@ public:
     int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
     byte inited;
 
+    void dead_pass(byte UCID);
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
 
