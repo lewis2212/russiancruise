@@ -14,8 +14,6 @@ struct LghPlayer
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
     byte    Light;
     bool    Light3;
     /** misc **/

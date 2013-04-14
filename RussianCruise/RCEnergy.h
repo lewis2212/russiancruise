@@ -8,14 +8,11 @@
 
 #include "tools.h"
 
-
 struct EnergyPlayer
 {
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
     byte    Zone;
     /** Energy **/
     int     Energy; // Energy xD from 0 to 10000
@@ -63,7 +60,7 @@ private:
 
 
     // Функции-утилиты
-    int check_pos (struct EnergyPlayer *splayer); //+
+    int check_pos ( byte UCID ); //+
 
 public:
     RCEnergy();
@@ -73,7 +70,7 @@ public:
     RCBank      *bank;
 
     struct  place zone;
-    struct  EnergyPlayer *players;     // Array of players
+    map<byte, EnergyPlayer>players;     // Array of players
     // Основные функции класса
     int     init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
     void    readconfig(const char *Track);
@@ -82,7 +79,7 @@ public:
     void    insim_mci( struct IS_MCI* packet );
 
     void    energy_save(byte UCID);
-    void    btn_energy (struct EnergyPlayer *splayer);
+    void    btn_energy ( byte UCID );
 
 
     int     GetEnergy(byte UCID);

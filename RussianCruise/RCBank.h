@@ -14,8 +14,6 @@ typedef struct BankPlayer
     struct  CompCar Info;
     char    UName[24];              // Username
     char    PName[24];              // Player name
-    byte    UCID;                   // Connection ID
-    byte    PLID;                   // PLayer ID
     double   Cash;
     //char    CName[4];             // Car Name
     bool    InZone;                 //зона банка
@@ -45,11 +43,13 @@ private:
     MYSQL_ROW rcbankRow;
 
     struct  Bank_info TrackInf;
-    BankPlayer *players;
+    map<byte, BankPlayer>players;
     struct  place zone;
     double BankFond;
 
     char RootDir[MAX_PATH];
+	RCMessage   *msg;
+    RCDL        *dl;
 
     void insim_ncn( struct IS_NCN* packet );
     void insim_npl( struct IS_NPL* packet );
@@ -63,10 +63,6 @@ public:
     RCBank();
     ~RCBank();
 
-    char errmsg[64];
-    RCMessage   *msg;
-    RCDL        *dl;
-
     bool AddToBank(int Cash);
     bool RemFrBank(int Cash);
 
@@ -75,7 +71,6 @@ public:
     bool AddCash(byte UCID, int Cash,  bool Show);
     bool RemCash(byte UCID, int Cash);
     int  GetCash(byte UCID);
-    byte GetPlayerUCID (int i);
 
     // Основные функции класса
     int init(const char *dir,void *CInSim, void *GetMessage, void *DL);
@@ -84,7 +79,7 @@ public:
 
     void credit_penalty(byte UCID);
 
-    void btn_cash(int i);
+    void BtnCash( byte UCID );
 
     void insim_mci( struct IS_MCI* packet );
 

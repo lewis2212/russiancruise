@@ -11,6 +11,8 @@
 
 #include "tools.h"      // Check_Pos  etc.
 
+#define MAX_POINTS 2048
+
 struct Taxi_info
 {
     int     ShopCount;
@@ -109,10 +111,7 @@ private:
     int		DialSpeedCount;
     char 	Dialog_Speed[11][128];
 
-    bool readAxm;
 
-
-    //CInsim      *insim; // Переменная-указатель на класс CInsim
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
@@ -127,7 +126,7 @@ private:
     struct  Taxi_points *Points; // Рабочая строчка
     struct  Taxi_points PointsAdd[2048]; //Для добавления точек
 
-    struct  Taxi_clients ClientPoints[2048];
+    struct  Taxi_clients ClientPoints[ MAX_POINTS ];
     bool    StartPointsAdd;
 
     struct  place zone;
