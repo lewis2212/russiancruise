@@ -188,8 +188,8 @@ void    RCBaseClass::insim_mci( struct IS_MCI* packet )
 bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
 {
 
-    int      i, j=polySides-1 ;
-    bool  oddNodes=false     ;
+    int		i, j=polySides-1 ;
+    bool	oddNodes=false;
 	try{
 		for (i=0; i<polySides; i++)
 		{

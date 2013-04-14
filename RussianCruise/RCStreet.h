@@ -7,6 +7,7 @@
 
 #include "tools.h"      // Check_Pos  etc.
 
+#define MAX_STREETS 32
 // Задаем структуру игрока
 
 struct StrPlayer
@@ -42,9 +43,11 @@ private:
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    struct  StrPlayer *players;     // Структура игроков
+    //struct  StrPlayer *players;     // Структура игроков
+    map< byte, StrPlayer >players;
+
     byte    StreetNums;                          // Count of streets
-    struct  streets Street[30];              // Array of streets
+    struct  streets Street[ MAX_STREETS ];              // Array of streets
     // struct  streets2 Street2[30];              // Array of streets
 
     // функции-повторители основных фунцкий ядра
@@ -56,8 +59,7 @@ private:
     void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
 
-
-    void btn_street(struct StrPlayer *splayer);
+    void btn_street( byte UCID );
 
 public:
     // Переменные и функции, доступные для всех
@@ -65,19 +67,13 @@ public:
     RCStreet();   // Конструктор класса (обязательно)
     ~RCStreet();  // Деструктор класса (обязательно)
 
-
     bool IfInited;
     int CurentStreetNum(byte UCID);
     int CurentStreetInfo(void *StreetInfo, byte UCID);
     int CurentStreetInfoByNum(void *StreetInfo, int StrNum);
     int StreetCount();
 
-
-
-    // Основные функции класса
-    int init(const char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCStreet.
-    // Нужно для доступа к классу внутри потока
-    // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCStreet
+    int init(const char *dir,void *CInSim, void *Message);
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
     void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
