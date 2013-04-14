@@ -160,25 +160,21 @@ void RCStreet::insim_ncn( struct IS_NCN* packet )
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
-    //players[i].UCID = packet->UCID;
 }
 
 void RCStreet::insim_npl( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
-	players[ packet->UCID ].PLID = packet->PLID;
 	players[ packet->UCID ].StreetNum = 250;
 }
 
 void RCStreet::insim_plp( struct IS_PLP* packet)
 {
-	players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCStreet::insim_pll( struct IS_PLL* packet )
 {
-    players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 

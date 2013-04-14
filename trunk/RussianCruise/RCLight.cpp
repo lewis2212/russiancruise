@@ -483,18 +483,18 @@ void RCLight::insim_ncn( struct IS_NCN* packet )
 void RCLight::insim_npl( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID ;
-	players[ packet->UCID ].PLID = packet->PLID;
+	//players[ packet->UCID ].PLID = packet->PLID;
 }
 
 void RCLight::insim_plp( struct IS_PLP* packet)
 {
-	players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
+	//players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCLight::insim_pll( struct IS_PLL* packet )
 {
-	players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
+	//players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 

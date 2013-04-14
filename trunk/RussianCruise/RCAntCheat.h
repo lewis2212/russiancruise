@@ -26,8 +26,7 @@ struct Player
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
+
     char    CName[4];              // Car Name
     /** TELEPORT **/
     float   Distance;
@@ -48,11 +47,12 @@ private:
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
     //struct  Player players[ MAX_PLAYERS ];     // Структура игроков
-    struct  Player *players;     // Структура игроков
+    //struct  Player *players;     // Структура игроков
+    map<byte, Player>players;
 
     // Переменные и функции, доступные только самому классу
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
-    void insim_reo( struct IS_REO* packet );
+    //void insim_reo( struct IS_REO* packet );
     void insim_pla( struct IS_PLA* packet );
     // функции-повторители основных фунцкий ядра
     //void next_packet(); // Функция переборки типа пакета

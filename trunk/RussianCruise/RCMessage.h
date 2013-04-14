@@ -1,13 +1,6 @@
 #ifndef _RC_GetMessage_H
 #define _RC_GetMessage_H
 
-
-#include <stdio.h>
-#include <iostream>
-#include <time.h>
-#include <fstream>
-#include <windows.h>
-
 #include "RCBaseClass.h"
 
 #include "tools.h"
@@ -17,7 +10,6 @@
 
 struct MPlayer
 {
-    byte UCID;
     char UName[24];
     int LangID;
 };
@@ -28,9 +20,10 @@ private:
 
     char RootDir[MAX_PATH];
 
-    char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
+    //char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
+    map< int , map< int ,string> >MsgArray;
 
-    struct MPlayer *players;
+    map<byte, MPlayer>players;
 
     void insim_ncn( struct IS_NCN* packet );
     void insim_cnl( struct IS_CNL* packet );
@@ -45,7 +38,7 @@ public:
 
     void save(byte UCID);
 
-    char* GetMessage(byte UCID, int MsgID);
+    const char* GetMessage(byte UCID, int MsgID);
 
 }; // this method is not good but better when old method.
 

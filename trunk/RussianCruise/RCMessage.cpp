@@ -4,28 +4,20 @@ using namespace std;
 
 RCMessage::RCMessage()
 {
-	players = new MPlayer[MAX_PLAYERS];
-	memset(players, 0, sizeof( MPlayer ) * MAX_PLAYERS );
+
 }
 
 RCMessage::~RCMessage()
 {
-	delete[] players;
+
 }
 
-char* RCMessage::GetMessage(byte UCID, int MsgID)
+const char* RCMessage::GetMessage(byte UCID, int MsgID)
 {
-    for (int i=0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if (players[i].LangID == 0)
-                return (char*)("^1LangID == 0");
+	if (players[ UCID ].LangID == 0)
+		return (char*)("^1LangID == 0");
 
-            return MsgArray[players[i].LangID][MsgID];
-        }
-    }
-    return (char*)("^1User Not Found");
+	return MsgArray[ players[ UCID ].LangID ][ MsgID ].c_str();
 }
 
 
@@ -67,8 +59,9 @@ void RCMessage::readconfig(const char *Track)
 
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
-            memset(&MsgArray[ LANG_ID_RUS ][atoi(id)],0,sizeof(MsgArray[1][atoi(id)]));
-            strncpy(MsgArray[ LANG_ID_RUS ][atoi(id)], mesage,strlen(mesage));
+            //memset(&MsgArray[ LANG_ID_RUS ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_RUS ][atoi(id)]));
+            MsgArray[ LANG_ID_RUS ].erase( atoi(id) );
+            MsgArray[ LANG_ID_RUS ][ atoi(id)] = mesage;
         }
     }
     readf.close();
@@ -94,8 +87,9 @@ void RCMessage::readconfig(const char *Track)
 
             id = strtok (str,"\"");
             mesage = strtok (NULL,"\"");
-            memset(&MsgArray[ LANG_ID_ENG ][atoi(id)],0,sizeof(MsgArray[2][atoi(id)]));
-            strncpy(MsgArray[ LANG_ID_ENG ][atoi(id)], mesage,strlen(mesage));
+            //memset(&MsgArray[ LANG_ID_ENG ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_ENG ][atoi(id)]));
+            MsgArray[ LANG_ID_ENG ].erase( atoi(id) );
+            MsgArray[ LANG_ID_ENG ][ atoi(id) ] = mesage;
 
         }
     }
@@ -104,26 +98,15 @@ void RCMessage::readconfig(const char *Track)
 
 void RCMessage::insim_ncn( struct IS_NCN* packet )
 {
-    int i;
-
     if (packet->UCID == 0)
         return;
 
-    for (i=0; i<MAX_PLAYERS; i++)
-        if (players[i].UCID == 0)
-            break;
 
+    strcpy(players[ packet->UCID ].UName, packet->UName);
 
-    if (i == MAX_PLAYERS)
-        return;
-
-    strcpy(players[i].UName, packet->UName);
-    players[i].UCID = packet->UCID;
-
-    /** read file **/
 
     char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[i].UName);
+    sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[ packet->UCID ].UName);
 
 
     // Try Find New File
@@ -133,8 +116,8 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf("Can't find %s\n Create File for user",file);
-        players[i].LangID = LANG_ID_RUS;
-        save(players[i].UCID);
+        players[ packet->UCID ].LangID = LANG_ID_RUS;
+        save( packet->UCID );
     }
     else
     {
@@ -146,13 +129,10 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
             readf.getline(str,128);
             if (strlen(str) > 0)
             {
-                // Get Cash
                 if (strncmp("LangID=",str,7)==0)
                 {
-                    players[i].LangID = atoi(str+7);
+                    players[ packet->UCID ].LangID = atoi(str+7);
                 }
-                // Get Credits
-                // Get Deposits
             }
         }
         readf.close();
@@ -162,51 +142,32 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
 
 void RCMessage::insim_cnl( struct IS_CNL* packet )
 {
-    int i;
-    // Find player and set the whole player struct he was using to 0
-    for (i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            /** save file**/
-            save(players[i].UCID);
-
-            memset(&players[i],0,sizeof(struct MPlayer));
-            break;
-        }
-    }
+	save(packet->UCID);
+	players.erase( packet->UCID );
 }
 
 void RCMessage::insim_mso( struct IS_MSO* packet )
 {
-    int i;
-    char Msg[96];
-    strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
-
-    // The chat GetMessage is sent by the host, don't do anything
     if (packet->UCID == 0)
         return;
 
-    // Find the player that wrote in the chat
-    for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == packet->UCID)
-            break;
-
+    char Msg[96];
+    strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
 
 
     if (strncmp(Msg, "!save", 5) == 0 )
-        save(players[i].UCID);
+        save( packet->UCID );
 
     if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
     {
-        cout << players[i].UName << " send !lang" << endl;
+        cout << players[ packet->UCID ].UName << " send !lang" << endl;
 
         char message2[96];
         strcpy(message2,Msg);
 
         if (strlen(message2) < 8)
         {
-            send_mtc(players[i].UCID,GetMessage(players[i].UCID,2104));
+            send_mtc( packet->UCID ,GetMessage( packet->UCID ,2104));
             return;
         }
 
@@ -218,7 +179,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc(players[i].UCID,GetMessage(players[i].UCID,2105));
+            send_mtc( packet->UCID , GetMessage( packet->UCID ,2105));
             return;
         }
 
@@ -228,11 +189,11 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if (strcmp(id,"eng") == 0)
         {
-            players[i].LangID = LANG_ID_ENG;
+            players[ packet->UCID ].LangID = LANG_ID_ENG;
         }
         else if (strcmp(id,"rus") == 0)
         {
-            players[i].LangID = LANG_ID_RUS;
+            players[ packet->UCID ].LangID = LANG_ID_RUS;
         }
 
     }
@@ -241,21 +202,10 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
 void RCMessage::save (byte UCID)
 {
-    // Find player and set the whole player struct he was using to 0
+	char file[MAX_PATH];
+	sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[ UCID ].UName);
 
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-
-            char file[MAX_PATH];
-            sprintf(file,"%sdata\\RCMessages\\users\\%s.txt",RootDir,players[i].UName);
-
-            ofstream writef (file,ios::out);
-            writef << "LangID=" << players[i].LangID << endl;
-            writef.close();
-
-            break;
-        }
-    }
+	ofstream writef (file,ios::out);
+	writef << "LangID=" << players[ UCID ].LangID << endl;
+	writef.close();
 }

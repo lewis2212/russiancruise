@@ -4,197 +4,135 @@ using namespace std;
 
 RCDL::RCDL()
 {
-	players = new DLPlayer[MAX_PLAYERS];
-	memset(players, 0, sizeof( DLPlayer ) * MAX_PLAYERS );
+
 }
 
 RCDL::~RCDL()
 {
-	delete[] players;
+
 }
 
-int     RCDL::GetLVL(byte UCID)
+int RCDL::GetLVL(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            return players[i].LVL;
-        }
-    }
-    return 0;
-}
-int     RCDL::GetSkill(byte UCID)
-{
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            return players[i].Skill;
-        }
-    }
-    return 0;
+	return players[ UCID ].LVL;
 }
 
-bool    RCDL::AddSkill(byte UCID)
+int RCDL::GetSkill(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if (!Islocked(UCID))
-            {
-                players[i].Skill += 250*players[i].LVL;
+	return players[ UCID ].Skill;
+}
 
-                char Text[64];
-                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
-                float skl = (players[i].LVL*250/nextlvl)*100;
-                sprintf(Text,"^2 + ^3%2.3f%% ^7Skill",skl);
-                send_mtc(players[i].UCID,Text);
+bool RCDL::AddSkill(byte UCID)
+{
+	if ( !Islocked( UCID ) )
+	{
+		players[ UCID ].Skill += 250*players[ UCID ].LVL;
 
-                return true;
-            }
-        }
-    }
+		char Text[64];
+		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
+		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100;
+		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
+		send_mtc( UCID, Text );
+		return true;
+	}
     return false;
 }
 
-bool    RCDL::AddSkill(byte UCID, float coef)
+bool RCDL::AddSkill(byte UCID, float coef)
 {
 	if (coef < 0)
 		return false;
 
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if (!Islocked(UCID))
-            {
-                players[i].Skill += (250*players[i].LVL)*coef;
+	if ( !Islocked( UCID ) )
+	{
+		players[ UCID ].Skill += (250 * players[ UCID ].LVL ) * coef;
 
-                char Text[64];
-                float nextlvl = (pow(players[i].LVL,2)*0.5+100)*1000;
-                float skl = (players[i].LVL*250/nextlvl)*100*coef;
-                sprintf(Text,"^2 + ^3%2.3f%% ^7Skill",skl);
-                printf("^2 + ^3%2.3f%% ^7Skill",skl);
-                send_mtc(players[i].UCID,Text);
-
-                return true;
-            }
-        }
-    }
+		char Text[64];
+		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
+		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100 * coef;
+		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
+		send_mtc( UCID, Text );
+		return true;
+	}
     return false;
 }
 
-bool    RCDL::RemSkill(byte UCID)
+bool RCDL::RemSkill(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if ( !Islocked( UCID ) )
-            {
-                if (players[i].Skill < 500*players[i].LVL){
+	if ( !Islocked( UCID ) )
+	{
+		if ( players[ UCID ].Skill < 500 * players[ UCID ].LVL ){
 
-                    if( players[i].LVL > 0 ){
-						players[i].Skill = ( ( pow( players[i].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[i].LVL - players[i].Skill );
-						players[i].LVL --;
-					}
-					else
-						players[i].Skill = 0;
+			if( players[ UCID ].LVL > 0 ){
+				players[ UCID ].Skill = ( ( pow( players[ UCID ].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[ UCID ].LVL - players[ UCID ].Skill );
+				players[ UCID ].LVL --;
+			}
+			else
+				players[ UCID ].Skill = 0;
 
-                }
-                else
-                    players[i].Skill -= 500*players[i].LVL;
+		}
+		else
+			players[ UCID ].Skill -= 500 * players[ UCID ].LVL;
 
-                char Text[64];
-                float nextlvl = ( pow( players[i].LVL , 2 ) * 0.5 + 100 ) * 1000;
-                float skl = ( players[i].LVL * 500 / nextlvl ) * 100;
-                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl );
-                send_mtc(players[i].UCID,Text);
-
-                return true;
-            }
-        }
-    }
+		char Text[64];
+		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
+		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
+		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl );
+		send_mtc( UCID, Text );
+		return true;
+	}
     return false;
 }
 
-bool    RCDL::RemSkill(byte UCID, float coef)
+bool RCDL::RemSkill(byte UCID, float coef)
 {
 	if (coef < 0)
 		return false;
 
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if ( !Islocked( UCID ) )
-            {
-                if ( players[i].Skill < 500 * players[i].LVL * coef ){
+	if ( !Islocked( UCID ) )
+	{
+		if ( players[ UCID ].Skill < 500 * players[ UCID ].LVL * coef ){
 
-                    if( players[i].LVL > 0 ){
-						players[i].Skill = ( ( pow( players[i].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[i].LVL * coef - players[i].Skill );
-						players[i].LVL --;
-					}
-					else
-						players[i].Skill = 0;
-                }
-                else
-                    players[i].Skill -= 500 * players[i].LVL * coef;
+			if( players[ UCID ].LVL > 0 ){
+				players[ UCID ].Skill = ( ( pow( players[ UCID ].LVL - 1 , 2 ) * 0.5 + 100 ) * 1000 ) - ( 500 * players[ UCID ].LVL * coef - players[ UCID ].Skill );
+				players[ UCID ].LVL --;
+			}
+			else
+				players[ UCID ].Skill = 0;
+		}
+		else
+			players[ UCID ].Skill -= 500 * players[ UCID ].LVL * coef;
 
-                char Text[64];
-                float nextlvl = ( pow( players[i].LVL , 2 ) * 0.5 + 100 ) * 1000;
-                float skl = ( players[i].LVL * 500 / nextlvl ) * 100;
-                sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl * coef );
-                send_mtc(players[i].UCID,Text);
+		char Text[64];
+		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
+		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
+		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl * coef );
+		send_mtc( UCID ,Text);
 
-                return true;
-            }
-        }
-    }
+		return true;
+	}
+
     return false;
 }
 
-bool    RCDL::Lock(byte UCID)
+bool RCDL::Lock(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            players[i].Lock = 1;
-            return true;
-        }
-    }
-    return false;
+	players[ UCID ].Lock = 1;
+	return true;
 }
 
-bool    RCDL::Unlock(byte UCID)
+bool RCDL::Unlock(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            players[i].Lock = 0;
-            return true;
-        }
-    }
-    return false;
+	players[ UCID ].Lock = 0;
+	return true;
 }
 
-bool    RCDL::Islocked(byte UCID)
+bool RCDL::Islocked(byte UCID)
 {
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-            if (players[i].Lock == 1)
-                return true;
-            else
-                return false;
-        }
-    }
-    return false;
+	if (players[ UCID ].Lock == 1)
+		return true;
+	else
+		return false;
 }
 
 int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
@@ -242,24 +180,12 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
 
 void RCDL::insim_ncn( struct IS_NCN* packet )
 {
-    int i;
-
-
-
     if (packet->UCID == 0)
         return;
 
-    for (i=0; i<MAX_PLAYERS; i++)
-        if (players[i].UCID == 0)
-            break;
-
-    if (i == MAX_PLAYERS)
-        return;
-
     // Copy all the player data we need into the players[] array
-    strcpy(players[i].UName, packet->UName);
-    strcpy(players[i].PName, packet->PName);
-    players[i].UCID = packet->UCID;
+    strcpy(players[ packet->UCID ].UName, packet->UName);
+    strcpy(players[ packet->UCID ].PName, packet->PName);
 
 	char query[128];
     sprintf(query,"SELECT lvl,skill FROM dl WHERE username='%s' LIMIT 1;",packet->UName);
@@ -283,8 +209,8 @@ void RCDL::insim_ncn( struct IS_NCN* packet )
     if(mysql_num_rows( rcDLRes ) > 0)
     {
         rcDLRow = mysql_fetch_row( rcDLRes );
-        players[i].LVL = atof( rcDLRow[0] );
-        players[i].Skill = atof( rcDLRow[1] );
+        players[ packet->UCID ].LVL = atof( rcDLRow[0] );
+        players[ packet->UCID ].Skill = atof( rcDLRow[1] );
     }
     else
     {
@@ -304,8 +230,8 @@ void RCDL::insim_ncn( struct IS_NCN* packet )
             // произвести кик пользователя чтоль
         }
 
-        players[i].LVL = 0;
-        save(players[i].UCID);
+        players[ packet->UCID ].LVL = 0;
+        save( packet->UCID );
 
     }
 
@@ -314,125 +240,52 @@ void RCDL::insim_ncn( struct IS_NCN* packet )
 
 void RCDL::insim_npl( struct IS_NPL* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            players[i].PLID = packet->PLID;
-            break;
-        }
-    }
+	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 }
 
 void RCDL::insim_plp( struct IS_PLP* packet)
 {
-
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == packet->PLID)
-        {
-            players[i].PLID = 0;
-            memset(&players[i].Info,0,sizeof(CompCar));
-            break;
-        }
-    }
+	memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
+	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCDL::insim_pll( struct IS_PLL* packet )
 {
-
-
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == packet->PLID)
-        {
-            players[i].PLID = 0;
-            memset(&players[i].Info,0,sizeof(CompCar));
-            break;
-        }
-    }
+	memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
+	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCDL::insim_cnl( struct IS_CNL* packet )
 {
-    int i;
-
-
-
-    for (i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            save(players[i].UCID);
-            memset(&players[i],0,sizeof(struct DLPlayer));
-            break;
-        }
-    }
+	save( packet->UCID );
+	players.erase( packet->UCID );
 }
 
 void RCDL::insim_cpr( struct IS_CPR* packet )
 {
-    int i;
-
-
-
-    // Find player and set his PLID to 0
-    for (i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == packet->UCID)
-        {
-            strcpy(players[i].PName, packet->PName);
-            break;
-        }
-    }
+	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
 void RCDL::insim_mso( struct IS_MSO* packet )
 {
-    int i;
-
-
-
-    // The chat GetMessage is sent by the host, don't do anything
-    if (packet->UCID == 0)
-        return;
-
-    // Find the player that wrote in the chat
-    for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == packet->UCID)
-            break;
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
-        save(players[i].UCID);
+        save( packet->UCID );
 
 }
 
 void RCDL::save (byte UCID)
 {
-    // Find player and set the whole player struct he was using to 0
+	char query[128];
+	sprintf(query,"UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[ UCID ].LVL , players[ UCID ].Skill, players[ UCID ].UName);
 
-    for (int i = 0; i< MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == UCID)
-        {
-        	char query[128];
-            sprintf(query,"UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[i].LVL , players[i].Skill, players[i].UName);
+	if( mysql_ping( &rcDLDB ) != 0 )
+		printf("Bank Error: connection with MySQL server was lost\n");
 
-            if( mysql_ping( &rcDLDB ) != 0 )
-                printf("Bank Error: connection with MySQL server was lost\n");
+	if( mysql_query( &rcDLDB , query) != 0 )
+		printf("Bank Error: MySQL Query Save\n");
 
-            if( mysql_query( &rcDLDB , query) != 0 )
-                printf("Bank Error: MySQL Query Save\n");
-
-            printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
-
-            break;
-        }
-    }
+	printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
 
 }
 
@@ -469,73 +322,68 @@ void RCDL::insim_mci( struct IS_MCI* pack_mci )
 {
 
     for (int i = 0; i < pack_mci->NumC; i++)
-
     {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
+    	byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
 
-            if (pack_mci->Info[i].PLID == players[j].PLID and players[j].PLID != 0 and players[j].UCID != 0)
+		int X = pack_mci->Info[i].X/65536;
+		int Y = pack_mci->Info[i].Y/65536;
 
-            {
-                int X = pack_mci->Info[i].X/65536;
-                int Y = pack_mci->Info[i].Y/65536;
+		int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
-                int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
+		int X1 = players[ UCID ].Info.X/65536;
+		int Y1 = players[ UCID ].Info.Y/65536;
 
-                int X1 = players[j].Info.X/65536;
-                int Y1 = players[j].Info.Y/65536;
-
-                if (X1==0 and Y1==0)
-                {
-                    X1=X;
-                    Y1=Y;
-                    memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
-                }
+		if (X1==0 and Y1==0)
+		{
+			X1=X;
+			Y1=Y;
+			memcpy(&players[ UCID ].Info,&pack_mci->Info[i],sizeof(CompCar));
+		}
 
 
-                float Skill = Distance(X,Y,X1,Y1);
+		float Skill = Distance(X,Y,X1,Y1);
 
-                if ((abs((int)Skill) > 10) and (S>30))
-                {
-                    players[j].Skill += abs((int)(Skill*1.5f));
-                    memcpy(&players[j].Info,&pack_mci->Info[i],sizeof(CompCar));
-                }
+		if ((abs((int)Skill) > 10) and (S>30))
+		{
+			players[ UCID ].Skill += abs((int)(Skill*1.5f));
+			memcpy(&players[ UCID ].Info,&pack_mci->Info[i],sizeof(CompCar));
+		}
 
-                /** next lvl **/
+		/** next lvl **/
 
-                float nextlvl = (pow(players[j].LVL,2)*0.5+100)*1000;
+		float nextlvl = (pow(players[ UCID ].LVL,2)*0.5+100)*1000;
 
-                if (players[j].Skill > nextlvl)
-                {
-                    players[j].LVL ++;
-                    players[j].Skill = 0;
-                    char Msg[64];
-                    sprintf(Msg,"/msg ^5| ^8^C%s ^1Get ^3%d ^1Level",players[j].PName, players[j].LVL);
-                    if (players[j].UCID!=0) send_mst(Msg);
-                }
+		if (players[ UCID ].Skill > nextlvl)
+		{
+			players[ UCID ].LVL ++;
+			players[ UCID ].Skill = 0;
+			char Msg[64];
+			sprintf(Msg,"/msg ^5| ^8^C%s ^1Get ^3%d ^1Level",players[ UCID ].PName, players[ UCID ].LVL);
+			if( UCID !=0 )
+				send_mst(Msg);
+		}
 
-                /** buttons **/
+		/** buttons **/
 
-                if (players[j].mcicount > 10)
-                {
-                    btn_dl(&players[j]);
-                    players[j].mcicount = 0;
-                }
-                else
-                    players[j].mcicount += 1;
-            }
-        }
+		if (players[ UCID ].mcicount > 10)
+		{
+			btn_dl( UCID );
+			players[ UCID ].mcicount = 0;
+		}
+		else
+			players[ UCID ].mcicount += 1;
+
     }
 }
 
-void RCDL::btn_dl(struct DLPlayer *splayer)
+void RCDL::btn_dl( byte UCID )
 {
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
     pack.Size = sizeof(struct IS_BTN);
     pack.Type = ISP_BTN;
     pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
+    pack.UCID = UCID;
     pack.Inst = 0;
     pack.TypeIn = 0;
     pack.ClickID = 230;
@@ -545,12 +393,12 @@ void RCDL::btn_dl(struct DLPlayer *splayer)
     pack.W = 35;
     pack.H = 4;
 
-    float nextlvl = (pow(splayer->LVL,2)*0.5+100)*1000;
-    float skl = (splayer->Skill/nextlvl)*100;
-    sprintf(pack.Text,"^7^CDrive Level: ^2%d ^7Skill: ^2%4.2f%%", splayer->LVL,skl);
+    float nextlvl = ( pow( players[ UCID ].LVL, 2) * 0.5 + 100 ) * 1000;
+    float skl = ( players[ UCID ].Skill / nextlvl ) * 100;
+    sprintf( pack.Text,"^7^CDrive Level: ^2%d ^7Skill: ^2%4.2f%%", players[ UCID ].LVL,skl);
     insim->send_packet(&pack);
 
     char Text[64];
-    sprintf(Text,"^C^4| %s ^7перешел на %d уровень",splayer->PName, splayer->LVL);
+    sprintf(Text,"^C^4| %s ^7перешел на %d уровень",players[ UCID ].PName, players[ UCID ].LVL);
 
 }

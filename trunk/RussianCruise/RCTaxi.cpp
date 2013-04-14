@@ -5,6 +5,7 @@ RCTaxi::RCTaxi()
 {
     players = new TaxiPlayer[MAX_PLAYERS];
     memset(players, 0, sizeof( TaxiPlayer ) * MAX_PLAYERS );
+    memset(ClientPoints, 0, sizeof( Taxi_clients ) * MAX_POINTS );
 }
 
 RCTaxi::~RCTaxi()
@@ -392,8 +393,6 @@ void RCTaxi::accept_user2(byte UCID)
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
                 //удал€ю маршала
-
-
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
@@ -437,9 +436,6 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
         if (players[i].UCID == packet->UCID)
         {
             //удал€ю маршалов
-
-
-
             struct IS_AXM pacAXM;
             memset(&pacAXM, 0, sizeof(struct IS_AXM));
             pacAXM.Info[0].Index=255;
@@ -481,9 +477,9 @@ void RCTaxi::insim_cpr( struct IS_CPR* packet )
     }
 }
 
-byte ddd=0;
 void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 {
+	byte ddd=0;
     float Dist;
     char d[96];
 

@@ -12,8 +12,6 @@
 struct DLPlayer
 {
     struct  CompCar Info;
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
     char    UName[32];             // Username
     char    PName[32];             // Player name
     u_int   LVL;
@@ -41,7 +39,7 @@ private:
     RCMessage *msg;
 
     //struct  DLPlayer players[32];     // Array of players
-    struct  DLPlayer *players;     // Array of players
+    map<byte, DLPlayer>players;     // Array of players
 
     // функции-повторители основных фунцкий ядра
     void insim_ncn( struct IS_NCN* packet );
@@ -53,8 +51,7 @@ private:
     void insim_mso( struct IS_MSO* packet );
     void insim_con( struct IS_CON* packet );
 
-    void btn_dl(struct DLPlayer *splayer);
-    int check_pos (struct BankPlayer *splayer); //+
+    void btn_dl( byte UCID );
 
 public:
     RCDL();
