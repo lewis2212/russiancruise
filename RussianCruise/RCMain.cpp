@@ -60,7 +60,7 @@ void create_classes()
 #endif
 
 #ifdef _RC_CHEAT_H
-	antcht = new RCAntCheat();
+    antcht = new RCAntCheat();
 #endif
 
 #ifdef _RC_STREET_H
@@ -72,7 +72,7 @@ void create_classes()
 #endif
 
 #ifdef _RC_PIZZA_H
-	pizza = new RCPizza();
+    pizza = new RCPizza();
 #endif
 
 #ifdef _RC_TAXI_H
@@ -80,7 +80,7 @@ void create_classes()
 #endif
 
 #ifdef _RC_BANLIST_H
-	//banlist.init(RootDir, insim);
+    //banlist.init(RootDir, insim);
 #endif
 }
 
@@ -99,7 +99,7 @@ void init_classes()
 #endif
 
 #ifdef _RC_CHEAT_H
-	antcht->init(RootDir,insim, msg);
+    antcht->init(RootDir,insim, msg);
 #endif
 
 #ifdef _RC_STREET_H
@@ -111,7 +111,7 @@ void init_classes()
 #endif
 
 #ifdef _RC_PIZZA_H
-	pizza->init(RootDir, pizza, insim, msg, bank, nrg, dl, &taxi);
+    pizza->init(RootDir, pizza, insim, msg, bank, nrg, dl, &taxi);
 #endif
 
 #ifdef _RC_TAXI_H
@@ -119,7 +119,7 @@ void init_classes()
 #endif
 
 #ifdef _RC_BANLIST_H
-	banlist.init(RootDir, insim);
+    banlist.init(RootDir, insim);
 #endif
 }
 
@@ -874,9 +874,9 @@ void case_btc ()
             GetLocalTime(&sm);
             char log[255];
             sprintf(log,"%slogs\\shop\\shop(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-			/**
-			Пользователь кликнул по другому пользователю
-			*/
+            /**
+            Пользователь кликнул по другому пользователю
+            */
             if (pack_btc->ClickID<=32)
             {
                 ginfo->players[i].BID2 =  pack_btc->ClickID;
@@ -943,9 +943,9 @@ void case_btc ()
                     send_bfn(ginfo->players[i].UCID,j);
             }
 
-			/**
-			Включаем погоню
-			*/
+            /**
+            Включаем погоню
+            */
             if (pack_btc->ClickID==40)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -964,10 +964,10 @@ void case_btc ()
                             nrg->Lock(ginfo->players[g].UCID);
 
                             char fine_c[255];
-							sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-							ofstream readf (fine_c,ios::app);
-							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " begin pursuit to "  << ginfo->players[g].UName << endl;
-							readf.close();
+                            sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+                            ofstream readf (fine_c,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " begin pursuit to "  << ginfo->players[g].UName << endl;
+                            readf.close();
                         }
                         break;
                     }
@@ -1056,9 +1056,9 @@ void case_btc ()
                 btn_info(&ginfo->players[i],4);
             }
 
-			/**
-			Не помню. Возможно на удаление
-			*/
+            /**
+            Не помню. Возможно на удаление
+            */
             if (pack_btc->ClickID == 200)
             {
                 for (int j=0; j<5; j++)
@@ -1090,9 +1090,9 @@ void case_btt ()
     {
         if (ginfo->players[i].UCID == pack_btt->UCID)
         {
-        	/**
-        	Пользователь передает деньги
-        	*/
+            /**
+            Пользователь передает деньги
+            */
             if (pack_btt->ClickID==36)
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
@@ -1126,9 +1126,9 @@ void case_btt ()
                 }//for
             }
 
-			/**
-			Пользователь передает сообщение
-			*/
+            /**
+            Пользователь передает сообщение
+            */
             if (pack_btt->ClickID == 37)
             {
 
@@ -1426,7 +1426,7 @@ void case_mci ()
 
                 /** Zones (PitSave, shop, etc) **/
                 if(bank->InBank(ginfo->players[j].UCID))
-					ginfo->players[j].Zone = 4;
+                    ginfo->players[j].Zone = 4;
                 else    if (ginfo->players[j].Pitlane)
                     ginfo->players[j].Zone = 1;
                 else if (dl->Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y))
@@ -1507,9 +1507,9 @@ void case_mci_cop ()
                                     }
                                 }
                             } // pogonya
-							/**
-							РАДАР
-							*/
+                            /**
+                            РАДАР
+                            */
                             if (ginfo->players[j].radar ==1 )
                             {
                                 if ((Rast < 50 ) and (ginfo->players[g].cop != 1))
@@ -1539,9 +1539,9 @@ void case_mci_cop ()
                                     }
                                 }
                             }
-							/**
-							ЛЮСТРА
-							*/
+                            /**
+                            ЛЮСТРА
+                            */
                             if (ginfo->players[j].sirena ==1)
                             {
                                 if ( (Rast < 120) and (ginfo->players[g].cop != 1) )
@@ -1558,9 +1558,9 @@ void case_mci_cop ()
                                 ginfo->players[j].sirenaOnOff = 1;
 
                                 if ( ginfo->players[j].cop == 1 )
-									ginfo->players[j].sirenaSize = 90;
-								else
-									ginfo->players[j].sirenaSize = 0;
+                                    ginfo->players[j].sirenaSize = 90;
+                                else
+                                    ginfo->players[j].sirenaSize = 0;
                             }
                             else
                             {
@@ -2466,46 +2466,50 @@ void case_mso_cop ()
 
         if (bank->InBank(ginfo->players[i].UCID))
         {
-
-        int j=0;
-        for (j=0; j<MAX_FINES; j++)
-        {
-            if (ginfo->players[i].fines[j].fine_id == id_i)
+            if (ginfo->fines[id_i].cash<bank->GetCash(ginfo->players[i].UCID))
             {
-                ginfo->players[i].fines[j].fine_id = 0;
-                ginfo->players[i].fines[j].fine_date = 0;
-
-                bank->RemCash(ginfo->players[i].UCID,ginfo->fines[id_i].cash);
-
-                int cop = 0;
-                for (int k=0; k<MAX_PLAYERS; k++)
+                int j=0;
+                for (j=0; j<MAX_FINES; j++)
                 {
-                    if (ginfo->players[k].cop == 1)
+                    if (ginfo->players[i].fines[j].fine_id == id_i)
                     {
-                    	if (dl->Islocked( ginfo->players[k].UCID )){
-							dl->Unlock( ginfo->players[k].UCID );
-							dl->AddSkill(ginfo->players[k].UCID, 0.05);
-							dl->Lock( ginfo->players[k].UCID );
-                    	}
-                    	else
-							dl->AddSkill(ginfo->players[k].UCID, 0.05);
+                        ginfo->players[i].fines[j].fine_id = 0;
+                        ginfo->players[i].fines[j].fine_date = 0;
 
-                        bank->AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
-                        cop++;
+                        bank->RemCash(ginfo->players[i].UCID,ginfo->fines[id_i].cash);
+
+                        int cop = 0;
+                        for (int k=0; k<MAX_PLAYERS; k++)
+                        {
+                            if (ginfo->players[k].cop == 1)
+                            {
+                                if (dl->Islocked( ginfo->players[k].UCID ))
+                                {
+                                    dl->Unlock( ginfo->players[k].UCID );
+                                    dl->AddSkill(ginfo->players[k].UCID, 0.05);
+                                    dl->Lock( ginfo->players[k].UCID );
+                                }
+                                else
+                                    dl->AddSkill(ginfo->players[k].UCID, 0.05);
+
+                                bank->AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
+                                cop++;
+                            }
+                        }
+
+                        bank->AddToBank((ginfo->fines[id_i].cash)-((ginfo->fines[id_i].cash)*0.05)*cop);
+                        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2106));
+                        dl->RemSkill(ginfo->players[i].UCID);
+                        break;
                     }
+
+                    if (j == MAX_FINES)
+                        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2107));
                 }
-
-                bank->AddToBank((ginfo->fines[id_i].cash)-((ginfo->fines[id_i].cash)*0.05)*cop);
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2106));
-                dl->RemSkill(ginfo->players[i].UCID);
-                break;
             }
-
-            if (j == MAX_FINES)
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2107));
+            else send_mtc(ginfo->players[i].UCID,"^1| ^C^7На вашем счету недостаточно средств");
         }
-    }
-    else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
+        else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
     }
 
     if (strncmp(Msg, "!kick", 4) == 0 )
@@ -2603,35 +2607,35 @@ void case_mso_cop ()
             rCops.close();
         }
 //!ban#denis-takumi#1
-		if (strncmp(Msg, "!ban", 4) == 0 )
+        if (strncmp(Msg, "!ban", 4) == 0 )
         {
-        	cout << Msg << endl;
-        	char* com;
-        	char* user;
-        	char* timee;
+            cout << Msg << endl;
+            char* com;
+            char* user;
+            char* timee;
 
-        	com = strtok(Msg, "#");
-        	user = strtok(NULL, "#");
-        	timee = strtok(NULL, "#");
+            com = strtok(Msg, "#");
+            user = strtok(NULL, "#");
+            timee = strtok(NULL, "#");
 
-        	if( !com || !user || !timee )
-				return;
+            if( !com || !user || !timee )
+                return;
 
-			banlist.addUser( user, time(NULL) + atoi(timee)*24*3600 );
+            banlist.addUser( user, time(NULL) + atoi(timee)*24*3600 );
 
         }
 
-		if (strncmp(Msg, "!unban", 6) == 0 )
+        if (strncmp(Msg, "!unban", 6) == 0 )
         {
-        	char* com;
-        	char* user;
+            char* com;
+            char* user;
 
-        	com = strtok(Msg, "#");
-        	user = strtok(NULL, "#");
+            com = strtok(Msg, "#");
+            user = strtok(NULL, "#");
 
-        	if( !com || !user )
-				return;
-        	banlist.removeUser( user );
+            if( !com || !user )
+                return;
+            banlist.removeUser( user );
         }
 
     }
@@ -2926,8 +2930,8 @@ void case_pll ()
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2600));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2601));
 
-				if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
-					dl->RemSkill(ginfo->players[i].UCID,10);
+                if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+                    dl->RemSkill(ginfo->players[i].UCID,10);
 
                 bank->RemCash(ginfo->players[i].UCID,5000);
                 bank->AddToBank(5000);
@@ -2982,8 +2986,8 @@ void case_plp ()
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2700));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2701));
 
-				if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
-					dl->RemSkill(ginfo->players[i].UCID,10);
+                if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+                    dl->RemSkill(ginfo->players[i].UCID,10);
 
                 bank->RemCash(ginfo->players[i].UCID,5000);
                 bank->AddToBank(5000);
@@ -3466,10 +3470,10 @@ void *thread_btn (void *params)
 
                             street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
-							if ( ginfo->players[j].Pogonya == 1 )
-                            sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
+                            if ( ginfo->players[j].Pogonya == 1 )
+                                sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
                             else if ( ginfo->players[j].Pogonya == 2 )
-                            sprintf(pack.Text,"%s %s ^1^CАРЕСТОВАН",ginfo->players[j].PName,StreetInfo.Street);
+                                sprintf(pack.Text,"%s %s ^1^CАРЕСТОВАН",ginfo->players[j].PName,StreetInfo.Street);
 
                             insim->send_packet(&pack);
                             pack.T -=4;
@@ -3601,7 +3605,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     int error_ch;
 
-	insim = new CInsim();
+    insim = new CInsim();
     ginfo = new GlobalInfo();
 
     read_cfg();
@@ -3649,7 +3653,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     }
     Sleep(1000);
 
-	create_classes();
+    create_classes();
     init_classes();
 
 
@@ -3782,7 +3786,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif
 
 #ifdef _RC_BANLIST_H
-		banlist.next_packet();
+        banlist.next_packet();
 #endif
     }
 
@@ -4073,8 +4077,8 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
     switch (dwControl)
     {
     case SERVICE_CONTROL_STOP:     // остановить сервис
-    	send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-		send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
+        send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
+        send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
         // save all users
         for (int j=0; j<MAX_PLAYERS; j++)
         {
