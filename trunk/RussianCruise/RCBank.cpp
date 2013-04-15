@@ -353,6 +353,8 @@ void RCBank::insim_mso( struct IS_MSO* packet )
 
                 sprintf(Text,"^5| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %s",players[ packet->UCID ].Credit,DateCreate);
                 send_mtc( packet->UCID , Text);
+                sprintf( Text,"^5| ^7^CСумма возврата: %d ^3RUR^7.",players[ packet->UCID ].Credit * 13 / 10 );
+				send_mtc( packet->UCID , Text);
                 sprintf(Text,"^5| ^7^CВремя до снятия: ^2%3.0f ^7дней.",razn);
                 send_mtc( packet->UCID , Text);
                 return;
