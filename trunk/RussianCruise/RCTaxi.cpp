@@ -337,7 +337,7 @@ void RCTaxi::accept_user()
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
+                pacAXM.Info[0].Heading=ClientPoints[players[1].WorkPointDestinaion].Dir;
                 pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
                 pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
                 pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
@@ -470,6 +470,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 
 
 
+
                 /** player drive on dest street **/
                 if (players[j].WorkNow == 1 and players[j].WorkAccept != 0)
                 {
@@ -514,15 +515,15 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             if (!players[j].HandUp and players[j].WorkAccept == 1)
                             {
                                 //направление на авто
-                                int xx = (ClientPoints[players[j].WorkPointDestinaion].X - pack_mci->Info[i].X)/65536;
-                                int yy = (ClientPoints[players[j].WorkPointDestinaion].Y - pack_mci->Info[i].Y)/65536;
-                                int gip = sqrt(xx*xx+yy*yy);
-
-                                float c = (float)(yy)/(float)(gip)*(-xx/abs(xx));
-                                float ddd = acos(c)*180/3.14+180;
+                                float xx = (ClientPoints[players[j].WorkPointDestinaion].X - pack_mci->Info[i].X)/65536;
+                                float yy = (ClientPoints[players[j].WorkPointDestinaion].Y - pack_mci->Info[i].Y)/65536;
+                                float gip = sqrt(xx*xx+yy*yy);
+                                float ddd = acos(xx/gip)*(180/3.14);
+                                if (yy>0)ddd=360-ddd;
+                                ddd=ddd+90;
                                 if (ddd>360) ddd=ddd-360;
-                                if (ddd<0) ddd=ddd+360;
-                                ddd = ddd/360*256;
+                                //printf("%3.0f\n",ddd);
+                                ddd=(360-ddd)/360*256; //угол поворота для маршала
 
                                 players[j].HandUp=true;
 
