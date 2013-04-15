@@ -51,7 +51,6 @@ struct TaxiPlayer
     byte    Zone;
 
     /** Work **/
-    int ClientID;
     bool HandUp;
     bool instr;     //заплатка для улиц
     int spd;
@@ -151,6 +150,8 @@ private:
 
     void read_user(struct TaxiPlayer *splayer);
     void save_user(struct TaxiPlayer *splayer);
+
+    void delete_marshal(byte UCID);
 
     void btn_stress(struct TaxiPlayer *splayer);
     void btn_Dist(struct TaxiPlayer *splayer, const char* Text);

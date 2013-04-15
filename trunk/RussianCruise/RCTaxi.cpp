@@ -297,7 +297,6 @@ void RCTaxi::readconfig(const char *Track)
             ClientPoints[i].Z = atoi(strtok (NULL,", "));
             ClientPoints[i].Dir = atoi(strtok (NULL,", "));
             ClientPoints[i].StreetId = atoi(strtok (NULL,", "));
-            //printf("%d.   %d, %d, %d, %d\n",i,ClientPoints[i].X,ClientPoints[i].Y,ClientPoints[i].Dir,ClientPoints[i].StreetId);
         }
         ClientCount=i;
     }
@@ -330,21 +329,18 @@ void RCTaxi::accept_user()
 
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
-                players[i].ClientID = DestPoint; //ID клиента
                 players[i].WorkPointDestinaion = DestPoint;
                 players[i].WorkStreetDestinaion = ClientPoints[DestPoint].StreetId; //улица назначения
 
                 //рисую маршала
                 players[i].HandUp=false; //маршал стоит с опущенной рукой
-
-
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].ClientID].Dir;
-                pacAXM.Info[0].X=ClientPoints[players[i].ClientID].X/4096;
-                pacAXM.Info[0].Y=ClientPoints[players[i].ClientID].Y/4096;
-                pacAXM.Info[0].Zchar=ClientPoints[players[i].ClientID].Z;
+                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
+                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
+                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
+                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
                 pacAXM.Info[0].Flags=133;
                 pacAXM.Type=ISP_AXM;
                 pacAXM.ReqI=1;
@@ -393,21 +389,7 @@ void RCTaxi::accept_user2(byte UCID)
             if (street->CurentStreetInfo(&StreetInfo,players[i].UCID))
             {
                 //удаляю маршала
-                struct IS_AXM pacAXM;
-                memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
-                pacAXM.Info[0].Flags=135;
-                pacAXM.Type=ISP_AXM;
-                pacAXM.ReqI=1;
-                pacAXM.NumO=1;
-                pacAXM.Size=8+pacAXM.NumO*8;
-                pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                insim->send_packet(&pacAXM);
-
+                delete_marshal(players[i].UCID);
 
                 players[i].WorkPointDestinaion = DestPoint;
                 players[i].WorkStreetDestinaion = DestStreet;
@@ -436,26 +418,7 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
         if (players[i].UCID == packet->UCID)
         {
             //удаляю маршалов
-            struct IS_AXM pacAXM;
-            memset(&pacAXM, 0, sizeof(struct IS_AXM));
-            pacAXM.Info[0].Index=255;
-            pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-            pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-            pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-            pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
-            pacAXM.Info[0].Flags=133;
-            pacAXM.Type=ISP_AXM;
-            pacAXM.ReqI=1;
-            pacAXM.NumO=1;
-            pacAXM.Size=8+pacAXM.NumO*8;
-            pacAXM.PMOAction = PMO_DEL_OBJECTS;
-            insim->send_packet(&pacAXM);
-
-
-
-
-            pacAXM.Info[0].Flags=135;
-            insim->send_packet(&pacAXM);
+            delete_marshal(players[i].UCID);
 
             save_user(&players[i]);
             memset(&players[i],0,sizeof(struct TaxiPlayer));
@@ -479,7 +442,6 @@ void RCTaxi::insim_cpr( struct IS_CPR* packet )
 
 void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 {
-	byte ddd=0;
     float Dist;
     char d[96];
 
@@ -517,7 +479,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         struct streets StreetInfo;
                         memset(&StreetInfo,0,sizeof(streets));
                         street->CurentStreetInfoByNum(&StreetInfo,street->CurentStreetNum(players[j].UCID));
-                        if (Speed>StreetInfo.SpeedLimit)
+                        if (Speed>(StreetInfo.SpeedLimit+10))
                         {
                             if (players[j].spd==5) players[j].spd=0;
                             if (players[j].spd==0)
@@ -546,19 +508,20 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             send_mtc(players[j].UCID,MSG);
                         }
 
-                        if (Dist < 30)
+                        if (Dist <= 30)
                         {
                             //маршал поднимает руку
                             if (!players[j].HandUp and players[j].WorkAccept == 1)
                             {
                                 //направление на авто
-                                int xx = (ClientPoints[players[i].WorkPointDestinaion].X - pack_mci->Info[i].X)/65536;
-                                int yy = (ClientPoints[players[i].WorkPointDestinaion].Y - pack_mci->Info[i].Y)/65536;
+                                int xx = (ClientPoints[players[j].WorkPointDestinaion].X - pack_mci->Info[i].X)/65536;
+                                int yy = (ClientPoints[players[j].WorkPointDestinaion].Y - pack_mci->Info[i].Y)/65536;
                                 int gip = sqrt(xx*xx+yy*yy);
 
                                 float c = (float)(yy)/(float)(gip)*(-xx/abs(xx));
                                 float ddd = acos(c)*180/3.14+180;
-                                if (ddd>360) ddd=ddd-360;if (ddd<0) ddd=ddd+360;
+                                if (ddd>360) ddd=ddd-360;
+                                if (ddd<0) ddd=ddd+360;
                                 ddd = ddd/360*256;
 
                                 players[j].HandUp=true;
@@ -568,9 +531,9 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                                 pacAXM.Info[0].Index=255;
                                 pacAXM.Info[0].Heading=(byte)ddd;
-                                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
+                                pacAXM.Info[0].X=ClientPoints[players[j].WorkPointDestinaion].X/4096;
+                                pacAXM.Info[0].Y=ClientPoints[players[j].WorkPointDestinaion].Y/4096;
+                                pacAXM.Info[0].Zchar=ClientPoints[players[j].WorkPointDestinaion].Z;
                                 pacAXM.Info[0].Flags=133;
                                 pacAXM.Type=ISP_AXM;
                                 pacAXM.ReqI=1;
@@ -603,15 +566,13 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             if (players[j].HandUp and players[j].WorkAccept == 1)
                             {
                                 players[j].HandUp=false;
-
-
                                 struct IS_AXM pacAXM;
                                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                                 pacAXM.Info[0].Index=255;
-                                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-                                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
+                                pacAXM.Info[0].Heading=ClientPoints[players[j].WorkPointDestinaion].Dir;
+                                pacAXM.Info[0].X=ClientPoints[players[j].WorkPointDestinaion].X/4096;
+                                pacAXM.Info[0].Y=ClientPoints[players[j].WorkPointDestinaion].Y/4096;
+                                pacAXM.Info[0].Zchar=ClientPoints[players[j].WorkPointDestinaion].Z;
                                 pacAXM.Info[0].Flags=135;
                                 pacAXM.Type=ISP_AXM;
                                 pacAXM.ReqI=1;
@@ -630,15 +591,15 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             {
                                 if (players[j].InPasZone == 1)
                                 {
-                                    if (!players[j].instr) players[j].instr=true;
-                                    else
-                                    {
-                                        players[j].InPasZone = 0;
-                                        players[j].PassStress += 10;
-                                        srand ( time(NULL) );
-                                        send_mtc(players[j].UCID,Dialog_Past[rand()%DialPastCount]); // проехали мимо
-                                        players[j].instr=false;
-                                    }
+                                    //if (!players[j].instr) players[j].instr=true;
+                                    //else
+                                    //{
+                                    players[j].InPasZone = 0;
+                                    players[j].PassStress += 10;
+                                    srand ( time(NULL) );
+                                    send_mtc(players[j].UCID,Dialog_Past[rand()%DialPastCount]); // проехал мимо
+                                    //players[j].instr=false;
+                                    //}
                                 }
                             }
                         }
@@ -692,7 +653,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                         }
 
                         btn_stress(&players[j]);
-                        sprintf(d,"^7%d m.",(int)Dist);
+                        sprintf(d," ^7%d ^Cм",(int)Dist);
                         btn_Dist(&players[j],d);
 
                         if (players[j].PassStress > 800)
@@ -767,25 +728,10 @@ void RCTaxi::dead_pass(byte UCID)
         if (players[i].UCID == UCID)
         {
             //printf("%d, %d, %d",players[i].Info.X,players[i].Info.Y,players[i].Info.Direction);
-            if (abs(ClientPoints[players[i].WorkPointDestinaion].X/65536 - players[i].Info.X/65536)<50)
+            if (players[i].WorkAccept != 0 and abs(ClientPoints[players[i].WorkPointDestinaion].X/65536 - players[i].Info.X/65536)<5)
             {
                 //удаляем маршала
-
-
-                struct IS_AXM pacAXM;
-                memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
-                pacAXM.Info[0].Flags=135;
-                pacAXM.Type=ISP_AXM;
-                pacAXM.ReqI=1;
-                pacAXM.NumO=1;
-                pacAXM.Size=8+pacAXM.NumO*8;
-                pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                insim->send_packet(&pacAXM);
+                delete_marshal(players[i].UCID);
 
                 players[i].WorkAccept = 0;
                 players[i].WorkPointDestinaion = 0;
@@ -854,27 +800,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
             players[i].PassStress = 0;
 
             players[i].Work = 0;
-                //удаляю маршалов
-
-
-                struct IS_AXM pacAXM;
-                memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
-                pacAXM.Info[0].Flags=133;
-                pacAXM.Type=ISP_AXM;
-                pacAXM.ReqI=1;
-                pacAXM.NumO=1;
-                pacAXM.Size=8+pacAXM.NumO*8;
-                pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                insim->send_packet(&pacAXM);
-
-
-                pacAXM.Info[0].Flags=135;
-                insim->send_packet(&pacAXM);
+            //удаляю маршалов
+            delete_marshal(players[i].UCID);
         }
 
         if (strncmp(Message, "!workstart", strlen("!workstart")) == 0 )
@@ -913,27 +840,8 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
             players[i].StressOverCount = 0;
             players[i].PassStress = 0;
 
-                //удаляю маршалов
-
-
-                struct IS_AXM pacAXM;
-                memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
-                pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
-                pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
-                pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
-                pacAXM.Info[0].Flags=133;
-                pacAXM.Type=ISP_AXM;
-                pacAXM.ReqI=1;
-                pacAXM.NumO=1;
-                pacAXM.Size=8+pacAXM.NumO*8;
-                pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                insim->send_packet(&pacAXM);
-
-
-                pacAXM.Info[0].Flags=135;
-                insim->send_packet(&pacAXM);
+            //удаляю маршалов
+            delete_marshal(players[i].UCID);
         }
     }
 
@@ -1110,6 +1018,33 @@ void RCTaxi::read_user(struct TaxiPlayer *splayer)
         readf.close();
     }
     FindClose(fff);
+}
+
+void RCTaxi::delete_marshal(byte UCID)
+{
+    for (int i=0; i < MAX_PLAYERS; i++)
+    {
+        if (players[i].UCID == UCID)
+        {
+            struct IS_AXM pacAXM;
+            memset(&pacAXM, 0, sizeof(struct IS_AXM));
+            pacAXM.Info[0].Index=255;
+            pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
+            pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
+            pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
+            pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
+            pacAXM.Info[0].Flags=135;
+            pacAXM.Type=ISP_AXM;
+            pacAXM.ReqI=1;
+            pacAXM.NumO=1;
+            pacAXM.Size=8+pacAXM.NumO*8;
+            pacAXM.PMOAction = PMO_DEL_OBJECTS;
+            insim->send_packet(&pacAXM);
+
+            pacAXM.Info[0].Flags=135;
+            insim->send_packet(&pacAXM);
+        }
+    }
 }
 
 void RCTaxi::save_user(struct TaxiPlayer *splayer)
