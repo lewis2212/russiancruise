@@ -2678,7 +2678,7 @@ void case_npl ()
 {
     // out << "joining race or leaving pits" << endl;
     int i;
-    char Text[64];
+    char specText[64];
     struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
 
     // Find player using UCID and update his PLID
@@ -2686,8 +2686,8 @@ void case_npl ()
     {
         if (ginfo->players[i].UCID == pack_npl->UCID)
         {
+			sprintf(specText, "/spec %s", ginfo->players[i].UName);
 
-            // out << "Core.dll: find user " << ginfo->players[i].UName << endl;
             if (pack_npl->PType != 6)
             {
                 memset(&ginfo->players[i].Info,0,sizeof(CompCar));
@@ -2697,9 +2697,9 @@ void case_npl ()
 
                 if (IfCop(&ginfo->players[i]) == 1)
                 {
-                    strcpy(Text, "/spec ");
-                    strcat (Text, ginfo->players[i].UName);
+                    send_mst( specText );
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1300));
+                    return;
                 }
                 else if (IfCop(&ginfo->players[i]) == 3)
                 {
@@ -2710,9 +2710,7 @@ void case_npl ()
                     lgh->SetLight3(ginfo->players[i].UCID,true);
                 }
 
-                char Text[64];
-                strcpy(Text, "/spec ");
-                strcat (Text, ginfo->players[i].UName);
+
 
                 ginfo->players[i].PLID = pack_npl->PLID;
                 ginfo->players[i].H_TRes =  pack_npl->H_TRes;
@@ -2752,7 +2750,7 @@ void case_npl ()
                     {
                         ginfo->players[i].PLID = 0;
                         ginfo->players[i].Zone = 1;
-                        send_mst(Text);
+                        send_mst( specText );
 
                         char msg2[64];
                         sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
@@ -2776,7 +2774,7 @@ void case_npl ()
                     {
                         ginfo->players[i].PLID = 0;
                         ginfo->players[i].Zone = 1;
-                        send_mst(Text);
+                        send_mst( specText );
 
                         char Texxt[32];
                         sprintf(Texxt,"%s %d %%",msg->GetMessage(ginfo->players[i].UCID,2400),tune);
@@ -2787,11 +2785,10 @@ void case_npl ()
                 else
                 {
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2404));
-
                     help_cmds(&ginfo->players[i],2);
                     ginfo->players[i].Zone = 1;
                     ginfo->players[i].PLID = 0;
-                    send_mst(Text);
+                    send_mst( specText );
                     return;
                 }
                 break;
@@ -3316,12 +3313,10 @@ int read_cop(struct player *splayer)
     {
         char str[32];
         readf.getline(str,32);
-        if (strlen(str) > 0)
-        {
-            if (strncmp(splayer->UName,str,strlen(splayer->UName))==0)
-            {
-                cop ++;
-            }
+        if( strlen( str ) > 0 and strcmp( splayer->UName , str ) == 0 )
+		{
+			cop ++;
+			break;
         }
     }
 
