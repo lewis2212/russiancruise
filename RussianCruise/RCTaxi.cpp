@@ -526,7 +526,6 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 
                                 players[j].HandUp=true;
 
-
                                 struct IS_AXM pacAXM;
                                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                                 pacAXM.Info[0].Index=255;
@@ -541,7 +540,6 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 pacAXM.Size=8+pacAXM.NumO*8;
                                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                                 insim->send_packet(&pacAXM);
-
 
                                 pacAXM.Info[0].Flags=135;
                                 pacAXM.PMOAction = PMO_ADD_OBJECTS;
@@ -580,7 +578,6 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                                 pacAXM.Size=8+pacAXM.NumO*8;
                                 pacAXM.PMOAction = PMO_DEL_OBJECTS;
                                 insim->send_packet(&pacAXM);
-
 
                                 pacAXM.Info[0].Flags=133;
                                 pacAXM.PMOAction = PMO_ADD_OBJECTS;
