@@ -603,11 +603,15 @@ void RCTaxi::dead_pass(byte UCID)
 void RCTaxi::insim_mso( struct IS_MSO* packet )
 {
     int i;
-    if (packet->UCID == 0) return;
+    if (packet->UCID == 0)
+		return;
+
     char Message[96];
     strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
 
-    if (strncmp(Message, "!save", strlen("!save")) == 0) save_user( packet->UCID );
+    if (strncmp(Message, "!save", strlen("!save")) == 0){
+		save_user( packet->UCID );
+    }
 
     if (players[ packet->UCID ].InZone == 1)
     {
@@ -968,6 +972,8 @@ void RCTaxi::btn_Dist( byte UCID , const char* Text)
 
 bool RCTaxi::IfWork (byte UCID)
 {
-	if (players[ UCID ].Work != 0) return true;
+	if (players[ UCID ].Work != 0)
+		return true;
+
     return false;
 }
