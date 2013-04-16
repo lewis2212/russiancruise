@@ -71,8 +71,8 @@ class RCPizza:public RCBaseClass
 {
 private:
 
-    u_int   Capital;
-    int     NumCars;
+    u_int   Capital = 0;
+    int     NumCars = 0;
 
     char RootDir[MAX_PATH];
 
@@ -81,17 +81,15 @@ public:
     RCPizza();
     ~RCPizza();
 
-    bool    ShopAccepted;
-    int     CarsInWork;
+    bool    ShopAccepted = false;
+    int     CarsInWork = 0;
     //int     Next;
 
-    int NumP;
+    int NumP = 0;
     int ginfo_time;
     struct Store PStore;
     struct  pizza_info TrackInf;
 
-    char errmsg[64];
-    //CInsim      *insim;
     RCMessage   *msg;
     RCBank      *bank;
     RCEnergy    *nrg;
@@ -104,8 +102,8 @@ public:
     //struct  PizzaPlayer players[32];     // Array of players
     struct  PizzaPlayer *players;
     // Основные функции класса
-    int init(const char *dir,void *classname,void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void *Taxi);    // classname - указатель на класс RCPizza. Нужно для доступа к классу внутри потока
-    // Эта штука нужна для того чтобы отдельно запущенный поток имел доступ к классу RCPizza
+    int init(const char *dir, void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic);
+
     void readconfig(const char *Track);
     void deal(struct PizzaPlayer *splayer);
     void undeal(struct PizzaPlayer *splayer,const char *Reason);

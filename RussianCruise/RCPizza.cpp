@@ -175,7 +175,7 @@ RCPizza::~RCPizza()
 	delete[] players;
 }
 
-int RCPizza::init(const char *dir,void *classname,void *CInSim, void *GetMessage,void *Bank,void *Energy,void *DrLic, void *Taxi)
+int RCPizza::init( const char *dir, void *CInSim, void *GetMessage, void *Bank, void *Energy, void *DrLic)
 {
     strcpy(RootDir,dir);
 
@@ -702,7 +702,7 @@ void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
                     {
                         done(&players[j]);
                         bank->RemCash(players[PLN-100].UCID,800);
-                        nrg->players[PLN-100].Energy += 8000;
+                        nrg->AddEnergy( players[PLN-100].UCID, 8000);
                         send_mtc(players[PLN-100].UCID,msg->GetMessage(players[PLN-100].UCID,1604));
                         players[PLN-100].Pizza = 0;
                     }

@@ -236,6 +236,8 @@ void RCDL::insim_ncn( struct IS_NCN* packet )
     }
 
     mysql_free_result( rcDLRes );
+
+    btn_dl( packet->UCID );
 }
 
 void RCDL::insim_npl( struct IS_NPL* packet )

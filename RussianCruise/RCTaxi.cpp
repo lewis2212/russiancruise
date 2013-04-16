@@ -11,7 +11,7 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza)
+int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
     insim = (CInsim *)CInSim; // Присваиваем указателю область памяти

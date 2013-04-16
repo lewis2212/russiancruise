@@ -219,6 +219,8 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
     }
     /** credit **/
 
+    BtnCash( packet->UCID );
+
     return ;
 }
 

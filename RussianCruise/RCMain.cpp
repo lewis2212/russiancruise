@@ -111,11 +111,11 @@ void init_classes()
 #endif
 
 #ifdef _RC_PIZZA_H
-    pizza->init(RootDir, pizza, insim, msg, bank, nrg, dl, &taxi);
+    pizza->init(RootDir, insim, msg, bank, nrg, dl);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi->init(RootDir, insim, msg, bank, dl, street, pizza);
+    taxi->init(RootDir, insim, msg, bank, dl, street);
 #endif
 
 #ifdef _RC_BANLIST_H
