@@ -664,6 +664,11 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
                 send_mtc( packet->UCID ,"^6| ^C^7Голову мне не морочь, ты и так уже на вахте.");
                 return;
             }
+			if (!players[ packet->UCID ].CanWork)
+			{
+				send_mtc( packet->UCID ,"^6| ^C^7Ты не можешь работать на этой машине.");
+                return;
+			}
             players[ packet->UCID ].AcceptTime = time(NULL) + PASSANGER_INTERVAL/(NumP+1);
             players[ packet->UCID ].WorkNow = 1;
             send_mtc( packet->UCID ,"^6| ^C^7Все, иди работать.");
@@ -744,6 +749,35 @@ void RCTaxi::insim_ncn( struct IS_NCN* packet )
 void RCTaxi::insim_npl( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
+	strcpy(players[packet->UCID].CName ,packet->CName);
+
+	if (
+		strcmp(players[packet->UCID].CName,"MRT") == 0 or
+		strcmp(players[packet->UCID].CName,"UFR") == 0 or
+		strcmp(players[packet->UCID].CName,"XFR") == 0 or
+		//strcmp(players[packet->UCID].CName,"FXR") == 0 or
+		strcmp(players[packet->UCID].CName,"XRR") == 0 or
+		strcmp(players[packet->UCID].CName,"FZR") == 0 or
+		strcmp(players[packet->UCID].CName,"FBM") == 0 or
+		strcmp(players[packet->UCID].CName,"FOX") == 0 or
+		strcmp(players[packet->UCID].CName,"FO8") == 0 or
+		strcmp(players[packet->UCID].CName,"BF1") == 0
+		)
+		players[ packet->UCID ].CanWork=false;
+		else
+		players[ packet->UCID ].CanWork=true;
+
+	if (players[ packet->UCID ].WorkNow != 0 and !players[ packet->UCID ].CanWork)
+	{
+		send_mtc( packet->UCID ,"^6| ^C^7Ты не можешь работать на этой машине.");
+		players[ packet->UCID ].WorkNow = 0;
+		players[ packet->UCID ].WorkAccept = 0;
+		players[ packet->UCID ].WorkPointDestinaion = 0;
+		players[ packet->UCID ].WorkStreetDestinaion = 0;
+		players[ packet->UCID ].StressOverCount = 0;
+		players[ packet->UCID ].PassStress = 0;
+		delete_marshal(packet->UCID);
+	}
 }
 
 void RCTaxi::insim_plp( struct IS_PLP* packet)
