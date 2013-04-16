@@ -2507,7 +2507,7 @@ void case_mso_cop ()
                         send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2107));
                 }
             }
-            else send_mtc(ginfo->players[i].UCID,"^1| ^C^7На вашем счету недостаточно средств");
+            else send_mtc(ginfo->players[i].UCID,"^1| ^C^7На вашем счете недостаточно средств для оплаты штрафа");
         }
         else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
     }
