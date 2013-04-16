@@ -140,6 +140,7 @@ void RCTaxi::readconfig(const char *Track)
     readf.close();
 
     sprintf(file,"%sdata\\RCTaxi\\dialog.txt",RootDir);
+	TaxiDialogs.empty();
 
     HANDLE ff;
     // WIN32_FIND_DATA fd;
@@ -155,113 +156,19 @@ void RCTaxi::readconfig(const char *Track)
 
     while (read.good())
     {
-        char str[128];
-        read.getline(str,128);
+        char key[128];
+        char message[128];
+        read.getline(key,128);
 
-        if (strncmp(str,"#con",5)==0)
+        if (strncmp(key,"#",1) == 0 )
         {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialContCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Cont[i],str);
-            }
-        }
-
-        if (strncmp(str,"#obh",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialObhCount = count;
-
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                memset(&Dialog_Obh[i],0,128);
-                strcpy(Dialog_Obh[i],str);
-            }
-        }
-
-        if (strncmp(str,"#dist",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialDistCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Dist[i],str);
-            }
-        }
-
-        if (strncmp(str,"#done",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialDoneCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Done[i],str);
-            }
-        }
-
-        if (strncmp(str,"#past",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialPastCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Past[i],str);
-            }
-        }
-
-        if (strncmp(str,"#needstop",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialStopCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Stop[i],str);
-            }
-        }
-
-        if (strncmp(str,"#exit",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialExitCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Exit[i],str);
-            }
-        }
-
-        if (strncmp(str,"#speed",5)==0)
-        {
-            read.getline(str,128);
-            int count = atoi(str);
-            DialSpeedCount = count;
-
-            for (int i=0 ; i<count; i++)
-            {
-                read.getline(str,128);
-                strcpy(Dialog_Speed[i],str);
-            }
+        	int i = 0;
+        	read.getline(message,128);
+        	while( strncmp(message,"=",1) != 0 )
+			{
+				TaxiDialogs[key+1][i++] = message;
+				read.getline(message,128);
+			}
         }
     }
     read.close();
@@ -307,7 +214,7 @@ void RCTaxi::accept_user( byte UCID )
 	{
 
 		if ( players[ UCID ].AcceptTime >= time(&acctime) ){
-			return;
+			//return;
 		}
 
 		int DestPoint = 0;
@@ -457,7 +364,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 					if (players[ UCID ].spd==5) players[ UCID ].spd=0;
 					if (players[ UCID ].spd==0)
 					{
-						send_mtc( UCID ,Dialog_Speed[rand()%DialSpeedCount]); // превышаешь скорость
+						send_mtc( UCID ,  TaxiDialogs["speed"][ rand()%TaxiDialogs["speed"].size() ].c_str() ); // превышаешь скорость
 					}
 					players[ UCID ].spd++;
 					players[ UCID ].PassStress += 10;
@@ -525,7 +432,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 						{
 							players[ UCID ].InPasZone = 1;
 							srand ( time(NULL) );
-							send_mtc( UCID ,Dialog_Dist[rand()%DialDistCount]); // приехали
+							send_mtc( UCID ,  TaxiDialogs["dist"][ rand()%TaxiDialogs["dist"].size() ].c_str() ); // приехали
 						}
 					}
 
@@ -565,7 +472,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 							players[ UCID ].InPasZone = 0;
 							players[ UCID ].PassStress += 10;
 							srand ( time(NULL) );
-							send_mtc( UCID ,Dialog_Past[rand()%DialPastCount]); // проехал мимо
+							send_mtc( UCID ,  TaxiDialogs["past"][ rand()%TaxiDialogs["past"].size() ].c_str() ); // проехал мимо
 						}
 					}
 				}
@@ -627,7 +534,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 					if (players[ UCID ].StressOverCount == 0)
 					{
 						srand ( time(NULL) );
-						send_mtc( UCID ,Dialog_Stop[rand()%DialStopCount]); // пугаецца, требует остановить
+						send_mtc( UCID ,  TaxiDialogs["needstop"][ rand()%TaxiDialogs["needstop"].size() ].c_str() ); // пугаецца, требует остановить
 					}
 
 					players[ UCID ].StressOverCount ++;
@@ -767,7 +674,7 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
                 send_mtc( packet->UCID ,"^6| ^C^7√олову мне не морочь, ты и так уже на вахте.");
                 return;
             }
-            players[ packet->UCID ].AcceptTime = time(NULL) + 2400/(NumP+1);
+            players[ packet->UCID ].AcceptTime = time(NULL) + PASSANGER_INTERVAL/(NumP+1);
             players[ packet->UCID ].WorkNow = 1;
             send_mtc( packet->UCID ,"^6| ^C^7¬се, иди работать.");
         }
@@ -879,7 +786,6 @@ void RCTaxi::insim_ncn( struct IS_NCN* packet )
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
-    players[i].AcceptTime = time(&acctime) + 60;
 
     read_user( packet->UCID );
     NumP ++;
@@ -994,7 +900,7 @@ void RCTaxi::taxi_done( byte UCID )
     {
         players[ UCID ].PassCount++;
         srand ( time(NULL) );
-        send_mtc( UCID ,Dialog_Done[rand()%DialDoneCount]); // send random dialog phrase
+        send_mtc( UCID , TaxiDialogs["done"][ rand()%TaxiDialogs["done"].size() ].c_str() ); // send random dialog phrase
 
         bank->AddCash( UCID ,(1000 - players[ UCID ].PassStress/2), true);
         dl->AddSkill( UCID );
@@ -1003,10 +909,10 @@ void RCTaxi::taxi_done( byte UCID )
     else
     {
         srand ( time(NULL) );
-        send_mtc( UCID ,Dialog_Exit[rand()%DialExitCount]); // send random dialog phrase
+        send_mtc( UCID , TaxiDialogs["exit"][ rand()%TaxiDialogs["exit"].size() ].c_str() ); // send random dialog phrase
     }
 
-	players[ UCID ].AcceptTime += 2400/(NumP+1);
+	players[ UCID ].AcceptTime = time(NULL) + PASSANGER_INTERVAL/(NumP+1);
     players[ UCID ].WorkAccept = 0;
     players[ UCID ].WorkPointDestinaion = 0;
     players[ UCID ].WorkStreetDestinaion = 0;
@@ -1026,7 +932,7 @@ void RCTaxi::insim_con( struct IS_CON* packet )
 		players[ UCIDA ].PassStress += 10 * packet->SpClose;
 
 		srand ( time(NULL) );
-		send_mtc( UCIDA,Dialog_Cont[rand()%DialContCount]); // send random dialog phrase
+		send_mtc( UCIDA, TaxiDialogs["con"][ rand()%TaxiDialogs["con"].size() ].c_str() ); // send random dialog phrase
 	}
 
 	if (players[ UCIDB ].WorkAccept == 2)
@@ -1034,7 +940,7 @@ void RCTaxi::insim_con( struct IS_CON* packet )
 		players[ UCIDB ].PassStress += 10 * packet->SpClose;
 
 		srand ( time(NULL) );
-		send_mtc( UCIDB ,Dialog_Cont[rand()%DialContCount]); // send random dialog phrase
+		send_mtc( UCIDB ,  TaxiDialogs["con"][ rand()%TaxiDialogs["con"].size() ].c_str() ); // send random dialog phrase
 	}
 
 }
@@ -1055,7 +961,7 @@ void RCTaxi::insim_obh( struct IS_OBH* packet )
 		{
 			players[ UCID ].PassStress +=  packet->SpClose;
 			srand ( time(NULL) );
-			send_mtc( UCID ,Dialog_Obh[rand()%DialObhCount]); // send random dialog phrase
+			send_mtc( UCID ,  TaxiDialogs["obh"][ rand()%TaxiDialogs["obh"].size() ].c_str() ); // send random dialog phrase
 		}
 		else players[ UCID ].PassStress +=  packet->SpClose/10;
 	}

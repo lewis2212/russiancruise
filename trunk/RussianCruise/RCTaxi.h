@@ -12,6 +12,7 @@
 #include "tools.h"      // Check_Pos  etc.
 
 #define MAX_POINTS 2048
+#define PASSANGER_INTERVAL 1200
 
 struct Taxi_info
 {
@@ -83,38 +84,10 @@ private:
     time_t  acctime;
     int     NumP = 0;
 
-    int		DialContCount;
-    char 	Dialog_Cont[11][128];
-
-    int		DialObhCount;
-    char 	Dialog_Obh[11][128];
-
-    int		DialDistCount;
-    char 	Dialog_Dist[11][128];
-
-    int		DialDoneCount;
-    char 	Dialog_Done[11][128];
-
-    int		DialPastCount;
-    char 	Dialog_Past[11][128];
-
-    int		DialStopCount;
-    char 	Dialog_Stop[11][128];
-
-    int		DialExitCount;
-    char 	Dialog_Exit[11][128];
-
-    int		DialSpeedCount;
-    char 	Dialog_Speed[11][128];
-
-    map<string, map<int,string> >TaxiDialogs;
-
-
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
     RCStreet    *street;
-
 
     struct  Taxi_info TrackInf;
     int PointCount;
@@ -128,9 +101,9 @@ private:
     bool    StartPointsAdd;
 
     struct  place zone;
+
+    map<string, map<int,string> >TaxiDialogs;
     map<byte, TaxiPlayer>players;     // Структура игроков
-
-
 
     void accept_user( byte UCID );
     void accept_user2( byte UCID );
