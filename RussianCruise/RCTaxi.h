@@ -1,4 +1,4 @@
-#ifndef _RC_TAXI_H // РџСЂРѕРІРµСЂРєР°, С‡С‚РѕР±С‹ С„Р°Р№Р» РїРѕРґРєР»СЋС‡Р°Р»СЃСЏ РѕРґРёРЅ СЂР°Р·
+#ifndef _RC_TAXI_H // Проверка, чтобы файл подключался один раз
 #define _RC_TAXI_H
 
 #include "RCBaseClass.h"
@@ -38,29 +38,27 @@ struct Taxi_clients
 };
 
 
-// Р—Р°РґР°РµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ РёРіСЂРѕРєР°
+// Задаем структуру игрока
 
 struct TaxiPlayer
 {
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
     byte    Zone;
 
     /** Work **/
     bool HandUp;
-    bool instr;     //Р·Р°РїР»Р°С‚РєР° РґР»СЏ СѓР»РёС†
+    bool instr;     //заплатка для улиц
     int spd;
 
-
+	int		AcceptTime;
     char    WorkDest[96];           // destination text
-    byte    WorkAccept;			    // 0 = РЅРµ Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№ , 1 = Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№
+    byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkStreetDestinaion;
-    int     WorkPointDestinaion;     // РќРѕРјРµСЂ С‚РѕС‡РєРё С‚СЂР°СЃСЃС‹, РєСѓРґР° РЅР°РґРѕ РґРѕСЃС‚Р°РІРёС‚СЊ
-    int     WorkTime;			    // Р’СЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РѕРЅ РґРѕР»Р¶РµРЅ РґРѕСЃС‚Р°РІРёС‚СЊ С‚РѕРІР°СЂ
+    int     WorkPointDestinaion;     // Номер точки трассы, куда надо доставить
+    int     WorkTime;			    // Время за которое он должен доставить товар
 
     byte    InZone;
     bool    OnStreet;
@@ -77,14 +75,13 @@ struct TaxiPlayer
 
 
 
-// РћРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР° РўР°РєСЃРё
+// Описание класса Такси
 class RCTaxi: public RCBaseClass
 {
 private:
-    // РџРµСЂРµРјРµРЅРЅС‹Рµ Рё С„СѓРЅРєС†РёРё, РґРѕСЃС‚СѓРїРЅС‹Рµ С‚РѕР»СЊРєРѕ СЃР°РјРѕРјСѓ РєР»Р°СЃСЃСѓ
+    // Переменные и функции, доступные только самому классу
     time_t  acctime;
-    int     accept_time;
-    int     NumP;
+    int     NumP = 0;
 
     int		DialContCount;
     char 	Dialog_Cont[11][128];
@@ -110,9 +107,11 @@ private:
     int		DialSpeedCount;
     char 	Dialog_Speed[11][128];
 
+    map<string, map<int,string> >TaxiDialogs;
 
-    RCMessage   *msg;   // РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCMessage
-    RCBank      *bank;  // РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCBank
+
+    RCMessage   *msg;   // Переменная-указатель на класс RCMessage
+    RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
     RCStreet    *street;
 
@@ -122,55 +121,55 @@ private:
     int ClientCount;
 
 
-    struct  Taxi_points *Points; // Р Р°Р±РѕС‡Р°СЏ СЃС‚СЂРѕС‡РєР°
-    struct  Taxi_points PointsAdd[2048]; //Р”Р»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ С‚РѕС‡РµРє
+    struct  Taxi_points *Points; // Рабочая строчка
+    struct  Taxi_points PointsAdd[2048]; //Для добавления точек
 
     struct  Taxi_clients ClientPoints[ MAX_POINTS ];
     bool    StartPointsAdd;
 
     struct  place zone;
-    struct  TaxiPlayer *players;     // РЎС‚СЂСѓРєС‚СѓСЂР° РёРіСЂРѕРєРѕРІ
+    map<byte, TaxiPlayer>players;     // Структура игроков
 
 
 
-    void accept_user();
-    void accept_user2(byte UCID);
-    void taxi_done(TaxiPlayer *splayer);
+    void accept_user( byte UCID );
+    void accept_user2( byte UCID );
+    void taxi_done( byte UCID );
 
-    void insim_ncn( struct IS_NCN* packet );   // РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-    void insim_npl( struct IS_NPL* packet );   // РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-    void insim_plp( struct IS_PLP* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-    void insim_pll( struct IS_PLL* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-    void insim_cnl( struct IS_CNL* packet );   // РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-    void insim_cpr( struct IS_CPR* packet );   // РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-    void insim_mso( struct IS_MSO* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
-    void insim_con( struct IS_CON* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
-    void insim_obh( struct IS_OBH* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+    void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void insim_plp( struct IS_PLP* packet );   // Игрок ушел в боксы
+    void insim_pll( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void insim_cnl( struct IS_CNL* packet );   // Игрок ушел с сервера
+    void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
+    void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
+    void insim_con( struct IS_CON* packet );   // Игрок отправил сообщение
+    void insim_obh( struct IS_OBH* packet );   // Игрок отправил сообщение
     //void insim_axm( struct IS_AXM* packet );
 
-    void read_user(struct TaxiPlayer *splayer);
-    void save_user(struct TaxiPlayer *splayer);
+    void read_user( byte UCID );
+    void save_user( byte UCID );
 
-    void delete_marshal(byte UCID);
+    void delete_marshal( byte UCID );
 
-    void btn_stress(struct TaxiPlayer *splayer);
-    void btn_Dist(struct TaxiPlayer *splayer, const char* Text);
+    void btn_stress( byte UCID );
+    void btn_Dist( byte UCID , const char* Text);
 
 public:
 
-    RCTaxi();   // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
-    ~RCTaxi();  // Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
+    RCTaxi();   // Конструктор класса (обязательно)
+    ~RCTaxi();  // Деструктор класса (обязательно)
 
 
-    // РћСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РєР»Р°СЃСЃР°
+    // Основные функции класса
     int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
     byte inited;
 
     void dead_pass(byte UCID);
-    void readconfig(const char *Track); // Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ С‚РѕС‡РєР°С… "РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ"
+    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
 
-    void insim_mci( struct IS_MCI* packet );   // РџР°РєРµС‚ СЃ РґР°РЅРЅС‹РјРё Рѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… Рё С‚.Рґ.
+    void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
 
 

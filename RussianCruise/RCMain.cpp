@@ -2189,7 +2189,7 @@ void case_mso ()
     }
 
     //!EXIT
-    if (strncmp(Msg, "!exit", 5) == 0 and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
+    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
     {
         send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
         send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
@@ -2690,7 +2690,7 @@ void case_npl ()
 
             if (pack_npl->PType != 6)
             {
-                memset(&ginfo->players[i].Info,0,sizeof(CompCar));
+                msg->send_bfn_all( ginfo->players[i].UCID );
 
                 ginfo->players[i].cop = 0;
                 ginfo->players[i].Pitlane = 1;
@@ -2912,6 +2912,7 @@ void case_pll ()
     {
         if (ginfo->players[i].PLID == pack_pll->PLID)
         {
+        	msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
             ginfo->players[i].Penalty =0;
@@ -2964,10 +2965,9 @@ void case_plp ()
     {
         if (ginfo->players[i].PLID == pack_plp->PLID)
         {
+        	msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
-            ginfo->players[i].Info.X = 0;
-            ginfo->players[i].Info.Y = 0;
-            ginfo->players[i].Info.Z = 0;
+            memset(&ginfo->players[i].Info,0,sizeof(CompCar));
             ginfo->players[i].Penalty =0;
 
 

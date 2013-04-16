@@ -249,6 +249,17 @@ void RCBaseClass::send_bfn (byte UCID, byte ClickID)
     insim->send_packet(&pack);
 }
 
+void RCBaseClass::send_bfn_all ( byte UCID )
+{
+    struct IS_BFN pack;
+    memset(&pack, 0, sizeof(struct IS_BFN));
+    pack.Size = sizeof(struct IS_BFN);
+    pack.Type = ISP_BFN;
+    pack.UCID = UCID;
+    pack.SubT = BFN_CLEAR;
+    insim->send_packet(&pack);
+}
+
 void RCBaseClass::btn_information(byte UCID, const char* Message)
 {
     struct IS_BTN pack;

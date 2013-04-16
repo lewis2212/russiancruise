@@ -27,6 +27,7 @@ public:
     void        insim_mci( struct IS_MCI* packet );     // ѕакет с данными о координатах и т.д.
 
     virtual void send_bfn(byte UCID, byte ClickID);
+    virtual void send_bfn_all ( byte UCID );
     virtual void send_mst (const char* Text);
     virtual void send_mtc (byte UCID,const char* Msg);
     virtual void btn_information(byte UCID, const char* Message);
