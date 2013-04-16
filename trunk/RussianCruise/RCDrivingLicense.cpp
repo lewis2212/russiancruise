@@ -358,7 +358,7 @@ void RCDL::insim_mci( struct IS_MCI* pack_mci )
 			players[ UCID ].LVL ++;
 			players[ UCID ].Skill = 0;
 			char Msg[64];
-			sprintf(Msg,"/msg ^5| ^8^C%s ^1Get ^3%d ^1Level",players[ UCID ].PName, players[ UCID ].LVL);
+			sprintf(Msg,"/msg ^5| ^8^C%s ^1get ^3%d ^1lvl",players[ UCID ].PName, players[ UCID ].LVL);
 			if( UCID !=0 )
 				send_mst(Msg);
 		}

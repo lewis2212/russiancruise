@@ -333,11 +333,11 @@ void RCTaxi::accept_user()
                 players[i].WorkStreetDestinaion = ClientPoints[DestPoint].StreetId; //улица назначения
 
                 //рисую маршала
-                players[i].HandUp=false; //маршал стоит с опущенной рукой
+                players[i].HandUp=false;
                 struct IS_AXM pacAXM;
                 memset(&pacAXM, 0, sizeof(struct IS_AXM));
                 pacAXM.Info[0].Index=255;
-                pacAXM.Info[0].Heading=ClientPoints[players[1].WorkPointDestinaion].Dir;
+                pacAXM.Info[0].Heading=ClientPoints[players[i].WorkPointDestinaion].Dir;
                 pacAXM.Info[0].X=ClientPoints[players[i].WorkPointDestinaion].X/4096;
                 pacAXM.Info[0].Y=ClientPoints[players[i].WorkPointDestinaion].Y/4096;
                 pacAXM.Info[0].Zchar=ClientPoints[players[i].WorkPointDestinaion].Z;
@@ -551,6 +551,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
                             {
                                 if (players[j].InPasZone != 1)
                                 {
+                                	players[j].instr=true;
                                     players[j].InPasZone = 1;
                                     srand ( time(NULL) );
                                     send_mtc(players[j].UCID,Dialog_Dist[rand()%DialDistCount]); // приехали
@@ -587,17 +588,13 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 
                             if (players[j].WorkAccept == 2)
                             {
-                                if (players[j].InPasZone == 1)
+                                if (players[j].InPasZone == 1 and players[j].instr)
                                 {
-                                    //if (!players[j].instr) players[j].instr=true;
-                                    //else
-                                    //{
                                     players[j].InPasZone = 0;
                                     players[j].PassStress += 10;
                                     srand ( time(NULL) );
                                     send_mtc(players[j].UCID,Dialog_Past[rand()%DialPastCount]); // проехал мимо
-                                    //players[j].instr=false;
-                                    //}
+                                    players[j].instr=false;
                                 }
                             }
                         }
