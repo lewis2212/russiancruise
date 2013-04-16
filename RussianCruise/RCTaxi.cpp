@@ -214,7 +214,7 @@ void RCTaxi::accept_user( byte UCID )
 	{
 
 		if ( players[ UCID ].AcceptTime >= time(&acctime) ){
-			//return;
+			return;
 		}
 
 		int DestPoint = 0;
