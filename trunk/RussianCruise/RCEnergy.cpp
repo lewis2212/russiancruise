@@ -1,31 +1,6 @@
 using namespace std;
 #include "RCEnergy.h"
 
-void *nrg_thread_btn (void *energy)
-{
-	typedef map<byte, EnergyPlayer>::iterator pl_it;
-    RCEnergy *nrg = (RCEnergy *)energy; //struct our RCPizza class in thread
-
-    if(!nrg)
-    {
-        printf ("Can't start Energy thread");
-        return 0;
-    }
-
-    int ok = 1;
-
-    while (ok > 0)
-    {
-        for ( pl_it player_it = nrg->players.begin(); player_it  != nrg->players.end(); player_it ++)
-			if ( player_it->first != 0)
-                nrg->btn_energy( player_it->first );
-
-        Sleep(2000);
-    }
-    return 0;
-};
-
-
 RCEnergy::RCEnergy()
 {
 	//players = new EnergyPlayer[MAX_PLAYERS];
@@ -41,13 +16,6 @@ RCEnergy::~RCEnergy()
 int RCEnergy::init(const char *dir,void *CInSim, void *Message,void *Bank)
 {
     strcpy(RootDir,dir);
-
-    pthread_attr_init(&attr);
-    pthread_attr_setscope(&attr,PTHREAD_SCOPE_SYSTEM);
-    pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_JOINABLE);
-
-    if (pthread_create(&tid,&attr,nrg_thread_btn,this) < 0)
-        return -1;
 
     insim = (CInsim *)CInSim;
     if(!insim)
@@ -203,6 +171,8 @@ void RCEnergy::insim_ncn( struct IS_NCN* packet )
 
     mysql_free_result( rcNrgRes );
 
+    btn_energy( packet->UCID );
+
 }
 
 void RCEnergy::insim_npl( struct IS_NPL* packet )
@@ -349,6 +319,7 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 			send_mst(Text);
 		}
 
+		btn_energy( UCID );
     }
 }
 
@@ -534,4 +505,16 @@ bool RCEnergy::Islocked(byte UCID)
 		return true;
 	else
 		return false;
+}
+
+bool RCEnergy::AddEnergy( byte UCID, int Energy)
+{
+	players[ UCID ].Energy += Energy;
+	return true;
+}
+
+bool RCEnergy::RemoveEnergy( byte UCID, int Energy)
+{
+	players[ UCID ].Energy -= Energy;
+	return true;
 }

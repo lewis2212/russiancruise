@@ -135,7 +135,7 @@ public:
 
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Pizza);
+    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
     byte inited;
 
     void dead_pass(byte UCID);

@@ -40,10 +40,10 @@ private:
     // Массив полей текущей строки
     MYSQL_ROW rcNrgRow;
 
-    pthread_t tid; // Thread ID
-    pthread_attr_t attr;
     time_t nrgtime;
     struct  energy_info TrackInf;             // Where PitBox and Shop
+
+	map<byte, EnergyPlayer>players;     // Array of players
 
     char RootDir[MAX_PATH];
 
@@ -70,7 +70,7 @@ public:
     RCBank      *bank;
 
     struct  place zone;
-    map<byte, EnergyPlayer>players;     // Array of players
+
     // Основные функции класса
     int     init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
     void    readconfig(const char *Track);
@@ -86,6 +86,9 @@ public:
     bool    Lock(byte UCID);
     bool    Unlock(byte UCID);
     bool    Islocked(byte UCID);
+
+    bool	AddEnergy( byte UCID, int Energy);
+    bool	RemoveEnergy( byte UCID, int Energy);
 
 };
 
