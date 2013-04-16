@@ -46,12 +46,12 @@ struct TaxiPlayer
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    char    CName[4];              // Car Name
+    char    CName[3];              // Car Name
     byte    Zone;
 
     /** Work **/
+    bool CanWork;
     bool HandUp;
-    bool instr;     //заплатка для улиц
     int spd;
 
 	int		AcceptTime;
