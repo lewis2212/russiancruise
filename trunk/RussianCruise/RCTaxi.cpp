@@ -371,7 +371,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				sprintf(d," ^7%4.0f ^Cì",Dist);
 				btn_Dist( UCID ,d);
 
-				if (players[ UCID ].OnStreet == false)
+				if (players[ UCID ].OnStreet == false and players[ UCID ].PassStress <= 800)
 				{
 					players[ UCID ].OnStreet = true;
 					char MSG[96];
