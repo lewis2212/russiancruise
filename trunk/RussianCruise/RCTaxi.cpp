@@ -210,15 +210,13 @@ void RCTaxi::readconfig(const char *Track)
 
 void RCTaxi::accept_user( byte UCID )
 {
-	if ((players[ UCID ].Work == 1) and (players[ UCID ].WorkNow == 1) and (players[ UCID ].WorkAccept == 0))
+	if (players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].WorkAccept == 0 and players[UCID].CanWork)
 	{
 
-		if ( players[ UCID ].AcceptTime >= time(&acctime) ){
+		if ( players[ UCID ].AcceptTime >= time(&acctime) )
 			return;
-		}
 
 		int DestPoint = 0;
-
 		srand(time(NULL));
 		bool ok = true;
 		while (ok)
@@ -230,7 +228,6 @@ void RCTaxi::accept_user( byte UCID )
 
 		struct streets StreetInfo;
 		memset(&StreetInfo,0,sizeof(streets));
-
 		if (street->CurentStreetInfo(&StreetInfo, UCID ))
 		{
 			players[ UCID ].WorkPointDestinaion = DestPoint;
@@ -241,10 +238,10 @@ void RCTaxi::accept_user( byte UCID )
 			struct IS_AXM pacAXM;
 			memset(&pacAXM, 0, sizeof(struct IS_AXM));
 			pacAXM.Info[0].Index=255;
-			pacAXM.Info[0].Heading=ClientPoints[players[ UCID ].WorkPointDestinaion].Dir;
-			pacAXM.Info[0].X=ClientPoints[players[ UCID ].WorkPointDestinaion].X/4096;
-			pacAXM.Info[0].Y=ClientPoints[players[ UCID ].WorkPointDestinaion].Y/4096;
-			pacAXM.Info[0].Zchar=ClientPoints[players[ UCID ].WorkPointDestinaion].Z;
+			pacAXM.Info[0].Heading=ClientPoints[DestPoint].Dir;
+			pacAXM.Info[0].X=ClientPoints[DestPoint].X/4096;
+			pacAXM.Info[0].Y=ClientPoints[DestPoint].Y/4096;
+			pacAXM.Info[0].Zchar=ClientPoints[DestPoint].Z;
 			pacAXM.Info[0].Flags=133;
 			pacAXM.Type=ISP_AXM;
 			pacAXM.ReqI=1;
@@ -269,7 +266,6 @@ void RCTaxi::accept_user( byte UCID )
 
 void RCTaxi::accept_user2(byte UCID)
 {
-
 	srand(time(NULL)); //подготовка функции rand() к работе
 
 	int DestPoint = 0;
@@ -305,7 +301,6 @@ void RCTaxi::accept_user2(byte UCID)
 		players[ UCID ].PassStress = rand()%500;
 	}
 }
-
 
 void RCTaxi::insim_cnl( struct IS_CNL* packet )
 {
@@ -770,7 +765,7 @@ void RCTaxi::insim_npl( struct IS_NPL* packet )
 	if (players[ packet->UCID ].WorkNow != 0 and !players[ packet->UCID ].CanWork)
 	{
 		send_mtc( packet->UCID ,"^6| ^C^7Ты не можешь работать на этой машине.");
-		players[ packet->UCID ].WorkNow = 0;
+		//players[ packet->UCID ].WorkNow = 0;
 		players[ packet->UCID ].WorkAccept = 0;
 		players[ packet->UCID ].WorkPointDestinaion = 0;
 		players[ packet->UCID ].WorkStreetDestinaion = 0;
