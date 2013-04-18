@@ -121,6 +121,7 @@ void RCEnergy::insim_ncn( struct IS_NCN* packet )
     // Copy all the player data we need into the players[] array
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
+	players[  packet->UCID ].Zone = 1;
 
 	char query[128];
     sprintf(query,"SELECT energy FROM energy WHERE username='%s' LIMIT 1;",packet->UName);
@@ -128,16 +129,15 @@ void RCEnergy::insim_ncn( struct IS_NCN* packet )
     if( mysql_ping( &rcNrgDB ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
     }
 
     if( mysql_query( &rcNrgDB , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
     }
 
     rcNrgRes = mysql_store_result( &rcNrgDB );
+
     if(rcNrgRes == NULL)
         printf("Error: can't get the result description\n");
 
@@ -155,13 +155,11 @@ void RCEnergy::insim_ncn( struct IS_NCN* packet )
         if( mysql_ping( &rcNrgDB ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
-            // произвести кик пользователя чтоль
         }
 
         if( mysql_query( &rcNrgDB , query) != 0 )
         {
             printf("Error: MySQL Query\n");
-            // произвести кик пользователя чтоль
         }
 
         players[ packet->UCID ].Energy = 10000;
@@ -183,12 +181,11 @@ void RCEnergy::insim_npl( struct IS_NPL* packet )
 	{
 		send_mtc( packet->UCID, msg->GetMessage( packet->UCID, 2402 ) );
 		send_mtc( packet->UCID, msg->GetMessage( packet->UCID, 2403 ) );
-		players[ packet->UCID ].Zone = 1;
 
 		char Text[64];
 		sprintf(Text, "/spec %s", players[ packet->UCID ].UName);
 		send_mst(Text);
-
+		players[ packet->UCID ].Zone = 1;
 		return;
 	}
 	players[packet->UCID].EnergyTime = time(&nrgtime);
@@ -236,6 +233,8 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
     for (int i = 0; i < pack_mci->NumC; i++)
     {
 		byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
+		if( UCID == 0)
+			return;
 
 		int X = pack_mci->Info[i].X/65536;
 		int Y = pack_mci->Info[i].Y/65536;
@@ -272,6 +271,13 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 
 		if (Check_Pos(TrackInf.CafeCount,TrackInf.XCafe,TrackInf.YCafe,X,Y))
 			players[ UCID ].Zone = 3;
+		else if ( players[ UCID ].Energy < 10 )
+		{
+			players[ UCID ].Zone = 1;
+			char Text[64];
+			sprintf(Text, "/spec %s", players[ UCID ].UName);
+			send_mst(Text);
+		}
 		else
 			players[ UCID ].Zone = 0;
 
@@ -309,16 +315,6 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 
 		memcpy( &players[ UCID ].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
 
-		if (players[ UCID ].Energy < 10)
-		{
-
-			players[ UCID ].Zone = 1;
-
-			char Text[64];
-			sprintf(Text, "/spec %s", players[ UCID ].UName);
-			send_mst(Text);
-		}
-
 		btn_energy( UCID );
     }
 }
@@ -332,7 +328,6 @@ void RCEnergy::insim_mso( struct IS_MSO* packet )
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!coffee", 7) == 0)
     {
-        //out << players[ packet->UCID ].UName << " send !coffee" << endl;
         if (((players[ packet->UCID ].Zone == 1) and (players[ packet->UCID ].Energy < 500)) or (players[ packet->UCID ].Zone == 3))
         {
             if (bank->GetCash(packet->UCID) > 50)
@@ -340,7 +335,6 @@ void RCEnergy::insim_mso( struct IS_MSO* packet )
                 players[ packet->UCID ].Energy += 500;
                 bank->RemCash(packet->UCID,50);
                 bank->AddToBank(50);
-
             }
             else
             {
@@ -356,7 +350,6 @@ void RCEnergy::insim_mso( struct IS_MSO* packet )
     //!redbule
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!redbull", 8) == 0)
     {
-        //out << players[ packet->UCID ].UName << " send !redbull" << endl;
         if (((players[ packet->UCID ].Zone == 1) and (players[ packet->UCID ].Energy < 500)) or (players[ packet->UCID ].Zone == 3))
         {
             if (bank->GetCash(packet->UCID) > 100)

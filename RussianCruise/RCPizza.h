@@ -12,6 +12,9 @@
 
 #define PIZZA_WORK_TIME 360
 
+
+
+
 void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
 
 
@@ -27,8 +30,6 @@ struct PizzaPlayer
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
     byte    Zone;
     byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
@@ -71,17 +72,18 @@ class RCPizza:public RCBaseClass
 {
 private:
 
-    u_int   Capital = 0;
-    int     NumCars = 0;
-
     char RootDir[MAX_PATH];
 
+	RCMessage   *msg;
+    RCBank      *bank;
+    RCEnergy    *nrg;
+#ifdef _RC_LEVEL_H
+    RCDL        *dl;
+#endif
 
-public:
-    RCPizza();
-    ~RCPizza();
-
-    bool    ShopAccepted = false;
+	u_int   Capital = 0;
+    int     NumCars = 0;
+	bool    ShopAccepted = false;
     int     CarsInWork = 0;
     //int     Next;
 
@@ -89,43 +91,45 @@ public:
     int ginfo_time;
     struct Store PStore;
     struct  pizza_info TrackInf;
+	struct  place zone;
 
-    RCMessage   *msg;
-    RCBank      *bank;
-    RCEnergy    *nrg;
-#ifdef _RC_LEVEL_H
-    RCDL        *dl;
-#endif
+    map<byte,PizzaPlayer>players;
+    typedef map<byte,PizzaPlayer>::iterator player_it;
+
+	void Deal( byte UCID );
+    void Undeal( byte UCID ,const char *Reason);
+    void Take ( byte UCID );
+    void Done ( byte UCID );
+    void btn_work ( byte UCID );
 
 
-    struct  place zone;
-    //struct  PizzaPlayer players[32];     // Array of players
-    struct  PizzaPlayer *players;
+	void insim_ncn( struct IS_NCN* packet );
+    void insim_npl( struct IS_NPL* packet );
+    void insim_plp( struct IS_PLP* packet );
+    void insim_pll( struct IS_PLL* packet );
+    void insim_cnl( struct IS_CNL* packet );
+    void insim_cpr( struct IS_CPR* packet );
+    void insim_mso( struct IS_MSO* packet );
+
+     // Функции-утилиты
+    int check_pos ( byte UCID );
+
+public:
+    RCPizza();
+    ~RCPizza();
+
     // Основные функции класса
     int init(const char *dir, void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic);
 
     void readconfig(const char *Track);
-    void deal(struct PizzaPlayer *splayer);
-    void undeal(struct PizzaPlayer *splayer,const char *Reason);
-    void take (struct PizzaPlayer *splayer);
-    void done (struct PizzaPlayer *splayer);
-    void btn_work (struct PizzaPlayer *splayer);
 
-    // функции-повторители основных фунцкий ядра
 
-    void insim_ncn( struct IS_NCN* packet ); //+
-    void insim_npl( struct IS_NPL* packet ); //+
-    void insim_plp( struct IS_PLP* packet ); //+
-    void insim_pll( struct IS_PLL* packet ); //+
-    void insim_cnl( struct IS_CNL* packet ); //+
-    void insim_cpr( struct IS_CPR* packet ); //+
-    void insim_mci( struct IS_MCI* packet );
-    void insim_mso( struct IS_MSO* packet );
 
-    // Функции-утилиты
-    int check_pos (struct PizzaPlayer *splayer); //+
+	void insim_mci( struct IS_MCI* packet );
+    //+
 
     bool IfWork(byte UCID);
+    void Event();
 
 };
 
