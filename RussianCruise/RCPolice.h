@@ -3,6 +3,11 @@
 
 #include "RCBaseClass.h"
 
+#include "RCMessage.h"  // Messages
+#include "RCBank.h"     // Bank
+#include "RCDrivingLicense.h"
+#include "RCStreet.h"
+
 #define MAX_FINES 100
 
 struct fine
@@ -28,8 +33,6 @@ struct PolicePlayer
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // Player ID
 	/** COP **/
     byte    cop;
     byte    radar;
@@ -46,8 +49,14 @@ struct PolicePlayer
 class RCPolice: public RCBaseClass
 {
 private:
+
+    RCMessage   *msg;   // Переменная-указатель на класс RCMessage
+    RCBank      *bank;  // Переменная-указатель на класс RCBank
+    RCDL        *dl;
+    RCStreet    *street;
+
 	struct  fine fines[MAX_FINES];
-	struct	PolicePlayer players[MAX_PLAYERS];
+	map<byte, PolicePlayer>players;
 
 	void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
@@ -58,9 +67,23 @@ private:
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
     void insim_con( struct IS_CON* packet );   // Игрок отправил сообщение
     void insim_obh( struct IS_OBH* packet );   // Игрок отправил сообщение
+    void insim_btt( struct IS_BTT* packet );
+    void insim_pen( struct IS_PEN* packet );
+    void insim_pla( struct IS_PLA* packet );
+
+
+    void ReadUserFines( byte UCID );
+
+
 public:
 	RCPolice();
 	~RCPolice();
+
+	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
+
+	void SaveUserFines( byte UCID );
+
+	void ReadFines();
 };
 
 #endif

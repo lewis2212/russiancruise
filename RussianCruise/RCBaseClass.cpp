@@ -185,7 +185,7 @@ void    RCBaseClass::insim_mci( struct IS_MCI* packet )
     if(!insim)return;/**dont work if insim is NULL**/
 }
 
-bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
+bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],int x,int y)
 {
 
     int		i, j=polySides-1 ;

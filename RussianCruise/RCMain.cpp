@@ -46,6 +46,10 @@ RCTaxi  *taxi;
 RCBanList banlist;
 #endif
 
+#ifdef _RC_POLICE_H
+RCPolice *police;
+#endif // _RC_POLICE_H
+
 void create_classes()
 {
     msg = new RCMessage();
@@ -82,6 +86,11 @@ void create_classes()
 #ifdef _RC_BANLIST_H
     //banlist.init(RootDir, insim);
 #endif
+
+#ifdef _RC_POLICE_H
+police = new RCPolice();
+#endif // _RC_POLICE_H
+
 }
 
 void init_classes()
@@ -121,6 +130,9 @@ void init_classes()
 #ifdef _RC_BANLIST_H
     banlist.init(RootDir, insim);
 #endif
+#ifdef _RC_POLICE_H
+	police->init(RootDir, insim, msg, bank, dl, street);
+#endif // _RC_POLICE_H
 }
 
 void readconfigs()
@@ -270,24 +282,7 @@ void save_user_cars (struct player *splayer)
     }
 }
 
-void save_user_fines (struct player *splayer)
-{
-    out <<splayer->UName << " save fines_info" << endl;
 
-    char file[255];
-    sprintf(file,"%sdata\\RCPolice\\fines\\%s.txt", RootDir, splayer->UName);
-
-    ofstream writef (file,ios::out);
-    for (int i = 0; i < MAX_FINES; i++)
-    {
-        if (splayer->fines[i].fine_id > 0)
-        {
-            writef << splayer->fines[i].fine_id << ";" << splayer->fines[i].fine_date <<  endl;
-        }
-    }
-
-    writef.close();
-}
 
 void read_user_cars(struct player *splayer)
 {
@@ -352,47 +347,6 @@ void read_user_cars(struct player *splayer)
     mysql_free_result( rcMainRes );
     send_plc(splayer->UCID,splayer->PLC);
 }
-
-void read_user_fines(struct player *splayer)
-{
-    char file[255];
-    sprintf(file,"%sdata\\RCPolice\\fines\\%s.txt", RootDir, splayer->UName);
-
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        out << "Can't find " << file << endl;
-        save_user_fines(splayer);
-    }
-    else
-    {
-        ifstream readf (file,ios::in);
-        int i=0;
-        while (readf.good())
-        {
-            char str[128];
-            readf.getline(str,128);
-
-            if (strlen(str) > 0)
-            {
-                char *id;
-                char *date;
-
-                id = strtok(str,";");
-                date = strtok(NULL,";");
-
-
-                splayer->fines[i].fine_id = atoi(id);
-                splayer->fines[i].fine_date = atoi(date);
-
-                i++;
-            }
-        }
-    }
-}
-
 
 void save_car (struct player *splayer)
 {
@@ -471,34 +425,7 @@ void help_cmds (struct player *splayer,int h_type)
         }
 
     }
-    if (h_type == 3)
-    {
-        int i=0;
-        int j=0;
-        for (i=0; i<MAX_FINES; i++)
-        {
-            if (splayer->fines[i].fine_id > 0 and splayer->fines[i].fine_id < MAX_FINES )
-            {
-                char Text[64];
-                // rcMainRow[0] = username
-                // rcMainRow[1] = fine_id
-                // rcMainRow[2] = fine_date
 
-                int fine_id = splayer->fines[i].fine_id;
-                // int fine_date = atoi(rcMainRow[2));
-
-                sprintf(Text,"^2| ^7ID = %d. %.64s ^3(^2%d RUR.^3)", fine_id , ginfo->fines[fine_id].name , ginfo->fines[fine_id].cash );
-                send_mtc(splayer->UCID,Text);
-
-                j++;
-            }
-        }
-
-        if (j == 0)
-        {
-            send_mtc(splayer->UCID,msg->GetMessage(splayer->UCID,3102));;
-        }
-    }
 }
 
 
@@ -659,7 +586,7 @@ void btn_info (struct player *splayer, int b_type)
             insim->send_packet(&pack);
         }
     }
-
+/*
     if (b_type == 4)
     {
         int fineID = 0;
@@ -681,7 +608,7 @@ void btn_info (struct player *splayer, int b_type)
         }
 
     }
-
+*/
     pack.BStyle = 8;
     pack.ClickID = 149;
     pack.L = 99+126/2-8;
@@ -1152,110 +1079,7 @@ void case_btt ()
                     }
                 }//for
             }
-
-            /**
-            Пользователь выписывает штраф
-            */
-            if (pack_btt->ClickID==38)
-            {
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
-                    {
-                        if (atoi(pack_btt->Text) > 0)
-                        {
-                            out << ginfo->players[i].UName << " send fine id = " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-
-                            for (int j = 0; j < MAX_FINES; j++)
-                            {
-                                if( ginfo->fines[j].id == atoi(pack_btt->Text) )
-                                {
-                                    char Msg[64];
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1104));
-                                    send_mtc(ginfo->players[g].UCID,Msg);
-                                    strcpy(Msg,"^2| ^7");
-                                    strcat(Msg,ginfo->fines[atoi(pack_btt->Text)].name);
-                                    send_mtc(ginfo->players[g].UCID,Msg);
-
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1105));
-                                    send_mtc(ginfo->players[i].UCID,Msg);
-                                    send_mtc(ginfo->players[i].UCID,ginfo->fines[atoi(pack_btt->Text)].name);
-
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1106));
-                                    strcat(Msg,ginfo->players[g].PName);
-                                    send_mtc(ginfo->players[i].UCID,Msg);
-
-                                    for (int j=0; j<MAX_FINES; j++)
-                                    {
-                                        if (ginfo->players[g].fines[j].fine_id == 0)
-                                        {
-                                            ginfo->players[g].fines[j].fine_id = atoi(pack_btt->Text);
-                                            ginfo->players[g].fines[j].fine_date = int(time(&stime));
-                                            break;
-                                        }
-                                    }
-
-                                    ofstream readf (fine_c,ios::app);
-                                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " get fine ID = " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-                                    readf.close();
-                                }
-                            }
-                        } // if atoi(pack_btt->Text) > 0
-                        break;
-                    }
-                }//for
-            }
-
-            /**
-            Пользователь отменяет штраф
-            */
-            if (pack_btt->ClickID==39)
-            {
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
-                    {
-                        if (atoi(pack_btt->Text) > 0)
-                        {
-                            out << ginfo->players[i].UName << " cancle fine id = " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-
-                            for (int j=0; j<MAX_FINES; j++)
-                            {
-                                if (ginfo->players[g].fines[j].fine_id == atoi(pack_btt->Text))
-                                {
-                                    char Msg[64];
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1107));
-                                    send_mtc(ginfo->players[g].UCID,Msg);
-                                    strcpy(Msg,"^2| ");
-                                    strcat(Msg,ginfo->fines[atoi(pack_btt->Text)].name);
-                                    send_mtc(ginfo->players[g].UCID,Msg);
-
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1108));
-                                    send_mtc(ginfo->players[i].UCID,Msg);
-                                    send_mtc(ginfo->players[i].UCID,ginfo->fines[atoi(pack_btt->Text)].name);
-
-                                    strcpy(Msg,msg->GetMessage(ginfo->players[g].UCID,1106));
-                                    strcat(Msg,ginfo->players[g].PName);
-                                    send_mtc(ginfo->players[i].UCID,Msg);
-
-                                    ginfo->players[g].fines[j].fine_id = 0;
-                                    ginfo->players[g].fines[j].fine_date = 0;
-
-                                    ofstream readf (fine_c,ios::app);
-                                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-                                    readf.close();
-
-                                    break;
-                                }
-                            }
-
-
-                        } // if atoi(pack_btt->Text) > 0
-                        break;
-                    }
-                }//for
-            }
-        }
+		}
     }
     pthread_mutex_unlock (&RCmutex);
 }
@@ -1273,7 +1097,11 @@ void case_cnl ()
         if (ginfo->players[i].UCID == pack_cnl->UCID)
         {
             save_user_cars(&ginfo->players[i]);
-            save_user_fines(&ginfo->players[i]);
+
+            #ifdef _RC_POLICE_H
+			police->SaveUserFines( ginfo->players[i].UCID );
+            #endif // _RC_POLICE_H
+
 
             out << ginfo->players[i].UName << " left server" << endl;
             ginfo->players[i].cars2.clear();
@@ -1659,7 +1487,10 @@ void case_mso ()
         out << ginfo->players[i].UName << " send !save" << endl;
         save_car(&ginfo->players[i]);
         save_user_cars(&ginfo->players[i]);
-        save_user_fines(&ginfo->players[i]);
+
+        #ifdef _RC_POLICE_H
+		police->SaveUserFines( ginfo->players[i].UCID );
+		#endif // _RC_POLICE_H
 
         bank->bank_save(ginfo->players[i].UCID);
         send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,3000));
@@ -2200,7 +2031,10 @@ void case_mso ()
             {
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
-                save_user_fines(&ginfo->players[j]);
+#ifdef _RC_POLICE_H
+				police->SaveUserFines( ginfo->players[j].UCID );
+#endif // _RC_POLICE_H
+
                 bank->bank_save(ginfo->players[j].UCID);
 #ifdef _RC_ENERGY_H
                 nrg->energy_save(ginfo->players[j].UCID);
@@ -2444,74 +2278,6 @@ void case_mso_cop ()
         help_cmds(&ginfo->players[i],3);
     }
 
-    if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
-    {
-
-        char GetMessage2[96];
-        strcpy(GetMessage2,Msg);
-
-        char * comand;
-        char * id;
-
-        comand = strtok (GetMessage2," ");
-        id = strtok (NULL," ");
-
-        int id_i = atoi(id);
-
-        if ((!id) or (id_i < 1))
-        {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2105));
-            return;
-        }
-
-        if (bank->InBank(ginfo->players[i].UCID))
-        {
-            if (ginfo->fines[id_i].cash<bank->GetCash(ginfo->players[i].UCID))
-            {
-                int j=0;
-                for (j=0; j<MAX_FINES; j++)
-                {
-                    if (ginfo->players[i].fines[j].fine_id == id_i)
-                    {
-                        ginfo->players[i].fines[j].fine_id = 0;
-                        ginfo->players[i].fines[j].fine_date = 0;
-
-                        bank->RemCash(ginfo->players[i].UCID,ginfo->fines[id_i].cash);
-
-                        int cop = 0;
-                        for (int k=0; k<MAX_PLAYERS; k++)
-                        {
-                            if (ginfo->players[k].cop == 1)
-                            {
-                                if (dl->Islocked( ginfo->players[k].UCID ))
-                                {
-                                    dl->Unlock( ginfo->players[k].UCID );
-                                    dl->AddSkill(ginfo->players[k].UCID, 0.05);
-                                    dl->Lock( ginfo->players[k].UCID );
-                                }
-                                else
-                                    dl->AddSkill(ginfo->players[k].UCID, 0.05);
-
-                                bank->AddCash(ginfo->players[k].UCID,(ginfo->fines[id_i].cash)*0.05, true);
-                                cop++;
-                            }
-                        }
-
-                        bank->AddToBank((ginfo->fines[id_i].cash)-((ginfo->fines[id_i].cash)*0.05)*cop);
-                        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2106));
-                        dl->RemSkill(ginfo->players[i].UCID);
-                        break;
-                    }
-
-                    if (j == MAX_FINES)
-                        send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2107));
-                }
-            }
-            else send_mtc(ginfo->players[i].UCID,"^1| ^C^7На вашем счете недостаточно средств для оплаты штрафа");
-        }
-        else send_mtc(ginfo->players[i].UCID,"^1| ^C^7Вы находитесь не в банке");
-    }
-
     if (strncmp(Msg, "!kick", 4) == 0 )
     {
         char user[16];
@@ -2669,7 +2435,6 @@ void case_ncn ()
     ginfo->players[i].Zone = 1;
 
     read_user_cars(&ginfo->players[i]);
-    read_user_fines(&ginfo->players[i]);
 
     help_cmds(&ginfo->players[i],2);
 }
@@ -2811,46 +2576,9 @@ void case_pen ()
         {
             if (pack_pen->Reason == PENR_WRONG_WAY)
             {
-                for (int j=0; j<MAX_FINES; j++)
-                {
-                    if (ginfo->players[i].fines[j].fine_id == 0)
-                    {
-                        taxi->dead_pass(ginfo->players[i].UCID);
-
-                        ginfo->players[i].fines[j].fine_id = 18;
-                        ginfo->players[i].fines[j].fine_date = int(time(&stime));
-
-                        char Msg[64];
-                        strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1104));
-                        send_mtc(ginfo->players[i].UCID,Msg);
-                        strcpy(Msg,"^2| ^7");
-                        strcat(Msg,ginfo->fines[18].name);
-                        send_mtc(ginfo->players[i].UCID,Msg);
-                        break;
-                    }
-                }
+				taxi->dead_pass(ginfo->players[i].UCID);
             }
 
-            if((pack_pen->NewPen != 0) and (pack_pen->Reason == PENR_SPEEDING))
-            {
-                ginfo->players[i].Penalty = 1;
-                for (int j=0; j<MAX_FINES; j++)
-                {
-                    if (ginfo->players[i].fines[j].fine_id == 0)
-                    {
-                        ginfo->players[i].fines[j].fine_id = 13;
-                        ginfo->players[i].fines[j].fine_date = int(time(&stime));
-
-                        char Msg[64];
-                        strcpy(Msg,msg->GetMessage(ginfo->players[i].UCID,1104));
-                        send_mtc(ginfo->players[i].UCID,Msg);
-                        strcpy(Msg,"^2| ^7");
-                        strcat(Msg,ginfo->fines[13].name);
-                        send_mtc(ginfo->players[i].UCID,Msg);
-                        break;
-                    }
-                }
-            }
             break;
         }
     }
@@ -2875,20 +2603,7 @@ void case_pla ()
                     sprintf(Text, "/p_clear %s",ginfo->players[i].UName);
                     send_mst(Text);
                 }
-                int count = 0;
-                for (int j=0; j<MAX_FINES; j++)
-                {
-                    if (ginfo->players[i].fines[j].fine_id != 0)
-                        count++;
-                }
 
-                if (count > 10)
-                {
-                    char Text[64];
-                    sprintf(Text, "/pitlane %s",ginfo->players[i].UName);
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,3400));
-                    send_mst(Text);
-                }
             }
             else
             {
@@ -3019,7 +2734,9 @@ void case_rst ()
 
     read_car();
 
-    read_fines();
+#ifdef _RC_POLICE_H
+			police->ReadFines();
+#endif // _RC_POLICE_H
 
     read_track();
 
@@ -3243,54 +2960,6 @@ void read_car()
     readf.close();
 }
 
-void read_fines()
-{
-
-    char file[255];
-    strcpy(file,RootDir);
-    sprintf(file,"%smisc\\fines.txt" , RootDir);
-
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        out << "Can't find " << file << endl;
-        return;
-    }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
-
-    int i = 0;
-    while (readf.good())
-    {
-        char str[128];
-        readf.getline(str,128);
-        if (strlen(str) > 0)
-        {
-            if (strstr(str,"//"))
-                continue;
-
-            char * id;
-            char * name;
-            char * cash;
-            id = strtok (str,";");
-            name = strtok (NULL,";");
-            cash = strtok (NULL,";");
-
-            i = atoi(id);
-            memset(&ginfo->fines[i],0,sizeof(struct cars));
-            ginfo->fines[i].id = i;
-            strcpy(ginfo->fines[i].name, name);
-            ginfo->fines[i].cash = atoi(cash);
-
-        } // if strlen > 0
-    } //while readf.good()
-
-    readf.close();
-}
-
 int read_cop(struct player *splayer)
 {
     char file[255];
@@ -3499,7 +3168,9 @@ void *thread_save (void *params)
                 {
                     save_car(&ginfo->players[j]);
                     save_user_cars(&ginfo->players[j]);
-                    save_user_fines(&ginfo->players[j]);
+#ifdef _RC_POLICE_H
+					police->SaveUserFines( ginfo->players[j].UCID );
+#endif // _RC_POLICE_H
 #ifdef _RC_ENERGY_H
                     nrg->energy_save(ginfo->players[j].UCID);
 #endif
@@ -4082,7 +3753,9 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
             {
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
-                save_user_fines(&ginfo->players[j]);
+#ifdef _RC_POLICE_H
+			police->SaveUserFines( ginfo->players[j].UCID );
+#endif // _RC_POLICE_H
 #ifdef _RC_ENERGY_H
                 nrg->energy_save(ginfo->players[j].UCID);
 #endif

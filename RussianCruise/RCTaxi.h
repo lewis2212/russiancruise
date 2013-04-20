@@ -2,12 +2,11 @@
 #define _RC_TAXI_H
 
 #include "RCBaseClass.h"
+
 #include "RCMessage.h"  // Messages
 #include "RCBank.h"     // Bank
-
 #include "RCDrivingLicense.h"
 #include "RCStreet.h"
-#include "RCPizza.h"
 
 #include "tools.h"      // Check_Pos  etc.
 
