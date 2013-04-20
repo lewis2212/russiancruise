@@ -153,20 +153,7 @@ typedef struct user_car
     float     dist;
 } _user_car;
 
-#ifndef _RC_POLICE_H
-typedef struct user_fine
-{
-    int     fine_id;
-    int     fine_date;
-} _user_fine;
 
-struct fine
-{
-    int     id;
-    char    name[64];
-    int     cash;
-};
-#endif
 
 struct track_info
 {
@@ -182,7 +169,7 @@ struct player
 {
     struct CompCar Info;
     user_car cars[MAX_CARS];
-    struct user_fine fines[MAX_FINES];
+
     map <string, user_car> cars2;
 
     char    UName[24];             // Username
@@ -241,7 +228,7 @@ class GlobalInfo
     struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
     byte    Sp2;
     map < string , cars > carMap;
-    struct  fine fines[MAX_FINES];                 // Array of fines (for cops)
+
     byte    Sp3;
     /** Bad words **/
     int     WordsCount;
