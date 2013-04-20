@@ -97,7 +97,9 @@ void init_classes()
 {
     msg->init(RootDir,insim);
 
+#ifdef _RC_BANK_H
     bank->init(RootDir, insim, msg, dl);
+#endif // _RC_BANK_H
 
 #ifdef _RC_ENERGY_H
     nrg->init(RootDir, insim, msg, bank);
@@ -140,7 +142,11 @@ void readconfigs()
 #ifdef _RC_PIZZA_H
     pizza->readconfig(ginfo->Track);
 #endif
+
+
     msg->readconfig(ginfo->Track);
+
+
 #ifdef _RC_ENERGY_H
     nrg->readconfig(ginfo->Track);
 #endif
@@ -2432,11 +2438,15 @@ void case_ncn ()
     strcpy(ginfo->players[i].PName, pack_ncn->PName);
     ginfo->players[i].UCID = pack_ncn->UCID;
     ginfo->players[i].BID = i;
+    #ifdef _RC_POLICE_H
+    police->SetUserBID( ginfo->players[i].UCID, ginfo->players[i].BID );
+    #endif // _RC_POLICE_H
+
     ginfo->players[i].Zone = 1;
 
     read_user_cars(&ginfo->players[i]);
 
-    help_cmds(&ginfo->players[i],2);
+    help_cmds(&ginfo->players[i],1);
 }
 
 void case_npl ()
@@ -2458,6 +2468,7 @@ void case_npl ()
                 msg->send_bfn_all( ginfo->players[i].UCID );
 
                 ginfo->players[i].cop = 0;
+                police->CopTurnOff( ginfo->players[i].UCID );
                 ginfo->players[i].Pitlane = 1;
 
                 if (IfCop(&ginfo->players[i]) == 1)
@@ -2469,7 +2480,10 @@ void case_npl ()
                 else if (IfCop(&ginfo->players[i]) == 3)
                 {
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1301));
+
                     ginfo->players[i].cop = 1;
+                    police->CopTurnOn( ginfo->players[i].UCID );
+
                     dl->Lock(ginfo->players[i].UCID);
                     nrg->Lock(ginfo->players[i].UCID);
                     lgh->SetLight3(ginfo->players[i].UCID,true);
@@ -3069,7 +3083,6 @@ void *thread_mci (void *params)
 #endif
 
 #ifdef _RC_STREET_H
-        if (street->IfInited)
             street->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
@@ -3088,6 +3101,9 @@ void *thread_mci (void *params)
             taxi->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
+#ifdef _RC_POLICE_H
+    police->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+#endif // _RC_POLICE_H
 
     }
     return 0;
@@ -3346,7 +3362,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         }
 
         msg->next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
-        msg->next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
 
         switch (insim->peek_packet())
         {
@@ -3431,7 +3446,11 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #ifdef _RC_PIZZA_H
         pizza->next_packet();
 #endif
-        bank->next_packet();
+
+#ifdef _RC_BANK_H
+		bank->next_packet();
+#endif // _RC_BANK_H
+
 #ifdef _RC_LEVEL_H
         dl->next_packet();
 #endif
@@ -3455,6 +3474,11 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #ifdef _RC_BANLIST_H
         banlist.next_packet();
 #endif
+
+#ifdef _RC_POLICE_H
+    police->next_packet();
+#endif // _RC_POLICE_H
+
     }
 
     if (insim->isclose() < 0)
@@ -3756,10 +3780,15 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
 #ifdef _RC_POLICE_H
 			police->SaveUserFines( ginfo->players[j].UCID );
 #endif // _RC_POLICE_H
+
 #ifdef _RC_ENERGY_H
                 nrg->energy_save(ginfo->players[j].UCID);
 #endif
+
+#ifdef _RC_BANK_H
                 bank->bank_save(ginfo->players[j].UCID);
+#endif // _RC_BANK_H
+
 #ifdef _RC_LEVEL_H
                 dl->save(ginfo->players[j].UCID);
 #endif

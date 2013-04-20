@@ -53,32 +53,41 @@ int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *
 
 void RCPolice::insim_ncn( struct IS_NCN* packet )
 {
+	cout << "RCPolice ncn" << endl;
+	if( packet->UCID == 0 )
+		return;
+
+	strcpy(players[ packet->UCID ].UName, packet->UName);
+    strcpy(players[ packet->UCID ].PName, packet->PName);
+
 	ReadUserFines( packet->UCID );
 }
 
 void RCPolice::insim_npl( struct IS_NPL* packet )
 {
-
+	PLIDtoUCID[ packet->PLID ] = packet->UCID;
+	strcpy(players[packet->UCID].CName ,packet->CName);
 }
 
 void RCPolice::insim_plp( struct IS_PLP* packet )
 {
-
+	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCPolice::insim_pll( struct IS_PLL* packet )
 {
-
+	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCPolice::insim_cnl( struct IS_CNL* packet )
 {
 	SaveUserFines( packet->UCID );
+	players.erase( packet->UCID );
 }
 
 void RCPolice::insim_cpr( struct IS_CPR* packet )
 {
-
+	strcpy( players[ packet->UCID ].PName, packet->PName);
 }
 
 void RCPolice::insim_mso( struct IS_MSO* packet )
@@ -152,24 +161,24 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
 
                         bank->RemCash( packet->UCID ,fines[id_i].cash);
 
-                        int cop = 0;
-                        /*for (int k=0; k<MAX_PLAYERS; k++)
+                       int cop = 0;
+                       for ( player_it play = players.begin(); play != players.end() ; play++)
                         {
-                            if (players[k].cop == 1)
+                            if ( players[ play->first ].cop == 1)
                             {
-                                if (dl->Islocked( players[k].UCID ))
+                                if (dl->Islocked(  play->first  ))
                                 {
-                                    dl->Unlock( players[k].UCID );
-                                    dl->AddSkill(players[k].UCID, 0.05);
-                                    dl->Lock( players[k].UCID );
+                                    dl->Unlock(  play->first  );
+                                    dl->AddSkill( play->first , 0.05);
+                                    dl->Lock(  play->first  );
                                 }
                                 else
-                                    dl->AddSkill(players[k].UCID, 0.05);
+                                    dl->AddSkill( play->first , 0.05);
 
-                                bank->AddCash(players[k].UCID,(fines[id_i].cash)*0.05, true);
+                                bank->AddCash( play->first ,(fines[id_i].cash)*0.05, true);
                                 cop++;
                             }
-                        }*/
+                        }
 
                         bank->AddToBank((fines[id_i].cash)-((fines[id_i].cash)*0.05)*cop);
                         send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2106));
@@ -199,111 +208,113 @@ void RCPolice::insim_obh( struct IS_OBH* packet )
 
 }
 
+void RCPolice::insim_btc( struct IS_BTC* packet )
+{
+	if ( packet->ClickID <= 32 )
+	{
+		players[ packet->UCID ].BID2 =  packet->ClickID;
+	}
+}
+
 void RCPolice::insim_btt( struct IS_BTT* packet )
 {
+	/**
+	Пользователь выписывает штраф
+	*/
+	if ( packet->ClickID == 38 )
+	{
+		for ( player_it play = players.begin(); play != players.end() ; play++)
+		{
+			if  ( players[ packet->UCID ].BID2 == players[ play->first ].BID)
+			{
+				if (atoi(packet->Text) > 0)
+				{
+
+					for (int j = 0; j < MAX_FINES; j++)
+					{
+						if( fines[j].id == atoi(packet->Text) )
+						{
+							char Msg[64];
+							strcpy(Msg,msg->GetMessage( play->first ,1104));
+							send_mtc( play->first ,Msg);
+							strcpy(Msg,"^2| ^7");
+							strcat(Msg,fines[atoi(packet->Text)].name);
+							send_mtc( play->first ,Msg);
+
+							strcpy(Msg,msg->GetMessage( packet->UCID ,1105));
+							send_mtc( packet->UCID ,Msg);
+							send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
+
+							strcpy(Msg,msg->GetMessage( packet->UCID ,1106));
+							strcat(Msg,players[ play->first ].PName);
+							send_mtc( packet->UCID ,Msg);
+
+							for (int j=0; j<MAX_FINES; j++)
+							{
+								if (players[ play->first ].fines[j].fine_id == 0)
+								{
+									players[ play->first ].fines[j].fine_id = atoi(packet->Text);
+									players[ play->first ].fines[j].fine_date = int( time( NULL ) );
+									break;
+								}
+							}
+
+							/*ofstream readf (fine_c,ios::app);
+							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " get fine ID = " << packet->Text << " to "  << players[g].UName << endl;
+							readf.close();*/
+						}
+					}
+				} // if atoi(pack_btt->Text) > 0
+				break;
+			}
+		}//for
+	}
 
 	/**
-            Пользователь выписывает штраф
-            */
-          /*  if (packet->ClickID==38)
-            {
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  ( players[i].BID2 == players[g].BID)
-                    {
-                        if (atoi(packet->Text) > 0)
-                        {
-                            out << players[i].UName << " send fine id = " << packet->Text << " to "  << players[g].UName << endl;
+	Пользователь отменяет штраф
+	*/
+	if (packet->ClickID==39)
+	{
+		for ( player_it play = players.begin(); play != players.end() ; play++)
+		{
+			if  (players[ packet->UCID ].BID2 == players[ play->first ].BID)
+			{
+				if ( atoi( packet->Text ) > 0 )
+				{
+					for (int j=0; j<MAX_FINES; j++)
+					{
+						if ( players[ play->first ].fines[j].fine_id == atoi( packet->Text ) )
+						{
+							char Msg[64];
+							strcpy(Msg,msg->GetMessage( play->first ,1107));
+							send_mtc( play->first ,Msg);
+							strcpy(Msg,"^2| ");
+							strcat(Msg,fines[atoi(packet->Text)].name);
+							send_mtc( play->first ,Msg);
 
-                            for (int j = 0; j < MAX_FINES; j++)
-                            {
-                                if( fines[j].id == atoi(packet->Text) )
-                                {
-                                    char Msg[64];
-                                    strcpy(Msg,msg->GetMessage(players[g].UCID,1104));
-                                    send_mtc(players[g].UCID,Msg);
-                                    strcpy(Msg,"^2| ^7");
-                                    strcat(Msg,fines[atoi(packet->Text)].name);
-                                    send_mtc(players[g].UCID,Msg);
+							strcpy(Msg,msg->GetMessage( packet->UCID ,1108));
+							send_mtc( packet->UCID ,Msg);
+							send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
 
-                                    strcpy(Msg,msg->GetMessage( packet->UCID ,1105));
-                                    send_mtc( packet->UCID ,Msg);
-                                    send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
+							strcpy(Msg,msg->GetMessage( play->first ,1106));
+							strcat(Msg,players[ play->first ].PName);
+							send_mtc( packet->UCID ,Msg);
 
-                                    strcpy(Msg,msg->GetMessage( packet->UCID ,1106));
-                                    strcat(Msg,players[g].PName);
-                                    send_mtc( packet->UCID ,Msg);
+							players[ play->first ].fines[j].fine_id = 0;
+							players[ play->first ].fines[j].fine_date = 0;
 
-                                    for (int j=0; j<MAX_FINES; j++)
-                                    {
-                                        if (players[g].fines[j].fine_id == 0)
-                                        {
-                                            players[g].fines[j].fine_id = atoi(packet->Text);
-                                            players[g].fines[j].fine_date = int(time(&stime));
-                                            break;
-                                        }
-                                    }
+							/*ofstream readf (fine_c,ios::app);
+							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;
+							readf.close();*/
 
-                                    ofstream readf (fine_c,ios::app);
-                                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " get fine ID = " << packet->Text << " to "  << players[g].UName << endl;
-                                    readf.close();
-                                }
-                            }
-                        } // if atoi(pack_btt->Text) > 0
-                        break;
-                    }
-                }//for
-            }
-*/
-            /**
-            Пользователь отменяет штраф
-            */
-/*            if (packet->ClickID==39)
-            {
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  (players[i].BID2 == players[g].BID)
-                    {
-                        if (atoi(packet->Text) > 0)
-                        {
-
-                            for (int j=0; j<MAX_FINES; j++)
-                            {
-                                if (players[g].fines[j].fine_id == atoi(packet->Text))
-                                {
-                                    char Msg[64];
-                                    strcpy(Msg,msg->GetMessage(players[g].UCID,1107));
-                                    send_mtc(players[g].UCID,Msg);
-                                    strcpy(Msg,"^2| ");
-                                    strcat(Msg,fines[atoi(packet->Text)].name);
-                                    send_mtc(players[g].UCID,Msg);
-
-                                    strcpy(Msg,msg->GetMessage( packet->UCID ,1108));
-                                    send_mtc( packet->UCID ,Msg);
-                                    send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
-
-                                    strcpy(Msg,msg->GetMessage(players[g].UCID,1106));
-                                    strcat(Msg,players[g].PName);
-                                    send_mtc( packet->UCID ,Msg);
-
-                                    players[g].fines[j].fine_id = 0;
-                                    players[g].fines[j].fine_date = 0;
-
-                                    ofstream readf (fine_c,ios::app);
-                                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;
-                                    readf.close();
-
-                                    break;
-                                }
-                            }
-
-
-                        } // if atoi(pack_btt->Text) > 0
-                        break;
-                    }
-                }//for
-            }
-*/
+							break;
+						}
+					}
+				} // if atoi(pack_btt->Text) > 0
+				break;
+			}
+		}//for
+	}
 }
 
 void RCPolice::insim_pen( struct IS_PEN* packet )
@@ -373,6 +384,21 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
 			send_mst(Text);
 		}
 	}
+}
+
+void RCPolice::CopTurnOn( byte UCID )
+{
+	players[ UCID ].cop = 1;
+}
+
+void RCPolice::CopTurnOff( byte UCID )
+{
+	players[ UCID ].cop = 0;
+}
+
+void RCPolice::SetUserBID ( byte UCID, byte BID )
+{
+	players[ UCID ].BID = BID;
 }
 
 void RCPolice::SaveUserFines ( byte UCID )

@@ -23,8 +23,6 @@ struct user_fine
     int     fine_date;
 };
 
-// struct  fine fines[100];                 // Array of fines (for cops)
-
 struct PolicePlayer
 {
     struct  CompCar Info;
@@ -33,6 +31,10 @@ struct PolicePlayer
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
+
+    byte    BID;
+    byte    BID2;
+
 	/** COP **/
     byte    cop;
     byte    radar;
@@ -45,6 +47,8 @@ struct PolicePlayer
     int     StopTime;
     byte    Penalty;        // Если превысил скорость в питах
 };
+
+typedef map<byte, PolicePlayer>::iterator player_it;
 
 class RCPolice: public RCBaseClass
 {
@@ -67,6 +71,7 @@ private:
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
     void insim_con( struct IS_CON* packet );   // Игрок отправил сообщение
     void insim_obh( struct IS_OBH* packet );   // Игрок отправил сообщение
+    void insim_btc( struct IS_BTC* packet );
     void insim_btt( struct IS_BTT* packet );
     void insim_pen( struct IS_PEN* packet );
     void insim_pla( struct IS_PLA* packet );
@@ -82,8 +87,10 @@ public:
 	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
 
 	void SaveUserFines( byte UCID );
-
+	void SetUserBID( byte UCID, byte BID);
 	void ReadFines();
+	void CopTurnOn( byte UCID );
+	void CopTurnOff( byte UCID );
 };
 
 #endif

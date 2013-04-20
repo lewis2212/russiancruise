@@ -34,7 +34,7 @@ public:
     virtual void btn_information(byte UCID, const char* Message);
     virtual void btn_information_clear(byte UCID);
 
-    bool Check_Pos(int polySides,int polyX[],int polyY[],int x,int y);
+    bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     int Distance (int X, int Y, int X1, int Y1);
 
 protected:
