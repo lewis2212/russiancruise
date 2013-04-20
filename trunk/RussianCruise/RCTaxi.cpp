@@ -729,8 +729,6 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
 
 void RCTaxi::insim_ncn( struct IS_NCN* packet )
 {
-    int i;
-
     if (packet->UCID == 0)
         return;
 
