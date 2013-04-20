@@ -12,12 +12,6 @@
 
 #define PIZZA_WORK_TIME 360
 
-
-
-
-void *pizzathread(void *arg);// Поток предназначен для того чтобы работали часики, которые отсчитывают обратный счет
-
-
 struct pizza_info
 {
     int     ShopCount;
@@ -43,8 +37,6 @@ struct PizzaPlayer
     int     WorkTime;			// время за которое он должен доставить товар
     int     WorkCountDone;
 };
-
-
 
 enum
 {
@@ -94,7 +86,6 @@ private:
 	struct  place zone;
 
     map<byte,PizzaPlayer>players;
-    typedef map<byte,PizzaPlayer>::iterator player_it;
 
 	void Deal( byte UCID );
     void Undeal( byte UCID ,const char *Reason);
@@ -120,17 +111,13 @@ public:
 
     // Основные функции класса
     int init(const char *dir, void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic);
-
     void readconfig(const char *Track);
 
 
-
 	void insim_mci( struct IS_MCI* packet );
-    //+
 
     bool IfWork(byte UCID);
     void Event();
-
 };
 
 #endif

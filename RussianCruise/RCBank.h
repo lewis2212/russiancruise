@@ -6,9 +6,6 @@
 #include "RCMessage.h"
 #include "RCDrivingLicense.h"
 
-
-
-
 typedef struct BankPlayer
 {
     struct  CompCar Info;

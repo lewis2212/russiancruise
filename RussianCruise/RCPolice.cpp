@@ -162,20 +162,20 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
                         bank->RemCash( packet->UCID ,fines[id_i].cash);
 
                        int cop = 0;
-                       for ( player_it play = players.begin(); play != players.end() ; play++)
+                       for ( auto& play: players)
                         {
-                            if ( players[ play->first ].cop == 1)
+                            if ( players[ play.first ].cop == 1)
                             {
-                                if (dl->Islocked(  play->first  ))
+                                if (dl->Islocked(  play.first  ))
                                 {
-                                    dl->Unlock(  play->first  );
-                                    dl->AddSkill( play->first , 0.05);
-                                    dl->Lock(  play->first  );
+                                    dl->Unlock(  play.first  );
+                                    dl->AddSkill( play.first , 0.05);
+                                    dl->Lock(  play.first  );
                                 }
                                 else
-                                    dl->AddSkill( play->first , 0.05);
+                                    dl->AddSkill( play.first , 0.05);
 
-                                bank->AddCash( play->first ,(fines[id_i].cash)*0.05, true);
+                                bank->AddCash( play.first ,(fines[id_i].cash)*0.05, true);
                                 cop++;
                             }
                         }
@@ -223,9 +223,9 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
 	*/
 	if ( packet->ClickID == 38 )
 	{
-		for ( player_it play = players.begin(); play != players.end() ; play++)
+		for ( auto& play: players )
 		{
-			if  ( players[ packet->UCID ].BID2 == players[ play->first ].BID)
+			if  ( players[ packet->UCID ].BID2 == players[ play.first ].BID)
 			{
 				if (atoi(packet->Text) > 0)
 				{
@@ -235,26 +235,26 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
 						if( fines[j].id == atoi(packet->Text) )
 						{
 							char Msg[64];
-							strcpy(Msg,msg->GetMessage( play->first ,1104));
-							send_mtc( play->first ,Msg);
+							strcpy(Msg,msg->GetMessage( play.first ,1104));
+							send_mtc( play.first ,Msg);
 							strcpy(Msg,"^2| ^7");
 							strcat(Msg,fines[atoi(packet->Text)].name);
-							send_mtc( play->first ,Msg);
+							send_mtc( play.first ,Msg);
 
 							strcpy(Msg,msg->GetMessage( packet->UCID ,1105));
 							send_mtc( packet->UCID ,Msg);
 							send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
 
 							strcpy(Msg,msg->GetMessage( packet->UCID ,1106));
-							strcat(Msg,players[ play->first ].PName);
+							strcat(Msg,players[ play.first ].PName);
 							send_mtc( packet->UCID ,Msg);
 
 							for (int j=0; j<MAX_FINES; j++)
 							{
-								if (players[ play->first ].fines[j].fine_id == 0)
+								if (players[ play.first ].fines[j].fine_id == 0)
 								{
-									players[ play->first ].fines[j].fine_id = atoi(packet->Text);
-									players[ play->first ].fines[j].fine_date = int( time( NULL ) );
+									players[ play.first ].fines[j].fine_id = atoi(packet->Text);
+									players[ play.first ].fines[j].fine_date = int( time( NULL ) );
 									break;
 								}
 							}
@@ -275,33 +275,33 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
 	*/
 	if (packet->ClickID==39)
 	{
-		for ( player_it play = players.begin(); play != players.end() ; play++)
+		for ( auto& play: players )
 		{
-			if  (players[ packet->UCID ].BID2 == players[ play->first ].BID)
+			if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
 			{
 				if ( atoi( packet->Text ) > 0 )
 				{
 					for (int j=0; j<MAX_FINES; j++)
 					{
-						if ( players[ play->first ].fines[j].fine_id == atoi( packet->Text ) )
+						if ( players[ play.first ].fines[j].fine_id == atoi( packet->Text ) )
 						{
 							char Msg[64];
-							strcpy(Msg,msg->GetMessage( play->first ,1107));
-							send_mtc( play->first ,Msg);
+							strcpy(Msg,msg->GetMessage( play.first ,1107));
+							send_mtc( play.first ,Msg);
 							strcpy(Msg,"^2| ");
 							strcat(Msg,fines[atoi(packet->Text)].name);
-							send_mtc( play->first ,Msg);
+							send_mtc( play.first ,Msg);
 
 							strcpy(Msg,msg->GetMessage( packet->UCID ,1108));
 							send_mtc( packet->UCID ,Msg);
 							send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
 
-							strcpy(Msg,msg->GetMessage( play->first ,1106));
-							strcat(Msg,players[ play->first ].PName);
+							strcpy(Msg,msg->GetMessage( play.first ,1106));
+							strcat(Msg,players[ play.first ].PName);
 							send_mtc( packet->UCID ,Msg);
 
-							players[ play->first ].fines[j].fine_id = 0;
-							players[ play->first ].fines[j].fine_date = 0;
+							players[ play.first ].fines[j].fine_id = 0;
+							players[ play.first ].fines[j].fine_date = 0;
 
 							/*ofstream readf (fine_c,ios::app);
 							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;

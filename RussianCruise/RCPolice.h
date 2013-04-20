@@ -48,8 +48,6 @@ struct PolicePlayer
     byte    Penalty;        // Если превысил скорость в питах
 };
 
-typedef map<byte, PolicePlayer>::iterator player_it;
-
 class RCPolice: public RCBaseClass
 {
 private:
