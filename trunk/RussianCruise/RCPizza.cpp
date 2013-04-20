@@ -554,11 +554,11 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
         send_mtc( packet->UCID ,Text);
 
 
-        for (player_it plit = players.begin(); plit != players.end(); plit++)
+        for ( auto& plit: players )
         {
-            if (players[ plit->first ].WorkType == WK_PIZZA)
+            if (players[ plit.first ].WorkType == WK_PIZZA)
             {
-                sprintf(Text,"%s Accept = %d Count = %d",players[  plit->first ].PName, players[  plit->first ].WorkAccept, players[  plit->first ].WorkCountDone);
+                sprintf(Text,"%s Accept = %d Count = %d",players[  plit.first ].PName, players[  plit.first ].WorkAccept, players[  plit.first ].WorkCountDone);
                 send_mtc( packet->UCID ,Text);
             }
 
@@ -683,45 +683,45 @@ void RCPizza::Event()
 
     /** вывод кнопки с часиками и скрытие ее если таймер пришел в ноль **/
 
-	for ( player_it plit = players.begin(); plit != players.end(); plit++ )
+	for ( auto& plit: players )
 	{
 
-		if (players[ plit->first ].WorkAccept != 0)
+		if (players[ plit.first ].WorkAccept != 0)
 		{
-			//cout << "player[ plit->first ].UCID = " << (int) plit->first  <<endl;
+			//cout << "player[ plit.first ].UCID = " << (int) plit.first  <<endl;
 			int nowtime = time(&ptime);
-			if (players[ plit->first ].WorkTime <= nowtime)
+			if (players[ plit.first ].WorkTime <= nowtime)
 			{
-				send_bfn( plit->first ,210);
-				send_bfn( plit->first ,211);
+				send_bfn( plit.first ,210);
+				send_bfn( plit.first ,211);
 
-				if (players[ plit->first ].WorkAccept == 3) // не успел заказать продукты
+				if (players[ plit.first ].WorkAccept == 3) // не успел заказать продукты
 					ShopAccepted = false;
 
-				if (players[ plit->first ].WorkAccept != 0)
+				if (players[ plit.first ].WorkAccept != 0)
 				{
-					send_mtc( plit->first ,msg->GetMessage( plit->first ,4101));
-					players[ plit->first ].WorkType = WK_NULL;
-					players[ plit->first ].WorkAccept = 0;
-					if ( players[ plit->first ].WorkPlayerAccept != 0)
+					send_mtc( plit.first ,msg->GetMessage( plit.first ,4101));
+					players[ plit.first ].WorkType = WK_NULL;
+					players[ plit.first ].WorkAccept = 0;
+					if ( players[ plit.first ].WorkPlayerAccept != 0)
 					{
-						for ( player_it plit2 = players.begin(); plit2 != players.end(); plit2++ )
+						for ( auto& plit2: players )
 						{
-							if ( plit2->first == players[ plit->first ].WorkPlayerAccept)
-								players[ plit2->first ].Pizza = 0;
+							if ( plit2.first == players[ plit.first ].WorkPlayerAccept)
+								players[ plit2.first ].Pizza = 0;
 							break;
 						}
 					}
-					players[ plit->first ].WorkPlayerAccept = 0;
+					players[ plit.first ].WorkPlayerAccept = 0;
 					CarsInWork --;
 				}
 			}
 		}
 
-		if (players[ plit->first ].WorkAccept != 0)
+		if (players[ plit.first ].WorkAccept != 0)
 		{
-			btn_work( plit->first );
-			btn_information( plit->first ,players[ plit->first ].WorkDest);
+			btn_work( plit.first );
+			btn_information( plit.first ,players[ plit.first ].WorkDest);
 		}
 	}
 	/** конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль **/
@@ -737,25 +737,25 @@ void RCPizza::Event()
 
 		if ((PStore.Muka > 5) && (PStore.Voda > 5) && (PStore.Ovoshi > 5) && (PStore.Cheese > 5))
 		{
-			for ( player_it plit = players.begin(); plit != players.end(); plit++ )
+			for ( auto& plit: players )
 			{
-				if ( ( plit->first  !=0) and (players[ plit->first ].WorkType != 0) and (players[ plit->first ].WorkAccept == 0))
+				if ( ( plit.first  !=0) and (players[ plit.first ].WorkType != 0) and (players[ plit.first ].WorkAccept == 0))
 				{
 					/** прогон пользователей на предмет заказа **/
 
-					for ( player_it plit2 = players.begin(); plit2 != players.end(); plit2++ )
+					for ( auto& plit2: players )
 					{
-						if (  ( plit2->first  !=  plit->first ) and ( players[ plit2->first ].Pizza == 1 ) )
+						if (  ( plit2.first  !=  plit.first ) and ( players[ plit2.first ].Pizza == 1 ) )
 						{
-							send_mtc( plit->first , msg->GetMessage( plit->first ,2201));
-							send_mtc( plit->first , msg->GetMessage( plit->first ,2202));
-							players[ plit->first ].WorkAccept = 1;
-							players[ plit->first ].WorkPlayerAccept = plit2->first;
-							players[ plit->first ].WorkZone =0;
+							send_mtc( plit.first , msg->GetMessage( plit.first ,2201));
+							send_mtc( plit.first , msg->GetMessage( plit.first ,2202));
+							players[ plit.first ].WorkAccept = 1;
+							players[ plit.first ].WorkPlayerAccept = plit2.first;
+							players[ plit.first ].WorkZone =0;
 							int worktime = time(&ptime);
-							players[ plit->first ].WorkTime = worktime+60*6;
+							players[ plit.first ].WorkTime = worktime+60*6;
 
-							players[ plit2->first ].Pizza = 2;
+							players[ plit2.first ].Pizza = 2;
 
 							break; // чтобы оповещал только одного игрока
 						}
@@ -766,20 +766,20 @@ void RCPizza::Event()
 
 			/** тут заказ пиццы ботом **/
 
-			for ( player_it plit = players.begin(); plit != players.end(); plit++ )
+			for ( auto& plit: players )
 			{
-				if ( ( plit->first  !=0) and (players[ plit->first ].WorkType == WK_PIZZA) and (players[ plit->first ].WorkAccept == 0))
+				if ( ( plit.first  !=0) and (players[ plit.first ].WorkType == WK_PIZZA) and (players[ plit.first ].WorkAccept == 0))
 				{
-					send_mtc( plit->first ,msg->GetMessage( plit->first ,2201));
-					send_mtc( plit->first ,msg->GetMessage( plit->first ,2202));
+					send_mtc( plit.first ,msg->GetMessage( plit.first ,2201));
+					send_mtc( plit.first ,msg->GetMessage( plit.first ,2202));
 
-					strcpy(players[ plit->first ].WorkDest,msg->GetMessage( plit->first ,2201)+4); // +4 == remove slash
+					strcpy(players[ plit.first ].WorkDest,msg->GetMessage( plit.first ,2201)+4); // +4 == remove slash
 
-					players[ plit->first ].WorkAccept =1;
-					players[ plit->first ].WorkPlayerAccept =0;
-					players[ plit->first ].WorkZone =0;
+					players[ plit.first ].WorkAccept =1;
+					players[ plit.first ].WorkPlayerAccept =0;
+					players[ plit.first ].WorkZone =0;
 					int worktime = time(&ptime);
-					players[ plit->first ].WorkTime = worktime+60*6;
+					players[ plit.first ].WorkTime = worktime+60*6;
 					break; // чтобы оповещал только одного игрока
 				}
 			}
@@ -792,22 +792,22 @@ void RCPizza::Event()
 	{
 		if  (ShopAccepted == false)
 		{
-			for ( player_it plit = players.begin(); plit != players.end(); plit++ )
+			for ( auto& plit: players )
 			{
-				if ( ( plit->first  !=0)
-						and (players[ plit->first ].WorkType != 0)
-						and (players[ plit->first ].WorkAccept == 0))
+				if ( ( plit.first  !=0)
+						and (players[ plit.first ].WorkType != 0)
+						and (players[ plit.first ].WorkAccept == 0))
 				{
-					cout << players[ plit->first ].UName << " accepted for shop\n";
+					cout << players[ plit.first ].UName << " accepted for shop\n";
 
-					send_mtc( plit->first ,"^C^3| ^7«акажите продукты в магазине");
-					strcpy(players[ plit->first ].WorkDest,"^C^7«акажите продукты в магазине"); // +4 == remove slash
+					send_mtc( plit.first ,"^C^3| ^7«акажите продукты в магазине");
+					strcpy(players[ plit.first ].WorkDest,"^C^7«акажите продукты в магазине"); // +4 == remove slash
 
-					players[ plit->first ].WorkAccept =3;
-					players[ plit->first ].WorkPlayerAccept =0;
-					players[ plit->first ].WorkZone =0;
+					players[ plit.first ].WorkAccept =3;
+					players[ plit.first ].WorkPlayerAccept =0;
+					players[ plit.first ].WorkZone =0;
 					int worktime = time(&ptime);
-					players[ plit->first ].WorkTime = worktime+60*6;
+					players[ plit.first ].WorkTime = worktime+60*6;
 					ShopAccepted = true;
 					break; // чтобы оповещал только одного игрока
 				}

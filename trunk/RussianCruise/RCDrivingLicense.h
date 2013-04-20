@@ -74,7 +74,6 @@ public:
 
     void    insim_mci( struct IS_MCI* packet );
 
-
     // Основные функции класса
     int init(const char *dir,void *CInSim, void *GetMessage);
 };
