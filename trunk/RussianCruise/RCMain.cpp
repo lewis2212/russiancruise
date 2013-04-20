@@ -177,7 +177,13 @@ int GetCarID(char *CarName)
     if (strlen(CarName)!=3)
         return 0;
 
-	return ginfo->carMap[ CarName ].id;
+    for (int i=0; i< MAX_CARS; i++)
+    {
+        if (strcmp(CarName,ginfo->car[i].car)==0)
+            return ginfo->car[i].id;
+    }
+
+    return 0;
 }
 
 int IfCop (struct player *splayer)
@@ -218,6 +224,19 @@ user_car AddUserCar(const char *car = "UF1", float dist =0, int tuning = 0)
     c.tuning = tuning;
     return c;
 }
+
+cars AddCar(int id = 0, const char *car = "UF1", int cash =0, int sell = 0, unsigned PLC = 0)
+{
+    cars c;
+    c.id = id;
+    strcpy(c.car, car);
+    c.cash = cash;
+    c.sell = sell;
+    c.PLC = PLC;
+    return c;
+}
+
+
 
 void read_words()
 {
@@ -301,9 +320,6 @@ void read_user_cars(struct player *splayer)
             splayer->cars[i].tuning = atoi( rcMainRow[1] );
             splayer->cars[i].dist = atof( rcMainRow[2] );
             /** map<> **/
-            splayer->cars2[ rcMainRow[0] ].tuning = atoi( rcMainRow[1] );
-            splayer->cars2[ rcMainRow[0] ].dist = atof( rcMainRow[2] );
-
             splayer->PLC += ginfo->carMap[ rcMainRow[0] ].PLC;
             i++;
         }
@@ -328,9 +344,6 @@ void read_user_cars(struct player *splayer)
         strcpy(splayer->cars[0].car,"UF1");
         splayer->cars[0].tuning = 0;
         splayer->cars[0].dist = 0;
-
-        splayer->cars2[ rcMainRow[0] ].tuning = 0;
-		splayer->cars2[ rcMainRow[0] ].dist = 0.0f;
 
         splayer->PLC += ginfo->carMap[ "UF1" ].PLC;
 
@@ -529,31 +542,34 @@ void btn_info (struct player *splayer, int b_type)
 
     if (b_type == 1)
     {
-    	pack.W = 50;
-		pack.H = 6;
-		pack.BStyle = 16 + 64;
-		pack.L = 39;
-		pack.T = 51;
-		pack.ClickID = 110;
-
-    	int counter = 0;
-        for ( auto car: ginfo->carMap )
+        for (int i=2; i<MAX_CARS/2; i++)
         {
-            if ( car.second.id == 0 )
+            if ( ginfo->car[i].id == 0 )
                 continue;
 
-            if( counter ==  ginfo->carMap.size()/2 ){
-				pack.L += 51;
-				pack.T = 51;
-            }
-
-            pack.T += 6;
-            pack.ClickID += 1;
-
-            sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(car.second.id-1)*5,car.second.car, (int)car.second.cash, car.second.sell );
+            pack.L = (101-126/2)+1;
+            pack.BStyle = 16 + 64;
+            pack.T = 50+6*(i-1)+1;
+            pack.W = 50;
+            pack.H = 6;
+            pack.ClickID = 110 + i;
+            sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
             insim->send_packet(&pack);
+        }
 
-            counter++;
+        for (int i=MAX_CARS/2; i<MAX_CARS; i++)
+        {
+            if ( ginfo->car[i].id == 0 )
+                continue;
+
+            pack.L = (101-126/2)+1+51;
+            pack.BStyle = 16 + 64;
+            pack.T = 50+6*(i-MAX_CARS/2+1)+1;
+            pack.W = 50;
+            pack.H = 6;
+            pack.ClickID = 110 + i;
+            sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
+            insim->send_packet(&pack);
         }
 
     } // if (type == 1)
@@ -1092,7 +1108,7 @@ void case_cnl ()
 			police->SaveUserFines( ginfo->players[i].UCID );
             #endif // _RC_POLICE_H
 
-            ginfo->players[i].cars2.clear();
+            //ginfo->players[i].cars2.clear();
             memset(&ginfo->players[i],0,sizeof(struct player));
             break;
         }
@@ -1851,7 +1867,15 @@ void case_mso ()
 
         int CarID;
 
-		if (strcmp(id,ginfo->carMap[id].car) != 0)
+        for (CarID = 0; CarID < MAX_CARS; CarID ++)
+        {
+            if (strcmp(id,ginfo->car[CarID].car)== 0)
+            {
+                break;
+            }
+        }
+
+        if (CarID == MAX_CARS)
         {
             send_mtc(ginfo->players[i].UCID,"^C^2| ^7У нас нет такой машины!");
             return;
@@ -1867,10 +1891,10 @@ void case_mso ()
             return;
         }
 #endif
-        if (bank->GetCash(ginfo->players[i].UCID) < (int)ginfo->carMap[id].cash)
+        if (bank->GetCash(ginfo->players[i].UCID) < (int)ginfo->car[CarID].cash)
         {
             char msg[64];
-            sprintf(msg,"^C^2| ^7Нужно ^1%d ^7RUR.",(int)ginfo->carMap[id].cash);
+            sprintf(msg,"^C^2| ^7Нужно ^1%d ^7RUR.",(int)ginfo->car[CarID].cash);
             send_mtc(ginfo->players[i].UCID,msg);
             return;
         }
@@ -1899,10 +1923,10 @@ void case_mso ()
                 sprintf(msg,"^C^2|^7 Вы купили %s",id);
                 send_mtc(ginfo->players[i].UCID,msg);
 
-                bank->RemCash(ginfo->players[i].UCID,ginfo->carMap[id].cash);
-                bank->AddToBank(ginfo->carMap[id].cash);
+                bank->RemCash(ginfo->players[i].UCID,ginfo->car[CarID].cash);
+                bank->AddToBank(ginfo->car[CarID].cash);
 
-                ginfo->players[i].PLC += ginfo->carMap[id].PLC;
+                ginfo->players[i].PLC += ginfo->car[CarID].PLC;
                 send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
 
                 SYSTEMTIME sm;
@@ -1915,7 +1939,7 @@ void case_mso ()
                 readf.close();
 
                 char sql[128];
-                sprintf(sql,"INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo->players[i].UName , ginfo->carMap[id].car );
+                sprintf(sql,"INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo->players[i].UName , ginfo->car[CarID].car );
                 mysql_query( &rcMaindb , sql );
 
                 break;
@@ -1949,8 +1973,11 @@ void case_mso ()
             return;
         // search car in global base
         int j = 0; // global car id
+        for ( j = 1 ; j < MAX_CARS ; j++)
+            if (strcmp(id,ginfo->car[j].car)==0)
+                break;
 
-		if (strcmp(id,ginfo->carMap[id].car)!=0)
+        if ( j == MAX_CARS )
             return;
 
         // if user now  on this car
@@ -1962,7 +1989,7 @@ void case_mso ()
 
         for ( int k=0; k<MAX_CARS; k++)
         {
-            if (strcmp(ginfo->players[i].cars[k].car,ginfo->carMap[id].car) == 0)
+            if (strcmp(ginfo->players[i].cars[k].car,ginfo->car[j].car) == 0)
             {
                 char msg[64];
                 sprintf(msg,"^C^2|^7 Вы продали %s",id);
@@ -1980,14 +2007,14 @@ void case_mso ()
                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " sell car " << id << endl;
                 readf.close();
 
-                bank->AddCash(ginfo->players[i].UCID,ginfo->carMap[id].sell, true);
-                bank->RemFrBank(ginfo->carMap[id].sell);
+                bank->AddCash(ginfo->players[i].UCID,ginfo->car[j].sell, true);
+                bank->RemFrBank(ginfo->car[j].sell);
 
-                ginfo->players[i].PLC -= ginfo->carMap[id].PLC;
+                ginfo->players[i].PLC -= ginfo->car[j].PLC;
                 send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
 
                 char sql[128];
-                sprintf(sql,"DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", ginfo->players[i].UName , ginfo->carMap[id].car );
+                sprintf(sql,"DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", ginfo->players[i].UName , ginfo->car[j].car );
                 mysql_query( &rcMaindb , sql );
                 break;
             }
@@ -2930,12 +2957,14 @@ void read_car()
             PLC = strtok (NULL,";");
 
             i = atoi(id);
-           // memset(&ginfo->car[i],0,sizeof(struct cars));
-            ginfo->carMap[car].id = i;
-            strcpy(ginfo->carMap[car].car, car);
-            ginfo->carMap[car].cash =atoi(cash);
-            ginfo->carMap[car].sell = ginfo->carMap[car].cash*8/10;
-            ginfo->carMap[car].PLC =atoi(PLC);
+            memset(&ginfo->car[i],0,sizeof(struct cars));
+            ginfo->car[i].id = i;
+            strcpy(ginfo->car[i].car, car);
+            ginfo->car[i].cash =atoi(cash);
+            ginfo->car[i].sell= ginfo->car[i].cash*8/10;
+            ginfo->car[i].PLC =atoi(PLC);
+            /** map<> **/
+            ginfo->carMap[ car ] = AddCar(i ,car, atoi(cash), atoi(cash)*8/10 , atoi(PLC) );
 
         } // if strlen > 0
     } //while readf.good()

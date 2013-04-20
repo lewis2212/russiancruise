@@ -170,7 +170,7 @@ struct player
     struct CompCar Info;
     user_car cars[MAX_CARS];
 
-    map <string, user_car> cars2;
+    //map <string, user_car> cars2;
 
     char    UName[24];             // Username
     char    PName[24];             // Player name
@@ -224,19 +224,22 @@ class GlobalInfo
 {
 	public:
     struct  player players[MAX_PLAYERS];     // Array of players
-
+    byte    Sp1;
+    struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
+    byte    Sp2;
     map < string , cars > carMap;
 
+    byte    Sp3;
     /** Bad words **/
     int     WordsCount;
     char    Words[100][32];
     /**  **/
     struct  track_info TrackInf;             // Where PitBox and Shop
 
+    /** IS_STA **/
     /** IS_RST **/
     char    Track[6];                          // Current track (for streets)
     char    Product[6];                        // DEMO or S1 or S2
-
     /** insim **/
     char    IP[16];                            // IP port for connect (for InSim IS_III)
     word    TCPPORT;                           // TCP port (for InSim IS_III)
