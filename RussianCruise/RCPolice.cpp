@@ -10,7 +10,7 @@ RCPolice::~RCPolice()
 
 }
 
-int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet)
+int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Energy)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
     insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
@@ -45,6 +45,13 @@ int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *
     if(!street)
     {
         printf ("Can't struct RCStreet class");
+        return -1;
+    }
+
+    nrg = (RCEnergy *)Energy;
+    if(!nrg)
+    {
+        printf ("Can't struct RCEnergy class");
         return -1;
     }
 
@@ -93,6 +100,9 @@ void RCPolice::insim_cpr( struct IS_CPR* packet )
 void RCPolice::insim_mso( struct IS_MSO* packet )
 {
 	if (packet->UCID == 0)
+        return;
+
+	if ( packet->UserType != MSO_PREFIX )
         return;
 
 	char Msg[128];
@@ -195,7 +205,138 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
         else send_mtc( packet->UCID ,"^1| ^C^7Вы находитесь не в банке");
     }
 
+	if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
+    {
 
+        if (players[ packet->UCID ].cop == 1)
+        {
+            if (players[ packet->UCID ].sirena ==0 )
+            {
+                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2100));
+                players[ packet->UCID ].sirena = 1;
+            }
+            else
+            {
+                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2101));
+                players[ packet->UCID ].sirena = 0;
+            }
+        }
+    }
+
+    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
+    {
+
+        if (players[ packet->UCID ].cop == 1)
+        {
+            if (players[ packet->UCID ].radar ==0 )
+            {
+                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2102));
+                players[ packet->UCID ].radar = 1;
+            }
+            else
+            {
+                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2103));
+                players[ packet->UCID ].radar = 0;
+            }
+        }
+    }
+
+
+    if (strncmp(Msg, "!kick", 4) == 0 )
+    {
+        char user[16];
+        strcpy(user,Msg+5);
+
+        if(strlen(user)>0)
+        {
+            if (players[ packet->UCID ].cop == 1)
+            {
+                char Kick[64];
+                sprintf(Kick,"/kick %s",user);
+                send_mst(Kick);
+
+                SYSTEMTIME sm;
+                GetLocalTime(&sm);
+                char log[MAX_PATH];
+                sprintf(log,"%slogs\\cop\\kick(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+                ofstream readf (log,ios::app);
+                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[ packet->UCID ].UName << " kick " << user << endl;
+                readf.close();
+            }
+        }
+    }
+
+    if ( strcmp( players[ packet->UCID ].UName ,"denis-takumi") == 0 )
+    {
+        char file[255];
+        sprintf(file,"%smisc\\cops.txt",RootDir);
+
+        char line[32];
+        if (strncmp(Msg, "!cop_add", 8) == 0 )
+        {
+            char param[16];
+            strcpy(param,Msg+9);
+
+            if(strlen(param)>0)
+            {
+                ofstream wCops( file , ios::app );
+                wCops << param <<  endl;
+                wCops.close();
+            }
+        }
+
+        if (strncmp(Msg, "!cop_del", 8) == 0 )
+        {
+            char param[16];
+            strcpy(param,Msg+9);
+            printf("%s\n",param);
+            if(strlen(param)>0)
+            {
+                char cops[40][32];
+                memset(&cops,0,40*32);
+
+                int j = 0;
+
+                ifstream rCops( file , ios::in );
+
+                while ( rCops.good() )
+                {
+                    memset(&line,0,32);
+                    rCops.getline(line, 32);
+
+                    if (strlen(line) >0)
+                        strncpy(cops[j++],line,32);
+                }
+                rCops.close();
+
+                ofstream wCops( file , ios::out );
+
+                for(j=0; j<40; j++)
+                {
+                    if (strncmp(cops[j],param,strlen(param)) != 0)
+                    {
+                        wCops << cops[j] << endl;
+                    }
+                }
+                wCops.close();
+
+            }
+        }
+        if (strncmp(Msg, "!cop_list", 9) == 0 )
+        {
+            ifstream rCops( file , ios::in );
+
+            while ( rCops.good() )
+            {
+
+                memset(&line,0,32);
+                rCops.getline(line, 32);
+                if (strlen(line) >0)
+                    send_mst(line);
+            }
+            rCops.close();
+        }
+    }
 }
 
 void RCPolice::insim_con( struct IS_CON* packet )
@@ -385,6 +526,213 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
 		}
 	}
 }
+
+void RCPolice::insim_mci( struct IS_MCI* packet )
+{
+	for (int i = 0; i < packet->NumC; i++)
+    {
+    	byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
+    	if( UCID == 0 )
+			return;
+
+		int S = players[ UCID ].Info.Speed*360/32768;
+		/** автоотключение радара **/
+		if (S < 5)
+			players[ UCID ].StopTime ++;
+		else
+		{
+			players[ UCID ].StopTime = 0;
+			if (players[ UCID ].radar ==1 )
+			{
+				send_mtc( UCID ,msg->GetMessage( UCID ,1700));
+				players[ UCID ].radar = 0;
+			}
+		}
+
+		if (players[ UCID ].cop == 1)
+		{
+			for ( auto& play: players )
+			{
+				byte UCID2 = play.first;
+
+				int X = players[ UCID2 ].Info.X/65536;
+				int Y = players[ UCID2 ].Info.Y/65536;
+				int X1 = players[ UCID ].Info.X/65536;
+				int Y1 = players[ UCID ].Info.Y/65536;
+
+				int Rast = dl->Distance( X, Y, X1, Y1);
+
+				if (players[ UCID2 ].Pogonya == 1)
+				{
+					if ( (Rast < 10) and (players[ UCID2 ].cop != 1))
+					{
+						int S2 = players[ UCID2 ].Info.Speed*360/32768;
+
+						if ((S2 < 5) and (players[ UCID2 ].StopTime > 4))
+						{
+
+							players[ UCID2 ].Pogonya = 2;
+							nrg->Unlock( UCID2 );
+							strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage( UCID2 ,1701));
+
+							char Text[96];
+							sprintf(Text,"/msg ^2| %s%s", players[ UCID2 ].PName, msg->GetMessage( UCID ,1702));
+							send_mst(Text);
+
+							send_mtc( UCID ,msg->GetMessage( UCID ,1703));
+						}
+					}
+				} // pogonya
+				/**
+				РАДАР
+				*/
+				if (players[ UCID ].radar ==1 )
+				{
+					if ((Rast < 50 ) and (players[ UCID2 ].cop != 1))
+					{
+						int Speed = players[ UCID2 ].Info.Speed*360/32768;
+						struct streets StreetInfo;
+						street->CurentStreetInfo(&StreetInfo, UCID2 );
+
+						if ((Speed > StreetInfo.SpeedLimit+10) )
+						{
+							char text[64];
+							int Speed2 = Speed - StreetInfo.SpeedLimit;
+							sprintf(text,"^2| %s%s%d%s",players[ UCID2 ].PName,msg->GetMessage( UCID2 ,1704),Speed2,msg->GetMessage( UCID ,1705));
+							send_mtc( UCID ,text);
+
+							if (players[ UCID2 ].Pogonya == 0)
+							{
+								players[ UCID2 ].Pogonya = 1;
+								int worktime = time(NULL);
+								players[ UCID2 ].WorkTime = worktime+60*6;
+								strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage( UCID2 ,1006));
+								char Text[96];
+								sprintf(Text,"/msg ^2| %s%s", msg->GetMessage( UCID2 ,1007) , players[ UCID2 ].PName );
+								send_mst(Text);
+								nrg->Lock( UCID2 );
+							}
+						}
+					}
+				}
+				/**
+				ЛЮСТРА
+				*/
+				if (players[ UCID ].sirena ==1)
+				{
+					if ( (Rast < 120) and (players[ UCID2 ].cop != 1) )
+					{
+						players[ UCID2 ].sirenaOnOff = 1;
+						players[ UCID2 ].sirenaKey = 1;
+						players[ UCID2 ].sirenaSize = Rast;
+					}
+					else
+					{
+						players[ UCID2 ].sirenaOnOff = 0;
+					}
+					players[ UCID ].sirenaKey = 1;
+					players[ UCID ].sirenaOnOff = 1;
+
+					if ( players[ UCID ].cop == 1 )
+						players[ UCID ].sirenaSize = 90;
+					else
+						players[ UCID ].sirenaSize = 0;
+				}
+				else
+				{
+					players[ UCID2 ].sirenaOnOff = 0;
+					players[ UCID ].sirenaOnOff = 0;
+				}
+
+
+			}
+		}
+
+		if ((players[ UCID ].sirenaOnOff == 0) and (players[ UCID ].sirenaKey == 1))
+		{
+			players[ UCID ].sirenaKey = 0;
+			send_bfn( UCID ,203);
+		}
+
+		if ( players[ UCID ].sirenaOnOff == 1)
+			BtnSirena( UCID );
+
+
+		if ((players[ UCID ].Pogonya == 0) and (strlen(players[ UCID ].PogonyaReason) > 1))
+		{
+			strcpy(players[ UCID ].PogonyaReason,"");
+			send_bfn( UCID ,204);
+		}
+
+		if ( players[ UCID ].Pogonya != 0)
+			BtnPogonya( UCID );
+
+
+    }
+}
+
+
+void RCPolice::SetSirenLight( string sirenWord )
+{
+	siren = sirenWord;
+}
+
+
+void RCPolice::BtnSirena( byte UCID )
+{
+    //int Heith = 30;
+    //int Left = 100 - Heith/2;
+
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    pack.ClickID = 203;
+    pack.BStyle = 1;
+    //pack.L = 50;
+
+    pack.T = 20;
+    pack.W = 124 - (players[ UCID ].sirenaSize);
+    pack.L = 100 - pack.W/2;
+    pack.H = pack.W/3;
+
+    if (pack.W <= 0)
+        pack.W = 1;
+
+    if (pack.L <= 0)
+        pack.L = 1;
+
+    if (pack.H <= 0)
+        pack.H = 1;
+
+    strcpy(pack.Text,siren.c_str());
+    insim->send_packet(&pack);
+}
+
+void RCPolice::BtnPogonya( byte UCID )
+{
+    struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = 1;
+    pack.UCID = UCID;
+    pack.Inst = 0;
+    pack.TypeIn = 0;
+    pack.ClickID = 204;
+    pack.BStyle = 1;
+    pack.L = 50;
+    pack.T = 51;
+    pack.W = 100;
+    pack.H = 30;
+    strcpy(pack.Text,players[ UCID ].PogonyaReason);
+    insim->send_packet(&pack);
+}
+
 
 void RCPolice::CopTurnOn( byte UCID )
 {

@@ -106,7 +106,7 @@ using namespace std;
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
 
-const char* siren = "^0";
+
 
 // Дескриптор соединения
 MYSQL rcMaindb;

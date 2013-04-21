@@ -7,6 +7,7 @@
 #include "RCBank.h"     // Bank
 #include "RCDrivingLicense.h"
 #include "RCStreet.h"
+#include "RCEnergy.h"
 
 #define MAX_FINES 100
 
@@ -46,6 +47,8 @@ struct PolicePlayer
     char    PogonyaReason[64];
     int     StopTime;
     byte    Penalty;        // Если превысил скорость в питах
+
+    int     WorkTime;			// время за которое он должен доставить товар
 };
 
 class RCPolice: public RCBaseClass
@@ -56,7 +59,9 @@ private:
     RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
     RCStreet    *street;
+    RCEnergy	*nrg;
 
+	string siren = "^0";
 	struct  fine fines[MAX_FINES];
 	map<byte, PolicePlayer>players;
 
@@ -76,19 +81,24 @@ private:
 
 
     void ReadUserFines( byte UCID );
+    void BtnSirena( byte UCID );
+    void BtnPogonya( byte UCID );
 
 
 public:
 	RCPolice();
 	~RCPolice();
 
-	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
+	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy);
 
 	void SaveUserFines( byte UCID );
 	void SetUserBID( byte UCID, byte BID);
 	void ReadFines();
 	void CopTurnOn( byte UCID );
 	void CopTurnOff( byte UCID );
+	void SetSirenLight( string sirenWord );
+
+	void insim_mci( struct IS_MCI* packet );
 };
 
 #endif
