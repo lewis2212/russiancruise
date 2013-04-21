@@ -133,7 +133,7 @@ void init_classes()
     banlist.init(RootDir, insim);
 #endif
 #ifdef _RC_POLICE_H
-	police->init(RootDir, insim, msg, bank, dl, street);
+	police->init(RootDir, insim, msg, bank, dl, street, nrg);
 #endif // _RC_POLICE_H
 }
 
@@ -672,64 +672,6 @@ void btn_panel (struct player *splayer)
 
 }
 
-
-
-
-
-void btn_sirena(struct player *splayer)
-{
-    //int Heith = 30;
-    //int Left = 100 - Heith/2;
-
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 203;
-    pack.BStyle = 1;
-    //pack.L = 50;
-
-    pack.T = 20;
-    pack.W = 124 - (splayer->sirenaSize);
-    pack.L = 100 - pack.W/2;
-    pack.H = pack.W/3;
-
-    if (pack.W <= 0)
-        pack.W = 1;
-
-    if (pack.L <= 0)
-        pack.L = 1;
-
-    if (pack.H <= 0)
-        pack.H = 1;
-
-    strcpy(pack.Text,siren);
-    insim->send_packet(&pack);
-}
-
-void btn_pogonya(struct player *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 204;
-    pack.BStyle = 1;
-    pack.L = 50;
-    pack.T = 51;
-    pack.W = 100;
-    pack.H = 30;
-    strcpy(pack.Text,splayer->PogonyaReason);
-    insim->send_packet(&pack);
-}
 
 void btn_work (struct player *splayer)
 {
@@ -1276,154 +1218,6 @@ void case_mci ()
                 memcpy(&ginfo->players[j].Info, &pack_mci->Info[i],sizeof(CompCar));
 
             } // if pack_mci->Info[i].PLID == ginfo->players[j].PLID
-        }
-    }
-}
-
-void case_mci_cop ()
-{
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
-    for (int i = 0; i < pack_mci->NumC; i++)
-
-    {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
-            if (pack_mci->Info[i].PLID == ginfo->players[j].PLID and ginfo->players[j].PLID != 0 and ginfo->players[j].UCID != 0)
-            {
-                int S = ginfo->players[j].Info.Speed*360/32768;
-                /** автоотключение радара **/
-                if (S < 5)
-                    ginfo->players[j].StopTime ++;
-                else
-                {
-                    ginfo->players[j].StopTime = 0;
-                    if (ginfo->players[j].radar ==1 )
-                    {
-                        send_mtc(ginfo->players[j].UCID,msg->GetMessage(ginfo->players[j].UCID,1700));
-                        ginfo->players[j].radar = 0;
-                    }
-                }
-
-                if (ginfo->players[j].cop == 1)
-                {
-                    for (int g =0; g < MAX_PLAYERS; g++)
-                    {
-                        if (ginfo->players[g].PLID !=0)
-                        {
-                            int X = ginfo->players[g].Info.X/65536;
-                            int Y = ginfo->players[g].Info.Y/65536;
-                            int X1 = ginfo->players[j].Info.X/65536;
-                            int Y1 = ginfo->players[j].Info.Y/65536;
-
-                            int Rast = dl->Distance( X, Y, X1, Y1);
-
-                            if (ginfo->players[g].Pogonya == 1)
-                            {
-                                if ( (Rast < 10) and (ginfo->players[g].cop != 1))
-                                {
-                                    int S2 = ginfo->players[g].Info.Speed*360/32768;
-
-                                    if ((S2 < 5) and (ginfo->players[g].StopTime > 4))
-                                    {
-
-                                        ginfo->players[g].Pogonya = 2;
-                                        nrg->Unlock(ginfo->players[g].UCID);
-                                        strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1701));
-
-                                        char Text[96];
-                                        sprintf(Text,"/msg ^2| %s%s", ginfo->players[g].PName, msg->GetMessage(ginfo->players[j].UCID,1702));
-                                        send_mst(Text);
-
-                                        send_mtc(ginfo->players[j].UCID,msg->GetMessage(ginfo->players[j].UCID,1703));
-                                    }
-                                }
-                            } // pogonya
-                            /**
-                            РАДАР
-                            */
-                            if (ginfo->players[j].radar ==1 )
-                            {
-                                if ((Rast < 50 ) and (ginfo->players[g].cop != 1))
-                                {
-                                    int Speed = ginfo->players[g].Info.Speed*360/32768;
-                                    struct streets StreetInfo;
-                                    street->CurentStreetInfo(&StreetInfo,ginfo->players[g].UCID);
-
-                                    if ((Speed > StreetInfo.SpeedLimit+10) )
-                                    {
-                                        char text[64];
-                                        int Speed2 = Speed - StreetInfo.SpeedLimit;
-                                        sprintf(text,"^2| %s%s%d%s",ginfo->players[g].PName,msg->GetMessage(ginfo->players[g].UCID,1704),Speed2,msg->GetMessage(ginfo->players[j].UCID,1705));
-                                        send_mtc(ginfo->players[j].UCID,text);
-
-                                        if (ginfo->players[g].Pogonya == 0)
-                                        {
-                                            ginfo->players[g].Pogonya = 1;
-                                            int worktime = time(&stime);
-                                            ginfo->players[g].WorkTime = worktime+60*6;
-                                            strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1006));
-                                            char Text[96];
-                                            sprintf(Text,"/msg ^2| %s%s", msg->GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
-                                            send_mst(Text);
-                                            nrg->Lock(ginfo->players[g].UCID);
-                                        }
-                                    }
-                                }
-                            }
-                            /**
-                            ЛЮСТРА
-                            */
-                            if (ginfo->players[j].sirena ==1)
-                            {
-                                if ( (Rast < 120) and (ginfo->players[g].cop != 1) )
-                                {
-                                    ginfo->players[g].sirenaOnOff = 1;
-                                    ginfo->players[g].sirenaKey = 1;
-                                    ginfo->players[g].sirenaSize = Rast;
-                                }
-                                else
-                                {
-                                    ginfo->players[g].sirenaOnOff = 0;
-                                }
-                                ginfo->players[j].sirenaKey = 1;
-                                ginfo->players[j].sirenaOnOff = 1;
-
-                                if ( ginfo->players[j].cop == 1 )
-                                    ginfo->players[j].sirenaSize = 90;
-                                else
-                                    ginfo->players[j].sirenaSize = 0;
-                            }
-                            else
-                            {
-                                ginfo->players[g].sirenaOnOff = 0;
-                                ginfo->players[j].sirenaOnOff = 0;
-                            }
-
-                        }
-                    }
-                }
-
-                if ((ginfo->players[j].sirenaOnOff == 0) and (ginfo->players[j].sirenaKey == 1))
-                {
-                    ginfo->players[j].sirenaKey = 0;
-                    send_bfn(ginfo->players[j].UCID,203);
-                }
-
-                if ( ginfo->players[j].sirenaOnOff == 1)
-                    btn_sirena(&ginfo->players[j]);
-
-
-                if ((ginfo->players[j].Pogonya == 0) and (strlen(ginfo->players[j].PogonyaReason) > 1))
-                {
-                    strcpy(ginfo->players[j].PogonyaReason,"");
-                    send_bfn(ginfo->players[j].UCID,204);
-                }
-
-                if ( ginfo->players[j].Pogonya != 0)
-                    btn_pogonya(&ginfo->players[j]);
-
-            } // if CompCar->PLID == PLID
         }
     }
 }
@@ -2239,144 +2033,9 @@ void case_mso_cop ()
     char Msg[96];
     strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-    if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
-    {
-        out << ginfo->players[i].UName << " send !sirena" << endl;
-
-        if (ginfo->players[i].cop == 1)
-        {
-            if (ginfo->players[i].sirena ==0 )
-            {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2100));
-                ginfo->players[i].sirena = 1;
-            }
-            else
-            {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2101));
-                ginfo->players[i].sirena = 0;
-            }
-        }
-    }
-
-    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
-    {
-        out << ginfo->players[i].UName << " send !radar" << endl;
-
-        if (ginfo->players[i].cop == 1)
-        {
-            if (ginfo->players[i].radar ==0 )
-            {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2102));
-                ginfo->players[i].radar = 1;
-            }
-            else
-            {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2103));
-                ginfo->players[i].radar = 0;
-            }
-        }
-    }
-
-    if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^Cштрафы", 9) == 0 ))
-    {
-        help_cmds(&ginfo->players[i],3);
-    }
-
-    if (strncmp(Msg, "!kick", 4) == 0 )
-    {
-        char user[16];
-        strcpy(user,Msg+5);
-
-        if(strlen(user)>0)
-        {
-            if (ginfo->players[i].cop == 1)
-            {
-                char Kick[64];
-                sprintf(Kick,"/kick %s",user);
-                send_mst(Kick);
-
-                SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                char log[MAX_PATH];
-                sprintf(log,"%slogs\\cop\\kick(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-                ofstream readf (log,ios::app);
-                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " kick " << user << endl;
-                readf.close();
-            }
-        }
-    }
-
     if ( strcmp( ginfo->players[i].UName ,"denis-takumi") == 0 )
     {
-        char file[255];
-        sprintf(file,"%smisc\\cops.txt",RootDir);
-
-        char line[32];
-        if (strncmp(Msg, "!cop_add", 8) == 0 )
-        {
-            char param[16];
-            strcpy(param,Msg+9);
-
-            if(strlen(param)>0)
-            {
-                ofstream wCops( file , ios::app );
-                wCops << param <<  endl;
-                wCops.close();
-            }
-        }
-
-        if (strncmp(Msg, "!cop_del", 8) == 0 )
-        {
-            char param[16];
-            strcpy(param,Msg+9);
-            printf("%s\n",param);
-            if(strlen(param)>0)
-            {
-                char cops[40][32];
-                memset(&cops,0,40*32);
-
-                int j = 0;
-
-                ifstream rCops( file , ios::in );
-
-                while ( rCops.good() )
-                {
-                    memset(&line,0,32);
-                    rCops.getline(line, 32);
-
-                    if (strlen(line) >0)
-                        strncpy(cops[j++],line,32);
-                }
-                rCops.close();
-
-                ofstream wCops( file , ios::out );
-
-                for(j=0; j<40; j++)
-                {
-                    if (strncmp(cops[j],param,strlen(param)) != 0)
-                    {
-                        wCops << cops[j] << endl;
-                    }
-                }
-                wCops.close();
-
-            }
-        }
-        if (strncmp(Msg, "!cop_list", 9) == 0 )
-        {
-            ifstream rCops( file , ios::in );
-
-            while ( rCops.good() )
-            {
-
-                memset(&line,0,32);
-                rCops.getline(line, 32);
-                if (strlen(line) >0)
-                    send_mst(line);
-            }
-            rCops.close();
-        }
-//!ban#denis-takumi#1
+        //!ban#denis-takumi#1
         if (strncmp(Msg, "!ban", 4) == 0 )
         {
             cout << Msg << endl;
@@ -2466,7 +2125,10 @@ void case_npl ()
                 msg->send_bfn_all( ginfo->players[i].UCID );
 
                 ginfo->players[i].cop = 0;
+                #ifdef _RC_POLICE_H
                 police->CopTurnOff( ginfo->players[i].UCID );
+                #endif // _RC_POLICE_H
+
                 ginfo->players[i].Pitlane = 1;
 
                 if (IfCop(&ginfo->players[i]) == 1)
@@ -2480,8 +2142,10 @@ void case_npl ()
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1301));
 
                     ginfo->players[i].cop = 1;
-                    police->CopTurnOn( ginfo->players[i].UCID );
 
+                    #ifdef _RC_POLICE_H
+                    police->CopTurnOn( ginfo->players[i].UCID );
+					#endif
                     dl->Lock(ginfo->players[i].UCID);
                     nrg->Lock(ginfo->players[i].UCID);
                     lgh->SetLight3(ginfo->players[i].UCID,true);
@@ -3062,7 +2726,7 @@ void *thread_mci (void *params)
         //out << "UDP packet MCI " << endl;
         case_mci ();
         //case_mci_svetofor();
-        case_mci_cop();
+
 
 #ifdef _RC_BANK_H
         bank->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
@@ -3196,9 +2860,13 @@ void *thread_save (void *params)
 
         }
         Sleep(500);
-        siren = "^4||||||||||^1||||||||||";
+        #ifdef _RC_POLICE_H
+        police->SetSirenLight( "^4||||||||||^1||||||||||" );
+        #endif
         Sleep(500);
-        siren = "^1||||||||||^4||||||||||";
+        #ifdef _RC_POLICE_H
+        police->SetSirenLight( "^1||||||||||^4||||||||||" );
+        #endif
     }
     return 0;
 };
@@ -3304,6 +2972,8 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         //return 0;
     }
 
+    create_classes();
+    init_classes();
 
     pthread_t mci_tid; // Thread ID
     pthread_t btn_tid; // Thread ID
@@ -3331,8 +3001,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     }
     Sleep(1000);
 
-    create_classes();
-    init_classes();
 
 
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
