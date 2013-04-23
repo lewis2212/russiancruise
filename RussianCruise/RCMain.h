@@ -197,8 +197,7 @@ struct player
     char    Msg[128];
     int     FloodCount;
     int     FloodTime;
-    /** Work **/
-    int     WorkTime;			// время за которое он должен доставить товар
+
 
     time_t  LastSave;
     time_t  LastBFN;
@@ -209,7 +208,7 @@ struct player
 
 class GlobalInfo
 {
-	public:
+public:
     struct  player players[MAX_PLAYERS];     // Array of players
 
     struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
