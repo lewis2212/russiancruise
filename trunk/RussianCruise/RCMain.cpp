@@ -186,36 +186,6 @@ int GetCarID(char *CarName)
     return 0;
 }
 
-int IfCop (struct player *splayer)
-{
-    char PlayerName[32];
-    strcpy(PlayerName,splayer->PName);
-
-    int COP = 0;
-
-    if (
-        ((strncmp("^4[^C^7ÄÏÑ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÄÏC^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7äïñ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7äïc^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÃÀÈ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ãàè^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÃAÈ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ãaè^4]",PlayerName,13)==0))
-        && (splayer->cop != 1)
-    )
-    {
-        COP += 1;
-    }
-
-    if ( read_cop(splayer) > 0)
-    {
-        COP += 2;
-    }
-
-    return COP;
-}
-
 user_car AddUserCar(const char *car = "UF1", float dist =0, int tuning = 0)
 {
     user_car c;
@@ -781,7 +751,7 @@ void case_btc ()
                     insim->send_packet(&pack_btn);
 
                     // cop buttons
-                    if (ginfo->players[i].cop != 0)
+                    if ( police->IsCop( ginfo->players[i].UCID ) != 0)
                     {
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 2;
@@ -818,78 +788,6 @@ void case_btc ()
                     send_bfn(ginfo->players[i].UCID,j);
             }
 
-            /**
-            Âêëþ÷àåì ïîãîíþ
-            */
-            if (pack_btc->ClickID==40)
-            {
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
-                    {
-                        if (ginfo->players[g].Pogonya == 0)
-                        {
-                            ginfo->players[g].Pogonya = 1;
-                            int worktime = time(&stime);
-                            ginfo->players[g].WorkTime = worktime+60*6;
-                            strcpy(ginfo->players[g].PogonyaReason,msg->GetMessage(ginfo->players[g].UCID,1006));
-                            char Text[96];
-                            sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(ginfo->players[g].UCID,1007) , ginfo->players[g].PName );
-                            send_mst(Text);
-                            nrg->Lock(ginfo->players[g].UCID);
-
-                            char fine_c[255];
-                            sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-                            ofstream readf (fine_c,ios::app);
-                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  ginfo->players[i].UName << " begin pursuit to "  << ginfo->players[g].UName << endl;
-                            readf.close();
-                        }
-                        break;
-                    }
-                }
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if (ginfo->players[g].cop != 0)
-                    {
-                        for (int k=60; k<79; k++)
-                            send_bfn(ginfo->players[g].UCID,k);
-                    }
-                }
-
-            }
-
-            /**
-            Âûêëþ÷àåì ïîãîíþ
-            */
-            if (pack_btc->ClickID==41)
-            {
-
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
-                    {
-                        if (ginfo->players[g].Pogonya != 0)
-                        {
-                            ginfo->players[g].Pogonya = 0;
-                            send_bfn(ginfo->players[g].UCID,210);
-                            char Text[96];
-                            sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(ginfo->players[g].UCID,1008) , ginfo->players[g].PName );
-                            send_mst(Text);
-                            nrg->Unlock(ginfo->players[g].UCID);
-                        }
-                        break;
-                    }
-                }
-
-                for (int g=0; g<MAX_PLAYERS; g++)
-                {
-                    if (ginfo->players[g].cop != 0)
-                    {
-                        for (int k=60; k<79; k++)
-                            send_bfn(ginfo->players[g].UCID,k);
-                    }
-                }
-            }
 
             /**
             Èíôîðìàöèîííûå êíîïêè
@@ -1874,7 +1772,7 @@ void case_mso ()
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cïèò", 6) == 0 ))
     {
-        if (ginfo->players[i].Pogonya == 1)
+        if ( police->InPursuite( ginfo->players[i].UCID ) )
         {
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
@@ -1921,7 +1819,7 @@ void case_mso ()
         int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
         {
-            if (ginfo->players[j].UCID!=0 and ginfo->players[j].cop == 0)
+            if (ginfo->players[j].UCID!=0 and  police->IsCop( ginfo->players[j].UCID )  != false )
             {
                 if (col == 16)
                 {
@@ -2124,24 +2022,22 @@ void case_npl ()
             {
                 msg->send_bfn_all( ginfo->players[i].UCID );
 
-                ginfo->players[i].cop = 0;
+
                 #ifdef _RC_POLICE_H
                 police->CopTurnOff( ginfo->players[i].UCID );
                 #endif // _RC_POLICE_H
 
                 ginfo->players[i].Pitlane = 1;
 
-                if (IfCop(&ginfo->players[i]) == 1)
+                if ( police->IfCop( ginfo->players[i].UCID ) == 1)
                 {
                     send_mst( specText );
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1300));
                     return;
                 }
-                else if (IfCop(&ginfo->players[i]) == 3)
+                else if ( police->IfCop( ginfo->players[i].UCID ) == 3)
                 {
                     send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1301));
-
-                    ginfo->players[i].cop = 1;
 
                     #ifdef _RC_POLICE_H
                     police->CopTurnOn( ginfo->players[i].UCID );
@@ -2273,13 +2169,6 @@ void case_pla ()
             if (pack_pla->Fact == PITLANE_EXIT)
             {
                 ginfo->players[i].Pitlane = false;
-                if (ginfo->players[i].Penalty != 0)
-                {
-                    char Text[64];
-                    sprintf(Text, "/p_clear %s",ginfo->players[i].UName);
-                    send_mst(Text);
-                }
-
             }
             else
             {
@@ -2306,7 +2195,7 @@ void case_pll ()
         	msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
-            ginfo->players[i].Penalty =0;
+
 
             dl->Unlock(ginfo->players[i].UCID);
             nrg->Unlock(ginfo->players[i].UCID);
@@ -2314,7 +2203,7 @@ void case_pll ()
 
             save_car(&ginfo->players[i]);
 
-            if (ginfo->players[i].Pogonya == 1)
+            if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2600));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2601));
@@ -2359,8 +2248,6 @@ void case_plp ()
         	msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
-            ginfo->players[i].Penalty =0;
-
 
             dl->Unlock(ginfo->players[i].UCID);
             nrg->Unlock(ginfo->players[i].UCID);
@@ -2369,7 +2256,7 @@ void case_plp ()
 
             save_car(&ginfo->players[i]);
 
-            if (ginfo->players[i].Pogonya == 1)
+            if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2700));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2701));
@@ -2636,39 +2523,6 @@ void read_car()
     readf.close();
 }
 
-int read_cop(struct player *splayer)
-{
-    char file[255];
-    sprintf(file,"%smisc\\cops.txt",RootDir);
-
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        out << "Can't find " << file << endl;
-        return -1;
-    }
-    FindClose(fff);
-
-    ifstream readf (file,ios::in);
-
-    int cop = 0;
-    while (readf.good())
-    {
-        char str[32];
-        readf.getline(str,32);
-        if( strlen( str ) > 0 and strcmp( splayer->UName , str ) == 0 )
-		{
-			cop ++;
-			break;
-        }
-    }
-
-    readf.close();
-    return cop;
-}
-
 void read_cfg()
 {
     out << "Read Server Config" << endl;
@@ -2778,7 +2632,7 @@ void *thread_btn (void *params)
             {
                 btn_panel(&ginfo->players[i]);
 
-                if (ginfo->players[i].cop == 1)
+                if ( police->IsCop( ginfo->players[i].UCID ) )
                 {
                     struct IS_BTN pack;
                     memset(&pack, 0, sizeof(struct IS_BTN));
@@ -2799,7 +2653,7 @@ void *thread_btn (void *params)
 
                     for (int j=0; j<MAX_PLAYERS; j++)
                     {
-                        if (ginfo->players[j].UCID != 0 and ginfo->players[j].Pogonya != 0)
+                        if (ginfo->players[j].UCID != 0 and  police->InPursuite( ginfo->players[j].UCID ) )
                         {
                             int time2 = ginfo->players[j].WorkTime - time(&stime);
                             int min = (time2/60)%60;
@@ -2809,9 +2663,9 @@ void *thread_btn (void *params)
 
                             street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
-                            if ( ginfo->players[j].Pogonya == 1 )
+                            if ( police->InPursuite( ginfo->players[j].UCID ) == 1 )
                                 sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
-                            else if ( ginfo->players[j].Pogonya == 2 )
+                            else if ( police->InPursuite( ginfo->players[j].UCID ) == 2 )
                                 sprintf(pack.Text,"%s %s ^1^CÀÐÅÑÒÎÂÀÍ",ginfo->players[j].PName,StreetInfo.Street);
 
                             insim->send_packet(&pack);
@@ -2882,7 +2736,7 @@ void *thread_work (void *params)
         {
             if (ginfo->players[i].UCID != 0)
             {
-                if (ginfo->players[i].Pogonya == 1)
+                if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
                 {
                     btn_work(&ginfo->players[i]);
                     int nowtime = time(&stime);
@@ -2894,7 +2748,7 @@ void *thread_work (void *params)
                         sprintf( Text , "/msg ^2|%s %s" , ginfo->players[i].PName , msg->GetMessage(ginfo->players[i].UCID,1706) );
 
                         send_mst(Text);
-                        ginfo->players[i].Pogonya = 0;
+						police->SetPursuite( ginfo->players[i].UCID , 0);
                         nrg->Unlock(ginfo->players[i].UCID);
                         dl->AddSkill(ginfo->players[i].UCID);
                     }

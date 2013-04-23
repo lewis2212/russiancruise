@@ -135,8 +135,6 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
 
 pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 
-
-
 typedef struct cars
 {
     int             id;
@@ -196,16 +194,16 @@ struct player
     byte    lang_id;
     byte    Svetofor;
     /** COP **/
-    byte    cop;
-    byte    radar;
-    byte    sirena;         // коповский выключатель сирены
-    byte    sirenaOnOff;    // постаянная запись положения сирены у духов
-    byte    sirenaKey;      // определяем включить или выключить сирену у духов
-    int     sirenaSize;      // размер кнопки
-    byte    Pogonya;
+    //byte    cop;
+    //byte    radar;
+    //byte    sirena;         // коповский выключатель сирены
+    //byte    sirenaOnOff;    // постаянная запись положения сирены у духов
+    //byte    sirenaKey;      // определяем включить или выключить сирену у духов
+    //int     sirenaSize;      // размер кнопки
+    //byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
-    byte    Penalty;        // Если превысил скорость в питах
+    //byte    Penalty;        // Если превысил скорость в питах
     /** Flood **/
     char    Msg[128];
     int     FloodCount;
