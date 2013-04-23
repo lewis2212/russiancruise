@@ -167,7 +167,6 @@ struct player
 {
     struct CompCar Info;
     user_car cars[MAX_CARS];
-
     //map <string, user_car> cars2;
 
     char    UName[24];             // Username
@@ -193,17 +192,7 @@ struct player
     char    Lang[4];
     byte    lang_id;
     byte    Svetofor;
-    /** COP **/
-    //byte    cop;
-    //byte    radar;
-    //byte    sirena;         // коповский выключатель сирены
-    //byte    sirenaOnOff;    // постаянная запись положения сирены у духов
-    //byte    sirenaKey;      // определяем включить или выключить сирену у духов
-    //int     sirenaSize;      // размер кнопки
-    //byte    Pogonya;
-    char    PogonyaReason[64];
-    int     StopTime;
-    //byte    Penalty;        // Если превысил скорость в питах
+
     /** Flood **/
     char    Msg[128];
     int     FloodCount;
@@ -222,19 +211,16 @@ class GlobalInfo
 {
 	public:
     struct  player players[MAX_PLAYERS];     // Array of players
-    byte    Sp1;
+
     struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
-    byte    Sp2;
     map < string , cars > carMap;
 
-    byte    Sp3;
     /** Bad words **/
     int     WordsCount;
     char    Words[100][32];
     /**  **/
     struct  track_info TrackInf;             // Where PitBox and Shop
 
-    /** IS_STA **/
     /** IS_RST **/
     char    Track[6];                          // Current track (for streets)
     char    Product[6];                        // DEMO or S1 or S2
@@ -246,12 +232,7 @@ class GlobalInfo
 };
 
 void read_track();
-void read_lang(struct player *splayer);
 void read_car();
-void read_fines();
-int read_cop(struct player *splayer);
-void read_words();
-
 
 void send_mtc (byte UCID,const char* Msg)
 {
@@ -288,7 +269,6 @@ void send_bfn (byte UCID, byte ClickID)
 
 void send_plc (byte UCID, unsigned PLC)
 {
-
     struct IS_PLC pack;
     memset(&pack, 0, sizeof(struct IS_PLC));
     pack.Size = sizeof(struct IS_PLC);

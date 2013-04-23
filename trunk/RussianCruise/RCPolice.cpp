@@ -364,36 +364,34 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
 	*/
 	if (packet->ClickID==40)
 	{
-		for (int g=0; g<MAX_PLAYERS; g++)
+		for ( auto& play: players )
 		{
-			if  (players[i].BID2 == players[g].BID)
+			if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
 			{
-				if (players[g].Pogonya == 0)
+				if (players[ play.first ].Pogonya == 0)
 				{
-					players[g].Pogonya = 1;
-					int worktime = time(&stime);
-					players[g].WorkTime = worktime+60*6;
-					strcpy(players[g].PogonyaReason,msg->GetMessage(players[g].UCID,1006));
+					players[ play.first ].Pogonya = 1;
+					int worktime = time(NULL);
+					players[ play.first ].WorkTime = worktime+60*6;
+					strcpy(players[ play.first ].PogonyaReason,msg->GetMessage( play.first ,1006));
 					char Text[96];
-					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(players[g].UCID,1007) , players[g].PName );
+					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage( play.first ,1007) , players[ play.first ].PName );
 					send_mst(Text);
-					nrg->Lock(players[g].UCID);
+					nrg->Lock( play.first );
 
-					char fine_c[255];
+					/*char fine_c[255];
 					sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
 					ofstream readf (fine_c,ios::app);
 					readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " begin pursuit to "  << players[g].UName << endl;
-					readf.close();
+					readf.close();*/
 				}
-				break;
+
 			}
-		}
-		for (int g=0; g<MAX_PLAYERS; g++)
-		{
-			if ( police->IsCop( players[g].UCID )  != false )
+
+			if ( players[ play.first ].cop )
 			{
 				for (int k=60; k<79; k++)
-					send_bfn(players[g].UCID,k);
+					send_bfn( play.first ,k);
 			}
 		}
 
@@ -402,36 +400,31 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
 	/**
 	Выключаем погоню
 	*/
-	if (pack_btc->ClickID==41)
+	if (packet->ClickID==41)
 	{
-
-		for (int g=0; g<MAX_PLAYERS; g++)
+		for ( auto& play: players )
 		{
-			if  (players[i].BID2 == players[g].BID)
+			if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
 			{
-				if (players[g].Pogonya != 0)
+				if (players[ play.first ].Pogonya != 0)
 				{
-					players[g].Pogonya = 0;
-					send_bfn(players[g].UCID,210);
+					players[ play.first ].Pogonya = 0;
+					send_bfn( play.first ,210);
 					char Text[96];
-					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(players[g].UCID,1008) , players[g].PName );
+					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage( play.first ,1008) , players[ play.first ].PName );
 					send_mst(Text);
-					nrg->Unlock(players[g].UCID);
+					nrg->Unlock( play.first );
 				}
-				break;
-			}
-		}
 
-		for (int g=0; g<MAX_PLAYERS; g++)
-		{
-			if ( police->IsCop( players[g].UCID )  != false )
+			}
+
+			if ( players[ play.first ].cop )
 			{
 				for (int k=60; k<79; k++)
-					send_bfn(players[g].UCID,k);
+					send_bfn( play.first ,k);
 			}
 		}
 	}
-
 }
 
 void RCPolice::insim_btt( struct IS_BTT* packet )
@@ -827,7 +820,7 @@ void RCPolice::SetSirenLight( string sirenWord )
 	siren = sirenWord;
 }
 
-bool RCPolice::InPursuite( byte UCID )
+int RCPolice::InPursuite( byte UCID )
 {
 	return players[ UCID ].Pogonya != 0;
 }
