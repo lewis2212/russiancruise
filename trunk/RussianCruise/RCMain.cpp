@@ -88,7 +88,7 @@ void create_classes()
 #endif
 
 #ifdef _RC_POLICE_H
-police = new RCPolice();
+    police = new RCPolice();
 #endif // _RC_POLICE_H
 
 }
@@ -133,7 +133,7 @@ void init_classes()
     banlist.init(RootDir, insim);
 #endif
 #ifdef _RC_POLICE_H
-	police->init(RootDir, insim, msg, bank, dl, street, nrg);
+    police->init(RootDir, insim, msg, bank, dl, street, nrg, lgh);
 #endif // _RC_POLICE_H
 }
 
@@ -562,29 +562,29 @@ void btn_info (struct player *splayer, int b_type)
             insim->send_packet(&pack);
         }
     }
-/*
-    if (b_type == 4)
-    {
-        int fineID = 0;
-        for (int i=0; i<MAX_FINES; i++)
+    /*
+        if (b_type == 4)
         {
-            pack.L = (101-126/2)+1;
-            pack.BStyle = 16 + 64;
-            if (ginfo->fines[i].id != 0)
+            int fineID = 0;
+            for (int i=0; i<MAX_FINES; i++)
             {
-                fineID ++;
-                pack.T = 56+6*(fineID-1);
-                pack.W = 122;
-                pack.H = 6;
-                pack.ClickID = 110 + fineID;
-                sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo->fines[i].id,ginfo->fines[i].name,ginfo->fines[i].cash);
-                insim->send_packet(&pack);
+                pack.L = (101-126/2)+1;
+                pack.BStyle = 16 + 64;
+                if (ginfo->fines[i].id != 0)
+                {
+                    fineID ++;
+                    pack.T = 56+6*(fineID-1);
+                    pack.W = 122;
+                    pack.H = 6;
+                    pack.ClickID = 110 + fineID;
+                    sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo->fines[i].id,ginfo->fines[i].name,ginfo->fines[i].cash);
+                    insim->send_packet(&pack);
+                }
+
             }
 
         }
-
-    }
-*/
+    */
     pack.BStyle = 8;
     pack.ClickID = 149;
     pack.L = 99+126/2-8;
@@ -637,35 +637,6 @@ void btn_panel (struct player *splayer)
 
     sprintf(pack.Text,"^2%4.3f Km.",splayer->Distance/1000);
 
-
-    insim->send_packet(&pack);
-
-}
-
-
-void btn_work (struct player *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 210;
-    pack.BStyle = 32;
-    pack.L = 136;
-    pack.T = 1;
-    pack.W = 10;
-    pack.H = 8;
-
-    int time2 = splayer->WorkTime - time(&stime);
-    int min;
-    int sec;
-    min = time2/60;
-    sec = time2%60;
-    sprintf(pack.Text,"^2%02d:%02d",min,sec);
 
     insim->send_packet(&pack);
 
@@ -925,7 +896,7 @@ void case_btt ()
                     }
                 }//for
             }
-		}
+        }
     }
     pthread_mutex_unlock (&RCmutex);
 }
@@ -944,9 +915,9 @@ void case_cnl ()
         {
             save_user_cars(&ginfo->players[i]);
 
-            #ifdef _RC_POLICE_H
-			police->SaveUserFines( ginfo->players[i].UCID );
-            #endif // _RC_POLICE_H
+#ifdef _RC_POLICE_H
+            police->SaveUserFines( ginfo->players[i].UCID );
+#endif // _RC_POLICE_H
 
             //ginfo->players[i].cars2.clear();
             memset(&ginfo->players[i],0,sizeof(struct player));
@@ -1184,9 +1155,9 @@ void case_mso ()
         save_car(&ginfo->players[i]);
         save_user_cars(&ginfo->players[i]);
 
-        #ifdef _RC_POLICE_H
-		police->SaveUserFines( ginfo->players[i].UCID );
-		#endif // _RC_POLICE_H
+#ifdef _RC_POLICE_H
+        police->SaveUserFines( ginfo->players[i].UCID );
+#endif // _RC_POLICE_H
 
         bank->bank_save(ginfo->players[i].UCID);
         send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,3000));
@@ -1728,7 +1699,7 @@ void case_mso ()
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
 #ifdef _RC_POLICE_H
-				police->SaveUserFines( ginfo->players[j].UCID );
+                police->SaveUserFines( ginfo->players[j].UCID );
 #endif // _RC_POLICE_H
 
                 bank->bank_save(ginfo->players[j].UCID);
@@ -1772,7 +1743,7 @@ void case_mso ()
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
     {
-        if ( police->InPursuite( ginfo->players[i].UCID ) )
+        if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
         {
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
@@ -1819,7 +1790,7 @@ void case_mso ()
         int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
         {
-            if (ginfo->players[j].UCID!=0 and  police->IsCop( ginfo->players[j].UCID )  != false )
+            if (ginfo->players[j].UCID != 0 and  !police->IsCop( ginfo->players[j].UCID ) )
             {
                 if (col == 16)
                 {
@@ -1993,9 +1964,9 @@ void case_ncn ()
     strcpy(ginfo->players[i].PName, pack_ncn->PName);
     ginfo->players[i].UCID = pack_ncn->UCID;
     ginfo->players[i].BID = i;
-    #ifdef _RC_POLICE_H
+#ifdef _RC_POLICE_H
     police->SetUserBID( ginfo->players[i].UCID, ginfo->players[i].BID );
-    #endif // _RC_POLICE_H
+#endif // _RC_POLICE_H
 
     ginfo->players[i].Zone = 1;
 
@@ -2016,38 +1987,13 @@ void case_npl ()
     {
         if (ginfo->players[i].UCID == pack_npl->UCID)
         {
-			sprintf(specText, "/spec %s", ginfo->players[i].UName);
+            sprintf(specText, "/spec %s", ginfo->players[i].UName);
 
             if (pack_npl->PType != 6)
             {
                 msg->send_bfn_all( ginfo->players[i].UCID );
 
-
-                #ifdef _RC_POLICE_H
-                police->CopTurnOff( ginfo->players[i].UCID );
-                #endif // _RC_POLICE_H
-
                 ginfo->players[i].Pitlane = 1;
-
-                if ( police->IfCop( ginfo->players[i].UCID ) == 1)
-                {
-                    send_mst( specText );
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1300));
-                    return;
-                }
-                else if ( police->IfCop( ginfo->players[i].UCID ) == 3)
-                {
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,1301));
-
-                    #ifdef _RC_POLICE_H
-                    police->CopTurnOn( ginfo->players[i].UCID );
-					#endif
-                    dl->Lock(ginfo->players[i].UCID);
-                    nrg->Lock(ginfo->players[i].UCID);
-                    lgh->SetLight3(ginfo->players[i].UCID,true);
-                }
-
-
 
                 ginfo->players[i].PLID = pack_npl->PLID;
                 ginfo->players[i].H_TRes =  pack_npl->H_TRes;
@@ -2148,7 +2094,7 @@ void case_pen ()
         {
             if (pack_pen->Reason == PENR_WRONG_WAY)
             {
-				taxi->dead_pass(ginfo->players[i].UCID);
+                taxi->dead_pass(ginfo->players[i].UCID);
             }
 
             break;
@@ -2192,23 +2138,18 @@ void case_pll ()
     {
         if (ginfo->players[i].PLID == pack_pll->PLID)
         {
-        	msg->send_bfn_all( ginfo->players[i].UCID );
+            msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
-
-            dl->Unlock(ginfo->players[i].UCID);
-            nrg->Unlock(ginfo->players[i].UCID);
-            lgh->SetLight3(ginfo->players[i].UCID,false);
-
             save_car(&ginfo->players[i]);
 
-            if ( police->InPursuite( ginfo->players[i].UCID ) )
+            if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2600));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2601));
 
-                if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+                if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
 
                 bank->RemCash(ginfo->players[i].UCID,5000);
@@ -2245,14 +2186,9 @@ void case_plp ()
     {
         if (ginfo->players[i].PLID == pack_plp->PLID)
         {
-        	msg->send_bfn_all( ginfo->players[i].UCID );
+            msg->send_bfn_all( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
-
-            dl->Unlock(ginfo->players[i].UCID);
-            nrg->Unlock(ginfo->players[i].UCID);
-            lgh->SetLight3(ginfo->players[i].UCID,false);
-
 
             save_car(&ginfo->players[i]);
 
@@ -2261,7 +2197,7 @@ void case_plp ()
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2700));
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage(ginfo->players[i].UCID,2701));
 
-                if( nrg->GetEnergy( ginfo->players[i].UCID ) > 10 )
+                if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
 
                 bank->RemCash(ginfo->players[i].UCID,5000);
@@ -2298,7 +2234,7 @@ void case_rst ()
     read_car();
 
 #ifdef _RC_POLICE_H
-			police->ReadFines();
+    police->ReadFines();
 #endif // _RC_POLICE_H
 
     read_track();
@@ -2599,23 +2535,23 @@ void *thread_mci (void *params)
 #endif
 
 #ifdef _RC_STREET_H
-		street->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        street->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LIGHT_H
-		lgh->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        lgh->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LEVEL_H
-		dl->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        dl->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_TAXI_H
-		taxi->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        taxi->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_POLICE_H
-		police->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        police->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
 #endif // _RC_POLICE_H
 
     }
@@ -2631,50 +2567,6 @@ void *thread_btn (void *params)
             if (ginfo->players[i].UCID != 0)
             {
                 btn_panel(&ginfo->players[i]);
-
-                if ( police->IsCop( ginfo->players[i].UCID ) )
-                {
-                    struct IS_BTN pack;
-                    memset(&pack, 0, sizeof(struct IS_BTN));
-                    pack.Size = sizeof(struct IS_BTN);
-                    pack.Type = ISP_BTN;
-                    pack.ReqI = 1;
-                    pack.UCID = ginfo->players[i].UCID;
-                    pack.Inst = 0;
-                    pack.TypeIn = 0;
-                    pack.ClickID = 60;
-                    pack.BStyle = 32;
-                    pack.L = 73;
-                    pack.T = 191;
-                    pack.W = 50;
-                    pack.H = 4;
-
-                    streets StreetInfo;
-
-                    for (int j=0; j<MAX_PLAYERS; j++)
-                    {
-                        if (ginfo->players[j].UCID != 0 and  police->InPursuite( ginfo->players[j].UCID ) )
-                        {
-                            int time2 = ginfo->players[j].WorkTime - time(&stime);
-                            int min = (time2/60)%60;
-                            int sec = time2%60;
-
-                            float D = dl->Distance(ginfo->players[i].Info.X,ginfo->players[i].Info.Y,ginfo->players[j].Info.X,ginfo->players[j].Info.Y)/65536;
-
-                            street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
-
-                            if ( police->InPursuite( ginfo->players[j].UCID ) == 1 )
-                                sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)",ginfo->players[j].PName,StreetInfo.Street,D,min,sec);
-                            else if ( police->InPursuite( ginfo->players[j].UCID ) == 2 )
-                                sprintf(pack.Text,"%s %s ^1^CАРЕСТОВАН",ginfo->players[j].PName,StreetInfo.Street);
-
-                            insim->send_packet(&pack);
-                            pack.T -=4;
-                            pack.ClickID ++;
-
-                        }
-                    }
-                }
             }
 
         }
@@ -2698,7 +2590,7 @@ void *thread_save (void *params)
                     save_car(&ginfo->players[j]);
                     save_user_cars(&ginfo->players[j]);
 #ifdef _RC_POLICE_H
-					police->SaveUserFines( ginfo->players[j].UCID );
+                    police->SaveUserFines( ginfo->players[j].UCID );
 #endif // _RC_POLICE_H
 #ifdef _RC_ENERGY_H
                     nrg->energy_save(ginfo->players[j].UCID);
@@ -2714,13 +2606,13 @@ void *thread_save (void *params)
 
         }
         Sleep(500);
-        #ifdef _RC_POLICE_H
+#ifdef _RC_POLICE_H
         police->SetSirenLight( "^4||||||||||^1||||||||||" );
-        #endif
+#endif
         Sleep(500);
-        #ifdef _RC_POLICE_H
+#ifdef _RC_POLICE_H
         police->SetSirenLight( "^1||||||||||^4||||||||||" );
-        #endif
+#endif
     }
     return 0;
 };
@@ -2731,33 +2623,8 @@ void *thread_work (void *params)
 
     while (ok > 0)
     {
-        // вывод кнопки с часиками и скрытие ее если таймер пришел в ноль
-        for (int i=0; i<MAX_PLAYERS; i++)
-        {
-            if (ginfo->players[i].UCID != 0)
-            {
-                if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
-                {
-                    btn_work(&ginfo->players[i]);
-                    int nowtime = time(&stime);
-                    if (ginfo->players[i].WorkTime <= nowtime)
-                    {
-                        send_bfn(ginfo->players[i].UCID,210);
-
-                        char Text[64];
-                        sprintf( Text , "/msg ^2|%s %s" , ginfo->players[i].PName , msg->GetMessage(ginfo->players[i].UCID,1706) );
-
-                        send_mst(Text);
-						police->SetPursuite( ginfo->players[i].UCID , 0);
-                        nrg->Unlock(ginfo->players[i].UCID);
-                        dl->AddSkill(ginfo->players[i].UCID);
-                    }
-                }
-
-            }
-        } // конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль
-
-		pizza->Event();
+        police->Event();
+        pizza->Event();
         Sleep(1000);
     }
     return 0;
@@ -2965,7 +2832,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif
 
 #ifdef _RC_BANK_H
-		bank->next_packet();
+        bank->next_packet();
 #endif // _RC_BANK_H
 
 #ifdef _RC_LEVEL_H
@@ -2993,7 +2860,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif
 
 #ifdef _RC_POLICE_H
-    police->next_packet();
+        police->next_packet();
 #endif // _RC_POLICE_H
 
     }
@@ -3150,7 +3017,7 @@ int core_uninstall_service()
 int main(int argc, char* argv[])
 {
 
-    isf_flag = ISF_MCI + ISF_MSO_COLS + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
+    isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
 
     int need = 92;
@@ -3295,7 +3162,7 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
                 save_car(&ginfo->players[j]);
                 save_user_cars(&ginfo->players[j]);
 #ifdef _RC_POLICE_H
-			police->SaveUserFines( ginfo->players[j].UCID );
+                police->SaveUserFines( ginfo->players[j].UCID );
 #endif // _RC_POLICE_H
 
 #ifdef _RC_ENERGY_H

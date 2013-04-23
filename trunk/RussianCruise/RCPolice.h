@@ -8,6 +8,7 @@
 #include "RCDrivingLicense.h"
 #include "RCStreet.h"
 #include "RCEnergy.h"
+#include "RCLight.h"
 
 #define MAX_FINES 100
 
@@ -60,6 +61,7 @@ private:
     RCDL        *dl;
     RCStreet    *street;
     RCEnergy	*nrg;
+    RCLight		*lgh;
 
 	string siren = "^0";
 	struct  fine fines[MAX_FINES];
@@ -83,13 +85,14 @@ private:
     void ReadUserFines( byte UCID );
     void BtnSirena( byte UCID );
     void BtnPogonya( byte UCID );
+    void ButtonClock( byte UCID );
 
 
 public:
 	RCPolice();
 	~RCPolice();
 
-	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy);
+	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
 	void SaveUserFines( byte UCID );
 	void SetUserBID( byte UCID, byte BID);
@@ -98,10 +101,10 @@ public:
 	void CopTurnOff( byte UCID );
 	void SetSirenLight( string sirenWord );
 	int IfCop ( byte UCID );
-	int ReadCop( byte UCID );
 	bool IsCop( byte UCID );
 	int InPursuite( byte UCID );
-	int SetPursuite( byte UCID, int State);
+
+	void Event();
 
 	void insim_mci( struct IS_MCI* packet );
 };
