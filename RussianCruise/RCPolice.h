@@ -37,7 +37,7 @@ struct PolicePlayer
     byte    BID2;
 
 	/** COP **/
-    byte    cop;
+    bool    cop;
     byte    radar;
     byte    sirena;         // коповский выключатель сирены
     byte    sirenaOnOff;    // постаянная запись положения сирены у духов
@@ -97,6 +97,11 @@ public:
 	void CopTurnOn( byte UCID );
 	void CopTurnOff( byte UCID );
 	void SetSirenLight( string sirenWord );
+	int IfCop ( byte UCID );
+	int ReadCop( byte UCID );
+	bool IsCop( byte UCID );
+	int InPursuite( byte UCID );
+	int SetPursuite( byte UCID, int State);
 
 	void insim_mci( struct IS_MCI* packet );
 };

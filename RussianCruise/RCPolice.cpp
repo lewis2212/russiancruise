@@ -73,16 +73,19 @@ void RCPolice::insim_ncn( struct IS_NCN* packet )
 void RCPolice::insim_npl( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
+	players[ packet->UCID ].cop = false;
 	strcpy(players[packet->UCID].CName ,packet->CName);
 }
 
 void RCPolice::insim_plp( struct IS_PLP* packet )
 {
+	players[ PLIDtoUCID[ packet->PLID ] ].Penalty =0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCPolice::insim_pll( struct IS_PLL* packet )
 {
+	players[ PLIDtoUCID[ packet->PLID ] ].Penalty =0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
@@ -355,6 +358,80 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
 	{
 		players[ packet->UCID ].BID2 =  packet->ClickID;
 	}
+
+	 /**
+	Âêëþ÷àåì ïîãîíþ
+	*/
+	if (packet->ClickID==40)
+	{
+		for (int g=0; g<MAX_PLAYERS; g++)
+		{
+			if  (players[i].BID2 == players[g].BID)
+			{
+				if (players[g].Pogonya == 0)
+				{
+					players[g].Pogonya = 1;
+					int worktime = time(&stime);
+					players[g].WorkTime = worktime+60*6;
+					strcpy(players[g].PogonyaReason,msg->GetMessage(players[g].UCID,1006));
+					char Text[96];
+					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(players[g].UCID,1007) , players[g].PName );
+					send_mst(Text);
+					nrg->Lock(players[g].UCID);
+
+					char fine_c[255];
+					sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+					ofstream readf (fine_c,ios::app);
+					readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " begin pursuit to "  << players[g].UName << endl;
+					readf.close();
+				}
+				break;
+			}
+		}
+		for (int g=0; g<MAX_PLAYERS; g++)
+		{
+			if ( police->IsCop( players[g].UCID )  != false )
+			{
+				for (int k=60; k<79; k++)
+					send_bfn(players[g].UCID,k);
+			}
+		}
+
+	}
+
+	/**
+	Âûêëþ÷àåì ïîãîíþ
+	*/
+	if (pack_btc->ClickID==41)
+	{
+
+		for (int g=0; g<MAX_PLAYERS; g++)
+		{
+			if  (players[i].BID2 == players[g].BID)
+			{
+				if (players[g].Pogonya != 0)
+				{
+					players[g].Pogonya = 0;
+					send_bfn(players[g].UCID,210);
+					char Text[96];
+					sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(players[g].UCID,1008) , players[g].PName );
+					send_mst(Text);
+					nrg->Unlock(players[g].UCID);
+				}
+				break;
+			}
+		}
+
+		for (int g=0; g<MAX_PLAYERS; g++)
+		{
+			if ( police->IsCop( players[g].UCID )  != false )
+			{
+				for (int k=60; k<79; k++)
+					send_bfn(players[g].UCID,k);
+			}
+		}
+	}
+
 }
 
 void RCPolice::insim_btt( struct IS_BTT* packet )
@@ -510,6 +587,13 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
 
 	if (packet->Fact == PITLANE_EXIT)
 	{
+		if ( players[ UCID ].Penalty != 0)
+		{
+			char Text[64];
+			sprintf(Text, "/p_clear %s", players[ UCID ].UName);
+			send_mst(Text);
+		}
+
 		int count = 0;
 		for (int j=0; j<MAX_FINES; j++)
 		{
@@ -671,10 +755,86 @@ void RCPolice::insim_mci( struct IS_MCI* packet )
     }
 }
 
+int RCPolice::IfCop ( byte UCID )
+{
+    char PlayerName[32];
+    strcpy(PlayerName,players[ UCID ].PName);
+
+    int COP = 0;
+
+    if (
+        ((strncmp("^4[^C^7ÄÏÑ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ÄÏC^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7äïñ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7äïc^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ÃÀÈ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ãàè^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ÃAÈ^4]",PlayerName,13)==0)
+         || (strncmp("^4[^C^7ãaè^4]",PlayerName,13)==0))
+        && (players[ UCID ].cop != 1)
+    )
+    {
+        COP += 1;
+    }
+
+    if ( ReadCop( UCID ) > 0)
+    {
+        COP += 2;
+    }
+
+    return COP;
+}
+
+int RCPolice::ReadCop( byte UCID )
+{
+    char file[255];
+    sprintf(file,"%smisc\\cops.txt",RootDir);
+
+    HANDLE fff;
+    WIN32_FIND_DATA fd;
+    fff = FindFirstFile(file,&fd);
+    if (fff == INVALID_HANDLE_VALUE)
+    {
+        return -1;
+    }
+    FindClose(fff);
+
+    ifstream readf (file,ios::in);
+
+    int cop = 0;
+    while (readf.good())
+    {
+        char str[32];
+        readf.getline(str,32);
+        if( strlen( str ) > 0 and strcmp( players[ UCID ].UName , str ) == 0 )
+		{
+			cop ++;
+			break;
+        }
+    }
+
+    readf.close();
+    return cop;
+}
+
+bool RCPolice::IsCop( byte UCID )
+{
+	return players[ UCID ].cop;
+}
 
 void RCPolice::SetSirenLight( string sirenWord )
 {
 	siren = sirenWord;
+}
+
+bool RCPolice::InPursuite( byte UCID )
+{
+	return players[ UCID ].Pogonya != 0;
+}
+
+int RCPolice::SetPursuite( byte UCID, int State)
+{
+	return players[ UCID ].Pogonya = State;
 }
 
 
