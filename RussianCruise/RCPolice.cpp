@@ -2,7 +2,7 @@
 
 RCPolice::RCPolice()
 {
-
+	memset( &fines, 0, sizeof( fine ) * MAX_FINES );
 }
 
 RCPolice::~RCPolice()
@@ -459,6 +459,37 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
             }
         }
     }
+
+	if (packet->ClickID == 106)
+	{
+
+		struct IS_BTN pack;
+		memset(&pack, 0, sizeof(struct IS_BTN));
+		pack.Size = sizeof(struct IS_BTN);
+		pack.Type = ISP_BTN;
+		pack.ReqI = 1;
+		pack.UCID = packet->UCID;
+		pack.Inst = 0;
+		pack.TypeIn = 0;
+
+		int fineID = 0;
+		for (int i=0; i<MAX_FINES; i++)
+		{
+			pack.L = (101-126/2)+1;
+			pack.BStyle = 16 + 64;
+			if (fines[i].id != 0)
+			{
+				fineID ++;
+				pack.T = 56+6*(fineID-1);
+				pack.W = 122;
+				pack.H = 6;
+				pack.ClickID = 110 + fineID;
+				sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)", fines[i].id, fines[i].name, fines[i].cash);
+				insim->send_packet(&pack);
+			}
+
+		}
+	}
 }
 
 void RCPolice::insim_btt( struct IS_BTT* packet )
@@ -578,8 +609,7 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
                 char Msg[64];
                 strcpy(Msg,msg->GetMessage(UCID ,1104));
                 send_mtc( UCID ,Msg);
-                strcpy(Msg,"^2| ^7");
-                strcat(Msg,fines[18].name);
+                sprintf(Msg,"^2| ^7%s", fines[18].name);
                 send_mtc( UCID ,Msg);
                 break;
             }
@@ -599,8 +629,7 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
                 char Msg[64];
                 strcpy(Msg,msg->GetMessage( UCID ,1104));
                 send_mtc( UCID ,Msg);
-                strcpy(Msg,"^2| ^7");
-                strcat(Msg,fines[13].name);
+                sprintf(Msg,"^2| ^7%s" ,fines[13].name);
                 send_mtc( UCID ,Msg);
                 break;
             }
@@ -1014,7 +1043,7 @@ void RCPolice::ReadFines()
             i = atoi(id);
             memset(&fines[i],0,sizeof(struct fine));
             fines[i].id = i;
-            strcpy(fines[i].name, name);
+            strncpy(fines[i].name, name, 64);
             fines[i].cash = atoi(cash);
 
         } // if strlen > 0

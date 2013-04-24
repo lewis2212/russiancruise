@@ -562,29 +562,11 @@ void btn_info (struct player *splayer, int b_type)
             insim->send_packet(&pack);
         }
     }
-    /*
-        if (b_type == 4)
-        {
-            int fineID = 0;
-            for (int i=0; i<MAX_FINES; i++)
-            {
-                pack.L = (101-126/2)+1;
-                pack.BStyle = 16 + 64;
-                if (ginfo->fines[i].id != 0)
-                {
-                    fineID ++;
-                    pack.T = 56+6*(fineID-1);
-                    pack.W = 122;
-                    pack.H = 6;
-                    pack.ClickID = 110 + fineID;
-                    sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)",ginfo->fines[i].id,ginfo->fines[i].name,ginfo->fines[i].cash);
-                    insim->send_packet(&pack);
-                }
 
-            }
+	if (b_type == 4)
+	{
+	}
 
-        }
-    */
     pack.BStyle = 8;
     pack.ClickID = 149;
     pack.L = 99+126/2-8;
@@ -792,6 +774,7 @@ void case_btc ()
 
                 btn_info(&ginfo->players[i],3);
             }
+
             if (pack_btc->ClickID == 106)
             {
                 for (int j=0; j<50; j++)
