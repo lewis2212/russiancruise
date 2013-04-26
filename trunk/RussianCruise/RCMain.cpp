@@ -1955,7 +1955,9 @@ void case_ncn ()
 
     read_user_cars(&ginfo->players[i]);
 
-    help_cmds(&ginfo->players[i],1);
+    //help_cmds(&ginfo->players[i],1);
+    send_mtc(pack_ncn->UCID,msg->GetMessage(pack_ncn->UCID,3200));
+    send_mtc(pack_ncn->UCID,msg->GetMessage(pack_ncn->UCID,3202));
 }
 
 void case_npl ()
