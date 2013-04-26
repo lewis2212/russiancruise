@@ -47,7 +47,6 @@ struct PolicePlayer
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
-    byte    Penalty;        // Если превысил скорость в питах
 
     int     WorkTime;			// время за которое он должен доставить товар
 };
