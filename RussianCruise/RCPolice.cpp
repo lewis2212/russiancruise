@@ -109,7 +109,6 @@ void RCPolice::insim_plp( struct IS_PLP* packet )
     dl->Unlock( PLIDtoUCID[ packet->PLID ] );
     nrg->Unlock( PLIDtoUCID[ packet->PLID ] );
 
-    players[ PLIDtoUCID[ packet->PLID ] ].Penalty =0;
     PLIDtoUCID.erase( packet->PLID );
 }
 
@@ -119,7 +118,6 @@ void RCPolice::insim_pll( struct IS_PLL* packet )
     dl->Unlock( PLIDtoUCID[ packet->PLID ] );
     nrg->Unlock( PLIDtoUCID[ packet->PLID ] );
 
-    players[ PLIDtoUCID[ packet->PLID ] ].Penalty =0;
     PLIDtoUCID.erase( packet->PLID );
 }
 
@@ -616,9 +614,8 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
         }
     }
 
-    if((packet->NewPen != 0) and (packet->Reason == PENR_SPEEDING))
+    if(packet->NewPen == PENALTY_SG or packet->NewPen == PENALTY_DT)
     {
-        players[ UCID ].Penalty = 1;
         for (int j=0; j<MAX_FINES; j++)
         {
             if (players[ UCID ].fines[j].fine_id == 0)
@@ -643,12 +640,9 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
 
     if (packet->Fact == PITLANE_EXIT)
     {
-        if ( players[ UCID ].Penalty != 0)
-        {
             char Text[64];
             sprintf(Text, "/p_clear %s", players[ UCID ].UName);
             send_mst(Text);
-        }
 
         int count = 0;
         for (int j=0; j<MAX_FINES; j++)
@@ -1009,7 +1003,7 @@ void RCPolice::ReadFines()
 {
     char file[255];
     strcpy(file,RootDir);
-    sprintf(file,"%smisc\\fines.txt" , RootDir);
+    sprintf(file,"%sdata\\RCPolice\\fines.txt" , RootDir);
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
