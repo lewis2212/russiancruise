@@ -205,6 +205,23 @@ void RCTaxi::readconfig(const char *Track)
         ClientCount=i;
     }
     readt.close();
+
+    //очистка маршалов
+    for (int i=0;i<ClientCount;i++)
+	{
+		struct IS_AXM pacAXM;
+		memset(&pacAXM, 0, sizeof(struct IS_AXM));
+		pacAXM.Info[0].Index=255;
+		pacAXM.Info[0].X=ClientPoints[i].X/4096;
+		pacAXM.Info[0].Y=ClientPoints[i].Y/4096;
+		pacAXM.Info[0].Zchar=ClientPoints[i].Z;
+		pacAXM.Type=ISP_AXM;
+		pacAXM.ReqI=1;
+		pacAXM.NumO=1;
+		pacAXM.Size=8+pacAXM.NumO*8;
+		pacAXM.PMOAction = PMO_DEL_OBJECTS;
+		insim->send_packet(&pacAXM);
+	}
 }
 
 
@@ -350,7 +367,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				struct streets StreetInfo;
 				memset(&StreetInfo,0,sizeof(streets));
 				street->CurentStreetInfoByNum(&StreetInfo,street->CurentStreetNum( UCID ));
-				if (Speed>(StreetInfo.SpeedLimit+10))
+				if (Speed>(StreetInfo.SpeedLimit+10) and players[ UCID ].PassStress <= 800)
 				{
 					if (players[ UCID ].spd==5) players[ UCID ].spd=0;
 					if (players[ UCID ].spd==0)
@@ -368,8 +385,8 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				int des_Y = ClientPoints[players[ UCID ].WorkPointDestinaion].Y/65536;
 				/** вычисляем растояние до точки остановки **/
 				Dist = Distance(X , Y , des_X , des_Y);
-				sprintf(d," ^7%4.0f ^Cм",Dist);
-				btn_Dist( UCID ,d);
+				//sprintf(d," ^7%4.0f ^Cм",Dist);
+				//btn_Dist( UCID ,d);
 
 				if (players[ UCID ].OnStreet == false and players[ UCID ].PassStress <= 800)
 				{
@@ -499,6 +516,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				long dH = abs((int)(sin(H)*100))-abs((int)(sin(H1)*100));
 
 				//int K = int(sqrt(abs((dD-dH)*(1+dA)*dS))/32);
+				if (Speed<60 and abs(A)<40) dA=0;
 				int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
 
 				players[ UCID ].PassStress += K;
@@ -885,7 +903,7 @@ void RCTaxi::taxi_done( byte UCID )
         srand ( time(NULL) );
         send_mtc( UCID , TaxiDialogs["exit"][ rand()%TaxiDialogs["exit"].size() ].c_str() ); // send random dialog phrase
     }
-	players[ UCID ].AcceptTime = time(NULL) + PASSANGER_INTERVAL/(NumP+1);
+	players[ UCID ].AcceptTime = time(NULL) + rand()%PASSANGER_INTERVAL/(NumP+1);
     players[ UCID ].WorkAccept = 0;
     players[ UCID ].WorkPointDestinaion = 0;
     players[ UCID ].WorkStreetDestinaion = 0;
@@ -953,7 +971,7 @@ void RCTaxi::btn_stress( byte UCID )
 
     pack.ClickID = 206;
     pack.BStyle = 32+64;
-    pack.L = 9;
+    pack.L = 1;
     pack.T = 125;
     pack.W = 48;
     pack.H = 4;
@@ -988,7 +1006,7 @@ void RCTaxi::btn_Dist( byte UCID , const char* Text)
 
     pack.ClickID = 205;
     pack.BStyle = 32+64;
-    pack.L = 1;
+    pack.L = 49;
     pack.T = 125;
     pack.W = 8;
     pack.H = 4;
