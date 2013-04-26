@@ -8,16 +8,17 @@
 
 typedef struct BankPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];              // Username
-    char    PName[24];              // Player name
-    double   Cash;
-    //char    CName[4];             // Car Name
-    bool    InZone;                 //зона банка
-    u_int   Credit;
-    time_t   Date_create;
+    struct  	CompCar Info;
+    char    	UName[24];              // Username
+    char    	PName[24];              // Player name
+    double   	Cash;
+    //char    	CName[4];             // Car Name
+    bool    	InZone;                 //зона банка
+    u_int   	Credit;
+    time_t  	Date_create;
 
-
+    u_int   	Deposit;
+    time_t   	Dep_Date_create;
 } _BankPlayer;
 
 struct Bank_info

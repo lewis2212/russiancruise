@@ -1102,7 +1102,7 @@ void case_mso ()
 
 
     //!help
-    if (((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0)) and !bank->InBank(ginfo->players[i].UCID))
+    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
     {
         for (int j=159; j>0; j--)
         {
