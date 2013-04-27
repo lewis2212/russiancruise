@@ -143,6 +143,7 @@ public:
 
     void insim_mci( struct IS_MCI* packet );   // ѕакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
+    void Event();
 
 
 };

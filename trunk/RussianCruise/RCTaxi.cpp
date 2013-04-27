@@ -224,14 +224,16 @@ void RCTaxi::readconfig(const char *Track)
 	}
 }
 
+void RCTaxi::Event()
+{
+
+}
 
 void RCTaxi::accept_user( byte UCID )
 {
 	if (players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].WorkAccept == 0 and players[UCID].CanWork)
 	{
-
-		if ( players[ UCID ].AcceptTime >= time(&acctime) )
-			return;
+		//if (players[UCID].AcceptTime >= time(&acctime)) return;
 
 		int DestPoint = 0;
 		srand(time(NULL));
@@ -239,7 +241,7 @@ void RCTaxi::accept_user( byte UCID )
 		while (ok)
 		{
 			DestPoint = rand()%ClientCount;
-			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID )) ok = false;
+			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID)) ok = false;
 			Sleep(100);
 		}
 
@@ -388,9 +390,9 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				//sprintf(d," ^7%4.0f ^Cм",Dist);
 				//btn_Dist( UCID ,d);
 
-				if (players[ UCID ].OnStreet == false and players[ UCID ].PassStress <= 800)
+				if (players[UCID].OnStreet == false and players[ UCID ].PassStress <= 800)
 				{
-					players[ UCID ].OnStreet = true;
+					players[UCID].OnStreet = true;
 					char MSG[96];
 					sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров",(Dist-(int)Dist%10));
 					send_mtc( UCID ,MSG);
@@ -490,8 +492,27 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				players[ UCID ].OnStreet = false;
 			}
 
+			if (players[ UCID ].WorkAccept == 1)
+			{
+				struct streets StreetInfo;
+				memset(&StreetInfo,0,sizeof(streets));
+				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
+
+				char Msg[96];
+				sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+				btn_information( UCID ,Msg);
+			}
+
 			if (players[ UCID ].WorkAccept == 2)
 			{
+				struct streets StreetInfo;
+				memset(&StreetInfo,0,sizeof(streets));
+				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
+
+				char Msg[96];
+				sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
+				if (players[ UCID ].PassStress <= 800) btn_information( UCID ,Msg);
+
 				int X = pack_mci->Info[i].X/65536;
 				int Y = pack_mci->Info[i].Y/65536;
 				int Z = pack_mci->Info[i].Z/65536;
@@ -532,8 +553,9 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				}
 
 				btn_stress( UCID );
+
 				sprintf(d," ^7%d ^Cм",(int)Dist);
-				btn_Dist( UCID ,d);
+				if (players[ UCID ].OnStreet and players[ UCID ].PassStress <= 800) btn_Dist( UCID ,d);
 
 				if (players[ UCID ].PassStress > 800)
 				{
@@ -541,6 +563,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 					{
 						srand ( time(NULL) );
 						send_mtc( UCID ,  TaxiDialogs["needstop"][ rand()%TaxiDialogs["needstop"].size() ].c_str() ); // пугаецца, требует остановить
+						btn_information_clear( UCID );
 					}
 
 					players[ UCID ].StressOverCount ++;
