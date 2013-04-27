@@ -2610,6 +2610,7 @@ void *thread_work (void *params)
     {
         police->Event();
         pizza->Event();
+        taxi->Event();
         Sleep(1000);
     }
     return 0;
