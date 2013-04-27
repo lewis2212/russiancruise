@@ -556,6 +556,11 @@ void RCBank::insim_mso( struct IS_MSO* packet )
         }
         if (strncmp(Message, "!withdraw", strlen("!withdraw")) == 0 )
         {
+        	if (players[ packet->UCID ].Dep_Date_create==0)
+            {
+                send_mtc( packet->UCID ,"^5| ^C^7У вас нет вкладов.");
+                return;
+            }
             strtok (Message," ");
         	double razn=((double)(players[ packet->UCID ].Dep_Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
             int dtt;
