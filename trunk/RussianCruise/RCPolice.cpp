@@ -614,7 +614,7 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
         }
     }
 
-    if(packet->NewPen == PENALTY_SG or packet->NewPen == PENALTY_DT)
+    if(packet->NewPen == PENALTY_30 or packet->NewPen == PENALTY_45)
     {
         for (int j=0; j<MAX_FINES; j++)
         {
@@ -962,6 +962,7 @@ void RCPolice::SaveUserFines ( byte UCID )
 
 void RCPolice::ReadUserFines( byte UCID )
 {
+
     char file[255];
     sprintf(file,"%sdata\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
 
