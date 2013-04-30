@@ -70,8 +70,6 @@ H = 118;
 */
 using namespace std;
 
-
-
 #include <math.h>
 #include <windows.h>
 #include <time.h>
@@ -95,13 +93,8 @@ using namespace std;
 
 //#include "sqlite/SQLite.h"
 
-
-
 #define MAX_CARS 30
 
-#ifndef _RC_POLICE_H
-#define MAX_FINES 100
-#endif
 
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
