@@ -20,6 +20,17 @@ const char* RCMessage::GetMessage(byte UCID, int MsgID)
 	return MsgArray[ players[ UCID ].LangID ][ MsgID ].c_str();
 }
 
+const char* RCMessage::GetMessage( byte UCID, string CODE )
+{
+	if (players[ UCID ].LangID == 0)
+		return (char*)("^1LangID == 0");
+
+	if( MsgArray2[ players[ UCID ].LangID ].find( CODE ) == MsgArray2[ players[ UCID ].LangID ].end() )
+		return CODE.c_str();
+
+	return MsgArray2[ players[ UCID ].LangID ][ CODE ].c_str();
+}
+
 
 
 int RCMessage::init(const char *dir, void *CInSim)
@@ -62,6 +73,8 @@ void RCMessage::readconfig(const char *Track)
             //memset(&MsgArray[ LANG_ID_RUS ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_RUS ][atoi(id)]));
             MsgArray[ LANG_ID_RUS ].erase( atoi(id) );
             MsgArray[ LANG_ID_RUS ][ atoi(id)] = mesage;
+
+            MsgArray2[ LANG_ID_RUS ][ id ] = mesage;
         }
     }
     readf.close();
@@ -90,6 +103,8 @@ void RCMessage::readconfig(const char *Track)
             //memset(&MsgArray[ LANG_ID_ENG ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_ENG ][atoi(id)]));
             MsgArray[ LANG_ID_ENG ].erase( atoi(id) );
             MsgArray[ LANG_ID_ENG ][ atoi(id) ] = mesage;
+
+            MsgArray2[ LANG_ID_ENG ][ id ] = mesage;
 
         }
     }

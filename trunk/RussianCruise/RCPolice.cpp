@@ -1089,10 +1089,10 @@ void RCPolice::Event()
                 send_bfn( UCID ,210);
 
                 char Text[64];
-                sprintf( Text , "/msg ^2|%s %s" , playr.PName , msg->GetMessage( UCID ,1706) );
+                sprintf( Text , "/msg ^2| %s %s" , playr.PName , msg->GetMessage( UCID ,1706) );
 
                 send_mst(Text);
-                playr.Pogonya = 0;
+                players[ UCID ].Pogonya = 0;
                 nrg->Unlock( UCID );
                 dl->AddSkill( UCID );
             }
