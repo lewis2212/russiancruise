@@ -12,23 +12,24 @@ RCMessage::~RCMessage()
 
 }
 
-const char* RCMessage::GetMessage(byte UCID, int MsgID)
+/*const char* RCMessage::GetMessage(byte UCID, int MsgID)
 {
 	if (players[ UCID ].LangID == 0)
 		return (char*)("^1LangID == 0");
 
 	return MsgArray[ players[ UCID ].LangID ][ MsgID ].c_str();
-}
+}*/
 
 const char* RCMessage::GetMessage( byte UCID, string CODE )
 {
 	if (players[ UCID ].LangID == 0)
 		return (char*)("^1LangID == 0");
 
-	if( MsgArray2[ players[ UCID ].LangID ].find( CODE ) == MsgArray2[ players[ UCID ].LangID ].end() )
+	//send_mst( MsgArray2[ players[ UCID ].LangID ][ "400" ].c_str() );
+	if( MsgArray[ players[ UCID ].LangID ].find( CODE ) == MsgArray[ players[ UCID ].LangID ].end() )
 		return CODE.c_str();
 
-	return MsgArray2[ players[ UCID ].LangID ][ CODE ].c_str();
+	return MsgArray[ players[ UCID ].LangID ][ CODE ].c_str();
 }
 
 
@@ -65,16 +66,17 @@ void RCMessage::readconfig(const char *Track)
         readf.getline(str,128);
         if (strlen(str) > 6)
         {
-            char * id;
-            char * mesage;
+            string id;
+            string mesage;
 
             id = strtok (str,"\"");
-            mesage = strtok (NULL,"\"");
-            //memset(&MsgArray[ LANG_ID_RUS ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_RUS ][atoi(id)]));
-            MsgArray[ LANG_ID_RUS ].erase( atoi(id) );
-            MsgArray[ LANG_ID_RUS ][ atoi(id)] = mesage;
+            id.erase(id.find_last_not_of(" \t\r\n\0")+1);
 
-            MsgArray2[ LANG_ID_RUS ][ id ] = mesage;
+			mesage = strtok (NULL,"\"");
+			mesage.erase( mesage.find_last_not_of(" \t\r\n\0")+1);
+
+			MsgArray[ LANG_ID_RUS ].erase( id );
+            MsgArray[ LANG_ID_RUS ][ id ] = mesage;
         }
     }
     readf.close();
@@ -95,17 +97,17 @@ void RCMessage::readconfig(const char *Track)
         readf2.getline(str,128);
         if (strlen(str) > 6)
         {
-            char * id;
-            char * mesage;
+			string id;
+            string mesage;
 
             id = strtok (str,"\"");
-            mesage = strtok (NULL,"\"");
-            //memset(&MsgArray[ LANG_ID_ENG ][atoi(id)],0,sizeof(MsgArray[ LANG_ID_ENG ][atoi(id)]));
-            MsgArray[ LANG_ID_ENG ].erase( atoi(id) );
-            MsgArray[ LANG_ID_ENG ][ atoi(id) ] = mesage;
+            id.erase(id.find_last_not_of(" \t\r\n\0")+1);
 
-            MsgArray2[ LANG_ID_ENG ][ id ] = mesage;
+			mesage = strtok (NULL,"\"");
+			mesage.erase( mesage.find_last_not_of(" \t\r\n\0")+1);
 
+			MsgArray[ LANG_ID_ENG ].erase( id );
+            MsgArray[ LANG_ID_ENG ][ id ] = mesage;
         }
     }
     readf2.close();
@@ -182,7 +184,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if (strlen(message2) < 8)
         {
-            send_mtc( packet->UCID ,GetMessage( packet->UCID ,2104));
+            send_mtc( packet->UCID ,GetMessage( packet->UCID , "2104"));
             return;
         }
 
@@ -194,7 +196,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc( packet->UCID , GetMessage( packet->UCID ,2105));
+            send_mtc( packet->UCID , GetMessage( packet->UCID , "2105"));
             return;
         }
 

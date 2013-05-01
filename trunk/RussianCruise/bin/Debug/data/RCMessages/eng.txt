@@ -4,10 +4,10 @@
 201 "^2Fines"
 202 "^2About"
 
-400 "^2PITSAFE"
+PitSaveGood "^2PITSAFE"
 401 "^3Shop"
 402 "^3Cafe"
-403 "^1PITSAFE"
+PitSaveNotGood "^1PITSAFE"
 404 "^3Bank"
 
 
