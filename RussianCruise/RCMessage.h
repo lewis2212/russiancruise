@@ -21,8 +21,8 @@ private:
     char RootDir[MAX_PATH];
 
     //char MsgArray[3][20000][64]; // message[lang_id][msg_id][msg_len];
-    map< int , map< int ,string> >MsgArray;
-    map< int , map< string ,string> >MsgArray2;
+    //map< int , map< int ,string> >MsgArray;
+    map< int , map< string ,string> >MsgArray;
 
     map<byte, MPlayer>players;
 
@@ -39,7 +39,7 @@ public:
 
     void save(byte UCID);
 
-    const char* GetMessage( byte UCID, int MsgID );
+    //const char* GetMessage( byte UCID, int MsgID );
     const char* GetMessage( byte UCID, string CODE );
 
 }; // this method is not good but better when old method.

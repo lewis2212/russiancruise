@@ -88,12 +88,12 @@ void RCPolice::insim_npl( struct IS_NPL* packet )
     if (IfCop(  packet->UCID  ) == 1)
     {
         send_mst( specText );
-        send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,1300));
+        send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "1300" ));
         return;
     }
     else if (IfCop(  packet->UCID  ) == 3)
     {
-        send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,1301));
+        send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "1301" ));
 
         players[ packet->UCID ].cop = true;
 
@@ -168,7 +168,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
 
         if (j == 0)
         {
-            send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,3102));;
+            send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "3102" ));;
         }
     }
 
@@ -188,7 +188,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
 
         if ((!id) or (id_i < 1))
         {
-            send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2105));
+            send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "3105" ));
             return;
         }
 
@@ -226,13 +226,13 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
                         }
 
                         bank->AddToBank((fines[id_i].cash)-((fines[id_i].cash)*0.05)*cop);
-                        send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2106));
+                        send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2106" ));
                         dl->RemSkill( packet->UCID );
                         break;
                     }
 
                     if (j == MAX_FINES)
-                        send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2107));
+                        send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2107" ));
                 }
             }
             else send_mtc( packet->UCID ,"^1| ^C^7На вашем счете недостаточно средств для оплаты штрафа");
@@ -247,12 +247,12 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
         {
             if (players[ packet->UCID ].sirena ==0 )
             {
-                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2100));
+                send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2100" ));
                 players[ packet->UCID ].sirena = 1;
             }
             else
             {
-                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2101));
+                send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2101" ));
                 players[ packet->UCID ].sirena = 0;
             }
         }
@@ -265,12 +265,12 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
         {
             if (players[ packet->UCID ].radar ==0 )
             {
-                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2102));
+                send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2102" ));
                 players[ packet->UCID ].radar = 1;
             }
             else
             {
-                send_mtc( packet->UCID ,msg->GetMessage( packet->UCID ,2103));
+                send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2103" ));
                 players[ packet->UCID ].radar = 0;
             }
         }
@@ -405,9 +405,9 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
                     players[ play.first ].Pogonya = 1;
                     int worktime = time(NULL);
                     players[ play.first ].WorkTime = worktime+60*6;
-                    strcpy(players[ play.first ].PogonyaReason,msg->GetMessage( play.first ,1006));
+                    strcpy(players[ play.first ].PogonyaReason,msg->GetMessage(  play.first , "1006" ));
                     char Text[96];
-                    sprintf(Text,"/msg ^2| %s %s", msg->GetMessage( play.first ,1007) , players[ play.first ].PName );
+                    sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(  play.first , "1007" ) , players[ play.first ].PName );
                     send_mst(Text);
                     nrg->Lock( play.first );
 
@@ -443,7 +443,7 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
                     players[ play.first ].Pogonya = 0;
                     send_bfn( play.first ,210);
                     char Text[96];
-                    sprintf(Text,"/msg ^2| %s %s", msg->GetMessage( play.first ,1008) , players[ play.first ].PName );
+                    sprintf(Text,"/msg ^2| %s %s", msg->GetMessage(  play.first , "1008" ) , players[ play.first ].PName );
                     send_mst(Text);
                     nrg->Unlock( play.first );
                 }
@@ -509,17 +509,17 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
                         if( fines[j].id == atoi(packet->Text) )
                         {
                             char Msg[64];
-                            strcpy(Msg,msg->GetMessage( play.first ,1104));
+                            strcpy(Msg,msg->GetMessage(  play.first , "1104" ));
                             send_mtc( play.first ,Msg);
                             strcpy(Msg,"^2| ^7");
                             strcat(Msg,fines[atoi(packet->Text)].name);
                             send_mtc( play.first ,Msg);
 
-                            strcpy(Msg,msg->GetMessage( packet->UCID ,1105));
+                            strcpy(Msg,msg->GetMessage(  packet->UCID , "1105" ));
                             send_mtc( packet->UCID ,Msg);
                             send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
 
-                            strcpy(Msg,msg->GetMessage( packet->UCID ,1106));
+                            strcpy(Msg,msg->GetMessage(  packet->UCID , "1106" ));
                             strcat(Msg,players[ play.first ].PName);
                             send_mtc( packet->UCID ,Msg);
 
@@ -560,17 +560,17 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
                         if ( players[ play.first ].fines[j].fine_id == atoi( packet->Text ) )
                         {
                             char Msg[64];
-                            strcpy(Msg,msg->GetMessage( play.first ,1107));
+                            strcpy(Msg,msg->GetMessage(  play.first , "1107" ));
                             send_mtc( play.first ,Msg);
                             strcpy(Msg,"^2| ");
                             strcat(Msg,fines[atoi(packet->Text)].name);
                             send_mtc( play.first ,Msg);
 
-                            strcpy(Msg,msg->GetMessage( packet->UCID ,1108));
+                            strcpy(Msg,msg->GetMessage(  packet->UCID , "1108" ));
                             send_mtc( packet->UCID ,Msg);
                             send_mtc( packet->UCID ,fines[atoi(packet->Text)].name);
 
-                            strcpy(Msg,msg->GetMessage( play.first ,1106));
+                            strcpy(Msg,msg->GetMessage(  play.first , "1106" ));
                             strcat(Msg,players[ play.first ].PName);
                             send_mtc( packet->UCID ,Msg);
 
@@ -605,7 +605,7 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
                 players[ UCID ].fines[j].fine_date = int(time(NULL));
 
                 char Msg[64];
-                strcpy(Msg,msg->GetMessage(UCID ,1104));
+                strcpy(Msg,msg->GetMessage( UCID , "1104" ));
                 send_mtc( UCID ,Msg);
                 sprintf(Msg,"^2| ^7%s", fines[18].name);
                 send_mtc( UCID ,Msg);
@@ -624,7 +624,7 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
                 players[ UCID ].fines[j].fine_date = int(time(NULL));
 
                 char Msg[64];
-                strcpy(Msg,msg->GetMessage( UCID ,1104));
+                strcpy(Msg,msg->GetMessage(  UCID , "1104" ));
                 send_mtc( UCID ,Msg);
                 sprintf(Msg,"^2| ^7%s" ,fines[13].name);
                 send_mtc( UCID ,Msg);
@@ -655,7 +655,7 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
         {
             char Text[64];
             sprintf(Text, "/pitlane %s",players[ UCID ].UName);
-            send_mtc( UCID ,msg->GetMessage( UCID ,3400));
+            send_mtc( UCID ,msg->GetMessage(  UCID , "3400" ));
             send_mst(Text);
         }
     }
@@ -678,7 +678,7 @@ void RCPolice::insim_mci( struct IS_MCI* packet )
             players[ UCID ].StopTime = 0;
             if (players[ UCID ].radar ==1 )
             {
-                send_mtc( UCID ,msg->GetMessage( UCID ,1700));
+                send_mtc( UCID ,msg->GetMessage(  UCID , "1700" ));
                 players[ UCID ].radar = 0;
             }
         }
@@ -708,13 +708,13 @@ void RCPolice::insim_mci( struct IS_MCI* packet )
 
                             players[ UCID2 ].Pogonya = 2;
                             nrg->Unlock( UCID2 );
-                            strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage( UCID2 ,1701));
+                            strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage(  UCID2 , "1701" ));
 
                             char Text[96];
-                            sprintf(Text,"/msg ^2| %s%s", players[ UCID2 ].PName, msg->GetMessage( UCID ,1702));
+                            sprintf(Text,"/msg ^2| %s%s", players[ UCID2 ].PName, msg->GetMessage(  UCID , "1702" ));
                             send_mst(Text);
 
-                            send_mtc( UCID ,msg->GetMessage( UCID ,1703));
+                            send_mtc( UCID ,msg->GetMessage(  UCID , "1703" ));
                         }
                     }
                 } // pogonya
@@ -733,7 +733,7 @@ void RCPolice::insim_mci( struct IS_MCI* packet )
                         {
                             char text[64];
                             int Speed2 = Speed - StreetInfo.SpeedLimit;
-                            sprintf(text,"^2| %s%s%d%s",players[ UCID2 ].PName,msg->GetMessage( UCID2 ,1704),Speed2,msg->GetMessage( UCID ,1705));
+                            sprintf(text,"^2| %s%s%d%s",players[ UCID2 ].PName,msg->GetMessage(   UCID2 , "1704" ),Speed2,msg->GetMessage( UCID , "1705" ));
                             send_mtc( UCID ,text);
 
                             if (players[ UCID2 ].Pogonya == 0)
@@ -741,9 +741,9 @@ void RCPolice::insim_mci( struct IS_MCI* packet )
                                 players[ UCID2 ].Pogonya = 1;
                                 int worktime = time(NULL);
                                 players[ UCID2 ].WorkTime = worktime+60*6;
-                                strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage( UCID2 ,1006));
+                                strcpy(players[ UCID2 ].PogonyaReason,msg->GetMessage(  UCID2 , "1006" ));
                                 char Text[96];
-                                sprintf(Text,"/msg ^2| %s%s", msg->GetMessage( UCID2 ,1007) , players[ UCID2 ].PName );
+                                sprintf(Text,"/msg ^2| %s%s", msg->GetMessage(  UCID2 , "1007" ) , players[ UCID2 ].PName );
                                 send_mst(Text);
                                 nrg->Lock( UCID2 );
                             }
@@ -1089,7 +1089,7 @@ void RCPolice::Event()
                 send_bfn( UCID ,210);
 
                 char Text[64];
-                sprintf( Text , "/msg ^2| %s %s" , playr.PName , msg->GetMessage( UCID ,1706) );
+                sprintf( Text , "/msg ^2| %s %s" , playr.PName , msg->GetMessage(  UCID , "1706" ) );
 
                 send_mst(Text);
                 players[ UCID ].Pogonya = 0;
