@@ -594,9 +594,10 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
 void RCPolice::insim_pen( struct IS_PEN* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
-
-    if (packet->Reason == PENR_WRONG_WAY)
+cout << (int)packet->Reason << endl;
+    if (packet->Reason == PENR_WRONG_WAY )
     {
+    	cout << "PENR_WRONG_WAY" << endl;
         for (int j=0; j<MAX_FINES; j++)
         {
             if (players[ UCID ].fines[j].fine_id == 0)
@@ -613,24 +614,31 @@ void RCPolice::insim_pen( struct IS_PEN* packet )
             }
         }
     }
-
-    if(packet->NewPen == PENALTY_30 or packet->NewPen == PENALTY_45)
+    else if (packet->Reason == PENR_SPEEDING )
     {
-        for (int j=0; j<MAX_FINES; j++)
-        {
-            if (players[ UCID ].fines[j].fine_id == 0)
-            {
-                players[ UCID ].fines[j].fine_id = 13;
-                players[ UCID ].fines[j].fine_date = int(time(NULL));
+    	cout << "PENR_SPEEDING" << endl;
+    	cout << (int)packet->NewPen << endl;
+		if( packet->NewPen == PENALTY_30 or
+			packet->NewPen == PENALTY_45 or
+			packet->NewPen == PENALTY_DT or
+			packet->NewPen == PENALTY_SG )
+		{
+			for (int j=0; j<MAX_FINES; j++)
+			{
+				if (players[ UCID ].fines[j].fine_id == 0)
+				{
+					players[ UCID ].fines[j].fine_id = 13;
+					players[ UCID ].fines[j].fine_date = int(time(NULL));
 
-                char Msg[64];
-                strcpy(Msg,msg->GetMessage(  UCID , "1104" ));
-                send_mtc( UCID ,Msg);
-                sprintf(Msg,"^2| ^7%s" ,fines[13].name);
-                send_mtc( UCID ,Msg);
-                break;
-            }
-        }
+					char Msg[64];
+					strcpy(Msg,msg->GetMessage(  UCID , "1104" ));
+					send_mtc( UCID ,Msg);
+					sprintf(Msg,"^2| ^7%s" ,fines[13].name);
+					send_mtc( UCID ,Msg);
+					break;
+				}
+			}
+		}
     }
 }
 
