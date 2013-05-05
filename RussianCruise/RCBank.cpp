@@ -20,7 +20,7 @@ int RCBank::GetCash(byte UCID)
 
 bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
 {
-    char Text[96];
+    char Text[128];
     sprintf(Text,"^5| ^7^CНа ваш счет поступило: %d ^3RUR^7.",Cash);
     if( Show )
         send_mtc(UCID, Text);
@@ -31,7 +31,7 @@ bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
 
 bool RCBank::RemCash(byte UCID, int Cash)
 {
-    char Text[96];
+    char Text[128];
     sprintf(Text,"^5| ^7^CС вашего счета списано: %d ^3RUR^7.",Cash);
     send_mtc(UCID, Text);
     players[ UCID ].Cash -= Cash;
@@ -235,7 +235,7 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
     /** credit **/
     if (players[ packet->UCID ].Date_create!=0)
     {
-        char Text[96];
+        char Text[128];
         double razn=((double)(players[ packet->UCID ].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
 
         printf("%d",razn);
@@ -264,7 +264,7 @@ void RCBank::insim_ncn( struct IS_NCN* packet )
 
 void RCBank::credit_penalty (byte UCID)
 {
-    char Text[96];
+    char Text[128];
     double razn=((double)(players[ UCID ].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
     int c = (int)abs((ceil(razn)));
     sprintf(Text,"^1| ^1^CВЫ ПРОСРОЧИЛИ КРЕДИТ!");
@@ -347,12 +347,12 @@ void RCBank::insim_cpr( struct IS_CPR* packet )
 void RCBank::insim_mso( struct IS_MSO* packet )
 {
 
-    char Message[96];
+    char Message[128];
     strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
 
     if (players[ packet->UCID ].InZone)
     {
-        char Text[96];
+        char Text[128];
 
         /** Кредиты **/
 

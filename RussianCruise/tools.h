@@ -1,12 +1,18 @@
 #ifndef _RC_TOOLS_H
 #define _RC_TOOLS_H
 
+using namespace std;
+
 #include <math.h>
 #include <windows.h>
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
 
 typedef unsigned char byte;
+
+
 
 struct square           // square of destination point
 {
@@ -36,6 +42,6 @@ namespace tools {
 
 	void log(const char *text);
 	void read_mysql(const char *path ,mysqlConf *conf);
-}
+};
 
 #endif

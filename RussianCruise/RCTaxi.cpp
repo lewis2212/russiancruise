@@ -272,7 +272,7 @@ void RCTaxi::accept_user( byte UCID )
 			memset(&StreetInfo,0,sizeof(streets));
 			street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
-			char Msg[96];
+			char Msg[128];
 			sprintf(Msg,"^6|^C^7 Заберите клиента на %s ",StreetInfo.Street);
 			send_mtc( UCID ,Msg);
 			sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
@@ -311,7 +311,7 @@ void RCTaxi::accept_user2(byte UCID)
 		memset(&StreetInfo,0,sizeof(streets));
 		street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
-		char Msg[96];
+		char Msg[128];
 		sprintf(Msg,"^6|^C^7 Отвези меня на %s ",StreetInfo.Street);
 		send_mtc( UCID ,Msg);
 		sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
@@ -338,7 +338,7 @@ void RCTaxi::insim_cpr( struct IS_CPR* packet )
 void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 {
     float Dist;
-    char d[96];
+
     for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
     {
     	byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
@@ -365,7 +365,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 		{
 			if(players[ UCID ].WorkAccept == 2)
 			{
-				char dd[96];
+
 				struct streets StreetInfo;
 				memset(&StreetInfo,0,sizeof(streets));
 				street->CurentStreetInfoByNum(&StreetInfo,street->CurentStreetNum( UCID ));
@@ -393,7 +393,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				if (players[UCID].OnStreet == false and players[ UCID ].PassStress <= 800)
 				{
 					players[UCID].OnStreet = true;
-					char MSG[96];
+					char MSG[128];
 					sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров",(Dist-(int)Dist%10));
 					send_mtc( UCID ,MSG);
 				}
@@ -498,7 +498,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				memset(&StreetInfo,0,sizeof(streets));
 				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
-				char Msg[96];
+				char Msg[128];
 				sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
 				btn_information( UCID ,Msg);
 			}
@@ -509,7 +509,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				memset(&StreetInfo,0,sizeof(streets));
 				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
-				char Msg[96];
+				char Msg[128];
 				sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
 				if (players[ UCID ].PassStress <= 800) btn_information( UCID ,Msg);
 
@@ -553,7 +553,7 @@ void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
 				}
 
 				btn_stress( UCID );
-
+				char d[128];
 				sprintf(d," ^7%d ^Cм",(int)Dist);
 				if (players[ UCID ].OnStreet and players[ UCID ].PassStress <= 800) btn_Dist( UCID ,d);
 
@@ -642,7 +642,7 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
     if (packet->UCID == 0)
 		return;
 
-    char Message[96];
+    char Message[128];
     strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
 
     if (strncmp(Message, "!save", strlen("!save")) == 0){

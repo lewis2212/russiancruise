@@ -13,6 +13,7 @@ using namespace std;
 #include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
 #include <map>
+#include <vector>
 
 #include "mysql/include/mysql.h"
 
@@ -79,6 +80,15 @@ protected:
 
 
 private:
+};
+
+class SplitString : public string {
+    std::vector<string> flds;
+public:
+    SplitString(char *s) : string(s) { };
+    SplitString(string s) : string(s) { };
+    SplitString() : string() { };
+    std::vector<string>& split( const char delim, int rep=0);
 };
 
 #endif // RCBASECLASS_H

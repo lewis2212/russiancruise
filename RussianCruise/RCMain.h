@@ -182,12 +182,10 @@ struct player
     float   Bonus_dist;
     int     Bonus_count;
     /******************/
-    char    Lang[4];
-    byte    lang_id;
     byte    Svetofor;
 
     /** Flood **/
-    char    Msg[128];
+    string  Msg;
     int     FloodCount;
     int     FloodTime;
 
