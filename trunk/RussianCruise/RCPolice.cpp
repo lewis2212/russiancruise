@@ -175,7 +175,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
     if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
     {
 
-        char GetMessage2[96];
+        char GetMessage2[128];
         strcpy(GetMessage2,Msg);
 
         char * comand;
@@ -188,7 +188,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
 
         if ((!id) or (id_i < 1))
         {
-            send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "3105" ));
+            send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2105" ));
             return;
         }
 

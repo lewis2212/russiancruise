@@ -1,9 +1,7 @@
-
-
 #include "tools.h"
 #include <stdio.h>
 #include <string.h>
-using namespace std;
+
 // с какой стороны обрезать символы - слева, справа или с обеих сторон
 enum trim_type {LEFT=1, RIGHT, LEFT_AND_RIGHT};
 // первый параметр - строка
@@ -65,6 +63,7 @@ void trim(char *str, char *s, trim_type t=LEFT_AND_RIGHT)
 // =================================================
 
 namespace tools {
+
 	void log(const char *text){
 
 		FILE *file;
@@ -77,7 +76,7 @@ namespace tools {
 
 	void read_mysql(const char *path ,mysqlConf *conf)
 	{
-		 HANDLE fff;
+		HANDLE fff;
 		WIN32_FIND_DATA fd;
 		fff = FindFirstFile(path,&fd);
 		if (fff == INVALID_HANDLE_VALUE)

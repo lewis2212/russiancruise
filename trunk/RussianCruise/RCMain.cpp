@@ -1831,8 +1831,8 @@ void case_mso_flood ()
             break;
 
 
-    char Msg[128];
-    strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+    string Msg;
+    Msg = pack_mso->Msg + ((unsigned char)pack_mso->TextStart) ;
 
     /**  FLOOD ***/
     if (pack_mso->UserType == MSO_USER) // if msg from user
@@ -1867,7 +1867,7 @@ void case_mso_flood ()
 
         for (int j=0; j< ginfo->WordsCount; j++)
         {
-            if (strstr(Msg,ginfo->Words[j]))
+            if ( Msg.find( ginfo->Words[j]) != string::npos )
             {
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2005" ));
 
@@ -1876,11 +1876,12 @@ void case_mso_flood ()
             }
 
         }
-        strcpy(ginfo->players[i].Msg,Msg);
+        ginfo->players[i].Msg = Msg;
     } // if UserType != MSO_PREFIX
     /** Flood and bad words **/
 
 }
+
 void case_mso_cop ()
 {
     int i;
@@ -1899,7 +1900,7 @@ void case_mso_cop ()
         if (ginfo->players[i].UCID == pack_mso->UCID)
             break;
 
-    char Msg[96];
+    char Msg[128];
     strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
     if ( strcmp( ginfo->players[i].UName ,"denis-takumi") == 0 )

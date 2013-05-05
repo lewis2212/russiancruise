@@ -141,7 +141,7 @@ void RCPizza::Take( byte UCID )
             players[ UCID ].WorkTime = worktime + PIZZA_WORK_TIME;
             players[ UCID ].WorkDestinaion = players[ UCID ].WorkPlayerAccept;
             players[ UCID ].WorkAccept = 2;
-            char text[96];
+            char text[128];
             strcpy(text,msg->GetMessage(  UCID , "4201" ));
             strcat(text,players[ players[ UCID ].WorkPlayerAccept ].PName);
 

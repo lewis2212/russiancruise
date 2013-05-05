@@ -168,7 +168,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
     if (packet->UCID == 0)
         return;
 
-    char Msg[96];
+    char Msg[128];
     strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
 
 
@@ -179,7 +179,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
     {
         cout << players[ packet->UCID ].UName << " send !lang" << endl;
 
-        char message2[96];
+        char message2[128];
         strcpy(message2,Msg);
 
         if (strlen(message2) < 8)
