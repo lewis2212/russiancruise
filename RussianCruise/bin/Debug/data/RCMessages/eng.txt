@@ -1,4 +1,5 @@
-100 "Energy"
+Energy " Energy"
+LvlAndSkill " ^C^7Drive Level: ^2%d^7, skill:^2%4.2f"
 
 200 "^2Cars"
 201 "^2Fines"

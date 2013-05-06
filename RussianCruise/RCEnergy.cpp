@@ -385,56 +385,33 @@ void RCEnergy::btn_energy ( byte UCID )
     pack.UCID = UCID;
     pack.Inst = 0;
     pack.TypeIn = 0;
-    // bg
     pack.ClickID = 207;
-    pack.BStyle = 32;
+    pack.BStyle = 32+64;
     pack.L = 100;
     pack.T = 1;
-    pack.W = 35;
+    pack.W = 30;
     pack.H = 4;
-    strcat(pack.Text,"");
-    insim->send_packet(&pack);
 
-    pack.ClickID = 209;
-    pack.BStyle = 1;
-    pack.L = 100;
-    pack.T = 1;
-    pack.W = 7;
-    pack.H = 4;
     if (players[ UCID ].Zone == 3)
-    {
-        strcpy(pack.Text,"^2");
-    }
-    else
-    {
-        strcpy(pack.Text,"^1");
-    }
-    strcat(pack.Text,msg->GetMessage(  UCID , "100" ));
-    insim->send_packet(&pack);
-    //
-    pack.ClickID = 208;
-    pack.BStyle = 64;
-    pack.L = 107;
-    pack.T = 1;
-    pack.W = 26;
-    pack.H = 4;
+		strcpy(pack.Text,"^2");
+	else
+		strcpy(pack.Text,"^1");
+
+    strcat(pack.Text,msg->GetMessage(UCID , "Energy"));
 
     int nrg = players[ UCID ].Energy/50 ;
 
-
-    if (nrg <= 40 and nrg > 0)
-        strcpy(pack.Text,"^1");
+    if (nrg <= 40)
+        strcat(pack.Text,"^1");
     else if (nrg <= 140 and nrg > 40)
-        strcpy(pack.Text,"^3");
+        strcat(pack.Text,"^3");
     else
-        strcpy(pack.Text,"^2");
+        strcat(pack.Text,"^2");
 
     float nrg2 = (players[ UCID ].Energy)*100/10000;
 
-    sprintf(pack.Text+2,"%1.1f%%",nrg2);
-
+    sprintf(pack.Text,"%s %0.0f^K£¥",pack.Text,nrg2);
     insim->send_packet(&pack);
-
 }
 
 int RCEnergy::check_pos( byte UCID )

@@ -269,10 +269,10 @@ void RCBaseClass::btn_information(byte UCID, const char* Message)
     pack.ReqI = 1;
     pack.UCID = UCID;
     pack.ClickID = 211;
-    pack.BStyle = 32;
-    pack.L = 85;
-    pack.T = 15;
-    pack.W = 50;
+    pack.BStyle = 16;
+    pack.L = 70;
+    pack.T = 9;
+    pack.W = 60;
     pack.H = 4;
 
     strcpy(pack.Text,Message);
