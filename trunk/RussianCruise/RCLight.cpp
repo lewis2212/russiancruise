@@ -8,6 +8,7 @@ const char* signal3 ="^0Х";
 const char* signal11 ="^0Х";
 const char* signal12 ="^0Х";
 const char* signal13 ="^0Х";
+int red1, red2, yell1, yell2, green1, green2;
 
 time_t sstime;
 
@@ -20,73 +21,66 @@ void *thread_svet1(void* params)
     {
         int svtime = time(&sstime)%40;
 
-        if (svtime < 10)
+        if (svtime < 13)
         {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^2Х";
-        }
-        else if (svtime == 10)
-        {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^0Х";
-        }
-        else if (svtime == 11)
-        {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^2Х";
-        }
-        else if (svtime == 12)
-        {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^0Х";
+            red1=0;
+            yell1=0;
+            green1=1;
         }
         else if (svtime == 13)
         {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^2Х";
+            red1=0;
+            yell1=0;
+            green1=0;
         }
         else if (svtime == 14)
         {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^0Х";
+            red1=0;
+            yell1=0;
+            green1=1;
         }
         else if (svtime == 15)
         {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^2Х";
+            red1=0;
+            yell1=0;
+            green1=0;
         }
         else if (svtime == 16)
         {
-            signal1="^0Х";
-            signal2="^0Х";
-            signal3="^0Х";
+            red1=0;
+            yell1=0;
+            green1=1;
         }
-        else if ((svtime > 16) and (svtime < 20))
+        else if (svtime == 17)
         {
-            signal1="^0Х";
-            signal2="^3Х";
-            signal3="^0Х";
+            red1=0;
+            yell1=0;
+            green1=0;
         }
-        else if ((svtime >= 20) and (svtime < 37))
+        else if (svtime == 18)
         {
-            signal1="^1Х";
-            signal2="^0Х";
-            signal3="^0Х";
+            red1=0;
+            yell1=0;
+            green1=1;
+        }
+        else if (svtime == 19)
+        {
+            red1=0;
+            yell1=0;
+            green1=0;
+        }
+        else if ((svtime > 19) and (svtime < 37))
+        {
+            red1=1;
+            yell1=0;
+            green1=0;
         }
         else if ((svtime >= 37))
         {
-            signal1="^1Х";
-            signal2="^3Х";
-            signal3="^0Х";
+            red1=1;
+            yell1=1;
+            green1=0;
         }
-
 
         Sleep(1000);
     }
@@ -98,90 +92,78 @@ void *thread_svet2( void* params)
     for (;;)
     {
         int svtime = (time(&sstime)+20)%40;
-
-        if (svtime < 10)
+		if (svtime < 13)
         {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^2Х";
-        }
-        else if (svtime == 10)
-        {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^0Х";
-        }
-        else if (svtime == 11)
-        {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^2Х";
-        }
-        else if (svtime == 12)
-        {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^0Х";
+            red2=0;
+            yell2=0;
+            green2=1;
         }
         else if (svtime == 13)
         {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^2Х";
+            red2=0;
+            yell2=0;
+            green2=0;
         }
         else if (svtime == 14)
         {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^0Х";
+            red2=0;
+            yell2=0;
+            green2=1;
         }
         else if (svtime == 15)
         {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^2Х";
+            red2=0;
+            yell2=0;
+            green2=0;
         }
         else if (svtime == 16)
         {
-            signal11="^0Х";
-            signal12="^0Х";
-            signal13="^0Х";
+            red2=0;
+            yell2=0;
+            green2=1;
         }
-        else if ((svtime > 16) and (svtime < 20))
+        else if (svtime == 17)
         {
-            signal11="^0Х";
-            signal12="^3Х";
-            signal13="^0Х";
+            red2=0;
+            yell2=0;
+            green2=0;
         }
-        else if ((svtime >= 20) and (svtime < 37))
+        else if (svtime == 18)
         {
-            signal11="^1Х";
-            signal12="^0Х";
-            signal13="^0Х";
+            red2=0;
+            yell2=0;
+            green2=1;
+        }
+        else if (svtime == 19)
+        {
+            red2=0;
+            yell2=0;
+            green2=0;
+        }
+        else if ((svtime > 19) and (svtime < 37))
+        {
+            red2=1;
+            yell2=0;
+            green2=0;
         }
         else if ((svtime >= 37))
         {
-            signal11="^1Х";
-            signal12="^3Х";
-            signal13="^0Х";
+            red2=1;
+            yell2=1;
+            green2=0;
         }
-
-
         Sleep(1000);
     }
     return 0;
 }
 
-
 RCLight::RCLight()
 {
     if (pthread_create(&svet1_tid,NULL,thread_svet1,NULL) < 0)
         printf("Can't start `thread_svet1` Thread\n");
-
     Sleep(1000);
     if (pthread_create(&svet2_tid,NULL,thread_svet2,NULL) < 0)
         printf("Can't start `thread_svet2` Thread\n");
-
     Sleep(1000);
 }
 
@@ -189,17 +171,13 @@ RCLight::~RCLight()
 {
     pthread_detach(svet1_tid);
     pthread_detach(svet2_tid);
-	//delete[] players;
 }
 
 bool RCLight::SetLight3(byte UCID,bool Key)
 {
 	if (players[ UCID ].Light3 and !Key)
-	{
 		for (int f=190; f < 203; f++)
 			send_bfn( UCID ,f);
-	}
-
 	players[ UCID ].Light3 = Key;
 }
 
@@ -207,41 +185,33 @@ int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
 {
     IfInited = false;
     strcpy(RootDir,dir); //  опируем путь до программы
-
     insim = (CInsim *)CInSim; // ѕрисваиваем указателю область пам€ти
     if(!insim) // ѕровер€ем на существование
     {
         printf ("Can't struct CInsim class");
         return -1;
     }
-
     msg = (RCMessage *)Message;
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
         return -1;
     }
-
     dl = (RCDL *)RCDLic;
     if(!dl)
     {
         printf ("Can't struct RCDL class");
         return -1;
     }
-
     IfInited = true;
-
-
     return 0;
 }
 
 void RCLight::readconfig(const char *Track)
 {
-
     strcpy(TrackName, Track);
     char file[255];
     sprintf(file,"%sdata\\RCLight\\tracks\\%s.txt",RootDir,Track);
-
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -254,20 +224,15 @@ void RCLight::readconfig(const char *Track)
     FindClose(fff);
 
     ifstream readf (file,ios::in);
-
     int i = 0;
     while (readf.good())
     {
-
         char str[128];
         readf.getline(str,128);
-
-
         if (strlen(str) > 0)
         {
             if (strcmp(str,"#Light")==0)
             {
-
                 readf.getline(str,128);
                 Light[i].ID = atoi(str);
 
@@ -278,7 +243,7 @@ void RCLight::readconfig(const char *Track)
                 readf.getline(str,128);
                 Light[i].PointCount = atoi(str);
 
-                // объ€вл€ем массих точек ’ and Y
+                // объ€вл€ем массив точек ’ and Y
                 Light[i].X = new int[Light[i].PointCount];
                 Light[i].Y = new int[Light[i].PointCount];
 
@@ -294,15 +259,12 @@ void RCLight::readconfig(const char *Track)
                 }
                 i++;
             }
-        } // if strlen > 0
-    } //while readf.good()
+        }
+    }
     LightsCount = i;
-
     readf.close();
-
     return;
 }
-
 
 void RCLight::insim_cnl( struct IS_CNL* packet )
 {
@@ -320,7 +282,6 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
     {
 		byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
 		/** streets  **/
-
 		int X = pack_mci->Info[i].X/65536;
 		int Y = pack_mci->Info[i].Y/65536;
 		int H = pack_mci->Info[i].Heading/182;
@@ -335,10 +296,6 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 			{
 				int HR = Light[g].Heading-80;
 				int HL = Light[g].Heading+80;
-
-				char Text[64];
-				sprintf(Text,"in zone");
-				//send_mtc(255,Text);
 
 				if (HR < 0)
 				{
@@ -366,8 +323,6 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 						SvetKey = Light[g].ID;
 					}
 				}
-
-
 			}
 		}
 
@@ -383,17 +338,15 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 		{
 			if (players[ UCID ].Light != 0)
 			{
-				for (int f=190; f < 203; f++)
+				for (int f=170; f < 203; f++)
 					send_bfn( UCID ,f);
 
 				players[ UCID ].Light = 0;
-				//out << "clear svetofor" << endl;
 			}
 		}
 
 		if (players[ UCID ].Light3)
 			btn_svetofor3( UCID );
-
 
 		/**  steets **/
 
@@ -426,8 +379,6 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 					btn_wrong_way( UCID );
 					if (S > 10)
 						dl->RemSkill( UCID );
-
-
 				}
 			}
 			else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
@@ -459,144 +410,174 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
 					send_bfn( UCID ,204);
 				}
 			}
-
-		}// if SO4X
-
+		}
     }
 }
 
 void RCLight::insim_mso( struct IS_MSO* packet )
 {
-
 }
 
 void RCLight::insim_ncn( struct IS_NCN* packet )
 {
-    if (packet->UCID == 0)
-        return;
-
+    if (packet->UCID == 0) return;
     strcpy( players[ packet->UCID ].UName, packet->UName);
     strcpy( players[ packet->UCID ].PName, packet->PName);
-
 }
 
 void RCLight::insim_npl( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID ;
-	//players[ packet->UCID ].PLID = packet->PLID;
 }
 
 void RCLight::insim_plp( struct IS_PLP* packet)
 {
-	//players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCLight::insim_pll( struct IS_PLL* packet )
 {
-	//players[ PLIDtoUCID[ packet->PLID ] ].PLID = 0;
 	PLIDtoUCID.erase( packet->PLID );
+}
+
+void RCLight::button (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
+{
+	struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = ReqI;
+    pack.UCID = UCID;
+    pack.Inst = 0;
+    pack.BStyle = BStyle;
+    pack.TypeIn = 0;
+    pack.ClickID = ClickID;
+    pack.L = L;
+    pack.T = T;
+    pack.W = W;
+    pack.H = H;
+    strcpy(pack.Text,Text);
+    insim->send_packet(&pack);
 }
 
 void RCLight::btn_svetofor1 ( byte UCID )
 {
+	/*printf("%d %d\n",red1,red2);
+	printf("%d %d\n",yell1,yell2);
+	printf("%d %d\n",green1,green2);
+	printf("\n");*/
 
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.BStyle = 32;
-    pack.TypeIn = 0;
+	byte
+	id = 170,
+	l = 145,
+	t = 12,
+	w = 18;
 
-    pack.ClickID = 190;
-    pack.L = 92;
-    pack.T = 15;
-    pack.W = 16;
-    pack.H = 40;
-    insim->send_packet(&pack);
+	char cR [10], cY [10], cG [10];
+	int R=8, Y=8, G=8;
+	if (red1 == 1) {R=1;}
+	if (yell1 == 1) {Y=3;}
+	if (green1 == 1) {G=2;}
 
-    pack.BStyle = 16;
-    pack.ClickID = 191;
-    pack.L = 93;
-    pack.T = 16;
-    pack.W = 14;
-    pack.H = 38;
-    insim->send_packet(&pack);
+	sprintf(cR,"^%d^S°с",R);
+	sprintf(cY,"^%d^S°с",Y);
+	sprintf(cG,"^%d^S°с",G);
 
-    pack.BStyle = 1;
-    pack.ClickID = 192;
-    pack.L = 85;
-    pack.T = 10;
-    pack.W = 30;
-    pack.H = 30;
-    strcpy(pack.Text,signal1);
-    insim->send_packet(&pack);
+	//подвес
+	button(255, UCID, id, l-3, t-3, 6, 6, 0, "^0^C^H°_"); id++;
+	button(255, UCID, id, l-1, 0, 2, 13, 32, ""); id++;
+	button(255, UCID, id, l-1, 0, 2, 13, 32, ""); id++;
 
-    pack.ClickID = 193;
-    pack.T = 10+10;
-    strcpy(pack.Text,signal2);
-    insim->send_packet(&pack);
+	//подложка
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 13, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+2 + 16/1.3, w-10, 13, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+3 + 2*16/1.3, w-10, 13, 32, ""); id++;
 
-    pack.ClickID = 194;
-    pack.T = 10+20;
-    strcpy(pack.Text,signal3);
-    insim->send_packet(&pack);
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, ""); id++;
+
+	//уголки по бокам
+	button(255, UCID, id, l-8, t, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
+	button(255, UCID, id, l-8, t + 16-3, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
+	button(255, UCID, id, l-8, t + 2*16-6, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
+
+	//red
+	button(255, UCID, id, (l - w / 2), t-1, w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), t+2, w-8, 16-3, 7, cR); id++;
+
+	//yell
+	button(255, UCID, id, (l - w / 2), (t + 16 / 1.3), w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w-8, 16-3, 7, cY); id++;
+
+	//green
+	button(255, UCID, id, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w-8, 16-3, 7, cG); id++;
 }
 
 void RCLight::btn_svetofor2 ( byte UCID )
 {
+    byte
+	id = 170,
+	l = 145,
+	t = 12,
+	w = 18;
 
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.BStyle = 32;
-    pack.TypeIn = 0;
+	char cR [10], cY [10], cG [10];
+	int R=8, Y=8, G=8;
+	if (red2 == 1) {R=1;}
+	if (yell2 == 1) {Y=3;}
+	if (green2 == 1) {G=2;}
 
-    pack.ClickID = 190;
-    pack.L = 92;
-    pack.T = 15;
-    pack.W = 16;
-    pack.H = 40;
-    insim->send_packet(&pack);
+	sprintf(cR,"^%d^S°с",R);
+	sprintf(cY,"^%d^S°с",Y);
+	sprintf(cG,"^%d^S°с",G);
 
-    pack.BStyle = 16;
-    pack.ClickID = 191;
-    pack.L = 93;
-    pack.T = 16;
-    pack.W = 14;
-    pack.H = 38;
-    insim->send_packet(&pack);
+	//подвес
+	button(255, UCID, id, l-3, t-3, 6, 6, 0, "^0^C^H°_"); id++;
+	button(255, UCID, id, l-1, 0, 2, 13, 32, ""); id++;
+	button(255, UCID, id, l-1, 0, 2, 13, 32, ""); id++;
 
-    pack.BStyle = 1;
-    pack.ClickID = 192;
-    pack.L = 85;
-    pack.T = 10;
-    pack.W = 30;
-    pack.H = 30;
-    strcpy(pack.Text,signal11);
-    insim->send_packet(&pack);
+	//подложка
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 13, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+2 + 16/1.3, w-10, 13, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+3 + 2*16/1.3, w-10, 13, 32, ""); id++;
 
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, ""); id++;
+	button(255, UCID, id, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, ""); id++;
 
-    pack.ClickID = 193;
-    pack.T = 10+10;
-    strcpy(pack.Text,signal12);
-    insim->send_packet(&pack);
+	//уголки по бокам
+	button(255, UCID, id, l-8, t, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
+	button(255, UCID, id, l-8, t + 16-3, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
+	button(255, UCID, id, l-8, t + 2*16-6, 16, 16-1, 0, "^0^C^S®Р               ®П"); id++;
 
-    pack.ClickID = 194;
-    pack.T = 10+20;
-    strcpy(pack.Text,signal13);
-    insim->send_packet(&pack);
+	//red
+	button(255, UCID, id, (l - w / 2), t-1, w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), t+2, w-8, 16-3, 7, cR); id++;
+
+	//yell
+	button(255, UCID, id, (l - w / 2), (t + 16 / 1.3), w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w-8, 16-3, 7, cY); id++;
+
+	//green
+	button(255, UCID, id, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "  ^0^C^S°с  "); id++;
+	button(255, UCID, id, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w-8, 16-3, 7, cG); id++;
 }
 
 void RCLight::btn_svetofor3 ( byte UCID )
 {
+	signal1 ="^0Х";
+	signal2 ="^0Х";
+	signal3 ="^0Х";
+	signal11 ="^0Х";
+	signal12 ="^0Х";
+	signal13 ="^0Х";
+
+	if (red1 == 1) signal1 ="^1Х";
+	if (yell1 == 1) signal2 ="^3Х";
+	if (green1 == 1) signal3 ="^2Х";
+	if (red2 == 1) signal11 ="^1Х";
+	if (yell2 == 1) signal12 ="^3Х";
+	if (green2 == 1) signal13 ="^2Х";
 
     struct IS_BTN pack_btn;
     memset(&pack_btn, 0, sizeof(struct IS_BTN));
@@ -607,25 +588,25 @@ void RCLight::btn_svetofor3 ( byte UCID )
     pack_btn.Inst = 0;
     pack_btn.BStyle = 32;
     pack_btn.TypeIn = 0;
+
     /**** telo1 **/
     pack_btn.ClickID = 195;
-    pack_btn.L = 148;
-    pack_btn.T = 110;
-    pack_btn.W = 8;
-    pack_btn.H = 20;
+    pack_btn.L = 168;
+    pack_btn.T = 112;
+    pack_btn.W = 6;
+    pack_btn.H = 17;
     strcpy(pack_btn.Text,"");
     insim->send_packet(&pack_btn);
-    /**********/
 
+    /**********/
     pack_btn.BStyle = 1;
     pack_btn.ClickID = 196;
-    pack_btn.L = 144;
+    pack_btn.L = 165;
     pack_btn.T = 107;
-    pack_btn.W = 16;
+    pack_btn.W = 12;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal1);
     insim->send_packet(&pack_btn);
-
 
     pack_btn.ClickID = 197;
     pack_btn.T = 112;
@@ -636,23 +617,24 @@ void RCLight::btn_svetofor3 ( byte UCID )
     pack_btn.T = 117;
     strcpy(pack_btn.Text,signal3);
     insim->send_packet(&pack_btn);
+
     /********************************/
-    pack_btn.BStyle = 32;
     /**** telo 2 *******/
+    pack_btn.BStyle = 32;
     pack_btn.ClickID = 199;
-    pack_btn.L = 157;
-    pack_btn.T = 110;
-    pack_btn.W = 8;
-    pack_btn.H = 20;
+    pack_btn.L = 162;
+    pack_btn.T = 112;
+    pack_btn.W = 6;
+    pack_btn.H = 17;
     strcpy(pack_btn.Text,"");
     insim->send_packet(&pack_btn);
     /*************************/
     pack_btn.BStyle = 1;
 
     pack_btn.ClickID = 200;
-    pack_btn.L = 153;
+    pack_btn.L = 159;
     pack_btn.T = 107;
-    pack_btn.W = 16;
+    pack_btn.W = 12;
     pack_btn.H = 16;
     strcpy(pack_btn.Text,signal11);
     insim->send_packet(&pack_btn);

@@ -392,15 +392,12 @@ void RCDL::btn_dl( byte UCID )
     pack.BStyle = 32+64;
     pack.L = 100;
     pack.T = 5;
-    pack.W = 35;
+    pack.W = 30;
     pack.H = 4;
 
     float nextlvl = ( pow( players[ UCID ].LVL, 2) * 0.5 + 100 ) * 1000;
     float skl = ( players[ UCID ].Skill / nextlvl ) * 100;
-    sprintf( pack.Text,"^7^CDrive Level: ^2%d ^7Skill: ^2%4.2f%%", players[ UCID ].LVL,skl);
+
+    sprintf( pack.Text,msg->GetMessage(UCID, "LvlAndSkill"),players[ UCID ].LVL,skl);
     insim->send_packet(&pack);
-
-    char Text[64];
-    sprintf(Text,"^C^4| %s ^7перешел на %d уровень",players[ UCID ].PName, players[ UCID ].LVL);
-
 }
