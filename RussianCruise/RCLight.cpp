@@ -6,7 +6,6 @@ bool gff=false;
 time_t sstime;
 
 pthread_t svet1_tid; // Thread ID
-pthread_t svet2_tid; // Thread ID
 
 void *thread_svet1(void* params)
 {
@@ -88,7 +87,6 @@ RCLight::RCLight()
 RCLight::~RCLight()
 {
     pthread_detach(svet1_tid);
-    pthread_detach(svet2_tid);
 }
 
 bool RCLight::SetLight3(byte UCID,bool Key)
