@@ -185,7 +185,7 @@ struct player
     byte    Svetofor;
 
     /** Flood **/
-    string  Msg;
+    char  	Msg[128];
     int     FloodCount;
     int     FloodTime;
 

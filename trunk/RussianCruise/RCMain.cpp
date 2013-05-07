@@ -1831,8 +1831,8 @@ void case_mso_flood ()
             break;
 
 
-    string Msg;
-    Msg = pack_mso->Msg + ((unsigned char)pack_mso->TextStart) ;
+    char Msg[128];
+	strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
     /**  FLOOD ***/
     if (pack_mso->UserType == MSO_USER) // if msg from user
@@ -1867,7 +1867,7 @@ void case_mso_flood ()
 
         for (int j=0; j< ginfo->WordsCount; j++)
         {
-            if ( Msg.find( ginfo->Words[j]) != string::npos )
+            if (strstr(Msg,ginfo->Words[j]))
             {
                 send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2005" ));
 
@@ -1876,7 +1876,7 @@ void case_mso_flood ()
             }
 
         }
-        ginfo->players[i].Msg = Msg;
+        strcpy( ginfo->players[i].Msg, Msg);
     } // if UserType != MSO_PREFIX
     /** Flood and bad words **/
 
