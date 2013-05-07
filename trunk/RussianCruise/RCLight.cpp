@@ -1,14 +1,7 @@
 using namespace std;
-
 #include "RCLight.h"
-
-const char* signal1 ="^0•";
-const char* signal2 ="^0•";
-const char* signal3 ="^0•";
-const char* signal11 ="^0•";
-const char* signal12 ="^0•";
-const char* signal13 ="^0•";
 int red1, red2, yell1, yell2, green1, green2;
+bool gff=false;
 
 time_t sstime;
 
@@ -19,140 +12,69 @@ void *thread_svet1(void* params)
 {
     for (;;)
     {
-        int svtime = time(&sstime)%40;
+        float svtime = time(&sstime)%40;
 
-        if (svtime < 13)
+        if (svtime == 0)
         {
-            red1=0;
-            yell1=0;
-            green1=1;
+            red1=0;		red2=1;
+            yell1=0;	yell2=0;
+            green1=1;	green2=0;
         }
-        else if (svtime == 13)
+        else if (svtime >= 14 and svtime<17)
         {
-            red1=0;
-            yell1=0;
-            green1=0;
-        }
-        else if (svtime == 14)
-        {
-            red1=0;
-            yell1=0;
-            green1=1;
-        }
-        else if (svtime == 15)
-        {
-            red1=0;
-            yell1=0;
-            green1=0;
-        }
-        else if (svtime == 16)
-        {
-            red1=0;
-            yell1=0;
-            green1=1;
+        	if (gff)
+			{
+				red1=0;
+				yell1=0;
+				green1=1;
+				gff = false;
+			}
+			else
+			{
+				red1=0;
+				yell1=0;
+				green1=0;
+				gff = true;
+			}
         }
         else if (svtime == 17)
         {
-            red1=0;
-            yell1=0;
-            green1=0;
+        	gff = false;
+            red1=0;		red2=1;
+            yell1=1;	yell2=1;
+            green1=0;	green2=0;
         }
-        else if (svtime == 18)
+        else if (svtime == 20)
         {
-            red1=0;
-            yell1=0;
-            green1=1;
+            red1=1;		red2=0;
+            yell1=0;	yell2=0;
+            green1=0;	green2=1;
         }
-        else if (svtime == 19)
+        else if (svtime >= 34 and svtime<37)
         {
-            red1=0;
-            yell1=0;
-            green1=0;
+        	if (gff)
+			{
+				red2=0;
+				yell2=0;
+				green2=1;
+				gff = false;
+			}
+			else
+			{
+				red2=0;
+				yell2=0;
+				green2=0;
+				gff = true;
+			}
         }
-        else if ((svtime > 19) and (svtime < 37))
+        else if (svtime == 37)
         {
-            red1=1;
-            yell1=0;
-            green1=0;
+        	gff = false;
+            red1=1;		red2=0;
+            yell1=1;	yell2=1;
+            green1=0;	green2=0;
         }
-        else if ((svtime >= 37))
-        {
-            red1=1;
-            yell1=1;
-            green1=0;
-        }
-
-        Sleep(1000);
-    }
-    return 0;
-}
-
-void *thread_svet2( void* params)
-{
-    for (;;)
-    {
-        int svtime = (time(&sstime)+20)%40;
-		if (svtime < 13)
-        {
-            red2=0;
-            yell2=0;
-            green2=1;
-        }
-        else if (svtime == 13)
-        {
-            red2=0;
-            yell2=0;
-            green2=0;
-        }
-        else if (svtime == 14)
-        {
-            red2=0;
-            yell2=0;
-            green2=1;
-        }
-        else if (svtime == 15)
-        {
-            red2=0;
-            yell2=0;
-            green2=0;
-        }
-        else if (svtime == 16)
-        {
-            red2=0;
-            yell2=0;
-            green2=1;
-        }
-        else if (svtime == 17)
-        {
-            red2=0;
-            yell2=0;
-            green2=0;
-        }
-        else if (svtime == 18)
-        {
-            red2=0;
-            yell2=0;
-            green2=1;
-        }
-        else if (svtime == 19)
-        {
-            red2=0;
-            yell2=0;
-            green2=0;
-        }
-        else if ((svtime > 19) and (svtime < 37))
-        {
-            red2=1;
-            yell2=0;
-            green2=0;
-        }
-        else if ((svtime >= 37))
-        {
-            red2=1;
-            yell2=1;
-            green2=0;
-        }
-        Sleep(1000);
+        Sleep(500);
     }
     return 0;
 }
@@ -161,10 +83,6 @@ RCLight::RCLight()
 {
     if (pthread_create(&svet1_tid,NULL,thread_svet1,NULL) < 0)
         printf("Can't start `thread_svet1` Thread\n");
-    Sleep(1000);
-    if (pthread_create(&svet2_tid,NULL,thread_svet2,NULL) < 0)
-        printf("Can't start `thread_svet2` Thread\n");
-    Sleep(1000);
 }
 
 RCLight::~RCLight()
@@ -462,22 +380,18 @@ void RCLight::button (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W
 
 void RCLight::btn_svetofor1 ( byte UCID )
 {
-	/*printf("%d %d\n",red1,red2);
+	printf("%d %d\n",red1,red2);
 	printf("%d %d\n",yell1,yell2);
 	printf("%d %d\n",green1,green2);
-	printf("\n");*/
+	printf("\n");
 
-	byte
-	id = 170,
-	l = 145,
-	t = 12,
-	w = 18;
+	byte id = 170, l = 145, t = 12, w = 18;
 
 	char cR [10], cY [10], cG [10];
 	int R=8, Y=8, G=8;
-	if (red1 == 1) {R=1;}
-	if (yell1 == 1) {Y=3;}
-	if (green1 == 1) {G=2;}
+	if (red1 == 1) R=1;
+	if (yell1 == 1) Y=3;
+	if (green1 == 1) G=2;
 
 	sprintf(cR,"^%d^S¡ñ",R);
 	sprintf(cY,"^%d^S¡ñ",Y);
@@ -516,17 +430,13 @@ void RCLight::btn_svetofor1 ( byte UCID )
 
 void RCLight::btn_svetofor2 ( byte UCID )
 {
-    byte
-	id = 170,
-	l = 145,
-	t = 12,
-	w = 18;
+    byte id = 170, l = 145, t = 12, w = 18;
 
 	char cR [10], cY [10], cG [10];
 	int R=8, Y=8, G=8;
-	if (red2 == 1) {R=1;}
-	if (yell2 == 1) {Y=3;}
-	if (green2 == 1) {G=2;}
+	if (red2 == 1) R=1;
+	if (yell2 == 1) Y=3;
+	if (green2 == 1) G=2;
 
 	sprintf(cR,"^%d^S¡ñ",R);
 	sprintf(cY,"^%d^S¡ñ",Y);
@@ -565,12 +475,12 @@ void RCLight::btn_svetofor2 ( byte UCID )
 
 void RCLight::btn_svetofor3 ( byte UCID )
 {
-	signal1 ="^0•";
-	signal2 ="^0•";
-	signal3 ="^0•";
-	signal11 ="^0•";
-	signal12 ="^0•";
-	signal13 ="^0•";
+	const char* signal1 ="^0•";
+	const char* signal2 ="^0•";
+	const char* signal3 ="^0•";
+	const char* signal11 ="^0•";
+	const char* signal12 ="^0•";
+	const char* signal13 ="^0•";
 
 	if (red1 == 1) signal1 ="^1•";
 	if (yell1 == 1) signal2 ="^3•";
