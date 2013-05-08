@@ -71,7 +71,7 @@ public:
     int  GetCash(byte UCID);
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *GetMessage, void *DL);
+    int init(const char *dir,void *CInSim, void *RCMessageClass, void *DL);
     void readconfig(const char *Track);
     void bank_save(byte UCID);
 

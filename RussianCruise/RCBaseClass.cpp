@@ -217,7 +217,7 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
 
 
 
-void RCBaseClass::send_mtc (byte UCID,const char* Msg)
+void RCBaseClass::SendMTC (byte UCID,const char* Msg)
 {
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
@@ -228,7 +228,7 @@ void RCBaseClass::send_mtc (byte UCID,const char* Msg)
     insim->send_packet(&pack_mtc);
 }
 
-void RCBaseClass::send_mst (const char* Text)
+void RCBaseClass::SendMST (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));
@@ -238,7 +238,7 @@ void RCBaseClass::send_mst (const char* Text)
     insim->send_packet(&pack_mst);
 }
 
-void RCBaseClass::send_bfn (byte UCID, byte ClickID)
+void RCBaseClass::SendBFN (byte UCID, byte ClickID)
 {
     struct IS_BFN pack;
     memset(&pack, 0, sizeof(struct IS_BFN));
@@ -249,7 +249,7 @@ void RCBaseClass::send_bfn (byte UCID, byte ClickID)
     insim->send_packet(&pack);
 }
 
-void RCBaseClass::send_bfn_all ( byte UCID )
+void RCBaseClass::SendBFNAll ( byte UCID )
 {
     struct IS_BFN pack;
     memset(&pack, 0, sizeof(struct IS_BFN));
@@ -289,6 +289,26 @@ void RCBaseClass::btn_information_clear(byte UCID)
     pack.Type = ISP_BFN;
     pack.UCID = UCID;
     pack.ClickID = 211;
+    insim->send_packet(&pack);
+}
+
+void RCBaseClass::SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
+{
+	struct IS_BTN pack;
+    memset(&pack, 0, sizeof(struct IS_BTN));
+    pack.Size = sizeof(struct IS_BTN);
+    pack.Type = ISP_BTN;
+    pack.ReqI = ReqI;
+    pack.UCID = UCID;
+    pack.Inst = 0;
+    pack.BStyle = BStyle;
+    pack.TypeIn = 0;
+    pack.ClickID = ClickID;
+    pack.L = L;
+    pack.T = T;
+    pack.W = W;
+    pack.H = H;
+    strcpy(pack.Text,Text);
     insim->send_packet(&pack);
 }
 

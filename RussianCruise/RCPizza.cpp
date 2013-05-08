@@ -19,7 +19,7 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init( const char *dir, void *CInSim, void *GetMessage, void *Bank, void *Energy, void *DrLic)
+int RCPizza::init( const char *dir, void *CInSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic)
 {
     strcpy(RootDir,dir);
 
@@ -30,7 +30,7 @@ int RCPizza::init( const char *dir, void *CInSim, void *GetMessage, void *Bank, 
         return -1;
     }
 
-    msg = (RCMessage *)GetMessage;
+    msg = (RCMessage *)RCMessageClass;
     if(!msg)
     {
         printf ("RCPizza: Can't struct RCMessage class");
@@ -70,22 +70,22 @@ void RCPizza::Deal( byte UCID )
         {
             players[ UCID ].WorkType = WK_PIZZA;
             players[ UCID ].WorkAccept = 0;
-            send_mtc( UCID ,msg->GetMessage(  UCID , "4000" ));
+            SendMTC( UCID ,msg->_(  UCID , "4000" ));
             CarsInWork ++;
         }
         else
         {
-            send_mtc( UCID ,"^C^3| ^7Нет вакансий");
+            SendMTC( UCID ,"^C^3| ^7Нет вакансий");
             return;
         }
     }
     else if (players[ UCID ].WorkType == WK_PIZZA)
     {
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4001" ));
+        SendMTC( UCID ,msg->_(  UCID , "4001" ));
     }
     else
     {
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4002" ));
+        SendMTC( UCID ,msg->_(  UCID , "4002" ));
     }
 }
 
@@ -93,13 +93,13 @@ void RCPizza::Take( byte UCID )
 {
     if (players[ UCID ].WorkType != WK_PIZZA)
     {
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4002" ));
+        SendMTC( UCID ,msg->_(  UCID , "4002" ));
         return;
     }
 
     if (strcmp(players[ UCID ].CName,"UF1")!=0)
     {
-        send_mtc( UCID , "^3^C| ^7Нужна машина ^2UF1");
+        SendMTC( UCID , "^3^C| ^7Нужна машина ^2UF1");
         return;
     }
 
@@ -128,10 +128,10 @@ void RCPizza::Take( byte UCID )
             players[ UCID ].WorkTime = worktime + PIZZA_WORK_TIME;
             players[ UCID ].WorkDestinaion = place;
             players[ UCID ].WorkAccept = 2;
-            send_mtc( UCID ,msg->GetMessage(  UCID , "4200" ));
+            SendMTC( UCID ,msg->_(  UCID , "4200" ));
             char Text[64];
             sprintf(Text, "^3| %s",zone.point[place].Place);
-            send_mtc( UCID, Text);
+            SendMTC( UCID, Text);
             strcpy(players[ UCID ].WorkDest,zone.point[place].Place);
 
         }
@@ -142,22 +142,22 @@ void RCPizza::Take( byte UCID )
             players[ UCID ].WorkDestinaion = players[ UCID ].WorkPlayerAccept;
             players[ UCID ].WorkAccept = 2;
             char text[128];
-            strcpy(text,msg->GetMessage(  UCID , "4201" ));
+            strcpy(text,msg->_(  UCID , "4201" ));
             strcat(text,players[ players[ UCID ].WorkPlayerAccept ].PName);
 
             strcpy( players[ UCID ].WorkDest, players[ players[ UCID ].WorkPlayerAccept ].PName);
 
-            send_mtc( UCID ,text);
+            SendMTC( UCID ,text);
         }
 
     }
     else if (players[ UCID ].WorkAccept == 2)
     {
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4202" )); // Отвези сначала этот заказ
+        SendMTC( UCID ,msg->_(  UCID , "4202" )); // Отвези сначала этот заказ
     }
     else
     {
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4203" )); // Wait until i call you
+        SendMTC( UCID ,msg->_(  UCID , "4203" )); // Wait until i call you
     }
 
 }
@@ -179,8 +179,8 @@ void RCPizza::Done( byte UCID )
         dl->AddSkill( UCID );
 
         players[ UCID ].WorkCountDone ++;
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4300" ));
-        send_bfn( UCID ,210);
+        SendMTC( UCID ,msg->_(  UCID , "4300" ));
+        SendBFN( UCID ,210);
         btn_information_clear( UCID );
         players[ UCID ].WorkZone =0;
     }
@@ -194,10 +194,10 @@ void RCPizza::Undeal( byte UCID ,const char *Reason)
         if (players[ UCID ].WorkAccept == 3)
             ShopAccepted = false;
 
-        send_bfn( UCID ,210);
-        send_bfn( UCID ,211);
-        send_mtc( UCID ,msg->GetMessage(  UCID , "4100" ));
-        send_mtc( UCID ,Reason);
+        SendBFN( UCID ,210);
+        SendBFN( UCID ,211);
+        SendMTC( UCID ,msg->_(  UCID , "4100" ));
+        SendMTC( UCID ,Reason);
         players[ UCID ].WorkType = WK_NULL;
         players[ UCID ].WorkDestinaion =0;
         players[ UCID ].WorkAccept = 0;
@@ -444,14 +444,14 @@ void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
 			{
 				players[ UCID ].Zone = 4;
 
-				send_mtc( UCID ,msg->GetMessage(  UCID , "1600" )); // pizza u Jony
+				SendMTC( UCID ,msg->_(  UCID , "1600" )); // pizza u Jony
 				if (players[ UCID ].WorkType != WK_PIZZA)
-					send_mtc( UCID ,msg->GetMessage(  UCID , "1601" )); // deal
+					SendMTC( UCID ,msg->_(  UCID , "1601" )); // deal
 				else
-					send_mtc( UCID ,msg->GetMessage(  UCID , "1602" )); // undeal
+					SendMTC( UCID ,msg->_(  UCID , "1602" )); // undeal
 				if (players[ UCID ].WorkAccept != 0)
 				{
-					send_mtc( UCID ,msg->GetMessage(  UCID , "1603" )); // take
+					SendMTC( UCID ,msg->_(  UCID , "1603" )); // take
 					Take( UCID );
 				}
 
@@ -479,7 +479,7 @@ void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
 				Done( UCID );
 				bank->RemCash(PL_UCID ,800);
 				nrg->AddEnergy( PL_UCID , 8000);
-				send_mtc( PL_UCID ,msg->GetMessage(  PL_UCID , "1604" ) );
+				SendMTC( PL_UCID ,msg->_(  PL_UCID , "1604" ) );
 				players[ PL_UCID ].Pizza = 0;
 			}
 
@@ -491,9 +491,9 @@ void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
 			players[ UCID ].WorkDestinaion =0;
 			players[ UCID ].WorkAccept = 0;
 			players[ UCID ].WorkPlayerAccept = 0;
-			send_bfn( UCID ,210);
-			send_bfn( UCID ,211);
-			send_mtc( UCID ,"^C^3| ^7Спасибо за заказ продуктов.");
+			SendBFN( UCID ,210);
+			SendBFN( UCID ,211);
+			SendMTC( UCID ,"^C^3| ^7Спасибо за заказ продуктов.");
 
 			// проверяем склад на продукты
 
@@ -539,19 +539,19 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
         //cout << players[i].UName << " send !deal" << endl;
         char Text[64];
         sprintf(Text,"^C^3| ^7Капитал Пиццерии составляет %d Руб.",Capital);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Продукты на складе.");
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Мука: %1.2f Кг.",PStore.Muka);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Вода: %1.2f Кг.",PStore.Voda);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Овощи: %1.2f Кг.",PStore.Ovoshi);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Сыр: %1.2f Кг.",PStore.Cheese);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
         sprintf(Text,"^C^3| ^7Работники: %d/%d.",CarsInWork,NumCars);
-        send_mtc( packet->UCID ,Text);
+        SendMTC( packet->UCID ,Text);
 
 
         for ( auto& plit: players )
@@ -559,7 +559,7 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
             if (players[ plit.first ].WorkType == WK_PIZZA)
             {
                 sprintf(Text,"%s Accept = %d Count = %d",players[  plit.first ].PName, players[  plit.first ].WorkAccept, players[  plit.first ].WorkCountDone);
-                send_mtc( packet->UCID ,Text);
+                SendMTC( packet->UCID ,Text);
             }
 
         }
@@ -573,7 +573,7 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
         {
             if (dl->GetLVL( packet->UCID ) > 19)
             {
-                send_mtc( packet->UCID ,"^6| ^C^7Большим дядькам большую работу. Нужен уровень ниже 20.");
+                SendMTC( packet->UCID ,"^6| ^C^7Большим дядькам большую работу. Нужен уровень ниже 20.");
                 return;
             }
             if (strcmp(players[ packet->UCID ].CName,"UF1") == 0 )
@@ -582,7 +582,7 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
             }
             else
             {
-                send_mtc( packet->UCID , "^3^C| ^7Нужна машина ^2UF1");
+                SendMTC( packet->UCID , "^3^C| ^7Нужна машина ^2UF1");
             }
         }
 
@@ -592,7 +592,7 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!undeal", 7) == 0 )
     {
         if ((check_pos( packet->UCID ) == 1) and (players[ packet->UCID ].WorkType == WK_PIZZA))
-            Undeal( packet->UCID ,msg->GetMessage(  packet->UCID , "2200" ));
+            Undeal( packet->UCID ,msg->_(  packet->UCID , "2200" ));
 
     }
 
@@ -608,20 +608,20 @@ void RCPizza::insim_mso( struct IS_MSO* packet )
     {
         if (nrg->GetEnergy( packet->UCID ) > 80)
         {
-            send_mtc( packet->UCID ,"Your power must be less than 80%"); // заказ принят
+            SendMTC( packet->UCID ,msg->_(packet->UCID, "Your power must be less than 80%") ); // заказ принят
             return;
         }
 
         if (players[ packet->UCID ].WorkType == WK_PIZZA)
         {
-            send_mtc( packet->UCID ,"You can't order a tofu because you work here."); // заказ принят
+            SendMTC( packet->UCID ,msg->_(packet->UCID, "You can't order a tofu because you work here.") ); // заказ принят
             return;
         }
 
         if (players[ packet->UCID ].Pizza == 0)
         {
             players[ packet->UCID ].Pizza = 1;
-            send_mtc( packet->UCID ,msg->GetMessage(  packet->UCID , "2204" )); // заказ принят
+            SendMTC( packet->UCID ,msg->_(  packet->UCID , "2204" )); // заказ принят
         }
 
     }
@@ -657,8 +657,6 @@ void RCPizza::btn_work ( byte UCID )
     insim->send_packet(&pack);
 }
 
-// функции-утилиты
-
 int RCPizza::check_pos( byte UCID )
 {
     int PLX = players[ UCID ].Info.X/65536;
@@ -692,15 +690,15 @@ void RCPizza::Event()
 			int nowtime = time(&ptime);
 			if (players[ plit.first ].WorkTime <= nowtime)
 			{
-				send_bfn( plit.first ,210);
-				send_bfn( plit.first ,211);
+				SendBFN( plit.first ,210);
+				SendBFN( plit.first ,211);
 
 				if (players[ plit.first ].WorkAccept == 3) // не успел заказать продукты
 					ShopAccepted = false;
 
 				if (players[ plit.first ].WorkAccept != 0)
 				{
-					send_mtc( plit.first ,msg->GetMessage(  plit.first , "4101" ));
+					SendMTC( plit.first ,msg->_(  plit.first , "4101" ));
 					players[ plit.first ].WorkType = WK_NULL;
 					players[ plit.first ].WorkAccept = 0;
 					if ( players[ plit.first ].WorkPlayerAccept != 0)
@@ -747,8 +745,8 @@ void RCPizza::Event()
 					{
 						if (  ( plit2.first  !=  plit.first ) and ( players[ plit2.first ].Pizza == 1 ) )
 						{
-							send_mtc( plit.first , msg->GetMessage(  plit.first , "2201" ));
-							send_mtc( plit.first , msg->GetMessage(  plit.first , "2202" ));
+							SendMTC( plit.first , msg->_(  plit.first , "2201" ));
+							SendMTC( plit.first , msg->_(  plit.first , "2202" ));
 							players[ plit.first ].WorkAccept = 1;
 							players[ plit.first ].WorkPlayerAccept = plit2.first;
 							players[ plit.first ].WorkZone =0;
@@ -770,10 +768,10 @@ void RCPizza::Event()
 			{
 				if ( ( plit.first  !=0) and (players[ plit.first ].WorkType == WK_PIZZA) and (players[ plit.first ].WorkAccept == 0))
 				{
-					send_mtc( plit.first ,msg->GetMessage(  plit.first , "2201" ));
-					send_mtc( plit.first ,msg->GetMessage(  plit.first , "2202" ));
+					SendMTC( plit.first ,msg->_(  plit.first , "2201" ));
+					SendMTC( plit.first ,msg->_(  plit.first , "2202" ));
 
-					strcpy(players[ plit.first ].WorkDest,msg->GetMessage(  plit.first , "2201" )+4); // +4 == remove slash
+					strcpy(players[ plit.first ].WorkDest,msg->_(  plit.first , "2201" )+4); // +4 == remove slash
 
 					players[ plit.first ].WorkAccept =1;
 					players[ plit.first ].WorkPlayerAccept =0;
@@ -800,7 +798,7 @@ void RCPizza::Event()
 				{
 					cout << players[ plit.first ].UName << " accepted for shop\n";
 
-					send_mtc( plit.first ,"^C^3| ^7Закажите продукты в магазине");
+					SendMTC( plit.first ,"^C^3| ^7Закажите продукты в магазине");
 					strcpy(players[ plit.first ].WorkDest,"^C^7Закажите продукты в магазине"); // +4 == remove slash
 
 					players[ plit.first ].WorkAccept =3;
@@ -814,6 +812,4 @@ void RCPizza::Event()
 			}
 		}
 	}
-
-
 }

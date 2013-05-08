@@ -1,5 +1,5 @@
-#ifndef _RC_GetMessage_H
-#define _RC_GetMessage_H
+#ifndef _RC___H
+#define _RC___H
 
 #include "RCBaseClass.h"
 
@@ -34,13 +34,12 @@ public:
     RCMessage();
     ~RCMessage();
 
-    int init(const char *dir,void *CInSim); // open file msg_rus.txt and msg_eng.txt and write msgs in GetMessage array
+    int init(const char *dir,void *CInSim);
     void readconfig(const char *Track);
 
     void save(byte UCID);
 
-    //const char* GetMessage( byte UCID, int MsgID );
-    const char* GetMessage( byte UCID, string CODE );
+    const char* _( byte UCID, string CODE );
 
 }; // this method is not good but better when old method.
 

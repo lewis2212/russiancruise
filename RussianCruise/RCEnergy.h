@@ -72,7 +72,7 @@ public:
     struct  place zone;
 
     // Основные функции класса
-    int     init(const char *dir,void *CInSim, void *GetMessage,void *Bank);
+    int     init(const char *dir,void *CInSim, void *RCMessageClass,void *Bank);
     void    readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
 

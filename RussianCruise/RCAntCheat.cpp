@@ -100,8 +100,8 @@ void RCAntCheat::insim_npl( struct IS_NPL* packet )
 	{
 		players[ packet->UCID ].NPLHack = 0;
 		sprintf(Text, "/kick %s", players[ packet->UCID ].UName);
-		send_mtc( packet->UCID ,"^1Hack detect");
-		send_mst(Text);
+		SendMTC( packet->UCID ,"^1Hack detect");
+		SendMST(Text);
 		return;
 
 	}
@@ -109,8 +109,8 @@ void RCAntCheat::insim_npl( struct IS_NPL* packet )
 	if ( strlen( packet->CName ) < 3)
 	{
 		sprintf(Text, "/spec %s", players[ packet->UCID ].UName);
-		send_mst("/msg ^1Hack detect");
-		send_mst(Text);
+		SendMST("/msg ^1Hack detect");
+		SendMST(Text);
 		return;
 	}
 
@@ -170,9 +170,9 @@ void RCAntCheat::insim_pla( struct IS_PLA* packet )
             {
                 char Text[48];
                 sprintf(Text,"/spec %s",players[i].UName);
-                send_mst(Text);
+                SendMST(Text);
                 sprintf(Text,"/msg %s ^1have wrong PLID",players[i].UName);
-                send_mst(Text);
+                SendMST(Text);
             }
         }
     }

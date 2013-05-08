@@ -40,6 +40,11 @@ private:
     int     LightsCount;
     struct  Lights Light[30];
 
+    int red1, red2, yell1, yell2, green1, green2;
+	bool gff=false;
+
+	time_t sstime;
+
     void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
     void insim_plp( struct IS_PLP* packet );   // Игрок ушел в боксы
@@ -48,20 +53,19 @@ private:
     void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
     void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
 
-	void button (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text );
 
-    void btn_svetofor1 ( byte UCID );
-    void btn_svetofor2 ( byte UCID );
-    void btn_svetofor3 ( byte UCID );
-    void btn_wrong_way ( byte UCID );
+    void Svetofor1 ( byte UCID );
+    void Svetofor2 ( byte UCID );
+    void Svetofor3 ( byte UCID );
+    void WrongWay ( byte UCID );
 
 
 public:
     RCLight();   // Конструктор класса (обязательно)
     ~RCLight();  // Деструктор класса (обязательно)
 
-    bool IfInited;
     bool SetLight3(byte UCID,bool Key);
+    void Event();
 
     int init(const char *dir,void *CInSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"

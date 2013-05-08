@@ -268,13 +268,13 @@ void read_user_cars(struct player *splayer)
     if( mysql_ping( &rcMaindb ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
+        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
     }
 
     if( mysql_query( &rcMaindb , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
+        // РїСЂРѕРёР·РІРµСЃС‚Рё РєРёРє РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ С‡С‚РѕР»СЊ
     }
 
     rcMainRes = mysql_store_result(&rcMaindb);
@@ -347,29 +347,29 @@ void help_cmds (struct player *splayer,int h_type)
 {
     if (h_type == 1)
     {
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3201" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3202" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3203" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3204" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3205" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3206" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3207" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3208" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3209" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3210" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3211" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3212" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3213" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3214" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3215" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3216" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3217" ) );
-            send_mtc( splayer->UCID, msg->GetMessage(  splayer->UCID, "3218" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3201" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3202" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3203" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3204" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3205" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3206" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3207" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3208" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3209" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3210" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3211" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3212" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3213" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3214" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3215" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3216" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3217" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
 
     }
     if (h_type == 2)
     {
-        send_mtc(splayer->UCID,msg->GetMessage( splayer->UCID, "3100" ));
+        SendMTC(splayer->UCID,msg->_( splayer->UCID, "3100" ));
         for ( int i=0; i<MAX_CARS; i++)
         {
             if (strlen(splayer->cars[i].car)>0)
@@ -413,7 +413,7 @@ void help_cmds (struct player *splayer,int h_type)
                 }
 
                 sprintf(Text,"^1| ^C^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)",splayer->cars[i].car,splayer->cars[i].dist/1000,Tun,tune2);
-                send_mtc(splayer->UCID,Text);
+                SendMTC(splayer->UCID,Text);
             }
         }
 
@@ -476,10 +476,10 @@ void btn_info (struct player *splayer, int b_type)
 
     char info_text[5][100];
     sprintf(info_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
-    strncpy(info_text[1], "^C^7 Добро пожаловать, ",99);
-    strncpy(info_text[2], "^C^7 Деньги: ^2",99);
-    strncpy(info_text[3], "^C^7   тут жизненный статус",99);
-    strncpy(info_text[4], "^C^7Доступные автомобили:",99);
+    strncpy(info_text[1], "^C^7 Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ, ",99);
+    strncpy(info_text[2], "^C^7 Р”РµРЅСЊРіРё: ^2",99);
+    strncpy(info_text[3], "^C^7   С‚СѓС‚ Р¶РёР·РЅРµРЅРЅС‹Р№ СЃС‚Р°С‚СѓСЃ",99);
+    strncpy(info_text[4], "^C^7Р”РѕСЃС‚СѓРїРЅС‹Рµ Р°РІС‚РѕРјРѕР±РёР»Рё:",99);
 
     char about_text[10][100];
     sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
@@ -509,20 +509,20 @@ void btn_info (struct player *splayer, int b_type)
     pack.T = 46;
     pack.W = 16;
     pack.H = 8;
-    strcpy(pack.Text,msg->GetMessage( splayer->UCID, "200" ));
+    strcpy(pack.Text,msg->_( splayer->UCID, "200" ));
     insim->send_packet(&pack);
 
     pack.BStyle = 32+8;
     pack.ClickID = 106;
     pack.L += 17;
-    strcpy(pack.Text,msg->GetMessage( splayer->UCID, "201" ));
+    strcpy(pack.Text,msg->_( splayer->UCID, "201" ));
     insim->send_packet(&pack);
 
     pack.BStyle = 32+8;
     pack.ClickID = 105;
     pack.L += 17;
     pack.W = 20;
-    strcpy(pack.Text,msg->GetMessage( splayer->UCID, "202" ));
+    strcpy(pack.Text,msg->_( splayer->UCID, "202" ));
     insim->send_packet(&pack);
 
     /* Tabs */
@@ -616,15 +616,15 @@ void btn_panel (struct player *splayer)
     pack.H = 8;
 
     if (splayer->Zone== 1)
-        strcpy(pack.Text,msg->GetMessage(splayer->UCID,"PitSaveGood"));
+        strcpy(pack.Text,msg->_(splayer->UCID,"PitSaveGood"));
     else if (splayer->Zone== 2)
-        strcpy(pack.Text,msg->GetMessage( splayer->UCID, "401" ));
+        strcpy(pack.Text,msg->_( splayer->UCID, "401" ));
     else if (splayer->Zone== 3)
-        strcpy(pack.Text,msg->GetMessage( splayer->UCID, "402" ));
+        strcpy(pack.Text,msg->_( splayer->UCID, "402" ));
     else if (splayer->Zone== 4)
-        strcpy(pack.Text,msg->GetMessage( splayer->UCID, "404" ));
+        strcpy(pack.Text,msg->_( splayer->UCID, "404" ));
     else
-        strcpy(pack.Text,msg->GetMessage(splayer->UCID,"PitSaveNotGood"));
+        strcpy(pack.Text,msg->_(splayer->UCID,"PitSaveNotGood"));
     insim->send_packet(&pack);
 
     //
@@ -656,7 +656,7 @@ void case_bfn ()
 
             if((now - ginfo->players[i].LastBFN) < 10)
             {
-                send_mtc(ginfo->players[i].UCID,"^1^CНельзя так часто жать кнопки");
+                SendMTC(ginfo->players[i].UCID,"^1^CРќРµР»СЊР·СЏ С‚Р°Рє С‡Р°СЃС‚Рѕ Р¶Р°С‚СЊ РєРЅРѕРїРєРё");
                 return;
             }
 
@@ -690,7 +690,7 @@ void case_btc ()
             char log[255];
             sprintf(log,"%slogs\\shop\\shop(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
             /**
-            Пользователь кликнул по другому пользователю
+            РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РєР»РёРєРЅСѓР» РїРѕ РґСЂСѓРіРѕРјСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ
             */
             if (pack_btc->ClickID<=32)
             {
@@ -711,13 +711,13 @@ void case_btc ()
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 36;
-                    strcpy(pack_btn.Text,msg->GetMessage( ginfo->players[i].UCID, "1000" ));
+                    strcpy(pack_btn.Text,msg->_( ginfo->players[i].UCID, "1000" ));
                     insim->send_packet(&pack_btn);
 
                     pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 37;
-                    strcpy(pack_btn.Text, msg->GetMessage( ginfo->players[i].UCID, "1001" ));
+                    strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1001" ));
                     insim->send_packet(&pack_btn);
 
                     // cop buttons
@@ -727,59 +727,59 @@ void case_btc ()
                         pack_btn.TypeIn = 2;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
-                        strcpy(pack_btn.Text, msg->GetMessage( ginfo->players[i].UCID, "1002" ));
+                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1002" ));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.T += 4;
                         pack_btn.ClickID = 39;
-                        strcpy(pack_btn.Text, msg->GetMessage( ginfo->players[i].UCID, "1003" ));
+                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1003" ));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.TypeIn = 0;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
-                        strcpy(pack_btn.Text, msg->GetMessage( ginfo->players[i].UCID, "1004" ));
+                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1004" ));
                         insim->send_packet(&pack_btn);
 
                         pack_btn.T += 4;
                         pack_btn.ClickID = 41;
-                        strcpy(pack_btn.Text, msg->GetMessage( ginfo->players[i].UCID, "1005" ));
+                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1005" ));
                         insim->send_packet(&pack_btn);
                     }
                 }
             }
 
             /**
-            Скрыть кнопки с пользователями
+            РЎРєСЂС‹С‚СЊ РєРЅРѕРїРєРё СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё
             */
             if (pack_btc->ClickID==34)
             {
                 for (int j=0; j<50; j++)
-                    send_bfn(ginfo->players[i].UCID,j);
+                    SendBFN(ginfo->players[i].UCID,j);
             }
 
 
             /**
-            Информационные кнопки
+            РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹Рµ РєРЅРѕРїРєРё
             **/
             if (pack_btc->ClickID == 149)
             {
                 ginfo->players[i].bfn=0;
                 for (int j=159; j>0; j--)
-                    send_bfn(pack_btc->UCID,j);
+                    SendBFN(pack_btc->UCID,j);
             }
 
             if (pack_btc->ClickID == 103)
             {
                 for (int j=0; j<50; j++)
-                    send_bfn(pack_btc->UCID,100+j);
+                    SendBFN(pack_btc->UCID,100+j);
                 btn_info(&ginfo->players[i],1);
             }
 
             if (pack_btc->ClickID == 104)
             {
                 for (int j=0; j<50; j++)
-                    send_bfn(pack_btc->UCID,100+j);
+                    SendBFN(pack_btc->UCID,100+j);
 
                 btn_info(&ginfo->players[i],2);
             }
@@ -787,7 +787,7 @@ void case_btc ()
             if (pack_btc->ClickID == 105)
             {
                 for (int j=0; j<50; j++)
-                    send_bfn(pack_btc->UCID,100+j);
+                    SendBFN(pack_btc->UCID,100+j);
 
                 btn_info(&ginfo->players[i],3);
             }
@@ -795,18 +795,18 @@ void case_btc ()
             if (pack_btc->ClickID == 106)
             {
                 for (int j=0; j<50; j++)
-                    send_bfn(pack_btc->UCID,100+j);
+                    SendBFN(pack_btc->UCID,100+j);
 
                 btn_info(&ginfo->players[i],4);
             }
 
             /**
-            Не помню. Возможно на удаление
+            РќРµ РїРѕРјРЅСЋ. Р’РѕР·РјРѕР¶РЅРѕ РЅР° СѓРґР°Р»РµРЅРёРµ
             */
             if (pack_btc->ClickID == 200)
             {
                 for (int j=0; j<5; j++)
-                    send_bfn(pack_btc->UCID,200+j);
+                    SendBFN(pack_btc->UCID,200+j);
             }
 
             break;
@@ -835,7 +835,7 @@ void case_btt ()
         if (ginfo->players[i].UCID == pack_btt->UCID)
         {
             /**
-            Пользователь передает деньги
+            РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РїРµСЂРµРґР°РµС‚ РґРµРЅСЊРіРё
             */
             if (pack_btt->ClickID==36)
             {
@@ -852,8 +852,8 @@ void case_btt ()
                                 bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
 
                                 char Msg[120];
-                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg->GetMessage( ginfo->players[i].UCID, "1100" ),atoi(pack_btt->Text));
-                                send_mtc(ginfo->players[g].UCID,Msg);
+                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg->_( ginfo->players[i].UCID, "1100" ),atoi(pack_btt->Text));
+                                SendMTC(ginfo->players[g].UCID,Msg);
 
                                 ofstream readf (send_c,ios::app);
                                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo->players[g].UName << endl;
@@ -861,8 +861,8 @@ void case_btt ()
                             }
                             else
                             {
-                                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "1101" ));
-                                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "1101" ));
+                                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "1101" ));
+                                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "1101" ));
                             }
                         } // if atoi(pack_btt->Text) > 0
                         break;
@@ -871,7 +871,7 @@ void case_btt ()
             }
 
             /**
-            Пользователь передает сообщение
+            РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РїРµСЂРµРґР°РµС‚ СЃРѕРѕР±С‰РµРЅРёРµ
             */
             if (pack_btt->ClickID == 37)
             {
@@ -884,13 +884,13 @@ void case_btt ()
                         {
                             out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                             char Msg[127];
-                            strcpy(Msg,msg->GetMessage( ginfo->players[g].UCID, "1103" ));
+                            strcpy(Msg,msg->_( ginfo->players[g].UCID, "1103" ));
                             strcat(Msg,ginfo->players[i].PName);
                             strcat(Msg,": ^1");
                             int len = strlen(Msg);
                             int can = (127-len);
                             strncat(Msg,pack_btt->Text,can);
-                            send_mtc(ginfo->players[g].UCID,Msg);
+                            SendMTC(ginfo->players[g].UCID,Msg);
                         } // if atoi(pack_btt->Text) > 0
                         break;
                     }
@@ -940,8 +940,8 @@ void case_toc ()
             char Text[64];
             strcpy(Text, "/spec ");
             strcat (Text, ginfo->players[i].UName);
-            send_mtc(pack_toc->NewUCID,"^1Access Denine");
-            send_mst(Text);
+            SendMTC(pack_toc->NewUCID,"^1Access Denine");
+            SendMST(Text);
             break;
         }
     }
@@ -1028,7 +1028,7 @@ void case_mci ()
                     /** Bonus **/
                     ginfo->players[j].Bonus_dist += Dist;
 
-                    //начисляем деньги только до 20 уровня
+                    //РЅР°С‡РёСЃР»СЏРµРј РґРµРЅСЊРіРё С‚РѕР»СЊРєРѕ РґРѕ 20 СѓСЂРѕРІРЅСЏ
                     if(dl->GetLVL(ginfo->players[j].UCID) < 20)
                     {
 
@@ -1062,8 +1062,8 @@ void case_mci ()
                     //bank->BankFond -= bonus;
 
                     char bonus_c[64];
-                    sprintf(bonus_c,"%s%d ^7RUR.",msg->GetMessage( ginfo->players[j].UCID, "1500" ),bonus);
-                    send_mtc(ginfo->players[j].UCID,bonus_c);
+                    sprintf(bonus_c,"%s%d ^7RUR.",msg->_( ginfo->players[j].UCID, "1500" ),bonus);
+                    SendMTC(ginfo->players[j].UCID,bonus_c);
 
                 }
 
@@ -1098,7 +1098,6 @@ void case_mso ()
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    // The chat GetMessage is sent by the host, don't do anything
     if (pack_mso->UCID == 0)
         return;
 
@@ -1119,21 +1118,21 @@ void case_mso ()
 
 
     //!help
-    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
+    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^CРёРЅС„Рѕ", 7) == 0))
     {
         for (int j=159; j>0; j--)
         {
-            send_bfn(ginfo->players[i].UCID,j);
+            SendBFN(ginfo->players[i].UCID,j);
         }
         btn_info(&ginfo->players[i],1);
     }
 
-    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
+    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^CРїРѕРјРѕС‰СЊ", 9) == 0))
     {
         out << ginfo->players[i].UName << " send !help" << endl;
         help_cmds(&ginfo->players[i],1);
     }
-    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
+    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^CРјР°С€РёРЅС‹", 9) == 0))
     {
         out << ginfo->players[i].UName << " send !cars" << endl;
         help_cmds(&ginfo->players[i],2);
@@ -1147,7 +1146,7 @@ void case_mso ()
 
         if((now - ginfo->players[i].LastSave) < 5*3600)
         {
-            send_mtc(ginfo->players[i].UCID,"^1^CНельзя так часто сохраняться");
+            SendMTC(ginfo->players[i].UCID,"^1^CРќРµР»СЊР·СЏ С‚Р°Рє С‡Р°СЃС‚Рѕ СЃРѕС…СЂР°РЅСЏС‚СЊСЃСЏ");
             return;
         }
         ginfo->players[i].LastSave = now;
@@ -1160,14 +1159,14 @@ void case_mso ()
 #endif // _RC_POLICE_H
 
         bank->bank_save(ginfo->players[i].UCID);
-        send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "3000" ));
+        SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "3000" ));
 
     }
 
-    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
+    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^CРїРµСЂРµРґР°С‡Рё", 11) == 0))
     {
-        char GetMessage[128];
-        strcpy(GetMessage,Msg);
+        char _[128];
+        strcpy(_,Msg);
 
         char file[255];
         strcpy(file,RootDir);
@@ -1187,7 +1186,7 @@ void case_mso ()
 
         char * comand;
         char * user;
-        comand = strtok (GetMessage," ");
+        comand = strtok (_," ");
         user = strtok (NULL," ");
 
         if ((user) and (strlen(user) > 0))
@@ -1203,7 +1202,7 @@ void case_mso ()
                         char Text[64];
                         strcpy(Text,"^1| ^C^7");
                         strncat(Text,str,55);
-                        send_mtc(ginfo->players[i].UCID,Text);
+                        SendMTC(ginfo->players[i].UCID,Text);
                     }
                 }
             }
@@ -1222,7 +1221,7 @@ void case_mso ()
                         char Text[64];
                         strcpy(Text,"^1| ^C^7");
                         strncat(Text,str,55);
-                        send_mtc(ginfo->players[i].UCID,Text);
+                        SendMTC(ginfo->players[i].UCID,Text);
                     }
                 }
             }
@@ -1236,23 +1235,23 @@ void case_mso ()
         char Text[64];
 
         sprintf(Text,"/msg ^1------------------------------");
-        send_mst(Text);
+        SendMST(Text);
 
         sprintf(Text,"/msg ^7 %s",ginfo->players[i].PName);
-        send_mst(Text);
+        SendMST(Text);
 
         sprintf(Text,"/msg ^7Cash: ^1%d",bank->GetCash(ginfo->players[i].UCID));
-        send_mst(Text);
+        SendMST(Text);
 #ifdef _RC_LEVEL_H
         sprintf(Text,"/msg ^7Drive Level: ^1%d",dl->GetLVL(ginfo->players[i].UCID));
-        send_mst(Text);
+        SendMST(Text);
 
         float nextlvl = (pow(dl->GetLVL(ginfo->players[i].UCID),2)*0.5+100)*1000;
 
         int prog = int(dl->GetSkill(ginfo->players[i].UCID)/nextlvl*100);
 
         sprintf(Text,"/msg ^7Drive Skill: ^1%d%s",prog,"%");
-        send_mst(Text);
+        SendMST(Text);
 #endif
         for ( int j=0; j<MAX_CARS; j++)
         {
@@ -1297,12 +1296,12 @@ void case_mso ()
                 }
 
                 sprintf(Text,"/msg ^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)",ginfo->players[i].cars[j].car,ginfo->players[i].cars[j].dist/1000,Tun,tune2);
-                send_mst(Text);
+                SendMST(Text);
             }
         }
 
         sprintf(Text,"/msg ^1------------------------------");
-        send_mst(Text);
+        SendMST(Text);
     }
     //!tunning
 
@@ -1310,7 +1309,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2000" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1321,7 +1320,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc(ginfo->players[i].UCID,"Error");
+            SendMTC(ginfo->players[i].UCID,"Error");
             return;
         }
 
@@ -1334,16 +1333,16 @@ void case_mso ()
             if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 #endif
             if (ginfo->players[i].CTune&1)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 У вас уже есть ECU");
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ ECU");
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 
@@ -1351,16 +1350,16 @@ void case_mso ()
             {
                 ginfo->players[i].CTune +=1;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили ECU (%d RUR.)",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё ECU (%d RUR.)",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->RemCash(ginfo->players[i].UCID,needcash);
                 bank->AddToBank(needcash);
             }
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужно %d RUR.",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
             }
         }
         else if (strcmp(id,"TRB")==0)
@@ -1371,16 +1370,16 @@ void case_mso ()
             if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вам нужен уровень: ^1%d",needlvl);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 #endif
             if (ginfo->players[i].CTune&2)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 У вас уже есть Turbo");
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ Turbo");
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 
@@ -1388,16 +1387,16 @@ void case_mso ()
             {
                 ginfo->players[i].CTune +=2;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы купили Turbo (%d RUR.)",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’С‹ РєСѓРїРёР»Рё Turbo (%d RUR.)",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->RemCash(ginfo->players[i].UCID,needcash);
                 bank->AddToBank(needcash);
             }
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужно %d RUR.",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
             }
 
         }
@@ -1409,16 +1408,16 @@ void case_mso ()
             if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужен уровень: ^1%d",needlvl);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 #endif
             if (ginfo->players[i].CTune&4)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7У вас уже установлено \"Облегчение веса\"");
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7РЈ РІР°СЃ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\"");
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
 
@@ -1426,16 +1425,16 @@ void case_mso ()
             {
                 ginfo->players[i].CTune+=4;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили \"Облегчение веса\" (%d RUR.)",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\" (%d RUR.)",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->RemCash(ginfo->players[i].UCID,needcash);
                 bank->AddToBank(needcash);
             }
             else
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вам нужно %d RUR.",needcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’Р°Рј РЅСѓР¶РЅРѕ %d RUR.",needcash);
+                SendMTC(ginfo->players[i].UCID,msg);
             }
 
         }
@@ -1447,7 +1446,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2000" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1458,7 +1457,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc(ginfo->players[i].UCID,"Error");
+            SendMTC(ginfo->players[i].UCID,"Error");
             return;
         }
 
@@ -1470,8 +1469,8 @@ void case_mso ()
             {
                 ginfo->players[i].CTune -=1;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали ECU (%d RUR.)",sellcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё ECU (%d RUR.)",sellcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1485,8 +1484,8 @@ void case_mso ()
             {
                 ginfo->players[i].CTune -=2;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали Turbo (%d RUR.)",sellcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё Turbo (%d RUR.)",sellcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1500,8 +1499,8 @@ void case_mso ()
             {
                 ginfo->players[i].CTune -=4;
                 char msg[64];
-                sprintf(msg,"^C^2| ^7Вы продали \"Облегчение веса\" (%d RUR.)",sellcash);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7Р’С‹ РїСЂРѕРґР°Р»Рё \"РћР±Р»РµРіС‡РµРЅРёРµ РІРµСЃР°\" (%d RUR.)",sellcash);
+                SendMTC(ginfo->players[i].UCID,msg);
                 bank->AddCash(ginfo->players[i].UCID,sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1513,7 +1512,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2000" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1524,7 +1523,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc(ginfo->players[i].UCID,"Error");
+            SendMTC(ginfo->players[i].UCID,"Error");
             return;
         }
 
@@ -1540,7 +1539,7 @@ void case_mso ()
 
         if (CarID == MAX_CARS)
         {
-            send_mtc(ginfo->players[i].UCID,"^C^2| ^7У нас нет такой машины!");
+            SendMTC(ginfo->players[i].UCID,"^C^2| ^7РЈ РЅР°СЃ РЅРµС‚ С‚Р°РєРѕР№ РјР°С€РёРЅС‹!");
             return;
         }
 
@@ -1549,16 +1548,16 @@ void case_mso ()
         if (dl->GetLVL(ginfo->players[i].UCID) < needlvl)
         {
             char msg[64];
-            sprintf(msg,"^C^2| ^7Нужен уровень: ^1%d",needlvl);
-            send_mtc(ginfo->players[i].UCID,msg);
+            sprintf(msg,"^C^2| ^7РќСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: ^1%d",needlvl);
+            SendMTC(ginfo->players[i].UCID,msg);
             return;
         }
 #endif
         if (bank->GetCash(ginfo->players[i].UCID) < (int)ginfo->car[CarID].cash)
         {
             char msg[64];
-            sprintf(msg,"^C^2| ^7Нужно ^1%d ^7RUR.",(int)ginfo->car[CarID].cash);
-            send_mtc(ginfo->players[i].UCID,msg);
+            sprintf(msg,"^C^2| ^7РќСѓР¶РЅРѕ ^1%d ^7RUR.",(int)ginfo->car[CarID].cash);
+            SendMTC(ginfo->players[i].UCID,msg);
             return;
         }
 
@@ -1568,8 +1567,8 @@ void case_mso ()
             if (strcmp(id,ginfo->players[i].cars[j].car)== 0)
             {
                 char msg[64];
-                sprintf(msg,"^C^2| ^7У вас уже есть такая машина");
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2| ^7РЈ РІР°СЃ СѓР¶Рµ РµСЃС‚СЊ С‚Р°РєР°СЏ РјР°С€РёРЅР°");
+                SendMTC(ginfo->players[i].UCID,msg);
                 return;
             }
         }
@@ -1583,8 +1582,8 @@ void case_mso ()
                 ginfo->players[i].cars[j].tuning=0;
                 ginfo->players[i].cars[j].dist=0;
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы купили %s",id);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’С‹ РєСѓРїРёР»Рё %s",id);
+                SendMTC(ginfo->players[i].UCID,msg);
 
                 bank->RemCash(ginfo->players[i].UCID,ginfo->car[CarID].cash);
                 bank->AddToBank(ginfo->car[CarID].cash);
@@ -1617,7 +1616,7 @@ void case_mso ()
     {
         if (ginfo->players[i].Zone != 2)
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2000" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1628,7 +1627,7 @@ void case_mso ()
         // test if "id" NULL or != 3
         if ( ( !id ) or ( strlen( id ) != 3 ) )
         {
-            send_mtc(ginfo->players[i].UCID,"Error");
+            SendMTC(ginfo->players[i].UCID,"Error");
             return;
         }
 
@@ -1646,7 +1645,7 @@ void case_mso ()
         // if user now  on this car
         if (strcmp(id,ginfo->players[i].CName)==0)
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "1009" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "1009" ));
             return;
         }
 
@@ -1655,8 +1654,8 @@ void case_mso ()
             if (strcmp(ginfo->players[i].cars[k].car,ginfo->car[j].car) == 0)
             {
                 char msg[64];
-                sprintf(msg,"^C^2|^7 Вы продали %s",id);
-                send_mtc(ginfo->players[i].UCID,msg);
+                sprintf(msg,"^C^2|^7 Р’С‹ РїСЂРѕРґР°Р»Рё %s",id);
+                SendMTC(ginfo->players[i].UCID,msg);
 
                 strcpy(ginfo->players[i].cars[k].car,"");
                 ginfo->players[i].cars[k].tuning=0;
@@ -1687,10 +1686,10 @@ void case_mso ()
     }
 
     //!EXIT
-    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
+    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^CРІС‹С…РѕРґ", 8) == 0) ) and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
     {
-        send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-        send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
+        SendMST("/msg ^1| ^3Russian Cruise: ^7^CРџРѕРґР°РЅР° РєРѕРјР°РЅРґР° РЅР° РІС‹РєР»СЋС‡РµРЅРёРµ");
+        SendMST("/msg ^1| ^3Russian Cruise: ^7^CРЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С…");
         for (int j=0; j<MAX_PLAYERS; j++)
         {
 
@@ -1717,7 +1716,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
-        send_mst("/msg ^1| ^3Russian Cruise: ^3^CПодана команда на чтение файлов");
+        SendMST("/msg ^1| ^3Russian Cruise: ^3^CРџРѕРґР°РЅР° РєРѕРјР°РЅРґР° РЅР° С‡С‚РµРЅРёРµ С„Р°Р№Р»РѕРІ");
 
         struct IS_TINY pack_requests;
         memset(&pack_requests, 0, sizeof(struct IS_TINY));
@@ -1741,15 +1740,15 @@ void case_mso ()
 
     }
 
-    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
+    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^CРїРёС‚", 6) == 0 ))
     {
         if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
         {
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
-            send_mst(Msg);
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2700" ));
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2701" ));
+            SendMST(Msg);
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2701" ));
             bank->RemCash(ginfo->players[i].UCID,5000);
             bank->AddToBank(5000);
         }
@@ -1758,7 +1757,7 @@ void case_mso ()
 
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
-            send_mst(Msg);
+            SendMST(Msg);
             ginfo->players[i].Zone = 1;
             bank->RemCash(ginfo->players[i].UCID,250);
             bank->AddToBank(250);
@@ -1766,13 +1765,13 @@ void case_mso ()
         }
     }
     //!users
-    if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
+    if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^CРЅР°СЂРѕРґ", 8) == 0 ))
     {
         ginfo->players[i].Action = 1;
 
         for(int h=0; h<50; h++)
         {
-            send_bfn(ginfo->players[i].UCID,h);
+            SendBFN(ginfo->players[i].UCID,h);
         }
 
         struct IS_BTN pack_btn;
@@ -1809,7 +1808,7 @@ void case_mso ()
         }
         pack_btn.ClickID = 34;
         pack_btn.T = 195;
-        strcpy(pack_btn.Text,msg->GetMessage( ginfo->players[i].UCID, "2003" ));
+        strcpy(pack_btn.Text,msg->_( ginfo->players[i].UCID, "2003" ));
         insim->send_packet(&pack_btn);
 
     }
@@ -1821,7 +1820,6 @@ void case_mso_flood ()
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    // The chat GetMessage is sent by the host, don't do anything
     if (pack_mso->UCID == 0)
         return;
 
@@ -1855,7 +1853,7 @@ void case_mso_flood ()
 
         if (ginfo->players[i].FloodCount > 4)   //max lines to tolerate
         {
-            send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2004" ));
+            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2004" ));
             ginfo->players[i].FloodCount = 0;
 
             bank->RemCash(ginfo->players[i].UCID,500);
@@ -1863,13 +1861,13 @@ void case_mso_flood ()
         }
 
 
-        /*** МАТ И Т.П. ***/
+        /*** РњРђРў Р Рў.Рџ. ***/
 
         for (int j=0; j< ginfo->WordsCount; j++)
         {
             if (strstr(Msg,ginfo->Words[j]))
             {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2005" ));
+                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2005" ));
 
                 bank->RemCash(ginfo->players[i].UCID,5000);
                 bank->AddToBank(5000);
@@ -1888,14 +1886,12 @@ void case_mso_cop ()
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    // The chat GetMessage is sent by the host, don't do anything
     if (pack_mso->UCID == 0)
         return;
 
     if ( pack_mso->UserType != MSO_PREFIX )
         return;
 
-    // Find the player that wrote in the chat
     for (i=0; i < MAX_PLAYERS; i++)
         if (ginfo->players[i].UCID == pack_mso->UCID)
             break;
@@ -1974,8 +1970,8 @@ void case_ncn ()
     read_user_cars(&ginfo->players[i]);
 
     //help_cmds(&ginfo->players[i],1);
-    send_mtc(pack_ncn->UCID,msg->GetMessage( pack_ncn->UCID, "3200" ));
-    send_mtc(pack_ncn->UCID,msg->GetMessage( pack_ncn->UCID, "3202" ));
+    SendMTC(pack_ncn->UCID,msg->_( pack_ncn->UCID, "3200" ));
+    SendMTC(pack_ncn->UCID,msg->_( pack_ncn->UCID, "3202" ));
 }
 
 void case_npl ()
@@ -1994,7 +1990,7 @@ void case_npl ()
 
             if (pack_npl->PType != 6)
             {
-                msg->send_bfn_all( ginfo->players[i].UCID );
+                msg->SendBFNAll( ginfo->players[i].UCID );
 
                 ginfo->players[i].Pitlane = 1;
 
@@ -2036,12 +2032,12 @@ void case_npl ()
                     {
                         ginfo->players[i].PLID = 0;
                         ginfo->players[i].Zone = 1;
-                        send_mst( specText );
+                        SendMST( specText );
 
                         char msg2[64];
-                        sprintf(msg2,"^C^1|^7 Нужен уровень: %d",needlvl);
-                        send_mtc(ginfo->players[i].UCID,msg2);
-                        send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2404" ));
+                        sprintf(msg2,"^C^1|^7 РќСѓР¶РµРЅ СѓСЂРѕРІРµРЅСЊ: %d",needlvl);
+                        SendMTC(ginfo->players[i].UCID,msg2);
+                        SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2404" ));
 
                         char Text2[64];
                         strcpy(Text2,"^1| ^2");
@@ -2053,28 +2049,28 @@ void case_npl ()
                                 strcat(Text2," ");
                             }
                         }
-                        send_mtc(ginfo->players[i].UCID,Text2);
+                        SendMTC(ginfo->players[i].UCID,Text2);
                         return;
                     }
                     else if ((pack_npl->H_TRes < tune))
                     {
                         ginfo->players[i].PLID = 0;
                         ginfo->players[i].Zone = 1;
-                        send_mst( specText );
+                        SendMST( specText );
 
                         char Texxt[32];
-                        sprintf(Texxt,"%s %d %%",msg->GetMessage( ginfo->players[i].UCID, "2400" ),tune);
-                        send_mtc(ginfo->players[i].UCID,Texxt);
+                        sprintf(Texxt,"%s %d %%",msg->_( ginfo->players[i].UCID, "2400" ),tune);
+                        SendMTC(ginfo->players[i].UCID,Texxt);
                     }
 #endif
                 }
                 else
                 {
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2404" ));
+                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2404" ));
                     help_cmds(&ginfo->players[i],2);
                     ginfo->players[i].Zone = 1;
                     ginfo->players[i].PLID = 0;
-                    send_mst( specText );
+                    SendMST( specText );
                     return;
                 }
                 break;
@@ -2141,7 +2137,7 @@ void case_pll ()
     {
         if (ginfo->players[i].PLID == pack_pll->PLID)
         {
-            msg->send_bfn_all( ginfo->players[i].UCID );
+            msg->SendBFNAll( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
@@ -2149,8 +2145,8 @@ void case_pll ()
 
             if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2600" ));
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2601" ));
+                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2600" ));
+                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2601" ));
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
@@ -2162,15 +2158,15 @@ void case_pll ()
             {
                 if (ginfo->players[i].Zone != 1)
                 {
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2602" ));
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2603" ));
+                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2602" ));
+                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2603" ));
 
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);
                 }
             }
             for (int g=0; g<200; g++)
-                send_bfn(ginfo->players[i].UCID,g);
+                SendBFN(ginfo->players[i].UCID,g);
 
             break;
         }
@@ -2189,7 +2185,7 @@ void case_plp ()
     {
         if (ginfo->players[i].PLID == pack_plp->PLID)
         {
-            msg->send_bfn_all( ginfo->players[i].UCID );
+            msg->SendBFNAll( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
@@ -2197,8 +2193,8 @@ void case_plp ()
 
             if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2700" ));
-                send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2701" ));
+                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
+                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2701" ));
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
@@ -2210,8 +2206,8 @@ void case_plp ()
             {
                 if (ginfo->players[i].Zone != 1)
                 {
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2702" ));
-                    send_mtc(ginfo->players[i].UCID,msg->GetMessage( ginfo->players[i].UCID, "2703" ));
+                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2702" ));
+                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2703" ));
 
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);
@@ -2219,7 +2215,7 @@ void case_plp ()
             }
 
             for (int g=0; g<200; g++)
-                send_bfn(ginfo->players[i].UCID,g);
+                SendBFN(ginfo->players[i].UCID,g);
 
             break;
         }
@@ -2253,8 +2249,8 @@ void case_vtn ()
     {
         if (ginfo->players[i].UCID == pack_vtn->UCID)
         {
-            send_mst(msg->GetMessage( ginfo->players[i].UCID, "2900" ));
-            send_mst("/cv");
+            SendMST(msg->_( ginfo->players[i].UCID, "2900" ));
+            SendMST("/cv");
             break;
         }
     }
@@ -2603,7 +2599,7 @@ void *thread_save (void *params)
                     dl->save(ginfo->players[j].UCID);
 #endif
 
-                    send_mtc(ginfo->players[j].UCID,msg->GetMessage( ginfo->players[j].UCID, "3000" ));
+                    SendMTC(ginfo->players[j].UCID,msg->_( ginfo->players[j].UCID, "3000" ));
                 }
             }
 
@@ -2629,7 +2625,8 @@ void *thread_work (void *params)
         police->Event();
         pizza->Event();
         taxi->Event();
-        Sleep(1000);
+        lgh->Event();
+        Sleep(500);
     }
     return 0;
 };
@@ -2644,7 +2641,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         return -1;
     }
 
-    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // СЂР°Р·СЂРµС€Р°РµРј РїРµСЂРµРїРѕРґРєР»СЋС‡РµРЅРёРµ
 
     mysqlConf conf;
     char path[MAX_PATH];
@@ -2665,9 +2662,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     if (strlen(ServiceName) == 0)
     {
-        out << "Не задан файл конфигурации\n"   ;
+        out << "РќРµ Р·Р°РґР°РЅ С„Р°Р№Р» РєРѕРЅС„РёРіСѓСЂР°С†РёРё\n"   ;
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         return 0;
 
@@ -2749,7 +2746,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
         }
 
-        msg->next_packet(); // обрабатывается первым, из-за того что потом е выводятся сообщения. приоритет емае
+        msg->next_packet(); // РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚СЃСЏ РїРµСЂРІС‹Рј, РёР·-Р·Р° С‚РѕРіРѕ С‡С‚Рѕ РїРѕС‚РѕРј Рµ РІС‹РІРѕРґСЏС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёСЏ. РїСЂРёРѕСЂРёС‚РµС‚ РµРјР°Рµ
 
         switch (insim->peek_packet())
         {
@@ -2884,15 +2881,15 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 }
 
 
-int  nCount;     // счетчик
+int  nCount;     // СЃС‡РµС‚С‡РёРє
 
 
 int core_install_service(char* param[])
 {
     hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CREATE_SERVICE  // возможно создание сервиса
+                                 NULL,      // Р»РѕРєР°Р»СЊРЅР°СЏ РјР°С€РёРЅР°
+                                 NULL,      // Р°РєС‚РёРІРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ
+                                 SC_MANAGER_CREATE_SERVICE  // РІРѕР·РјРѕР¶РЅРѕ СЃРѕР·РґР°РЅРёРµ СЃРµСЂРІРёСЃР°
                              );
     if (hServiceControlManager == NULL)
     {
@@ -2904,32 +2901,32 @@ int core_install_service(char* param[])
     char dir[255];
     sprintf(dir,"%s %s", param[0] , param[1]);
 
-    // устанавливаем новый сервис
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅРѕРІС‹Р№ СЃРµСЂРІРёСЃ
     hService = CreateService(
-                   hServiceControlManager,      // дескриптор менеджера сервисов
-                   ServiceName,                 // внутреннее имя сервиса, используемое SCM
-                   ServiceName,                 // внешнее имя сервиса в панели управления
-                   SERVICE_ALL_ACCESS,          // полный контроль над сервисом
-                   SERVICE_WIN32_OWN_PROCESS,   // сервис является процессом
-                   SERVICE_AUTO_START,        	// запускается сервис по требованию
-                   SERVICE_ERROR_NORMAL,        // обработка ошибок нормальная
-                   dir,                         // путь к сервису
-                   NULL,                        // сервис не принадлежит к группе
-                   NULL,                        // тэг группы не изменяется
-                   NULL,                        // сервис не зависит от других сервисов
-                   NULL,                        // имя совпадает с текущим именем учетной записи
-                   NULL                         // пароля нет
+                   hServiceControlManager,      // РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
+                   ServiceName,                 // РІРЅСѓС‚СЂРµРЅРЅРµРµ РёРјСЏ СЃРµСЂРІРёСЃР°, РёСЃРїРѕР»СЊР·СѓРµРјРѕРµ SCM
+                   ServiceName,                 // РІРЅРµС€РЅРµРµ РёРјСЏ СЃРµСЂРІРёСЃР° РІ РїР°РЅРµР»Рё СѓРїСЂР°РІР»РµРЅРёСЏ
+                   SERVICE_ALL_ACCESS,          // РїРѕР»РЅС‹Р№ РєРѕРЅС‚СЂРѕР»СЊ РЅР°Рґ СЃРµСЂРІРёСЃРѕРј
+                   SERVICE_WIN32_OWN_PROCESS,   // СЃРµСЂРІРёСЃ СЏРІР»СЏРµС‚СЃСЏ РїСЂРѕС†РµСЃСЃРѕРј
+                   SERVICE_AUTO_START,        	// Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ СЃРµСЂРІРёСЃ РїРѕ С‚СЂРµР±РѕРІР°РЅРёСЋ
+                   SERVICE_ERROR_NORMAL,        // РѕР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє РЅРѕСЂРјР°Р»СЊРЅР°СЏ
+                   dir,                         // РїСѓС‚СЊ Рє СЃРµСЂРІРёСЃСѓ
+                   NULL,                        // СЃРµСЂРІРёСЃ РЅРµ РїСЂРёРЅР°РґР»РµР¶РёС‚ Рє РіСЂСѓРїРїРµ
+                   NULL,                        // С‚СЌРі РіСЂСѓРїРїС‹ РЅРµ РёР·РјРµРЅСЏРµС‚СЃСЏ
+                   NULL,                        // СЃРµСЂРІРёСЃ РЅРµ Р·Р°РІРёСЃРёС‚ РѕС‚ РґСЂСѓРіРёС… СЃРµСЂРІРёСЃРѕРІ
+                   NULL,                        // РёРјСЏ СЃРѕРІРїР°РґР°РµС‚ СЃ С‚РµРєСѓС‰РёРј РёРјРµРЅРµРј СѓС‡РµС‚РЅРѕР№ Р·Р°РїРёСЃРё
+                   NULL                         // РїР°СЂРѕР»СЏ РЅРµС‚
                );
     if (hService == NULL)
     {
         printf("Create service failed.");
-        // закрываем дескриптор менеджера сервисов
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
         CloseServiceHandle(hServiceControlManager);
         return 0;
     }
 
     printf("Service is installed.");
-    // закрываем дескрипторы
+    // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
     CloseServiceHandle(hService);
     CloseServiceHandle(hServiceControlManager);
     return 2;
@@ -2938,9 +2935,9 @@ int core_install_service(char* param[])
 int core_uninstall_service()
 {
     hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CONNECT   // соединение с менеджером сервисов
+                                 NULL,      // Р»РѕРєР°Р»СЊРЅР°СЏ РјР°С€РёРЅР°
+                                 NULL,      // Р°РєС‚РёРІРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… СЃРµСЂРІРёСЃРѕРІ
+                                 SC_MANAGER_CONNECT   // СЃРѕРµРґРёРЅРµРЅРёРµ СЃ РјРµРЅРµРґР¶РµСЂРѕРј СЃРµСЂРІРёСЃРѕРІ
                              );
     if (hServiceControlManager == NULL)
     {
@@ -2951,17 +2948,17 @@ int core_uninstall_service()
 
     printf("Service control manager is opened.");
 
-    // открываем сервис
+    // РѕС‚РєСЂС‹РІР°РµРј СЃРµСЂРІРёСЃ
     hService = OpenService(
-                   hServiceControlManager,  // дескриптор менеджера сервисов
-                   ServiceName,            // имя сервиса
-                   SERVICE_ALL_ACCESS | DELETE  // любой доступ к сервису
-                   // и удаление из базы данных
+                   hServiceControlManager,  // РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
+                   ServiceName,            // РёРјСЏ СЃРµСЂРІРёСЃР°
+                   SERVICE_ALL_ACCESS | DELETE  // Р»СЋР±РѕР№ РґРѕСЃС‚СѓРї Рє СЃРµСЂРІРёСЃСѓ
+                   // Рё СѓРґР°Р»РµРЅРёРµ РёР· Р±Р°Р·С‹ РґР°РЅРЅС‹С…
                );
     if (hService == NULL)
     {
         printf("Open service failed.");
-        // закрываем дескриптор менеджера сервисов
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РјРµРЅРµРґР¶РµСЂР° СЃРµСЂРІРёСЃРѕРІ
         CloseServiceHandle(hServiceControlManager);
 
         return 0;
@@ -2970,39 +2967,39 @@ int core_uninstall_service()
     printf("Service is opened.");
 
 
-    // получаем состояние сервиса
+    // РїРѕР»СѓС‡Р°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!QueryServiceStatus(hService, &service_status))
     {
         printf("Query service status failed.");
-        // закрываем дескрипторы
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
         CloseServiceHandle(hServiceControlManager);
         CloseServiceHandle(hService);
 
         return 0;
     }
 
-    // если сервис работает, то останавливаем его
+    // РµСЃР»Рё СЃРµСЂРІРёСЃ СЂР°Р±РѕС‚Р°РµС‚, С‚Рѕ РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј РµРіРѕ
     if (service_status.dwCurrentState != SERVICE_STOPPED)
     {
         printf("Service is working. It will be stoped");
         if (!ControlService(hService, SERVICE_CONTROL_STOP, &service_status))
         {
             printf("Control service failed.");
-            // закрываем дескрипторы
+            // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
             CloseServiceHandle(hServiceControlManager);
             CloseServiceHandle(hService);
 
             return 0;
         }
-        // ждем, пока сервис остановится
+        // Р¶РґРµРј, РїРѕРєР° СЃРµСЂРІРёСЃ РѕСЃС‚Р°РЅРѕРІРёС‚СЃСЏ
         Sleep(5000);
     }
 
-    // удаляем сервис
+    // СѓРґР°Р»СЏРµРј СЃРµСЂРІРёСЃ
     if (!DeleteService(hService))
     {
         printf("Delete service failed.");
-        // закрываем дескрипторы
+        // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
         CloseServiceHandle(hServiceControlManager);
         CloseServiceHandle(hService);
 
@@ -3011,13 +3008,13 @@ int core_uninstall_service()
 
     printf("The service is deleted.");
 
-    // закрываем дескрипторы
+    // Р·Р°РєСЂС‹РІР°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂС‹
     CloseServiceHandle(hServiceControlManager);
     CloseServiceHandle(hService);
 
     return 2;
 }
-// главная функция приложения
+// РіР»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ
 int main(int argc, char* argv[])
 {
 
@@ -3058,7 +3055,7 @@ int main(int argc, char* argv[])
 
         CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
-        // рабочий цикл сервиса
+        // СЂР°Р±РѕС‡РёР№ С†РёРєР» СЃРµСЂРІРёСЃР°
         while (ok)
         {
             Sleep(1000);
@@ -3069,14 +3066,14 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    //  инициализируем структуру сервисов
+    //  РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃРµСЂРІРёСЃРѕРІ
     SERVICE_TABLE_ENTRY  service_table[] =
     {
-        {ServiceName, ServiceMain},   // имя сервиса и функция сервиса
-        { NULL, NULL }                 // больше сервисов нет
+        {ServiceName, ServiceMain},   // РёРјСЏ СЃРµСЂРІРёСЃР° Рё С„СѓРЅРєС†РёСЏ СЃРµСЂРІРёСЃР°
+        { NULL, NULL }                 // Р±РѕР»СЊС€Рµ СЃРµСЂРІРёСЃРѕРІ РЅРµС‚
     };
 
-    // запускаем диспетчер сервиса
+    // Р·Р°РїСѓСЃРєР°РµРј РґРёСЃРїРµС‚С‡РµСЂ СЃРµСЂРІРёСЃР°
     if (!StartServiceCtrlDispatcher(service_table))
         return 0;
 
@@ -3093,10 +3090,10 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
     out.open(log);
 
-    // регистрируем обработчик управляющих команд для сервиса
+    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РѕР±СЂР°Р±РѕС‚С‡РёРє СѓРїСЂР°РІР»СЏСЋС‰РёС… РєРѕРјР°РЅРґ РґР»СЏ СЃРµСЂРІРёСЃР°
     hServiceStatus = RegisterServiceCtrlHandler(
-                         ServiceName,        // имя сервиса
-                         ServiceCtrlHandler   // обработчик управляющих команд
+                         ServiceName,        // РёРјСЏ СЃРµСЂРІРёСЃР°
+                         ServiceCtrlHandler   // РѕР±СЂР°Р±РѕС‚С‡РёРє СѓРїСЂР°РІР»СЏСЋС‰РёС… РєРѕРјР°РЅРґ
                      );
     if (!hServiceStatus)
     {
@@ -3104,7 +3101,7 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
         return;
     }
 
-    // инициализируем структуру состояния сервиса
+    // РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃРµСЂРІРёСЃР°
     service_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
     service_status.dwCurrentState = SERVICE_START_PENDING;
     service_status.dwControlsAccepted = SERVICE_ACCEPT_STOP |
@@ -3114,31 +3111,31 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
     service_status.dwCheckPoint = 0;
     service_status.dwWaitHint = 5000;
 
-    // устанавливаем состояние сервиса
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!SetServiceStatus(hServiceStatus, &service_status))
     {
         out << "Set service status 'SERVICE_START_PENDING' failed.";
         return;
     }
 
-    // определяем сервис как работающий
+    // РѕРїСЂРµРґРµР»СЏРµРј СЃРµСЂРІРёСЃ РєР°Рє СЂР°Р±РѕС‚Р°СЋС‰РёР№
     service_status.dwCurrentState = SERVICE_RUNNING;
-    // нет ошибок
+    // РЅРµС‚ РѕС€РёР±РѕРє
     service_status.dwWin32ExitCode = NO_ERROR;
-    // устанавливаем новое состояние сервиса
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅРѕРІРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
     if (!SetServiceStatus(hServiceStatus, &service_status))
     {
         out << "Set service status 'START_PENDING' failed.";
         return;
     }
 
-    // открываем файл протокола работы сервиса
+    // РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
 
     out << "The service is started." << endl << flush;
     out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
     CreateThread(NULL,0,ThreadMain,0,0,NULL);
 
-    // рабочий цикл сервиса
+    // СЂР°Р±РѕС‡РёР№ С†РёРєР» СЃРµСЂРІРёСЃР°
     while (service_status.dwCurrentState == SERVICE_RUNNING)
     {
         ++nCount;
@@ -3155,9 +3152,9 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
 {
     switch (dwControl)
     {
-    case SERVICE_CONTROL_STOP:     // остановить сервис
-        send_mst("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-        send_mst("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
+    case SERVICE_CONTROL_STOP:     // РѕСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРµСЂРІРёСЃ
+        SendMST("/msg ^1| ^3Russian Cruise: ^7^CРџРѕРґР°РЅР° РєРѕРјР°РЅРґР° РЅР° РІС‹РєР»СЋС‡РµРЅРёРµ");
+        SendMST("/msg ^1| ^3Russian Cruise: ^7^CРЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С…");
         // save all users
         for (int j=0; j<MAX_PLAYERS; j++)
         {
@@ -3184,27 +3181,27 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
             }
         }
         ok=0;
-        // записываем конечное значение счетчика
+        // Р·Р°РїРёСЃС‹РІР°РµРј РєРѕРЅРµС‡РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃС‡РµС‚С‡РёРєР°
         //out << "Count = " << nCount << endl;
         tools::log( "The service is finished." );
-        // закрываем файл
+        // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 
-        // устанавливаем состояние остановки
+        // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РѕСЃС‚Р°РЅРѕРІРєРё
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         break;
 
-    case SERVICE_CONTROL_SHUTDOWN:     // завершить сервис
+    case SERVICE_CONTROL_SHUTDOWN:     // Р·Р°РІРµСЂС€РёС‚СЊ СЃРµСЂРІРёСЃ
         service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
+        // РёР·РјРµРЅРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР°
         SetServiceStatus(hServiceStatus, &service_status);
         break;
 
     default:
-        // увеличиваем значение контрольной точки
+        // СѓРІРµР»РёС‡РёРІР°РµРј Р·РЅР°С‡РµРЅРёРµ РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё
         ++service_status.dwCheckPoint;
-        // оставляем состояние сервиса без изменения
+        // РѕСЃС‚Р°РІР»СЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРµСЂРІРёСЃР° Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
         SetServiceStatus(hServiceStatus, &service_status);
         break;
     }

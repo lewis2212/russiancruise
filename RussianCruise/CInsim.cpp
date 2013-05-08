@@ -606,10 +606,6 @@ bool CInsim::send_mtc(void* s_mtc)
     text2send = text_len + 4 - text_len%4;
     pack_mtc->Size = 8 + text2send;
 
-
-
-    //printf("Size == %d\n",*((byte*)s_mtc));
-
     pthread_mutex_lock (&ismutex);
     if (send(sock, (const char *)s_mtc,*((byte*)s_mtc), 0) < 0)
     {
