@@ -12,26 +12,16 @@ RCMessage::~RCMessage()
 
 }
 
-/*const char* RCMessage::GetMessage(byte UCID, int MsgID)
+const char* RCMessage::_( byte UCID, string CODE )
 {
 	if (players[ UCID ].LangID == 0)
 		return (char*)("^1LangID == 0");
 
-	return MsgArray[ players[ UCID ].LangID ][ MsgID ].c_str();
-}*/
-
-const char* RCMessage::GetMessage( byte UCID, string CODE )
-{
-	if (players[ UCID ].LangID == 0)
-		return (char*)("^1LangID == 0");
-
-	//send_mst( MsgArray2[ players[ UCID ].LangID ][ "400" ].c_str() );
 	if( MsgArray[ players[ UCID ].LangID ].find( CODE ) == MsgArray[ players[ UCID ].LangID ].end() )
 		return CODE.c_str();
 
 	return MsgArray[ players[ UCID ].LangID ][ CODE ].c_str();
 }
-
 
 
 int RCMessage::init(const char *dir, void *CInSim)
@@ -184,7 +174,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if (strlen(message2) < 8)
         {
-            send_mtc( packet->UCID ,GetMessage( packet->UCID , "2104"));
+            SendMTC( packet->UCID ,_( packet->UCID , "2104"));
             return;
         }
 
@@ -196,7 +186,7 @@ void RCMessage::insim_mso( struct IS_MSO* packet )
 
         if ((!id) or (strlen(id) != 3))
         {
-            send_mtc( packet->UCID , GetMessage( packet->UCID , "2105"));
+            SendMTC( packet->UCID , _( packet->UCID , "2105"));
             return;
         }
 

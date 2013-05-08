@@ -32,7 +32,7 @@ bool RCDL::AddSkill(byte UCID)
 		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100;
 		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
-		send_mtc( UCID, Text );
+		SendMTC( UCID, Text );
 		return true;
 	}
     return false;
@@ -51,7 +51,7 @@ bool RCDL::AddSkill(byte UCID, float coef)
 		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100 * coef;
 		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
-		send_mtc( UCID, Text );
+		SendMTC( UCID, Text );
 		return true;
 	}
     return false;
@@ -78,7 +78,7 @@ bool RCDL::RemSkill(byte UCID)
 		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
 		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl );
-		send_mtc( UCID, Text );
+		SendMTC( UCID, Text );
 		return true;
 	}
     return false;
@@ -107,7 +107,7 @@ bool RCDL::RemSkill(byte UCID, float coef)
 		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
 		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl * coef );
-		send_mtc( UCID ,Text);
+		SendMTC( UCID ,Text);
 
 		return true;
 	}
@@ -135,7 +135,7 @@ bool RCDL::Islocked(byte UCID)
 		return false;
 }
 
-int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
+int RCDL::init(const char *dir,void *CInSim, void *RCMessageClass)
 {
     strcpy(RootDir,dir);
 
@@ -146,7 +146,7 @@ int RCDL::init(const char *dir,void *CInSim, void *GetMessage)
         return -1;
     }
 
-    msg = (RCMessage *)GetMessage;
+    msg = (RCMessage *)RCMessageClass;
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
@@ -362,7 +362,7 @@ void RCDL::insim_mci( struct IS_MCI* pack_mci )
 			char Msg[64];
 			sprintf(Msg,"/msg ^5| ^8^C%s ^1get ^3%d ^1lvl",players[ UCID ].PName, players[ UCID ].LVL);
 			if( UCID !=0 )
-				send_mst(Msg);
+				SendMST(Msg);
 		}
 
 		/** buttons **/
@@ -398,6 +398,6 @@ void RCDL::btn_dl( byte UCID )
     float nextlvl = ( pow( players[ UCID ].LVL, 2) * 0.5 + 100 ) * 1000;
     float skl = ( players[ UCID ].Skill / nextlvl ) * 100;
 
-    sprintf( pack.Text,msg->GetMessage(UCID, "LvlAndSkill"),players[ UCID ].LVL,skl);
+    sprintf( pack.Text,msg->_(UCID, "LvlAndSkill"),players[ UCID ].LVL,skl);
     insim->send_packet(&pack);
 }

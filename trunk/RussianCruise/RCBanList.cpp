@@ -54,18 +54,18 @@ void RCBanList::insim_ncn( struct IS_NCN* packet ){
 
 				char command[64];
 				sprintf( command, "^1BAN BAN BAN -> %s", buffer );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
-				send_mtc(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
+				SendMTC(packet->UCID, command );
 				sprintf( command, "/kick %s", packet->UName );
-				send_mst( command );
+				SendMST( command );
 			}
 			else{
 
@@ -139,9 +139,9 @@ cout << file << endl;
 
 		char command[64];
 		sprintf( command, "^1BAN ^0%s ^7-> %s",username, buffer );
-		send_mst( command );
+		SendMST( command );
 		sprintf( command, "/kick %s", username );
-		send_mst( command );
+		SendMST( command );
 
 	}
 }

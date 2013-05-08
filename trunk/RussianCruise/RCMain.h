@@ -224,7 +224,7 @@ public:
 void read_track();
 void read_car();
 
-void send_mtc (byte UCID,const char* Msg)
+void SendMTC (byte UCID,const char* Msg)
 {
     struct IS_MTC pack_mtc;
     memset(&pack_mtc, 0, sizeof(struct IS_MTC));
@@ -235,7 +235,7 @@ void send_mtc (byte UCID,const char* Msg)
     insim->send_packet(&pack_mtc);
 };
 
-void send_mst (const char* Text)
+void SendMST (const char* Text)
 {
     struct IS_MST pack_mst;
     memset(&pack_mst, 0, sizeof(struct IS_MST));
@@ -246,7 +246,7 @@ void send_mst (const char* Text)
 };
 
 
-void send_bfn (byte UCID, byte ClickID)
+void SendBFN (byte UCID, byte ClickID)
 {
     struct IS_BFN pack;
     memset(&pack, 0, sizeof(struct IS_BFN));

@@ -179,12 +179,12 @@ void RCEnergy::insim_npl( struct IS_NPL* packet )
 
 	if ( players[packet->UCID].Energy < 500 )
 	{
-		send_mtc( packet->UCID, msg->GetMessage(  packet->UCID, "2402" ) );
-		send_mtc( packet->UCID, msg->GetMessage(  packet->UCID, "2403" ) );
+		SendMTC( packet->UCID, msg->_(  packet->UCID, "2402" ) );
+		SendMTC( packet->UCID, msg->_(  packet->UCID, "2403" ) );
 
 		char Text[64];
 		sprintf(Text, "/spec %s", players[ packet->UCID ].UName);
-		send_mst(Text);
+		SendMST(Text);
 		players[ packet->UCID ].Zone = 1;
 		return;
 	}
@@ -276,7 +276,7 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 			players[ UCID ].Zone = 1;
 			char Text[64];
 			sprintf(Text, "/spec %s", players[ UCID ].UName);
-			send_mst(Text);
+			SendMST(Text);
 		}
 		else
 			players[ UCID ].Zone = 0;
@@ -338,12 +338,12 @@ void RCEnergy::insim_mso( struct IS_MSO* packet )
             }
             else
             {
-                send_mtc(packet->UCID,msg->GetMessage( packet->UCID, "2001" ));
+                SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
             }
         }
         else
         {
-            send_mtc(packet->UCID,msg->GetMessage( packet->UCID, "2002" ));
+            SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
         }
     }
 
@@ -360,12 +360,12 @@ void RCEnergy::insim_mso( struct IS_MSO* packet )
             }
             else
             {
-                send_mtc(packet->UCID,msg->GetMessage( packet->UCID, "2001" ));
+                SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
             }
         }
         else
         {
-            send_mtc(packet->UCID,msg->GetMessage( packet->UCID, "2002" ));
+            SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
         }
 
     }
@@ -397,7 +397,7 @@ void RCEnergy::btn_energy ( byte UCID )
 	else
 		strcpy(pack.Text,"^1");
 
-    strcat(pack.Text,msg->GetMessage(UCID , "Energy"));
+    strcat(pack.Text,msg->_(UCID , "Energy"));
 
     int nrg = players[ UCID ].Energy/50 ;
 
