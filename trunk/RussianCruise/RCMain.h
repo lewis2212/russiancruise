@@ -6,6 +6,8 @@ Russian Cruise by TurboSnail
 
 **/
 
+#define MAX_PLAYERS 32
+
 /**
 
 tunbyte
@@ -70,13 +72,17 @@ H = 118;
 */
 using namespace std;
 
+#ifdef __linux__
+	#include <mysql.h>
+#else
+	#include <windows.h>
+	#include "mysql/include/mysql.h"
+#endif
+
+
 #include <math.h>
-#include <windows.h>
 #include <time.h>
 #include <map>
-
-//#include "mysql/include/my_global.h"
-#include "mysql/include/mysql.h"
 
 #include "Cinsim.h"
 #include "RCPizza.h"
@@ -90,8 +96,6 @@ using namespace std;
 #include "RCTaxi.h"
 #include "RCPolice.h"
 #include "RCBanList.h"
-
-//#include "sqlite/SQLite.h"
 
 #define MAX_CARS 30
 
@@ -128,21 +132,21 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
 
 pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 
-typedef struct cars
+struct cars
 {
     int             id;
     char            car[6];
     unsigned long   cash;
     unsigned long   sell;
     unsigned		PLC;
-} _cars;
+};
 
-typedef struct user_car
+struct user_car
 {
     char    car[6];
     int     tuning;
     float     dist;
-} _user_car;
+};
 
 
 
