@@ -18,128 +18,128 @@ void RCBaseClass::next_packet()
     switch (insim->peek_packet())
     {
     case ISP_VER:
-        insim_ver( (struct IS_VER*)insim->get_packet() );
+        InsimVER( (struct IS_VER*)insim->get_packet() );
         break;
 
     case ISP_TINY:
-        insim_tiny( (struct IS_TINY*)insim->get_packet() );
+        InsimTINY( (struct IS_TINY*)insim->get_packet() );
         break;
 
     case ISP_SMALL:
-        insim_small( (struct IS_SMALL*)insim->get_packet() );
+        InsimSMALL( (struct IS_SMALL*)insim->get_packet() );
         break;
 
     case ISP_STA:
-        insim_sta( (struct IS_STA*)insim->get_packet() );
+        InsimSTA( (struct IS_STA*)insim->get_packet() );
         break;
 
     case ISP_ISM:
-        insim_ism( (struct IS_ISM*)insim->get_packet() );
+        InsimISM( (struct IS_ISM*)insim->get_packet() );
         break;
 
     case ISP_MSO:
-        insim_mso( (struct IS_MSO*)insim->get_packet() );
+        InsimMSO( (struct IS_MSO*)insim->get_packet() );
         break;
 
     case ISP_III:
-        insim_iii( (struct IS_III*)insim->get_packet() );
+        InsimIII( (struct IS_III*)insim->get_packet() );
         break;
 
     case ISP_VTN:
-        insim_vtn( (struct IS_VTN*)insim->get_packet() );
+        InsimVTN( (struct IS_VTN*)insim->get_packet() );
         break;
 
     case ISP_RST:
-        insim_rst( (struct IS_RST*)insim->get_packet() );
+        InsimRST( (struct IS_RST*)insim->get_packet() );
         break;
 
     case ISP_NCN:
-		insim_ncn(  (struct IS_NCN*)insim->get_packet()  );
+		InsimNCN(  (struct IS_NCN*)insim->get_packet()  );
         break;
 
     case ISP_CNL:
-        insim_cnl( (struct IS_CNL*)insim->get_packet() );
+        InsimCNL( (struct IS_CNL*)insim->get_packet() );
         break;
 
     case ISP_CPR:
-        insim_cpr( (struct IS_CPR*)insim->get_packet() );
+        InsimCPR( (struct IS_CPR*)insim->get_packet() );
         break;
 
     case ISP_NPL:
-        insim_npl( (struct IS_NPL*)insim->get_packet() );
+        InsimNPL( (struct IS_NPL*)insim->get_packet() );
         break;
 
     case ISP_PLP:
-        insim_plp( (struct IS_PLP*)insim->get_packet() );
+        InsimPLP( (struct IS_PLP*)insim->get_packet() );
         break;
 
     case ISP_PLL:
-        insim_pll( (struct IS_PLL*)insim->get_packet() );
+        InsimPLL( (struct IS_PLL*)insim->get_packet() );
         break;
 
 
     case ISP_LAP:
-        insim_lap( (struct IS_LAP*)insim->get_packet() );
+        InsimLAP( (struct IS_LAP*)insim->get_packet() );
         break;
 
     case ISP_SPX:
-        insim_spx( (struct IS_SPX*)insim->get_packet() );
+        InsimSPX( (struct IS_SPX*)insim->get_packet() );
         break;
 
     case ISP_PIT:
-        insim_pit( (struct IS_PIT*)insim->get_packet() );
+        InsimPIT( (struct IS_PIT*)insim->get_packet() );
         break;
 
     case ISP_PSF:
-        insim_psf( (struct IS_PSF*)insim->get_packet() );
+        InsimPSF( (struct IS_PSF*)insim->get_packet() );
         break;
 
     case ISP_PLA:
-        insim_pla( (struct IS_PLA*)insim->get_packet() );
+        InsimPLA( (struct IS_PLA*)insim->get_packet() );
         break;
 
     case ISP_PEN:
-        insim_pen( (struct IS_PEN*)insim->get_packet() );
+        InsimPEN( (struct IS_PEN*)insim->get_packet() );
         break;
 
     case ISP_TOC:
-        insim_toc( (struct IS_TOC*)insim->get_packet() );
+        InsimTOC( (struct IS_TOC*)insim->get_packet() );
         break;
 
     case ISP_FLG:
-        insim_flg( (struct IS_FLG*)insim->get_packet() );
+        InsimFLG( (struct IS_FLG*)insim->get_packet() );
         break;
 
     case ISP_CRS:
-        insim_crs( (struct IS_CRS*)insim->get_packet() );
+        InsimCRS( (struct IS_CRS*)insim->get_packet() );
         break;
 
     case ISP_BFN:
-        insim_bfn( (struct IS_BFN*)insim->get_packet() );
+        InsimBFN( (struct IS_BFN*)insim->get_packet() );
         break;
 
     case ISP_BTC:
-        insim_btc( (struct IS_BTC*)insim->get_packet() );
+        InsimBTC( (struct IS_BTC*)insim->get_packet() );
         break;
 
     case ISP_BTT:
-        insim_btt( (struct IS_BTT*)insim->get_packet() );
+        InsimBTT( (struct IS_BTT*)insim->get_packet() );
         break;
 
     case ISP_CON:
-        insim_con( (struct IS_CON*)insim->get_packet() );
+        InsimCON( (struct IS_CON*)insim->get_packet() );
         break;
 
     case ISP_OBH:
-        insim_obh( (struct IS_OBH*)insim->get_packet() );
+        InsimOBH( (struct IS_OBH*)insim->get_packet() );
         break;
 
     case ISP_AXM:
-        insim_axm( (struct IS_AXM*)insim->get_packet() );
+        InsimAXM( (struct IS_AXM*)insim->get_packet() );
         break;
 
     case ISP_ACR:
-        insim_acr( (struct IS_ACR*)insim->get_packet() );
+        InsimACR( (struct IS_ACR*)insim->get_packet() );
         break;
 
 
@@ -147,40 +147,40 @@ void RCBaseClass::next_packet()
     }
 }
 
-void RCBaseClass::insim_ver( struct IS_VER* packet ){}
-void RCBaseClass::insim_tiny( struct IS_TINY* packet ){}
-void RCBaseClass::insim_small( struct IS_SMALL* packet ){}
-void RCBaseClass::insim_sta( struct IS_STA* packet ){}
-void RCBaseClass::insim_ism( struct IS_ISM* packet ){}
-void RCBaseClass::insim_iii( struct IS_III* packet ){}
-void RCBaseClass::insim_vtn( struct IS_VTN* packet ){}
-void RCBaseClass::insim_rst( struct IS_RST* packet ){}
-void RCBaseClass::insim_lap( struct IS_LAP* packet ){}
-void RCBaseClass::insim_spx( struct IS_SPX* packet ){}
-void RCBaseClass::insim_pit( struct IS_PIT* packet ){}
-void RCBaseClass::insim_psf( struct IS_PSF* packet ){}
-void RCBaseClass::insim_pla( struct IS_PLA* packet ){}
-void RCBaseClass::insim_pen( struct IS_PEN* packet ){}
-void RCBaseClass::insim_toc( struct IS_TOC* packet ){}
-void RCBaseClass::insim_flg( struct IS_FLG* packet ){}
-void RCBaseClass::insim_reo( struct IS_REO* packet ){}
-void RCBaseClass::insim_crs( struct IS_CRS* packet ){}
-void RCBaseClass::insim_bfn( struct IS_BFN* packet ){}
-void RCBaseClass::insim_btc( struct IS_BTC* packet ){}
-void RCBaseClass::insim_btt( struct IS_BTT* packet ){}
-void RCBaseClass::insim_axm( struct IS_AXM* packet ){}
-void RCBaseClass::insim_acr( struct IS_ACR* packet ){}
-void RCBaseClass::insim_ncn( struct IS_NCN* packet ){}
-void RCBaseClass::insim_npl( struct IS_NPL* packet ){}
-void RCBaseClass::insim_plp( struct IS_PLP* packet ){}
-void RCBaseClass::insim_pll( struct IS_PLL* packet ){}
-void RCBaseClass::insim_cnl( struct IS_CNL* packet ){}
-void RCBaseClass::insim_cpr( struct IS_CPR* packet ){}
-void RCBaseClass::insim_mso( struct IS_MSO* packet ){}
-void RCBaseClass::insim_con( struct IS_CON* packet ){}
-void RCBaseClass::insim_obh( struct IS_OBH* packet ){}
+void RCBaseClass::InsimVER( struct IS_VER* packet ){}
+void RCBaseClass::InsimTINY( struct IS_TINY* packet ){}
+void RCBaseClass::InsimSMALL( struct IS_SMALL* packet ){}
+void RCBaseClass::InsimSTA( struct IS_STA* packet ){}
+void RCBaseClass::InsimISM( struct IS_ISM* packet ){}
+void RCBaseClass::InsimIII( struct IS_III* packet ){}
+void RCBaseClass::InsimVTN( struct IS_VTN* packet ){}
+void RCBaseClass::InsimRST( struct IS_RST* packet ){}
+void RCBaseClass::InsimLAP( struct IS_LAP* packet ){}
+void RCBaseClass::InsimSPX( struct IS_SPX* packet ){}
+void RCBaseClass::InsimPIT( struct IS_PIT* packet ){}
+void RCBaseClass::InsimPSF( struct IS_PSF* packet ){}
+void RCBaseClass::InsimPLA( struct IS_PLA* packet ){}
+void RCBaseClass::InsimPEN( struct IS_PEN* packet ){}
+void RCBaseClass::InsimTOC( struct IS_TOC* packet ){}
+void RCBaseClass::InsimFLG( struct IS_FLG* packet ){}
+void RCBaseClass::InsimREO( struct IS_REO* packet ){}
+void RCBaseClass::InsimCRS( struct IS_CRS* packet ){}
+void RCBaseClass::InsimBFN( struct IS_BFN* packet ){}
+void RCBaseClass::InsimBTC( struct IS_BTC* packet ){}
+void RCBaseClass::InsimBTT( struct IS_BTT* packet ){}
+void RCBaseClass::InsimAXM( struct IS_AXM* packet ){}
+void RCBaseClass::InsimACR( struct IS_ACR* packet ){}
+void RCBaseClass::InsimNCN( struct IS_NCN* packet ){}
+void RCBaseClass::InsimNPL( struct IS_NPL* packet ){}
+void RCBaseClass::InsimPLP( struct IS_PLP* packet ){}
+void RCBaseClass::InsimPLL( struct IS_PLL* packet ){}
+void RCBaseClass::InsimCNL( struct IS_CNL* packet ){}
+void RCBaseClass::InsimCPR( struct IS_CPR* packet ){}
+void RCBaseClass::InsimMSO( struct IS_MSO* packet ){}
+void RCBaseClass::InsimCON( struct IS_CON* packet ){}
+void RCBaseClass::InsimOBH( struct IS_OBH* packet ){}
 
-void    RCBaseClass::insim_mci( struct IS_MCI* packet )
+void    RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {
     if(!insim)return;/**dont work if insim is NULL**/
 }
@@ -224,7 +224,7 @@ void RCBaseClass::SendMTC (byte UCID,const char* Msg)
     pack_mtc.Size = sizeof(struct IS_MTC);
     pack_mtc.Type = ISP_MTC;
     pack_mtc.UCID = UCID;
-    strncpy(pack_mtc.Text, Msg,strlen(Msg));
+    sprintf( pack_mtc.Text, "%.127s\0", Msg );
     insim->send_packet(&pack_mtc);
 }
 
@@ -234,7 +234,7 @@ void RCBaseClass::SendMST (const char* Text)
     memset(&pack_mst, 0, sizeof(struct IS_MST));
     pack_mst.Size = sizeof(struct IS_MST);
     pack_mst.Type = ISP_MST;
-    strcpy(pack_mst.Msg,Text);
+    sprintf( pack_mst.Msg, "%.63s\0", Text );
     insim->send_packet(&pack_mst);
 }
 

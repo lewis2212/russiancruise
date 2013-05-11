@@ -23,7 +23,7 @@ class RCBanList:public RCBaseClass
 		void addUser( const char* username, time_t timestamp );
 
 	private:
-		void insim_ncn( struct IS_NCN* packet );
+		void InsimNCN( struct IS_NCN* packet );
 };
 
 #endif // RCBANLIST_H

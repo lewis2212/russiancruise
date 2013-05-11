@@ -103,7 +103,7 @@ void RCMessage::readconfig(const char *Track)
     readf2.close();
 }
 
-void RCMessage::insim_ncn( struct IS_NCN* packet )
+void RCMessage::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
         return;
@@ -147,13 +147,13 @@ void RCMessage::insim_ncn( struct IS_NCN* packet )
     FindClose(fff);
 }
 
-void RCMessage::insim_cnl( struct IS_CNL* packet )
+void RCMessage::InsimCNL( struct IS_CNL* packet )
 {
 	save(packet->UCID);
 	players.erase( packet->UCID );
 }
 
-void RCMessage::insim_mso( struct IS_MSO* packet )
+void RCMessage::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
         return;

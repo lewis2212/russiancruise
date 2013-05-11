@@ -16,18 +16,18 @@
 // INSIM VERSION NUMBER (updated for version 0.6B)
 // ====================
 
-const int INSIM_VERSION = 5;
+const int InsimVERSION = 5;
 
 
 // CHANGES
 // =======
 
-// Version 0.5Z (no change to INSIM_VERSION)
+// Version 0.5Z (no change to InsimVERSION)
 
 // NLP / MCI packets are now output at regular intervals
 // CCI_LAG bit added to the CompCar structure
 
-// Version 0.6B (INSIM_VERSION increased to 5)
+// Version 0.6B (InsimVERSION increased to 5)
 
 // Lap timing info added to IS_RST (Timing byte)
 // NLP / MCI minimum time interval reduced to 40 ms (was 50 ms)

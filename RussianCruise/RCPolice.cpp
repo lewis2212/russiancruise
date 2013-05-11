@@ -65,7 +65,7 @@ int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *
     return 0;
 }
 
-void RCPolice::insim_ncn( struct IS_NCN* packet )
+void RCPolice::InsimNCN( struct IS_NCN* packet )
 {
     if( packet->UCID == 0 )
         return;
@@ -76,7 +76,7 @@ void RCPolice::insim_ncn( struct IS_NCN* packet )
     ReadUserFines( packet->UCID );
 }
 
-void RCPolice::insim_npl( struct IS_NPL* packet )
+void RCPolice::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
     players[ packet->UCID ].cop = false;
@@ -103,7 +103,7 @@ void RCPolice::insim_npl( struct IS_NPL* packet )
     }
 }
 
-void RCPolice::insim_plp( struct IS_PLP* packet )
+void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
     lgh->SetLight3( PLIDtoUCID[ packet->PLID ] ,false);
     dl->Unlock( PLIDtoUCID[ packet->PLID ] );
@@ -112,7 +112,7 @@ void RCPolice::insim_plp( struct IS_PLP* packet )
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCPolice::insim_pll( struct IS_PLL* packet )
+void RCPolice::InsimPLL( struct IS_PLL* packet )
 {
     lgh->SetLight3( PLIDtoUCID[ packet->PLID ] ,false);
     dl->Unlock( PLIDtoUCID[ packet->PLID ] );
@@ -121,18 +121,18 @@ void RCPolice::insim_pll( struct IS_PLL* packet )
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCPolice::insim_cnl( struct IS_CNL* packet )
+void RCPolice::InsimCNL( struct IS_CNL* packet )
 {
     SaveUserFines( packet->UCID );
     players.erase( packet->UCID );
 }
 
-void RCPolice::insim_cpr( struct IS_CPR* packet )
+void RCPolice::InsimCPR( struct IS_CPR* packet )
 {
     strcpy( players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCPolice::insim_mso( struct IS_MSO* packet )
+void RCPolice::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
         return;
@@ -304,7 +304,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
     if ( strcmp( players[ packet->UCID ].UName ,"denis-takumi") == 0 )
     {
         char file[255];
-        sprintf(file,"%smisc\\cops.txt",RootDir);
+        sprintf(file,"%sdata\\RCPolice\\cops.txt",RootDir);
 
         char line[32];
         if (strncmp(Msg, "!cop_add", 8) == 0 )
@@ -327,8 +327,7 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
             printf("%s\n",param);
             if(strlen(param)>0)
             {
-                char cops[40][32];
-                memset(&cops,0,40*32);
+                vector<string>cops;
 
                 int j = 0;
 
@@ -340,17 +339,17 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
                     rCops.getline(line, 32);
 
                     if (strlen(line) >0)
-                        strncpy(cops[j++],line,32);
+                        cops[j++] = line;
                 }
                 rCops.close();
 
                 ofstream wCops( file , ios::out );
 
-                for(j=0; j<40; j++)
+                for(auto& cop: cops)
                 {
-                    if (strncmp(cops[j],param,strlen(param)) != 0)
+                    if ( cop != param )
                     {
-                        wCops << cops[j] << endl;
+                        wCops << cop << endl;
                     }
                 }
                 wCops.close();
@@ -374,17 +373,17 @@ void RCPolice::insim_mso( struct IS_MSO* packet )
     }
 }
 
-void RCPolice::insim_con( struct IS_CON* packet )
+void RCPolice::InsimCON( struct IS_CON* packet )
 {
 
 }
 
-void RCPolice::insim_obh( struct IS_OBH* packet )
+void RCPolice::InsimOBH( struct IS_OBH* packet )
 {
 
 }
 
-void RCPolice::insim_btc( struct IS_BTC* packet )
+void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
     if ( packet->ClickID <= 32 )
     {
@@ -490,7 +489,7 @@ void RCPolice::insim_btc( struct IS_BTC* packet )
 	}
 }
 
-void RCPolice::insim_btt( struct IS_BTT* packet )
+void RCPolice::InsimBTT( struct IS_BTT* packet )
 {
     /**
     Пользователь выписывает штраф
@@ -591,7 +590,7 @@ void RCPolice::insim_btt( struct IS_BTT* packet )
     }
 }
 
-void RCPolice::insim_pen( struct IS_PEN* packet )
+void RCPolice::InsimPEN( struct IS_PEN* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 cout << (int)packet->Reason << endl;
@@ -642,7 +641,7 @@ cout << (int)packet->Reason << endl;
     }
 }
 
-void RCPolice::insim_pla( struct IS_PLA* packet )
+void RCPolice::InsimPLA( struct IS_PLA* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 
@@ -669,7 +668,7 @@ void RCPolice::insim_pla( struct IS_PLA* packet )
     }
 }
 
-void RCPolice::insim_mci( struct IS_MCI* packet )
+void RCPolice::InsimMCI( struct IS_MCI* packet )
 {
     for (int i = 0; i < packet->NumC; i++)
     {
@@ -837,16 +836,13 @@ int RCPolice::IfCop ( byte UCID )
     }
 
     char file[255];
-    sprintf(file,"%smisc\\cops.txt",RootDir);
+    sprintf(file,"%sdata\\RCPolice\\cops.txt",RootDir);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
+    FILE *fff = fopen(file, "r");
+    if ( NULL == fff )
         return -1;
-    }
-    FindClose(fff);
+
+    fclose(fff);
 
     ifstream readf (file,ios::in);
 

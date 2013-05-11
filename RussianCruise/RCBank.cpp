@@ -104,7 +104,7 @@ int RCBank::init(const char *dir,void *CInSim, void *RCMessageClass, void *DL)
 }
 
 
-void RCBank::insim_ncn( struct IS_NCN* packet )
+void RCBank::InsimNCN( struct IS_NCN* packet )
 {
     int i;
 
@@ -279,7 +279,7 @@ void RCBank::credit_penalty (byte UCID)
     bank_save( UCID ); //сохраняемся
 }
 
-void RCBank::insim_npl( struct IS_NPL* packet )
+void RCBank::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
 
@@ -287,17 +287,17 @@ void RCBank::insim_npl( struct IS_NPL* packet )
         players[packet->UCID].Cash = 5000000;
 }
 
-void RCBank::insim_plp( struct IS_PLP* packet)
+void RCBank::InsimPLP( struct IS_PLP* packet)
 {
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCBank::insim_pll( struct IS_PLL* packet )
+void RCBank::InsimPLL( struct IS_PLL* packet )
 {
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCBank::insim_cnl( struct IS_CNL* packet )
+void RCBank::InsimCNL( struct IS_CNL* packet )
 {
     bank_save( packet->UCID );
     players.erase( packet->UCID );
@@ -339,12 +339,12 @@ void RCBank::bank_save (byte UCID)
 
 }
 
-void RCBank::insim_cpr( struct IS_CPR* packet )
+void RCBank::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCBank::insim_mso( struct IS_MSO* packet )
+void RCBank::InsimMSO( struct IS_MSO* packet )
 {
 
     char Message[128];
@@ -603,7 +603,7 @@ void RCBank::insim_mso( struct IS_MSO* packet )
     }
 }
 
-void RCBank::insim_mci( struct IS_MCI* pack_mci )
+void RCBank::InsimMCI( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {

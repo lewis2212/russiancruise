@@ -22,7 +22,7 @@ int RCBanList::init( const char* dir, void *CInSim )
     }
 }
 
-void RCBanList::insim_ncn( struct IS_NCN* packet ){
+void RCBanList::InsimNCN( struct IS_NCN* packet ){
 
 	char file[MAX_PATH];
     sprintf(file,"%smisc\\banlist.txt",RootDir);

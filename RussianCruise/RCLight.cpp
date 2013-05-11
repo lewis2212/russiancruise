@@ -107,17 +107,17 @@ void RCLight::readconfig(const char *Track)
     return;
 }
 
-void RCLight::insim_cnl( struct IS_CNL* packet )
+void RCLight::InsimCNL( struct IS_CNL* packet )
 {
 	players.erase( packet->UCID );
 }
 
-void RCLight::insim_cpr( struct IS_CPR* packet )
+void RCLight::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCLight::insim_mci ( struct IS_MCI* pack_mci )
+void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -255,28 +255,28 @@ void RCLight::insim_mci ( struct IS_MCI* pack_mci )
     }
 }
 
-void RCLight::insim_mso( struct IS_MSO* packet )
+void RCLight::InsimMSO( struct IS_MSO* packet )
 {
 }
 
-void RCLight::insim_ncn( struct IS_NCN* packet )
+void RCLight::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0) return;
     strcpy( players[ packet->UCID ].UName, packet->UName);
     strcpy( players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCLight::insim_npl( struct IS_NPL* packet )
+void RCLight::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID ;
 }
 
-void RCLight::insim_plp( struct IS_PLP* packet)
+void RCLight::InsimPLP( struct IS_PLP* packet)
 {
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCLight::insim_pll( struct IS_PLL* packet )
+void RCLight::InsimPLL( struct IS_PLL* packet )
 {
 	PLIDtoUCID.erase( packet->PLID );
 }

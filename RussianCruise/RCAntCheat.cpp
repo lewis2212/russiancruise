@@ -37,29 +37,29 @@ int RCAntCheat::init(char *dir,void *CInSim, void *Message)
     return 0;
 }
 
-void RCAntCheat::insim_cnl( struct IS_CNL* packet )
+void RCAntCheat::InsimCNL( struct IS_CNL* packet )
 {
    players.erase( packet->UCID );
 }
 
-void RCAntCheat::insim_cpr( struct IS_CPR* packet )
+void RCAntCheat::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCAntCheat::insim_mci ( struct IS_MCI* pack_mci )
+void RCAntCheat::InsimMCI ( struct IS_MCI* pack_mci )
 {
 	return;
 }
 
-void RCAntCheat::insim_mso( struct IS_MSO* packet )
+void RCAntCheat::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
         return;
 }
 
 
-void RCAntCheat::insim_ncn( struct IS_NCN* packet )
+void RCAntCheat::InsimNCN( struct IS_NCN* packet )
 {
 
     if (packet->UCID == 0)
@@ -69,7 +69,7 @@ void RCAntCheat::insim_ncn( struct IS_NCN* packet )
     strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCAntCheat::insim_npl( struct IS_NPL* packet )
+void RCAntCheat::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 	players[ packet->UCID ].NPL = 1;
@@ -117,7 +117,7 @@ void RCAntCheat::insim_npl( struct IS_NPL* packet )
 	players[ packet->UCID ].ReadyForMCI = true;
 }
 
-void RCAntCheat::insim_plp( struct IS_PLP* packet)
+void RCAntCheat::InsimPLP( struct IS_PLP* packet)
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
 	PLIDtoUCID.erase( packet->PLID );
@@ -127,7 +127,7 @@ void RCAntCheat::insim_plp( struct IS_PLP* packet)
 	players[ UCID ].ReadyForMCI = false;
 }
 
-void RCAntCheat::insim_pll( struct IS_PLL* packet )
+void RCAntCheat::InsimPLL( struct IS_PLL* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
 	PLIDtoUCID.erase( packet->PLID );
@@ -137,7 +137,7 @@ void RCAntCheat::insim_pll( struct IS_PLL* packet )
 	players[ UCID ].ReadyForMCI = false;
 }
 
-void RCAntCheat::insim_pla( struct IS_PLA* packet )
+void RCAntCheat::InsimPLA( struct IS_PLA* packet )
 {
 
     struct IS_TINY pack_requests;
@@ -149,7 +149,7 @@ void RCAntCheat::insim_pla( struct IS_PLA* packet )
     insim->send_packet(&pack_requests);
 }
 
-/*void RCAntCheat::insim_reo( struct IS_REO* packet )
+/*void RCAntCheat::InsimREO( struct IS_REO* packet )
 {
 
 

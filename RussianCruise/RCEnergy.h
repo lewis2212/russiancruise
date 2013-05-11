@@ -47,16 +47,16 @@ private:
 
     char RootDir[MAX_PATH];
 
-    void insim_ncn( struct IS_NCN* packet );
-    void insim_npl( struct IS_NPL* packet );
-    void insim_plp( struct IS_PLP* packet );
-    void insim_pll( struct IS_PLL* packet );
-    void insim_cnl( struct IS_CNL* packet );
-    void insim_cpr( struct IS_CPR* packet );
-    void insim_mso( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLP( struct IS_PLP* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimMSO( struct IS_MSO* packet );
     //! HIT CONTROL
-    void insim_con( struct IS_CON* packet );
-    void insim_obh( struct IS_OBH* packet );
+    void InsimCON( struct IS_CON* packet );
+    void InsimOBH( struct IS_OBH* packet );
 
 
     // Функции-утилиты
@@ -76,7 +76,7 @@ public:
     void    readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
 
-    void    insim_mci( struct IS_MCI* packet );
+    void    InsimMCI( struct IS_MCI* packet );
 
     void    energy_save(byte UCID);
     void    btn_energy ( byte UCID );

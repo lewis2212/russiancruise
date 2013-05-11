@@ -45,13 +45,13 @@ private:
 
 	time_t sstime;
 
-    void insim_ncn( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-    void insim_npl( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void insim_plp( struct IS_PLP* packet );   // Игрок ушел в боксы
-    void insim_pll( struct IS_PLL* packet );   // Игрок ушел в зрители
-    void insim_cnl( struct IS_CNL* packet );   // Игрок ушел с сервера
-    void insim_cpr( struct IS_CPR* packet );   // Игрок переименовался
-    void insim_mso( struct IS_MSO* packet );   // Игрок отправил сообщение
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
 
 
     void Svetofor1 ( byte UCID );
@@ -69,6 +69,6 @@ public:
 
     int init(const char *dir,void *CInSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
-    void insim_mci( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H
