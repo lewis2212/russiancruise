@@ -870,28 +870,22 @@ void RCTaxi::read_user( byte UCID )
 
 void RCTaxi::delete_marshal(byte UCID)
 {
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if ( UCID  == UCID)
-        {
-            struct IS_AXM pacAXM;
-            memset(&pacAXM, 0, sizeof(struct IS_AXM));
-            pacAXM.Info[0].Index=255;
-            pacAXM.Info[0].Heading=ClientPoints[players[ UCID ].WorkPointDestinaion].Dir;
-            pacAXM.Info[0].X=ClientPoints[players[ UCID ].WorkPointDestinaion].X/4096;
-            pacAXM.Info[0].Y=ClientPoints[players[ UCID ].WorkPointDestinaion].Y/4096;
-            pacAXM.Info[0].Zchar=ClientPoints[players[ UCID ].WorkPointDestinaion].Z;
-            pacAXM.Info[0].Flags=133;
-            pacAXM.Type=ISP_AXM;
-            pacAXM.ReqI=1;
-            pacAXM.NumO=1;
-            pacAXM.Size=8+pacAXM.NumO*8;
-            pacAXM.PMOAction = PMO_DEL_OBJECTS;
-            insim->send_packet(&pacAXM);
-            pacAXM.Info[0].Flags=135;
-            insim->send_packet(&pacAXM);
-        }
-    }
+   	struct IS_AXM pacAXM;
+	memset(&pacAXM, 0, sizeof(struct IS_AXM));
+	pacAXM.Info[0].Index=255;
+	pacAXM.Info[0].Heading=ClientPoints[players[ UCID ].WorkPointDestinaion].Dir;
+	pacAXM.Info[0].X=ClientPoints[players[ UCID ].WorkPointDestinaion].X/4096;
+	pacAXM.Info[0].Y=ClientPoints[players[ UCID ].WorkPointDestinaion].Y/4096;
+	pacAXM.Info[0].Zchar=ClientPoints[players[ UCID ].WorkPointDestinaion].Z;
+	pacAXM.Info[0].Flags=133;
+	pacAXM.Type=ISP_AXM;
+	pacAXM.ReqI=1;
+	pacAXM.NumO=1;
+	pacAXM.Size=8+pacAXM.NumO*8;
+	pacAXM.PMOAction = PMO_DEL_OBJECTS;
+	insim->send_packet(&pacAXM);
+	pacAXM.Info[0].Flags=135;
+	insim->send_packet(&pacAXM);
 }
 
 void RCTaxi::save_user( byte UCID )

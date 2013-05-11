@@ -5,12 +5,11 @@ using namespace std;
 #include "CInsim.h"
 
 #include <math.h>
-#include <stdio.h>      //
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <time.h>       // для работы с временем и рандомом
-#include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
 #include <map>
 #include <vector>
