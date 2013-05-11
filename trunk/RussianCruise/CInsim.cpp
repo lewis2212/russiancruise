@@ -286,7 +286,7 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         {
         case ISP_VER:                     // It was, get it!
             memcpy(pack_ver, (struct IS_VER*)get_packet(), sizeof(struct IS_VER));
-            InsimVERSION = pack_ver->InSimVer;
+            INSIM_VERSION = pack_ver->InSimVer;
             break;
         default:                          // It wasn't, something went wrong. Quit
             if (isclose() < 0)
