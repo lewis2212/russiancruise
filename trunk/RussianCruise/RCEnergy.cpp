@@ -112,7 +112,7 @@ void RCEnergy::readconfig(const char *Track)
 
 
 
-void RCEnergy::insim_ncn( struct IS_NCN* packet )
+void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
 
     if (packet->UCID == 0)
@@ -173,7 +173,7 @@ void RCEnergy::insim_ncn( struct IS_NCN* packet )
 
 }
 
-void RCEnergy::insim_npl( struct IS_NPL* packet )
+void RCEnergy::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 
@@ -191,17 +191,17 @@ void RCEnergy::insim_npl( struct IS_NPL* packet )
 	players[packet->UCID].EnergyTime = time(&nrgtime);
 }
 
-void RCEnergy::insim_plp( struct IS_PLP* packet)
+void RCEnergy::InsimPLP( struct IS_PLP* packet)
 {
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCEnergy::insim_pll( struct IS_PLL* packet )
+void RCEnergy::InsimPLL( struct IS_PLL* packet )
 {
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCEnergy::insim_cnl( struct IS_CNL* packet )
+void RCEnergy::InsimCNL( struct IS_CNL* packet )
 {
 	energy_save( packet->UCID );
 	players.erase(  packet->UCID );
@@ -222,12 +222,12 @@ void RCEnergy::energy_save (byte UCID)
 
 }
 
-void RCEnergy::insim_cpr( struct IS_CPR* packet )
+void RCEnergy::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
+void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 {
 
     for (int i = 0; i < pack_mci->NumC; i++)
@@ -320,7 +320,7 @@ void RCEnergy::insim_mci ( struct IS_MCI* pack_mci )
 }
 
 
-void RCEnergy::insim_mso( struct IS_MSO* packet )
+void RCEnergy::InsimMSO( struct IS_MSO* packet )
 {
 
     if (packet->UCID == 0)
@@ -433,7 +433,7 @@ int RCEnergy::GetEnergy(byte UCID)
 }
 
 
-void RCEnergy::insim_con( struct IS_CON* packet )
+void RCEnergy::InsimCON( struct IS_CON* packet )
 {
 	byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
 	byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
@@ -445,7 +445,7 @@ void RCEnergy::insim_con( struct IS_CON* packet )
 		players[ UCIDB ].Energy -= 10 * packet->SpClose;
 }
 
-void RCEnergy::insim_obh( struct IS_OBH* packet )
+void RCEnergy::InsimOBH( struct IS_OBH* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
     if((packet->Index > 45 and packet->Index < 125) or (packet->Index > 140))

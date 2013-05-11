@@ -108,17 +108,17 @@ void RCStreet::readconfig(const char *Track)
 
 
 
-void RCStreet::insim_cnl( struct IS_CNL* packet )
+void RCStreet::InsimCNL( struct IS_CNL* packet )
 {
      players.erase(packet->UCID);
 }
 
-void RCStreet::insim_cpr( struct IS_CPR* packet )
+void RCStreet::InsimCPR( struct IS_CPR* packet )
 {
      strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
+void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -142,14 +142,14 @@ void RCStreet::insim_mci ( struct IS_MCI* pack_mci )
     }
 }
 
-void RCStreet::insim_mso( struct IS_MSO* packet )
+void RCStreet::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
         return;
 }
 
 
-void RCStreet::insim_ncn( struct IS_NCN* packet )
+void RCStreet::InsimNCN( struct IS_NCN* packet )
 {
     int i;
 
@@ -160,18 +160,18 @@ void RCStreet::insim_ncn( struct IS_NCN* packet )
     strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCStreet::insim_npl( struct IS_NPL* packet )
+void RCStreet::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
 	players[ packet->UCID ].StreetNum = 250;
 }
 
-void RCStreet::insim_plp( struct IS_PLP* packet)
+void RCStreet::InsimPLP( struct IS_PLP* packet)
 {
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCStreet::insim_pll( struct IS_PLL* packet )
+void RCStreet::InsimPLL( struct IS_PLL* packet )
 {
 	PLIDtoUCID.erase( packet->PLID );
 }

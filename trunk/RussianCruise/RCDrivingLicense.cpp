@@ -178,7 +178,7 @@ int RCDL::init(const char *dir,void *CInSim, void *RCMessageClass)
     return 0;
 }
 
-void RCDL::insim_ncn( struct IS_NCN* packet )
+void RCDL::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
         return;
@@ -240,35 +240,35 @@ void RCDL::insim_ncn( struct IS_NCN* packet )
     btn_dl( packet->UCID );
 }
 
-void RCDL::insim_npl( struct IS_NPL* packet )
+void RCDL::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 }
 
-void RCDL::insim_plp( struct IS_PLP* packet)
+void RCDL::InsimPLP( struct IS_PLP* packet)
 {
 	memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCDL::insim_pll( struct IS_PLL* packet )
+void RCDL::InsimPLL( struct IS_PLL* packet )
 {
 	memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
 	PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCDL::insim_cnl( struct IS_CNL* packet )
+void RCDL::InsimCNL( struct IS_CNL* packet )
 {
 	save( packet->UCID );
 	players.erase( packet->UCID );
 }
 
-void RCDL::insim_cpr( struct IS_CPR* packet )
+void RCDL::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCDL::insim_mso( struct IS_MSO* packet )
+void RCDL::InsimMSO( struct IS_MSO* packet )
 {
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
@@ -291,7 +291,7 @@ void RCDL::save (byte UCID)
 
 }
 
-void RCDL::insim_con( struct IS_CON* packet )
+void RCDL::InsimCON( struct IS_CON* packet )
 {
     struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
     /*
@@ -320,7 +320,7 @@ void RCDL::insim_con( struct IS_CON* packet )
 }
 
 
-void RCDL::insim_mci( struct IS_MCI* pack_mci )
+void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 {
 
     for (int i = 0; i < pack_mci->NumC; i++)

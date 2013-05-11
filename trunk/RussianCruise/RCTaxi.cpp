@@ -321,7 +321,7 @@ void RCTaxi::accept_user2(byte UCID)
 	}
 }
 
-void RCTaxi::insim_cnl( struct IS_CNL* packet )
+void RCTaxi::InsimCNL( struct IS_CNL* packet )
 {
 	//удал€ю маршалов
 	delete_marshal( packet->UCID );
@@ -330,12 +330,12 @@ void RCTaxi::insim_cnl( struct IS_CNL* packet )
 	NumP --;
 }
 
-void RCTaxi::insim_cpr( struct IS_CPR* packet )
+void RCTaxi::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy( players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCTaxi::insim_mci ( struct IS_MCI* pack_mci )
+void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 {
     float Dist;
 
@@ -636,7 +636,7 @@ void RCTaxi::dead_pass(byte UCID)
 	}
 }
 
-void RCTaxi::insim_mso( struct IS_MSO* packet )
+void RCTaxi::InsimMSO( struct IS_MSO* packet )
 {
     int i;
     if (packet->UCID == 0)
@@ -768,7 +768,7 @@ void RCTaxi::insim_mso( struct IS_MSO* packet )
     }
 }
 
-void RCTaxi::insim_ncn( struct IS_NCN* packet )
+void RCTaxi::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
         return;
@@ -780,7 +780,7 @@ void RCTaxi::insim_ncn( struct IS_NCN* packet )
     NumP ++;
 }
 
-void RCTaxi::insim_npl( struct IS_NPL* packet )
+void RCTaxi::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 	strcpy(players[packet->UCID].CName ,packet->CName);
@@ -814,12 +814,12 @@ void RCTaxi::insim_npl( struct IS_NPL* packet )
 	}
 }
 
-void RCTaxi::insim_plp( struct IS_PLP* packet)
+void RCTaxi::InsimPLP( struct IS_PLP* packet)
 {
    PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCTaxi::insim_pll( struct IS_PLL* packet )
+void RCTaxi::InsimPLL( struct IS_PLL* packet )
 {
    PLIDtoUCID.erase( packet->PLID );
 }
@@ -935,7 +935,7 @@ void RCTaxi::taxi_done( byte UCID )
     players[ UCID ].InPasZone = 0;
 }
 
-void RCTaxi::insim_con( struct IS_CON* packet )
+void RCTaxi::InsimCON( struct IS_CON* packet )
 {
 
 	byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
@@ -960,13 +960,13 @@ void RCTaxi::insim_con( struct IS_CON* packet )
 }
 
 
-/*void RCTaxi::insim_axm( struct IS_AXM* packet )
+/*void RCTaxi::InsimAXM( struct IS_AXM* packet )
 {
     readAxm=true;
 }*/
 
 
-void RCTaxi::insim_obh( struct IS_OBH* packet )
+void RCTaxi::InsimOBH( struct IS_OBH* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
 	if (players[ UCID ].WorkAccept == 2)

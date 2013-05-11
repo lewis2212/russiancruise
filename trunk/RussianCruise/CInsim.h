@@ -128,7 +128,7 @@ private:
     fd_set udp_readfd, udp_exceptfd;        // (for NLP and MCI packets via UDP) File descriptor watches
     pthread_mutex_t ismutex;                // Mutex var used for send_packet() method
 
-    byte INSIM_VERSION;
+    byte InsimVERSION;
     bool send_button(void* button);      // Sends a variable sized button to the host
     bool send_mtc(void* s_mtc); //  Send a variable sized message to connect
 

@@ -26,9 +26,9 @@ private:
 
     map<byte, MPlayer>players;
 
-    void insim_ncn( struct IS_NCN* packet );
-    void insim_cnl( struct IS_CNL* packet );
-    void insim_mso( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimMSO( struct IS_MSO* packet );
 
 public:
     RCMessage();

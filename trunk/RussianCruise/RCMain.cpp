@@ -2518,39 +2518,39 @@ void *thread_mci (void *params)
 
 
 #ifdef _RC_BANK_H
-        bank->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        bank->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_CHEAT_H
-        antcht->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        antcht->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_PIZZA_H
-        pizza->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        pizza->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_ENERGY_H
-        nrg->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        nrg->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_STREET_H
-        street->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        street->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LIGHT_H
-        lgh->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        lgh->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_LEVEL_H
-        dl->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        dl->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_TAXI_H
-        taxi->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        taxi->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif
 
 #ifdef _RC_POLICE_H
-        police->insim_mci( (struct IS_MCI*)insim->udp_get_packet() );
+        police->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif // _RC_POLICE_H
 
     }

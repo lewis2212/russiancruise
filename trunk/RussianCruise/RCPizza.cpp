@@ -365,7 +365,7 @@ void RCPizza::readconfig(const char *Track)
 }
 
 
-void RCPizza::insim_ncn( struct IS_NCN* packet )
+void RCPizza::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
         return;
@@ -375,26 +375,26 @@ void RCPizza::insim_ncn( struct IS_NCN* packet )
 
 }
 
-void RCPizza::insim_npl( struct IS_NPL* packet )
+void RCPizza::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 	strcpy(players[ packet->UCID ].CName ,packet->CName);
 	NumP ++;
 }
 
-void RCPizza::insim_plp( struct IS_PLP* packet)
+void RCPizza::InsimPLP( struct IS_PLP* packet)
 {
 	PLIDtoUCID.erase(  packet->PLID );
 	NumP --;
 }
 
-void RCPizza::insim_pll( struct IS_PLL* packet )
+void RCPizza::InsimPLL( struct IS_PLL* packet )
 {
  	PLIDtoUCID.erase(  packet->PLID );
 	NumP --;
 }
 
-void RCPizza::insim_cnl( struct IS_CNL* packet )
+void RCPizza::InsimCNL( struct IS_CNL* packet )
 {
 	if ( players[ packet->UCID ].WorkAccept == 3 )
 		ShopAccepted = false;
@@ -422,12 +422,12 @@ void RCPizza::insim_cnl( struct IS_CNL* packet )
 
 }
 
-void RCPizza::insim_cpr( struct IS_CPR* packet )
+void RCPizza::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
+void RCPizza::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -528,7 +528,7 @@ void RCPizza::insim_mci ( struct IS_MCI* pack_mci )
     }
 }
 
-void RCPizza::insim_mso( struct IS_MSO* packet )
+void RCPizza::InsimMSO( struct IS_MSO* packet )
 {
 
     if (packet->UCID == 0)
