@@ -2,64 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// с какой стороны обрезать символы - слева, справа или с обеих сторон
-enum trim_type {LEFT=1, RIGHT, LEFT_AND_RIGHT};
-// первый параметр - строка
-// второй параметр - символ, который нужно обрезать с края строки
-// третий параметр - с какой стороны обрезать символ
-void trim(char *str, char c=' ', trim_type t=LEFT_AND_RIGHT)
-{
-     int len = strlen(str);
-     int beg=0;
-     if(t & RIGHT)
-          while(str[len-1]==c) str[--len]=0;
-     if(t & LEFT)
-          while(str[beg]==c) str[beg++]=0;
-     if(beg) memmove(str, str+beg, len-beg+1);
-}
-// первый параметр - строка
-// второй параметр - строка, содержащая символы, которые нужно обрезать
-// третий параметр - с какой стороны обрезать символы
-void trim(char *str, char *s, trim_type t=LEFT_AND_RIGHT)
-{
-     int len = strlen(str), slen = strlen(s);
-     int beg=0;
 
-     if(t & RIGHT)
-     {
-          bool b=true;
-          while(b)
-          {
-               b = false;
-               for(int i=0; i<slen; i++)
-               if(str[len-1]==s[i])
-               {
-                    str[--len]=0;
-                    b = true;
-                    break;
-               }
-          }
-     }
-     if(t & LEFT)
-     {
-          bool b=true;
-          while(b)
-          {
-               b = false;
-               for(int i=0; i<slen; i++)
-               if(str[beg]==s[i])
-               {
-                    str[beg++]=0;
-                    b = true;
-                    break;
-               }
-          }
-     }
-     if(beg) memmove(str, str+beg, len-beg+1);
-}
-// вместо написания отдельных функций - пара макросов
-#define ltrim(str, c) trim(str, c, LEFT)
-#define rtrim(str, c) trim(str, c, RIGHT)
 // =================================================
 
 namespace tools {
