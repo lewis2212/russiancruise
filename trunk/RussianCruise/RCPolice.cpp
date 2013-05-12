@@ -157,19 +157,22 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (players[ packet->UCID ].fines[i].fine_id > 0 and players[ packet->UCID ].fines[i].fine_id < MAX_FINES )
             {
-                char Text[64];
+                char Text[128];
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
 
-                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName.c_str() );
+                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7)", fine_id , fines[fine_id].name , fines[fine_id].cash );
+                if (strlen(players[ packet->UCID ].fines[i].CopName.c_str()) > 0)
+				{
+					strcat(Text," - ");
+					strcat(Text,players[ packet->UCID ].fines[i].CopName.c_str());
+				}
                 SendMTC( packet->UCID ,Text);
                 j++;
             }
         }
 
         if (j == 0)
-        {
-            SendMTC( packet->UCID ,msg->_(  packet->UCID , "3102" ));;
-        }
+            SendMTC(packet->UCID ,msg->_(  packet->UCID , "3102" ));
     }
 
     if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))

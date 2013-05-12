@@ -2155,7 +2155,6 @@ void case_pll ()
             if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
                 SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2600" ));
-                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2601" ));
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
@@ -2168,7 +2167,6 @@ void case_pll ()
                 if (ginfo->players[i].Zone != 1)
                 {
                     SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2602" ));
-                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2603" ));
 
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);
@@ -2203,7 +2201,6 @@ void case_plp ()
             if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
                 SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
-                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2701" ));
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
@@ -2216,7 +2213,6 @@ void case_plp ()
                 if (ginfo->players[i].Zone != 1)
                 {
                     SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2702" ));
-                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2703" ));
 
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);

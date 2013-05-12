@@ -102,18 +102,11 @@ Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3κμ/χ"
 2403 "^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
 2404 "^1| ^1Take alloved car ^7(^2!cars^7)"
 
+2600 "^2| ^7Care in spectators during chase. Fine - 5000 ^3 RUR."
+2602 "^1| ^7Care in spectators in the wrong place. Fine - 500 ^3 RUR."
 
-2600 "^2| ^7Care in spectators during chase."
-2601 "^2| ^7Fine - 5000 ^3 RUR."
-2602 "^1| ^7Care in spectators in the wrong place."
-2603 "^1| ^7Fine - 500 ^3 RUR."
-
-
-2700 "^2| ^7Care in spectators during chase."
-2701 "^2| ^7Fine- 5000 ^3 RUR."
-2702 "^1| ^7Care in the boxes in the wrong place."
-2703 "^1| ^7Fine - 500 ^3 RUR."
-
+2700 "^2| ^7Care in spectators during chase. Fine- 5000 ^3 RUR."
+2702 "^1| ^7Care in the boxes in the wrong place. Fine - 500 ^3 RUR."
 
 2900 "/msg ^7Voting on the server is forbidden."
 
