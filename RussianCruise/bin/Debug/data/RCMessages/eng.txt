@@ -33,7 +33,7 @@ PitSaveNotGood "^1PITSAFE"
 1100 "^7 Sent you ^7"
 1101 "^1| ^7you entered an amount greater than what you have in your account."
 1102 "^1| ^7Try select a smaller amount."
-1103 "^1| ^7from "
+MsgFrom  "^1| ^C^7From %s ^7: ^1%s"
 
 PogonyaOn 	"^2| ^C^7Ведется погоня за %s"
 PogonyaOff 	"^2| ^C^7Отменена погоня за %s"

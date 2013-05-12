@@ -165,7 +165,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
                 // int fine_date = atoi(rcMainRow[2));
 
-                sprintf(Text,"^2| ^7ID = %d. %.64s ^3(^2%d RUR.^3)", fine_id , fines[fine_id].name , fines[fine_id].cash );
+                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName.c_str() );
                 SendMTC( packet->UCID ,Text);
 
                 j++;
@@ -631,9 +631,9 @@ void RCPolice::InsimPLA( struct IS_PLA* packet )
 
     if (packet->Fact == PITLANE_EXIT)
     {
-            char Text[64];
-            sprintf(Text, "/p_clear %s", players[ UCID ].UName);
-            SendMST(Text);
+		char Text[64];
+		sprintf(Text, "/p_clear %s", players[ UCID ].UName);
+		SendMST(Text);
 
         int count = 0;
         for (int j=0; j<MAX_FINES; j++)
