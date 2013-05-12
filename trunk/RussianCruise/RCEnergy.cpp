@@ -367,7 +367,6 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
         {
             SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
         }
-
     }
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )

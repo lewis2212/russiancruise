@@ -88,14 +88,20 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
     if (IfCop(  packet->UCID  ) == 1)
     {
         SendMST( specText );
-        SendMTC( packet->UCID ,msg->_(  packet->UCID , "1300" ));
+        SendMTC( packet->UCID, msg->_(  packet->UCID , "1300" ));
         return;
     }
     else if (IfCop(  packet->UCID  ) == 3)
     {
-        SendMTC( packet->UCID ,msg->_(  packet->UCID , "1301" ));
+        SendMTC( packet->UCID, msg->_(  packet->UCID , "1301" ));
 
         players[ packet->UCID ].cop = true;
+
+		if (!((strncmp("DPS",packet->SName,3)==0)
+		||  (strncmp("dps",packet->SName,3)==0)
+        ||  (strncmp("POLICE",packet->SName,6)==0)
+        ||  (strncmp("police",packet->SName,6)==0)))
+        SendMTC( packet->UCID, msg->_(  packet->UCID , "^6| ^C^7Â íàçâàíèè ñêèíà íå íàéäåíî óêàçàòåëåé íà ïğèíàäëåæíîñòü ê ÄÏÑ" ));
 
         dl->Lock( packet->UCID );
         nrg->Lock( packet->UCID );
@@ -818,14 +824,14 @@ int RCPolice::IfCop ( byte UCID )
     int COP = 0;
 
     if (
-        ((strncmp("^4[^C^7ÄÏÑ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÄÏC^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7äïñ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7äïc^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÃÀÈ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ãàè^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ÃAÈ^4]",PlayerName,13)==0)
-         || (strncmp("^4[^C^7ãaè^4]",PlayerName,13)==0))
+		(  (strncmp("^4[^C^7ÄÏÑ^4]",PlayerName,13)==0)
+		|| (strncmp("^4[^C^7ÄÏC^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7äïñ^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7äïc^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7ÃÀÈ^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7ãàè^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7ÃAÈ^4]",PlayerName,13)==0)
+        || (strncmp("^4[^C^7ãaè^4]",PlayerName,13)==0))
         && ( !players[ UCID ].cop )
     )
     {
@@ -834,13 +840,9 @@ int RCPolice::IfCop ( byte UCID )
 
     char file[255];
     sprintf(file,"%sdata\\RCPolice\\cops.txt",RootDir);
-
     FILE *fff = fopen(file, "r");
-    if ( NULL == fff )
-        return -1;
-
+    if ( NULL == fff ) return -1;
     fclose(fff);
-
     ifstream readf (file,ios::in);
 
     while (readf.good())
@@ -853,9 +855,7 @@ int RCPolice::IfCop ( byte UCID )
             break;
         }
     }
-
     readf.close();
-
     return COP;
 }
 
@@ -886,7 +886,6 @@ void RCPolice::BtnSirena( byte UCID )
     pack.TypeIn = 0;
     pack.ClickID = 203;
     pack.BStyle = 1;
-    //pack.L = 50;
 
     pack.T = 20;
     pack.W = 124 - (players[ UCID ].sirenaSize);
@@ -925,7 +924,6 @@ void RCPolice::BtnPogonya( byte UCID )
     strcpy(pack.Text,players[ UCID ].PogonyaReason);
     insim->send_packet(&pack);
 }
-
 
 void RCPolice::CopTurnOn( byte UCID )
 {
@@ -1132,9 +1130,9 @@ void RCPolice::Event()
 
                     street->CurentStreetInfo(&StreetInfo,UCID2);
 
-                    if (playr2.Pogonya == 1 )
+                    if (playr2.Pogonya == 1)
                         sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
-                    else if ( playr2.Pogonya == 2 )
+                    else if (playr2.Pogonya == 2)
                         sprintf(pack.Text,"%s %s ^1^CÀĞÅÑÒÎÂÀÍ", playr2.PName,StreetInfo.Street);
 
                     insim->send_packet(&pack);

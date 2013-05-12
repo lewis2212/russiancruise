@@ -7,6 +7,8 @@
 #include "RCBank.h"     // Bank
 #include "RCDrivingLicense.h"
 #include "RCStreet.h"
+#include "RCPolice.h"
+#include "RCLight.h"
 
 #include "tools.h"      // Check_Pos  etc.
 
@@ -87,6 +89,8 @@ private:
     RCBank      *bank;  // Переменная-указатель на класс RCBank
     RCDL        *dl;
     RCStreet    *street;
+    RCLight    	*lgh;
+    RCPolice    *police;
 
     struct  Taxi_info TrackInf;
     int PointCount;
@@ -134,7 +138,7 @@ public:
 
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet);
+    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
     byte inited;
 
     void dead_pass(byte UCID);

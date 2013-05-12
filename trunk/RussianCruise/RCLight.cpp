@@ -135,6 +135,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 		{
 			if(Check_Pos(Light[g].PointCount,Light[g].X,Light[g].Y,X,Y))
 			{
+				players[UCID].LightNum = g;
 				int HR = Light[g].Heading-80;
 				int HL = Light[g].Heading+80;
 
@@ -170,25 +171,30 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 		if (SvetKey == 1)
 		{
 			Svetofor1( UCID );
+			players[UCID].DiffDir = abs(Light[players[UCID].LightNum].Heading - D);
 		}
 		else if (SvetKey == 2)
 		{
 			Svetofor2( UCID );
+			players[UCID].DiffDir = abs(Light[players[UCID].LightNum].Heading - D);
 		}
 		else
 		{
-			if (players[ UCID ].Light != 0)
+			if (players[UCID].Light != 0)
 			{
+				if (players[UCID].RedLight and players[UCID].DiffDir<45 and (pack_mci->Info[i].AngVel*360/16384)<70)
+					players[UCID].OnRed=true;
+				else
+					players[UCID].OnRed=false;
+
 				for (int f=170; f < 203; f++)
 					SendBFN( UCID ,f);
-
 				players[ UCID ].Light = 0;
 			}
 		}
 
 		if (players[ UCID ].Light3)
 			Svetofor3( UCID );
-
 		/**  steets **/
 
 		/** pit wrong route **/
@@ -255,6 +261,16 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
     }
 }
 
+bool RCLight::CheckOnRed(byte UCID)
+{
+	return players[UCID].OnRed;
+}
+
+void RCLight::OnRedFalse(byte UCID)
+{
+	players[UCID].OnRed=false;
+}
+
 void RCLight::InsimMSO( struct IS_MSO* packet )
 {
 }
@@ -283,17 +299,17 @@ void RCLight::InsimPLL( struct IS_PLL* packet )
 
 void RCLight::Svetofor1 ( byte UCID )
 {
-	printf("%d %d\n",red1,red2);
+	/*printf("%d %d\n",red1,red2);
 	printf("%d %d\n",yell1,yell2);
 	printf("%d %d\n",green1,green2);
-	printf("\n");
+	printf("\n");*/
 
 	byte ClickId = 170, l = 145, t = 12, w = 18;
 
 	char cR [10], cY [10], cG [10];
 	int R=8, Y=8, G=8;
-	if (red1 == 1) R=1;
-	if (yell1 == 1) Y=3;
+	if (red1 == 1) {R=1;players[UCID].RedLight=true;}else players[UCID].RedLight=false;
+	if (yell1 == 1) {Y=3;players[UCID].RedLight=false;}
 	if (green1 == 1) G=2;
 
 	sprintf(cR,"^%d^S¡ñ",R);
@@ -337,8 +353,8 @@ void RCLight::Svetofor2 ( byte UCID )
 
 	char cR [10], cY [10], cG [10];
 	int R=8, Y=8, G=8;
-	if (red2 == 1) R=1;
-	if (yell2 == 1) Y=3;
+	if (red2 == 1) {R=1;players[UCID].RedLight=true;}else players[UCID].RedLight=false;
+	if (yell2 == 1) {Y=3;players[UCID].RedLight=false;}
 	if (green2 == 1) G=2;
 
 	sprintf(cR,"^%d^S¡ñ",R);
@@ -498,7 +514,7 @@ void RCLight::Event()
 {
 	float svtime = time(&sstime)%40;
 
-	if (svtime == 0)
+	if (svtime >= 0 and svtime<14)
 	{
 		red1=0;		red2=1;
 		yell1=0;	yell2=0;
@@ -528,7 +544,7 @@ void RCLight::Event()
 		yell1=1;	yell2=1;
 		green1=0;	green2=0;
 	}
-	else if (svtime == 20)
+	else if (svtime >= 20 and svtime<34)
 	{
 		red1=1;		red2=0;
 		yell1=0;	yell2=0;
