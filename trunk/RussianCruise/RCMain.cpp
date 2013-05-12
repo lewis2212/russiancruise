@@ -1071,7 +1071,7 @@ void case_mci ()
                     ginfo->players[j].Bonus_count +=1;
 
                     bank->AddCash(ginfo->players[j].UCID,bonus, false);
-                    //bank->BankFond -= bonus;
+                    bank->RemFrBank( bonus );
 
                     char bonus_c[64];
                     sprintf(bonus_c,"%s%d ^7RUR.",msg->_( ginfo->players[j].UCID, "1500" ),bonus);

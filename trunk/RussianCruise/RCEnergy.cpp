@@ -399,19 +399,26 @@ void RCEnergy::btn_energy ( byte UCID )
 
     if (nrg <= 10)
 	{
-		if( players[ UCID ].EnergyAlarm ){
+		if( players[ UCID ].EnergyAlarm )
+		{
 			players[ UCID ].EnergyAlarm = false;
-			strcpy(pack.Text,"^0");}
-		else{players[ UCID ].EnergyAlarm = true;
-			strcpy(pack.Text,"^1");}
+			strcpy(pack.Text,"^0");
+		}
+		else
+		{
+			players[ UCID ].EnergyAlarm = true;
+			strcpy(pack.Text,"^1");
+		}
     }
     else if (nrg <= 50 and nrg > 10)
         strcpy(pack.Text,"^3");
     else
         strcpy(pack.Text,"^2");
 
-	if (players[ UCID ].Zone == 3) sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
-	else sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
+	if (players[ UCID ].Zone == 3)
+		sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
+	else
+		sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
     insim->send_packet(&pack);
 }
 

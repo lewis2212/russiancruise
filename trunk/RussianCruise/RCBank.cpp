@@ -662,7 +662,7 @@ void RCBank::BtnCash ( byte UCID )
     strcat(pack.Text,"^7 RUR.");
     insim->send_packet(&pack);
 
-    if (strcmp(players[ UCID ].UName,"denis-takumi") == 0)
+    if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 || strcmp(players[ UCID ].UName,"Lexanom") == 0)
     {
         pack.ClickID = 163;
         pack.L = 50;
