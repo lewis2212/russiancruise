@@ -8,6 +8,7 @@
 #include "tools.h"      // Check_Pos  etc.
 
 #define MAX_STREETS 32
+#define DEFAULT_STREET_NUM 250
 // Задаем структуру игрока
 
 struct StrPlayer

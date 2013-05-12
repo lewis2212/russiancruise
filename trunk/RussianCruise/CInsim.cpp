@@ -36,7 +36,7 @@
 
 #include "cinsim.h"
 
-#ifdef CIS_LINUX
+#ifdef __linux__
 #define INVALID_SOCKET -1
 #endif
 
@@ -90,7 +90,7 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 {
     // Initialise WinSock
     // Only required on Windows
-    #ifdef CIS_WINDOWS
+    #ifdef _WINDOWS
     WSADATA wsadata;
     if (WSAStartup(0x202, &wsadata) == SOCKET_ERROR) {
       WSACleanup();
@@ -103,10 +103,10 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
     // Could we get the socket handle? If not the OS might be too busy or has run out of available socket descriptors
     if (sock == INVALID_SOCKET) {
-      #ifdef CIS_WINDOWS
+      #ifdef _WINDOWS
       closesocket(sock);
       WSACleanup();
-      #elif defined CIS_LINUX
+      #elif defined __linux__
       close(sock);
       #endif
 
@@ -132,10 +132,10 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
     // Now the socket address structure is full, lets try to connect
     if (connect(sock, (struct sockaddr *) &saddr, sizeof(saddr)) < 0) {
-      #ifdef CIS_WINDOWS
+      #ifdef _WINDOWS
       closesocket(sock);
       WSACleanup();
-      #elif defined CIS_LINUX
+      #elif defined __linux__
       close(sock);
       #endif
 
@@ -149,11 +149,11 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
         // Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
         if (sockudp == INVALID_SOCKET) {
-            #ifdef CIS_WINDOWS
+            #ifdef _WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #elif defined CIS_LINUX
+            #elif defined __linux__
             close(sock);
             close(sockudp);
             #endif
@@ -190,11 +190,11 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
         // Connect the UDP using the same address as in the TCP socket
         if (connect(sockudp, (struct sockaddr *) &udp_saddr, sizeof(udp_saddr)) < 0) {
-            #ifdef CIS_WINDOWS
+            #ifdef _WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #elif defined CIS_LINUX
+            #elif defined __linux__
             close(sock);
             close(sockudp);
             #endif
@@ -224,17 +224,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
     // Send the initialization packet
     if(send_packet(&isi_p) < 0) {
         if (using_udp) {
-            #ifdef CIS_WINDOWS
+            #ifdef _WINDOWS
             closesocket(sockudp);
-            #elif defined CIS_LINUX
+            #elif defined __linux__
             close(sockudp);
             #endif
 	}
 
-        #ifdef CIS_WINDOWS
+        #ifdef _WINDOWS
         closesocket(sock);
         WSACleanup();
-        #elif defined CIS_LINUX
+        #elif defined __linux__
         close(sock);
         #endif
         return -1;
@@ -242,9 +242,9 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
     // Set the timeout period
     select_timeout.tv_sec = IS_TIMEOUT;
-    #ifdef CIS_WINDOWS
+    #ifdef _WINDOWS
     select_timeout.tv_usec = 0;
-    #elif defined CIS_LINUX
+    #elif defined __linux__
     select_timeout.tv_nsec = 0;
     #endif
 
@@ -254,17 +254,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         if (next_packet() < 0) {             // Get next packet, supposed to be an IS_VER
             if (isclose() < 0) {
                 if (using_udp) {
-                    #ifdef CIS_WINDOWS
+                    #ifdef _WINDOWS
                     closesocket(sockudp);
-                    #elif defined CIS_LINUX
+                    #elif defined __linux__
                     close(sockudp);
                     #endif
                 }
 
-                #ifdef CIS_WINDOWS
+                #ifdef _WINDOWS
                 closesocket(sock);
                 WSACleanup();
-                #elif defined CIS_LINUX
+                #elif defined __linux__
                 close(sock);
                 #endif
                 return -1;
@@ -280,17 +280,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
             default:                          // It wasn't, something went wrong. Quit
                 if (isclose() < 0) {
                     if (using_udp) {
-                        #ifdef CIS_WINDOWS
+                        #ifdef _WINDOWS
                         closesocket(sockudp);
-                        #elif defined CIS_LINUX
+                        #elif defined __linux__
                         close(sockudp);
                         #endif
                     }
 
-                    #ifdef CIS_WINDOWS
+                    #ifdef _WINDOWS
                     closesocket(sock);
                     WSACleanup();
-                    #elif defined CIS_LINUX
+                    #elif defined __linux__
                     close(sock);
                     #endif
                 }
@@ -315,17 +315,17 @@ int CInsim::isclose()
         return -1;
 
     if (using_udp) {
-        #ifdef CIS_WINDOWS
+        #ifdef _WINDOWS
         closesocket(sockudp);
-        #elif defined CIS_LINUX
+        #elif defined __linux__
         close(sockudp);
         #endif
     }
 
-    #ifdef CIS_WINDOWS
+    #ifdef _WINDOWS
     closesocket(sock);
     WSACleanup();
-    #elif defined CIS_LINUX
+    #elif defined __linux__
     close(sock);
     #endif
     return 0;
@@ -368,9 +368,9 @@ int CInsim::next_packet()
             FD_SET(sock, &readfd);
             FD_SET(sock, &exceptfd);
 
-            #ifdef CIS_WINDOWS
+            #ifdef _WINDOWS
             int rc = select(0, &readfd, NULL, &exceptfd, &select_timeout);
-            #elif defined CIS_LINUX
+            #elif defined __linux__
             int rc = pselect(sock + 1, &readfd, NULL, &exceptfd, &select_timeout, NULL);
             #endif
 
@@ -459,9 +459,9 @@ int CInsim::udp_next_packet()
         FD_SET(sockudp, &udp_readfd);
         FD_SET(sockudp, &udp_exceptfd);
 
-        #ifdef CIS_WINDOWS
+        #ifdef _WINDOWS
         int rc = select(0, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
-        #elif defined CIS_LINUX
+        #elif defined __linux__
         int rc = pselect(sockudp + 1, &udp_readfd, NULL, &udp_exceptfd, &select_timeout, NULL);
         #endif
 

@@ -329,8 +329,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             {
                 vector<string>cops;
 
-                int j = 0;
-
                 ifstream rCops( file , ios::in );
 
                 while ( rCops.good() )
@@ -339,18 +337,17 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     rCops.getline(line, 32);
 
                     if (strlen(line) >0)
-                        cops[j++] = line;
+                        cops.push_back(line);
                 }
                 rCops.close();
 
                 ofstream wCops( file , ios::out );
 
-                for(auto& cop: cops)
+                for( int i = 0; i < cops.size(); i++)
                 {
-                    if ( cop != param )
-                    {
-                        wCops << cop << endl;
-                    }
+                    if ( cops[i] != param )
+                        wCops << cops[i].c_str() << endl;
+
                 }
                 wCops.close();
 

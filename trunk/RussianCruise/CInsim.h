@@ -61,20 +61,23 @@ typedef struct
 #include "insim.h"
 
 /* Defines whether the Windows or Linux part of the source will be compiled.
- * Options are CIS_WINDOWS or CIS_LINUX
+ * Options are _WINDOWS or __linux__
  */
-#define CIS_WINDOWS
+#ifdef _WIN32
+	#define _WINDOWS
+#elif defined _WIN64
+	#define _WINDOWS
+#endif
 
 // Includes for Windows (uses winsock2)
-#ifdef CIS_WINDOWS
+#ifdef _WINDOWS
 #include <winsock2.h>
 #include <stdio.h>
 #include <string.h>
 #include "pthread.h"
-#endif
 
 // Includes for *NIX (no winsock2, these headers are needed instead)
-#ifdef CIS_LINUX
+#elif defined __linux__
 #include <stdio.h>
 #include <pthread.h>
 #include <limits.h>
@@ -92,6 +95,15 @@ typedef struct
 #define PACKET_MAX_SIZE 512
 #define IS_TIMEOUT 5
 
+#define IS_BTN_HDRSIZE 12
+#define IS_BTN_MAXTLEN 239
+#define IS_MTC_HDRSIZE 8
+#define IS_MTC_MAXTLEN 127
+
+#ifdef __linux__
+#define INVALID_SOCKET -1
+#endif
+
 // Definition for our buffer datatype
 struct packBuffer
 {
@@ -105,10 +117,10 @@ struct packBuffer
 class CInsim
 {
   private:
-    #ifdef CIS_WINDOWS
+    #ifdef _WINDOWS
     SOCKET sock;                            // TCP Socket (most packets)
     SOCKET sockudp;                         // UDP Socket (if requested, for NLP and MCI)
-    #elif defined CIS_LINUX
+    #elif defined __linux__
     int sock;                               // TCP Socket (most packets)
     int sockudp;                            // UDP Socket (if requested, for NLP and MCI)
     #endif
@@ -117,9 +129,9 @@ class CInsim
     struct packBuffer lbuf;                     // Our local buffer
     char packet[PACKET_MAX_SIZE];           // A buffer where the current packet is stored
     fd_set readfd, exceptfd;                // File descriptor watches
-    #ifdef CIS_WINDOWS
+    #ifdef _WINDOWS
     struct timeval select_timeout;          // timeval struct for the select() call
-    #elif defined CIS_LINUX
+    #elif defined __linux__
     struct timespec select_timeout;        // timeval struct for the pselect() call
     #endif
     struct packBuffer udp_lbuf;                 // (for NLP and MCI packets via UDP) Our local buffer (no global buffer needed for UDP)
