@@ -582,10 +582,8 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
                 players[ UCID ].fines[j].fine_id = 18;
                 players[ UCID ].fines[j].fine_date = int(time(NULL));
 
-                char Msg[64];
-                strcpy(Msg,msg->_( UCID , "1104" ));
-                SendMTC( UCID ,Msg);
-                sprintf(Msg,"^2| ^7%s", fines[18].name);
+                char Msg[96];
+                sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[18].name);
                 SendMTC( UCID ,Msg);
                 break;
             }
@@ -608,9 +606,7 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
 					players[ UCID ].fines[j].fine_date = int(time(NULL));
 
 					char Msg[64];
-					strcpy(Msg,msg->_(  UCID , "1104" ));
-					SendMTC( UCID ,Msg);
-					sprintf(Msg,"^2| ^7%s" ,fines[13].name);
+					sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[13].name);
 					SendMTC( UCID ,Msg);
 					break;
 				}
