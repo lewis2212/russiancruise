@@ -366,7 +366,7 @@ void help_cmds (struct player *splayer,int h_type)
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3215" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3216" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3217" ) );
-            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
+            //SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
 
     }
     if (h_type == 2)
@@ -708,8 +708,16 @@ void case_btc ()
                     pack_btn.UCID = ginfo->players[i].UCID;              // UCID of the player that will receive the button
                     pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
                     pack_btn.TypeIn = 16;
-                    pack_btn.L = 49;
-                    pack_btn.T = 175;
+                    pack_btn.L = 25;
+
+                    int count;
+					for (int j=0; j<MAX_PLAYERS; j++)
+						if (ginfo->players[j].UCID != 0) count++;
+					if (count>16) pack_btn.L += 24;
+
+                    pack_btn.T = 191;
+                    if (police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI)) pack_btn.T = 175;
+
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 36;
@@ -723,7 +731,7 @@ void case_btc ()
                     insim->send_packet(&pack_btn);
 
                     // cop buttons
-                    if ( police->IsCop( ginfo->players[i].UCID ) != 0)
+                    if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI))
                     {
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 2;
@@ -748,6 +756,13 @@ void case_btc ()
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1005" ));
                         insim->send_packet(&pack_btn);
                     }
+                    else
+					{
+						SendBFN(ginfo->players[i].UCID,38);
+						SendBFN(ginfo->players[i].UCID,39);
+						SendBFN(ginfo->players[i].UCID,40);
+						SendBFN(ginfo->players[i].UCID,41);
+					}
                 }
             }
 
@@ -1059,8 +1074,7 @@ void case_mci ()
                     int bonus = 100+(50*(ginfo->players[j].Bonus_count));
                     ginfo->players[j].Bonus_count +=1;
 
-                    bank->AddCash(ginfo->players[j].UCID,bonus, true);
-                    //dl->AddSkill(ginfo->players[j].UCID);
+                    bank->AddCash(ginfo->players[j].UCID,bonus, false);
                     //bank->BankFond -= bonus;
 
                     char bonus_c[64];
@@ -1689,7 +1703,7 @@ void case_mso ()
     }
 
     //!EXIT
-    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and strcmp(ginfo->players[i].UName, "denis-takumi") == 0)
+    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
         SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
@@ -1771,17 +1785,12 @@ void case_mso ()
     if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
     {
         ginfo->players[i].Action = 1;
-
-        for(int h=0; h<50; h++)
-        {
-            SendBFN(ginfo->players[i].UCID,h);
-        }
+        for(int h=0; h<50; h++) SendBFN(ginfo->players[i].UCID,h);
 
         struct IS_BTN pack_btn;
         memset(&pack_btn, 0, sizeof(struct IS_BTN));
         pack_btn.Size = sizeof(struct IS_BTN);
         pack_btn.Type = ISP_BTN;
-        pack_btn.ReqI = ginfo->players[i].UCID;              // Must be non-zero, I'll just use UCID
         pack_btn.UCID = ginfo->players[i].UCID;              // UCID of the player that will receive the button
         pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
         pack_btn.L = 1;
@@ -1792,28 +1801,29 @@ void case_mso ()
         int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
         {
-            if (ginfo->players[j].UCID != 0 and  !police->IsCop( ginfo->players[j].UCID ) )
+            if (ginfo->players[j].UCID != 0 /*and !police->IsCop( ginfo->players[j].UCID )*/ )
             {
                 if (col == 16)
                 {
                     pack_btn.L += 24;
                     pack_btn.T = 191;
                 }
-
+				pack_btn.ReqI = ginfo->players[j].UCID;
                 pack_btn.ClickID = ginfo->players[j].BID;
                 strcpy(pack_btn.Text, ginfo->players[j].PName);
                 insim->send_packet(&pack_btn);
                 pack_btn.T -= 4;
-
                 col++;
             }
-
         }
         pack_btn.ClickID = 34;
         pack_btn.T = 195;
-        strcpy(pack_btn.Text,msg->_( ginfo->players[i].UCID, "2003" ));
-        insim->send_packet(&pack_btn);
+        pack_btn.L = 1;
+        pack_btn.W = 24;
+        if (col > 16) pack_btn.W += 24;
 
+        strcpy(pack_btn.Text,msg->_( ginfo->players[i].UCID, "604" ));
+        insim->send_packet(&pack_btn);
     }
 }
 
