@@ -142,43 +142,48 @@ void RCBaseClass::next_packet()
         InsimACR( (struct IS_ACR*)insim->get_packet() );
         break;
 
+	case ISP_HLV:
+        InsimHLV( (struct IS_HLV*)insim->get_packet() );
+        break;
+
 
 
     }
 }
 
-void RCBaseClass::InsimVER( struct IS_VER* packet ){}
-void RCBaseClass::InsimTINY( struct IS_TINY* packet ){}
-void RCBaseClass::InsimSMALL( struct IS_SMALL* packet ){}
-void RCBaseClass::InsimSTA( struct IS_STA* packet ){}
-void RCBaseClass::InsimISM( struct IS_ISM* packet ){}
-void RCBaseClass::InsimIII( struct IS_III* packet ){}
-void RCBaseClass::InsimVTN( struct IS_VTN* packet ){}
-void RCBaseClass::InsimRST( struct IS_RST* packet ){}
-void RCBaseClass::InsimLAP( struct IS_LAP* packet ){}
-void RCBaseClass::InsimSPX( struct IS_SPX* packet ){}
-void RCBaseClass::InsimPIT( struct IS_PIT* packet ){}
-void RCBaseClass::InsimPSF( struct IS_PSF* packet ){}
-void RCBaseClass::InsimPLA( struct IS_PLA* packet ){}
-void RCBaseClass::InsimPEN( struct IS_PEN* packet ){}
-void RCBaseClass::InsimTOC( struct IS_TOC* packet ){}
-void RCBaseClass::InsimFLG( struct IS_FLG* packet ){}
-void RCBaseClass::InsimREO( struct IS_REO* packet ){}
-void RCBaseClass::InsimCRS( struct IS_CRS* packet ){}
+void RCBaseClass::InsimACR( struct IS_ACR* packet ){}
+void RCBaseClass::InsimAXM( struct IS_AXM* packet ){}
 void RCBaseClass::InsimBFN( struct IS_BFN* packet ){}
 void RCBaseClass::InsimBTC( struct IS_BTC* packet ){}
 void RCBaseClass::InsimBTT( struct IS_BTT* packet ){}
-void RCBaseClass::InsimAXM( struct IS_AXM* packet ){}
-void RCBaseClass::InsimACR( struct IS_ACR* packet ){}
+void RCBaseClass::InsimCNL( struct IS_CNL* packet ){}
+void RCBaseClass::InsimCON( struct IS_CON* packet ){}
+void RCBaseClass::InsimCPR( struct IS_CPR* packet ){}
+void RCBaseClass::InsimCRS( struct IS_CRS* packet ){}
+void RCBaseClass::InsimFLG( struct IS_FLG* packet ){}
+void RCBaseClass::InsimHLV( struct IS_HLV* packet ){}
+void RCBaseClass::InsimIII( struct IS_III* packet ){}
+void RCBaseClass::InsimISM( struct IS_ISM* packet ){}
+void RCBaseClass::InsimLAP( struct IS_LAP* packet ){}
+void RCBaseClass::InsimMSO( struct IS_MSO* packet ){}
 void RCBaseClass::InsimNCN( struct IS_NCN* packet ){}
 void RCBaseClass::InsimNPL( struct IS_NPL* packet ){}
-void RCBaseClass::InsimPLP( struct IS_PLP* packet ){}
-void RCBaseClass::InsimPLL( struct IS_PLL* packet ){}
-void RCBaseClass::InsimCNL( struct IS_CNL* packet ){}
-void RCBaseClass::InsimCPR( struct IS_CPR* packet ){}
-void RCBaseClass::InsimMSO( struct IS_MSO* packet ){}
-void RCBaseClass::InsimCON( struct IS_CON* packet ){}
 void RCBaseClass::InsimOBH( struct IS_OBH* packet ){}
+void RCBaseClass::InsimPEN( struct IS_PEN* packet ){}
+void RCBaseClass::InsimPIT( struct IS_PIT* packet ){}
+void RCBaseClass::InsimPLA( struct IS_PLA* packet ){}
+void RCBaseClass::InsimPLL( struct IS_PLL* packet ){}
+void RCBaseClass::InsimPLP( struct IS_PLP* packet ){}
+void RCBaseClass::InsimPSF( struct IS_PSF* packet ){}
+void RCBaseClass::InsimREO( struct IS_REO* packet ){}
+void RCBaseClass::InsimRST( struct IS_RST* packet ){}
+void RCBaseClass::InsimSMALL( struct IS_SMALL* packet ){}
+void RCBaseClass::InsimSPX( struct IS_SPX* packet ){}
+void RCBaseClass::InsimSTA( struct IS_STA* packet ){}
+void RCBaseClass::InsimTINY( struct IS_TINY* packet ){}
+void RCBaseClass::InsimTOC( struct IS_TOC* packet ){}
+void RCBaseClass::InsimVER( struct IS_VER* packet ){}
+void RCBaseClass::InsimVTN( struct IS_VTN* packet ){}
 
 void    RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {

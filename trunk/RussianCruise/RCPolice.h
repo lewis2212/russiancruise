@@ -23,6 +23,7 @@ struct user_fine
 {
     int     fine_id;
     int     fine_date;
+    string	CopName;
 };
 
 struct PolicePlayer

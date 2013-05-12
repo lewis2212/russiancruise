@@ -494,6 +494,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
 void RCPolice::InsimBTT( struct IS_BTT* packet )
 {
+	SYSTEMTIME sm;
+    GetLocalTime(&sm);
+
+    char fine_c[255];
+    sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
     /**
     Пользователь выписывает штраф
     */
@@ -511,7 +516,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                         if( fines[j].id == atoi(packet->Text) )
                         {
                             char Msg[64];
-                            strcpy(Msg,msg->_(  play.first , "1104" ));
+                            strcpy(Msg,msg->_( play.first , "1104" ));
                             SendMTC( play.first ,Msg);
                             strcpy(Msg,"^2| ^7");
                             strcat(Msg,fines[atoi(packet->Text)].name);
@@ -531,13 +536,14 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                                 {
                                     players[ play.first ].fines[j].fine_id = atoi(packet->Text);
                                     players[ play.first ].fines[j].fine_date = int( time( NULL ) );
+                                    players[ play.first ].fines[j].CopName = players[ packet->UCID ].UName;
                                     break;
                                 }
                             }
 
-                            /*ofstream readf (fine_c,ios::app);
-                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " get fine ID = " << packet->Text << " to "  << players[g].UName << endl;
-                            readf.close();*/
+                            ofstream readf (fine_c,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
+                            readf.close();
                         }
                     }
                 } // if atoi(pack_btt->Text) > 0
@@ -579,9 +585,9 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             players[ play.first ].fines[j].fine_id = 0;
                             players[ play.first ].fines[j].fine_date = 0;
 
-                            /*ofstream readf (fine_c,ios::app);
-                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;
-                            readf.close();*/
+                            ofstream readf (fine_c,ios::app);
+                            readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " cancle fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
+                            readf.close();
 
                             break;
                         }
@@ -952,7 +958,7 @@ void RCPolice::SaveUserFines ( byte UCID )
     {
         if (players[ UCID ].fines[i].fine_id > 0)
         {
-            writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date <<  endl;
+            writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date << ";" << players[ UCID ].fines[i].CopName <<  endl;
         }
     }
 
@@ -986,12 +992,18 @@ void RCPolice::ReadUserFines( byte UCID )
             {
                 char *id;
                 char *date;
+                char *CopName;
 
                 id = strtok(str,";");
                 date = strtok(NULL,";");
+                CopName = strtok(NULL,";");
 
                 players[ UCID ].fines[i].fine_id = atoi(id);
-                players[ UCID ].fines[i].fine_date = atoi(date);
+                if( date )
+					players[ UCID ].fines[i].fine_date = atoi(date);
+
+				if( CopName )
+					players[ UCID ].fines[i].CopName = CopName;
 
                 i++;
             }

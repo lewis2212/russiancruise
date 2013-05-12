@@ -17,7 +17,7 @@ struct EnergyPlayer
     /** Energy **/
     int     Energy; // Energy xD from 0 to 10000
     time_t  EnergyTime;
-
+	bool	EnergyAlarm = false;
     bool	Lock;
 };
 

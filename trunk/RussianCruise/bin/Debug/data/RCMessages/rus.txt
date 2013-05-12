@@ -1,4 +1,6 @@
-Energy " ^C—илы"
+Energy "%s ^C—илы %3.0f^K£•"
+Energy_up "%s ^C—илы %3.0f^K£•°и°и°и"
+
 LvlAndSkill " ^C^7”ровень: ^2%d^7, опыт: ^2%4.2f^K£•"
 
 
