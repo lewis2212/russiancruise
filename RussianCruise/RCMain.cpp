@@ -902,17 +902,12 @@ void case_btt ()
                         {
                             out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                             char Msg[127];
-                            strcpy(Msg,msg->_( ginfo->players[g].UCID, "1103" ));
-                            strcat(Msg,ginfo->players[i].PName);
-                            strcat(Msg,": ^1");
-                            int len = strlen(Msg);
-                            int can = (127-len);
-                            strncat(Msg,pack_btt->Text,can);
+                            sprintf(Msg,msg->_( ginfo->players[g].UCID, "MsgFrom" ),ginfo->players[i].PName,pack_btt->Text );
                             SendMTC(ginfo->players[g].UCID,Msg);
-                        } // if atoi(pack_btt->Text) > 0
+                        }
                         break;
                     }
-                }//for
+                }
             }
         }
     }
