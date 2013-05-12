@@ -11,7 +11,7 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet)
+int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light)
 {
     strcpy(RootDir,dir); // Копируем путь до программы
     insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
@@ -35,6 +35,13 @@ int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RC
         return -1;
     }
 
+    lgh = (RCLight *)Light;
+    if(!lgh)
+    {
+        printf ("Can't struct RCLight class");
+        return -1;
+    }
+
     dl = (RCDL *)RCdl;
     if(!dl)
     {
@@ -46,6 +53,13 @@ int RCTaxi::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RC
     if(!street)
     {
         printf ("Can't struct RCStreet class");
+        return -1;
+    }
+
+    police = (RCPolice *)Police;
+    if(!police)
+    {
+        printf ("Can't struct RCPolice class");
         return -1;
     }
 
@@ -233,7 +247,7 @@ void RCTaxi::accept_user( byte UCID )
 {
 	if (players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].WorkAccept == 0 and players[UCID].CanWork)
 	{
-		if (players[UCID].AcceptTime >= time(&acctime)) return;
+		//if (players[UCID].AcceptTime >= time(&acctime)) return;
 
 		int DestPoint = 0;
 		srand(time(NULL));
@@ -343,6 +357,18 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
     {
     	byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
 
+    	if (players[ UCID ].WorkNow != 0 and police->IsCop(UCID) and players[ UCID ].CanWork)
+		{
+			SendMTC( UCID ,msg->_(UCID, "1303" ));
+			players[ UCID ].CanWork=false;
+			delete_marshal(UCID);
+			players[ UCID ].WorkAccept = 0;
+			players[ UCID ].WorkPointDestinaion = 0;
+			players[ UCID ].WorkStreetDestinaion = 0;
+			players[ UCID ].StressOverCount = 0;
+			players[ UCID ].PassStress = 0;
+		}
+
 		int X = pack_mci->Info[i].X/65536;
 		int Y = pack_mci->Info[i].Y/65536;
 		int Speed = ((int)pack_mci->Info[i].Speed*360)/(32768);
@@ -378,6 +404,13 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 					}
 					players[ UCID ].spd++;
 					players[ UCID ].PassStress += 10;
+				}
+
+				if (lgh->CheckOnRed(UCID))
+				{
+					SendMTC( UCID ,  TaxiDialogs["redlight"][ rand()%TaxiDialogs["redlight"].size() ].c_str() ); // красный светофор
+					players[ UCID ].PassStress += 100;
+					lgh->OnRedFalse(UCID);
 				}
 			}
 
@@ -677,6 +710,9 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
                 return;
             }
             SendMTC( packet->UCID ,"^6| ^C^7Уходишь от нас? Ну и ступай отсюда, другого найду.");
+            //удаляю маршалов
+            delete_marshal( packet->UCID );
+
             players[ packet->UCID ].WorkAccept = 0;
             players[ packet->UCID ].WorkPointDestinaion = 0;
             players[ packet->UCID ].WorkStreetDestinaion = 0;
@@ -684,8 +720,6 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             players[ packet->UCID ].PassStress = 0;
             players[ packet->UCID ].WorkNow = 0;
             players[ packet->UCID ].Work = 0;
-            //удаляю маршалов
-            delete_marshal( packet->UCID );
         }
 
         if (strncmp(Message, "!workstart", strlen("!workstart")) == 0 )
@@ -695,6 +729,11 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
                 SendMTC( packet->UCID ,"^6| ^C^7Эй, еще не работаешь тут, а уже рвешься кататься!");
                 return;
             }
+            if (police->IsCop(packet->UCID))
+			{
+				SendMTC( packet->UCID ,msg->_(packet->UCID, "1303" ));
+				return;
+			}
             if (players[ packet->UCID ].WorkNow ==1)
             {
                 SendMTC( packet->UCID ,"^6| ^C^7Голову мне не морочь, ты и так уже на вахте.");
@@ -722,16 +761,18 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
                 SendMTC( packet->UCID ,"^6| ^C^7Я тебя уже отпустил домой.");
                 return;
             }
-            players[ packet->UCID ].WorkNow = 0;
+
             SendMTC( packet->UCID ,"^6| ^C^7Сделал дело, вымой тело.");
+
+            //удаляю маршалов
+            delete_marshal( packet->UCID );
+
+            players[ packet->UCID ].WorkNow = 0;
             players[ packet->UCID ].WorkAccept = 0;
             players[ packet->UCID ].WorkPointDestinaion = 0;
             players[ packet->UCID ].WorkStreetDestinaion = 0;
             players[ packet->UCID ].StressOverCount = 0;
             players[ packet->UCID ].PassStress = 0;
-
-            //удаляю маршалов
-            delete_marshal( packet->UCID );
         }
     }
 
@@ -804,15 +845,16 @@ void RCTaxi::InsimNPL( struct IS_NPL* packet )
 	if (players[ packet->UCID ].WorkNow != 0 and !players[ packet->UCID ].CanWork)
 	{
 		SendMTC( packet->UCID ,"^6| ^C^7Ты не можешь работать на этой машине.");
-		//players[ packet->UCID ].WorkNow = 0;
+		delete_marshal(packet->UCID);
 		players[ packet->UCID ].WorkAccept = 0;
 		players[ packet->UCID ].WorkPointDestinaion = 0;
 		players[ packet->UCID ].WorkStreetDestinaion = 0;
 		players[ packet->UCID ].StressOverCount = 0;
 		players[ packet->UCID ].PassStress = 0;
-		delete_marshal(packet->UCID);
 	}
 }
+
+
 
 void RCTaxi::InsimPLP( struct IS_PLP* packet)
 {

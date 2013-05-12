@@ -29,7 +29,7 @@ PitSaveNotGood "^1PITSAFE"
 1006 "^4RIDE FOR YOU"
 1007 "^7Being the pursuit of "
 1008 "^7Cancel the pursuit of "
-1009 "^1| ^7You can not sell the car when you're sitting in it."
+1009 "^1| ^7You can not sell the car when you're sitting in it"
 
 1100 "^7 Sent you ^7"
 1101 "^1| ^7you entered an amount greater than what you have in your account."
@@ -46,6 +46,7 @@ PitSaveNotGood "^1PITSAFE"
 1300 "^2| ^C^7You are not a Policeman"
 1301 "^2| ^C^7You  Policeman"
 1302 "^2| ^C^7You are not a Policeman"
+1303 "^2| ^C^7Policeman can not work in a taxi"
 
 
 
@@ -152,7 +153,7 @@ PitSaveNotGood "^1PITSAFE"
 4101 "^3|^7 You lost the order - YOU FIRE^1!!!"
 
 4200 "^3|^7 Deliver order!"
-4201 "^3|^7 Deliver custom player"
+4201 "^3|^7 Deliver custom player "
 4202 "^3|^7 Took first this order"
 4203 "^3|^7 Wait until I call you"
 

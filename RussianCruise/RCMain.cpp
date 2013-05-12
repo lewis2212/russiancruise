@@ -121,20 +121,22 @@ void init_classes()
     lgh->init(RootDir,insim, msg,dl);
 #endif
 
+#ifdef _RC_POLICE_H
+    police->init(RootDir, insim, msg, bank, dl, street, nrg, lgh);
+#endif // _RC_POLICE_H
+
 #ifdef _RC_PIZZA_H
     pizza->init(RootDir, insim, msg, bank, nrg, dl);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi->init(RootDir, insim, msg, bank, dl, street);
+    taxi->init(RootDir, insim, msg, bank, dl, street, police, lgh);
 #endif
 
 #ifdef _RC_BANLIST_H
     banlist.init(RootDir, insim);
 #endif
-#ifdef _RC_POLICE_H
-    police->init(RootDir, insim, msg, bank, dl, street, nrg, lgh);
-#endif // _RC_POLICE_H
+
 }
 
 void readconfigs()

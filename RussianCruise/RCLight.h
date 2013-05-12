@@ -16,6 +16,10 @@ struct LghPlayer
     bool    Light3;
     /** misc **/
     byte	WrongWay;
+    bool	RedLight;
+    byte 	LightNum;
+    byte 	DiffDir;
+    bool 	OnRed; //проехал ли на красный
 };
 
 struct Lights
@@ -66,6 +70,9 @@ public:
 
     bool SetLight3(byte UCID,bool Key);
     void Event();
+
+    void OnRedFalse(byte UCID);
+    bool CheckOnRed(byte UCID);
 
     int init(const char *dir,void *CInSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"

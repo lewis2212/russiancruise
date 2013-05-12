@@ -243,7 +243,7 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         if (razn<=4 and razn>0)
         {
 
-            sprintf(Text,"^1| ^1^CÎÑÒÀËÎÑÜ^7%3.0f ^1ÄÍß ÄÎ ÑÍßÒÈß ÊÐÅÄÈÒÀ!",razn);
+            sprintf(Text,"^1| ^1^CÎñòàëîñü ^7%0.0f ^1äíÿ äî ñíÿòèÿ êðåäèòà!",razn);
             SendMTC( packet->UCID , Text);
         }
         if (razn==0)
