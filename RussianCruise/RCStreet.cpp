@@ -163,7 +163,7 @@ void RCStreet::InsimNCN( struct IS_NCN* packet )
 void RCStreet::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
-	players[ packet->UCID ].StreetNum = 250;
+	players[ packet->UCID ].StreetNum = DEFAULT_STREET_NUM;
 }
 
 void RCStreet::InsimPLP( struct IS_PLP* packet)
@@ -203,6 +203,9 @@ int RCStreet::CurentStreetNum(byte UCID)
 
 int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 {
+	if ( players[ UCID ].StreetNum == DEFAULT_STREET_NUM )
+		return -1;
+
 	if (memcpy(StreetInfo,&Street[ players[ UCID ].StreetNum ],sizeof(streets)))
 		return 1;
 }
