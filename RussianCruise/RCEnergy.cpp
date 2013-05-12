@@ -397,27 +397,21 @@ void RCEnergy::btn_energy ( byte UCID )
 
     float nrg = players[ UCID ].Energy/100 ;
 
-    if (nrg <= 20){
-
-		 if( players[ UCID ].EnergyAlarm ){
+    if (nrg <= 10)
+	{
+		if( players[ UCID ].EnergyAlarm ){
 			players[ UCID ].EnergyAlarm = false;
-			strcpy(pack.Text,"^0");
-		}
-		else{
-			players[ UCID ].EnergyAlarm = true;
-			strcpy(pack.Text,"^1");
-		}
+			strcpy(pack.Text,"^0");}
+		else{players[ UCID ].EnergyAlarm = true;
+			strcpy(pack.Text,"^1");}
     }
-    else if (nrg <= 70 and nrg > 20)
+    else if (nrg <= 50 and nrg > 10)
         strcpy(pack.Text,"^3");
     else
         strcpy(pack.Text,"^2");
 
-	if (players[ UCID ].Zone == 3)
-		sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
-	else
-		sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
-
+	if (players[ UCID ].Zone == 3) sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
+	else sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
     insim->send_packet(&pack);
 }
 
@@ -426,10 +420,7 @@ int RCEnergy::check_pos( byte UCID )
     int PLX = players[ UCID ].Info.X/65536;
     int PLY = players[ UCID ].Info.Y/65536;
     if (Check_Pos(4,zone.dealX,zone.dealY,PLX,PLY))
-    {
         return 1;
-    }
-
     return 0;
 }
 
