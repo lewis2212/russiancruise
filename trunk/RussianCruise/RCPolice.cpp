@@ -515,19 +515,14 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                     {
                         if( fines[j].id == atoi(packet->Text) )
                         {
-                            char Msg[64];
-                            strcpy(Msg,msg->_( play.first , "1104" ));
-                            SendMTC( play.first ,Msg);
+                            char Msg[128];
+                            sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].name);
+                            SendMTC( play.first, Msg);
                             strcpy(Msg,"^2| ^7");
                             strcat(Msg,fines[atoi(packet->Text)].name);
                             SendMTC( play.first ,Msg);
 
-                            strcpy(Msg,msg->_(  packet->UCID , "1105" ));
-                            SendMTC( packet->UCID ,Msg);
-                            SendMTC( packet->UCID ,fines[atoi(packet->Text)].name);
-
-                            strcpy(Msg,msg->_(  packet->UCID , "1106" ));
-                            strcat(Msg,players[ play.first ].PName);
+                            sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,fines[atoi(packet->Text)].name);
                             SendMTC( packet->UCID ,Msg);
 
                             for (int j=0; j<MAX_FINES; j++)
