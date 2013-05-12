@@ -409,15 +409,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     players[ play.first ].WorkTime = worktime+60*6;
                     strcpy(players[ play.first ].PogonyaReason,msg->_(  play.first , "1006" ));
                     char Text[96];
-                    sprintf(Text,"/msg ^2| %s %s", msg->_(  play.first , "1007" ) , players[ play.first ].PName );
-                    SendMST(Text);
+                    sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ play.first ].PName );
+                    SendMTC(255, Text);
                     nrg->Lock( play.first );
-
-                    /*char fine_c[255];
-                    sprintf(fine_c,"%slogs\\cop\\pursuit(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-                    ofstream readf (fine_c,ios::app);
-                    readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " begin pursuit to "  << players[g].UName << endl;
-                    readf.close();*/
                 }
 
             }
@@ -445,8 +439,8 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     players[ play.first ].Pogonya = 0;
                     SendBFN( play.first ,210);
                     char Text[96];
-                    sprintf(Text,"/msg ^2| %s %s", msg->_(  play.first , "1008" ) , players[ play.first ].PName );
-                    SendMST(Text);
+                    sprintf(Text,msg->_(play.first , "PogonyaOff" ), players[ play.first ].PName );
+                    SendMTC(255, Text);
                     nrg->Unlock( play.first );
                 }
 
@@ -518,9 +512,6 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             char Msg[128];
                             sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].name);
                             SendMTC( play.first, Msg);
-                            strcpy(Msg,"^2| ^7");
-                            strcat(Msg,fines[atoi(packet->Text)].name);
-                            SendMTC( play.first ,Msg);
 
                             sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,fines[atoi(packet->Text)].name);
                             SendMTC( packet->UCID ,Msg);
@@ -535,16 +526,15 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                                     break;
                                 }
                             }
-
                             ofstream readf (fine_c,ios::app);
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
                             readf.close();
                         }
                     }
-                } // if atoi(pack_btt->Text) > 0
+                }
                 break;
             }
-        }//for
+        }
     }
 
     /**
@@ -562,42 +552,32 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                     {
                         if ( players[ play.first ].fines[j].fine_id == atoi( packet->Text ) )
                         {
-                            char Msg[64];
-                            strcpy(Msg,msg->_(  play.first , "1107" ));
-                            SendMTC( play.first ,Msg);
-                            strcpy(Msg,"^2| ");
-                            strcat(Msg,fines[atoi(packet->Text)].name);
+                            char Msg[128];
+                            sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].name);
                             SendMTC( play.first ,Msg);
 
-                            strcpy(Msg,msg->_(  packet->UCID , "1108" ));
-                            SendMTC( packet->UCID ,Msg);
-                            SendMTC( packet->UCID ,fines[atoi(packet->Text)].name);
-
-                            strcpy(Msg,msg->_(  play.first , "1106" ));
-                            strcat(Msg,players[ play.first ].PName);
+                            sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[atoi(packet->Text)].name);
                             SendMTC( packet->UCID ,Msg);
 
                             players[ play.first ].fines[j].fine_id = 0;
                             players[ play.first ].fines[j].fine_date = 0;
-
                             ofstream readf (fine_c,ios::app);
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " cancle fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
                             readf.close();
-
                             break;
                         }
                     }
-                } // if atoi(pack_btt->Text) > 0
+                }
                 break;
             }
-        }//for
+        }
     }
 }
 
 void RCPolice::InsimPEN( struct IS_PEN* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
-cout << (int)packet->Reason << endl;
+	cout << (int)packet->Reason << endl;
     if (packet->Reason == PENR_WRONG_WAY )
     {
     	cout << "PENR_WRONG_WAY" << endl;
@@ -709,7 +689,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
                 if (players[ UCID2 ].Pogonya == 1)
                 {
-                    cout << players[ UCID2 ].UName << endl;
+                    //cout << players[ UCID2 ].UName << endl;
                     if ( (Rast < 10) and (!players[ UCID2 ].cop))
                     {
                         int S2 = players[ UCID2 ].Info.Speed*360/32768;
@@ -738,13 +718,13 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                     {
                         int Speed = players[ UCID2 ].Info.Speed*360/32768;
                         struct streets StreetInfo;
-                        street->CurentStreetInfo(&StreetInfo, UCID2 );
+                        street->CurentStreetInfo(&StreetInfo, UCID );
 
                         if ((Speed > StreetInfo.SpeedLimit+10) )
                         {
-                            char text[64];
+                            char text[96];
                             int Speed2 = Speed - StreetInfo.SpeedLimit;
-                            sprintf(text,"^2| %s%s%d%s",players[ UCID2 ].PName,msg->_(   UCID2 , "1704" ),Speed2,msg->_( UCID , "1705" ));
+                            sprintf(text,msg->_(UCID2, "Speeding"),players[ UCID2 ].PName,Speed2);
                             SendMTC( UCID ,text);
 
                             if (players[ UCID2 ].Pogonya == 0)
@@ -754,8 +734,8 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                                 players[ UCID2 ].WorkTime = worktime+60*6;
                                 strcpy(players[ UCID2 ].PogonyaReason,msg->_(  UCID2 , "1006" ));
                                 char Text[96];
-                                sprintf(Text,"/msg ^2| %s%s", msg->_(  UCID2 , "1007" ) , players[ UCID2 ].PName );
-                                SendMST(Text);
+                                sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ UCID2 ].PName );
+								SendMTC(255, Text);
                                 nrg->Lock( UCID2 );
                             }
                         }
