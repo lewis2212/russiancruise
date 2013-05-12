@@ -10,36 +10,6 @@ Russian Cruise by TurboSnail
 
 /**
 
-tunbyte
-ecu     1
-trb     2
-wht     4
-abs     8
-skin    16
-
-1;XFG;80000
-2;XRG;120000
-3;LX4;300000
-4;LX6;350000
-5;RB4;150000
-6;FXO;180000
-7;XRT;220000
-8;MRT;55000
-9;VWS;9999999
-11;UF1;30000
-12;RAC;350000
-13;FZ5;300000
-14;UFR;380000
-15;XFR;420000
-16;FXR;450000
-17;XRR;480000
-18;FZR;500000
-
-Zones:
-0- no works
-1- time to change streetname
-2- shop
-
 buttons ClickId's:
 
 1-49  - users
@@ -63,11 +33,6 @@ buttons ClickId's:
 
 212,213 - drive lic
 
-workplace
-L = 38;
-T = 55;
-W = 124;
-H = 118;
 
 */
 using namespace std;

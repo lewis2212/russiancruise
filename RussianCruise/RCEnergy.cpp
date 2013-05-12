@@ -193,11 +193,13 @@ void RCEnergy::InsimNPL( struct IS_NPL* packet )
 
 void RCEnergy::InsimPLP( struct IS_PLP* packet)
 {
+	players[ PLIDtoUCID[ packet->PLID ] ].Zone = 1;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCEnergy::InsimPLL( struct IS_PLL* packet )
 {
+	players[ PLIDtoUCID[ packet->PLID ] ].Zone = 1;
 	PLIDtoUCID.erase( packet->PLID );
 }
 
@@ -328,45 +330,47 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!coffee", 7) == 0)
     {
-        if (((players[ packet->UCID ].Zone == 1) and (players[ packet->UCID ].Energy < 500)) or (players[ packet->UCID ].Zone == 3))
+    	if ( players[ packet->UCID ].Energy > 9500 )
+			return;
+
+		if (bank->GetCash( packet->UCID ) < 50)
+		{
+			 SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
+			 return;
+		}
+
+        if ( !( players[ packet->UCID ].Zone == 1 and players[ packet->UCID ].Energy < 500 ) and ( players[ packet->UCID ].Zone != 3 ) )
         {
-            if (bank->GetCash(packet->UCID) > 50)
-            {
-                players[ packet->UCID ].Energy += 500;
-                bank->RemCash(packet->UCID,50);
-                bank->AddToBank(50);
-            }
-            else
-            {
-                SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
-            }
+        	 SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
+        	 return;
         }
-        else
-        {
-            SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
-        }
-    }
+
+		players[ packet->UCID ].Energy += 500;
+		bank->RemCash(packet->UCID,50);
+		bank->AddToBank(50);
+	}
 
     //!redbule
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!redbull", 8) == 0)
     {
-        if (((players[ packet->UCID ].Zone == 1) and (players[ packet->UCID ].Energy < 500)) or (players[ packet->UCID ].Zone == 3))
+		if ( players[ packet->UCID ].Energy > 9000 )
+			return;
+
+		if (bank->GetCash( packet->UCID ) < 100)
+		{
+			 SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
+			 return;
+		}
+
+        if ( !( players[ packet->UCID ].Zone == 1 and players[ packet->UCID ].Energy < 500 ) and ( players[ packet->UCID ].Zone != 3 ) )
         {
-            if (bank->GetCash(packet->UCID) > 100)
-            {
-                players[ packet->UCID ].Energy += 1000;
-                bank->RemCash(packet->UCID,100);
-                bank->AddToBank(100);
-            }
-            else
-            {
-                SendMTC(packet->UCID,msg->_( packet->UCID, "2001" ));
-            }
+        	 SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
+        	 return;
         }
-        else
-        {
-            SendMTC(packet->UCID,msg->_( packet->UCID, "2002" ));
-        }
+		players[ packet->UCID ].Energy += 1000;
+		bank->RemCash(packet->UCID,100);
+		bank->AddToBank(100);
+
     }
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
@@ -385,31 +389,35 @@ void RCEnergy::btn_energy ( byte UCID )
     pack.Inst = 0;
     pack.TypeIn = 0;
     pack.ClickID = 207;
-    pack.BStyle = 32+64;
+    pack.BStyle = ISB_DARK + ISB_LEFT;
     pack.L = 100;
     pack.T = 1;
     pack.W = 30;
     pack.H = 4;
 
-    if (players[ UCID ].Zone == 3)
-		strcpy(pack.Text,"^2");
-	else
-		strcpy(pack.Text,"^1");
+    float nrg = players[ UCID ].Energy/100 ;
 
-    strcat(pack.Text,msg->_(UCID , "Energy"));
+    if (nrg <= 20){
 
-    int nrg = players[ UCID ].Energy/50 ;
-
-    if (nrg <= 40)
-        strcat(pack.Text,"^1");
-    else if (nrg <= 140 and nrg > 40)
-        strcat(pack.Text,"^3");
+		 if( players[ UCID ].EnergyAlarm ){
+			players[ UCID ].EnergyAlarm = false;
+			strcpy(pack.Text,"^0");
+		}
+		else{
+			players[ UCID ].EnergyAlarm = true;
+			strcpy(pack.Text,"^1");
+		}
+    }
+    else if (nrg <= 70 and nrg > 20)
+        strcpy(pack.Text,"^3");
     else
-        strcat(pack.Text,"^2");
+        strcpy(pack.Text,"^2");
 
-    float nrg2 = (players[ UCID ].Energy)*100/10000;
+	if (players[ UCID ].Zone == 3)
+		sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
+	else
+		sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
 
-    sprintf(pack.Text,"%s %0.0f^K£¥",pack.Text,nrg2);
     insim->send_packet(&pack);
 }
 

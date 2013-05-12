@@ -45,38 +45,39 @@ protected:
     char        RootDir[MAX_PATH]; // Полный путь до папки с программой
     std::map< byte, byte >PLIDtoUCID;
 
-    virtual void    InsimVER( struct IS_VER* packet );
-    virtual void    InsimTINY( struct IS_TINY* packet );
-    virtual void    InsimSMALL( struct IS_SMALL* packet );
-    virtual void    InsimSTA( struct IS_STA* packet );
-    virtual void    InsimISM( struct IS_ISM* packet );
-    virtual void    InsimIII( struct IS_III* packet );		// скрытое сообщение /i
-    virtual void    InsimVTN( struct IS_VTN* packet );		// Голосование
-    virtual void    InsimRST( struct IS_RST* packet );		// Начало гонки
-    virtual void    InsimLAP( struct IS_LAP* packet );		// Игрок сделал круг (гонка)
-    virtual void    InsimSPX( struct IS_SPX* packet );		// Игрок пересек сектор (гонка)
-    virtual void    InsimPIT( struct IS_PIT* packet );		// Игрок совершает питстоп
-    virtual void    InsimPSF( struct IS_PSF* packet );		// Игрок завершил питстоп
-    virtual void    InsimPLA( struct IS_PLA* packet );		// Игрок въехал или выехал с питлейна
-    virtual void    InsimPEN( struct IS_PEN* packet );		// Игрок получил пенальти (штраф проезд через боксы)
-    virtual void    InsimTOC( struct IS_TOC* packet );		// Игрок сел в машину другого игрока
-    virtual void    InsimFLG( struct IS_FLG* packet );
-    virtual void    InsimREO( struct IS_REO* packet );
-    virtual void    InsimCRS( struct IS_CRS* packet );		// Игрок восстановил машину
-    virtual void    InsimBFN( struct IS_BFN* packet );		// Игрок нажал shift + i
-    virtual void    InsimBTC( struct IS_BTC* packet );		// Игрок нажал на кнопку
-    virtual void    InsimBTT( struct IS_BTT* packet );		// Игрок отправил текст в кнопке
-    virtual void    InsimAXM( struct IS_AXM* packet );
-    virtual void    InsimACR( struct IS_ACR* packet );
-    virtual void    InsimNCN( struct IS_NCN* packet );		// Новый игрок зашел на сервер
-    virtual void    InsimNPL( struct IS_NPL* packet );		// Игрок вышел из боксов
-    virtual void    InsimPLP( struct IS_PLP* packet );		// Игрок ушел в боксы
-    virtual void    InsimPLL( struct IS_PLL* packet );		// Игрок ушел в зрители
-    virtual void    InsimCNL( struct IS_CNL* packet );		// Игрок ушел с сервера
-    virtual void    InsimCPR( struct IS_CPR* packet );		// Игрок переименовался
-    virtual void    InsimMSO( struct IS_MSO* packet );		// Игрок отправил сообщение
-    virtual void    InsimCON( struct IS_CON* packet );		// Игрок столкнулсяс машиной
-    virtual void    InsimOBH( struct IS_OBH* packet );		// Игрок столкнулсяс объектом
+	virtual void InsimACR( struct IS_ACR* packet );
+	virtual void InsimAXM( struct IS_AXM* packet );
+	virtual void InsimBFN( struct IS_BFN* packet );
+	virtual void InsimBTC( struct IS_BTC* packet );
+	virtual void InsimBTT( struct IS_BTT* packet );
+	virtual void InsimCNL( struct IS_CNL* packet );
+	virtual void InsimCON( struct IS_CON* packet );
+	virtual void InsimCPR( struct IS_CPR* packet );
+	virtual void InsimCRS( struct IS_CRS* packet );
+	virtual void InsimFLG( struct IS_FLG* packet );
+	virtual void InsimHLV( struct IS_HLV* packet );
+	virtual void InsimIII( struct IS_III* packet );
+	virtual void InsimISM( struct IS_ISM* packet );
+	virtual void InsimLAP( struct IS_LAP* packet );
+	virtual void InsimMSO( struct IS_MSO* packet );
+	virtual void InsimNCN( struct IS_NCN* packet );
+	virtual void InsimNPL( struct IS_NPL* packet );
+	virtual void InsimOBH( struct IS_OBH* packet );
+	virtual void InsimPEN( struct IS_PEN* packet );
+	virtual void InsimPIT( struct IS_PIT* packet );
+	virtual void InsimPLA( struct IS_PLA* packet );
+	virtual void InsimPLL( struct IS_PLL* packet );
+	virtual void InsimPLP( struct IS_PLP* packet );
+	virtual void InsimPSF( struct IS_PSF* packet );
+	virtual void InsimREO( struct IS_REO* packet );
+	virtual void InsimRST( struct IS_RST* packet );
+	virtual void InsimSMALL( struct IS_SMALL* packet );
+	virtual void InsimSPX( struct IS_SPX* packet );
+	virtual void InsimSTA( struct IS_STA* packet );
+	virtual void InsimTINY( struct IS_TINY* packet );
+	virtual void InsimTOC( struct IS_TOC* packet );
+	virtual void InsimVER( struct IS_VER* packet );
+	virtual void InsimVTN( struct IS_VTN* packet );
 
 
 
