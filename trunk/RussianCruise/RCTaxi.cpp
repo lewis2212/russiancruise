@@ -247,7 +247,7 @@ void RCTaxi::accept_user( byte UCID )
 {
 	if (players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].WorkAccept == 0 and players[UCID].CanWork)
 	{
-		//if (players[UCID].AcceptTime >= time(&acctime)) return;
+		if (players[UCID].AcceptTime >= time(&acctime)) return;
 
 		int DestPoint = 0;
 		srand(time(NULL));
