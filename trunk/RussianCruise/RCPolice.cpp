@@ -158,16 +158,10 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             if (players[ packet->UCID ].fines[i].fine_id > 0 and players[ packet->UCID ].fines[i].fine_id < MAX_FINES )
             {
                 char Text[64];
-                // rcMainRow[0] = username
-                // rcMainRow[1] = fine_id
-                // rcMainRow[2] = fine_date
-
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
-                // int fine_date = atoi(rcMainRow[2));
 
-                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName.c_str() );
+                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName );
                 SendMTC( packet->UCID ,Text);
-
                 j++;
             }
         }
