@@ -350,7 +350,8 @@ void help_cmds (struct player *splayer,int h_type)
     if (h_type == 1)
     {
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3201" ) );
-            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3202" ) );
+            SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
+            //SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3202" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3203" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3204" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3205" ) );
@@ -366,7 +367,6 @@ void help_cmds (struct player *splayer,int h_type)
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3215" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3216" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3217" ) );
-            //SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
 
     }
     if (h_type == 2)
@@ -865,12 +865,13 @@ void case_btt ()
                             if (bank->GetCash(ginfo->players[i].UCID) > atoi(pack_btt->Text))
                             {
                                 out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
-                                bank->RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
-                                bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
 
                                 char Msg[120];
                                 sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg->_( ginfo->players[i].UCID, "1100" ),atoi(pack_btt->Text));
                                 SendMTC(ginfo->players[g].UCID,Msg);
+
+                                bank->RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
+                                bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
 
                                 ofstream readf (send_c,ios::app);
                                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo->players[g].UName << endl;
