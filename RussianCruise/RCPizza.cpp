@@ -142,11 +142,8 @@ void RCPizza::Take( byte UCID )
             players[ UCID ].WorkDestinaion = players[ UCID ].WorkPlayerAccept;
             players[ UCID ].WorkAccept = 2;
             char text[128];
-            strcpy(text,msg->_(  UCID , "4201" ));
-            strcat(text,players[ players[ UCID ].WorkPlayerAccept ].PName);
-
-            strcpy( players[ UCID ].WorkDest, players[ players[ UCID ].WorkPlayerAccept ].PName);
-
+            sprintf(text,msg->_(  UCID , "4201" ),players[ players[ UCID ].WorkPlayerAccept ].PName);
+            strcpy( players[UCID].WorkDest, players[ players[ UCID ].WorkPlayerAccept ].PName);
             SendMTC( UCID ,text);
         }
 

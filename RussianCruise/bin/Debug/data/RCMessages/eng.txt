@@ -145,7 +145,7 @@ Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3κμ/χ"
 4101 "^3|^7 You lost the order - YOU FIRE^1!!!"
 
 4200 "^3|^7 Deliver order!"
-4201 "^3|^7 Deliver custom player "
+4201 "^3|^7 Deliver custom player %s"
 4202 "^3|^7 Took first this order"
 4203 "^3|^7 Wait until I call you"
 
