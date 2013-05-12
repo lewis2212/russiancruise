@@ -19,7 +19,7 @@ struct LghPlayer
     bool	RedLight;
     byte 	LightNum;
     byte 	DiffDir;
-    bool 	OnRed; //проехал ли на красный
+    bool 	OnRed = false; //проехал ли на красный
 };
 
 struct Lights
