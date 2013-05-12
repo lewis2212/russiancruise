@@ -300,7 +300,7 @@ void RCTaxi::accept_user( byte UCID )
 void RCTaxi::accept_user2(byte UCID)
 {
 	srand(time(NULL)); //подготовка функции rand() к работе
-
+	lgh->OnRedFalse(UCID);
 	int DestPoint = 0;
 	bool ok = true;
 	while (ok)

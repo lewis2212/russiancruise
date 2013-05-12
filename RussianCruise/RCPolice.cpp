@@ -160,7 +160,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 char Text[64];
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
 
-                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName );
+                sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7) - %s", fine_id , fines[fine_id].name , fines[fine_id].cash, players[ packet->UCID ].fines[i].CopName.c_str() );
                 SendMTC( packet->UCID ,Text);
                 j++;
             }
