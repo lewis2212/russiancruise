@@ -367,7 +367,6 @@ void help_cmds (struct player *splayer,int h_type)
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3215" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3216" ) );
             SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3217" ) );
-
     }
     if (h_type == 2)
     {
@@ -378,7 +377,6 @@ void help_cmds (struct player *splayer,int h_type)
             {
                 int     tune;
                 char    Text[64];
-
                 tune = splayer->cars[i].tuning;
 
                 char Tun[30];
@@ -418,9 +416,7 @@ void help_cmds (struct player *splayer,int h_type)
                 SendMTC(splayer->UCID,Text);
             }
         }
-
     }
-
 }
 
 
@@ -485,7 +481,7 @@ void btn_info (struct player *splayer, int b_type)
 
     char about_text[10][100];
     sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
-    strncpy(about_text[1], "^C^7Developers: Denis Kostin, Alexandr Mochalov",99);
+    strncpy(about_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov",99);
     strncpy(about_text[2], "^C^7Jabber: denis-kostin@jabber.ru",99);
     strncpy(about_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru",99);
     strncpy(about_text[4], "^7",99);
@@ -528,7 +524,6 @@ void btn_info (struct player *splayer, int b_type)
     insim->send_packet(&pack);
 
     /* Tabs */
-
     if (b_type == 1)
     {
         for (int i=2; i<MAX_CARS/2; i++)
@@ -560,8 +555,7 @@ void btn_info (struct player *splayer, int b_type)
             sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
             insim->send_packet(&pack);
         }
-
-    } // if (type == 1)
+    }
 
     if (b_type == 2)
     {
@@ -629,25 +623,19 @@ void btn_panel (struct player *splayer)
         strcpy(pack.Text,msg->_(splayer->UCID,"PitSaveNotGood"));
     insim->send_packet(&pack);
 
-    //
     pack.ClickID = 55;
     pack.L = 70;
     pack.T = 5;
     pack.W = 15;
     pack.H = 4;
-
-    sprintf(pack.Text,"^2%4.3f Km.",splayer->Distance/1000);
-
-
+    sprintf(pack.Text,msg->_(splayer->UCID, "Dist" ),splayer->Distance/1000);
     insim->send_packet(&pack);
-
 }
 
 /****************************************/
 void case_bfn ()
 {
     struct IS_BFN *pack_bfn = (struct IS_BFN*)insim->get_packet();
-
     int i;
     for (i=0; i < MAX_PLAYERS; i++)
     {
@@ -704,24 +692,35 @@ void case_btc ()
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
                     pack_btn.Size = sizeof(struct IS_BTN);
                     pack_btn.Type = ISP_BTN;
-                    pack_btn.ReqI = ginfo->players[i].UCID;              // Must be non-zero, I'll just use UCID
-                    pack_btn.UCID = ginfo->players[i].UCID;              // UCID of the player that will receive the button
-                    pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
+                    pack_btn.ReqI = ginfo->players[i].UCID;             // Must be non-zero, I'll just use UCID
+                    pack_btn.UCID = ginfo->players[i].UCID;             // UCID of the player that will receive the button
                     pack_btn.TypeIn = 16;
                     pack_btn.L = 25;
-
                     int count;
 					for (int j=0; j<MAX_PLAYERS; j++)
 						if (ginfo->players[j].UCID != 0) count++;
 					if (count>16) pack_btn.L += 24;
-
-                    pack_btn.T = 191;
-                    if (police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI)) pack_btn.T = 175;
-
+                    pack_btn.T = 187;
+                    if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI)) pack_btn.T = 171;
                     pack_btn.W = 24;
                     pack_btn.H = 4;
+                    pack_btn.ClickID = 35;
+
+                    for (int i=0; i < MAX_PLAYERS; i++)
+					{
+						if(ginfo->players[i].UCID == pack_btc->ReqI)
+						{
+							pack_btn.BStyle = 32 + 64;
+							sprintf(pack_btn.Text,msg->_( ginfo->players[i].UCID, "MsgPlFor" ),ginfo->players[i].PName);
+							insim->send_packet(&pack_btn);
+						}
+					}
+
+					pack_btn.BStyle = 16 + ISB_CLICK;
+                    pack_btn.TypeIn = 63;
+                    pack_btn.T += 4;
                     pack_btn.ClickID = 36;
-                    strcpy(pack_btn.Text,msg->_( ginfo->players[i].UCID, "1000" ));
+                    strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1000" ));
                     insim->send_packet(&pack_btn);
 
                     pack_btn.TypeIn = 63;
@@ -1788,7 +1787,6 @@ void case_mso ()
         pack_btn.Size = sizeof(struct IS_BTN);
         pack_btn.Type = ISP_BTN;
         pack_btn.UCID = ginfo->players[i].UCID;              // UCID of the player that will receive the button
-        pack_btn.BStyle = 16 + ISB_CLICK;                 // Dark frame for window title
         pack_btn.L = 1;
         pack_btn.T = 191;
         pack_btn.W = 24;
@@ -1797,13 +1795,16 @@ void case_mso ()
         int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
         {
-            if (ginfo->players[j].UCID != 0 /*and !police->IsCop( ginfo->players[j].UCID )*/ )
+            if (ginfo->players[j].UCID != 0)
             {
                 if (col == 16)
                 {
                     pack_btn.L += 24;
                     pack_btn.T = 191;
                 }
+                if (ginfo->players[j].UCID == ginfo->players[i].UCID) pack_btn.BStyle = 32;
+                else pack_btn.BStyle = 16 + ISB_CLICK;
+
 				pack_btn.ReqI = ginfo->players[j].UCID;
                 pack_btn.ClickID = ginfo->players[j].BID;
                 strcpy(pack_btn.Text, ginfo->players[j].PName);
@@ -1813,6 +1814,7 @@ void case_mso ()
             }
         }
         pack_btn.ClickID = 34;
+        pack_btn.BStyle = 16 + ISB_CLICK;
         pack_btn.T = 195;
         pack_btn.L = 1;
         pack_btn.W = 24;

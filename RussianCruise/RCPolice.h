@@ -29,7 +29,8 @@ struct user_fine
 struct PolicePlayer
 {
     struct  CompCar Info;
-    struct user_fine fines[MAX_FINES];
+    struct 	user_fine fines[MAX_FINES];
+
     /** GENERAL **/
     char    UName[24];             // Username
     char    PName[24];             // Player name
@@ -48,6 +49,9 @@ struct PolicePlayer
     byte    Pogonya;
     char    PogonyaReason[64];
     int     StopTime;
+
+    int 	ThisFineCount;
+    char 	ThisFine[20][200];
 
     int     WorkTime;			// время за которое он должен доставить товар
 };

@@ -101,7 +101,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 		||  (strncmp("dps",packet->SName,3)==0)
         ||  (strncmp("POLICE",packet->SName,6)==0)
         ||  (strncmp("police",packet->SName,6)==0)))
-        SendMTC( packet->UCID, msg->_(  packet->UCID , "^6| ^C^7В названии скина не найдено указателей на принадлежность к ДПС" ));
+        SendMTC( packet->UCID, msg->_(  packet->UCID , "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС" ));
 
         dl->Lock( packet->UCID );
         nrg->Lock( packet->UCID );
@@ -385,6 +385,13 @@ void RCPolice::InsimOBH( struct IS_OBH* packet )
 
 void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
+	if ( packet->ClickID == 130 and packet->ReqI == 254 )
+	{
+		players[packet->UCID].ThisFineCount=0;
+		for(int i=130;i<160;i++) SendBFN(packet->UCID,i);
+		for(int j=0;j<20;j++) strcpy(players[packet->UCID].ThisFine[j],"");
+	}
+
     if ( packet->ClickID <= 32 )
     {
         players[ packet->UCID ].BID2 =  packet->ClickID;
@@ -526,6 +533,15 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             ofstream readf (fine_c,ios::app);
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
                             readf.close();
+
+
+                            for(int j=0;j<20;j++)
+							if( strlen(players[play.first].ThisFine[j]) == 0 )
+							{
+								sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[atoi(packet->Text)].name,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
+								players[play.first].ThisFineCount++;
+								break;
+							}
                         }
                     }
                 }
@@ -561,6 +577,15 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             ofstream readf (fine_c,ios::app);
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " cancle fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
                             readf.close();
+
+							if (players[play.first].ThisFineCount>0)
+                            for(int j=0;j<20;j++)
+							if( strlen(players[play.first].ThisFine[j]) == 0 )
+							{
+								sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[atoi(packet->Text)].name,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
+								players[play.first].ThisFineCount++;
+								break;
+							}
                             break;
                         }
                     }
@@ -652,6 +677,23 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
         if( UCID == 0 )
             return;
+
+            /** окошко со штрафами **/
+            if (players[UCID].ThisFineCount!=0)
+			{
+				byte id=131, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
+				SendButton(255,UCID,id,l-w/2,t-h/2,w,h+10,32,"");id++; 							//фон
+				SendButton(255,UCID,id,l-w/2,t-h/2,w,h+10,32,"");id++;
+				SendButton(255,UCID,id,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3"));id++; 	//заголовок
+				SendButton(254,UCID,130,l-7,t-h/2+h+1,14,8,32+ISB_CLICK,"^2OK");id++; 			//закрывашка
+
+				for(int j=0;j<players[UCID].ThisFineCount;j++)
+				{
+					SendButton(255,UCID,id,l-w/2+1,t-h/2+10+5*j,w-2,5,16+64,players[UCID].ThisFine[j]);
+					id++;
+				}
+			}
+			/** ##штрафы **/
 
         int S = players[ UCID ].Info.Speed*360/32768;
         /** автоотключение радара **/
