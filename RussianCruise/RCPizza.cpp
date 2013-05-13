@@ -178,7 +178,7 @@ void RCPizza::Done( byte UCID )
         players[ UCID ].WorkCountDone ++;
         SendMTC( UCID ,msg->_(  UCID , "4300" ));
         SendBFN( UCID ,210);
-        btn_information_clear( UCID );
+        ClearButtonInfo( UCID );
         players[ UCID ].WorkZone =0;
     }
 
@@ -716,7 +716,7 @@ void RCPizza::Event()
 		if (players[ plit.first ].WorkAccept != 0)
 		{
 			btn_work( plit.first );
-			btn_information( plit.first ,players[ plit.first ].WorkDest);
+			ButtonInfo( plit.first ,players[ plit.first ].WorkDest);
 		}
 	}
 	/** конец цикла вывода кнопки с часиками и скрытие ее если таймер пришел в ноль **/

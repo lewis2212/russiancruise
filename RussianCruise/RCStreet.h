@@ -23,8 +23,8 @@ struct streets
 {
     char    Street[50];
     word    PointCount;
-    int     *StreetX;
-    int     *StreetY;
+    int     *StreetX = NULL;
+    int     *StreetY = NULL;
     int     SpeedLimit;
 };
 

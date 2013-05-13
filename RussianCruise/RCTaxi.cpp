@@ -290,7 +290,7 @@ void RCTaxi::accept_user( byte UCID )
 			sprintf(Msg,"^6|^C^7 Заберите клиента на %s ",StreetInfo.Street);
 			SendMTC( UCID ,Msg);
 			sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
-			btn_information( UCID ,Msg);
+			ButtonInfo( UCID ,Msg);
 			players[ UCID ].WorkAccept = 1;
 		}
 	}
@@ -330,7 +330,7 @@ void RCTaxi::accept_user2(byte UCID)
 		sprintf(Msg,"^6|^C^7 Отвези меня на %s ",StreetInfo.Street);
 		SendMTC( UCID ,Msg);
 		sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
-		btn_information( UCID ,Msg);
+		ButtonInfo( UCID ,Msg);
 		players[ UCID ].WorkAccept = 2;
 		players[ UCID ].PassStress = rand()%500;
 	}
@@ -534,7 +534,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
 				char Msg[128];
 				sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
-				btn_information( UCID ,Msg);
+				ButtonInfo( UCID ,Msg);
 			}
 
 			if (players[ UCID ].WorkAccept == 2)
@@ -545,7 +545,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
 				char Msg[128];
 				sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
-				if (players[ UCID ].PassStress <= 800) btn_information( UCID ,Msg);
+				if (players[ UCID ].PassStress <= 800) ButtonInfo( UCID ,Msg);
 
 				int X = pack_mci->Info[i].X/65536;
 				int Y = pack_mci->Info[i].Y/65536;
@@ -597,7 +597,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 					{
 						srand ( time(NULL) );
 						SendMTC( UCID ,  TaxiDialogs["needstop"][ rand()%TaxiDialogs["needstop"].size() ].c_str() ); // пугаецца, требует остановить
-						btn_information_clear( UCID );
+						ClearButtonInfo( UCID );
 					}
 
 					players[ UCID ].StressOverCount ++;
@@ -956,7 +956,7 @@ void RCTaxi::taxi_done( byte UCID )
 
         bank->AddCash( UCID ,(1000 - players[ UCID ].PassStress/2), true);
         dl->AddSkill( UCID );
-        btn_information_clear( UCID );
+        ClearButtonInfo( UCID );
     }
     else
     {
