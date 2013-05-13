@@ -10,6 +10,7 @@ using namespace std;
 #include <fstream>
 #include <ctime>
 #include <time.h>       // для работы с временем и рандомом
+#include <list>
 #include <exception>
 #include <map>
 #include <vector>

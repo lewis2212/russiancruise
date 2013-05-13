@@ -659,7 +659,7 @@ void RCBank::BtnCash ( byte UCID )
     else
         strcpy(pack.Text,"^1");
     strcat(pack.Text,cash);
-    strcat(pack.Text,"^7 RUR.");
+    strcat(pack.Text,"^7 RUR");
     insim->send_packet(&pack);
 
     if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 || strcmp(players[ UCID ].UName,"Lexanom") == 0)
@@ -678,7 +678,7 @@ void RCBank::BtnCash ( byte UCID )
         else
             strcpy(pack.Text,"^1");
         strcat(pack.Text,cash);
-        strcat(pack.Text,"^7 RUR.");
+        strcat(pack.Text,"^7 RUR");
         insim->send_packet(&pack);
     }
 }

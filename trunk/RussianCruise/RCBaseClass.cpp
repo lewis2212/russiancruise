@@ -281,9 +281,7 @@ void RCBaseClass::btn_information(byte UCID, const char* Message)
     pack.H = 4;
 
     strcpy(pack.Text,Message);
-
     insim->send_packet(&pack);
-
 }
 
 void RCBaseClass::btn_information_clear(byte UCID)
@@ -297,7 +295,7 @@ void RCBaseClass::btn_information_clear(byte UCID)
     insim->send_packet(&pack);
 }
 
-void RCBaseClass::SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
+void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
 {
 	struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
