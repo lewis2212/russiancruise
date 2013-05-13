@@ -34,10 +34,10 @@ public:
     virtual void SendMST (const char* Text);
     virtual void SendMTC (byte UCID,const char* Msg);
     virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text );
-    virtual void btn_information(byte UCID, const char* Message);
-    virtual void btn_information_clear(byte UCID);
+    virtual void ButtonInfo(byte UCID, const char* Message);
+    virtual void ClearButtonInfo(byte UCID);
 
-    bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
+    static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     int Distance (int X, int Y, int X1, int Y1);
 
 protected:

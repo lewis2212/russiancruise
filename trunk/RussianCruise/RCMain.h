@@ -118,11 +118,11 @@ struct user_car
 struct track_info
 {
     int     PitCount;
-    int     XPit[10];
-    int     YPit[10];
+    int     *XPit = NULL;
+    int     *YPit = NULL;
     int     ShopCount;
-    int     XShop[10];
-    int     YShop[10];
+    int     *XShop = NULL;
+    int     *YShop = NULL;
 };
 
 struct player
@@ -144,7 +144,7 @@ struct player
     byte    bfn;
     float   Distance;
     byte    Zone;
-    bool    Pitlane;
+    //bool    Pitlane;
     byte    Shop; // NO DELETE!!!!
     int     Action;
     /*** bonus ***/
@@ -195,45 +195,49 @@ void read_car();
 
 void SendMTC (byte UCID,const char* Msg)
 {
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    sprintf( pack_mtc.Text, "%.127s\0", Msg );
-    insim->send_packet(&pack_mtc);
+	IS_MTC *pack = new IS_MTC;
+    memset( pack, 0, sizeof( IS_MTC ) );
+    pack->Size = sizeof( IS_MTC );
+    pack->Type = ISP_MTC;
+    pack->UCID = UCID;
+    sprintf( pack->Text, "%.127s\0", Msg );
+    insim->send_packet( pack );
+    delete pack;
 };
 
 void SendMST (const char* Text)
 {
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    sprintf( pack_mst.Msg, "%.63s\0", Text );
-    insim->send_packet(&pack_mst);
+	IS_MST *pack = new IS_MST;
+	memset( pack, 0, sizeof( IS_MST));
+	pack->Size = sizeof( IS_MST);
+	pack->Type = ISP_MST;
+	sprintf( pack->Msg, "%.63s\0", Text );
+	insim->send_packet( pack );
+	delete pack;
 };
 
 
 void SendBFN (byte UCID, byte ClickID)
 {
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->UCID = UCID;
+    pack->ClickID = ClickID;
+    insim->send_packet( pack );
+    delete pack;
 };
 
-void send_plc (byte UCID, unsigned PLC)
+void SendPLC (byte UCID, unsigned PLC)
 {
-    struct IS_PLC pack;
-    memset(&pack, 0, sizeof(struct IS_PLC));
-    pack.Size = sizeof(struct IS_PLC);
-    pack.Type = ISP_PLC;
-    pack.UCID = UCID;
-    pack.Cars = PLC;
-    insim->send_packet(&pack);
+    IS_PLC *pack = new IS_PLC;
+    memset( pack, 0, sizeof( IS_PLC ) );
+    pack->Size = sizeof( IS_PLC );
+    pack->Type = ISP_PLC;
+    pack->UCID = UCID;
+    pack->Cars = PLC;
+    insim->send_packet( pack );
+    delete pack;
 }
 #endif

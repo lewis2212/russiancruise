@@ -224,95 +224,94 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
 
 void RCBaseClass::SendMTC (byte UCID,const char* Msg)
 {
-    struct IS_MTC pack_mtc;
-    memset(&pack_mtc, 0, sizeof(struct IS_MTC));
-    pack_mtc.Size = sizeof(struct IS_MTC);
-    pack_mtc.Type = ISP_MTC;
-    pack_mtc.UCID = UCID;
-    sprintf( pack_mtc.Text, "%.127s\0", Msg );
-    insim->send_packet(&pack_mtc);
+	IS_MTC *pack = new IS_MTC;
+	memset( pack, 0, sizeof( IS_MTC ) );
+	pack->Size = sizeof( IS_MTC );
+	pack->Type = ISP_MTC;
+	pack->UCID = UCID;
+	sprintf( pack->Text, "%.127s\0", Msg );
+	insim->send_packet( pack );
+	delete pack;
 }
 
 void RCBaseClass::SendMST (const char* Text)
 {
-    struct IS_MST pack_mst;
-    memset(&pack_mst, 0, sizeof(struct IS_MST));
-    pack_mst.Size = sizeof(struct IS_MST);
-    pack_mst.Type = ISP_MST;
-    sprintf( pack_mst.Msg, "%.63s\0", Text );
-    insim->send_packet(&pack_mst);
+	IS_MST *pack = new IS_MST;
+	memset( pack, 0, sizeof( IS_MST));
+	pack->Size = sizeof( IS_MST);
+	pack->Type = ISP_MST;
+	sprintf( pack->Msg, "%.63s\0", Text );
+	insim->send_packet( pack );
+	delete pack;
 }
 
 void RCBaseClass::SendBFN (byte UCID, byte ClickID)
 {
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = ClickID;
-    insim->send_packet(&pack);
+    IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->UCID = UCID;
+    pack->ClickID = ClickID;
+    insim->send_packet( pack );
+    delete pack;
 }
 
 void RCBaseClass::SendBFNAll ( byte UCID )
 {
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.SubT = BFN_CLEAR;
-    insim->send_packet(&pack);
+    IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->UCID = UCID;
+    pack->SubT = BFN_CLEAR;
+    insim->send_packet( pack );
+    delete pack;
 }
 
-void RCBaseClass::btn_information(byte UCID, const char* Message)
+void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.ClickID = 211;
-    pack.BStyle = 16;
-    pack.L = 70;
-    pack.T = 9;
-    pack.W = 60;
-    pack.H = 4;
-
-    strcpy(pack.Text,Message);
-    insim->send_packet(&pack);
+    IS_BTN *pack = new IS_BTN;
+    memset( pack, 0, sizeof( IS_BTN ) );
+    pack->Size = sizeof( IS_BTN );
+    pack->Type = ISP_BTN;
+    pack->ReqI = 1;
+    pack->UCID = UCID;
+    pack->ClickID = 211;
+    pack->BStyle = 16;
+    pack->L = 70;
+    pack->T = 9;
+    pack->W = 60;
+    pack->H = 4;
+    strcpy( pack->Text, Message );
+    insim->send_packet( pack );
+    delete pack;
 }
 
-void RCBaseClass::btn_information_clear(byte UCID)
+void RCBaseClass::ClearButtonInfo(byte UCID)
 {
-    struct IS_BFN pack;
-    memset(&pack, 0, sizeof(struct IS_BFN));
-    pack.Size = sizeof(struct IS_BFN);
-    pack.Type = ISP_BFN;
-    pack.UCID = UCID;
-    pack.ClickID = 211;
-    insim->send_packet(&pack);
+	SendBFN( UCID, 211);
 }
 
 void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
 {
-	struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = ReqI;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.BStyle = BStyle;
-    pack.TypeIn = 0;
-    pack.ClickID = ClickID;
-    pack.L = L;
-    pack.T = T;
-    pack.W = W;
-    pack.H = H;
-    strcpy(pack.Text,Text);
-    insim->send_packet(&pack);
+	IS_BTN *pack = new IS_BTN;
+    memset( pack, 0, sizeof( IS_BTN ) );
+    pack->Size = sizeof( IS_BTN );
+    pack->Type = ISP_BTN;
+    pack->ReqI = ReqI;
+    pack->UCID = UCID;
+    pack->Inst = 0;
+    pack->BStyle = BStyle;
+    pack->TypeIn = 0;
+    pack->ClickID = ClickID;
+    pack->L = L;
+    pack->T = T;
+    pack->W = W;
+    pack->H = H;
+    strcpy( pack->Text ,Text );
+    insim->send_packet( pack );
+    delete pack;
 }
 
 

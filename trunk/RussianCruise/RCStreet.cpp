@@ -71,7 +71,7 @@ void RCStreet::readconfig(const char *Track)
                 ...точки....
                 */
                 //онуляем позицию
-                ZeroMemory(&Street[i],sizeof(streets));
+                memset(&Street[i], 0, sizeof(streets));
                 // читаем название улицы
                 readf.getline(str,128);
                 sprintf(Street[i].Street,"^C^7%s",str);
@@ -83,6 +83,11 @@ void RCStreet::readconfig(const char *Track)
                 readf.getline(str,128);
                 Street[i].PointCount = atoi(str);
 
+                if( Street[i].StreetX != NULL )
+					delete[] Street[i].StreetX;
+
+                if( Street[i].StreetY != NULL )
+					delete[] Street[i].StreetY;
                 // объявляем массих точек Х and Y
                 Street[i].StreetX = new int[Street[i].PointCount];
                 Street[i].StreetY = new int[Street[i].PointCount];

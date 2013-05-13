@@ -323,7 +323,7 @@ void read_user_cars(struct player *splayer)
 
     }
     mysql_free_result( rcMainRes );
-    send_plc(splayer->UCID,splayer->PLC);
+    SendPLC(splayer->UCID,splayer->PLC);
 }
 
 void save_car (struct player *splayer)
@@ -1081,9 +1081,9 @@ void case_mci ()
                 /** Zones (PitSave, shop, etc) **/
                 if(bank->InBank(ginfo->players[j].UCID))
                     ginfo->players[j].Zone = 4;
-                else    if (ginfo->players[j].Pitlane)
+                else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.PitCount,ginfo->TrackInf.XPit,ginfo->TrackInf.YPit,X,Y))
                     ginfo->players[j].Zone = 1;
-                else if (dl->Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y))
+                else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.ShopCount,ginfo->TrackInf.XShop,ginfo->TrackInf.YShop,X,Y) )
                     ginfo->players[j].Zone = 2;
 
                 else
@@ -1093,7 +1093,7 @@ void case_mci ()
                 {
                     char TEST[64];
                     sprintf(TEST,"X=%d Y=%d H=%d",X,Y,pack_mci->Info[i].Heading/182);
-                    pizza->btn_information(ginfo->players[j].UCID,TEST);
+                    pizza->ButtonInfo(ginfo->players[j].UCID,TEST);
                 }
                 memcpy(&ginfo->players[j].Info, &pack_mci->Info[i],sizeof(CompCar));
 
@@ -1601,7 +1601,7 @@ void case_mso ()
                 bank->AddToBank(ginfo->car[CarID].cash);
 
                 ginfo->players[i].PLC += ginfo->car[CarID].PLC;
-                send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
+                SendPLC(ginfo->players[i].UCID, ginfo->players[i].PLC);
 
                 SYSTEMTIME sm;
                 GetLocalTime(&sm);
@@ -1685,7 +1685,7 @@ void case_mso ()
                 bank->RemFrBank(ginfo->car[j].sell);
 
                 ginfo->players[i].PLC -= ginfo->car[j].PLC;
-                send_plc(ginfo->players[i].UCID, ginfo->players[i].PLC);
+                SendPLC(ginfo->players[i].UCID, ginfo->players[i].PLC);
 
                 char sql[128];
                 sprintf(sql,"DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", ginfo->players[i].UName , ginfo->car[j].car );
@@ -1746,7 +1746,7 @@ void case_mso ()
             ginfo->players[i].Svetofor = 1;
         else
         {
-            pizza->btn_information_clear(ginfo->players[i].UCID);
+            pizza->ClearButtonInfo(ginfo->players[i].UCID);
             ginfo->players[i].Svetofor = 0;
         }
 
@@ -2003,7 +2003,7 @@ void case_npl ()
             {
                 msg->SendBFNAll( ginfo->players[i].UCID );
 
-                ginfo->players[i].Pitlane = 1;
+                //ginfo->players[i].Pitlane = 1;
 
                 ginfo->players[i].PLID = pack_npl->PLID;
                 ginfo->players[i].H_TRes =  pack_npl->H_TRes;
@@ -2122,14 +2122,6 @@ void case_pla ()
     {
         if (ginfo->players[i].PLID == pack_pla->PLID)
         {
-            if (pack_pla->Fact == PITLANE_EXIT)
-            {
-                ginfo->players[i].Pitlane = false;
-            }
-            else
-            {
-                ginfo->players[i].Pitlane = true;
-            }
             break;
         }
     }
@@ -2372,6 +2364,15 @@ void read_track()
 
                 ginfo->TrackInf.PitCount = count;
 
+                if( ginfo->TrackInf.XPit != NULL )
+					delete[] ginfo->TrackInf.XPit;
+
+				if( ginfo->TrackInf.YPit != NULL )
+					delete[] ginfo->TrackInf.YPit;
+
+                ginfo->TrackInf.XPit = new int[count];
+                ginfo->TrackInf.YPit = new int[count];
+
                 for (int i=0 ; i<count; i++)
                 {
                     readf.getline(str,128);
@@ -2389,6 +2390,15 @@ void read_track()
                 readf.getline(str,128);
                 int count = atoi(str);
                 ginfo->TrackInf.ShopCount = count;
+
+                if( ginfo->TrackInf.XShop != NULL )
+					delete[] ginfo->TrackInf.XShop;
+
+				if( ginfo->TrackInf.YShop != NULL )
+					delete[] ginfo->TrackInf.YShop;
+
+                ginfo->TrackInf.XShop = new int[count];
+				ginfo->TrackInf.YShop = new int[count];
 
                 for (int i=0 ; i<count; i++)
                 {
