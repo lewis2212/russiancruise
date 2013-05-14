@@ -1813,8 +1813,10 @@ void case_mso_cop ()
 
             if( !com || !user || !timee )
                 return;
-
+#ifdef _RC_BANLIST_H
             banlist.addUser( user, time(NULL) + atoi(timee)*24*3600 );
+#endif // _RC_BANLIST_H
+
 
         }
 
@@ -1828,7 +1830,9 @@ void case_mso_cop ()
 
             if( !com || !user )
                 return;
+#ifdef _RC_BANLIST_H
             banlist.removeUser( user );
+#endif // _RC_BANLIST_H
         }
     }
 }
