@@ -322,16 +322,13 @@ void RCDL::InsimCON( struct IS_CON* packet )
 
 void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 {
-
     for (int i = 0; i < pack_mci->NumC; i++)
     {
     	byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
 
 		int X = pack_mci->Info[i].X/65536;
 		int Y = pack_mci->Info[i].Y/65536;
-
 		int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-
 		int X1 = players[ UCID ].Info.X/65536;
 		int Y1 = players[ UCID ].Info.Y/65536;
 
@@ -341,7 +338,6 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 			Y1=Y;
 			memcpy(&players[ UCID ].Info,&pack_mci->Info[i],sizeof(CompCar));
 		}
-
 
 		float Skill = Distance(X,Y,X1,Y1);
 
@@ -366,15 +362,7 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 		}
 
 		/** buttons **/
-
-		if (players[ UCID ].mcicount > 10)
-		{
-			btn_dl( UCID );
-			players[ UCID ].mcicount = 0;
-		}
-		else
-			players[ UCID ].mcicount += 1;
-
+		btn_dl( UCID );
     }
 }
 

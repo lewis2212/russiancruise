@@ -336,7 +336,6 @@ void RCBank::bank_save (byte UCID)
     if( mysql_query( &rcbankDB , query) != 0 )
         printf("Bank Error: MySQL Query Save\n");
     printf("Capital Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
-
 }
 
 void RCBank::InsimCPR( struct IS_CPR* packet )
@@ -346,16 +345,18 @@ void RCBank::InsimCPR( struct IS_CPR* packet )
 
 void RCBank::InsimMSO( struct IS_MSO* packet )
 {
-
-    char Message[128];
+    char Message[128], Text[128];
     strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
+
+	if (strncmp(Message, "!bnk", strlen("!bnk")) == 0 and (strcmp(players[ packet->UCID ].UName,"denis-takumi") == 0 || strcmp(players[ packet->UCID ].UName,"Lexanom") == 0))
+        {
+        	sprintf(Text,"^5| ^7^CБаланс банка: %0.0f ^3RUR",BankFond);
+        	SendMTC( packet->UCID , Text);
+        }
 
     if (players[ packet->UCID ].InZone)
     {
-        char Text[128];
-
         /** Кредиты **/
-
         //Доступная сумма кредита:
         int cr = dl->GetLVL( packet->UCID ) * 10000;
         if (cr>500000) cr = 500000;
@@ -646,7 +647,7 @@ void RCBank::BtnCash ( byte UCID )
     pack.TypeIn = 0;
     pack.BStyle = 32;
     //
-    pack.ClickID = 162;
+    pack.ClickID = 166;
     pack.L = 70;
     pack.T = 1;
     pack.W = 15;
@@ -662,9 +663,9 @@ void RCBank::BtnCash ( byte UCID )
     strcat(pack.Text,"^7 RUR");
     insim->send_packet(&pack);
 
-    if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 || strcmp(players[ UCID ].UName,"Lexanom") == 0)
+    if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 /*|| strcmp(players[ UCID ].UName,"Lexanom") == 0*/)
     {
-        pack.ClickID = 163;
+        pack.ClickID = 167;
         pack.L = 50;
         pack.T = 1;
         pack.W = 20;

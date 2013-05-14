@@ -21,8 +21,8 @@ PitSaveNotGood "^1PITSAFE"
 
 
 
-1000 "^7Send Money"
-1001 "^7Send a message"
+1000 "Send Money"
+1001 "Send a message"
 1002 "^7Fine"
 1003 "^7Cancel fine"
 1004 "^7Being the pursuit"
@@ -37,6 +37,7 @@ MsgFrom  "^1| ^C^7From %s ^7: ^1%s"
 
 Dist		"^2%4.3f Km"
 MsgPlFor	"^7For %s ^7:"
+ItsYou		"^7It's you"
 
 PogonyaOn 	"^2| ^7Pursuit of %s"
 PogonyaOff 	"^2| ^7Cancel pursuit of %s"

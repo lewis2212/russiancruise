@@ -16,7 +16,6 @@ struct DLPlayer
     char    PName[32];             // Player name
     u_int   LVL;
     u_int   Skill;
-    u_int   mcicount;
     bool 	Lock;
 };
 
@@ -26,19 +25,14 @@ struct DLPlayer
 class RCDL:public RCBaseClass
 {
 private:
-
-		// Дескриптор соединения
     MYSQL	rcDLDB;
-    // Дескриптор результирующей таблицы
     MYSQL_RES *rcDLRes;
-    // Массив полей текущей строки
     MYSQL_ROW rcDLRow;
 
     char RootDir[MAX_PATH];
 
     RCMessage *msg;
 
-    //struct  DLPlayer players[32];     // Array of players
     map<byte, DLPlayer>players;     // Array of players
 
     // функции-повторители основных фунцкий ядра

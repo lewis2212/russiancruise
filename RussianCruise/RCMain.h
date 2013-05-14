@@ -205,6 +205,41 @@ void SendMTC (byte UCID,const char* Msg)
     delete pack;
 };
 
+void ClearBTN(byte UCID)
+{
+	IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->ReqI = 0;
+    pack->SubT = BFN_CLEAR;
+
+    pack->UCID = UCID;
+    insim->send_packet( pack );
+    delete pack;
+}
+
+void SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
+{
+	IS_BTN *pack = new IS_BTN;
+    memset( pack, 0, sizeof( IS_BTN ) );
+    pack->Size = sizeof( IS_BTN );
+    pack->Type = ISP_BTN;
+    pack->ReqI = ReqI;
+    pack->UCID = UCID;
+    pack->Inst = 0;
+    pack->BStyle = BStyle;
+    pack->TypeIn = 0;
+    pack->ClickID = ClickID;
+    pack->L = L;
+    pack->T = T;
+    pack->W = W;
+    pack->H = H;
+    strcpy( pack->Text ,Text );
+    insim->send_packet( pack );
+    delete pack;
+}
+
 void SendMST (const char* Text)
 {
 	IS_MST *pack = new IS_MST;

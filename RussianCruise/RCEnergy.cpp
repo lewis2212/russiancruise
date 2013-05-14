@@ -231,10 +231,9 @@ void RCEnergy::InsimCPR( struct IS_CPR* packet )
 
 void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 {
-
     for (int i = 0; i < pack_mci->NumC; i++)
     {
-		byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
+		byte UCID = PLIDtoUCID[pack_mci->Info[i].PLID];
 		if( UCID == 0)
 			return;
 
@@ -256,7 +255,6 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 		int S1 = ((int)players[ UCID ].Info.Speed*360)/(32768);
 		int A1 = players[ UCID ].Info.AngVel*360/16384;
 
-
 		long dA = A-A1;
 		long dS = S-S1;
 		long dD = abs((int)(sin(D)*100))-abs((int)(sin(D1)*100));
@@ -264,12 +262,9 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 
 		int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
 
-
 		if ((players[ UCID ].Energy > 5) and (S > 5))
-		{
 			if (!Islocked( UCID ))
 				players[ UCID ].Energy -= K;
-		}
 
 		if (Check_Pos(TrackInf.CafeCount,TrackInf.XCafe,TrackInf.YCafe,X,Y))
 			players[ UCID ].Zone = 3;
@@ -286,27 +281,20 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 		if (S == 0)
 		{
 			int time_i = time(&nrgtime) - players[ UCID ].EnergyTime;
-
 			if (time_i > 59)
 			{
 				if (players[ UCID ].Zone == 3)
 					players[ UCID ].Energy += 400;
 				else
 					players[ UCID ].Energy += 200;
-
 				players[ UCID ].EnergyTime = time(&nrgtime);
 			}
-
 		}
 
 		if (players[ UCID ].Energy > 10000 )
-		{
 			players[ UCID ].Energy = 10000;
-		}
 		else if (players[ UCID ].Energy < 0 )
-		{
 			players[ UCID ].Energy = 0;
-		}
 
 		if (X1==0 and Y1==0 and Z1==0)
 		{
@@ -314,10 +302,8 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 			Y1=Y;
 			Z1=Z;
 		}
-
-		memcpy( &players[ UCID ].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
-
 		btn_energy( UCID );
+		memcpy( &players[ UCID ].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
     }
 }
 
