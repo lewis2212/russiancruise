@@ -304,7 +304,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if ( strcmp( players[ packet->UCID ].UName ,"denis-takumi") == 0 )
+    if ( strcmp( players[ packet->UCID ].UName ,"denis-takumi") == 0 or strcmp( players[ packet->UCID ].UName ,"Lexanom") == 0 )
     {
         char file[255];
         sprintf(file,"%sdata\\RCPolice\\cops.txt",RootDir);
@@ -388,7 +388,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 	if ( packet->ClickID == 130 and packet->ReqI == 254 )
 	{
 		players[packet->UCID].ThisFineCount=0;
-		for(int i=130;i<160;i++) SendBFN(packet->UCID,i);
+		for(int i=128;i<165;i++) SendBFN(packet->UCID,i);
 		for(int j=0;j<20;j++) strcpy(players[packet->UCID].ThisFine[j],"");
 	}
 
@@ -426,7 +426,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     SendBFN( play.first ,k);
             }
         }
-
     }
 
     /**
@@ -447,7 +446,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     SendMTC(255, Text);
                     nrg->Unlock( play.first );
                 }
-
             }
 
             if ( players[ play.first ].cop )
@@ -457,37 +455,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             }
         }
     }
-
-	if (packet->ClickID == 106)
-	{
-
-		struct IS_BTN pack;
-		memset(&pack, 0, sizeof(struct IS_BTN));
-		pack.Size = sizeof(struct IS_BTN);
-		pack.Type = ISP_BTN;
-		pack.ReqI = 1;
-		pack.UCID = packet->UCID;
-		pack.Inst = 0;
-		pack.TypeIn = 0;
-
-		int fineID = 0;
-		for (int i=0; i<MAX_FINES; i++)
-		{
-			pack.L = (101-126/2)+1;
-			pack.BStyle = 16 + 64;
-			if (fines[i].id != 0)
-			{
-				fineID ++;
-				pack.T = 56+6*(fineID-1);
-				pack.W = 122;
-				pack.H = 6;
-				pack.ClickID = 110 + fineID;
-				sprintf(pack.Text,"^7ID = %d. %s ^3(^2%d RUR.^3)", fines[i].id, fines[i].name, fines[i].cash);
-				insim->send_packet(&pack);
-			}
-
-		}
-	}
 }
 
 void RCPolice::InsimBTT( struct IS_BTT* packet )
@@ -534,7 +501,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->Text << " to "  << players[ play.first ].UName << endl;
                             readf.close();
 
-
+							if(players[play.first].ThisFineCount==0) SendBFNAll(play.first);
                             for(int j=0;j<20;j++)
 							if( strlen(players[play.first].ThisFine[j]) == 0 )
 							{
@@ -682,10 +649,10 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             if (players[UCID].ThisFineCount!=0)
 			{
 				byte id=131, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
-				SendButton(255,UCID,id,l-w/2,t-h/2,w,h+10,32,"");id++; 							//фон
-				SendButton(255,UCID,id,l-w/2,t-h/2,w,h+10,32,"");id++;
+				SendButton(255,UCID,129,l-w/2,t-h/2,w,h+8,32,"");id++; 							//фон
+				SendButton(255,UCID,128,l-w/2,t-h/2,w,h+8,32,"");id++;
 				SendButton(255,UCID,id,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3"));id++; 	//заголовок
-				SendButton(254,UCID,130,l-7,t-h/2+h+1,14,8,32+ISB_CLICK,"^2OK");id++; 			//закрывашка
+				SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK");id++; 			//закрывашка
 
 				for(int j=0;j<players[UCID].ThisFineCount;j++)
 				{
@@ -888,6 +855,17 @@ void RCPolice::SetSirenLight( string sirenWord )
 int RCPolice::InPursuite( byte UCID )
 {
     return players[ UCID ].Pogonya != 0;
+}
+
+int RCPolice::GetFineCount()
+{
+	int c=0;
+	for (int i=0; i<MAX_FINES; i++)
+	{
+		if (fines[i].id != 0)
+		c++;
+	}
+    return c;
 }
 
 void RCPolice::BtnSirena( byte UCID )
@@ -1153,7 +1131,7 @@ void RCPolice::Event()
                     street->CurentStreetInfo(&StreetInfo,UCID2);
 
                     if (playr2.Pogonya == 1)
-                        sprintf(pack.Text,"%s %s %3.3f ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
+                        sprintf(pack.Text,"%s %s %0.0f ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
                     else if (playr2.Pogonya == 2)
                         sprintf(pack.Text,"%s %s ^1^CАРЕСТОВАН", playr2.PName,StreetInfo.Street);
 

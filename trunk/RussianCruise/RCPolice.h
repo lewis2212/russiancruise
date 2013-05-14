@@ -68,7 +68,6 @@ private:
     RCLight		*lgh;
 
 	string siren = "^0";
-	struct  fine fines[MAX_FINES];
 	map<byte, PolicePlayer>players;
 
 	void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
@@ -96,6 +95,8 @@ public:
 	RCPolice();
 	~RCPolice();
 
+	struct fine fines[MAX_FINES];
+
 	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
 	void SaveUserFines( byte UCID );
@@ -107,6 +108,7 @@ public:
 	int IfCop ( byte UCID );
 	bool IsCop( byte UCID );
 	int InPursuite( byte UCID );
+	int GetFineCount();
 
 	void Event();
 

@@ -77,7 +77,6 @@ void RCBaseClass::next_packet()
         InsimPLL( (struct IS_PLL*)insim->get_packet() );
         break;
 
-
     case ISP_LAP:
         InsimLAP( (struct IS_LAP*)insim->get_packet() );
         break;
@@ -145,9 +144,6 @@ void RCBaseClass::next_packet()
 	case ISP_HLV:
         InsimHLV( (struct IS_HLV*)insim->get_packet() );
         break;
-
-
-
     }
 }
 
@@ -192,7 +188,6 @@ void    RCBaseClass::InsimMCI( struct IS_MCI* packet )
 
 bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
 {
-
     int		i, j=polySides-1 ;
     bool	oddNodes=false;
 	try{
@@ -209,18 +204,15 @@ bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float 
 		}
 	}
 	catch(...){
-		//tools::log("Check_Pos Exeption\n");
+	//tools::log("Check_Pos Exeption\n");
 	}
     return oddNodes;
-
 }
 
 int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
 {
     return (int)sqrt((pow(X-X1,2))+(pow(Y-Y1,2)));
 }
-
-
 
 void RCBaseClass::SendMTC (byte UCID,const char* Msg)
 {
@@ -314,8 +306,6 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     delete pack;
 }
 
-
-
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
 vector<string>& SplitString::split( const char delim, int rep) {
@@ -339,4 +329,3 @@ vector<string>& SplitString::split( const char delim, int rep) {
         flds.push_back(buf);
     return flds;
 }
-

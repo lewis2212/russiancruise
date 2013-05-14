@@ -419,66 +419,8 @@ void help_cmds (struct player *splayer,int h_type)
     }
 }
 
-
-
-/**** buttons ****/
-void btn_main (struct player *splayer)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-
-    /* background */
-    pack.BStyle = 16+64;
-    pack.ClickID = 100;
-    pack.L = 100-126/2;
-    pack.T = 25;
-    pack.W = 126;
-    pack.H = 150;
-    strcpy(pack.Text,"");
-    insim->send_packet(&pack);
-    /* background */
-
-    /* Title */
-    pack.BStyle = 0;
-    pack.ClickID = 101;
-    pack.L = 101-126/2;
-    pack.T = 26;
-    pack.W = 126;
-    pack.H = 20;
-    strcpy(pack.Text,"^7RUSSIAN CRUISE");
-    insim->send_packet(&pack);
-    /* Title */
-
-    /* background #2 */
-    pack.BStyle = 16+32;
-    pack.ClickID = 102;
-    pack.L = 101-126/2;
-    pack.T = 55;
-    pack.W = 124;
-    pack.H = 118;
-    strcpy(pack.Text,"");
-    insim->send_packet(&pack);
-    /* background #2 */
-
-}
-
 void btn_info (struct player *splayer, int b_type)
 {
-    btn_main(splayer);
-
-    char info_text[5][100];
-    sprintf(info_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
-    strncpy(info_text[1], "^C^7 ƒобро пожаловать, ",99);
-    strncpy(info_text[2], "^C^7 ƒеньги: ^2",99);
-    strncpy(info_text[3], "^C^7   тут жизненный статус",99);
-    strncpy(info_text[4], "^C^7ƒоступные автомобили:",99);
-
     char about_text[10][100];
     sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
     strncpy(about_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov",99);
@@ -488,106 +430,72 @@ void btn_info (struct player *splayer, int b_type)
     strncpy(about_text[5], "^C^7More information",99);
     strncpy(about_text[6], "^C^7http://vk.com/russiancruise",99);
     strncpy(about_text[7], "^7",99);
-    strncpy(about_text[8], "^C^7        Thanks:",99);
-    strncpy(about_text[9], "^C^3        repeat, nose, R.Ratzinger",99);
+    strncpy(about_text[8], "^C^7Thanks:",99);
+    strncpy(about_text[9], "^C^3repeat, nose, R.Ratzinger",99);
 
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = splayer->UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
+    char ver[10], Text[128];
+    sprintf(ver,"v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
 
-    /* Tabs */
-    pack.BStyle = 32+8;
-    pack.ClickID = 103;
-    pack.L = 101-126/2;
-    pack.T = 46;
-    pack.W = 16;
-    pack.H = 8;
-    strcpy(pack.Text,msg->_( splayer->UCID, "200" ));
-    insim->send_packet(&pack);
+	byte c;
+		if (b_type == 1) c=MAX_CARS/2;				//количество строк дл€ 1 вкладки
+		if (b_type == 2) c=police->GetFineCount();	//количество строк дл€ 2 вкладки
+		if (b_type == 3) c=sizeof(about_text)/100;	//да, да, ты угадал
+	byte
+		UCID = splayer->UCID,
+		id=134, 			//стартовый ид кнопок
+		l=100, 				//не мен€ть
+		t=90,				//не мен€ть
+		hButton=5, 			//высота строки
+		w=100, 				//ширина пол€
+		h=16+c*hButton; 	//высота пол€
 
-    pack.BStyle = 32+8;
-    pack.ClickID = 106;
-    pack.L += 17;
-    strcpy(pack.Text,msg->_( splayer->UCID, "201" ));
-    insim->send_packet(&pack);
+	SendButton(255,UCID,128,l-w/2,t-h/2,w,h+8,32,"");id++; 						//фон
+	SendButton(255,UCID,129,l-w/2,t-h/2,w,h+8,32,"");id++;
+	SendButton(255,UCID,id,l-w/2,t-h/2,25,10,3+64,"RUSSIAN CRUISE");id++; 		//заголовок
+	SendButton(255,UCID,id,l-w/2+25,t-h/2+2,20,3,7+64,ver);id++; 				//верси€
+	SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK");id++; 		//закрывашка
 
-    pack.BStyle = 32+8;
-    pack.ClickID = 105;
-    pack.L += 17;
-    pack.W = 20;
-    strcpy(pack.Text,msg->_( splayer->UCID, "202" ));
-    insim->send_packet(&pack);
+	SendButton(254,UCID,131,l-w/2+1,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"200"));id++;	//вкладка раз
+	SendButton(254,UCID,132,l-w/2+17,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"201"));id++;	//два
+	SendButton(254,UCID,133,l-w/2+33,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"202"));id++;	//нутыпонел
 
-    /* Tabs */
     if (b_type == 1)
     {
-        for (int i=2; i<MAX_CARS/2; i++)
-        {
-            if ( ginfo->car[i].id == 0 )
+    	for (int i=0; i<MAX_CARS; i++)
+		{
+			if (ginfo->car[i].id == 0)
                 continue;
 
-            pack.L = (101-126/2)+1;
-            pack.BStyle = 16 + 64;
-            pack.T = 50+6*(i-1)+1;
-            pack.W = 50;
-            pack.H = 6;
-            pack.ClickID = 110 + i;
-            sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
-            insim->send_packet(&pack);
-        }
+			int plW=0,plH=1;
+			if (i>=MAX_CARS/2) {plW=w/2-1;plH=MAX_CARS/2;}
 
-        for (int i=MAX_CARS/2; i<MAX_CARS; i++)
-        {
-            if ( ginfo->car[i].id == 0 )
-                continue;
-
-            pack.L = (101-126/2)+1+51;
-            pack.BStyle = 16 + 64;
-            pack.T = 50+6*(i-MAX_CARS/2+1)+1;
-            pack.W = 50;
-            pack.H = 6;
-            pack.ClickID = 110 + i;
-            sprintf(pack.Text,"^3 %d Level ^2%s ^7(^2%d^7/^3%d^7)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
-            insim->send_packet(&pack);
-        }
+			if (dl->GetLVL(UCID)>=(i-1)*5)
+				sprintf(Text,"^3%d lvl ^2%s ^3(^2%d^3/%d)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
+			else
+				sprintf(Text,"%d lvl %s (%d/%d)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
+			SendButton(255,UCID,id,l-w/2+1+plW,t-h/2+16+hButton*(i-plH),w/2-1,hButton,16+64,Text);id++;
+		}
     }
 
     if (b_type == 2)
     {
-
+    	for(int i=0;i<c;i++)
+		{
+			sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].name, police->fines[i+1].cash);
+			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,16+64,Text);id++;
+		}
     }
 
     if (b_type == 3)
     {
-        pack.BStyle = 64;
-        pack.L = 101-126/2;
-        pack.W = 90;
-        for (int g=0; g<10; g++)
-        {
-            pack.ClickID = 110 + g;
-            pack.T += 9;
-            strcpy(pack.Text,about_text[g]);
-            insim->send_packet(&pack);
-        }
+		for(int i=0;i<c;i++)
+		{
+			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,0,about_text[i]);id++;
+		}
     }
 
-	if (b_type == 4)
-	{
-	}
-
-    pack.BStyle = 8;
-    pack.ClickID = 149;
-    pack.L = 99+126/2-8;
-    pack.T = 26;
-    pack.W = 8;
-    pack.H = 8;
-    strcpy(pack.Text,"^1[X]");
-    insim->send_packet(&pack);
+    for (int i=id; i<165; i++)
+	    SendBFN(UCID,i);
 }
 
 
@@ -644,23 +552,14 @@ void case_bfn ()
             time_t now;
             time(&now);
 
-            if((now - ginfo->players[i].LastBFN) < 10)
+            if((now - ginfo->players[i].LastBFN) < 5)
             {
-                SendMTC(ginfo->players[i].UCID,"^1^CЌельз€ так часто жать кнопки");
+                //SendMTC(ginfo->players[i].UCID,"^1^CЌельз€ так часто жать кнопки");
                 return;
             }
 
             ginfo->players[i].LastBFN = now;
-
-            if (ginfo->players[i].bfn == 0)
-            {
-                ginfo->players[i].bfn = 1;
-                btn_info(&ginfo->players[i],1);
-            }
-            else
-            {
-                ginfo->players[i].bfn = 0;
-            }
+			btn_info(&ginfo->players[i],1);
             break;
         }
     }
@@ -694,43 +593,48 @@ void case_btc ()
                     pack_btn.Type = ISP_BTN;
                     pack_btn.ReqI = ginfo->players[i].UCID;             // Must be non-zero, I'll just use UCID
                     pack_btn.UCID = ginfo->players[i].UCID;             // UCID of the player that will receive the button
-                    pack_btn.TypeIn = 16;
                     pack_btn.L = 25;
-                    int count;
-					for (int j=0; j<MAX_PLAYERS; j++)
-						if (ginfo->players[j].UCID != 0) count++;
-					if (count>16) pack_btn.L += 24;
-                    pack_btn.T = 187;
-                    if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI)) pack_btn.T = 171;
+                    int count; for (int j=0; j<MAX_PLAYERS; j++) if (ginfo->players[j].UCID != 0) count++;
+					if (count>16)
+						pack_btn.L += 24;
+						pack_btn.T = 187;
+                    if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI))
+						pack_btn.T = 171;
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 35;
+					pack_btn.BStyle = 32 + 64;
 
-                    for (int i=0; i < MAX_PLAYERS; i++)
+                    if (pack_btc->ReqI == ginfo->players[i].UCID)
+					{
+						sprintf(pack_btn.Text,msg->_( pack_btc->UCID, "ItsYou" ));
+						insim->send_packet(&pack_btn);
+						pack_btn.BStyle = 8 + 16;
+					}
+					else for (int i=0; i < MAX_PLAYERS; i++)
 					{
 						if(ginfo->players[i].UCID == pack_btc->ReqI)
 						{
-							pack_btn.BStyle = 32 + 64;
-							sprintf(pack_btn.Text,msg->_( ginfo->players[i].UCID, "MsgPlFor" ),ginfo->players[i].PName);
+							sprintf(pack_btn.Text,msg->_( pack_btc->UCID, "MsgPlFor" ),ginfo->players[i].PName);
 							insim->send_packet(&pack_btn);
+							pack_btn.BStyle = 3 + 16 + ISB_CLICK;
+							pack_btn.TypeIn = 63;
+							break;
 						}
 					}
 
-					pack_btn.BStyle = 16 + ISB_CLICK;
-                    pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 36;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1000" ));
                     insim->send_packet(&pack_btn);
 
-                    pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 37;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1001" ));
                     insim->send_packet(&pack_btn);
 
                     // cop buttons
-                    if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI))
+                    if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != ginfo->players[i].UCID)
                     {
                         pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 2;
@@ -785,36 +689,21 @@ void case_btc ()
                     SendBFN(pack_btc->UCID,j);
             }
 
-            if (pack_btc->ClickID == 103)
-            {
-                for (int j=0; j<50; j++)
-                    SendBFN(pack_btc->UCID,100+j);
-                btn_info(&ginfo->players[i],1);
-            }
+            /*
+            SendButton(254,UCID,131,l-w/2+1,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"200"));id++;	//вкладка раз
+			SendButton(254,UCID,132,l-w/2+17,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"201"));id++;	//два
+			SendButton(254,UCID,133,l-w/2+33,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"202"));id++;	//нутыпонел
+            */
+			if (pack_btc->ReqI==254)
+			{
+				if (pack_btc->ClickID == 131)
+					btn_info(&ginfo->players[i],1);
+				if (pack_btc->ClickID == 132)
+					btn_info(&ginfo->players[i],2);
+				if (pack_btc->ClickID == 133)
+					btn_info(&ginfo->players[i],3);
+			}
 
-            if (pack_btc->ClickID == 104)
-            {
-                for (int j=0; j<50; j++)
-                    SendBFN(pack_btc->UCID,100+j);
-
-                btn_info(&ginfo->players[i],2);
-            }
-
-            if (pack_btc->ClickID == 105)
-            {
-                for (int j=0; j<50; j++)
-                    SendBFN(pack_btc->UCID,100+j);
-
-                btn_info(&ginfo->players[i],3);
-            }
-
-            if (pack_btc->ClickID == 106)
-            {
-                for (int j=0; j<50; j++)
-                    SendBFN(pack_btc->UCID,100+j);
-
-                btn_info(&ginfo->players[i],4);
-            }
 
             /**
             Ќе помню. ¬озможно на удаление
@@ -1005,17 +894,14 @@ void case_lap ()
 void case_mci ()
 {
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
-
     for (int i = 0; i < pack_mci->NumC; i++)
-
     {
         for (int j =0; j < MAX_PLAYERS; j++)
         {
-
             if (pack_mci->Info[i].PLID == ginfo->players[j].PLID and ginfo->players[j].PLID != 0 and ginfo->players[j].UCID != 0)
-
             {
+            	btn_panel(&ginfo->players[j]);
+
                 struct streets StreetInfo;
                 street->CurentStreetInfo(&StreetInfo,ginfo->players[j].UCID);
 
@@ -1791,6 +1677,7 @@ void case_mso ()
         pack_btn.T = 191;
         pack_btn.W = 24;
         pack_btn.H = 4;
+        pack_btn.BStyle = 16 + ISB_CLICK;
 
         int col = 0;
         for (int j=0; j<MAX_PLAYERS; j++)
@@ -1802,8 +1689,8 @@ void case_mso ()
                     pack_btn.L += 24;
                     pack_btn.T = 191;
                 }
-                if (ginfo->players[j].UCID == ginfo->players[i].UCID) pack_btn.BStyle = 32;
-                else pack_btn.BStyle = 16 + ISB_CLICK;
+                //if (ginfo->players[j].UCID == ginfo->players[i].UCID) pack_btn.BStyle = 16;
+                //else pack_btn.BStyle = 16 + ISB_CLICK;
 
 				pack_btn.ReqI = ginfo->players[j].UCID;
                 pack_btn.ClickID = ginfo->players[j].BID;
@@ -1910,7 +1797,7 @@ void case_mso_cop ()
     char Msg[128];
     strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 
-    if ( strcmp( ginfo->players[i].UName ,"denis-takumi") == 0 )
+    if ( strcmp( ginfo->players[i].UName ,"denis-takumi") == 0 or strcmp( ginfo->players[i].UName ,"Lexanom") == 0 )
     {
         //!ban#denis-takumi#1
         if (strncmp(Msg, "!ban", 4) == 0 )
@@ -1943,12 +1830,8 @@ void case_mso_cop ()
                 return;
             banlist.removeUser( user );
         }
-
     }
 }
-
-
-
 
 void case_ncn ()
 {
@@ -1983,11 +1866,12 @@ void case_ncn ()
     //help_cmds(&ginfo->players[i],1);
     SendMTC(pack_ncn->UCID,msg->_( pack_ncn->UCID, "3200" ));
     SendMTC(pack_ncn->UCID,msg->_( pack_ncn->UCID, "3202" ));
+
+    btn_panel(&ginfo->players[i]);
 }
 
 void case_npl ()
 {
-    // out << "joining race or leaving pits" << endl;
     int i;
     char specText[64];
     struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
@@ -2140,7 +2024,7 @@ void case_pll ()
     {
         if (ginfo->players[i].PLID == pack_pll->PLID)
         {
-            msg->SendBFNAll( ginfo->players[i].UCID );
+            //msg->SendBFNAll( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
@@ -2166,8 +2050,8 @@ void case_pll ()
                     bank->AddToBank(500);
                 }
             }
-            for (int g=0; g<200; g++)
-                SendBFN(ginfo->players[i].UCID,g);
+            //for (int g=0; g<200; g++)
+            //    SendBFN(ginfo->players[i].UCID,g);
 
             break;
         }
@@ -2186,7 +2070,7 @@ void case_plp ()
     {
         if (ginfo->players[i].PLID == pack_plp->PLID)
         {
-            msg->SendBFNAll( ginfo->players[i].UCID );
+            //msg->SendBFNAll( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
@@ -2213,8 +2097,8 @@ void case_plp ()
                 }
             }
 
-            for (int g=0; g<200; g++)
-                SendBFN(ginfo->players[i].UCID,g);
+            //for (int g=0; g<200; g++)
+            //    SendBFN(ginfo->players[i].UCID,g);
 
             break;
         }
@@ -2574,23 +2458,6 @@ void *thread_mci (void *params)
     return 0;
 };
 
-void *thread_btn (void *params)
-{
-    while (ok > 0)
-    {
-        for (int i=0; i<MAX_PLAYERS; i++)
-        {
-            if (ginfo->players[i].UCID != 0)
-            {
-                btn_panel(&ginfo->players[i]);
-            }
-
-        }
-        Sleep(1000);
-    }
-    return 0;
-};
-
 void *thread_save (void *params)
 {
     SYSTEMTIME sm; //time_t seconds;
@@ -2721,12 +2588,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     out << "Cruise started" << endl;
     out << "Start threads :" << endl;
-    if (pthread_create(&btn_tid,NULL,thread_btn,NULL) < 0)
-    {
-        printf("Can't start `thread_btn` Thread\n");
-        return 0;
-    }
-    Sleep(1000);
     if (pthread_create(&work_tid,NULL,thread_work,NULL) < 0)
     {
         printf("Can't start `thread_work` Thread\n");
@@ -2739,9 +2600,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         return 0;
     }
     Sleep(1000);
-
-
-
     if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
@@ -2754,14 +2612,9 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     while (ok > 0)
     {
         if (error_ch = insim->next_packet() < 0)
-        {
             for (;;)
-            {
                 if ( core_reconnect(&pack_ver) > 0 )
                     break;
-            }
-
-        }
 
         msg->next_packet(); // обрабатываетс€ первым, из-за того что потом е вывод€тс€ сообщени€. приоритет емае
 
@@ -2772,7 +2625,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
             case_mso_cop();
             case_mso_flood();
             break;
-
 
         case ISP_NPL:
             case_npl ();
@@ -2793,7 +2645,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         case ISP_PLP:
             case_plp ();
             break;
-
 
         case ISP_BTC:
             case_btc ();
@@ -2880,7 +2731,6 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #ifdef _RC_POLICE_H
         police->next_packet();
 #endif // _RC_POLICE_H
-
     }
 
     if (insim->isclose() < 0)
@@ -2893,13 +2743,10 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     SetServiceStatus(hServiceStatus, &service_status);
 
     pthread_mutex_destroy(&RCmutex);
-
     return 0;
 }
 
-
 int  nCount;     // счетчик
-
 
 int core_install_service(char* param[])
 {
@@ -2959,7 +2806,6 @@ int core_uninstall_service()
     if (hServiceControlManager == NULL)
     {
         printf("Open service control manager failed.");
-
         return 0;
     }
 
@@ -2982,7 +2828,6 @@ int core_uninstall_service()
     }
 
     printf("Service is opened.");
-
 
     // получаем состо€ние сервиса
     if (!QueryServiceStatus(hService, &service_status))
