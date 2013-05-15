@@ -366,7 +366,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 memset(&line,0,32);
                 rCops.getline(line, 32);
                 if (strlen(line) >0)
-                    SendMST(line);
+                    SendMTC(packet->UCID,line);
             }
             rCops.close();
         }

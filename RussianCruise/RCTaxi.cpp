@@ -287,9 +287,9 @@ void RCTaxi::accept_user( byte UCID )
 			street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
 			char Msg[128];
-			sprintf(Msg,"^6|^C^7 Заберите клиента на %s ",StreetInfo.Street);
+			sprintf(Msg,"^6|^C^7 Заберите клиента на %s",StreetInfo.Street);
 			SendMTC( UCID ,Msg);
-			sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+			sprintf(Msg,msg->_(UCID,"TaxiAccept1"),StreetInfo.Street);
 			ButtonInfo( UCID ,Msg);
 			players[ UCID ].WorkAccept = 1;
 		}
@@ -327,9 +327,9 @@ void RCTaxi::accept_user2(byte UCID)
 		street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
 		char Msg[128];
-		sprintf(Msg,"^6|^C^7 Отвези меня на %s ",StreetInfo.Street);
+		sprintf(Msg,"^6|^C^7 Отвези меня на %s",StreetInfo.Street);
 		SendMTC( UCID ,Msg);
-		sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
+		sprintf(Msg,msg->_(UCID,"TaxiAccept2"),StreetInfo.Street);
 		ButtonInfo( UCID ,Msg);
 		players[ UCID ].WorkAccept = 2;
 		players[ UCID ].PassStress = rand()%500;
@@ -428,7 +428,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				{
 					players[UCID].OnStreet = true;
 					char MSG[128];
-					sprintf(MSG,"^6| ^C^7Остановитесь через %3.0f метров",(Dist-(int)Dist%10));
+					sprintf(MSG,msg->_(UCID,"TaxiOnStreet"),(Dist-(int)Dist%10));
 					SendMTC( UCID ,MSG);
 				}
 
@@ -533,7 +533,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
 				char Msg[128];
-				sprintf(Msg,"^C^7Заберите клиента на %s ",StreetInfo.Street);
+				sprintf(Msg,msg->_(UCID,"TaxiAccept1"),StreetInfo.Street);
 				ButtonInfo( UCID ,Msg);
 			}
 
@@ -544,7 +544,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
 				char Msg[128];
-				sprintf(Msg,"^C^7Отвези клиента на %s ",StreetInfo.Street);
+				sprintf(Msg,msg->_(UCID,"TaxiAccept2"),StreetInfo.Street);
 				if (players[ UCID ].PassStress <= 800) ButtonInfo( UCID ,Msg);
 
 				int X = pack_mci->Info[i].X/65536;
@@ -666,7 +666,7 @@ void RCTaxi::dead_pass(byte UCID)
 		players[ UCID ].PassStress = 0;
 		players[ UCID ].Work = 0;
 		players[ UCID ].WorkNow = 0;
-		SendMTC( UCID ,"^6| ^7^CТы убил своего клиента - ^1УВОЛЕН!");
+		SendMTC( UCID ,msg->_(UCID,"TaxiDead"));
 	}
 }
 
@@ -993,15 +993,12 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
 		srand ( time(NULL) );
 		SendMTC( UCIDB ,  TaxiDialogs["con"][ rand()%TaxiDialogs["con"].size() ].c_str() ); // send random dialog phrase
 	}
-
 }
-
 
 /*void RCTaxi::InsimAXM( struct IS_AXM* packet )
 {
     readAxm=true;
 }*/
-
 
 void RCTaxi::InsimOBH( struct IS_OBH* packet )
 {
@@ -1079,6 +1076,5 @@ bool RCTaxi::IfWork (byte UCID)
 {
 	if (players[ UCID ].Work != 0)
 		return true;
-
     return false;
 }

@@ -107,10 +107,8 @@ int RCBank::init(const char *dir,void *CInSim, void *RCMessageClass, void *DL)
 void RCBank::InsimNCN( struct IS_NCN* packet )
 {
     int i;
-
     if (packet->UCID == 0)
         return;
-
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
@@ -133,7 +131,7 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
     if(mysql_num_rows( rcbankRes ) > 0)
     {
         rcbankRow = mysql_fetch_row( rcbankRes );
-        players[ packet->UCID ].Cash = atof( rcbankRow[0] );
+        players[packet->UCID].Cash = atof(rcbankRow[0]);
     }
     else
     {
@@ -147,7 +145,6 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         {
             printf("Error: MySQL Query\n");
         }
-
         players[ packet->UCID ].Cash = 1000;
         bank_save( packet->UCID );
     }
@@ -272,7 +269,13 @@ void RCBank::credit_penalty (byte UCID)
     sprintf(Text,"^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день",players[ UCID ].Credit*13/10);
     SendMTC( UCID, Text);
 
-    RemCash( UCID,( ( players[ UCID ].Credit ) * 13 / 10 + 1000 * c ) ); //отбираем бабки у игрока
+    /*int ost = players[UCID].Cash - ((players[UCID].Credit) * 13 / 10 + 1000 * c);
+    if (ost<0)
+	{
+		//денег на счету недостаточно, забираем автомобили
+	}*/
+
+    RemCash( UCID,((players[UCID].Credit) * 13 / 10 + 1000 * c)); //отбираем бабки у игрока
     AddToBank( ( players[ UCID ].Credit ) * 13 / 10 + 1000 * c ); //сдаем в банк
     players[ UCID ].Credit = 0;
     players[ UCID ].Date_create = 0;
@@ -282,7 +285,6 @@ void RCBank::credit_penalty (byte UCID)
 void RCBank::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
-
     if (players[packet->UCID].Cash > 5000000)
         players[packet->UCID].Cash = 5000000;
 }
@@ -436,6 +438,12 @@ void RCBank::InsimMSO( struct IS_MSO* packet )
             {
                 SendMTC( packet->UCID ,"^5| ^C^7В выдаче кредита ^1отказано^7.");
                 SendMTC( packet->UCID ,"^5| ^C^7Сумма на вашем счете превышает размер кредита более чем в половину.");
+                return;
+            }
+            if( players[packet->UCID].Cash <= -50000 )
+            {
+            	SendMTC( packet->UCID ,"^5| ^C^7В выдаче кредита ^1отказано^7.");
+                SendMTC( packet->UCID ,"^5| ^C^7Сумма на вашем счете ниже -50000 3RUR^7.");
                 return;
             }
             //выдаем кредит
