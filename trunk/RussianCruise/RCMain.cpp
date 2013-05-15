@@ -609,7 +609,7 @@ void case_btc ()
 					{
 						sprintf(pack_btn.Text,msg->_( pack_btc->UCID, "ItsYou" ));
 						insim->send_packet(&pack_btn);
-						pack_btn.BStyle = 8 + 16;
+						pack_btn.BStyle = 7 + 8 + 16;
 					}
 					else for (int i=0; i < MAX_PLAYERS; i++)
 					{
@@ -1689,8 +1689,6 @@ void case_mso ()
                     pack_btn.L += 24;
                     pack_btn.T = 191;
                 }
-                //if (ginfo->players[j].UCID == ginfo->players[i].UCID) pack_btn.BStyle = 16;
-                //else pack_btn.BStyle = 16 + ISB_CLICK;
 
 				pack_btn.ReqI = ginfo->players[j].UCID;
                 pack_btn.ClickID = ginfo->players[j].BID;

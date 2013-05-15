@@ -33,7 +33,13 @@ PitSaveNotGood "^1PITSAFE"
 1100 "^7 Sent you ^7"
 1101 "^1| ^7you entered an amount greater than what you have in your account."
 1102 "^1| ^7Try select a smaller amount."
+
 MsgFrom  "^1| ^C^7From %s ^7: ^1%s"
+
+TaxiOnStreet	"^6| ^7Stop after %0.0f meters"
+TaxiAccept1	"^7Take away the client on %s"
+TaxiAccept2	"^7Take the client on %s"
+TaxiDead	"^6| ^7You killed your client - ^1FIRED!"
 
 Dist		"^2%4.3f Km"
 MsgPlFor	"^7For %s ^7:"
