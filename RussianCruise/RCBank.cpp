@@ -240,20 +240,20 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
 
         printf("%d",razn);
 
-        if (razn<=4 and razn>0)
+        if ((int)razn<=4 and (int)razn>0)
         {
 
             sprintf(Text,"^1| ^1^CÎñòàëîñü ^7%0.0f ^1äíÿ äî ñíÿòèÿ êðåäèòà!",razn);
             SendMTC( packet->UCID , Text);
         }
-        if (razn==0)
+        if ((int)razn==0)
         {
             sprintf(Text,"^1| ^1^CÑÅÃÎÄÍß ÏÎÑËÅÄÍÈÉ ÄÅÍÜ ÄËß ÏÎÃÀØÅÍÈß ÊÐÅÄÈÒÀ!");
             SendMTC( packet->UCID , Text);
             SendMTC( packet->UCID , Text);
             SendMTC( packet->UCID , Text);
         }
-        if (razn<0) credit_penalty( packet->UCID );
+        if ((int)razn<0) credit_penalty( packet->UCID );
     }
     /** credit **/
 
