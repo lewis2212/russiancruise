@@ -370,25 +370,23 @@ void RCPizza::InsimNCN( struct IS_NCN* packet )
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
 
+	NumP = packet->Total;
 }
 
 void RCPizza::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
 	strcpy(players[ packet->UCID ].CName ,packet->CName);
-	NumP ++;
 }
 
 void RCPizza::InsimPLP( struct IS_PLP* packet)
 {
 	PLIDtoUCID.erase(  packet->PLID );
-	NumP --;
 }
 
 void RCPizza::InsimPLL( struct IS_PLL* packet )
 {
  	PLIDtoUCID.erase(  packet->PLID );
-	NumP --;
 }
 
 void RCPizza::InsimCNL( struct IS_CNL* packet )
@@ -400,6 +398,8 @@ void RCPizza::InsimCNL( struct IS_CNL* packet )
 		CarsInWork --;
 
 	players.erase( packet->UCID );
+
+	NumP = packet->Total;
     /** Save Pizza Info **/
 
     char file[MAX_PATH];
@@ -727,7 +727,7 @@ void RCPizza::Event()
 	{
 		//srand(time(&ptime));
 		//int r = rand()%3 + 1;
-		int pizza_time = 600/(NumP+1);
+		int pizza_time = 600/( NumP );
 		ginfo_time += pizza_time;
 
 		if ((PStore.Muka > 5) && (PStore.Voda > 5) && (PStore.Ovoshi > 5) && (PStore.Cheese > 5))
