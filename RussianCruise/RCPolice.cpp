@@ -681,110 +681,105 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             for ( auto& play: players )
             {
                 byte UCID2 = play.first;
-
-                int X = players[ UCID2 ].Info.X/65536;
-                int Y = players[ UCID2 ].Info.Y/65536;
-                int X1 = players[ UCID ].Info.X/65536;
-                int Y1 = players[ UCID ].Info.Y/65536;
-
+                int X = players[UCID2].Info.X/65536;
+                int Y = players[UCID2].Info.Y/65536;
+                int X1 = players[UCID].Info.X/65536;
+                int Y1 = players[UCID].Info.Y/65536;
                 int Rast = dl->Distance( X, Y, X1, Y1);
-
                 if (players[ UCID2 ].Pogonya == 1)
                 {
-                    //cout << players[ UCID2 ].UName << endl;
                     if ( (Rast < 10) and (!players[ UCID2 ].cop))
                     {
                         int S2 = players[ UCID2 ].Info.Speed*360/32768;
-
-                        if ((S2 < 5) and (players[ UCID2 ].StopTime > 4))
+                        if ((S2 < 5) and (players[ UCID2 ].StopTime > 3))
                         {
-
-                            players[ UCID2 ].Pogonya = 2;
-                            nrg->Unlock( UCID2 );
-                            strcpy(players[ UCID2 ].PogonyaReason,msg->_(  UCID2 , "1701" ));
+                            players[UCID2].Pogonya = 2;
+                            nrg->Unlock(UCID2);
+                            strcpy(players[UCID2].PogonyaReason,msg->_(UCID2, "1701" ));
 
                             char Text[96];
-                            sprintf(Text,"/msg ^2| %s%s", players[ UCID2 ].PName, msg->_(  UCID , "1702" ));
-                            SendMST(Text);
+                            sprintf(Text,"^2| %s%s", players[ UCID2 ].PName, msg->_(  UCID , "1702" ));
+                            SendMTC(255,Text);
 
-                            SendMTC( UCID ,msg->_(  UCID , "1703" ));
-                        }
-                    }
-                } // pogonya
-                /**
-                ÐÀÄÀÐ
-                */
-                if (players[ UCID ].radar ==1 )
-                {
-                    if ((Rast < 50 ) and ( !players[ UCID2 ].cop ))
-                    {
-                        int Speed = players[ UCID2 ].Info.Speed*360/32768;
-                        struct streets StreetInfo;
-                        street->CurentStreetInfo(&StreetInfo, UCID );
-
-                        if ((Speed > StreetInfo.SpeedLimit+10) )
-                        {
-                            char text[96];
-                            int Speed2 = Speed - StreetInfo.SpeedLimit;
-                            sprintf(text,msg->_(UCID2, "Speeding"),players[ UCID2 ].PName,Speed2);
-                            SendMTC( UCID ,text);
-
-                            if (players[ UCID2 ].Pogonya == 0)
-                            {
-                                players[ UCID2 ].Pogonya = 1;
-                                int worktime = time(NULL);
-                                players[ UCID2 ].WorkTime = worktime+60*6;
-                                strcpy(players[ UCID2 ].PogonyaReason,msg->_(  UCID2 , "1006" ));
-                                char Text[96];
-                                sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ UCID2 ].PName );
-								SendMTC(255, Text);
-                                nrg->Lock( UCID2 );
-                            }
+                            SendMTC(UCID,msg->_( UCID, "1703" ));
                         }
                     }
                 }
-                /**
-                ËÞÑÒÐÀ
-                */
-                if (players[ UCID ].sirena ==1)
-                {
-                    if ( (Rast < 120) and ( !players[ UCID2 ].cop ) )
-                    {
-                        players[ UCID2 ].sirenaOnOff = 1;
-                        players[ UCID2 ].sirenaKey = 1;
-                        players[ UCID2 ].sirenaSize = Rast;
-                    }
-                    else
-                    {
-                        players[ UCID2 ].sirenaOnOff = 0;
-                    }
-                    players[ UCID ].sirenaKey = 1;
-                    players[ UCID ].sirenaOnOff = 1;
 
-                    if ( players[ UCID ].cop )
-                        players[ UCID ].sirenaSize = 90;
+                /** ÐÀÄÀÐ **/
+                if (players[UCID].radar ==1)
+                {
+                    if (Rast<25 and !players[UCID2].cop and players[UCID2].Pogonya==0)
+                    {
+                        int Speed = players[UCID2].Info.Speed*360/32768;
+                        struct streets StreetInfo;
+                        street->CurentStreetInfo(&StreetInfo,UCID);
+
+                        if ((Speed > StreetInfo.SpeedLimit+10) and Speed>players[UCID2].speed_over)
+								players[UCID2].speed_over=Speed;
+                    }
                     else
-                        players[ UCID ].sirenaSize = 0;
+						if (players[UCID2].speed_over>0)
+							{
+								struct streets StreetInfo;
+								street->CurentStreetInfo(&StreetInfo,UCID2);
+
+								char text[128];
+								int Speed2 = players[UCID2].speed_over - StreetInfo.SpeedLimit;
+								sprintf(text,msg->_(UCID2, "Speeding"),players[UCID2].PName,Speed2,StreetInfo.Street);
+								SendMTC(255,text);
+
+								if (players[UCID2].Pogonya == 0)
+								{
+									players[UCID2].Pogonya = 1;
+									int worktime = time(NULL);
+									players[UCID2].WorkTime = worktime+60*6;
+									strcpy(players[UCID2].PogonyaReason,msg->_(UCID2,"1006"));
+									sprintf(text,msg->_(play.first, "PogonyaOn" ), players[ UCID2 ].PName );
+									SendMTC(255, text);
+									nrg->Lock( UCID2 );
+								}
+								players[UCID2].speed_over=0;
+							}
+                }
+
+                /** ËÞÑÒÐÀ **/
+                if (players[UCID].sirena ==1)
+                {
+                    if ( (Rast < 120) and ( !players[UCID2].cop ) )
+                    {
+                        players[UCID2].sirenaOnOff = 1;
+                        players[UCID2].sirenaKey = 1;
+                        players[UCID2].sirenaSize = Rast;
+                    }
+                    else
+                    {
+                        players[UCID2].sirenaOnOff = 0;
+                    }
+                    players[UCID].sirenaKey = 1;
+                    players[UCID].sirenaOnOff = 1;
+
+                    if ( players[UCID].cop )
+                        players[UCID].sirenaSize = 90;
+                    else
+                        players[UCID].sirenaSize = 0;
                 }
                 else
                 {
-                    players[ UCID2 ].sirenaOnOff = 0;
-                    players[ UCID ].sirenaOnOff = 0;
+                    players[UCID2].sirenaOnOff = 0;
+                    players[UCID].sirenaOnOff = 0;
                 }
-
-
             }
         }
 
-        if ((players[ UCID ].sirenaOnOff == 0) and (players[ UCID ].sirenaKey == 1))
+        if ((players[UCID].sirenaOnOff == 0) and (players[UCID].sirenaKey == 1))
         {
-            players[ UCID ].sirenaKey = 0;
-            SendBFN( UCID ,203);
+            players[UCID].sirenaKey = 0;
+            SendBFN(UCID,203);
         }
 
         if ( players[ UCID ].sirenaOnOff == 1)
             BtnSirena( UCID );
-
 
         if ((players[ UCID ].Pogonya == 0) and (strlen(players[ UCID ].PogonyaReason) > 1))
         {
@@ -1131,9 +1126,9 @@ void RCPolice::Event()
                     street->CurentStreetInfo(&StreetInfo,UCID2);
 
                     if (playr2.Pogonya == 1)
-                        sprintf(pack.Text,"%s %s %0.0f ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
+                        sprintf(pack.Text,"%s^7 - %s, %0.0f ^Cì ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
                     else if (playr2.Pogonya == 2)
-                        sprintf(pack.Text,"%s %s ^1^CÀÐÅÑÒÎÂÀÍ", playr2.PName,StreetInfo.Street);
+                        sprintf(pack.Text,"%s ^7 - %s, ^1^Càðåñòîâàí", playr2.PName,StreetInfo.Street);
 
                     insim->send_packet(&pack);
                     pack.T -=4;
