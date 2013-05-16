@@ -978,16 +978,21 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
 	byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
 	byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
 
-	if (players[ UCIDA ].WorkAccept == 2)
+	time_t now;
+	time(&now);
+
+	if (players[ UCIDA ].WorkAccept == 2 and (now - players[UCIDA].LastT) > 1)
 	{
+		players[UCIDA].LastT = now;
 		players[ UCIDA ].PassStress += 10 * packet->SpClose;
 
 		srand ( time(NULL) );
 		SendMTC( UCIDA, TaxiDialogs["con"][ rand()%TaxiDialogs["con"].size() ].c_str() ); // send random dialog phrase
 	}
 
-	if (players[ UCIDB ].WorkAccept == 2)
+	if (players[ UCIDB ].WorkAccept == 2 and (now - players[UCIDB].LastT) > 1)
 	{
+		players[UCIDB].LastT = now;
 		players[ UCIDB ].PassStress += 10 * packet->SpClose;
 
 		srand ( time(NULL) );
@@ -995,23 +1000,45 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
 	}
 }
 
-/*void RCTaxi::InsimAXM( struct IS_AXM* packet )
-{
-    readAxm=true;
-}*/
-
 void RCTaxi::InsimOBH( struct IS_OBH* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
+
+	time_t now;
+	time(&now);
+	if((now - players[UCID].LastT) < 1) return;
+	players[UCID].LastT = now;
+
 	if (players[ UCID ].WorkAccept == 2)
 	{
-		if((packet->Index > 45 and packet->Index < 125) or (packet->Index > 140))
+		if((packet->Index > 45 and packet->Index < 125 and packet->Index!=120 and packet->Index!=121) or (packet->Index > 140))
 		{
 			players[ UCID ].PassStress +=  packet->SpClose;
 			srand ( time(NULL) );
 			SendMTC( UCID ,  TaxiDialogs["obh"][ rand()%TaxiDialogs["obh"].size() ].c_str() ); // send random dialog phrase
 		}
 		else players[ UCID ].PassStress +=  packet->SpClose/10;
+	}
+}
+
+void RCTaxi::InsimHLV( struct IS_HLV* packet )
+{
+	byte UCID = PLIDtoUCID[ packet->PLID ];
+
+	/** столкновение со стеной **/
+	if (packet->HLVC==1)
+	{
+		time_t now;
+		time(&now);
+		if((now - players[UCID].LastT) < 1) return;
+		players[UCID].LastT = now;
+
+		if (players[ UCID ].WorkAccept == 2)
+		{
+			players[ UCID ].PassStress +=  packet->C.Speed*10;
+			srand(time(NULL));
+			SendMTC(UCID, TaxiDialogs["obh"][ rand()%TaxiDialogs["obh"].size() ].c_str() ); // send random dialog phrase
+		}
 	}
 }
 
