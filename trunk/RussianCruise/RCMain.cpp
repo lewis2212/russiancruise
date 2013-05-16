@@ -2881,7 +2881,6 @@ int core_uninstall_service()
 // главная функция приложения
 int main(int argc, char* argv[])
 {
-
     isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
 

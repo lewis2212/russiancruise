@@ -73,6 +73,8 @@ struct TaxiPlayer
 
     int		PassStress; // from 0 to 1000
     int		StressOverCount;
+
+    time_t  LastT;
 };
 
 
@@ -119,9 +121,9 @@ private:
     void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
     void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
-    void InsimCON( struct IS_CON* packet );   // Игрок отправил сообщение
-    void InsimOBH( struct IS_OBH* packet );   // Игрок отправил сообщение
-    //void InsimAXM( struct IS_AXM* packet );
+    void InsimCON( struct IS_CON* packet );
+    void InsimOBH( struct IS_OBH* packet );
+    void InsimHLV( struct IS_HLV* packet );
 
     void read_user( byte UCID );
     void save_user( byte UCID );
