@@ -433,8 +433,8 @@ void btn_info (struct player *splayer, int b_type)
     strncpy(about_text[8], "^C^7Thanks:",99);
     strncpy(about_text[9], "^C^3repeat, nose, R.Ratzinger",99);
 
-    char ver[10], Text[128];
-    sprintf(ver,"v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
+    char ver[16], Text[128];
+    sprintf(ver,"v%d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
 
 	byte c;
 		if (b_type == 1) c=MAX_CARS/2;				//количество строк для 1 вкладки
@@ -452,7 +452,7 @@ void btn_info (struct player *splayer, int b_type)
 	SendButton(255,UCID,128,l-w/2,t-h/2,w,h+8,32,"");id++; 						//фон
 	SendButton(255,UCID,129,l-w/2,t-h/2,w,h+8,32,"");id++;
 	SendButton(255,UCID,id,l-w/2,t-h/2,25,10,3+64,"RUSSIAN CRUISE");id++; 		//заголовок
-	SendButton(255,UCID,id,l-w/2+25,t-h/2+2,20,3,7+64,ver);id++; 				//версия
+	SendButton(255,UCID,id,l-w/2+24,t-h/2+2,20,3,5+64,ver);id++; 				//версия
 	SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK");id++; 		//закрывашка
 
 	SendButton(254,UCID,131,l-w/2+1,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"200"));id++;	//вкладка раз

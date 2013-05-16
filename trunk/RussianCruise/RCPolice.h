@@ -54,6 +54,7 @@ struct PolicePlayer
     char 	ThisFine[20][200];
 
     int     WorkTime;			// время за которое он должен доставить товар
+    int 	speed_over;
 };
 
 class RCPolice: public RCBaseClass
