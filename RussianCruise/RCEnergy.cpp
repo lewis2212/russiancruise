@@ -439,10 +439,28 @@ void RCEnergy::InsimCON( struct IS_CON* packet )
 void RCEnergy::InsimOBH( struct IS_OBH* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
-    if((packet->Index > 45 and packet->Index < 125) or (packet->Index > 140))
-    {
-		if ( !Islocked( UCID ) )
-		players[ UCID ].Energy -=  packet->SpClose;
+    if((packet->Index > 45 and packet->Index < 125 and packet->Index!=120 and packet->Index!=121) or (packet->Index > 140))
+		{
+		time_t now = time(NULL);
+		if((now - players[UCID].LastT) < 1) return;
+		players[UCID].LastT = now;
+
+		if (!Islocked( UCID ))
+			players[ UCID ].Energy -=  packet->SpClose;
+    }
+}
+
+void RCEnergy::InsimHLV( struct IS_HLV* packet )
+{
+	byte UCID = PLIDtoUCID[ packet->PLID ];
+    if (packet->HLVC==1)
+	{
+		time_t now = time(NULL);
+		if((now - players[UCID].LastT) < 1) return;
+		players[UCID].LastT = now;
+
+		if (!Islocked( UCID ))
+			players[ UCID ].Energy -=  5*packet->C.Speed;
     }
 }
 
