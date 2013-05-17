@@ -616,6 +616,8 @@ void case_btc ()
 						if(ginfo->players[i].UCID == pack_btc->ReqI)
 						{
 							sprintf(pack_btn.Text,msg->_( pack_btc->UCID, "MsgPlFor" ),ginfo->players[i].PName);
+							if (police->IsCop(pack_btc->UCID))
+								sprintf(pack_btn.Text,"^7^CÄëÿ %s ^8(%s^8) ^7:",ginfo->players[i].PName,ginfo->players[i].UName);
 							insim->send_packet(&pack_btn);
 							pack_btn.BStyle = 3 + 16 + ISB_CLICK;
 							pack_btn.TypeIn = 63;
@@ -1689,10 +1691,9 @@ void case_mso ()
                     pack_btn.L += 24;
                     pack_btn.T = 191;
                 }
-
 				pack_btn.ReqI = ginfo->players[j].UCID;
                 pack_btn.ClickID = ginfo->players[j].BID;
-                strcpy(pack_btn.Text, ginfo->players[j].PName);
+				sprintf(pack_btn.Text, "%s",ginfo->players[j].PName);
                 insim->send_packet(&pack_btn);
                 pack_btn.T -= 4;
                 col++;

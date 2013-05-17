@@ -157,15 +157,25 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (players[ packet->UCID ].fines[i].fine_id > 0 and players[ packet->UCID ].fines[i].fine_id < MAX_FINES )
             {
-                char Text[128];
+                char Text[128], Date[128];
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
 
                 sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7)", fine_id , fines[fine_id].name , fines[fine_id].cash );
-                if (strlen(players[ packet->UCID ].fines[i].CopName.c_str()) > 0)
+                if (strlen(players[packet->UCID].fines[i].CopPName.c_str()) > 0)
 				{
 					strcat(Text," - ");
-					strcat(Text,players[ packet->UCID ].fines[i].CopName.c_str());
+					strcat(Text,players[packet->UCID].fines[i].CopPName.c_str());
 				}
+				else if (strlen(players[packet->UCID].fines[i].CopName.c_str()) > 0)
+				{
+					strcat(Text," - ");
+					strcat(Text,players[packet->UCID].fines[i].CopName.c_str());
+				}
+				struct tm * timeinfo;
+				time_t t = (time_t)players[packet->UCID].fines[i].fine_date;
+				timeinfo = localtime (&t);
+				strftime (Date,128,", ^2%d.%m.%y",timeinfo);
+				strcat(Text,Date);
                 SendMTC( packet->UCID ,Text);
                 j++;
             }
@@ -494,6 +504,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                                     players[ play.first ].fines[j].fine_id = atoi(packet->Text);
                                     players[ play.first ].fines[j].fine_date = int( time( NULL ) );
                                     players[ play.first ].fines[j].CopName = players[ packet->UCID ].UName;
+                                    players[ play.first ].fines[j].CopPName = players[ packet->UCID ].PName;
                                     break;
                                 }
                             }
