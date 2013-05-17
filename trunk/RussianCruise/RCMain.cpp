@@ -50,7 +50,11 @@ RCBanList banlist;
 RCPolice *police;
 #endif // _RC_POLICE_H
 
-void create_classes()
+#ifdef _RC_ROADSIGN
+RCRoadSign *RoadSign;
+#endif // _RC_ROADSIGN
+
+void CreateClasses()
 {
     msg = new RCMessage();
     bank = new RCBank();
@@ -91,9 +95,13 @@ void create_classes()
     police = new RCPolice();
 #endif // _RC_POLICE_H
 
+#ifdef _RC_ROADSIGN
+	RoadSign = new RCRoadSign();
+#endif // _RC_ROADSIGN
+
 }
 
-void init_classes()
+void InitClasses()
 {
     msg->init(RootDir,insim);
 
@@ -137,6 +145,10 @@ void init_classes()
     banlist.init(RootDir, insim);
 #endif
 
+#ifdef _RC_ROADSIGN
+	RoadSign->Init(RootDir,insim,msg,dl);
+#endif // _RC_ROADSIGN
+
 }
 
 void readconfigs()
@@ -172,6 +184,10 @@ void readconfigs()
 #ifdef _RC_TAXI_H
     taxi->readconfig(ginfo->Track);
 #endif
+
+#ifdef _RC_ROADSIGN
+	RoadSign->ReadConfig(ginfo->Track);
+#endif // _RC_ROADSIGN
 }
 
 int GetCarID(char *CarName)
@@ -2457,6 +2473,10 @@ void *thread_mci (void *params)
         police->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif // _RC_POLICE_H
 
+#ifdef _RC_ROADSIGN
+		RoadSign->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
+#endif // _RC_ROADSIGN
+
     }
     return 0;
 };
@@ -2581,8 +2601,8 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         //return 0;
     }
 
-    create_classes();
-    init_classes();
+    CreateClasses();
+    InitClasses();
 
     pthread_t mci_tid; // Thread ID
     pthread_t btn_tid; // Thread ID
@@ -2734,6 +2754,10 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #ifdef _RC_POLICE_H
         police->next_packet();
 #endif // _RC_POLICE_H
+
+#ifdef _RC_ROADSIGN
+
+#endif // _RC_ROADSIGN
     }
 
     if (insim->isclose() < 0)

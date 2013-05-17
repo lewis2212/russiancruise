@@ -60,6 +60,7 @@ using namespace std;
 #include "RCLight.h"
 #include "RCTaxi.h"
 #include "RCPolice.h"
+#include "RCRoadSign.h"
 //#include "RCBanList.h"
 
 #define MAX_CARS 30
