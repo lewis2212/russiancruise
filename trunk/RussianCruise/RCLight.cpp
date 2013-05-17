@@ -297,6 +297,13 @@ void RCLight::InsimPLL( struct IS_PLL* packet )
 	PLIDtoUCID.erase( packet->PLID );
 }
 
+bool RCLight::GetOnLight(byte UCID)
+{
+	if (players[UCID].Light!=0)
+		return true;
+	return false;
+}
+
 void RCLight::Svetofor1 ( byte UCID )
 {
 	/*printf("%d %d\n",red1,red2);

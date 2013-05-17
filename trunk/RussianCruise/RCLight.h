@@ -71,6 +71,7 @@ public:
     bool SetLight3(byte UCID,bool Key);
     void Event();
 
+    bool GetOnLight(byte UCID);
     void OnRedFalse(byte UCID);
     bool CheckOnRed(byte UCID);
 

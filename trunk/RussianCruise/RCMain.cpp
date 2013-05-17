@@ -146,7 +146,7 @@ void InitClasses()
 #endif
 
 #ifdef _RC_ROADSIGN
-	RoadSign->Init(RootDir,insim,msg,dl);
+	RoadSign->Init(RootDir,insim,msg, lgh);
 #endif // _RC_ROADSIGN
 
 }
@@ -2756,7 +2756,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif // _RC_POLICE_H
 
 #ifdef _RC_ROADSIGN
-	RoadSign->next_packet();
+		RoadSign->next_packet();
 #endif // _RC_ROADSIGN
     }
 
