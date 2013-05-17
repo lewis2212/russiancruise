@@ -978,8 +978,7 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
 	byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
 	byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
 
-	time_t now;
-	time(&now);
+	time_t now = time(NULL);
 
 	if (players[ UCIDA ].WorkAccept == 2 and (now - players[UCIDA].LastT) > 1)
 	{
@@ -1004,8 +1003,7 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 {
 	byte UCID = PLIDtoUCID[ packet->PLID ];
 
-	time_t now;
-	time(&now);
+	time_t now = time(NULL);
 	if((now - players[UCID].LastT) < 1) return;
 	players[UCID].LastT = now;
 
@@ -1028,8 +1026,7 @@ void RCTaxi::InsimHLV( struct IS_HLV* packet )
 	/** столкновение со стеной **/
 	if (packet->HLVC==1)
 	{
-		time_t now;
-		time(&now);
+		time_t now = time(NULL);
 		if((now - players[UCID].LastT) < 1) return;
 		players[UCID].LastT = now;
 

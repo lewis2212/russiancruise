@@ -19,6 +19,8 @@ struct EnergyPlayer
     time_t  EnergyTime;
 	bool	EnergyAlarm = false;
     bool	Lock;
+
+    time_t  LastT;
 };
 
 struct energy_info
@@ -57,6 +59,7 @@ private:
     //! HIT CONTROL
     void InsimCON( struct IS_CON* packet );
     void InsimOBH( struct IS_OBH* packet );
+    void InsimHLV( struct IS_HLV* packet );
 
 
     // Функции-утилиты
