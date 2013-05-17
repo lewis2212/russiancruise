@@ -2424,7 +2424,7 @@ void read_cfg()
 
 /*********************************************/
 
-void *thread_mci (void *params)
+void *ThreadMci (void *params)
 {
     out << "\tthread \"Multi Car Info\" started" << endl;
     while (true)
@@ -2481,7 +2481,7 @@ void *thread_mci (void *params)
     return 0;
 };
 
-void *thread_save (void *params)
+void *ThreadSave (void *params)
 {
     SYSTEMTIME sm; //time_t seconds;
     while (ok > 0)
@@ -2523,7 +2523,7 @@ void *thread_save (void *params)
     return 0;
 };
 
-void *thread_work (void *params)
+void *ThreadWork (void *params)
 {
     Sleep(10000);
 
@@ -2611,19 +2611,19 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     out << "Cruise started" << endl;
     out << "Start threads :" << endl;
-    if (pthread_create(&work_tid,NULL,thread_work,NULL) < 0)
+    if (pthread_create(&work_tid,NULL,ThreadWork,NULL) < 0)
     {
         printf("Can't start `thread_work` Thread\n");
         return 0;
     }
     Sleep(1000);
-    if (pthread_create(&save_tid,NULL,thread_save,NULL) < 0)
+    if (pthread_create(&save_tid,NULL,ThreadSave,NULL) < 0)
     {
         printf("Can't start `thread_save` Thread\n");
         return 0;
     }
     Sleep(1000);
-    if (pthread_create(&mci_tid,NULL,thread_mci,NULL) < 0)
+    if (pthread_create(&mci_tid,NULL,ThreadMci,NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
         return 0;
@@ -2756,7 +2756,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 #endif // _RC_POLICE_H
 
 #ifdef _RC_ROADSIGN
-
+	RoadSign->next_packet();
 #endif // _RC_ROADSIGN
     }
 
