@@ -110,11 +110,8 @@ void RCEnergy::readconfig(const char *Track)
     readf.close();
 }
 
-
-
 void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
-
     if (packet->UCID == 0)
         return;
 

@@ -111,8 +111,6 @@ void RCStreet::readconfig(const char *Track)
     readf.close();
 }
 
-
-
 void RCStreet::InsimCNL( struct IS_CNL* packet )
 {
      players.erase(packet->UCID);
