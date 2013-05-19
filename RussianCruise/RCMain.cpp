@@ -2563,7 +2563,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     printf("RCMain Success: Connected to MySQL server\n");
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
-    sprintf(IS_PRODUCT_NAME,"RC-%d.%d.%d:%s\0",AutoVersion::RC_MAJOR,AutoVersion::RC_MINOR,AutoVersion::RC_BUILD,AutoVersion::RC_SVN_REVISION);
+    sprintf(IS_PRODUCT_NAME,"RC-%s\0",AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
     pthread_mutex_init(&RCmutex, NULL);
 

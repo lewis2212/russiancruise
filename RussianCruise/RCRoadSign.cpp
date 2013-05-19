@@ -26,7 +26,7 @@ void RCRoadSign::ReadConfig(const char *Track)
 {
 	cout << "RCRoadSign::readconfig\n" ;
 	strcpy(TrackName, Track);
-    char file[255];
+    char file[MAX_PATH];
     sprintf(file,"%sdata\\RCRoadSign\\tracks\\%s.txt",RootDir,Track);
 
     HANDLE fff;
@@ -145,7 +145,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
     if (strncmp(Msg, "!s_add", 6) == 0)
     {
-        char file[255],text[96];
+        char file[MAX_PATH],text[96];
 
         sprintf(file,"%sdata\\RCRoadSign\\tracks\\%s.txt",RootDir,TrackName);
 
@@ -157,7 +157,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
         strtok(Msg," ");
 		int s = atoi(strtok(NULL," "));
-		if (s == NULL)
+		if (s == 0)
 		{
 			sprintf(text,"^1Error: ^Cукажи ID");
 			SendMTC(UCID,text);
