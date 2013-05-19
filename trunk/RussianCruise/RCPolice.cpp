@@ -577,10 +577,10 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 void RCPolice::InsimPEN( struct IS_PEN* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
-	cout << (int)packet->Reason << endl;
+
     if (packet->Reason == PENR_WRONG_WAY )
     {
-    	cout << "PENR_WRONG_WAY" << endl;
+
         for (int j=0; j<MAX_FINES; j++)
         {
             if (players[ UCID ].fines[j].fine_id == 0)
@@ -597,8 +597,7 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
     }
     else if (packet->Reason == PENR_SPEEDING )
     {
-    	cout << "PENR_SPEEDING" << endl;
-    	cout << (int)packet->NewPen << endl;
+
 		if( packet->NewPen == PENALTY_30 or
 			packet->NewPen == PENALTY_45 or
 			packet->NewPen == PENALTY_DT or

@@ -50,12 +50,12 @@ void RCRoadSign::ReadConfig(const char *Track)
         	int pr = atoi(strtok(str," "));
         	if (pr!=0)
 			{
-
-				Sign[i].ID = pr;
-				Sign[i].X = atoi(strtok(NULL," "));
-				Sign[i].Y = atoi(strtok(NULL," "));
-				Sign[i].Heading = atoi(strtok(NULL," "));
-
+                Signs sgn;
+                sgn.ID = pr;
+                sgn.X = atoi(strtok(NULL," "));
+                sgn.Y = atoi(strtok(NULL," "));
+                sgn.Heading = atoi(strtok(NULL," "));
+				Sign.push_back( sgn );
 				//printf("%d %d %d %d\n",Sign[i].X,Sign[i].Y,Sign[i].Heading,Sign[i].ID);
 				i++;
 			}
@@ -179,13 +179,13 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
 void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
 {
-	byte id = 90, l = 145, t = 0+27*Count, w = 46, h=0;
+	byte id = 90, l = 122, t = 0+27*Count, w = 46, h=0;
 	if (lgh->GetOnLight(UCID)) {t+=44;h=52;}
 
 	//подвес
-	SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
-	SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
-	SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
+	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
+	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
+	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
 	id = 93+10*Count;
 
 	/** главная дорога 2.1 **/
@@ -279,27 +279,25 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 		int H = packet->Info[i].Heading/182;
 		int S = ((int)packet->Info[i].Speed*360)/(32768);
 
-		int c=0;
-		for (int g=0; g<sizeof(Sign); g++)
+		int SignCount = 0;
+		for ( auto& sign: Sign)
 		{
-			if (Sign[g].ID==0) break;
-
-			if (Distance(X,Y,Sign[g].X,Sign[g].Y)<30 and abs(H-Sign[g].Heading)<40)
+			if ( Distance(X, Y, sign.X, sign.Y ) < 50 and abs( H - sign.Heading ) < 40 )
 			{
-				//printf("%d, %d\n",Sign[g].ID,c);
-				ShowSign(UCID,Sign[g].ID,c);
-				players[UCID].OnSign=true;
-				c++;
+				ShowSign(UCID, sign.ID, SignCount);
+				players[UCID].OnSign = true;
+				SignCount++;
+				break;
 			}
 		}
 
-		if (c!=players[UCID].c and players[UCID].OnSign)
+		if ( SignCount != players[UCID].SignCount and players[UCID].OnSign)
 		{
-			players[UCID].OnSign=false;
-			for (int f=90+10*c; f < 160; f++)
+			players[UCID].OnSign = false;
+			for (int f = 90 + 10 * SignCount; f < 160; f++)
 				SendBFN(UCID, f);
-			players[UCID].c=c;
-			break;
+			players[UCID].SignCount = SignCount;
+
 		}
 
 		if (S>1)
