@@ -10,7 +10,7 @@ struct RoadPlayer
     char    UName[24];             // Username
     char    PName[24];             // Player name
     bool 	OnSign;
-    byte 	c;
+    byte 	SignCount;
 };
 
 struct Signs
@@ -33,7 +33,7 @@ class RCRoadSign : public RCBaseClass
 		RCLight    	*lgh;
 
 		char TrackName[5];
-		struct  Signs Sign[50];
+		vector  <Signs> Sign;
 		struct  SignsN SignName[50];
 
 		map<byte, RoadPlayer> players;

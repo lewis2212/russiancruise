@@ -438,7 +438,7 @@ void help_cmds (struct player *splayer,int h_type)
 void btn_info (struct player *splayer, int b_type)
 {
     char about_text[10][100];
-    sprintf(about_text[0],"^7RUSSIAN CRUISE v %d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
+    sprintf(about_text[0],"^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME);
     strncpy(about_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov",99);
     strncpy(about_text[2], "^C^7Jabber: denis-kostin@jabber.ru",99);
     strncpy(about_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru",99);
@@ -450,7 +450,7 @@ void btn_info (struct player *splayer, int b_type)
     strncpy(about_text[9], "^C^3repeat, nose, R.Ratzinger",99);
 
     char ver[16], Text[128];
-    sprintf(ver,"v%d.%d.%d",(int)AutoVersion::RC_MAJOR,(int)AutoVersion::RC_MINOR,(int)AutoVersion::RC_BUILD);
+    sprintf(ver,"%s",IS_PRODUCT_NAME);
 
 	byte c;
 		if (b_type == 1) c=MAX_CARS/2;				//количество строк для 1 вкладки
