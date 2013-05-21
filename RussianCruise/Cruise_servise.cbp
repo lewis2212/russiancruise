@@ -63,6 +63,7 @@
 		<Unit filename="RCBank.h" />
 		<Unit filename="RCBaseClass.cpp" />
 		<Unit filename="RCBaseClass.h" />
+		<Unit filename="RCButtonClickID.h" />
 		<Unit filename="RCDrivingLicense.cpp" />
 		<Unit filename="RCDrivingLicense.h" />
 		<Unit filename="RCEnergy.cpp" />

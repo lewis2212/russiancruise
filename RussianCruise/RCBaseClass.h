@@ -4,6 +4,8 @@ using namespace std;
 
 #include "CInsim.h"
 
+#include "RCButtonClickID.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <iostream>

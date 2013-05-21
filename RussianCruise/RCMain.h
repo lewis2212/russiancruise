@@ -50,6 +50,8 @@ using namespace std;
 #include <map>
 
 #include "Cinsim.h"
+#include "RCButtonClickID.h"
+
 #include "RCPizza.h"
 #include "RCMessage.h"
 #include "RCEnergy.h"
