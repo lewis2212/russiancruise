@@ -80,9 +80,6 @@ public:
     void BtnCash( byte UCID );
 
     void InsimMCI( struct IS_MCI* packet );
-
-    // Функции-утилиты
-    int check_pos (struct BankPlayer *splayer);
 };
 
 #endif

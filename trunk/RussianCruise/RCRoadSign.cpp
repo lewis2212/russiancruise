@@ -10,13 +10,13 @@ int RCRoadSign::Init(const char *dir,void *CInSim, void *Message, void * Light)
     insim = (CInsim *)CInSim;
     if(!insim)
     {
-        printf ("Can't struct CInsim class");
+        printf ("Can'Top struct CInsim class");
         return -1;
     }
     lgh = (RCLight *)Light;
     if(!lgh)
     {
-        printf ("Can't struct RCLight class");
+        printf ("Can'Top struct RCLight class");
         return -1;
     }
     return 0;
@@ -34,7 +34,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     fff = FindFirstFile(file,&fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        cout << "RCRoadSign: Can't find " << file << endl;
+        cout << "RCRoadSign: Can'Top find " << file << endl;
         return ;
     }
     FindClose(fff);
@@ -70,7 +70,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     ff = FindFirstFile(file,&fd);
     if (ff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCRoadSign: Can't find \n%s",file);
+        printf ("RCRoadSign: Can'Top find \n%s",file);
         return;
     }
     FindClose(ff);
@@ -124,26 +124,28 @@ void RCRoadSign::InsimPLL( struct IS_PLL* packet )
 
 void RCRoadSign::InsimCNL( struct IS_CNL* packet )
 {
-	players.erase(packet->UCID);
+	players.erase( packet->UCID );
 }
 
 void RCRoadSign::InsimCPR( struct IS_CPR* packet )
 {
-	strcpy(players[ packet->UCID ].PName, packet->PName);
+	strcpy( players[ packet->UCID ].PName, packet->PName );
 }
 
 void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 {
 	byte UCID = packet->UCID;
-	if (UCID == 0)
+
+	if ( UCID == 0 )
         return;
-	if (packet->UserType != MSO_PREFIX)
+
+	if ( packet->UserType != MSO_PREFIX )
         return;
 
 	char Msg[128];
-    strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
+    strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if (strncmp(Msg, "!s_add", 6) == 0)
+    if ( strncmp(Msg, "!s_add", 6) == 0 )
     {
         char file[MAX_PATH],text[96];
 
@@ -179,47 +181,60 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
 void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
 {
-	byte id = 90, l = 122, t = 0+27*Count, w = 46, h=0;
-	if (lgh->GetOnLight(UCID)) {t+=44;h=52;}
+	byte ClickID = 90, Left = 145, Top = 0+27*Count, Width = 46, Height = 0;
+	if (lgh->GetOnLight(UCID))
+	{
+		Top+=44;
+		Height=52;
+	}
 
 	//подвес
-	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
-	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
-	//SendButton(255, UCID, id++, l, 0+h, 1, 15+27*Count, 32, "");
-	id = 93+10*Count;
+	SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27*Count, 32, "");
+	SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27*Count, 32, "");
+	SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27*Count, 32, "");
+	ClickID = 93+10*Count;
 
 	/** главна€ дорога 2.1 **/
 	if(ID==1)
 	{
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБЯ");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^7^JБЯ");
-		w-=10;t+=5;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБЯ");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^3^JБЯ");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБЯ");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^7^JБЯ");
+		Width-=10;
+		Top+=5;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБЯ");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^3^JБЯ");
 	}
 	/** уступи дорогу 2.4 **/
 	if(ID==2)
 	{
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБ•");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^1^JБ•");
-		w-=12;t+=6;
-		SendButton(255, UCID, id++, l-w/2, t-1, w, w, 0, "^7^JБ•");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБ•");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^1^JБ•");
+		Width-=12;
+		Top+=6;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top-1, Width, Width, 0, "^7^JБ•");
 	}
 	/** иск. неровность 1.17 **/
 	if(ID==3)
 	{
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБ£");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^1^JБ£");
-		w-=12;t+=6;
-		SendButton(255, UCID, id++, l-w/2, t+1, w, w, 0, "^7^JБ£");
-		w-=14;t+=16;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБ№");
-		w+=6;t-=13;
-		SendButton(255, UCID, id++, l-w/2+1, t, w-1, w, 0, "^0^JБQ");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБ£");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^1^JБ£");
+		Width-=12;
+		Top+=6;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top+1, Width, Width, 0, "^7^JБ£");
+		Width-=14;
+		Top+=16;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБ№");
+		Width+=6;
+		Top-=13;
+		SendButton(255, UCID, ClickID++, Left-Width/2+1, Top, Width-1, Width, 0, "^0^JБQ");
 	}
 	/** пешеходный переход 1.22 **/
 	if(ID==4)
@@ -232,27 +247,32 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
 	/** проезд запрещен 3.1 **/
 	if(ID==6)
 	{
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБЬ");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^7^JБЬ");
-		w-=4;t+=2;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^1^JБЬ");
-		SendButton(255, UCID, id++, l-w/2, t-1, w, w, 0, "^7^K£≠");
-		SendButton(255, UCID, id++, l-w/2, t+1, w, w, 0, "^7^K£≠");
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^7^K£≠");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБЬ");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^7^JБЬ");
+		Width-=4;
+		Top+=2;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^1^JБЬ");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top-1, Width, Width, 0, "^7^K£≠");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top+1, Width, Width, 0, "^7^K£≠");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^7^K£≠");
 	}
 	/** кольцева€ дорога 4.3 **/
 	/** ограничение скорости 3.24 **/
 	/** сто€нка 6.4 **/
 	if(ID==9)
 	{
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^0^JБ°");
-		w-=2;t+=1;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^7^JБ°");
-		w-=4;t+=2;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 6, "^JБ°");
-		w-=10;t+=5;
-		SendButton(255, UCID, id++, l-w/2, t, w, w, 0, "^7^K£–");
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^0^JБ°");
+		Width-=2;
+		Top+=1;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^7^JБ°");
+		Width-=4;
+		Top+=2;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 6, "^JБ°");
+		Width-=10;
+		Top+=5;
+		SendButton(255, UCID, ClickID++, Left-Width/2, Top, Width, Width, 0, "^7^K£–");
 	}
 	/** тупик 6.8 **/
 	if(ID==10)

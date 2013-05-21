@@ -591,9 +591,9 @@ void RCBank::InsimMSO( struct IS_MSO* packet )
 					return;
 				}
 			}
-            if (razn>16)
+            if (razn > 14)
 			{
-				sprintf(Text,"^5| ^C^1Внимание! ^7Еще не прошло 14 дней с момента вклада."); SendMTC( packet->UCID , Text );
+				SendMTC( packet->UCID , "^5| ^C^1Внимание! ^7Еще не прошло 14 дней с момента вклада." );
 				SendMTC( packet->UCID ,"^5| ^7^CВведите ^3!withdraw yes ^7чтобы закрыть вклад. Банк получит неустойку в размере ^25 %^7.");
 				return;
 			}
@@ -671,7 +671,7 @@ void RCBank::BtnCash ( byte UCID )
     strcat(pack.Text,"^7 RUR");
     insim->send_packet(&pack);
 
-    if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 /*|| strcmp(players[ UCID ].UName,"Lexanom") == 0*/)
+    if ( strcmp(players[ UCID ].UName,"denis-takumi") == 0 )
     {
         pack.ClickID = 167;
         pack.L = 50;
@@ -681,7 +681,7 @@ void RCBank::BtnCash ( byte UCID )
 
         char cash[10];
         sprintf(cash,"%.0f",BankFond);
-        //itoa((int)BankFond,cash,10);
+
         if (BankFond > 0)
             strcpy(pack.Text,"^2");
         else
@@ -712,7 +712,7 @@ void RCBank::readconfig(const char *Track)
         char str[128];
         readf.getline(str,128);
         TrackInf.BankCount = atoi(str);
-        //printf ("%d\n",TrackInf.BankCount);
+
         for (int i=0; i<TrackInf.BankCount; i++)
         {
             readf.getline(str,128);
@@ -722,7 +722,6 @@ void RCBank::readconfig(const char *Track)
             Y = strtok (NULL,";");
             TrackInf.XBank[i] = atoi(X);
             TrackInf.YBank[i] = atoi(Y);
-            //printf ("%d;%d\n",TrackInf.XBank[i],TrackInf.YBank[i]);
         }
     } //while readf.good()
     readf.close();
@@ -755,17 +754,4 @@ void RCBank::readconfig(const char *Track)
     }
 
     mysql_free_result( rcbankRes );
-}
-
-
-// функции-утилиты
-
-int RCBank::check_pos(struct BankPlayer *splayer)
-{
-    int PLX = splayer->Info.X/65536;
-    int PLY = splayer->Info.Y/65536;
-    if (Check_Pos(4,zone.dealX,zone.dealY,PLX,PLY))
-        return 1;
-
-    return 0;
 }
