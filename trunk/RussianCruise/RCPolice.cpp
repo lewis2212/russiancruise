@@ -171,6 +171,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 					strcat(Text," - ");
 					strcat(Text,players[packet->UCID].fines[i].CopName.c_str());
 				}
+
 				struct tm * timeinfo;
 				time_t t = (time_t)players[packet->UCID].fines[i].fine_date;
 				timeinfo = localtime (&t);
@@ -187,7 +188,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
     {
-
         char _2[128];
         strcpy(_2,Msg);
 
@@ -217,30 +217,39 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                         players[ packet->UCID ].fines[j].fine_id = 0;
                         players[ packet->UCID ].fines[j].fine_date = 0;
 
-                        bank->RemCash( packet->UCID ,fines[id_i].cash);
-
                         int cop = 0;
                         for ( auto& play: players)
                         {
-                            if ( players[ play.first ].cop )
+                            if ( players[ play.first ].cop and packet->UCID != play.first)
                             {
                                 if (dl->Islocked(  play.first  ))
                                 {
-                                    dl->Unlock(  play.first  );
+                                    dl->Unlock( play.first );
                                     dl->AddSkill( play.first , 0.05);
-                                    dl->Lock(  play.first  );
+                                    dl->Lock( play.first );
                                 }
                                 else
-                                    dl->AddSkill( play.first , 0.05);
+								{
+									dl->AddSkill( play.first , 0.05);
+								}
 
                                 bank->AddCash( play.first ,(fines[id_i].cash)*0.05, true);
                                 cop++;
                             }
                         }
 
+						SendMTC( packet->UCID ,msg->_(  packet->UCID , "2106" ));
+						bank->RemCash( packet->UCID ,fines[id_i].cash);
                         bank->AddToBank((fines[id_i].cash)-((fines[id_i].cash)*0.05)*cop);
-                        SendMTC( packet->UCID ,msg->_(  packet->UCID , "2106" ));
-                        dl->RemSkill( packet->UCID );
+
+						if (dl->Islocked( packet->UCID ))
+						{
+							dl->Unlock( packet->UCID );
+							dl->RemSkill( packet->UCID );
+							dl->Lock( packet->UCID );
+						}
+						else
+							dl->RemSkill( packet->UCID );
                         break;
                     }
 
@@ -951,7 +960,7 @@ void RCPolice::SaveUserFines ( byte UCID )
     {
         if (players[ UCID ].fines[i].fine_id > 0)
         {
-            writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date << ";" << players[ UCID ].fines[i].CopName <<  endl;
+            writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date << ";" << players[ UCID ].fines[i].CopName << ";" << players[ UCID ].fines[i].CopPName <<  endl;
         }
     }
 
@@ -986,10 +995,12 @@ void RCPolice::ReadUserFines( byte UCID )
                 char *id;
                 char *date;
                 char *CopName;
+                char *CopPName;
 
                 id = strtok(str,";");
                 date = strtok(NULL,";");
                 CopName = strtok(NULL,";");
+                CopPName = strtok(NULL,";");
 
                 players[ UCID ].fines[i].fine_id = atoi(id);
                 if( date )
@@ -997,6 +1008,9 @@ void RCPolice::ReadUserFines( byte UCID )
 
 				if( CopName )
 					players[ UCID ].fines[i].CopName = CopName;
+
+				if( CopPName )
+					players[ UCID ].fines[i].CopPName = CopPName;
 
                 i++;
             }
