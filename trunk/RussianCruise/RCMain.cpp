@@ -607,7 +607,7 @@ void case_btc ()
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
                     pack_btn.Size = sizeof(struct IS_BTN);
                     pack_btn.Type = ISP_BTN;
-                    pack_btn.ReqI = ginfo->players[i].UCID;             // Must be non-zero, I'll just use UCID
+                    pack_btn.ReqI = pack_btc->ReqI;             // Must be non-zero, I'll just use UCID
                     pack_btn.UCID = ginfo->players[i].UCID;             // UCID of the player that will receive the button
                     pack_btn.L = 25;
                     int count; for (int j=0; j<MAX_PLAYERS; j++) if (ginfo->players[j].UCID != 0) count++;
@@ -615,7 +615,7 @@ void case_btc ()
 						pack_btn.L += 24;
 						pack_btn.T = 187;
                     if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI))
-						pack_btn.T = 171;
+						pack_btn.T = 175;
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 35;
@@ -654,7 +654,14 @@ void case_btc ()
                     // cop buttons
                     if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != ginfo->players[i].UCID)
                     {
-                        pack_btn.BStyle = 32 + ISB_CLICK;
+                        pack_btn.TypeIn = 0;
+                    	pack_btn.BStyle = 32 + ISB_CLICK;
+                        pack_btn.T += 4;
+                        pack_btn.ClickID = 38;
+                        strcpy(pack_btn.Text, "^C^7Øענאפ");
+                        insim->send_packet(&pack_btn);
+
+                        /*pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.TypeIn = 2;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
@@ -667,6 +674,8 @@ void case_btc ()
                         insim->send_packet(&pack_btn);
 
                         pack_btn.TypeIn = 0;
+                        */
+
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1004" ));
