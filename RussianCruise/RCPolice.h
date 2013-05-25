@@ -56,6 +56,8 @@ struct PolicePlayer
 
     int     WorkTime;			// время за которое он должен доставить товар
     int 	speed_over;
+
+    //time_t  LastT;
 };
 
 class RCPolice: public RCBaseClass
@@ -86,12 +88,11 @@ private:
     void InsimPEN( struct IS_PEN* packet );
     void InsimPLA( struct IS_PLA* packet );
 
-
     void ReadUserFines( byte UCID );
     void BtnSirena( byte UCID );
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
-
+	void ShowFinesPanel( byte UCID, byte UCID2 );
 
 public:
 	RCPolice();

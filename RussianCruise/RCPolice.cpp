@@ -402,8 +402,147 @@ void RCPolice::InsimOBH( struct IS_OBH* packet )
 
 }
 
+void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
+{
+	char Text[128];
+	byte c = GetFineCount();
+
+	byte
+		id=84, 				//стартовый ид кнопок
+		id2=110,
+		l=100, 				//не менять
+		t=90,				//не менять
+		hButton=5, 			//высота строки
+		w=100, 				//ширина поля
+		h=10+c*hButton; 	//высота поля
+
+	SendButton(255,UCID,81,l-w/2,t-h/2,w,h+8,32,""); 								//фон
+	SendButton(255,UCID,82,l-w/2,t-h/2,w,h+8,32,"");
+
+	sprintf(Text,"^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName);
+
+	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 	//заголовок
+
+	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); 				//закрывашка
+
+	for(int i=0;i<c;i++)
+		{
+			byte fid = fines[i+1].id; if (fid==0) fid = 255;
+			sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, fines[i+1].name);
+
+			SendButton(fid,UCID,id++,l-w/2+1,t-h/2+10+hButton*i,w-12,hButton,16+64+8,Text);
+			SendButton(fid,UCID,id2++,l+w/2-11,t-h/2+10+hButton*i,10,hButton,16+8,"^CОтмена");
+		}
+}
+
 void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
+	if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
+	{
+		for(int i=80;i<165;i++) SendBFN(packet->UCID,i);
+
+	}
+
+	if ( packet->ClickID >= 84 and packet->ClickID < 110 and packet->ReqI != 254 and packet->ReqI != 255) //выписка штрафа
+	{
+		SYSTEMTIME sm;
+		GetLocalTime(&sm);
+		char fine_c[255];
+		sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+
+		/*time_t now = time(NULL);
+		if ((now - players[packet->UCID].LastT) < 0.3) return;
+		players[packet->UCID].LastT = now;*/
+
+		for ( auto& play: players )
+        {
+            if  ( players[packet->UCID].BID2 == players[play.first].BID)
+            {
+                char Msg[128];
+                sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[packet->ReqI].name);
+                SendMTC( play.first, Msg);
+
+                sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,fines[packet->ReqI].name);
+                SendMTC( packet->UCID ,Msg);
+
+                for (int j=0; j<MAX_FINES; j++)
+                {
+                    if (players[ play.first ].fines[j].fine_id == 0)
+                    {
+                        players[ play.first ].fines[j].fine_id = packet->ReqI;
+                        players[ play.first ].fines[j].fine_date = int( time( NULL ) );
+                        players[ play.first ].fines[j].CopName = players[ packet->UCID ].UName;
+                        players[ play.first ].fines[j].CopPName = players[ packet->UCID ].PName;
+                        break;
+                    }
+                }
+                ofstream readf (fine_c,ios::app);
+                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->ReqI << " to "  << players[ play.first ].UName << endl;
+                readf.close();
+
+                if(players[play.first].ThisFineCount==0) SendBFNAll(play.first);
+                for(int j=0; j<20; j++)
+                    if( strlen(players[play.first].ThisFine[j]) == 0 )
+                    {
+                        sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[packet->ReqI].name,fines[packet->ReqI].id,players[ packet->UCID ].PName);
+                        players[play.first].ThisFineCount++;
+                        break;
+                    }
+
+                break;
+            }
+        }
+	}
+
+	if ( packet->ClickID >= 110 and packet->ClickID <= 130 and packet->ReqI != 255 and packet->ReqI != 254) //выписка штрафа
+	{
+		SYSTEMTIME sm;
+		GetLocalTime(&sm);
+		char fine_c[255];
+		sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+
+		/*time_t now = time(NULL);
+		if ((now - players[packet->UCID].LastT) < 1) return;
+		players[packet->UCID].LastT = now;*/
+
+        for ( auto& play: players )
+        {
+            if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
+            {
+                for (int j=0; j<MAX_FINES; j++)
+                {
+                    if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
+                    {
+                        char Msg[128];
+                        sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[packet->ReqI].name);
+                        SendMTC( play.first ,Msg);
+
+                        sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[packet->ReqI].name);
+                        SendMTC( packet->UCID ,Msg);
+
+                        players[ play.first ].fines[j].fine_id = 0;
+                        players[ play.first ].fines[j].fine_date = 0;
+                        ofstream readf (fine_c,ios::app);
+                        readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " cancle fine ID = " << packet->ReqI << " to "  << players[ play.first ].UName << endl;
+                        readf.close();
+
+                        if (players[play.first].ThisFineCount>0)
+                            for(int j=0; j<20; j++)
+                                if( strlen(players[play.first].ThisFine[j]) == 0 )
+                                {
+                                    sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[packet->ReqI].name,fines[packet->ReqI].id,players[ packet->UCID ].PName);
+                                    players[play.first].ThisFineCount++;
+                                    break;
+                                }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+	}
+
+
 	if ( packet->ClickID == 130 and packet->ReqI == 254 )
 	{
 		players[packet->UCID].ThisFineCount=0;
@@ -415,6 +554,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     {
         players[ packet->UCID ].BID2 =  packet->ClickID;
     }
+
+    /** штрафы **/
+    if (packet->ClickID==38 and players[packet->UCID].cop)
+		ShowFinesPanel(packet->UCID, packet->ReqI);
 
     /**
     Включаем погоню
