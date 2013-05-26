@@ -955,7 +955,6 @@ void case_mci ()
 					{
 						if ( dl->Islocked( ginfo->players[j].UCID ) )
 							dl->Unlock( ginfo->players[j].UCID );
-
 						bank->AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
 						bank->RemFrBank(abs((int)Dist)/100);
 					}
@@ -1090,8 +1089,6 @@ void case_mso ()
         strcpy(file,RootDir);
         strcat(file,"logs\\sends\\send.txt");
 
-        HANDLE fff;
-        WIN32_FIND_DATA fd;
         FILE *fff = fopen(file,"r");
         if (fff == nullptr)
         {
@@ -2557,7 +2554,7 @@ void *ThreadMain(void *CmdLine)
     if(!mysql_init(&rcMaindb))
     {
         printf("RCMain Error: can't create MySQL-descriptor\n");
-        return -1;
+        return 0;
     }
 
     mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
@@ -2976,7 +2973,7 @@ int main(int argc, char* argv[])
 
         out.open(log);
 
-        pthread_create(NULL,NULL,ThreadMain,NULL);
+        pthread_create(&main_tid,NULL,ThreadMain,NULL);
 
         // рабочий цикл сервиса
         while (ok)
@@ -3064,7 +3061,7 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
     out << "The service is started." << endl << flush;
     out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
-    CreateThread(NULL,0,ThreadMain,0,0,NULL);
+    pthread_create(&main_tid,NULL,ThreadMain,NULL);
 
     // рабочий цикл сервиса
     while (service_status.dwCurrentState == SERVICE_RUNNING)

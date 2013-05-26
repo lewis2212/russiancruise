@@ -1,7 +1,4 @@
 #include "tools.h"
-#include <stdio.h>
-#include <string.h>
-
 
 // =================================================
 
@@ -19,15 +16,13 @@ namespace tools {
 
 	void read_mysql(const char *path ,mysqlConf *conf)
 	{
-		HANDLE fff;
-		WIN32_FIND_DATA fd;
-		fff = FindFirstFile(path,&fd);
-		if (fff == INVALID_HANDLE_VALUE)
+
+		FILE *fff = fopen(path,"r");
+		if ( fff == nullptr )
 		{
-			FindClose(fff);
 			return;
 		}
-		FindClose(fff);
+		fclose(fff);
 
 		memset(conf, 0, sizeof( mysqlConf ) );
 
