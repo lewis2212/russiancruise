@@ -437,6 +437,13 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 
 void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
+	if ( packet->ClickID == 130 and packet->ReqI == 254 )
+	{
+		players[packet->UCID].ThisFineCount=0;
+		for(int i=128;i<165;i++) SendBFN(packet->UCID,i);
+		for(int j=0;j<20;j++) strcpy(players[packet->UCID].ThisFine[j],"");
+	}
+
 	if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
 	{
 		for(int i=80;i<165;i++) SendBFN(packet->UCID,i);
@@ -494,7 +501,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         }
 	}
 
-	if ( packet->ClickID >= 110 and packet->ClickID <= 130 and packet->ReqI != 255 and packet->ReqI != 254) //выписка штрафа
+	if ( packet->ClickID >= 110 and packet->ClickID < 130 and packet->ReqI != 255 and packet->ReqI != 254) //выписка штрафа
 	{
 		SYSTEMTIME sm;
 		GetLocalTime(&sm);
@@ -540,14 +547,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 break;
             }
         }
-	}
-
-
-	if ( packet->ClickID == 130 and packet->ReqI == 254 )
-	{
-		players[packet->UCID].ThisFineCount=0;
-		for(int i=128;i<165;i++) SendBFN(packet->UCID,i);
-		for(int j=0;j<20;j++) strcpy(players[packet->UCID].ThisFine[j],"");
 	}
 
     if ( packet->ClickID <= 32 )
