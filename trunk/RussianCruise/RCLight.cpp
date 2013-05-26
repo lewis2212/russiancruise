@@ -54,15 +54,13 @@ void RCLight::readconfig(const char *Track)
     char file[255];
     sprintf(file,"%sdata\\RCLight\\tracks\\%s.txt",RootDir,Track);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
     {
         cout << "RCLight: Can't find " << file << endl;
         return ;
     }
-    FindClose(fff);
+    fclose(fff);
 
     ifstream readf (file,ios::in);
     int i = 0;

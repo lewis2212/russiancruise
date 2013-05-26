@@ -21,6 +21,7 @@ using namespace std;
 #include "mysql/include/mysql.h"
 
 //#include "tools.h"
+#define MAX_PATH	260
 
 class RCBaseClass
 {

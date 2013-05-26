@@ -171,7 +171,11 @@ int RCDL::init(const char *dir,void *CInSim, void *RCMessageClass)
     while( mysql_real_connect( &rcDLDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCDL Error: can't connect to MySQL server\n");
+		#ifdef __linux__
+        sleep(60000);
+        #else
         Sleep(60000);
+        #endif
     }
 	printf("RCDL Success: Connected to MySQL server\n");
 

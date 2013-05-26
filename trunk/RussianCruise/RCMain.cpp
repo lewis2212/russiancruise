@@ -231,15 +231,13 @@ void read_words()
     char file[255];
     sprintf(file,"%smisc\\words.txt", RootDir);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
     {
         out << "Can't find " << file << endl;
         return;
     }
-    FindClose(fff);
+    fclose(fff);
 
     ifstream readf (file,ios::in);
     int i=0;
@@ -1094,13 +1092,13 @@ void case_mso ()
 
         HANDLE fff;
         WIN32_FIND_DATA fd;
-        fff = FindFirstFile(file,&fd);
-        if (fff == INVALID_HANDLE_VALUE)
+        FILE *fff = fopen(file,"r");
+        if (fff == nullptr)
         {
             out << "Can't find " << file << endl;
             return;
         }
-        FindClose(fff);
+        fclose(fff);
 
         ifstream readf (file,ios::in);
 
@@ -2202,7 +2200,11 @@ int core_reconnect(void *pack_ver)
     insim->isclose();
 
     out << "wait 1 minute and reconnect \n";
-    Sleep (60000);
+	#ifdef __linux__
+	sleep(60000);
+	#else
+	Sleep(60000);
+	#endif
 
 
     memset(pack_ver,0,sizeof(struct IS_VER));
@@ -2242,15 +2244,13 @@ void read_track()
     char file[255];
     sprintf(file,"%sdata\\RCCore\\tracks\\%s.txt" , RootDir , ginfo->Track);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
     {
         out << "Can't find " << file << endl;
         return;
     }
-    FindClose(fff);
+    fclose(fff);
 
     ifstream readf (file,ios::in);
 
@@ -2333,15 +2333,13 @@ void read_car()
     char file[255];
     sprintf(file,"%smisc\\cars.txt" , RootDir);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
     {
         out << "Can't find " << file << endl;
         return;
     }
-    FindClose(fff);
+    fclose(fff);
 
     ginfo->carMap.clear();
 
@@ -2389,15 +2387,13 @@ void read_cfg()
     char file[255];
     sprintf(file,"%smisc\\%s.cfg",RootDir,ServiceName);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
     {
         out << "Can't find " << file << endl;
         return;
     }
-    FindClose(fff);
+    fclose(fff);
 
     ifstream readf (file,ios::in);
 
@@ -2515,11 +2511,19 @@ void *ThreadSave (void *params)
             }
 
         }
+        #ifdef __linux__
+        sleep(500);
+        #else
         Sleep(500);
+        #endif
 #ifdef _RC_POLICE_H
         police->SetSirenLight( "^4||||||||||^1||||||||||" );
 #endif
+        #ifdef __linux__
+        sleep(500);
+        #else
         Sleep(500);
+        #endif
 #ifdef _RC_POLICE_H
         police->SetSirenLight( "^1||||||||||^4||||||||||" );
 #endif
@@ -2537,13 +2541,17 @@ void *ThreadWork (void *params)
         pizza->Event();
         taxi->Event();
         lgh->Event();
+        #ifdef __linux__
+        sleep(500);
+        #else
         Sleep(500);
+        #endif
     }
     return 0;
 };
 
 
-DWORD WINAPI ThreadMain(void *CmdLine)
+void *ThreadMain(void *CmdLine)
 {
 
     if(!mysql_init(&rcMaindb))
@@ -2562,7 +2570,11 @@ DWORD WINAPI ThreadMain(void *CmdLine)
     while( mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCMain Error: can't connect to MySQL server\n");
+        #ifdef __linux__
+        sleep(60000);
+        #else
         Sleep(60000);
+        #endif
     }
     printf("RCMain Success: Connected to MySQL server\n");
     // TODO (#1#): Uncoment in Release
@@ -2573,10 +2585,12 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     if (strlen(ServiceName) == 0)
     {
-        out << "Не задан файл конфигурации\n"   ;
+        out << "Не задан файл конфигурации\n";
+        #ifndef __linux__
         service_status.dwCurrentState = SERVICE_STOPPED;
         // изменить состояние сервиса
         SetServiceStatus(hServiceStatus, &service_status);
+        #endif
         return 0;
 
     }
@@ -2620,19 +2634,31 @@ DWORD WINAPI ThreadMain(void *CmdLine)
         printf("Can't start `thread_work` Thread\n");
         return 0;
     }
-    Sleep(1000);
+	#ifdef __linux__
+	sleep(1000);
+	#else
+	Sleep(1000);
+	#endif
     if (pthread_create(&save_tid,NULL,ThreadSave,NULL) < 0)
     {
         printf("Can't start `thread_save` Thread\n");
         return 0;
     }
-    Sleep(1000);
+    #ifdef __linux__
+	sleep(1000);
+	#else
+	Sleep(1000);
+	#endif
     if (pthread_create(&mci_tid,NULL,ThreadMci,NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
         return 0;
     }
-    Sleep(1000);
+    #ifdef __linux__
+	sleep(1000);
+	#else
+	Sleep(1000);
+	#endif
 
     out << "All threads started" << endl;
 
@@ -2769,16 +2795,16 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
     delete insim;
     delete ginfo;
-
+#ifndef __linux__
     service_status.dwCurrentState = SERVICE_STOPPED;
     SetServiceStatus(hServiceStatus, &service_status);
-
+#endif
     pthread_mutex_destroy(&RCmutex);
     return 0;
 }
 
 int  nCount;     // счетчик
-
+#ifndef __linux__
 int core_install_service(char* param[])
 {
     hServiceControlManager = OpenSCManager(
@@ -2907,6 +2933,7 @@ int core_uninstall_service()
 
     return 2;
 }
+#endif
 // главная функция приложения
 int main(int argc, char* argv[])
 {
@@ -2926,12 +2953,16 @@ int main(int argc, char* argv[])
     strcpy(ServiceName,argv[1]);
     if (strcmp(argv[argc-1],"install") == 0 )
     {
+    	#ifndef __linux__
         core_install_service(argv);
+        #endif
         return 0;
     }
     else if (strcmp(argv[argc-1],"uninstall") == 0 )
     {
+    	#ifndef __linux__
         core_uninstall_service();
+        #endif
         return 0;
     }
     else if (strcmp(argv[argc-1],"console") == 0 )
@@ -2945,19 +2976,27 @@ int main(int argc, char* argv[])
 
         out.open(log);
 
-        CreateThread(NULL,0,ThreadMain,0,0,NULL);
+        pthread_create(NULL,NULL,ThreadMain,NULL);
 
         // рабочий цикл сервиса
         while (ok)
         {
-            Sleep(1000);
+            #ifdef __linux__
+			sleep(1000);
+			#else
+			Sleep(1000);
+			#endif
         }
         out.close();
 
+        #ifdef __linux__
+        sleep(10000);
+        #else
         Sleep(10000);
+        #endif
         return 0;
     }
-
+#ifndef __linux__
     //  инициализируем структуру сервисов
     SERVICE_TABLE_ENTRY  service_table[] =
     {
@@ -2968,10 +3007,10 @@ int main(int argc, char* argv[])
     // запускаем диспетчер сервиса
     if (!StartServiceCtrlDispatcher(service_table))
         return 0;
-
+#endif
     return 0;
 }
-
+#ifndef __linux__
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
     SYSTEMTIME sm;
@@ -3069,7 +3108,11 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
 #ifdef _RC_LEVEL_H
                 dl->save(ginfo->players[j].UCID);
 #endif
-                Sleep(500);
+                #ifdef __linux__
+				sleep(500);
+				#else
+				Sleep(500);
+				#endif
             }
         }
         ok=0;
@@ -3099,3 +3142,5 @@ VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
     }
     return;
 }
+
+#endif
