@@ -54,7 +54,11 @@ int RCEnergy::init(const char *dir,void *CInSim, void *Message,void *Bank)
     while( mysql_real_connect( &rcNrgDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCEnergy Error: can't connect to MySQL server\n");
+        #ifdef __linux__
+        sleep(60000);
+        #else
         Sleep(60000);
+        #endif
     }
 	printf("RCEnergy Success: Connected to MySQL server\n");
 
@@ -67,13 +71,11 @@ void RCEnergy::readconfig(const char *Track)
     char file[255];
     sprintf(file,"%sdata\\RCEnergy\\maps\\%s.txt", RootDir, Track );
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    FILE *fff = fopen(file,"r");
+    if (fff == nullptr)
         return;
 
-    FindClose(fff);
+    fclose(fff);
 
     ifstream readf (file,ios::in);
 

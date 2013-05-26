@@ -256,7 +256,11 @@ void RCTaxi::accept_user( byte UCID )
 		{
 			DestPoint = rand()%ClientCount;
 			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID)) ok = false;
+			#ifdef __linux__
+			sleep(100);
+			#else
 			Sleep(100);
+			#endif
 		}
 
 		struct streets StreetInfo;
@@ -308,7 +312,11 @@ void RCTaxi::accept_user2(byte UCID)
 	{
 		DestPoint = rand()%ClientCount;
 		if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID )) ok = false;
-		Sleep(100);
+		#ifdef __linux__
+        sleep(100);
+        #else
+        Sleep(100);
+        #endif
 	}
 
 	int DestStreet = ClientPoints[DestPoint].StreetId; //улица назначения

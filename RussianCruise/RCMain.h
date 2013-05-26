@@ -38,7 +38,7 @@ buttons ClickId's:
 using namespace std;
 
 #ifdef __linux__
-	#include <mysql.h>
+//	#include <mysql.h>
 #else
 	#include <windows.h>
 	#include "mysql/include/mysql.h"
@@ -49,7 +49,7 @@ using namespace std;
 #include <time.h>
 #include <map>
 
-#include "Cinsim.h"
+#include "CInsim.h"
 #include "RCButtonClickID.h"
 
 #include "RCPizza.h"
@@ -81,7 +81,7 @@ MYSQL_RES *rcMainRes;
 MYSQL_ROW rcMainRow;
 
 
-time_t  stime;
+time_t  s_time;
 int     chek_users =0;
 
 CInsim *insim;
@@ -91,13 +91,14 @@ ofstream  out;   // выходной файл для протокола работы сервиса
 char RootDir[MAX_PATH];
 char ServiceName[64];
 
+#ifndef __linux__
 SERVICE_STATUS    service_status;
 SERVICE_STATUS_HANDLE  hServiceStatus;
 SC_HANDLE  hServiceControlManager, hService;
 
 VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv);
 VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
-
+#endif
 pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 
 struct cars

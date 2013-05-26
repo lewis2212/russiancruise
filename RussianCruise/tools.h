@@ -4,7 +4,7 @@
 using namespace std;
 
 #include <math.h>
-#include <windows.h>
+//#include <windows.h>
 #include <iostream>
 #include <fstream>
 #include <string>
