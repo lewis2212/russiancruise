@@ -808,19 +808,16 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             return;
 
             /** окошко со штрафами **/
-            if (players[UCID].ThisFineCount!=0)
+            if ( players[UCID].ThisFineCount != 0 )
 			{
-				byte id=131, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
-				SendButton(255,UCID,129,l-w/2,t-h/2,w,h+8,32,"");id++; 							//фон
-				SendButton(255,UCID,128,l-w/2,t-h/2,w,h+8,32,"");id++;
-				SendButton(255,UCID,id,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3"));id++; 	//заголовок
-				SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK");id++; 			//закрывашка
+				byte ClickID=CLICKID::CLICK_ID_129, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
+				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");
+				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");							//фон
+				SendButton(255, UCID, ClickID++, l-7, t-h/2+h+1, 14, 6, ISB_LIGHT + ISB_CLICK,"^2OK"); 			//закрывашка
+				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3")); 	//заголовок
 
-				for(int j=0;j<players[UCID].ThisFineCount;j++)
-				{
-					SendButton(255,UCID,id,l-w/2+1,t-h/2+10+5*j,w-2,5,16+64,players[UCID].ThisFine[j]);
-					id++;
-				}
+				for( int j=0; j < players[UCID].ThisFineCount; j++ )
+					SendButton(255, UCID, ClickID++, l-w/2+1, t-h/2+10+5*j, w-2, 5,ISB_LEFT + ISB_LIGHT, players[UCID].ThisFine[j] );
 			}
 			/** ##штрафы **/
 
@@ -840,14 +837,27 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
         if (players[ UCID ].cop )
         {
+			if ( players[ UCID ].sirena == 1 )
+			{
+				players[ UCID ].sirenaOnOff = 1;
+				players[ UCID ].sirenaSize = 90;
+				BtnSirena( UCID );
+			}
+
             for ( auto& play: players )
             {
                 byte UCID2 = play.first;
-                int X = players[UCID2].Info.X/65536;
-                int Y = players[UCID2].Info.Y/65536;
-                int X1 = players[UCID].Info.X/65536;
-                int Y1 = players[UCID].Info.Y/65536;
-                int Rast = dl->Distance( X, Y, X1, Y1);
+
+                if( UCID == UCID2 )
+					continue;
+
+                int X = players[ UCID2 ].Info.X/65536;
+                int Y = players[ UCID2 ].Info.Y/65536;
+                int X1 = players[ UCID ].Info.X/65536;
+                int Y1 = players[ UCID ].Info.Y/65536;
+
+                int Rast = Distance( X, Y, X1, Y1);
+
                 if (players[ UCID2 ].Pogonya == 1)
                 {
                     if ( (Rast < 10) and (!players[ UCID2 ].cop))
@@ -857,7 +867,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                         {
                             players[UCID2].Pogonya = 2;
                             nrg->Unlock(UCID2);
-                            strcpy(players[UCID2].PogonyaReason,msg->_(UCID2, "1701" ));
+                            strcpy(players[UCID2].PogonyaReason, msg->_(UCID2, "1701" ));
 
                             char Text[96];
                             sprintf(Text,"^2| %s%s", players[ UCID2 ].PName, msg->_(  UCID , "1702" ));
@@ -881,7 +891,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 								players[UCID2].speed_over=Speed;
                     }
                     else
-						if (players[UCID2].speed_over>0)
+						if (players[ UCID2 ].speed_over>0)
 							{
 								struct streets StreetInfo;
 								street->CurentStreetInfo(&StreetInfo,UCID2);
@@ -891,11 +901,11 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 								sprintf(text,msg->_(UCID2, "Speeding"),players[UCID2].PName,Speed2,StreetInfo.Street,players[UCID].PName);
 								SendMTC(255,text);
 
-								if (players[UCID2].Pogonya == 0)
+								if (players[ UCID2 ].Pogonya == 0)
 								{
-									players[UCID2].Pogonya = 1;
+									players[ UCID2 ].Pogonya = 1;
 									int worktime = time(NULL);
-									players[UCID2].WorkTime = worktime+60*6;
+									players[ UCID2 ].WorkTime = worktime+60*6;
 									strcpy(players[UCID2].PogonyaReason,msg->_(UCID2,"1006"));
 									sprintf(text,msg->_(play.first, "PogonyaOn" ), players[ UCID2 ].PName );
 									SendMTC(255, text);
@@ -906,42 +916,23 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 }
 
                 /** ЛЮСТРА **/
-                if (players[UCID].sirena ==1)
+                if ( players[ UCID ].sirena == 1 )
                 {
-                    if ( (Rast < 120) and ( !players[UCID2].cop ) )
-                    {
-                        players[UCID2].sirenaOnOff = 1;
-                        players[UCID2].sirenaKey = 1;
-                        players[UCID2].sirenaSize = Rast;
-                    }
-                    else
-                    {
-                        players[UCID2].sirenaOnOff = 0;
-                    }
-                    players[UCID].sirenaKey = 1;
-                    players[UCID].sirenaOnOff = 1;
 
-                    if ( players[UCID].cop )
-                        players[UCID].sirenaSize = 90;
-                    else
-                        players[UCID].sirenaSize = 0;
+                    if ( ( Rast < 130 ) and ( !players[ UCID2 ].cop ) )
+                    {
+                        players[ UCID2 ].sirenaOnOff = 1;
+                        players[ UCID2 ].sirenaSize = Rast;
+                        BtnSirena( UCID2 );
+                    }
                 }
                 else
                 {
-                    players[UCID2].sirenaOnOff = 0;
-                    players[UCID].sirenaOnOff = 0;
+                    players[ UCID2 ].sirenaOnOff = 0;
+                    players[ UCID ].sirenaOnOff = 0;
                 }
-            }
-        }
-
-        if ((players[UCID].sirenaOnOff == 0) and (players[UCID].sirenaKey == 1))
-        {
-            players[UCID].sirenaKey = 0;
-            SendBFN(UCID,203);
-        }
-
-        if ( players[ UCID ].sirenaOnOff == 1)
-            BtnSirena( UCID );
+            } // for auto
+        } // if cop
 
         if ((players[ UCID ].Pogonya == 0) and (strlen(players[ UCID ].PogonyaReason) > 1))
         {
@@ -1035,7 +1026,7 @@ void RCPolice::BtnSirena( byte UCID )
     pack.UCID = UCID;
     pack.Inst = 0;
     pack.TypeIn = 0;
-    pack.ClickID = 203;
+    pack.ClickID = CLICKID::CLICK_ID_SIRENA;
     pack.BStyle = 1;
 
     pack.T = 20;
@@ -1241,6 +1232,13 @@ void RCPolice::Event()
     {
         byte UCID = play.first;
         auto playr = play.second;
+
+        if( players[ UCID ].sirenaSize > 120 and  players[ UCID ].sirenaOnOff == 1 ){
+			 players[ UCID ].sirenaOnOff == 0;
+			 SendBFN( UCID, CLICKID::CLICK_ID_SIRENA );
+        }
+
+
         if ( playr.Pogonya == 1 )
         {
             ButtonClock( UCID );
@@ -1269,7 +1267,7 @@ void RCPolice::Event()
             pack.UCID =  UCID ;
             pack.Inst = 0;
             pack.TypeIn = 0;
-            pack.ClickID = 60;
+            pack.ClickID = CLICKID::CLICK_ID_60;
             pack.BStyle = 32;
             pack.L = 73;
             pack.T = 191;
