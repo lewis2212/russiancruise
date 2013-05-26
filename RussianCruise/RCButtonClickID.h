@@ -1,8 +1,8 @@
 #ifndef _RC_CLICK_ID
 #define _RC_CLICK_ID
 
-enum ClickID{
-	CLICK_ID_0 = 0,
+enum CLICKID{
+	CLICK_ID_0 = 0, // пользователи
 	CLICK_ID_1 = 1,
 	CLICK_ID_2 = 2,
 	CLICK_ID_3 = 3,
@@ -34,7 +34,7 @@ enum ClickID{
 	CLICK_ID_29 = 29,
 	CLICK_ID_30 = 30,
 	CLICK_ID_31 = 31,
-	CLICK_ID_32 = 32,
+	CLICK_ID_32 = 32, // конец пользователей
 	CLICK_ID_33 = 33,
 	CLICK_ID_34 = 34,
 	CLICK_ID_35 = 35,
@@ -62,7 +62,7 @@ enum ClickID{
 	CLICK_ID_57 = 57,
 	CLICK_ID_58 = 58,
 	CLICK_ID_59 = 59,
-	CLICK_ID_60 = 60,
+	CLICK_ID_60 = 60, // List of Pursuite players
 	CLICK_ID_61 = 61,
 	CLICK_ID_62 = 62,
 	CLICK_ID_63 = 63,
@@ -131,7 +131,7 @@ enum ClickID{
 	CLICK_ID_126 = 126,
 	CLICK_ID_127 = 127,
 	CLICK_ID_128 = 128,
-	CLICK_ID_129 = 129,
+	CLICK_ID_129 = 129,//  окошко со штрафами
 	CLICK_ID_130 = 130,
 	CLICK_ID_131 = 131,
 	CLICK_ID_132 = 132,
@@ -205,9 +205,9 @@ enum ClickID{
 	CLICK_ID_200 = 200,
 	CLICK_ID_201 = 201,
 	CLICK_ID_202 = 202,
-	CLICK_ID_203 = 203,
-	CLICK_ID_204 = 204,
-	CLICK_ID_205 = 205,
+	CLICK_ID_SIRENA = 203, //SIRENA
+	CLICK_ID_WRONG_WAY = 204, //WRONG_WAY
+	CLICK_ID_WRONG_WAY_1 = 205,
 	CLICK_ID_206 = 206,
 	CLICK_ID_207 = 207,
 	CLICK_ID_208 = 208,

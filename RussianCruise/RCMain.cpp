@@ -947,30 +947,25 @@ void case_mci ()
                 }
                 float Dist = dl->Distance(X,Y,LastX,LastY);
 
-                if ((abs((int)Dist) > 10) and (S>30))
-                {
-                    ginfo->players[j].Distance += Dist;
-                    /** Bonus **/
-                    ginfo->players[j].Bonus_dist += Dist;
+				ginfo->players[j].Distance += Dist;
+				/** Bonus **/
+				ginfo->players[j].Bonus_dist += Dist;
 
-                    //начисляем деньги только до 20 уровня
-                    if(dl->GetLVL(ginfo->players[j].UCID) < 20)
-                    {
+                if ( S > 30 and dl->GetLVL(ginfo->players[j].UCID) < 20 )
+				{
+					if (S <= StreetInfo.SpeedLimit)
+					{
+						if ( dl->Islocked( ginfo->players[j].UCID ) )
+							dl->Unlock( ginfo->players[j].UCID );
 
-                        if (S <= StreetInfo.SpeedLimit)
-                        {
-                            if ( dl->Islocked( ginfo->players[j].UCID ) )
-                                dl->Unlock( ginfo->players[j].UCID );
-                            bank->AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
-                            bank->RemFrBank(abs((int)Dist)/100);
-                        }
-                        else
-                        {
-                            if ( !( dl->Islocked( ginfo->players[j].UCID ) ) )
-                                dl->Lock( ginfo->players[j].UCID );
-                        }
-
-                    }
+						bank->AddCash(ginfo->players[j].UCID,abs((int)Dist)/10, false);
+						bank->RemFrBank(abs((int)Dist)/100);
+					}
+					else
+					{
+						if ( !( dl->Islocked( ginfo->players[j].UCID ) ) )
+							dl->Lock( ginfo->players[j].UCID );
+					}
                 }
 
                 /** Bonus **/

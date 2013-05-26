@@ -499,7 +499,7 @@ void RCLight::WrongWay(byte UCID)
     pack_btn.BStyle = 0;
     pack_btn.TypeIn = 0;
     /**** telo1 **/
-    pack_btn.ClickID = 203;
+    pack_btn.ClickID = CLICKID::CLICK_ID_WRONG_WAY;
     pack_btn.L = 0;
     pack_btn.T = 0;
     pack_btn.W = 200;
@@ -507,7 +507,7 @@ void RCLight::WrongWay(byte UCID)
     strcpy(pack_btn.Text,"^1•");
     insim->send_packet(&pack_btn);
     /**** telo2 **/
-    pack_btn.ClickID = 204;
+    pack_btn.ClickID = CLICKID::CLICK_ID_WRONG_WAY_1;
     pack_btn.L = 25;
     pack_btn.T = 26;
     pack_btn.W = 150;
