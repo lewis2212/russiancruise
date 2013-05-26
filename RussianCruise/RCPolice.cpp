@@ -809,10 +809,10 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             /** окошко со штрафами **/
             if ( players[UCID].ThisFineCount != 0 )
 			{
-				byte ClickID=CLICKID::CLICK_ID_129, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
+				byte ClickID=CLICKID::CLICK_ID_128, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
 				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");
 				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");							//фон
-				SendButton(255, UCID, ClickID++, l-7, t-h/2+h+1, 14, 6, ISB_LIGHT + ISB_CLICK,"^2OK"); 			//закрывашка
+				SendButton(254, UCID, ClickID++, l-7, t-h/2+h+1, 14, 6, ISB_LIGHT + ISB_CLICK,"^2OK"); 			//закрывашка
 				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3")); 	//заголовок
 
 				for( int j=0; j < players[UCID].ThisFineCount; j++ )
@@ -840,8 +840,11 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 			{
 				players[ UCID ].sirenaOnOff = 1;
 				players[ UCID ].sirenaSize = 90;
-				BtnSirena( UCID );
 			}
+			else
+                players[ UCID ].sirenaSize = 124;
+
+            BtnSirena( UCID );
 
             for ( auto& play: players )
             {
@@ -917,8 +920,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 /** ЛЮСТРА **/
                 if ( players[ UCID ].sirena == 1 )
                 {
-
-                    if ( ( Rast < 130 ) and ( !players[ UCID2 ].cop ) )
+                    if ( ( Rast < 125 ) and ( !players[ UCID2 ].cop ) )
                     {
                         players[ UCID2 ].sirenaOnOff = 1;
                         players[ UCID2 ].sirenaSize = Rast;
@@ -927,8 +929,8 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 }
                 else
                 {
-                    players[ UCID2 ].sirenaOnOff = 0;
-                    players[ UCID ].sirenaOnOff = 0;
+                    players[ UCID2 ].sirenaSize = 124;
+                    players[ UCID ].sirenaSize = 124;
                 }
             } // for auto
         } // if cop
@@ -1017,6 +1019,12 @@ int RCPolice::GetFineCount()
 
 void RCPolice::BtnSirena( byte UCID )
 {
+    if( players[ UCID ].sirenaSize > 120 )
+    {
+        SendBFN(UCID, CLICKID::CLICK_ID_SIRENA);
+        return;
+    }
+
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
     pack.Size = sizeof(struct IS_BTN);
@@ -1232,11 +1240,10 @@ void RCPolice::Event()
         byte UCID = play.first;
         auto playr = play.second;
 
-        if( players[ UCID ].sirenaSize > 120 and  players[ UCID ].sirenaOnOff == 1 ){
-			 players[ UCID ].sirenaOnOff == 0;
-			 SendBFN( UCID, CLICKID::CLICK_ID_SIRENA );
-        }
-
+        /*if( playr.sirenaSize > 120 and playr.sirenaOnOff == 1){
+            players[ UCID ].sirenaOnOff = 0;
+            SendBFN(UCID, CLICKID::CLICK_ID_SIRENA);
+        }*/
 
         if ( playr.Pogonya == 1 )
         {

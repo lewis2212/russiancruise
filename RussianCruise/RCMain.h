@@ -62,7 +62,7 @@ using namespace std;
 #include "RCLight.h"
 #include "RCTaxi.h"
 #include "RCPolice.h"
-#include "RCRoadSign.h"
+//#include "RCRoadSign.h"
 //#include "RCBanList.h"
 
 #define MAX_CARS 30
@@ -100,7 +100,7 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv);
 VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
 #endif
 pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
-
+pthread_t main_tid; // Thread ID
 struct cars
 {
     int             id;

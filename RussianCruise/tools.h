@@ -9,6 +9,9 @@ using namespace std;
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>     /* atoi */
 
 typedef unsigned char byte;
 
