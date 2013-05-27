@@ -839,6 +839,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 			if ( players[ UCID ].sirena == 1 )
 			{
 				players[ UCID ].sirenaOnOff = 1;
+				players[ UCID ].sirenaKey = 1;
 				players[ UCID ].sirenaSize = 90;
 			}
 			else
@@ -918,13 +919,14 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 }
 
                 /** ËÞÑÒÐÀ **/
-                if ( players[ UCID ].sirena == 1 )
+                if (players[UCID].sirena ==1)
                 {
-                    if ( ( Rast < 125 ) and ( !players[ UCID2 ].cop ) )
+                    if ( (Rast < 120) and ( !players[UCID2].cop ) )
                     {
-                        players[ UCID2 ].sirenaOnOff = 1;
-                        players[ UCID2 ].sirenaSize = Rast;
-                        BtnSirena( UCID2 );
+                        players[ UCID2 ].sirenaOnOff += 1;
+                        players[ UCID2 ].sirenaKey = 1;
+                        if( players[UCID2].sirenaSize < Rast )
+							players[UCID2].sirenaSize = Rast;
                     }
                 }
                 else
@@ -934,6 +936,18 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 }
             } // for auto
         } // if cop
+
+        if ( (players[UCID].sirenaOnOff == 0) and (players[UCID].sirenaKey == 1) )
+        {
+            players[UCID].sirenaKey = 0;
+            SendBFN(UCID,  CLICKID::CLICK_ID_SIRENA );
+        }
+
+        if ( players[ UCID ].sirenaOnOff != 0 )
+            BtnSirena( UCID );
+
+		players[ UCID ].sirenaOnOff = 0;
+		players[ UCID ].sirenaSize = 0;
 
         if ((players[ UCID ].Pogonya == 0) and (strlen(players[ UCID ].PogonyaReason) > 1))
         {
@@ -1239,11 +1253,6 @@ void RCPolice::Event()
     {
         byte UCID = play.first;
         auto playr = play.second;
-
-        /*if( playr.sirenaSize > 120 and playr.sirenaOnOff == 1){
-            players[ UCID ].sirenaOnOff = 0;
-            SendBFN(UCID, CLICKID::CLICK_ID_SIRENA);
-        }*/
 
         if ( playr.Pogonya == 1 )
         {
