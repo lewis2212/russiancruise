@@ -306,6 +306,27 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     delete pack;
 }
 
+void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, const char * Caption )
+{
+	IS_BTN *pack = new IS_BTN;
+    memset( pack, 0, sizeof( IS_BTN ) );
+    pack->Size = sizeof( IS_BTN );
+    pack->Type = ISP_BTN;
+    pack->ReqI = ReqI;
+    pack->UCID = UCID;
+    pack->Inst = 0;
+    pack->BStyle = BStyle;
+    pack->TypeIn = 0;
+    pack->ClickID = ClickID;
+    pack->L = L;
+    pack->T = T;
+    pack->W = W;
+    pack->H = H;
+	sprintf(pack->Text,"\0%s\0%s", Caption, Text);
+    insim->send_packet( pack );
+    delete pack;
+}
+
 
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
