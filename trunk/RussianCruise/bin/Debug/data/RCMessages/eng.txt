@@ -30,7 +30,9 @@ PitSaveNotGood "^1PITSAFE"
 1006 "^4RIDE FOR YOU"
 1009 "^1| ^7You can not sell the car when you're sitting in it"
 
-1100 "^7 Sent you ^7"
+SendMoney	"^5| ^7You sent ^8%s ^7%d ^3RUR."
+GetMoney 	"^5| ^8%s ^7sent you ^7%d ^3RUR."
+
 1101 "^1| ^7you entered an amount greater than what you have in your account."
 1102 "^1| ^7Try select a smaller amount."
 
@@ -54,6 +56,8 @@ AddFine 	"^2| ^7You fined %s^7 : %s"
 DeletedFine 	"^2| ^8%s ^7canceled you fine: %s"
 DelFine		"^2| ^7You canceled a fine %s ^7: %s"
 Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3km/h ^7(%s^7) - %s"
+
+FinesButton	"^7Fines"
 
 1300 "^2| ^C^7You are not a Policeman"
 1301 "^2| ^C^7You  Policeman"

@@ -656,7 +656,7 @@ void case_btc ()
                     	pack_btn.BStyle = 32 + ISB_CLICK;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
-                        strcpy(pack_btn.Text, "^C^7Øענאפ");
+                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "FinesButton" ));
                         insim->send_packet(&pack_btn);
 
                         /*pack_btn.BStyle = 32 + ISB_CLICK;
@@ -780,11 +780,13 @@ void case_btt ()
                                 out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
 
                                 char Msg[120];
-                                sprintf(Msg,"^1| %s%s%d RUR.",ginfo->players[i].PName,msg->_( ginfo->players[i].UCID, "1100" ),atoi(pack_btt->Text));
+                                sprintf(Msg,msg->_(ginfo->players[i].UCID, "GetMoney" ),ginfo->players[i].PName,atoi(pack_btt->Text));
                                 SendMTC(ginfo->players[g].UCID,Msg);
+                                sprintf(Msg,msg->_(ginfo->players[i].UCID, "SendMoney" ),ginfo->players[g].PName,atoi(pack_btt->Text));
+                                SendMTC(ginfo->players[i].UCID,Msg);
 
                                 bank->RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
-                                bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), true);
+                                bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), false);
 
                                 ofstream readf (send_c,ios::app);
                                 readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo->players[g].UName << endl;
