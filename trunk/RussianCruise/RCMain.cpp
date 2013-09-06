@@ -452,7 +452,9 @@ void btn_info (struct player *splayer, int b_type)
 
 	byte c;
 		if (b_type == 1) c=MAX_CARS/2;				//количество строк для 1 вкладки
+        #ifdef _RC_POLICE_H
 		if (b_type == 2) c=police->GetFineCount();	//количество строк для 2 вкладки
+		#endif
 		if (b_type == 3) c=sizeof(about_text)/100;	//да, да, ты угадал
 	byte
 		UCID = splayer->UCID,
@@ -490,7 +492,7 @@ void btn_info (struct player *splayer, int b_type)
 			SendButton(255,UCID,id,l-w/2+1+plW,t-h/2+16+hButton*(i-plH),w/2-1,hButton,16+64,Text);id++;
 		}
     }
-
+#ifdef _RC_POLICE_H
     if (b_type == 2)
     {
     	for(int i=0;i<c;i++)
@@ -499,7 +501,7 @@ void btn_info (struct player *splayer, int b_type)
 			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,16+64,Text);id++;
 		}
     }
-
+#endif
     if (b_type == 3)
     {
 		for(int i=0;i<c;i++)
@@ -612,8 +614,10 @@ void case_btc ()
 					if (count>16)
 						pack_btn.L += 24;
 						pack_btn.T = 187;
+                    #ifdef _RC_POLICE_H
                     if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI))
 						pack_btn.T = 175;
+                    #endif
                     pack_btn.W = 24;
                     pack_btn.H = 4;
                     pack_btn.ClickID = 35;
@@ -630,8 +634,10 @@ void case_btc ()
 						if(ginfo->players[i].UCID == pack_btc->ReqI)
 						{
 							sprintf(pack_btn.Text,msg->_( pack_btc->UCID, "MsgPlFor" ),ginfo->players[i].PName);
+							#ifdef _RC_POLICE_H
 							if (police->IsCop(pack_btc->UCID))
 								sprintf(pack_btn.Text,"^7^CДля %s ^8(%s^8) ^7:",ginfo->players[i].PName,ginfo->players[i].UName);
+							#endif
 							insim->send_packet(&pack_btn);
 							pack_btn.BStyle = 3 + 16 + ISB_CLICK;
 							pack_btn.TypeIn = 63;
@@ -648,7 +654,7 @@ void case_btc ()
                     pack_btn.ClickID = 37;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1001" ));
                     insim->send_packet(&pack_btn);
-
+#ifdef _RC_POLICE_H
                     // cop buttons
                     if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != ginfo->players[i].UCID)
                     {
@@ -691,6 +697,7 @@ void case_btc ()
 						SendBFN(ginfo->players[i].UCID,40);
 						SendBFN(ginfo->players[i].UCID,41);
 					}
+#endif
                 }
             }
 
@@ -1000,7 +1007,9 @@ void case_mci ()
                 {
                     char TEST[64];
                     sprintf(TEST,"X=%d Y=%d H=%d",X,Y,pack_mci->Info[i].Heading/182);
+                    #ifdef _RC_PIZZA_H
                     pizza->ButtonInfo(ginfo->players[j].UCID,TEST);
+                    #endif
                 }
                 memcpy(&ginfo->players[j].Info, &pack_mci->Info[i],sizeof(CompCar));
 
@@ -1651,7 +1660,9 @@ void case_mso ()
             ginfo->players[i].Svetofor = 1;
         else
         {
+            #ifdef _RC_PIZZA_H
             pizza->ClearButtonInfo(ginfo->players[i].UCID);
+            #endif
             ginfo->players[i].Svetofor = 0;
         }
 
@@ -1659,6 +1670,7 @@ void case_mso ()
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
     {
+        #ifdef _RC_POLICE_H
         if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
         {
             char Msg[64];
@@ -1671,15 +1683,16 @@ void case_mso ()
         }
         else
         {
-
+        #endif
             char Msg[64];
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
             SendMST(Msg);
             ginfo->players[i].Zone = 1;
             bank->RemCash(ginfo->players[i].UCID,250);
             bank->AddToBank(250);
-
+#ifdef _RC_POLICE_H
         }
+        #endif
     }
     //!users
     if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
@@ -2008,7 +2021,9 @@ void case_pen ()
         {
             if (pack_pen->Reason == PENR_WRONG_WAY)
             {
+                #ifdef _RC_TAXI_H
                 taxi->dead_pass(ginfo->players[i].UCID);
+                #endif
             }
 
             break;
@@ -2049,7 +2064,7 @@ void case_pll ()
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
             save_car(&ginfo->players[i]);
-
+#ifdef _RC_POLICE_H
             if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
                 SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2600" ));
@@ -2062,6 +2077,7 @@ void case_pll ()
             }
             else
             {
+#endif
                 if (ginfo->players[i].Zone != 1)
                 {
                     SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2602" ));
@@ -2069,7 +2085,9 @@ void case_pll ()
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);
                 }
+#ifdef _RC_POLICE_H
             }
+#endif
             //for (int g=0; g<200; g++)
             //    SendBFN(ginfo->players[i].UCID,g);
 
@@ -2095,7 +2113,7 @@ void case_plp ()
             memset(&ginfo->players[i].Info,0,sizeof(CompCar));
 
             save_car(&ginfo->players[i]);
-
+#ifdef _RC_POLICE_H
             if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
                 SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
@@ -2108,6 +2126,7 @@ void case_plp ()
             }
             else
             {
+#endif
                 if (ginfo->players[i].Zone != 1)
                 {
                     SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2702" ));
@@ -2115,8 +2134,9 @@ void case_plp ()
                     bank->RemCash(ginfo->players[i].UCID,500);
                     bank->AddToBank(500);
                 }
+#ifdef _RC_POLICE_H
             }
-
+#endif
             //for (int g=0; g<200; g++)
             //    SendBFN(ginfo->players[i].UCID,g);
 
@@ -2322,7 +2342,7 @@ void read_track()
 
     readf.close();
 
-    memcpy(&antcht->TrackInf,&ginfo->TrackInf,sizeof(struct track_info));
+    //memcpy(&antcht->TrackInf,&ginfo->TrackInf,sizeof(struct track_info));
 }
 
 
@@ -2536,9 +2556,15 @@ void *ThreadWork (void *params)
 
     while (ok > 0)
     {
+        #ifdef _RC_POLICE_H
         police->Event();
+        #endif
+        #ifdef _RC_PIZZA_H
         pizza->Event();
+        #endif
+        #ifdef _RC_TAXI_H
         taxi->Event();
+        #endif // _RC_TAXI_H
         lgh->Event();
         #ifdef __linux__
         sleep(500);
