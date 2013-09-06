@@ -727,7 +727,7 @@ void RCPizza::Event()
 	{
 		//srand(time(&ptime));
 		//int r = rand()%3 + 1;
-		int pizza_time = 600/( NumP );
+		int pizza_time = 600/( NumP + 1 );
 		ginfo_time += pizza_time;
 
 		if ((PStore.Muka > 5) && (PStore.Voda > 5) && (PStore.Ovoshi > 5) && (PStore.Cheese > 5))
