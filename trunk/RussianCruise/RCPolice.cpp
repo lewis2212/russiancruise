@@ -264,7 +264,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
     {
-
         if (players[ packet->UCID ].cop )
         {
             if (players[ packet->UCID ].sirena ==0 )
@@ -282,7 +281,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
     {
-
         if (players[ packet->UCID ].cop )
         {
             if (players[ packet->UCID ].radar ==0 )
@@ -297,7 +295,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             }
         }
     }
-
 
     if (strncmp(Msg, "!kick", 4) == 0 )
     {
@@ -446,8 +443,8 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
 	if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
 	{
-		for(int i=80;i<165;i++) SendBFN(packet->UCID,i);
-
+		for(int i=80;i<165;i++)
+			SendBFN(packet->UCID,i);
 	}
 
 	if ( packet->ClickID >= 84 and packet->ClickID < 110 and packet->ReqI != 254 and packet->ReqI != 255) //выписка штрафа
@@ -456,10 +453,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 		GetLocalTime(&sm);
 		char fine_c[255];
 		sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-
-		/*time_t now = time(NULL);
-		if ((now - players[packet->UCID].LastT) < 0.3) return;
-		players[packet->UCID].LastT = now;*/
 
 		for ( auto& play: players )
         {
@@ -495,7 +488,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                         players[play.first].ThisFineCount++;
                         break;
                     }
-
                 break;
             }
         }
@@ -507,10 +499,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 		GetLocalTime(&sm);
 		char fine_c[255];
 		sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-
-		/*time_t now = time(NULL);
-		if ((now - players[packet->UCID].LastT) < 1) return;
-		players[packet->UCID].LastT = now;*/
 
         for ( auto& play: players )
         {
@@ -574,7 +562,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     players[ play.first ].WorkTime = worktime+60*6;
                     strcpy(players[ play.first ].PogonyaReason,msg->_(  play.first , "1006" ));
                     char Text[96];
-                    sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ play.first ].PName );
+                    sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ play.first ].PName, players[ packet->UCID ].PName );
                     SendMTC(255, Text);
                     nrg->Lock( play.first );
                 }
@@ -603,7 +591,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     players[ play.first ].Pogonya = 0;
                     SendBFN( play.first ,210);
                     char Text[96];
-                    sprintf(Text,msg->_(play.first , "PogonyaOff" ), players[ play.first ].PName );
+                    sprintf(Text,msg->_(play.first , "PogonyaOff" ), players[ play.first ].PName, players[ packet->UCID ].PName );
                     SendMTC(255, Text);
                     nrg->Unlock( play.first );
                 }
@@ -890,14 +878,14 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                         struct streets StreetInfo;
                         street->CurentStreetInfo(&StreetInfo,UCID);
 
-                        if ((Speed > StreetInfo.SpeedLimit+10) and Speed>players[UCID2].speed_over)
+                        if (Speed > StreetInfo.SpeedLimit+10 and Speed>players[UCID2].speed_over)
 								players[UCID2].speed_over=Speed;
                     }
                     else
 						if (players[ UCID2 ].speed_over>0)
 							{
 								struct streets StreetInfo;
-								street->CurentStreetInfo(&StreetInfo,UCID2);
+								street->CurentStreetInfo(&StreetInfo,UCID);
 
 								char text[128];
 								int Speed2 = players[UCID2].speed_over - StreetInfo.SpeedLimit;
@@ -921,7 +909,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 /** ЛЮСТРА **/
                 if (players[UCID].sirena ==1)
                 {
-                    if ( (Rast < 120) and ( !players[UCID2].cop ) )
+                    if (Rast < 120 and !players[UCID2].cop)
                     {
                         players[ UCID2 ].sirenaOnOff += 1;
                         players[ UCID2 ].sirenaKey = 1;

@@ -47,15 +47,15 @@ Dist		"^2%4.3f Km"
 MsgPlFor	"^7For %s ^7:"
 ItsYou		"^7It's you"
 
-PogonyaOn 	"^2| ^7Pursuit of %s"
-PogonyaOff 	"^2| ^7Cancel pursuit of %s"
+PogonyaOn 	"^2| ^7Pursuit of %s ^7(%s^7)"
+PogonyaOff 	"^2| ^7Cancel pursuit of %s ^7(%s^7)"
 GiveFine 	"^2| ^8%s ^7wrote you fine: %s"
 GiveFine2	"^1| ^C^7You have fine: %s"
 GiveFine3	"You have fine"
 AddFine 	"^2| ^7You fined %s^7 : %s"
 DeletedFine 	"^2| ^8%s ^7canceled you fine: %s"
 DelFine		"^2| ^7You canceled a fine %s ^7: %s"
-Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3km/h ^7(%s^7) - %s"
+Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3km/h^7, %s^7 (%s^7)"
 
 FinesButton	"^7Fines"
 
