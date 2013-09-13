@@ -1,154 +1,143 @@
 #include "RCPolice.h"
-
-RCPolice::RCPolice()
-{
-	memset( &fines, 0, sizeof( fine ) * MAX_FINES );
-}
-
-RCPolice::~RCPolice()
-{
-
-}
+RCPolice::RCPolice(){memset( &fines, 0, sizeof( fine ) * MAX_FINES );}
+RCPolice::~RCPolice(){}
 
 int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void *Energy, void *Light)
 {
-    strcpy(RootDir,dir); // Копируем путь до программы
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    strcpy(RootDir,dir);
+    insim = (CInsim *)CInSim;
     if(!insim)
     {
-        printf ("Can't struct CInsim class");    // Проверяем на существование
+        printf ("Can't struct CInsim class");
         return -1;
     }
-
     msg = (RCMessage *)Message;
     if(!msg)
     {
         printf ("Can't struct RCMessage class");
         return -1;
     }
-
     bank = (RCBank *)Bank;
     if(!bank)
     {
         printf ("Can't struct RCBank class");
         return -1;
     }
-
     dl = (RCDL *)RCdl;
     if(!dl)
     {
         printf ("Can't struct RCDL class");
         return -1;
     }
-
     street = (RCStreet *)STreet;
     if(!street)
     {
         printf ("Can't struct RCStreet class");
         return -1;
     }
-
     nrg = (RCEnergy *)Energy;
     if(!nrg)
     {
         printf ("Can't struct RCEnergy class");
         return -1;
     }
-
     lgh = (RCLight *)Light;
     if(!lgh)
     {
         printf ("Can't struct RCLight class");
         return -1;
     }
-
     return 0;
 }
 
+//done
 void RCPolice::InsimNCN( struct IS_NCN* packet )
 {
     if( packet->UCID == 0 )
         return;
 
-    strcpy(players[ packet->UCID ].UName, packet->UName);
-    strcpy(players[ packet->UCID ].PName, packet->PName);
+	players[packet->UCID].UCID = packet->UCID;
+    strcpy(players[packet->UCID].UName, packet->UName);
+    strcpy(players[packet->UCID].PName, packet->PName);
 
-    ReadUserFines( packet->UCID );
+	//читаем штрафы
+    ReadUserFines(packet->UCID);
 }
 
+//done
 void RCPolice::InsimNPL( struct IS_NPL* packet )
 {
-    PLIDtoUCID[ packet->PLID ] = packet->UCID;
-    players[ packet->UCID ].cop = false;
+	PLIDtoUCID[packet->PLID] = packet->UCID;
     strcpy(players[packet->UCID].CName ,packet->CName);
 
-    char specText[64];
-    sprintf(specText, "/spec %s", players[ packet->UCID ].UName);
-
-    if (IfCop(  packet->UCID  ) == 1)
-    {
-        SendMST( specText );
-        SendMTC( packet->UCID, msg->_(  packet->UCID , "1300" ));
-        return;
-    }
-    else if (IfCop(  packet->UCID  ) == 3)
-    {
-        SendMTC( packet->UCID, msg->_(  packet->UCID , "1301" ));
-
-        players[ packet->UCID ].cop = true;
+	if (strncmp("^4[^C^7ДПС^4]",players[packet->UCID].PName,13)==0 || strncmp("^4[^C^7ГАИ^4]",players[packet->UCID].PName,13)==0)
+	if (ReadCop(packet->UCID))
+	{
+        players[packet->UCID].cop = true;
+    	SendMTC(packet->UCID, msg->_(packet->UCID, "CopTrue"));
 
 		if (!((strncmp("DPS",packet->SName,3)==0)
-		||  (strncmp("dps",packet->SName,3)==0)
-        ||  (strncmp("POLICE",packet->SName,6)==0)
-        ||  (strncmp("police",packet->SName,6)==0)))
-        SendMTC( packet->UCID, msg->_(  packet->UCID , "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС" ));
+		|| (strncmp("dps",packet->SName,3)==0)
+        || (strncmp("POLICE",packet->SName,6)==0)
+        || (strncmp("police",packet->SName,6)==0)))
+        SendMTC(packet->UCID, "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС");
 
-        dl->Lock( packet->UCID );
-        nrg->Lock( packet->UCID );
-        lgh->SetLight3( packet->UCID ,true);
+        dl->Lock(packet->UCID);
+        nrg->Lock(packet->UCID);
+        lgh->SetLight3(packet->UCID, true);
+    }
+    else
+    {
+        SendMTC(packet->UCID, msg->_(packet->UCID ,"CopFalse"));
+
+		char text[96];
+		sprintf(text, "/spec %s", players[packet->UCID].UName);
+        SendMST(text);
     }
 }
 
+//done
 void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
-    lgh->SetLight3( PLIDtoUCID[ packet->PLID ] ,false);
-    dl->Unlock( PLIDtoUCID[ packet->PLID ] );
-    nrg->Unlock( PLIDtoUCID[ packet->PLID ] );
+    lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
+    dl->Unlock(PLIDtoUCID[packet->PLID]);
+    nrg->Unlock(PLIDtoUCID[packet->PLID]);
 
     PLIDtoUCID.erase( packet->PLID );
 }
 
+//done
 void RCPolice::InsimPLL( struct IS_PLL* packet )
 {
-    lgh->SetLight3( PLIDtoUCID[ packet->PLID ] ,false);
-    dl->Unlock( PLIDtoUCID[ packet->PLID ] );
-    nrg->Unlock( PLIDtoUCID[ packet->PLID ] );
+    lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
+    dl->Unlock(PLIDtoUCID[packet->PLID]);
+    nrg->Unlock(PLIDtoUCID[packet->PLID]);
 
     PLIDtoUCID.erase( packet->PLID );
 }
 
+//done
 void RCPolice::InsimCNL( struct IS_CNL* packet )
 {
-    SaveUserFines( packet->UCID );
-    players.erase( packet->UCID );
+    SaveUserFines(packet->UCID);
+    players.erase(packet->UCID);
 }
 
+//done
 void RCPolice::InsimCPR( struct IS_CPR* packet )
 {
-    strcpy( players[ packet->UCID ].PName, packet->PName);
+    strcpy(players[packet->UCID].PName, packet->PName);
+    if (players[packet->UCID].cop and !ReadCop(packet->UCID))
+		players[packet->UCID].cop = false;
 }
 
 void RCPolice::InsimMSO( struct IS_MSO* packet )
 {
-    if (packet->UCID == 0)
-        return;
-
-    if ( packet->UserType != MSO_PREFIX )
-        return;
+    if (packet->UCID == 0) return;
+    if ( packet->UserType != MSO_PREFIX ) return;
 
     char Msg[128];
     strcpy(Msg,packet->Msg + ((unsigned char)packet->TextStart));
-
 
     if ((strncmp(Msg, "!fines", 6) == 0) or (strncmp(Msg, "!^Cштрафы", 9) == 0 ))
     {
@@ -183,7 +172,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
 
         if (j == 0)
-            SendMTC(packet->UCID ,msg->_(  packet->UCID , "3102" ));
+            SendMTC(packet->UCID ,msg->_(  packet->UCID , "NoFines" ));
     }
 
     if ((strncmp(Msg, "!pay", 4) == 0 ) or (strncmp(Msg, "!^Cоплатить", 11) == 0 ))
@@ -238,7 +227,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                             }
                         }
 
-						SendMTC( packet->UCID ,msg->_(  packet->UCID , "2106" ));
+						SendMTC( packet->UCID ,msg->_(  packet->UCID , "PayDone" ));
 						bank->RemCash( packet->UCID ,fines[id_i].cash);
                         bank->AddToBank((fines[id_i].cash)-((fines[id_i].cash)*0.05)*cop);
 
@@ -254,47 +243,43 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     }
 
                     if (j == MAX_FINES)
-                        SendMTC( packet->UCID ,msg->_(  packet->UCID , "2107" ));
+                        SendMTC( packet->UCID, msg->_(  packet->UCID , "NoFine" ));
                 }
             }
-            else SendMTC( packet->UCID ,"^1| ^C^7На вашем счете недостаточно средств для оплаты штрафа");
+            else SendMTC(packet->UCID, msg->_(packet->UCID, "NoManyPay"));
         }
-        else SendMTC( packet->UCID ,"^1| ^C^7Вы находитесь не в банке");
+        else SendMTC(packet->UCID, msg->_(packet->UCID, "NoOnBank"));
     }
 
     if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
-    {
-        if (players[ packet->UCID ].cop )
+        if (players[packet->UCID].cop)
         {
-            if (players[ packet->UCID ].sirena ==0 )
+            if (players[packet->UCID].Sirena)
             {
-                SendMTC( packet->UCID ,msg->_(  packet->UCID , "2100" ));
-                players[ packet->UCID ].sirena = 1;
+                SendMTC(packet->UCID, msg->_(packet->UCID, "2100"));
+                players[packet->UCID].Sirena = false;
             }
             else
             {
-                SendMTC( packet->UCID ,msg->_(  packet->UCID , "2101" ));
-                players[ packet->UCID ].sirena = 0;
+                SendMTC(packet->UCID, msg->_(packet->UCID, "2101"));
+                players[packet->UCID].Sirena = true;
             }
         }
-    }
 
     if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
-    {
-        if (players[ packet->UCID ].cop )
+        if (players[packet->UCID].cop)
         {
-            if (players[ packet->UCID ].radar ==0 )
+            if (players[packet->UCID].Radar)
             {
-                SendMTC( packet->UCID ,msg->_(  packet->UCID , "2102" ));
-                players[ packet->UCID ].radar = 1;
+                SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOff"));
+                players[packet->UCID].Radar = false;
             }
             else
             {
-                SendMTC( packet->UCID ,msg->_(  packet->UCID , "2103" ));
-                players[ packet->UCID ].radar = 0;
+                SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOn"));
+                players[packet->UCID].Radar = true;
             }
         }
-    }
 
     if (strncmp(Msg, "!kick", 4) == 0 )
     {
@@ -389,16 +374,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     }
 }
 
-void RCPolice::InsimCON( struct IS_CON* packet )
-{
-
-}
-
-void RCPolice::InsimOBH( struct IS_OBH* packet )
-{
-
-}
-
 void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 {
 	char Text[128];
@@ -413,23 +388,21 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 		w=100, 				//ширина поля
 		h=10+c*hButton; 	//высота поля
 
-	SendButton(255,UCID,81,l-w/2,t-h/2,w,h+8,32,""); 								//фон
-	SendButton(255,UCID,82,l-w/2,t-h/2,w,h+8,32,"");
-
 	sprintf(Text,"^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName);
 
-	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 	//заголовок
-
-	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); 				//закрывашка
+	SendButton(255,UCID,81,l-w/2,t-h/2,w,h+8,32,""); 				//фон
+	SendButton(255,UCID,82,l-w/2,t-h/2,w,h+8,32,"");				//фон
+	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 				//заголовок
+	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); //закрывашка
 
 	for(int i=0;i<c;i++)
-		{
-			byte fid = fines[i+1].id; if (fid==0) fid = 255;
-			sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, fines[i+1].name);
+	{
+		byte fid = fines[i+1].id; if (fid==0) fid = 255;
+		sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, fines[i+1].name);
 
-			SendButton(fid,UCID,id++,l-w/2+1,t-h/2+10+hButton*i,w-12,hButton,16+64+8,Text);
-			SendButton(fid,UCID,id2++,l+w/2-11,t-h/2+10+hButton*i,10,hButton,16+8,"^CОтмена");
-		}
+		SendButton(fid,UCID,id++,l-w/2+1,t-h/2+10+hButton*i,w-12,hButton,16+64+8,Text);
+		SendButton(fid,UCID,id2++,l+w/2-11,t-h/2+10+hButton*i,10,hButton,16+8,"^CОтмена");
+	}
 }
 
 void RCPolice::InsimBTC( struct IS_BTC* packet )
@@ -538,55 +511,46 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 	}
 
     if ( packet->ClickID <= 32 )
-    {
         players[ packet->UCID ].BID2 =  packet->ClickID;
-    }
 
-    /** штрафы **/
+    /** Штрафы **/
     if (packet->ClickID==38 and players[packet->UCID].cop)
 		ShowFinesPanel(packet->UCID, packet->ReqI);
 
-    /**
-    Включаем погоню
-    */
+    /** Включаем погоню **/
     if (packet->ClickID==40)
     {
         for ( auto& play: players )
         {
             if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
             {
-                if (players[ play.first ].Pogonya == 0)
+                if (players[play.first].Pogonya == 0)
                 {
-                    players[ play.first ].Pogonya = 1;
+                    players[play.first].Pogonya = 1;
                     int worktime = time(NULL);
-                    players[ play.first ].WorkTime = worktime+60*6;
+                    players[play.first].WorkTime = worktime+60*5;
                     strcpy(players[ play.first ].PogonyaReason,msg->_(  play.first , "1006" ));
                     char Text[96];
                     sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ play.first ].PName, players[ packet->UCID ].PName );
                     SendMTC(255, Text);
                     nrg->Lock( play.first );
                 }
-
             }
 
             if ( players[ play.first ].cop )
-            {
                 for (int k=60; k<79; k++)
                     SendBFN( play.first ,k);
-            }
         }
     }
 
-    /**
-    Выключаем погоню
-    */
+    /** Выключаем погоню **/
     if (packet->ClickID==41)
     {
         for ( auto& play: players )
         {
             if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
             {
-                if (players[ play.first ].Pogonya != 0)
+                if (players[play.first].Pogonya != 0)
                 {
                     players[ play.first ].Pogonya = 0;
                     SendBFN( play.first ,210);
@@ -613,9 +577,8 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 
     char fine_c[255];
     sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-    /**
-    Пользователь выписывает штраф
-    */
+
+    /** Пользователь выписывает штраф **/
     if ( packet->ClickID == 38 )
     {
         for ( auto& play: players )
@@ -667,9 +630,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
         }
     }
 
-    /**
-    Пользователь отменяет штраф
-    */
+    /** Пользователь отменяет штраф **/
     if (packet->ClickID==39)
     {
         for ( auto& play: players )
@@ -719,7 +680,6 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
 
     if (packet->Reason == PENR_WRONG_WAY )
     {
-
         for (int j=0; j<MAX_FINES; j++)
         {
             if (players[ UCID ].fines[j].fine_id == 0)
@@ -790,187 +750,144 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 {
     for (int i = 0; i < packet->NumC; i++)
     {
-        byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
-        if( UCID == 0 )
-            return;
+        byte UCID = PLIDtoUCID[packet->Info[i].PLID];
+        if(UCID == 0) return;
 
-            /** окошко со штрафами **/
-            if ( players[UCID].ThisFineCount != 0 )
-			{
-				byte ClickID=CLICKID::CLICK_ID_128, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
-				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");
-				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");							//фон
-				SendButton(254, UCID, ClickID++, l-7, t-h/2+h+1, 14, 6, ISB_LIGHT + ISB_CLICK,"^2OK"); 			//закрывашка
-				SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3")); 	//заголовок
+        /** окошко со штрафами **/
+		if ( players[UCID].ThisFineCount != 0 )
+		{
+			byte ClickID=CLICKID::CLICK_ID_128, w=90, h=10+5*players[UCID].ThisFineCount, l=100, t=90;
+			SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");
+			SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,h+8,32,"");									//фон
+			SendButton(254, UCID, ClickID++, l-7, t-h/2+h+1, 14, 6, ISB_LIGHT + ISB_CLICK,"^2OK"); 		//закрывашка
+			SendButton(255, UCID, ClickID++,l-w/2,t-h/2,w,10,3+64,msg->_(UCID,"GiveFine3")); 			//заголовок
 
-				for( int j=0; j < players[UCID].ThisFineCount; j++ )
-					SendButton(255, UCID, ClickID++, l-w/2+1, t-h/2+10+5*j, w-2, 5,ISB_LEFT + ISB_LIGHT, players[UCID].ThisFine[j] );
-			}
-			/** ##штрафы **/
+			for(int j=0; j < players[UCID].ThisFineCount; j++)
+				SendButton(255, UCID, ClickID++, l-w/2+1, t-h/2+10+5*j, w-2, 5,ISB_LEFT + ISB_LIGHT, players[UCID].ThisFine[j]);
+		}
 
-        int S = players[ UCID ].Info.Speed*360/32768;
         /** автоотключение радара **/
-        if (S < 5)
-            players[ UCID ].StopTime ++;
-        else
-        {
-            players[ UCID ].StopTime = 0;
-            if (players[ UCID ].radar ==1 )
-            {
-                SendMTC( UCID ,msg->_(  UCID , "1700" ));
-                players[ UCID ].radar = 0;
-            }
+        int S = packet->Info[i].Speed*360/32768;
+        if (S > 5 and players[UCID].Radar)
+		{
+			SendMTC(UCID, msg->_(UCID, "RadarOff"));
+			players[UCID].Radar = false;
         }
 
-        if (players[ UCID ].cop )
-        {
-			if ( players[ UCID ].sirena == 1 )
+        /** сирена копа **/
+        if (players[UCID].cop and players[UCID].Sirena)
+			SendButton(255, UCID, 20, 90, 26, 20, 10, 32, siren.c_str());
+		else
+			SendBFN(UCID, 20);
+		int SirenaCount = 0;
+
+		int SDtemp=0;
+		for (auto& play: players)
+		{
+			if(UCID == play.first or !players[play.first].cop) continue;
+			int X1 = players[UCID].Info.X/65536,
+				Y1 = players[UCID].Info.Y/65536,
+				X2 = players[play.first].Info.X/65536,
+				Y2 = players[play.first].Info.Y/65536,
+				Dist = Distance(X1, Y1, X2, Y2);
+
+			/** сирена **/
+			if (players[play.first].Sirena)
 			{
-				players[ UCID ].sirenaOnOff = 1;
-				players[ UCID ].sirenaKey = 1;
-				players[ UCID ].sirenaSize = 90;
+				if (Dist < 120)
+				{
+					SirenaCount++;
+					if (Dist < SDtemp or SDtemp ==0)
+						SDtemp = Dist;
+				}
 			}
-			else
-                players[ UCID ].sirenaSize = 124;
+			players[UCID].SirenaDist = SDtemp;
 
-            BtnSirena( UCID );
+			/** радар **/
+			if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya != 1)
+			{
+				if (Dist<25)
+				{
+					int Speed = players[UCID].Info.Speed*360/32768;
+					struct streets StreetInfo;
+					street->CurentStreetInfo(&StreetInfo,UCID);
 
-            for ( auto& play: players )
-            {
-                byte UCID2 = play.first;
+					if (Speed > StreetInfo.SpeedLimit+10 and Speed > players[UCID].speed_over)
+						players[UCID].speed_over=Speed;
+				}
+				else if (players[UCID].speed_over>0)
+				{
+					struct streets StreetInfo;
+					street->CurentStreetInfo(&StreetInfo,UCID);
 
-                if( UCID == UCID2 )
-					continue;
+					char text[128];
+					int Speed2 = players[UCID].speed_over - StreetInfo.SpeedLimit;
+					sprintf(text,msg->_(UCID, "Speeding"), players[UCID].PName, Speed2, StreetInfo.Street, players[play.first].PName);
+					SendMTC(255,text);
 
-                int X = players[ UCID2 ].Info.X/65536;
-                int Y = players[ UCID2 ].Info.Y/65536;
-                int X1 = players[ UCID ].Info.X/65536;
-                int Y1 = players[ UCID ].Info.Y/65536;
+					if (players[UCID].Pogonya == 0)
+					{
+						players[UCID].Pogonya = 1;
+						int worktime = time(NULL);
+						players[UCID].WorkTime = worktime+60*5;
+						strcpy(players[UCID].PogonyaReason,msg->_(UCID,"1006"));
+						sprintf(text,msg->_(UCID, "PogonyaOn" ), players[UCID].PName, players[play.first].PName );
+						SendMTC(255, text);
+						nrg->Lock( UCID );
+					}
+					players[UCID].speed_over=0;
+				}
+			}
 
-                int Rast = Distance( X, Y, X1, Y1);
+			/** арест **/
+			if (players[UCID].Pogonya == 1)
+			{
+				int S2 = players[UCID].Info.Speed*360/32768;
+				if (S2 < 5 and Dist < 10)
+				{
+					if (players[UCID].StopTime >= 3)
+					{
+						players[UCID].Pogonya = 2;
+						nrg->Unlock(UCID);
+						strcpy(players[UCID].PogonyaReason, msg->_(UCID, "1701" ));
 
-                if (players[ UCID2 ].Pogonya == 1)
-                {
-                    if ( (Rast < 10) and (!players[ UCID2 ].cop))
-                    {
-                        int S2 = players[ UCID2 ].Info.Speed*360/32768;
-                        if ((S2 < 5) and (players[ UCID2 ].StopTime > 3))
-                        {
-                            players[UCID2].Pogonya = 2;
-                            nrg->Unlock(UCID2);
-                            strcpy(players[UCID2].PogonyaReason, msg->_(UCID2, "1701" ));
+						char Text[96];
+						sprintf(Text,"^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
+						SendMTC(255,Text);
+						SendMTC(UCID,msg->_(UCID, "1703"));
+					}
+					players[UCID].StopTime++;
+				}
+				else players[UCID].StopTime = 0;
+			}
+		}
 
-                            char Text[96];
-                            sprintf(Text,"^2| %s%s", players[ UCID2 ].PName, msg->_(  UCID , "1702" ));
-                            SendMTC(255,Text);
+		/** сирена у игрока **/
+		if (SirenaCount > 0)
+			ShowSirena(UCID);
+		else if (players[UCID].SirenaDist > 0 or SirenaCount == 0)
+		{
+			players[UCID].SirenaDist = 0;
+			HideSirena(UCID);
+		}
 
-                            SendMTC(UCID,msg->_( UCID, "1703" ));
-                        }
-                    }
-                }
-
-                /** РАДАР **/
-                if (players[UCID].radar ==1)
-                {
-                    if (Rast<25 and !players[UCID2].cop and players[UCID2].Pogonya==0)
-                    {
-                        int Speed = players[UCID2].Info.Speed*360/32768;
-                        struct streets StreetInfo;
-                        street->CurentStreetInfo(&StreetInfo,UCID);
-
-                        if (Speed > StreetInfo.SpeedLimit+10 and Speed>players[UCID2].speed_over)
-								players[UCID2].speed_over=Speed;
-                    }
-                    else
-						if (players[ UCID2 ].speed_over>0)
-							{
-								struct streets StreetInfo;
-								street->CurentStreetInfo(&StreetInfo,UCID);
-
-								char text[128];
-								int Speed2 = players[UCID2].speed_over - StreetInfo.SpeedLimit;
-								sprintf(text,msg->_(UCID2, "Speeding"),players[UCID2].PName,Speed2,StreetInfo.Street,players[UCID].PName);
-								SendMTC(255,text);
-
-								if (players[ UCID2 ].Pogonya == 0)
-								{
-									players[ UCID2 ].Pogonya = 1;
-									int worktime = time(NULL);
-									players[ UCID2 ].WorkTime = worktime+60*6;
-									strcpy(players[UCID2].PogonyaReason,msg->_(UCID2,"1006"));
-									sprintf(text,msg->_(play.first, "PogonyaOn" ), players[ UCID2 ].PName );
-									SendMTC(255, text);
-									nrg->Lock( UCID2 );
-								}
-								players[UCID2].speed_over=0;
-							}
-                }
-
-                /** ЛЮСТРА **/
-                if (players[UCID].sirena ==1)
-                {
-                    if (Rast < 120 and !players[UCID2].cop)
-                    {
-                        players[ UCID2 ].sirenaOnOff += 1;
-                        players[ UCID2 ].sirenaKey = 1;
-                        if( players[UCID2].sirenaSize < Rast )
-							players[UCID2].sirenaSize = Rast;
-                    }
-                }
-                else
-                {
-                    players[ UCID2 ].sirenaSize = 124;
-                    players[ UCID ].sirenaSize = 124;
-                }
-            } // for auto
-        } // if cop
-
-        if ( (players[UCID].sirenaOnOff == 0) and (players[UCID].sirenaKey == 1) )
-        {
-            players[UCID].sirenaKey = 0;
-            SendBFN(UCID,  CLICKID::CLICK_ID_SIRENA );
-        }
-
-        if ( players[ UCID ].sirenaOnOff != 0 )
-            BtnSirena( UCID );
-
-		players[ UCID ].sirenaOnOff = 0;
-		players[ UCID ].sirenaSize = 0;
-
-        if ((players[ UCID ].Pogonya == 0) and (strlen(players[ UCID ].PogonyaReason) > 1))
+        if (players[UCID].Pogonya == 0 and strlen(players[UCID].PogonyaReason) > 1)
         {
             strcpy(players[ UCID ].PogonyaReason,"");
             SendBFN( UCID ,204);
         }
 
-        if ( players[ UCID ].Pogonya != 0)
-            BtnPogonya( UCID );
+        if (players[UCID].Pogonya != 0)
+            BtnPogonya(UCID);
 
-        memcpy(  &players[ UCID ].Info, &packet->Info[i], sizeof( CompCar ) );
+        memcpy(&players[UCID].Info, &packet->Info[i], sizeof(CompCar));
     }
 }
 
-int RCPolice::IfCop ( byte UCID )
+bool RCPolice::ReadCop(byte UCID)
 {
     char PlayerName[32];
-    strcpy(PlayerName,players[ UCID ].PName);
-
-    int COP = 0;
-
-    if (
-		(  (strncmp("^4[^C^7ДПС^4]",PlayerName,13)==0)
-		|| (strncmp("^4[^C^7ДПC^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7дпс^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7дпc^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7ГАИ^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7гаи^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7ГAИ^4]",PlayerName,13)==0)
-        || (strncmp("^4[^C^7гaи^4]",PlayerName,13)==0))
-        && ( !players[ UCID ].cop )
-    )
-    {
-        COP += 1;
-    }
+    strcpy(PlayerName,players[UCID].PName);
 
     char file[255];
     sprintf(file,"%sdata\\RCPolice\\cops.txt",RootDir);
@@ -979,23 +896,18 @@ int RCPolice::IfCop ( byte UCID )
     fclose(fff);
     ifstream readf (file,ios::in);
 
+    char str[32];
     while (readf.good())
     {
-        char str[32];
         readf.getline(str,32);
-        if( strlen( str ) > 0 and strcmp( players[ UCID ].UName , str ) == 0 )
-        {
-            COP += 2;
-            break;
-        }
+        if(strlen(str) > 0 and strcmp(players[UCID].UName, str) == 0)
+            if ((strncmp("^4[^C^7ДПС^4]",PlayerName,13)==0) || (strncmp("^4[^C^7ГАИ^4]",PlayerName,13)==0))
+            {
+				readf.close();
+				return true;
+            }
     }
-    readf.close();
-    return COP;
-}
-
-bool RCPolice::IsCop( byte UCID )
-{
-    return players[ UCID ].cop;
+    return false;
 }
 
 void RCPolice::SetSirenLight( string sirenWord )
@@ -1003,9 +915,25 @@ void RCPolice::SetSirenLight( string sirenWord )
     siren = sirenWord;
 }
 
+void RCPolice::ShowSirena(byte UCID)
+{
+	char txt[50];
+	SendButton(255,UCID,21,0,31,200,(120-players[UCID].SirenaDist+1)/4, 0, siren.c_str());
+}
+
+void RCPolice::HideSirena(byte UCID)
+{
+	SendBFN(UCID, 21);
+}
+
+bool RCPolice::IsCop( byte UCID )
+{
+    return players[UCID].cop;
+}
+
 int RCPolice::InPursuite( byte UCID )
 {
-    return players[ UCID ].Pogonya != 0;
+    return players[UCID].Pogonya;
 }
 
 int RCPolice::GetFineCount()
@@ -1017,43 +945,6 @@ int RCPolice::GetFineCount()
 		c++;
 	}
     return c;
-}
-
-void RCPolice::BtnSirena( byte UCID )
-{
-    if( players[ UCID ].sirenaSize > 120 )
-    {
-        SendBFN(UCID, CLICKID::CLICK_ID_SIRENA);
-        return;
-    }
-
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = CLICKID::CLICK_ID_SIRENA;
-    pack.BStyle = 1;
-
-    pack.T = 20;
-    pack.W = 124 - (players[ UCID ].sirenaSize);
-    pack.L = 100 - pack.W/2;
-    pack.H = pack.W/3;
-
-    if (pack.W <= 0)
-        pack.W = 1;
-
-    if (pack.L <= 0)
-        pack.L = 1;
-
-    if (pack.H <= 0)
-        pack.H = 1;
-
-    strcpy(pack.Text,siren.c_str());
-    insim->send_packet(&pack);
 }
 
 void RCPolice::BtnPogonya( byte UCID )
@@ -1074,16 +965,6 @@ void RCPolice::BtnPogonya( byte UCID )
     pack.H = 30;
     strcpy(pack.Text,players[ UCID ].PogonyaReason);
     insim->send_packet(&pack);
-}
-
-void RCPolice::CopTurnOn( byte UCID )
-{
-    players[ UCID ].cop = true;
-}
-
-void RCPolice::CopTurnOff( byte UCID )
-{
-    players[ UCID ].cop = false;
 }
 
 void RCPolice::SetUserBID ( byte UCID, byte BID )
