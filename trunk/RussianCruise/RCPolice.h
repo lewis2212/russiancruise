@@ -2,9 +2,8 @@
 #define _RC_POLICE_H
 
 #include "RCBaseClass.h"
-
-#include "RCMessage.h"  // Messages
-#include "RCBank.h"     // Bank
+#include "RCMessage.h"
+#include "RCBank.h"
 #include "RCDrivingLicense.h"
 #include "RCStreet.h"
 #include "RCEnergy.h"
@@ -29,35 +28,38 @@ struct user_fine
 
 struct PolicePlayer
 {
-    struct  CompCar Info;
-    struct 	user_fine fines[MAX_FINES];
-
-    /** GENERAL **/
+	/** GENERAL **/
+	byte	UCID;
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
 
+	/** COP **/
+    bool    cop = false;
+    bool    Sirena;
+    bool    Radar;
+
+	/** other players **/
+	int		SirenaDist;
+    int    	Pogonya;
+    int     StopTime;
+
+
+
+
+    struct  CompCar Info;
+    struct 	user_fine fines[MAX_FINES];
+
     byte    BID;
     byte    BID2;
 
-	/** COP **/
-    bool    cop;
-    byte    radar;
-    byte    sirena;         // коповский выключатель сирены
-    byte    sirenaOnOff;    // постаянная запись положения сирены у духов
-    byte    sirenaKey;      // определяем включить или выключить сирену у духов
-    int     sirenaSize;      // размер кнопки
-    byte    Pogonya;
     char    PogonyaReason[64];
-    int     StopTime;
 
     int 	ThisFineCount;
     char 	ThisFine[20][200];
 
-    int     WorkTime;			// время за которое он должен доставить товар
+    int     WorkTime;
     int 	speed_over;
-
-    //time_t  LastT;
 };
 
 class RCPolice: public RCBaseClass
@@ -81,18 +83,18 @@ private:
     void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
     void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
-    void InsimCON( struct IS_CON* packet );   // Игрок отправил сообщение
-    void InsimOBH( struct IS_OBH* packet );   // Игрок отправил сообщение
     void InsimBTC( struct IS_BTC* packet );
     void InsimBTT( struct IS_BTT* packet );
     void InsimPEN( struct IS_PEN* packet );
     void InsimPLA( struct IS_PLA* packet );
 
     void ReadUserFines( byte UCID );
-    void BtnSirena( byte UCID );
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
 	void ShowFinesPanel( byte UCID, byte UCID2 );
+
+	void ShowSirena(byte UCID);
+	void HideSirena(byte UCID);
 
 public:
 	RCPolice();
@@ -105,11 +107,9 @@ public:
 	void SaveUserFines( byte UCID );
 	void SetUserBID( byte UCID, byte BID);
 	void ReadFines();
-	void CopTurnOn( byte UCID );
-	void CopTurnOff( byte UCID );
+	bool ReadCop(byte UCID);
 	void SetSirenLight( string sirenWord );
-	int IfCop ( byte UCID );
-	bool IsCop( byte UCID );
+	bool IsCop(byte UCID);
 	int InPursuite( byte UCID );
 	int GetFineCount();
 
