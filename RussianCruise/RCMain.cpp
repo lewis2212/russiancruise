@@ -594,21 +594,20 @@ void case_btc ()
             GetLocalTime(&sm);
             char log[255];
             sprintf(log,"%slogs\\shop\\shop(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
-            /**
-            ѕользователь кликнул по другому пользователю
-            */
+
+            /** ѕользователь кликнул по другому пользователю **/
             if (pack_btc->ClickID<=32)
             {
                 ginfo->players[i].BID2 =  pack_btc->ClickID;
 
-                if (ginfo->players[i].Action == 1) // send
+                if (ginfo->players[i].Action == 1)
                 {
                     struct IS_BTN pack_btn;
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
                     pack_btn.Size = sizeof(struct IS_BTN);
                     pack_btn.Type = ISP_BTN;
-                    pack_btn.ReqI = pack_btc->ReqI;             // Must be non-zero, I'll just use UCID
-                    pack_btn.UCID = ginfo->players[i].UCID;             // UCID of the player that will receive the button
+                    pack_btn.ReqI = pack_btc->ReqI;
+                    pack_btn.UCID = ginfo->players[i].UCID;
                     pack_btn.L = 25;
                     int count; for (int j=0; j<MAX_PLAYERS; j++) if (ginfo->players[j].UCID != 0) count++;
 					if (count>16)
@@ -665,21 +664,7 @@ void case_btc ()
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "FinesButton" ));
                         insim->send_packet(&pack_btn);
 
-                        /*pack_btn.BStyle = 32 + ISB_CLICK;
-                        pack_btn.TypeIn = 2;
-                        pack_btn.T += 4;
-                        pack_btn.ClickID = 38;
-                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1002" ));
-                        insim->send_packet(&pack_btn);
-
-                        pack_btn.T += 4;
-                        pack_btn.ClickID = 39;
-                        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1003" ));
-                        insim->send_packet(&pack_btn);
-
-                        pack_btn.TypeIn = 0;
-                        */
-
+						pack_btn.ReqI = pack_btc->ReqI;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1004" ));
