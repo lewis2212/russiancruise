@@ -29,7 +29,6 @@ struct user_fine
 struct PolicePlayer
 {
 	/** GENERAL **/
-	byte	UCID;
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
@@ -42,10 +41,7 @@ struct PolicePlayer
 	/** other players **/
 	int		SirenaDist;
     int    	Pogonya;
-    int     StopTime;
-
-
-
+    int     StopTime = 0;
 
     struct  CompCar Info;
     struct 	user_fine fines[MAX_FINES];

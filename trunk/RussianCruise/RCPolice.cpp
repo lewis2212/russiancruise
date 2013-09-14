@@ -50,13 +50,11 @@ int RCPolice::init(const char *dir,void *CInSim, void *Message,void *Bank,void *
     return 0;
 }
 
-//done
 void RCPolice::InsimNCN( struct IS_NCN* packet )
 {
     if( packet->UCID == 0 )
         return;
 
-	players[packet->UCID].UCID = packet->UCID;
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
 
@@ -64,7 +62,6 @@ void RCPolice::InsimNCN( struct IS_NCN* packet )
     ReadUserFines(packet->UCID);
 }
 
-//done
 void RCPolice::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[packet->PLID] = packet->UCID;
@@ -96,7 +93,6 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
     }
 }
 
-//done
 void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
     lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
@@ -106,7 +102,6 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     PLIDtoUCID.erase( packet->PLID );
 }
 
-//done
 void RCPolice::InsimPLL( struct IS_PLL* packet )
 {
     lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
@@ -116,14 +111,12 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
     PLIDtoUCID.erase( packet->PLID );
 }
 
-//done
 void RCPolice::InsimCNL( struct IS_CNL* packet )
 {
     SaveUserFines(packet->UCID);
     players.erase(packet->UCID);
 }
 
-//done
 void RCPolice::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[packet->UCID].PName, packet->PName);
@@ -520,53 +513,37 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     /** Включаем погоню **/
     if (packet->ClickID==40)
     {
-        for ( auto& play: players )
+    	if (players[packet->ReqI].Pogonya == 0)
         {
-            if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
-            {
-                if (players[play.first].Pogonya == 0)
-                {
-                    players[play.first].Pogonya = 1;
-                    int worktime = time(NULL);
-                    players[play.first].WorkTime = worktime+60*5;
-                    strcpy(players[ play.first ].PogonyaReason,msg->_(  play.first , "1006" ));
-                    char Text[96];
-                    sprintf(Text,msg->_(play.first, "PogonyaOn" ), players[ play.first ].PName, players[ packet->UCID ].PName );
-                    SendMTC(255, Text);
-                    nrg->Lock( play.first );
-                }
-            }
-
-            if ( players[ play.first ].cop )
-                for (int k=60; k<79; k++)
-                    SendBFN( play.first ,k);
-        }
+			players[packet->ReqI].Pogonya = 1;
+			int worktime = time(NULL);
+			players[packet->ReqI].WorkTime = worktime+60*5;
+			strcpy(players[packet->ReqI].PogonyaReason,msg->_(packet->ReqI , "1006" ));
+			char Text[96];
+			sprintf(Text,msg->_(packet->ReqI, "PogonyaOn" ), players[packet->ReqI].PName, players[packet->UCID].PName );
+			SendMTC(255, Text);
+			nrg->Lock(packet->ReqI);
+		}
+		return;
     }
 
     /** Выключаем погоню **/
     if (packet->ClickID==41)
     {
-        for ( auto& play: players )
-        {
-            if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
-            {
-                if (players[play.first].Pogonya != 0)
-                {
-                    players[ play.first ].Pogonya = 0;
-                    SendBFN( play.first ,210);
-                    char Text[96];
-                    sprintf(Text,msg->_(play.first , "PogonyaOff" ), players[ play.first ].PName, players[ packet->UCID ].PName );
-                    SendMTC(255, Text);
-                    nrg->Unlock( play.first );
-                }
-            }
+		if (players[packet->ReqI].Pogonya != 0)
+		{
+			players[packet->ReqI].Pogonya = 0;
+			SendBFN(packet->ReqI, 210);
+			char Text[96];
+			sprintf(Text,msg->_(packet->ReqI, "PogonyaOff" ), players[packet->ReqI].PName, players[packet->UCID].PName );
+			SendMTC(255, Text);
+			nrg->Unlock(packet->ReqI);
 
-            if ( players[ play.first ].cop )
-            {
-                for (int k=60; k<79; k++)
-                    SendBFN( play.first ,k);
-            }
-        }
+			//очистка кнопок
+			for (byte i = 60;i<92;i++)
+				SendBFN(255, i);
+		}
+		return;
     }
 }
 
@@ -753,6 +730,9 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         byte UCID = PLIDtoUCID[packet->Info[i].PLID];
         if(UCID == 0) return;
 
+		int SirenaCount = 0;
+		int SDtemp=0;
+
         /** окошко со штрафами **/
 		if ( players[UCID].ThisFineCount != 0 )
 		{
@@ -776,35 +756,55 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
         /** сирена копа **/
         if (players[UCID].cop and players[UCID].Sirena)
-			SendButton(255, UCID, 20, 90, 26, 20, 10, 32, siren.c_str());
-		else
-			SendBFN(UCID, 20);
-		int SirenaCount = 0;
+			SendButton(255, UCID, 140, 90, 26, 20, 10, 32, siren.c_str());
+		else if (players[UCID].cop)
+			SendBFN(UCID, 140);
 
-		int SDtemp=0;
 		for (auto& play: players)
 		{
-			if(UCID == play.first or !players[play.first].cop) continue;
+			if(UCID == play.first)
+				continue;
+
 			int X1 = players[UCID].Info.X/65536,
 				Y1 = players[UCID].Info.Y/65536,
 				X2 = players[play.first].Info.X/65536,
 				Y2 = players[play.first].Info.Y/65536,
 				Dist = Distance(X1, Y1, X2, Y2);
 
-			/** сирена **/
-			if (players[play.first].Sirena)
+			/** арест **/
+			if (players[UCID].Pogonya == 1)
 			{
-				if (Dist < 120)
+				if (S < 5 and Dist < 10)
 				{
-					SirenaCount++;
-					if (Dist < SDtemp or SDtemp ==0)
-						SDtemp = Dist;
+					players[UCID].StopTime++;
+					if (players[UCID].StopTime >= 3)
+					{
+						players[UCID].StopTime = 0;
+						players[UCID].Pogonya = 2;
+						nrg->Unlock(UCID);
+						strcpy(players[UCID].PogonyaReason, msg->_(UCID, "1701"));
+
+						char Text[128];
+						sprintf(Text,"^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
+						SendMTC(255, Text);
+						SendMTC(UCID, msg->_(UCID, "1703"));
+					}
 				}
+				if (S > 5)
+					players[UCID].StopTime = 0;
+			}
+
+			/** сирена **/
+			if (players[play.first].Sirena and players[play.first].cop and Dist < 120)
+			{
+				SirenaCount++;
+				if (Dist < SDtemp or SDtemp ==0)
+					SDtemp = Dist;
 			}
 			players[UCID].SirenaDist = SDtemp;
 
 			/** радар **/
-			if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya != 1)
+			if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya == 0)
 			{
 				if (Dist<25)
 				{
@@ -838,28 +838,6 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 					players[UCID].speed_over=0;
 				}
 			}
-
-			/** арест **/
-			if (players[UCID].Pogonya == 1)
-			{
-				int S2 = players[UCID].Info.Speed*360/32768;
-				if (S2 < 5 and Dist < 10)
-				{
-					if (players[UCID].StopTime >= 3)
-					{
-						players[UCID].Pogonya = 2;
-						nrg->Unlock(UCID);
-						strcpy(players[UCID].PogonyaReason, msg->_(UCID, "1701" ));
-
-						char Text[96];
-						sprintf(Text,"^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
-						SendMTC(255,Text);
-						SendMTC(UCID,msg->_(UCID, "1703"));
-					}
-					players[UCID].StopTime++;
-				}
-				else players[UCID].StopTime = 0;
-			}
 		}
 
 		/** сирена у игрока **/
@@ -873,7 +851,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
         if (players[UCID].Pogonya == 0 and strlen(players[UCID].PogonyaReason) > 1)
         {
-            strcpy(players[ UCID ].PogonyaReason,"");
+            strcpy(players[UCID].PogonyaReason, "");
             SendBFN( UCID ,204);
         }
 
@@ -918,12 +896,12 @@ void RCPolice::SetSirenLight( string sirenWord )
 void RCPolice::ShowSirena(byte UCID)
 {
 	char txt[50];
-	SendButton(255,UCID,21,0,31,200,(120-players[UCID].SirenaDist+1)/4, 0, siren.c_str());
+	SendButton(255,UCID,141,0,31,200,(120-players[UCID].SirenaDist+1)/4, 0, siren.c_str());
 }
 
 void RCPolice::HideSirena(byte UCID)
 {
-	SendBFN(UCID, 21);
+	SendBFN(UCID, 141);
 }
 
 bool RCPolice::IsCop( byte UCID )
@@ -1138,6 +1116,10 @@ void RCPolice::Event()
                 players[ UCID ].Pogonya = 0;
                 nrg->Unlock( UCID );
                 dl->AddSkill( UCID );
+
+                //очистка кнопок
+                for (byte i = 60;i<92;i++)
+					SendBFN(255, i);
             }
         }
 
