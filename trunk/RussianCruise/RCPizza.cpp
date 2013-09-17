@@ -149,13 +149,9 @@ void RCPizza::Take( byte UCID )
 
     }
     else if (players[ UCID ].WorkAccept == 2)
-    {
         SendMTC( UCID ,msg->_(  UCID , "4202" )); // Отвези сначала этот заказ
-    }
     else
-    {
         SendMTC( UCID ,msg->_(  UCID , "4203" )); // Wait until i call you
-    }
 
 }
 
@@ -268,6 +264,7 @@ void RCPizza::readconfig(const char *Track)
             {
                 readf.getline(str,64);
                 strncpy(zone.point[point].Place,str,strlen(str));
+                readf.getline(str,128);
                 readf.getline(str,128);
 
                 char * X;

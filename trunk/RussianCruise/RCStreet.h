@@ -21,7 +21,9 @@ struct StrPlayer
 
 struct streets
 {
-    char    Street[50];
+	int 	StreetID;
+    char    StreetRu[50];
+    char    StreetEn[50];
     word    PointCount;
     int     *StreetX = NULL;
     int     *StreetY = NULL;
@@ -33,8 +35,6 @@ struct streets
 class RCStreet:public RCBaseClass
 {
 private:
-    // Переменные и функции, доступные только самому классу
-
     char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
     char errmsg[64];
@@ -71,6 +71,8 @@ public:
     int CurentStreetInfo(void *StreetInfo, byte UCID);
     int CurentStreetInfoByNum(void *StreetInfo, int StrNum);
     int StreetCount();
+
+    string GetStreetName(byte UCID, int StreetID);
 
     int init(const char *dir,void *CInSim, void *Message);
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"

@@ -15,7 +15,7 @@ RCMessage::~RCMessage()
 const char* RCMessage::_( byte UCID, string CODE )
 {
 	if (players[ UCID ].LangID == 0)
-		return (char*)("^1LangID == 0");
+		return (char*)("^1LangID = 0");
 
 	if( MsgArray[ players[ UCID ].LangID ].find( CODE ) == MsgArray[ players[ UCID ].LangID ].end() )
 		return CODE.c_str();
@@ -23,6 +23,10 @@ const char* RCMessage::_( byte UCID, string CODE )
 	return MsgArray[ players[ UCID ].LangID ][ CODE ].c_str();
 }
 
+int RCMessage::GetLangID(byte UCID)
+{
+	return players[UCID].LangID;
+}
 
 int RCMessage::init(const char *dir, void *CInSim)
 {
