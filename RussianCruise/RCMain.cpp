@@ -785,10 +785,7 @@ void case_btt ()
                                 readf.close();
                             }
                             else
-                            {
                                 SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "1101" ));
-                                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "1101" ));
-                            }
                         } // if atoi(pack_btt->Text) > 0
                         break;
                     }
@@ -1627,7 +1624,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
-        SendMST("/msg ^1| ^3Russian Cruise: ^3^CПодана команда на чтение файлов");
+        SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
 
         struct IS_TINY pack_requests;
         memset(&pack_requests, 0, sizeof(struct IS_TINY));
@@ -1650,7 +1647,6 @@ void case_mso ()
             #endif
             ginfo->players[i].Svetofor = 0;
         }
-
     }
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
@@ -1663,8 +1659,8 @@ void case_mso ()
             SendMST(Msg);
             SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
             SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2701" ));
-            bank->RemCash(ginfo->players[i].UCID,5000);
-            bank->AddToBank(5000);
+            bank->RemCash(ginfo->players[i].UCID,10000);
+            bank->AddToBank(10000);
         }
         else
         {
@@ -1673,11 +1669,22 @@ void case_mso ()
             sprintf(Msg, "/pitlane %s",ginfo->players[i].UName);
             SendMST(Msg);
             ginfo->players[i].Zone = 1;
-            bank->RemCash(ginfo->players[i].UCID,250);
-            bank->AddToBank(250);
+            bank->RemCash(ginfo->players[i].UCID,500);
+            bank->AddToBank(500);
 #ifdef _RC_POLICE_H
         }
         #endif
+    }
+    if ((strncmp(Msg, "!test",5) == 0))
+    {
+    	/*
+    	struct streets StreetInfo;
+		street->CurentStreetInfo(&StreetInfo,ginfo->players[i].UCID);
+
+    	char str[96];
+		sprintf(str,street->GetStreetName(ginfo->players[i].UCID,StreetInfo.StreetID).c_str());
+		SendMTC(ginfo->players[i].UCID,str);
+		*/
     }
     //!users
     if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
@@ -1765,31 +1772,35 @@ void case_mso_flood ()
 
         if (ginfo->players[i].FloodCount > 4)   //max lines to tolerate
         {
-            SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2004" ));
-            ginfo->players[i].FloodCount = 0;
+        	int pay = 1000;
 
-            bank->RemCash(ginfo->players[i].UCID,500);
-            bank->AddToBank(500);
+			char str[96];
+			sprintf(str,msg->_(ginfo->players[i].UCID, "flood"),pay);
+			SendMTC(ginfo->players[i].UCID,str);
+
+            ginfo->players[i].FloodCount = 0;
+            bank->RemCash(ginfo->players[i].UCID,pay);
+            bank->AddToBank(pay);
         }
 
-
         /*** МАТ И Т.П. ***/
-
         for (int j=0; j< ginfo->WordsCount; j++)
         {
             if (strstr(Msg,ginfo->Words[j]))
             {
-                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2005" ));
+            	int pay = 5000;
 
-                bank->RemCash(ginfo->players[i].UCID,5000);
-                bank->AddToBank(5000);
+				char str[96];
+				sprintf(str,msg->_(ginfo->players[i].UCID, "swear"),pay);
+                SendMTC(ginfo->players[i].UCID,str);
+
+                bank->RemCash(ginfo->players[i].UCID,pay);
+                bank->AddToBank(pay);
             }
 
         }
         strcpy( ginfo->players[i].Msg, Msg);
-    } // if UserType != MSO_PREFIX
-    /** Flood and bad words **/
-
+    }
 }
 
 void case_mso_cop ()
@@ -2029,7 +2040,6 @@ void case_pla ()
             break;
         }
     }
-
 }
 
 void case_pll ()
@@ -2052,23 +2062,31 @@ void case_pll ()
 #ifdef _RC_POLICE_H
             if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
-                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2600" ));
+            	int pay = 10000;
+
+				char str[96];
+				sprintf(str,msg->_(ginfo->players[i].UCID, "2600"),pay);
+                SendMTC(ginfo->players[i].UCID,str);
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
 
-                bank->RemCash(ginfo->players[i].UCID,5000);
-                bank->AddToBank(5000);
+                bank->RemCash(ginfo->players[i].UCID,pay);
+                bank->AddToBank(pay);
             }
             else
             {
 #endif
                 if (ginfo->players[i].Zone != 1)
                 {
-                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2602" ));
+                	int pay = 2000;
 
-                    bank->RemCash(ginfo->players[i].UCID,500);
-                    bank->AddToBank(500);
+					char str[96];
+					sprintf(str,msg->_(ginfo->players[i].UCID, "2602"),pay);
+					SendMTC(ginfo->players[i].UCID,str);
+
+                    bank->RemCash(ginfo->players[i].UCID,pay);
+                    bank->AddToBank(pay);
                 }
 #ifdef _RC_POLICE_H
             }
@@ -2101,23 +2119,31 @@ void case_plp ()
 #ifdef _RC_POLICE_H
             if ( police->InPursuite( ginfo->players[i].UCID ) )
             {
-                SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2700" ));
+            	int pay = 10000;
+
+				char str[96];
+				sprintf(str,msg->_(ginfo->players[i].UCID, "2700"),pay);
+				SendMTC(ginfo->players[i].UCID,str);
 
                 if( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                     dl->RemSkill(ginfo->players[i].UCID,10);
 
-                bank->RemCash(ginfo->players[i].UCID,5000);
-                bank->AddToBank(5000);
+                bank->RemCash(ginfo->players[i].UCID,pay);
+                bank->AddToBank(pay);
             }
             else
             {
 #endif
                 if (ginfo->players[i].Zone != 1)
                 {
-                    SendMTC(ginfo->players[i].UCID,msg->_( ginfo->players[i].UCID, "2702" ));
+                	int pay = 2000;
 
-                    bank->RemCash(ginfo->players[i].UCID,500);
-                    bank->AddToBank(500);
+					char str[96];
+					sprintf(str,msg->_(ginfo->players[i].UCID, "2702"),pay);
+					SendMTC(ginfo->players[i].UCID,str);
+
+                    bank->RemCash(ginfo->players[i].UCID,pay);
+                    bank->AddToBank(pay);
                 }
 #ifdef _RC_POLICE_H
             }
@@ -2157,7 +2183,7 @@ void case_vtn ()
     {
         if (ginfo->players[i].UCID == pack_vtn->UCID)
         {
-            SendMST(msg->_( ginfo->players[i].UCID, "2900" ));
+            //SendMST(msg->_( ginfo->players[i].UCID, "2900" ));
             SendMST("/cv");
             break;
         }

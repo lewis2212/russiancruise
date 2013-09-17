@@ -772,7 +772,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 				Dist = Distance(X1, Y1, X2, Y2);
 
 			/** арест **/
-			if (players[UCID].Pogonya == 1)
+			if (players[UCID].Pogonya == 1 and players[play.first].cop)
 			{
 				if (S < 5 and Dist < 10)
 				{
@@ -822,7 +822,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 					char text[128];
 					int Speed2 = players[UCID].speed_over - StreetInfo.SpeedLimit;
-					sprintf(text,msg->_(UCID, "Speeding"), players[UCID].PName, Speed2, StreetInfo.Street, players[play.first].PName);
+					sprintf(text,msg->_(UCID, "Speeding"), players[UCID].PName, Speed2, street->GetStreetName(UCID, StreetInfo.StreetID).c_str(), players[play.first].PName);
 					SendMTC(255,text);
 
 					if (players[UCID].Pogonya == 0)
@@ -1157,9 +1157,9 @@ void RCPolice::Event()
                     street->CurentStreetInfo(&StreetInfo,UCID2);
 
                     if (playr2.Pogonya == 1)
-                        sprintf(pack.Text,"%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.Street, D, min, sec );
+                        sprintf(pack.Text,"%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.StreetRu, D, min, sec );
                     else if (playr2.Pogonya == 2)
-                        sprintf(pack.Text,"%s ^7 - %s, ^1^Cарестован", playr2.PName,StreetInfo.Street);
+                        sprintf(pack.Text,"%s ^7 - %s, ^1^Cарестован", playr2.PName, StreetInfo.StreetRu);
 
                     insim->send_packet(&pack);
                     pack.T -=4;

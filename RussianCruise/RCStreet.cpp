@@ -35,6 +35,14 @@ int RCStreet::init(const char *dir, void *CInSim, void *Message)
     return 0;
 }
 
+string RCStreet::GetStreetName(byte UCID, int StreetID)
+{
+	if (msg->GetLangID(UCID)==LANG_ID_RUS)
+		return Street[StreetID].StreetRu;
+	else
+		return Street[StreetID].StreetEn;
+}
+
 void RCStreet::readconfig(const char *Track)
 {
     char file[255];
@@ -65,16 +73,21 @@ void RCStreet::readconfig(const char *Track)
             if (strcmp(str,"#Street")==0)
             {
                 /**
-                название
+                название (рус)
+                название (енг)
                 ограничен скорости.
                 кол. точек
                 ...точки....
                 */
                 //онуляем позицию
                 memset(&Street[i], 0, sizeof(streets));
+                Street[i].StreetID = i;
                 // читаем название улицы
                 readf.getline(str,128);
-                sprintf(Street[i].Street,"^C^7%s",str);
+                sprintf(Street[i].StreetRu,"^C^7%s",str);
+                // читаем название улицы
+                readf.getline(str,128);
+                sprintf(Street[i].StreetEn,"^C^7%s",str);
 
                 readf.getline(str,128);
                 Street[i].SpeedLimit = atoi(str);
@@ -195,7 +208,7 @@ void RCStreet::btn_street (byte UCID)
     pack.T = 1;
     pack.W = 60;
     pack.H = 6;
-    sprintf(pack.Text, "%s ^2(^1%d ^C^7км/ч^2)", Street[ players[ UCID ].StreetNum ].Street, Street[ players[ UCID ].StreetNum ].SpeedLimit);
+    sprintf(pack.Text, "%s ^2(^1%d ^C^7км/ч^2)", GetStreetName(UCID, players[UCID].StreetNum).c_str(), Street[ players[ UCID ].StreetNum ].SpeedLimit);
     insim->send_packet(&pack);
 }
 

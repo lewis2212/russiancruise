@@ -37,6 +37,8 @@ public:
     int init(const char *dir,void *CInSim);
     void readconfig(const char *Track);
 
+    int GetLangID(byte UCID);
+
     void save(byte UCID);
 
     const char* _( byte UCID, string CODE );

@@ -1,8 +1,8 @@
 /dealer
--130,472
--102,477
--98,457
--128,451
+-116,446
+-115,441
+-107,443
+-107,449
 #dealer
 
 /shop
@@ -14,40 +14,81 @@
 #shop
 
 point
-^C^7Вернадского проспект д.1
+^C^7Проспект Вернадского, д.1
+^71 Vernadskogo av.
 -637,442
 
 point
-^C^7Банкирам что за питами
+^C^7Вернадского проспект, д.7
+^77 Vernadskogo av.
+-515,244
+
+point
+^C^7Банкирам, за питами
+^7Bankers, for the pits
 233,20
 
 point
-^C^7Ул. Гоголя д.8
+^C^7Ул. Гоголя, д.8
+^78 Gogolya str.
 -164,148
 
 point
-^C^7В магазин на Ул. Гоголя
+^C^7Ул. Гоголя, магазин
+^7Gogolya str., shop
 15,-40
 
 point
-^C^7ул. Покрышкина. парню перед эстакадой
+^C^7Ул. Покрышкина, парню перед эстакадой
+^7Pocrishkina str., guy before trestle
 351,-449
 
 point
-^C^7Эстакада - юг. Парню под мостом
+^C^7Эстакада-юг, парню под мостом
+^7Trestle-South, guy under the bridge
 -242,-64
 
 point
-^C^7ул. Новые Черемушки, парковка
+^C^7Эстакада-Север, охранникам
+^7Trestle-North, security guards
+448,-513
+
+point
+^C^7Эстакада-Север, парню под мостом
+^7Trestle-North, guy under the bridge
+300,-455
+
+point
+^C^7Ул. Новые Черемушки, парковка
+^7Novie Cheremushki str., parking
 -254,371
 
 point
-^C^7Таксистам на Превосходной
+^C^7Ул. Превосходная, таксопарк
+^7Prevoschodnaya str., taxi station
 -471,439
 
 point
-^C^7Вернадского проспект д.7
--515,244
-point
-^C^7ул. Покрышкина. д.2 (углубление)
+^C^7Ул. Покрышкина, д.2 (углубление)
+^72 Pocrishkina str.
 305,-285
+
+point
+^C^7Ленинский проспект, охранникам
+^7Leninsky av., security guards
+231,252
+
+point
+^C^7Ул. Новые Черемушки, д.14 (в тупике)
+^714 Novie Cheremushki str.
+-373,353
+
+point
+^C^7Ярославское шоссе, дорожникам
+^7Yaroslavskoe highway, road builders
+-64,-229
+
+point
+^C^7Ул. Титова, д.1
+^71 Titova str.
+-375,506
