@@ -304,11 +304,6 @@ bool RCLight::GetOnLight(byte UCID)
 
 void RCLight::Svetofor1 ( byte UCID )
 {
-	/*printf("%d %d\n",red1,red2);
-	printf("%d %d\n",yell1,yell2);
-	printf("%d %d\n",green1,green2);
-	printf("\n");*/
-
 	byte ClickId = 170, l = 145, t = 12, w = 18;
 
 	char cR [10], cY [10], cG [10];
@@ -412,6 +407,18 @@ void RCLight::Svetofor3 ( byte UCID )
 	if (red2 == 1) signal11 ="^1•";
 	if (yell2 == 1) signal12 ="^3•";
 	if (green2 == 1) signal13 ="^2•";
+
+	byte ClickID = 195;
+
+	/*SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "");
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);
+
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "");
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);
+	SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, signal1);*/
 
     struct IS_BTN pack_btn;
     memset(&pack_btn, 0, sizeof(struct IS_BTN));

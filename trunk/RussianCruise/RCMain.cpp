@@ -54,6 +54,10 @@ RCPolice *police;
 RCRoadSign *RoadSign;
 #endif // _RC_ROADSIGN
 
+#ifdef _RC_QUEST_H
+RCQuest	*quest;
+#endif // _RC_QUEST_H
+
 void CreateClasses()
 {
     msg = new RCMessage();
@@ -98,6 +102,10 @@ void CreateClasses()
 #ifdef _RC_ROADSIGN
 	RoadSign = new RCRoadSign();
 #endif // _RC_ROADSIGN
+
+#ifdef _RC_QUEST_H
+	quest = new RCQuest();
+#endif // _RC_QUEST_H
 
 }
 
@@ -149,6 +157,10 @@ void InitClasses()
 	RoadSign->Init(RootDir,insim,msg, lgh);
 #endif // _RC_ROADSIGN
 
+#ifdef _RC_QUEST_H
+	quest->init(RootDir,insim);
+#endif // _RC_QUEST_H
+
 }
 
 void readconfigs()
@@ -188,6 +200,10 @@ void readconfigs()
 #ifdef _RC_ROADSIGN
 	RoadSign->ReadConfig(ginfo->Track);
 #endif // _RC_ROADSIGN
+
+#ifdef _RC_QUEST_H
+	quest->readconfig(ginfo->Track);
+#endif // _RC_QUEST_H
 }
 
 int GetCarID(char *CarName)
@@ -357,6 +373,10 @@ void save_car (struct player *splayer)
 
 }
 
+void saveAll()
+{
+	//code
+}
 
 
 void help_cmds (struct player *splayer,int h_type)
@@ -2507,6 +2527,10 @@ void *ThreadMci (void *params)
 		RoadSign->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif // _RC_ROADSIGN
 
+#ifdef _RC_QUEST
+		quest->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
+#endif // _RC_QUEST
+
     }
     return 0;
 };
@@ -2824,6 +2848,10 @@ void *ThreadMain(void *CmdLine)
 #ifdef _RC_ROADSIGN
 		RoadSign->next_packet();
 #endif // _RC_ROADSIGN
+
+#ifdef _RC_QUEST
+		quest->next_packet();
+#endif // _RC_QUEST
     }
 
     if (insim->isclose() < 0)
