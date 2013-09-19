@@ -82,8 +82,8 @@ private:
     int NumP = 0;
     int ginfo_time;
     struct Store PStore;
-    struct  pizza_info TrackInf;
-	struct  place zone;
+    struct pizza_info TrackInf;
+	struct place zone;
 
     map<byte,PizzaPlayer>players;
 

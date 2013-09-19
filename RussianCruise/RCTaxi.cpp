@@ -291,7 +291,7 @@ void RCTaxi::accept_user( byte UCID )
 			street->CurentStreetInfoByNum(&StreetInfo,players[ UCID ].WorkStreetDestinaion);
 
 			char Msg[128];
-			sprintf(Msg,"^6|^C^7 Заберите клиента на %s",street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+			sprintf(Msg,msg->_(UCID,"TaxiAccept11"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
 			SendMTC( UCID ,Msg);
 			sprintf(Msg,msg->_(UCID,"TaxiAccept1"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
 			ButtonInfo( UCID ,Msg);
@@ -335,7 +335,7 @@ void RCTaxi::accept_user2(byte UCID)
 		street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
 		char Msg[128];
-		sprintf(Msg,"^6|^C^7 Отвези меня на %s",street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+		sprintf(Msg,msg->_(UCID,"TaxiAccept22"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
 		SendMTC( UCID ,Msg);
 		sprintf(Msg,msg->_(UCID,"TaxiAccept2"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
 		ButtonInfo( UCID ,Msg);
@@ -412,13 +412,13 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 						SendMTC( UCID ,  TaxiDialogs["speed"][ rand()%TaxiDialogs["speed"].size() ].c_str() ); // превышаешь скорость
 					}
 					players[ UCID ].spd++;
-					players[ UCID ].PassStress += 10;
+					players[ UCID ].PassStress += Speed-StreetInfo.SpeedLimit+10;
 				}
 
 				if (lgh->CheckOnRed(UCID))
 				{
 					SendMTC( UCID ,  TaxiDialogs["redlight"][ rand()%TaxiDialogs["redlight"].size() ].c_str() ); // красный светофор
-					players[ UCID ].PassStress += 100;
+					players[ UCID ].PassStress += 200;
 					lgh->OnRedFalse(UCID);
 				}
 			}

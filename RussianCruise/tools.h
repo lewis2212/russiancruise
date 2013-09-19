@@ -11,17 +11,16 @@ using namespace std;
 #include <vector>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>     /* atoi */
+#include <stdlib.h>
 
 typedef unsigned char byte;
-
-
 
 struct square           // square of destination point
 {
     int     X;       // 4 X points
     int     Y;       // 4 Y points
-    char    Place[64];  // The name of Destination Point
+    char    PlaceNameRu[64];  // The name of Destination Point
+    char    PlaceNameEn[64];  // The name of Destination Point
 };
 
 struct place

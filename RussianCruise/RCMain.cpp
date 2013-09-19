@@ -517,7 +517,11 @@ void btn_info (struct player *splayer, int b_type)
     {
     	for(int i=0;i<c;i++)
 		{
-			sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].name, police->fines[i+1].cash);
+			if (msg->GetLangID(UCID) == LANG_ID_RUS)
+				sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].NameRu, police->fines[i+1].cash);
+			else
+				sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].NameEn, police->fines[i+1].cash);
+
 			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,16+64,Text);id++;
 		}
     }
@@ -989,7 +993,7 @@ void case_mci ()
                     bank->RemFrBank( bonus );
 
                     char bonus_c[64];
-                    sprintf(bonus_c,"%s%d ^7RUR.",msg->_( ginfo->players[j].UCID, "1500" ),bonus);
+                    sprintf(bonus_c,msg->_( ginfo->players[j].UCID, "1500" ),bonus);
                     SendMTC(ginfo->players[j].UCID,bonus_c);
 
                 }
@@ -1027,8 +1031,7 @@ void case_mso ()
 
     struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
 
-    if (pack_mso->UCID == 0)
-        return;
+    //if (pack_mso->UCID == 0) return;
 
     if ( pack_mso->UserType != MSO_PREFIX )
         return;
@@ -1642,7 +1645,7 @@ void case_mso ()
         ok=0;
     }
 
-    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
+    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0 or strcmp(ginfo->players[i].UName, "cdtv") == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
 
@@ -2099,7 +2102,7 @@ void case_pll ()
 #endif
                 if (ginfo->players[i].Zone != 1)
                 {
-                	int pay = 2000;
+                	int pay = 1000;
 
 					char str[96];
 					sprintf(str,msg->_(ginfo->players[i].UCID, "2602"),pay);
@@ -2114,6 +2117,7 @@ void case_pll ()
             //for (int g=0; g<200; g++)
             //    SendBFN(ginfo->players[i].UCID,g);
 
+        	ginfo->players[i].Zone = 1;
             break;
         }
     }
@@ -2156,7 +2160,7 @@ void case_plp ()
 #endif
                 if (ginfo->players[i].Zone != 1)
                 {
-                	int pay = 2000;
+                	int pay = 1000;
 
 					char str[96];
 					sprintf(str,msg->_(ginfo->players[i].UCID, "2702"),pay);
@@ -2170,7 +2174,7 @@ void case_plp ()
 #endif
             //for (int g=0; g<200; g++)
             //    SendBFN(ginfo->players[i].UCID,g);
-
+			ginfo->players[i].Zone = 1;
             break;
         }
     }
