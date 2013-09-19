@@ -21,7 +21,7 @@ int RCBank::GetCash(byte UCID)
 bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
 {
     char Text[128];
-    sprintf(Text,"^5| ^7^CНа ваш счет поступило: %d ^3RUR^7.",Cash);
+    sprintf(Text,msg->_(UCID, "GetMoneyA"),Cash);
     if( Show )
         SendMTC(UCID, Text);
 
@@ -32,7 +32,7 @@ bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
 bool RCBank::RemCash(byte UCID, int Cash)
 {
     char Text[128];
-    sprintf(Text,"^5| ^7^CС вашего счета списано: %d ^3RUR^7.",Cash);
+    sprintf(Text,msg->_(UCID, "RemMoneyA"),Cash);
     SendMTC(UCID, Text);
     players[ UCID ].Cash -= Cash;
     return true;

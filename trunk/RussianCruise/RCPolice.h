@@ -14,7 +14,8 @@
 struct fine
 {
     int     id;
-    char    name[64];
+    char    NameRu[64];
+    char    NameEn[64];
     int     cash;
 };
 

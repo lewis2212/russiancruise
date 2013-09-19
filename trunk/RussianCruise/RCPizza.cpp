@@ -130,9 +130,18 @@ void RCPizza::Take( byte UCID )
             players[ UCID ].WorkAccept = 2;
             SendMTC( UCID ,msg->_(  UCID , "4200" ));
             char Text[64];
-            sprintf(Text, "^3| %s",zone.point[place].Place);
+
+            if (msg->GetLangID(UCID)==LANG_ID_RUS)
+				sprintf(Text, "^3| %s",zone.point[place].PlaceNameRu);
+			else
+				sprintf(Text, "^3| %s",zone.point[place].PlaceNameEn);
+
             SendMTC( UCID, Text);
-            strcpy(players[ UCID ].WorkDest,zone.point[place].Place);
+            if (msg->GetLangID(UCID)==LANG_ID_RUS)
+				strcpy(players[ UCID ].WorkDest,zone.point[place].PlaceNameRu);
+			else
+				strcpy(players[ UCID ].WorkDest,zone.point[place].PlaceNameEn);
+
 
         }
         else if (players[ UCID ].WorkPlayerAccept != 0) // заказал игрок
@@ -263,8 +272,10 @@ void RCPizza::readconfig(const char *Track)
             if (strncmp(str,"point",5)==0)
             {
                 readf.getline(str,64);
-                strncpy(zone.point[point].Place,str,strlen(str));
+                strncpy(zone.point[point].PlaceNameRu,str,strlen(str));
                 readf.getline(str,128);
+                strncpy(zone.point[point].PlaceNameEn,str,strlen(str));
+
                 readf.getline(str,128);
 
                 char * X;

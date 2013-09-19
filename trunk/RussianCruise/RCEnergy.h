@@ -11,11 +11,12 @@
 struct EnergyPlayer
 {
     struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
+    char    UName[24];
+    char    PName[24];
     byte    Zone;
+
     /** Energy **/
-    int     Energy; // Energy xD from 0 to 10000
+    int     Energy; // 0-10000
     time_t  EnergyTime;
 	bool	EnergyAlarm = false;
     bool	Lock;
@@ -30,20 +31,15 @@ struct energy_info
     int     YCafe[10];
 };
 
-
 class RCEnergy:public RCBaseClass
 {
 private:
-
-	// Дескриптор соединения
-    MYSQL	rcNrgDB;
-    // Дескриптор результирующей таблицы
-    MYSQL_RES *rcNrgRes;
-    // Массив полей текущей строки
-    MYSQL_ROW rcNrgRow;
+    MYSQL	rcNrgDB;		// Дескриптор соединения
+    MYSQL_RES *rcNrgRes;	// Дескриптор результирующей таблицы
+    MYSQL_ROW rcNrgRow;		// Массив полей текущей строки
 
     time_t nrgtime;
-    struct  energy_info TrackInf;             // Where PitBox and Shop
+    struct  energy_info TrackInf;       // Where PitBox and Shop
 
 	map<byte, EnergyPlayer>players;     // Array of players
 
@@ -56,15 +52,11 @@ private:
     void InsimCNL( struct IS_CNL* packet );
     void InsimCPR( struct IS_CPR* packet );
     void InsimMSO( struct IS_MSO* packet );
-    //! HIT CONTROL
     void InsimCON( struct IS_CON* packet );
     void InsimOBH( struct IS_OBH* packet );
     void InsimHLV( struct IS_HLV* packet );
 
-
-    // Функции-утилиты
-    int check_pos ( byte UCID ); //+
-
+    int check_pos ( byte UCID );
 public:
     RCEnergy();
     ~RCEnergy();
