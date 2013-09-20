@@ -804,8 +804,9 @@ void case_btt ()
                                 bank->RemCash(ginfo->players[i].UCID,atoi(pack_btt->Text));
                                 bank->AddCash(ginfo->players[g].UCID,atoi(pack_btt->Text), false);
 
+								sprintf(Msg,"[%02d.%02d.%d, %02d:%02d] %s => %s (%s RUR)",sm.wDay,sm.wMonth,sm.wYear,sm.wHour,sm.wMinute,ginfo->players[i].UName,ginfo->players[g].UName,(int)pack_btt->Text);
                                 ofstream readf (send_c,ios::app);
-                                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  ginfo->players[i].UName << " send " << pack_btt->Text << " RUR. to "  << ginfo->players[g].UName << endl;
+                                readf << Msg << endl;
                                 readf.close();
                             }
                             else
@@ -1137,24 +1138,36 @@ void case_mso ()
                     }
                 }
             }
-
         }
         else
         {
+        	int PreCount=0, PostCount=0;
+        	while (readf.good())
+            {
+                char str[128];
+                readf.getline(str,128);
+                if (strlen(str) > 0 and strstr(str,ginfo->players[i].UName))
+                    PreCount++;
+            }
+			readf.close();
+
+			SendMTC(ginfo->players[i].UCID,"^1| ^3LAST TRANSFERS:");
+			ifstream readf (file,ios::in);
             while (readf.good())
             {
                 char str[128];
                 readf.getline(str,128);
-                if (strlen(str) > 0)
-                {
-                    if (strstr(str,ginfo->players[i].UName))
+                if (strlen(str) > 0 and strstr(str,ginfo->players[i].UName))
                     {
-                        char Text[64];
-                        strcpy(Text,"^1| ^C^7");
-                        strncat(Text,str,55);
-                        SendMTC(ginfo->players[i].UCID,Text);
+                    	if (PostCount >= PreCount-15)
+						{
+							char Text[96];
+							strcpy(Text,"^1| ^C^7");
+							strncat(Text,str,55);
+							SendMTC(ginfo->players[i].UCID,Text);
+						}
+                    	PostCount++;
                     }
-                }
             }
         }
         readf.close();
