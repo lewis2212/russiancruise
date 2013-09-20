@@ -464,7 +464,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 for(int j=0; j<20; j++)
                     if( strlen(players[play.first].ThisFine[j]) == 0 )
                     {
-                    	if (msg->GetLangID(packet->ReqI) == LANG_ID_RUS)
+                    	if (msg->GetLangID(play.first) == LANG_ID_RUS)
 							sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[packet->ReqI].NameRu,fines[packet->ReqI].id,players[ packet->UCID ].PName);
                         else
 							sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[packet->ReqI].NameEn,fines[packet->ReqI].id,players[ packet->UCID ].PName);
@@ -858,7 +858,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 			players[UCID].SirenaDist = SDtemp;
 
 			/** радар **/
-			if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya == 0)
+			if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya == 0 and Dist < 50)
 			{
 				if (Dist<25)
 				{
@@ -1160,9 +1160,9 @@ void RCPolice::Event()
 
         if ( playr.Pogonya == 1 )
         {
-            ButtonClock( UCID );
+            ButtonClock(UCID);
             int nowtime = time( NULL );
-            if ( playr.WorkTime <= nowtime)
+            if (playr.WorkTime <= nowtime)
             {
                 SendBFN( UCID ,210);
 
