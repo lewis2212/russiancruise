@@ -89,10 +89,6 @@ private:
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
 	void ShowFinesPanel( byte UCID, byte UCID2 );
-
-	void ShowSirena(byte UCID);
-	void HideSirena(byte UCID);
-
 public:
 	RCPolice();
 	~RCPolice();

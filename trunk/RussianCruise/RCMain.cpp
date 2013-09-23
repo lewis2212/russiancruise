@@ -2215,7 +2215,7 @@ void case_rst ()
 void case_vtn ()
 {
     struct IS_VTN *pack_vtn = (struct IS_VTN *)insim->get_packet();
-
+	if (pack_vtn->UCID == 0) return;
     for (int i=0; i<MAX_PLAYERS; i++)
     {
         if (ginfo->players[i].UCID == pack_vtn->UCID)
