@@ -121,7 +121,10 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[packet->UCID].PName, packet->PName);
     if (players[packet->UCID].cop and !ReadCop(packet->UCID))
+	{
 		players[packet->UCID].cop = false;
+		SendMTC(packet->UCID, "^2| ^7^CВы больше не инспектор ДПС");
+	}
 }
 
 void RCPolice::InsimMSO( struct IS_MSO* packet )
@@ -560,11 +563,14 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 		if (players[packet->ReqI].Pogonya != 0)
 		{
 			players[packet->ReqI].Pogonya = 0;
-			SendBFN(packet->ReqI, 210);
 			char Text[96];
 			sprintf(Text,msg->_(packet->ReqI, "PogonyaOff" ), players[packet->ReqI].PName, players[packet->UCID].PName );
 			SendMTC(255, Text);
 			nrg->Unlock(packet->ReqI);
+
+			//закрывашка штрафов
+			for(byte c = 80;c<165;c++)
+				SendBFN(packet->UCID,c);
 
 			//очистка кнопок
 			for (byte i = 60;i<92;i++)
@@ -849,7 +855,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 			}
 
 			/** сирена **/
-			if (players[play.first].Sirena and players[play.first].cop and Dist < 120)
+			if (players[play.first].Sirena and players[play.first].cop and Dist < 180)
 			{
 				SirenaCount++;
 				if (Dist < SDtemp or SDtemp ==0)
@@ -896,11 +902,11 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 		/** сирена у игрока **/
 		if (SirenaCount > 0)
-			ShowSirena(UCID);
+			SendButton(255,UCID,141,0,36,200,(180-players[UCID].SirenaDist+4)/4, 0, siren.c_str());
 		else if (players[UCID].SirenaDist > 0 or SirenaCount == 0)
 		{
 			players[UCID].SirenaDist = 0;
-			HideSirena(UCID);
+			SendBFN(UCID, 141);
 		}
 
         if (players[UCID].Pogonya == 0 and strlen(players[UCID].PogonyaReason) > 1)
@@ -945,17 +951,6 @@ bool RCPolice::ReadCop(byte UCID)
 void RCPolice::SetSirenLight( string sirenWord )
 {
     siren = sirenWord;
-}
-
-void RCPolice::ShowSirena(byte UCID)
-{
-	char txt[50];
-	SendButton(255,UCID,141,0,31,200,(120-players[UCID].SirenaDist+1)/4, 0, siren.c_str());
-}
-
-void RCPolice::HideSirena(byte UCID)
-{
-	SendBFN(UCID, 141);
 }
 
 bool RCPolice::IsCop( byte UCID )
