@@ -45,9 +45,7 @@ private:
     //struct  StrPlayer *players;     // Структура игроков
     map< byte, StrPlayer >players;
 
-    byte    StreetNums;                          // Count of streets
-    struct  streets Street[ MAX_STREETS ];              // Array of streets
-    // struct  streets2 Street2[30];              // Array of streets
+    // struct  streets2 Street2[30];             // Array of streets
 
     // функции-повторители основных фунцкий ядра
     void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
@@ -65,6 +63,9 @@ public:
 
     RCStreet();   // Конструктор класса (обязательно)
     ~RCStreet();  // Деструктор класса (обязательно)
+
+    byte    StreetNums;                          // Count of streets
+    struct  streets Street[ MAX_STREETS ];       // Array of streets
 
     bool IfInited;
     int CurentStreetNum(byte UCID);

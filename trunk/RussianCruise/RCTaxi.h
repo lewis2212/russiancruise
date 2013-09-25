@@ -103,7 +103,7 @@ private:
     struct  Taxi_points PointsAdd[2048]; //Для добавления точек
 
     struct  Taxi_clients ClientPoints[ MAX_POINTS ];
-    bool    StartPointsAdd;
+    byte    StartPointsAdd;
 
     struct  place zone;
 
@@ -124,6 +124,8 @@ private:
     void InsimCON( struct IS_CON* packet );
     void InsimOBH( struct IS_OBH* packet );
     void InsimHLV( struct IS_HLV* packet );
+    void InsimAXM( struct IS_AXM* packet );
+
 
     void read_user( byte UCID );
     void save_user( byte UCID );
