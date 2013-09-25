@@ -334,14 +334,10 @@ void read_user_cars(struct player *splayer)
         sprintf(query,"INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');",splayer->UName);
 
         if( mysql_ping( &rcMaindb ) != 0 )
-        {
             printf("Error: connection with MySQL server was lost\n");
-        }
 
         if( mysql_query( &rcMaindb , query) != 0 )
-        {
             printf("Error: MySQL Query\n");
-        }
 
         strcpy(splayer->cars[0].car,"UF1");
         splayer->cars[0].tuning = 0;
@@ -1658,7 +1654,7 @@ void case_mso ()
         ok=0;
     }
 
-    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0 or strcmp(ginfo->players[i].UName, "cdtv") == 0))
+    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
 

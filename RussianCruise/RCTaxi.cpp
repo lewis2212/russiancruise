@@ -255,11 +255,7 @@ void RCTaxi::accept_user( byte UCID )
 		while (ok)
 		{
 			DestPoint = rand()%ClientCount;
-			int X1 = ClientPoints[DestPoint].X/65536,
-				Y1 = ClientPoints[DestPoint].Y/65536,
-				X2 = players[UCID].Info.X/65536,
-				Y2 = players[UCID].Info.Y/65536;
-			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID) and Distance(X1, Y1, X2, Y2)>300)
+			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
 				ok = false;
 			#ifdef __linux__
 			sleep(100);
@@ -316,7 +312,12 @@ void RCTaxi::accept_user2(byte UCID)
 	while (ok)
 	{
 		DestPoint = rand()%ClientCount;
-		if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID )) ok = false;
+		int X1 = ClientPoints[DestPoint].X/65536,
+			Y1 = ClientPoints[DestPoint].Y/65536,
+			X2 = players[UCID].Info.X/65536,
+			Y2 = players[UCID].Info.Y/65536;
+		if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID ) and Distance(X1, Y1, X2, Y2)>300)
+			ok = false;
 		#ifdef __linux__
         sleep(100);
         #else
@@ -624,40 +625,6 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 			}
 		}
 
-		if (StartPointsAdd == true)
-		{
-			bool newPoint = true;
-			for (int f=0; f<2048; f++)
-			{
-				if (PointsAdd[f].Id != 0)
-				{
-					float Dist = Distance(X,Y,PointsAdd[f].X,PointsAdd[f].Y);
-
-					if (Dist < 100)
-						newPoint = false;
-				}
-			}
-
-			if (newPoint == true)
-			{
-				for (int f=0; f<2048; f++)
-				{
-					if (PointsAdd[f].Id == 0)
-					{
-						PointsAdd[f].Id = 1;
-						PointsAdd[f].StreetId = street->CurentStreetNum( UCID );
-						PointsAdd[f].X = X;
-						PointsAdd[f].Y = Y;
-						PointCount ++;
-						char MSG[64];
-						sprintf(MSG,"^7Added new point [%d]{%d,%d}",PointCount,X,Y);
-						SendMST(MSG);
-						newPoint = false;
-						break;
-					}
-				}
-			}
-		}
 		memcpy( &players[UCID].Info , &pack_mci->Info[i] , sizeof( CompCar ) );
 
 		/** thread xD **/
@@ -685,7 +652,6 @@ void RCTaxi::dead_pass(byte UCID)
 
 void RCTaxi::InsimMSO( struct IS_MSO* packet )
 {
-    int i;
     if (packet->UCID == 0)
 		return;
 
@@ -790,36 +756,23 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Message, "!test", strlen("!test")) == 0 )
+    if (strncmp(Message, "!points", strlen("!test")) == 0 )
     {
-
-    }
-
-    if ((strncmp(Message, "!start_points", strlen("!start_points")) == 0 ) and (strncmp(players[ packet->UCID ].UName, "denis-takumi", strlen("denis-takumi")) == 0 ))
-    {
-        if (StartPointsAdd ==0)
-        {
-            StartPointsAdd =1;
-            PointCount = 0;
-            for (int f=0; f<2048; f++)
-            {
-                PointsAdd[f].Id = 0;
-            }
-        }
-        else
-        {
-            StartPointsAdd =0;
-
-            ofstream readf("PoInTs.txt",ios::out);
-            readf << PointCount << endl;
-            for (int f=0; f<2048; f++)
-            {
-                if (PointsAdd[f].Id != 0)
-                {
-                    readf << PointsAdd[f].X << "," << PointsAdd[f].Y << "," << PointsAdd[f].StreetId << endl;
-                }
-            }
-        }
+    	if (StartPointsAdd == 0)
+		{
+            StartPointsAdd = 1;
+            SendMTC(packet->UCID, "^3points clients ^2ON");
+		}
+		else if (StartPointsAdd == 1)
+		{
+            StartPointsAdd = 2;
+            SendMTC(packet->UCID, "^3points points ^2ON");
+		}
+		else if (StartPointsAdd == 2)
+		{
+            StartPointsAdd = 0;
+            SendMTC(packet->UCID, "^3points ^1OFF");
+		}
     }
 }
 
@@ -867,8 +820,6 @@ void RCTaxi::InsimNPL( struct IS_NPL* packet )
 		players[ packet->UCID ].PassStress = 0;
 	}
 }
-
-
 
 void RCTaxi::InsimPLP( struct IS_PLP* packet)
 {
@@ -956,7 +907,6 @@ void RCTaxi::save_user( byte UCID )
     writef.close();
 }
 
-
 void RCTaxi::taxi_done( byte UCID )
 {
     SendBFN( UCID ,206);
@@ -1017,7 +967,7 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 	byte UCID = PLIDtoUCID[ packet->PLID ];
 
 	time_t now = time(NULL);
-	if((now - players[UCID].LastT) < 1) return;
+	if((now - players[UCID].LastT) <= 1) return;
 	players[UCID].LastT = now;
 
 	if (players[UCID].WorkAccept == 2)
@@ -1035,6 +985,51 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 			SendMTC(UCID, TaxiDialogs["obh"][ rand()%TaxiDialogs["obh"].size() ].c_str() ); // send random dialog phrase
 		}
 		else players[UCID].PassStress +=  packet->SpClose/10;
+	}
+}
+
+void RCTaxi::InsimAXM( struct IS_AXM* packet )
+{
+	if (packet->PMOAction != 1 or StartPointsAdd == 0)
+		return;
+
+	char text[96];
+
+	int X = packet->Info[0].X*4096/65536;
+	int Y = packet->Info[0].Y*4096/65536;
+	int StreetID = 0;
+
+	if (StartPointsAdd==1)
+	{
+		for (int g = 0; g < street->StreetNums; g++)
+			if( Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,X,Y) )
+			{
+				StreetID = g;
+				break;
+			}
+
+		sprintf(text,"%d, %d, %d, %d, %d", packet->Info[0].X*4096, packet->Info[0].Y*4096, packet->Info[0].Zchar, packet->Info[0].Heading, StreetID);
+		SendMTC(255,text);
+
+		ofstream readf ("Clients.ini",ios::app);
+		readf << text << endl;
+		readf.close();
+	}
+	else
+	{
+		for (int g = 0; g < street->StreetNums; g++)
+			if( Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,X,Y) )
+			{
+				StreetID = g;
+				break;
+			}
+
+		sprintf(text,"%d,%d,%d", packet->Info[0].X, packet->Info[0].Y, StreetID);
+		SendMTC(255,text);
+
+		ofstream readf ("Points.ini",ios::app);
+		readf << text << endl;
+		readf.close();
 	}
 }
 
