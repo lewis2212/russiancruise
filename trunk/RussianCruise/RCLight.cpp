@@ -275,14 +275,14 @@ void RCLight::InsimMSO( struct IS_MSO* packet )
     strcpy(Message,packet->Msg + ((unsigned char)packet->TextStart));
 
     if (strncmp(Message, "!light", strlen("!light")) == 0 and (strcmp(players[packet->UCID].UName, "denis-takumi") == 0 or strcmp(players[packet->UCID].UName, "Lexanom") == 0))
-		if(YellowAlarm == true)
+		if(LightWorks == true)
 		{
-			YellowAlarm = false;
+			LightWorks = false;
 			SendMTC(packet->UCID, "^1| ^7^CСветофоры ^1выключены");
 		}
 		else
 		{
-			YellowAlarm = true;
+			LightWorks = true;
 			SendMTC(packet->UCID, "^1| ^7^CСветофоры ^2включены");
 		}
 }
@@ -538,7 +538,7 @@ void RCLight::WrongWay(byte UCID)
 
 void RCLight::Event()
 {
-	if (YellowAlarm)
+	if (!LightWorks)
 	{
 		if (gff)
 		{

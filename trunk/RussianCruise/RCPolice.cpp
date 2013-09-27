@@ -95,11 +95,10 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 
 void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
-    lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
-    dl->Unlock(PLIDtoUCID[packet->PLID]);
-    nrg->Unlock(PLIDtoUCID[packet->PLID]);
-
-    PLIDtoUCID.erase( packet->PLID );
+    //lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
+    //dl->Unlock(PLIDtoUCID[packet->PLID]);
+    //nrg->Unlock(PLIDtoUCID[packet->PLID]);
+    //PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCPolice::InsimPLL( struct IS_PLL* packet )
@@ -548,7 +547,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 			players[packet->ReqI].Pogonya = 1;
 			int worktime = time(NULL);
 			players[packet->ReqI].WorkTime = worktime+60*5;
-			strcpy(players[packet->ReqI].PogonyaReason,msg->_(packet->ReqI , "1006" ));
 			char Text[96];
 			sprintf(Text,msg->_(packet->ReqI, "PogonyaOn" ), players[packet->ReqI].PName, players[packet->UCID].PName );
 			SendMTC(255, Text);
@@ -842,8 +840,6 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 						players[UCID].StopTime = 0;
 						players[UCID].Pogonya = 2;
 						nrg->Unlock(UCID);
-						strcpy(players[UCID].PogonyaReason, msg->_(UCID, "1701"));
-
 						char Text[128];
 						sprintf(Text,"^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
 						SendMTC(255, Text);
@@ -890,7 +886,6 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 						players[UCID].Pogonya = 1;
 						int worktime = time(NULL);
 						players[UCID].WorkTime = worktime+60*5;
-						strcpy(players[UCID].PogonyaReason,msg->_(UCID,"1006"));
 						sprintf(text,msg->_(UCID, "PogonyaOn" ), players[UCID].PName, players[play.first].PName );
 						SendMTC(255, text);
 						nrg->Lock( UCID );
@@ -909,11 +904,8 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 			SendBFN(UCID, 141);
 		}
 
-        if (players[UCID].Pogonya == 0 and strlen(players[UCID].PogonyaReason) > 1)
-        {
-            strcpy(players[UCID].PogonyaReason, "");
-            SendBFN( UCID ,204);
-        }
+        if (players[UCID].Pogonya == 0)
+            SendBFN(UCID, 204);
 
         if (players[UCID].Pogonya != 0)
             BtnPogonya(UCID);
@@ -974,24 +966,18 @@ int RCPolice::GetFineCount()
     return c;
 }
 
-void RCPolice::BtnPogonya( byte UCID )
+void RCPolice::BtnPogonya(byte UCID)
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 204;
-    pack.BStyle = 1;
-    pack.L = 50;
-    pack.T = 51;
-    pack.W = 100;
-    pack.H = 30;
-    strcpy(pack.Text,players[ UCID ].PogonyaReason);
-    insim->send_packet(&pack);
+    if (players[UCID].Pogonya == 1)
+	{
+		SendButton(255, UCID, 204, 0, 51, 200, 20, 1, msg->_(UCID, "RideButton" ));
+		SendButton(255, UCID, 205, 0, 69, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
+	}
+	else if (players[UCID].Pogonya == 2)
+	{
+		SendButton(255, UCID, 204, 0, 51, 200, 30, 1, msg->_(UCID, "ArestButton"));
+		SendBFN(UCID, 205);
+	}
 }
 
 void RCPolice::SetUserBID ( byte UCID, byte BID )

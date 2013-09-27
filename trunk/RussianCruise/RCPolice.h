@@ -50,8 +50,6 @@ struct PolicePlayer
     byte    BID;
     byte    BID2;
 
-    char    PogonyaReason[64];
-
     int 	ThisFineCount;
     char 	ThisFine[20][200];
 

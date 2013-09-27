@@ -44,7 +44,7 @@ private:
     int     LightsCount;
     struct  Lights Light[30];
 
-    bool	YellowAlarm=false;
+    bool	LightWorks=true;
 
     int red1, red2, yell1, yell2, green1, green2;
 	bool gff=false;
