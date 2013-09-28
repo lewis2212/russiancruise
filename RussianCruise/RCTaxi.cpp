@@ -392,14 +392,15 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 			if (players[UCID].InZone == 0)
 			{
 				players[UCID].InZone = 1;
-				SendMTC(UCID, msg->_(UCID, "TaxiOnStreet1"));
-				SendMTC(UCID, msg->_(UCID, "TaxiOnStreet2"));
-				SendMTC(UCID, msg->_(UCID, "TaxiOnStreet3"));
-				SendMTC(UCID, msg->_(UCID, "TaxiOnStreet4"));
-				SendMTC(UCID, msg->_(UCID, "TaxiOnStreet5"));
+				SendMTC(UCID, msg->_(UCID, "TaxiDialog1"));
+				SendMTC(UCID, msg->_(UCID, "TaxiDialog2"));
+				SendMTC(UCID, msg->_(UCID, "TaxiDialog3"));
+				SendMTC(UCID, msg->_(UCID, "TaxiDialog4"));
+				SendMTC(UCID, msg->_(UCID, "TaxiDialog5"));
 			}
 		}
-		else if (players[UCID].InZone == 1) players[UCID].InZone = 0;
+		else if (players[UCID].InZone == 1)
+			players[UCID].InZone = 0;
 
 		/** player drive on dest street **/
 		if (players[UCID].WorkNow == 1 and players[UCID].WorkAccept != 0)
@@ -414,9 +415,8 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				{
 					if (players[UCID].spd==5) players[UCID].spd=0;
 					if (players[UCID].spd==0)
-					{
 						SendMTC(UCID,  TaxiDialogs["speed"][ rand()%TaxiDialogs["speed"].size() ].c_str() ); // превышаешь скорость
-					}
+
 					players[UCID].spd++;
 					players[UCID].PassStress += Speed-StreetInfo.SpeedLimit+10;
 				}
@@ -435,8 +435,6 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				int des_Y = ClientPoints[players[UCID].WorkPointDestinaion].Y/65536;
 				/** вычисляем растояние до точки остановки **/
 				Dist = Distance(X , Y , des_X , des_Y);
-				//sprintf(d," ^7%4.0f ^Cм",Dist);
-				//btn_Dist(UCID,d);
 
 				if (players[UCID].OnStreet == false and players[UCID].PassStress <= 800)
 				{
@@ -532,11 +530,12 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 					}
 				}
 
-				if (Dist < 5 and Speed < 5 and players[UCID].WorkAccept == 1) accept_user2( UCID ); // посадили
+				if (Dist < 5 and Speed < 5 and players[UCID].WorkAccept == 1)
+					accept_user2( UCID ); // посадили
 			}
 			else
 			{
-				if (players[UCID].OnStreet = true) SendBFN(UCID,205);
+				if (players[UCID].OnStreet = true) SendBFN(UCID,206);
 				players[UCID].OnStreet = false;
 			}
 
@@ -602,11 +601,13 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
 				btn_stress( UCID );
 				char d[128];
-				sprintf(d," ^7%d ^Cм",(int)Dist);
-				if (players[UCID].OnStreet and players[UCID].PassStress <= 800) btn_Dist(UCID,d);
+				sprintf(d,"^7%0.0f ^Cм ",(Dist-(int)Dist%10+10));
+				if (players[UCID].OnStreet and players[UCID].PassStress <= 800)
+					SendButton(255, UCID, 206, 49, 125, 8, 4, 32+128, d);
 
 				if (players[UCID].PassStress > 800)
 				{
+					SendBFN(UCID, 206);
 					if (players[UCID].StressOverCount == 0)
 					{
 						srand ( time(NULL) );
@@ -757,7 +758,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Message, "!points", strlen("!test")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))
+    if (strncmp(Message, "!points", strlen("!points")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))
     {
     	if (StartPointsAdd == 0)
 		{
@@ -908,8 +909,8 @@ void RCTaxi::save_user( byte UCID )
 
 void RCTaxi::taxi_done( byte UCID )
 {
+    SendBFN(UCID,207);
     SendBFN(UCID,206);
-    SendBFN(UCID,205);
     if (players[UCID].PassStress <= 800)
     {
         players[UCID].PassCount++;
@@ -1063,7 +1064,7 @@ void RCTaxi::btn_stress( byte UCID )
     pack.Inst = 0;
     pack.TypeIn = 0;
 
-    pack.ClickID = 206;
+    pack.ClickID = 207;
     pack.BStyle = 32+64;
     pack.L = 1;
     pack.T = 125;
@@ -1084,27 +1085,6 @@ void RCTaxi::btn_stress( byte UCID )
     }
     strcat(pack.Text,"^8");
     for (int i=0; i<(100-players[UCID].PassStress/10); i++) strcat(pack.Text,"||");
-    insim->send_packet(&pack);
-}
-
-void RCTaxi::btn_Dist( byte UCID , const char* Text)
-{
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID =  UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 205;
-    pack.BStyle = 32+64;
-    pack.L = 49;
-    pack.T = 125;
-    pack.W = 8;
-    pack.H = 4;
-
-    strcpy(pack.Text,Text);
     insim->send_packet(&pack);
 }
 

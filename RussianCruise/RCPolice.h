@@ -27,6 +27,13 @@ struct user_fine
     string	CopPName;
 };
 
+/** арестованные игроки **/
+struct APlayer
+{
+	char    UName[24];
+    time_t  ArestTime;
+};
+
 struct PolicePlayer
 {
 	/** GENERAL **/
@@ -69,7 +76,9 @@ private:
     RCLight		*lgh;
 
 	string siren = "^0";
-	map<byte, PolicePlayer>players;
+	map <byte, PolicePlayer> players;
+
+	map <byte, APlayer> ArestPlayers;
 
 	void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
