@@ -103,7 +103,7 @@ private:
     struct  Taxi_points PointsAdd[2048]; //Для добавления точек
 
     struct  Taxi_clients ClientPoints[ MAX_POINTS ];
-    byte    StartPointsAdd;
+    byte    StartPointsAdd=0;
 
     struct  place zone;
 

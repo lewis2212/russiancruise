@@ -306,7 +306,7 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     delete pack;
 }
 
-void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, const char * Caption )
+void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn)
 {
 	IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
@@ -316,13 +316,13 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     pack->UCID = UCID;
     pack->Inst = 0;
     pack->BStyle = BStyle;
-    pack->TypeIn = 0;
+    pack->TypeIn = TypeIn;
     pack->ClickID = ClickID;
     pack->L = L;
     pack->T = T;
     pack->W = W;
     pack->H = H;
-	sprintf(pack->Text,"\0%s\0%s", Caption, Text);
+	sprintf(pack->Text, Text);
     insim->send_packet( pack );
     delete pack;
 }

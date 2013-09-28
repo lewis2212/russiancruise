@@ -67,6 +67,22 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 	PLIDtoUCID[packet->PLID] = packet->UCID;
     strcpy(players[packet->UCID].CName ,packet->CName);
 
+	for( auto& p: ArestPlayers )
+    	if (strcmp(ArestPlayers[p.first].UName, players[packet->UCID].UName) == 0)
+		{
+			time_t now = time(NULL);
+			if (now <= ArestPlayers[p.first].ArestTime)
+			{
+				char str[96];
+				sprintf(str,"/spec %s",ArestPlayers[p.first].UName);
+				SendMST(str);
+
+				sprintf(str,"^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[p.first].ArestTime-now)/60+1));
+				SendMTC(packet->UCID, str);
+			}
+			break;
+		}
+
 	if (strncmp("^4[^C^7ДПС^4]",players[packet->UCID].PName,13)==0 || strncmp("^4[^C^7ГАИ^4]",players[packet->UCID].PName,13)==0)
 	if (ReadCop(packet->UCID))
 	{
@@ -394,6 +410,9 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 				//заголовок
 	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); //закрывашка
 
+	if (strcmp(players[UCID].UName, "Lexanom") == 0)
+		SendButton(UCID2,UCID,79,l+w/2-15,t-h/2+h+1,14,6,16+8+5, "^CАрестовать", 2 );
+
 	for(int i=0;i<c;i++)
 	{
 		byte fid = fines[i+1].id; if (fid==0) fid = 255;
@@ -418,7 +437,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
 	if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
 	{
-		for(int i=80;i<165;i++)
+		for(int i=79;i<165;i++)
 			SendBFN(packet->UCID,i);
 	}
 
@@ -585,6 +604,48 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 
     char fine_c[255];
     sprintf(fine_c,"%slogs\\fines\\fine(%d.%d.%d).txt",RootDir,sm.wYear,sm.wMonth,sm.wDay);
+
+	/** Арест на Х часов **/
+	if ( packet->ClickID == 79)
+	{
+		time_t now = time(NULL);
+		char str[96];
+
+		int Min = atoi(packet->Text);
+		if (Min>90)
+			Min = 90;
+		else if (Min<10 and Min>0)
+			Min = 10;
+
+		int i=0, finded = -1;
+
+		for(auto& p: ArestPlayers)
+		{
+			i++;
+			if (strcmp(ArestPlayers[p.first].UName, players[packet->ReqI].UName) == 0)
+				finded = i;
+		}
+
+		if (Min > 0)
+		{
+			sprintf(str,"/spec %s",players[packet->ReqI].UName);
+			SendMST(str);
+
+			sprintf(str,"^2| ^8%s ^1^Cпомещен под арест на ^7%d ^1%s", players[packet->ReqI].PName, Min,
+					Min == 1 ? "минуту" : Min < 5 ? "минуты" : "минут");
+			SendMTC(255,str);
+
+			strcpy(ArestPlayers[++i].UName, players[packet->ReqI].UName);
+			ArestPlayers[i].ArestTime = now + Min*60;
+		}
+		else if (finded != -1)
+		{
+			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",players[packet->ReqI].PName);
+			SendMTC(255,str);
+
+			ArestPlayers.erase(finded);
+		}
+	}
 
     /** Пользователь выписывает штраф **/
     if ( packet->ClickID == 38 )
@@ -905,7 +966,10 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 		}
 
         if (players[UCID].Pogonya == 0)
+		{
             SendBFN(UCID, 204);
+            SendBFN(UCID, 205);
+		}
 
         if (players[UCID].Pogonya != 0)
             BtnPogonya(UCID);
@@ -970,7 +1034,7 @@ void RCPolice::BtnPogonya(byte UCID)
 {
     if (players[UCID].Pogonya == 1)
 	{
-		SendButton(255, UCID, 204, 0, 51, 200, 20, 1, msg->_(UCID, "RideButton" ));
+		SendButton(255, UCID, 204, 0, 46, 200, 30, 1, msg->_(UCID, "RideButton" ));
 		SendButton(255, UCID, 205, 0, 69, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
 	}
 	else if (players[UCID].Pogonya == 2)
@@ -1134,6 +1198,29 @@ void RCPolice::ButtonClock( byte UCID )
 
 void RCPolice::Event()
 {
+	for( auto& p: ArestPlayers )
+    {
+    	time_t now = time(NULL);
+		if (now > ArestPlayers[p.first].ArestTime)
+		{
+			char pname[24];
+			sprintf(pname, ArestPlayers[p.first].UName);
+
+			for(auto& pp: players)
+				if (strcmp(ArestPlayers[p.first].UName, players[pp.first].UName) == 0)
+				{
+					sprintf(pname,players[pp.first].PName);
+					break;
+				}
+
+			char str[96];
+			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",pname);
+			SendMTC(255,str);
+
+			ArestPlayers.erase(p.first);
+		}
+    }
+
     for( auto& play: players )
     {
         byte UCID = play.first;

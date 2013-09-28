@@ -659,16 +659,17 @@ void case_btc ()
 							#endif
 							insim->send_packet(&pack_btn);
 							pack_btn.BStyle = 3 + 16 + ISB_CLICK;
-							pack_btn.TypeIn = 63;
 							break;
 						}
 					}
 
+					pack_btn.TypeIn = 7;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 36;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1000" ));
                     insim->send_packet(&pack_btn);
 
+					pack_btn.TypeIn = 63;
                     pack_btn.T += 4;
                     pack_btn.ClickID = 37;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1001" ));
@@ -791,7 +792,7 @@ void case_btt ()
                             {
                                 out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
 
-                                char Msg[120];
+                                char Msg[126];
                                 sprintf(Msg,msg->_(ginfo->players[i].UCID, "GetMoney" ),ginfo->players[i].PName,atoi(pack_btt->Text));
                                 SendMTC(ginfo->players[g].UCID,Msg);
                                 sprintf(Msg,msg->_(ginfo->players[i].UCID, "SendMoney" ),ginfo->players[g].PName,atoi(pack_btt->Text));
@@ -1114,10 +1115,10 @@ void case_mso ()
 
         char * comand;
         char * user;
-        comand = strtok (_," ");
-        user = strtok (NULL," ");
+        comand = strtok(_," ");
+        user = strtok(NULL," ");
 
-        if ((user) and (strlen(user) > 0))
+        if (user and strlen(user) > 0)
         {
             while (readf.good())
             {
@@ -1129,7 +1130,7 @@ void case_mso ()
                     {
                         char Text[64];
                         strcpy(Text,"^1| ^C^7");
-                        strncat(Text,str,55);
+                        strncat(Text,str,110);
                         SendMTC(ginfo->players[i].UCID,Text);
                     }
                 }
@@ -2150,7 +2151,7 @@ void case_plp ()
 
             save_car(&ginfo->players[i]);
 #ifdef _RC_POLICE_H
-            if ( police->InPursuite( ginfo->players[i].UCID ) )
+            if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
             {
             	int pay = 10000;
 
