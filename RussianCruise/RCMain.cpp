@@ -1710,13 +1710,14 @@ void case_mso ()
     }
     if ((strncmp(Msg, "!test",5) == 0))
     {
+    	//SendMTC(ginfo->players[i].UCID,strlwr("TdSEFdd"));
     	/*
     	struct streets StreetInfo;
 		street->CurentStreetInfo(&StreetInfo,ginfo->players[i].UCID);
 
     	char str[96];
 		sprintf(str,street->GetStreetName(ginfo->players[i].UCID,StreetInfo.StreetID).c_str());
-		SendMTC(ginfo->players[i].UCID,str);
+
 		*/
     }
     //!users

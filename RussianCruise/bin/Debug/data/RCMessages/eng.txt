@@ -1,20 +1,16 @@
-Energy 			"%s ^LEnergy %3.0f^KЈҐ"
-Energy_up 		"%s ^LEnergy %3.0f^KЈҐЎиЎиЎи"
+Energy 			"Energy"
 LvlAndSkill 	" ^7Drive Level: ^2%d^7, skill: ^2%4.2f"
 
-//вкладки
 200 			"^2Cars"
 201 			"^2Fines"
 202 			"^2About"
 
-//RCPizza
 1600 			"^3|^2 Tofu Fujiwara ^7shop"
 1601 			"^3|^2 !deal ^7- take a job"
 1602 			"^3|^2 !undeal ^7- leave the job"
 1603 			"^3|^2 !take ^7- take tofu"
 1604 			"^3|^7 Your tofu, Sr."
 
-//RCTaxi
 TaxiDialog1		"^6| ^3Taxi Radriges"
 TaxiDialog2		"^6| ^2!deal ^7- take a job"
 TaxiDialog3		"^6| ^2!undeal ^7- leave the job"
@@ -46,11 +42,9 @@ PitSaveNotGood "^1GARAGE"
 402 "^3Cafe"
 404 "^3Bank"
 
-//RCBank
 GetMoneyA		"^5| ^7You have recived %d ^3RUR^7"
 RemMoneyA		"^5| ^7You have been charged %d ^3RUR^7"
 
-//RCEnergy
 EnergyFull		"^1| ^7Energy full"
 
 600 "^7Auto show"
@@ -59,14 +53,19 @@ EnergyFull		"^1| ^7Energy full"
 603 "^7Sell" 
 604 "^1Close" 
 
+ArestedMin		"^2| ^8%s ^1under arrest for ^7%d ^1min"
+Reliaved		"^2| ^8%s ^2relieved from arrest"
+YouHaveAr		"^2| ^7You're under arrest. Until the end of the arrest remains ^1%d ^7minutes"
+YouUndArest		"^1You're under arrest"
+
 1000 "Send Money"
 1001 "Send a message"
 1002 "^7Fine"
 1003 "^7Cancel fine"
 1004 "^7Being the pursuit"
 1005 "^7Cancel the pursuit"
-RideButton "^4RIDE FOR YOU"
-RightAndStop 	"^C^1Прижмитесь к обочине и остановитесь"
+RideButton 		"^4PURSUIT BEHIND YOU"
+RightAndStop 	"^1Keep to the sidelines of the road and stop"
 1009 "^1| ^7You can not sell the car when you're sitting in it"
 
 SendMoney	"^5| ^7You sent ^8%s ^7%d ^3RUR."
@@ -98,8 +97,8 @@ CopTrue 		"^2| ^C^7You  Policeman"
 
 1500 "^1| ^7Bonus: %d ^3RUR"
 
-ArestButton		"^1YOU UNDER AREST"
-1702 "^1 under arest"
+ArestButton		"^1YOU ARE BUSTED"
+1702 "^1 are busted"
 1703 "^2| ^7Please set Pursuit in Off mod"
 1704 "^C^7 speeding m.th. ^1"
 1705 " ^3km/h"

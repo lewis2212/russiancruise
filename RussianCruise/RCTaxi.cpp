@@ -997,17 +997,18 @@ void RCTaxi::InsimAXM( struct IS_AXM* packet )
 
 	int X = packet->Info[0].X*4096/65536;
 	int Y = packet->Info[0].Y*4096/65536;
-	int StreetID = 0;
+	int StreetID = -1;
 
-	if (StartPointsAdd==1)
+	for (int g = 0; g < street->StreetNums; g++)
+		if( Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,X,Y) )
+		{
+			StreetID = g;
+			break;
+		}
+
+	if (StreetID != -1)
+	if (StartPointsAdd == 1)
 	{
-		for (int g = 0; g < street->StreetNums; g++)
-			if( Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,X,Y) )
-			{
-				StreetID = g;
-				break;
-			}
-
 		sprintf(text,"%d, %d, %d, %d, %d", packet->Info[0].X*4096, packet->Info[0].Y*4096, packet->Info[0].Zchar, packet->Info[0].Heading, StreetID);
 		SendMTC(255,text);
 
@@ -1017,13 +1018,6 @@ void RCTaxi::InsimAXM( struct IS_AXM* packet )
 	}
 	else
 	{
-		for (int g = 0; g < street->StreetNums; g++)
-			if( Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,X,Y) )
-			{
-				StreetID = g;
-				break;
-			}
-
 		sprintf(text,"%d,%d,%d", packet->Info[0].X, packet->Info[0].Y, StreetID);
 		SendMTC(255,text);
 
