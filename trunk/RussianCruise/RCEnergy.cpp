@@ -98,10 +98,6 @@ void RCEnergy::readconfig(const char *Track)
 
 void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
-    if (packet->UCID == 0)
-        return;
-
-    // Copy all the player data we need into the players[] array
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
 	players[packet->UCID].Zone = 1;
@@ -165,7 +161,7 @@ void RCEnergy::InsimNPL( struct IS_NPL* packet )
 void RCEnergy::InsimPLP( struct IS_PLP* packet)
 {
 	players[PLIDtoUCID[packet->PLID]].Zone = 1;
-	PLIDtoUCID.erase(packet->PLID);
+	//PLIDtoUCID.erase(packet->PLID);
 }
 
 void RCEnergy::InsimPLL( struct IS_PLL* packet )
@@ -213,6 +209,19 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 		int D = pack_mci->Info[i].Direction/182;
 		int H = pack_mci->Info[i].Heading/182;
 
+		if (Check_Pos(TrackInf.CafeCount,TrackInf.XCafe,TrackInf.YCafe,X,Y))
+			players[UCID].Zone = 3;
+		else if ( players[UCID].Energy < 10 )
+		{
+			players[UCID].Zone = 1;
+			char Text[64];
+			sprintf(Text, "/spec %s", players[UCID].UName);
+			SendMST(Text);
+		}
+		else
+			players[UCID].Zone = 0;
+
+
 		int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
 
 		int A = pack_mci->Info[i].AngVel*360/16384;
@@ -232,21 +241,9 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 
 		int K = (int)sqrt(abs((dD-dH)*(1+dA)*dS))/8;
 
-		if ((players[UCID].Energy > 5) and (S > 5))
-			if (!Islocked( UCID ))
+		if (players[UCID].Energy > 5 and S > 5)
+			if (!Islocked(UCID))
 				players[UCID].Energy -= K;
-
-		if (Check_Pos(TrackInf.CafeCount,TrackInf.XCafe,TrackInf.YCafe,X,Y))
-			players[UCID].Zone = 3;
-		else if ( players[UCID].Energy < 10 )
-		{
-			players[UCID].Zone = 1;
-			char Text[64];
-			sprintf(Text, "/spec %s", players[UCID].UName);
-			SendMST(Text);
-		}
-		else
-			players[UCID].Zone = 0;
 
 		if (S == 0)
 		{
@@ -272,6 +269,7 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 			Y1=Y;
 			Z1=Z;
 		}
+
 		btn_energy(UCID);
 		memcpy( &players[UCID].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
     }
@@ -339,46 +337,30 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
 
 void RCEnergy::btn_energy ( byte UCID )
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 207;
-    pack.BStyle = ISB_DARK + ISB_LEFT;
-    pack.L = 100;
-    pack.T = 1;
-    pack.W = 30;
-    pack.H = 4;
-
-    float nrg = players[UCID].Energy/100 ;
+	char str[64];
+    int nrg = players[UCID].Energy/100;
+    int color = 2;
 
     if (nrg <= 10)
-	{
 		if( players[UCID].EnergyAlarm )
 		{
 			players[UCID].EnergyAlarm = false;
-			strcpy(pack.Text,"^0");
+			color = 0;
 		}
 		else
 		{
 			players[UCID].EnergyAlarm = true;
-			strcpy(pack.Text,"^1");
+			color = 1;
 		}
-    }
-    else if (nrg <= 50 and nrg > 10)
-        strcpy(pack.Text,"^3");
-    else
-        strcpy(pack.Text,"^2");
+    else if (nrg <= 50)
+        color = 3;
+
+	sprintf(str, "^%d %s: %d^K£¥", color, msg->_(UCID , "Energy"), nrg);
 
 	if (players[UCID].Zone == 3)
-		sprintf(pack.Text, msg->_(UCID , "Energy_up"), pack.Text, nrg);
-	else
-		sprintf(pack.Text, msg->_(UCID , "Energy"), pack.Text, nrg);
-    insim->send_packet(&pack);
+		sprintf(str, "%s ^K¡è", str);
+
+	SendButton(255, UCID, 207, 100, 1, 30, 4, 32+64, str);
 }
 
 int RCEnergy::check_pos( byte UCID )

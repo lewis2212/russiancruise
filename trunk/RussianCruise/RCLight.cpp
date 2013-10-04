@@ -301,7 +301,7 @@ void RCLight::InsimNPL( struct IS_NPL* packet )
 
 void RCLight::InsimPLP( struct IS_PLP* packet)
 {
-	PLIDtoUCID.erase( packet->PLID );
+	//PLIDtoUCID.erase( packet->PLID );
 }
 
 void RCLight::InsimPLL( struct IS_PLL* packet )

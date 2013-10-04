@@ -77,7 +77,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 				sprintf(str,"/spec %s",ArestPlayers[p.first].UName);
 				SendMST(str);
 
-				sprintf(str,"^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[p.first].ArestTime-now)/60+1));
+				sprintf(str,msg->_(packet->UCID, "YouHaveAr"), (int)((ArestPlayers[p.first].ArestTime-now)/60+1));
 				SendMTC(packet->UCID, str);
 			}
 			break;
@@ -111,9 +111,9 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 
 void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
-    //lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
-    //dl->Unlock(PLIDtoUCID[packet->PLID]);
-    //nrg->Unlock(PLIDtoUCID[packet->PLID]);
+    lgh->SetLight3(PLIDtoUCID[packet->PLID], false);
+    dl->Unlock(PLIDtoUCID[packet->PLID]);
+    nrg->Unlock(PLIDtoUCID[packet->PLID]);
     //PLIDtoUCID.erase( packet->PLID );
 }
 
@@ -403,14 +403,14 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 		w=100, 				//ширина поля
 		h=10+c*hButton; 	//высота поля
 
-	sprintf(Text,"^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName);
+	sprintf(Text,"^C^7Панель штрафов (^8%s^7)", players[UCID2].PName);
 
 	SendButton(255,UCID,81,l-w/2,t-h/2,w,h+8,32,""); 				//фон
 	SendButton(255,UCID,82,l-w/2,t-h/2,w,h+8,32,"");				//фон
 	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 				//заголовок
 	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); //закрывашка
 
-	if (strcmp(players[UCID].UName, "Lexanom") == 0)
+	if (strcmp(players[UCID].UName, "Lexanom") == 0 /*or players[UCID2].Pogonya == 2*/)
 		SendButton(UCID2,UCID,79,l+w/2-15,t-h/2+h+1,14,6,16+8+5, "^CАрестовать", 2 );
 
 	for(int i=0;i<c;i++)
@@ -592,6 +592,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 			//очистка кнопок
 			for (byte i = 60;i<92;i++)
 				SendBFN(255, i);
+
+			//cкрываем таймер
+			SendBFN(packet->ReqI,210);
 		}
 		return;
     }
@@ -608,20 +611,31 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 	/** Арест на Х часов **/
 	if ( packet->ClickID == 79)
 	{
+		players[packet->ReqI].Pogonya = 0;
+		nrg->Unlock(packet->ReqI);
+
+		//закрывашка штрафов
+		for(byte c = 80;c<165;c++)
+			SendBFN(packet->UCID,c);
+
+		//очистка кнопок
+		for (byte i = 60;i<92;i++)
+				SendBFN(255, i);
+
 		time_t now = time(NULL);
 		char str[96];
 
 		int Min = atoi(packet->Text);
 		if (Min>90)
 			Min = 90;
-		else if (Min<10 and Min>0)
-			Min = 10;
+		else if (Min<5 and Min>0)
+			Min = 5;
 
-		int i=0, finded = -1;
+		int i = 0, finded = -1;
 
 		for(auto& p: ArestPlayers)
 		{
-			i++;
+			i = p.first;
 			if (strcmp(ArestPlayers[p.first].UName, players[packet->ReqI].UName) == 0)
 				finded = i;
 		}
@@ -631,16 +645,19 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 			sprintf(str,"/spec %s",players[packet->ReqI].UName);
 			SendMST(str);
 
-			sprintf(str,"^2| ^8%s ^1^Cпомещен под арест на ^7%d ^1%s", players[packet->ReqI].PName, Min,
-					Min == 1 ? "минуту" : Min < 5 ? "минуты" : "минут");
+			sprintf(str,msg->_(packet->ReqI, "ArestedMin"), players[packet->ReqI].PName, Min);
 			SendMTC(255,str);
 
-			strcpy(ArestPlayers[++i].UName, players[packet->ReqI].UName);
-			ArestPlayers[i].ArestTime = now + Min*60;
+			int c = ++i;
+			if (finded!=-1)
+				c = finded;
+
+			strcpy(ArestPlayers[c].UName, players[packet->ReqI].UName);
+			ArestPlayers[c].ArestTime = now + Min*60;
 		}
 		else if (finded != -1)
 		{
-			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",players[packet->ReqI].PName);
+			sprintf(str,msg->_(packet->ReqI, "Reliaved"),players[packet->ReqI].PName);
 			SendMTC(255,str);
 
 			ArestPlayers.erase(finded);
@@ -904,7 +921,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 						char Text[128];
 						sprintf(Text,"^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
 						SendMTC(255, Text);
-						SendMTC(UCID, msg->_(UCID, "1703"));
+						SendMTC(play.first, msg->_(play.first, "1703"));
 					}
 				}
 				if (S > 5)
@@ -1034,12 +1051,12 @@ void RCPolice::BtnPogonya(byte UCID)
 {
     if (players[UCID].Pogonya == 1)
 	{
-		SendButton(255, UCID, 204, 0, 46, 200, 30, 1, msg->_(UCID, "RideButton" ));
-		SendButton(255, UCID, 205, 0, 69, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
+		SendButton(255, UCID, 204, 0, 20, 200, 30, 1, msg->_(UCID, "RideButton" ));
+		SendButton(255, UCID, 205, 0, 43, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
 	}
 	else if (players[UCID].Pogonya == 2)
 	{
-		SendButton(255, UCID, 204, 0, 51, 200, 30, 1, msg->_(UCID, "ArestButton"));
+		SendButton(255, UCID, 204, 0, 20, 200, 30, 1, msg->_(UCID, "ArestButton"));
 		SendBFN(UCID, 205);
 	}
 }
@@ -1171,55 +1188,48 @@ void RCPolice::ReadFines()
 
 void RCPolice::ButtonClock( byte UCID )
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 210;
-    pack.BStyle = 32;
-    pack.L = 136;
-    pack.T = 1;
-    pack.W = 10;
-    pack.H = 8;
+	char str[10];
+    int TIME = players[UCID].WorkTime - time(NULL);
+    sprintf(str,"^2%02d:%02d",TIME/60,TIME%60);
 
-    int time2 = players[ UCID ].WorkTime - time(NULL);
-    int min;
-    int sec;
-    min = time2/60;
-    sec = time2%60;
-    sprintf(pack.Text,"^2%02d:%02d",min,sec);
-
-    insim->send_packet(&pack);
+	SendButton(255,UCID,210,130,1,10,8,32,str);
 }
 
 void RCPolice::Event()
 {
 	for( auto& p: ArestPlayers )
-    {
-    	time_t now = time(NULL);
-		if (now > ArestPlayers[p.first].ArestTime)
+	{
+		char PName[24];
+		byte UCID = 0;
+		sprintf(PName, ArestPlayers[p.first].UName);
+
+		for(auto& pp: players)
+			if (strcmp(ArestPlayers[p.first].UName, players[pp.first].UName) == 0)
+			{
+				sprintf(PName,players[pp.first].PName);
+				UCID = pp.first;
+				break;
+			}
+
+		if (time(NULL) > ArestPlayers[p.first].ArestTime)
 		{
-			char pname[24];
-			sprintf(pname, ArestPlayers[p.first].UName);
-
-			for(auto& pp: players)
-				if (strcmp(ArestPlayers[p.first].UName, players[pp.first].UName) == 0)
-				{
-					sprintf(pname,players[pp.first].PName);
-					break;
-				}
-
-			char str[96];
-			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",pname);
+			char str[128];
+			sprintf(str,msg->_(UCID, "Reliaved"),PName);
 			SendMTC(255,str);
 
 			ArestPlayers.erase(p.first);
+			break;
 		}
-    }
+		else if (UCID != 0)
+		{
+			char str[10];
+			int TIME = ArestPlayers[p.first].ArestTime - time(NULL);
+			sprintf(str,"^1%02d:%02d",TIME/60,TIME%60);
+			SendButton(255,UCID,210,130,1,10,8,32,str);
+			SendButton(255,UCID,211,120,9,20,5,32,msg->_(UCID, "YouUndArest"));
+		}
+	}
+
 
     for( auto& play: players )
     {
