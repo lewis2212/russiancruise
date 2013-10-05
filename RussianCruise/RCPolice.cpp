@@ -77,7 +77,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 				sprintf(str,"/spec %s",ArestPlayers[p.first].UName);
 				SendMST(str);
 
-				sprintf(str,msg->_(packet->UCID, "YouHaveAr"), (int)((ArestPlayers[p.first].ArestTime-now)/60+1));
+				sprintf(str,"^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[p.first].ArestTime-now)/60+1));
 				SendMTC(packet->UCID, str);
 			}
 			break;
@@ -160,10 +160,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 char Text[128], Date[128];
                 int fine_id = players[ packet->UCID ].fines[i].fine_id;
 
-				if (msg->GetLangID(packet->UCID) == LANG_ID_RUS)
-					sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7)", fine_id , fines[fine_id].NameRu , fines[fine_id].cash );
-				else
-					sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7)", fine_id , fines[fine_id].NameEn , fines[fine_id].cash );
+				sprintf(Text,"^2| ^7ID = %d. %.64s (^2%d RUR^7)", fine_id , GetFineName(packet->UCID,fine_id) , fines[fine_id].cash );
 
                 if (strlen(players[packet->UCID].fines[i].CopPName.c_str()) > 0)
 				{
@@ -403,23 +400,20 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 		w=100, 				//ширина поля
 		h=10+c*hButton; 	//высота поля
 
-	sprintf(Text,"^C^7Панель штрафов (^8%s^7)", players[UCID2].PName);
+	sprintf(Text,"^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName);
 
 	SendButton(255,UCID,81,l-w/2,t-h/2,w,h+8,32,""); 				//фон
 	SendButton(255,UCID,82,l-w/2,t-h/2,w,h+8,32,"");				//фон
 	SendButton(255,UCID,83,l-w/2,t-h/2,w,10,64,Text); 				//заголовок
 	SendButton(254,UCID,80,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK"); //закрывашка
 
-	if (strcmp(players[UCID].UName, "Lexanom") == 0 /*or players[UCID2].Pogonya == 2*/)
+	if (strcmp(players[UCID].UName, "Lexanom") == 0)
 		SendButton(UCID2,UCID,79,l+w/2-15,t-h/2+h+1,14,6,16+8+5, "^CАрестовать", 2 );
 
 	for(int i=0;i<c;i++)
 	{
 		byte fid = fines[i+1].id; if (fid==0) fid = 255;
-		if (msg->GetLangID(UCID) == LANG_ID_RUS)
-			sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, fines[i+1].NameRu);
-		else
-			sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, fines[i+1].NameEn);
+		sprintf(Text,"^2%02d. ^7%s", fines[i+1].id, GetFineName(UCID,i+1));
 
 		SendButton(fid,UCID,id++,l-w/2+1,t-h/2+10+hButton*i,w-12,hButton,16+64+8,Text);
 		SendButton(fid,UCID,id2++,l+w/2-11,t-h/2+10+hButton*i,10,hButton,16+8,"^CОтмена");
@@ -453,16 +447,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
                 char Msg[128];
-                if (msg->GetLangID(play.first) == LANG_ID_RUS)
-					sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[packet->ReqI].NameRu);
-				else
-					sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[packet->ReqI].NameEn);
+				sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName, GetFineName(play.first,packet->ReqI));
                 SendMTC( play.first, Msg);
 
-				if (msg->GetLangID(packet->UCID) == LANG_ID_RUS)
-					sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,fines[packet->ReqI].NameRu);
-				else
-					sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,fines[packet->ReqI].NameEn);
+				sprintf(Msg,msg->_(  packet->UCID , "AddFine" ),players[play.first].PName,GetFineName(packet->UCID,packet->ReqI));
 
                 SendMTC( packet->UCID ,Msg);
 
@@ -485,10 +473,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 for(int j=0; j<20; j++)
                     if( strlen(players[play.first].ThisFine[j]) == 0 )
                     {
-                    	if (msg->GetLangID(play.first) == LANG_ID_RUS)
-							sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[packet->ReqI].NameRu,fines[packet->ReqI].id,players[ packet->UCID ].PName);
-                        else
-							sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[packet->ReqI].NameEn,fines[packet->ReqI].id,players[ packet->UCID ].PName);
+						sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,GetFineName(play.first,packet->ReqI),fines[packet->ReqI].id,players[ packet->UCID ].PName);
                         players[play.first].ThisFineCount++;
                         break;
                     }
@@ -513,17 +498,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
                     {
                         char Msg[128];
-                        if (msg->GetLangID(play.first) == LANG_ID_RUS)
-							sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[packet->ReqI].NameRu);
-                        else
-							sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[packet->ReqI].NameEn);
+							sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,GetFineName(play.first,packet->ReqI));
 
                         SendMTC( play.first ,Msg);
 
-						if (msg->GetLangID(packet->UCID) == LANG_ID_RUS)
-							sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[packet->ReqI].NameRu);
-						else
-							sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[packet->ReqI].NameEn);
+						sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,GetFineName(packet->UCID,packet->ReqI));
                         SendMTC( packet->UCID ,Msg);
 
                         players[ play.first ].fines[j].fine_id = 0;
@@ -536,10 +515,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                             for(int j=0; j<20; j++)
                                 if( strlen(players[play.first].ThisFine[j]) == 0 )
                                 {
-                                	if (msg->GetLangID(play.first) == LANG_ID_RUS)
-										sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[packet->ReqI].NameRu,fines[packet->ReqI].id,players[ packet->UCID ].PName);
-									else
-										sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[packet->ReqI].NameEn,fines[packet->ReqI].id,players[ packet->UCID ].PName);
+									sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",GetFineName(play.first,packet->ReqI),fines[packet->ReqI].id,players[ packet->UCID ].PName);
                                     players[play.first].ThisFineCount++;
                                     break;
                                 }
@@ -592,9 +568,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 			//очистка кнопок
 			for (byte i = 60;i<92;i++)
 				SendBFN(255, i);
-
-			//cкрываем таймер
-			SendBFN(packet->ReqI,210);
 		}
 		return;
     }
@@ -631,11 +604,11 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 		else if (Min<5 and Min>0)
 			Min = 5;
 
-		int i = 0, finded = -1;
+		int i=0, finded = -1;
 
 		for(auto& p: ArestPlayers)
 		{
-			i = p.first;
+			i++;
 			if (strcmp(ArestPlayers[p.first].UName, players[packet->ReqI].UName) == 0)
 				finded = i;
 		}
@@ -645,19 +618,16 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 			sprintf(str,"/spec %s",players[packet->ReqI].UName);
 			SendMST(str);
 
-			sprintf(str,msg->_(packet->ReqI, "ArestedMin"), players[packet->ReqI].PName, Min);
+			sprintf(str,"^2| ^8%s ^1^Cпомещен под арест на ^7%d ^1%s", players[packet->ReqI].PName, Min,
+					Min == 1 ? "минуту" : Min < 5 ? "минуты" : "минут");
 			SendMTC(255,str);
 
-			int c = ++i;
-			if (finded!=-1)
-				c = finded;
-
-			strcpy(ArestPlayers[c].UName, players[packet->ReqI].UName);
-			ArestPlayers[c].ArestTime = now + Min*60;
+			strcpy(ArestPlayers[++i].UName, players[packet->ReqI].UName);
+			ArestPlayers[i].ArestTime = now + Min*60;
 		}
 		else if (finded != -1)
 		{
-			sprintf(str,msg->_(packet->ReqI, "Reliaved"),players[packet->ReqI].PName);
+			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",players[packet->ReqI].PName);
 			SendMTC(255,str);
 
 			ArestPlayers.erase(finded);
@@ -679,18 +649,11 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                         if( fines[j].id == atoi(packet->Text) )
                         {
                             char Msg[128];
-                            if (msg->GetLangID(play.first) == LANG_ID_RUS)
-								sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].NameRu);
-                            else
-								sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].NameEn);
 
+							sprintf(Msg,msg->_(play.first,"GiveFine"),players[packet->UCID].PName,GetFineName(play.first,atoi(packet->Text)));
                             SendMTC( play.first, Msg);
 
-							if (msg->GetLangID(packet->UCID) == LANG_ID_RUS)
-								sprintf(Msg,msg->_(packet->UCID, "AddFine" ),players[play.first].PName,fines[atoi(packet->Text)].NameRu);
-                            else
-								sprintf(Msg,msg->_(packet->UCID, "AddFine" ),players[play.first].PName,fines[atoi(packet->Text)].NameEn);
-
+							sprintf(Msg,msg->_(packet->UCID, "AddFine" ),players[play.first].PName,GetFineName(packet->UCID,atoi(packet->Text)));
                             SendMTC( packet->UCID ,Msg);
 
                             for (int j=0; j<MAX_FINES; j++)
@@ -712,11 +675,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             for(int j=0;j<20;j++)
 							if( strlen(players[play.first].ThisFine[j]) == 0 )
 							{
-								if (msg->GetLangID(play.first) == LANG_ID_RUS)
-									sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[atoi(packet->Text)].NameRu,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
-								else
-									sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,fines[atoi(packet->Text)].NameEn,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
-
+								sprintf(players[play.first].ThisFine[j],"^7%d. %s (^2ID = %d^7)   -   %s",j+1,GetFineName(play.first,atoi(packet->Text)),fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
 								players[play.first].ThisFineCount++;
 								break;
 							}
@@ -742,16 +701,11 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                         if ( players[ play.first ].fines[j].fine_id == atoi( packet->Text ) )
                         {
                             char Msg[128];
-                            if (msg->GetLangID(play.first) == LANG_ID_RUS)
-								sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].NameRu);
-                            else
-								sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,fines[atoi(packet->Text)].NameEn);
+
+							sprintf(Msg,msg->_( play.first, "DeletedFine"),players[packet->UCID].PName,GetFineName(play.first,atoi(packet->Text)));
                             SendMTC( play.first ,Msg);
 
-                            if (msg->GetLangID(packet->UCID) == LANG_ID_RUS)
-								sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[atoi(packet->Text)].NameRu);
-                            else
-								sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,fines[atoi(packet->Text)].NameEn);
+							sprintf(Msg,msg->_(packet->UCID, "DelFine"),players[ play.first ].PName,GetFineName(packet->UCID,atoi(packet->Text)));
                             SendMTC( packet->UCID ,Msg);
 
                             players[ play.first ].fines[j].fine_id = 0;
@@ -764,10 +718,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
                             for(int j=0;j<20;j++)
 							if( strlen(players[play.first].ThisFine[j]) == 0 )
 							{
-								if (msg->GetLangID(play.first) == LANG_ID_RUS)
-									sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[atoi(packet->Text)].NameRu,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
-								else
-									sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",fines[atoi(packet->Text)].NameEn,fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
+								sprintf(players[play.first].ThisFine[j],"   ^1^KЎї ^7%s (^2ID = %d^7)   -   %s",GetFineName(play.first,atoi(packet->Text)),fines[atoi(packet->Text)].id,players[ packet->UCID ].PName);
 								players[play.first].ThisFineCount++;
 								break;
 							}
@@ -795,10 +746,7 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
                 players[ UCID ].fines[j].fine_date = int(time(NULL));
 
                 char Msg[96];
-                if (msg->GetLangID(UCID) == LANG_ID_RUS)
-					sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[18].NameRu);
-                else
-					sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[18].NameEn);
+				sprintf(Msg,msg->_( UCID , "GiveFine2" ),GetFineName(UCID,18));
                 SendMTC( UCID ,Msg);
                 break;
             }
@@ -820,10 +768,7 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
 					players[ UCID ].fines[j].fine_date = int(time(NULL));
 
 					char Msg[64];
-					if (msg->GetLangID(UCID) == LANG_ID_RUS)
-						sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[13].NameRu);
-					else
-						sprintf(Msg,msg->_( UCID , "GiveFine2" ),fines[13].NameEn);
+					sprintf(Msg,msg->_( UCID , "GiveFine2" ),GetFineName(UCID,13));
 					SendMTC( UCID ,Msg);
 					break;
 				}
@@ -956,7 +901,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 					char text[128];
 					int Speed2 = players[UCID].speed_over - StreetInfo.SpeedLimit;
-					sprintf(text,msg->_(UCID, "Speeding"), players[UCID].PName, Speed2, street->GetStreetName(UCID, StreetInfo.StreetID).c_str(), players[play.first].PName);
+					sprintf(text,msg->_(UCID, "Speeding"), players[UCID].PName, Speed2, street->GetStreetName(UCID, StreetInfo.StreetID), players[play.first].PName);
 					SendMTC(255,text);
 
 					if (players[UCID].Pogonya == 0)
@@ -1195,6 +1140,14 @@ void RCPolice::ButtonClock( byte UCID )
 	SendButton(255,UCID,210,130,1,10,8,32,str);
 }
 
+char* RCPolice::GetFineName(byte UCID, int FineID)
+{
+	if (msg->GetLangID(UCID)==LANG_ID_RUS)
+		return fines[FineID].NameRu;
+	else
+		return fines[FineID].NameEn;
+}
+
 void RCPolice::Event()
 {
 	for( auto& p: ArestPlayers )
@@ -1213,8 +1166,9 @@ void RCPolice::Event()
 
 		if (time(NULL) > ArestPlayers[p.first].ArestTime)
 		{
+
 			char str[128];
-			sprintf(str,msg->_(UCID, "Reliaved"),PName);
+			sprintf(str,"^2| ^8%s ^2^Cосвобожден из под ареста",PName);
 			SendMTC(255,str);
 
 			ArestPlayers.erase(p.first);
@@ -1226,7 +1180,7 @@ void RCPolice::Event()
 			int TIME = ArestPlayers[p.first].ArestTime - time(NULL);
 			sprintf(str,"^1%02d:%02d",TIME/60,TIME%60);
 			SendButton(255,UCID,210,130,1,10,8,32,str);
-			SendButton(255,UCID,211,120,9,20,5,32,msg->_(UCID, "YouUndArest"));
+			SendButton(255,UCID,211,120,9,20,5,32,"^1^CВы арестованы");
 		}
 	}
 

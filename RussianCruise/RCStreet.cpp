@@ -35,12 +35,14 @@ int RCStreet::init(const char *dir, void *CInSim, void *Message)
     return 0;
 }
 
-string RCStreet::GetStreetName(byte UCID, int StreetID)
+char* RCStreet::GetStreetName(byte UCID, int StreetID)
 {
-	if (msg->GetLangID(UCID)==LANG_ID_RUS)
-		return Street[StreetID].StreetRu;
-	else
-		return Street[StreetID].StreetEn;
+	if (StreetID>0)
+		if (msg->GetLangID(UCID)==LANG_ID_RUS)
+			return Street[StreetID].StreetRu;
+		else
+			return Street[StreetID].StreetEn;
+	else return "NULL";
 }
 
 void RCStreet::readconfig(const char *Track)
@@ -194,22 +196,9 @@ void RCStreet::InsimPLL( struct IS_PLL* packet )
 
 void RCStreet::btn_street (byte UCID)
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.BStyle = 1;
-    pack.ClickID = 50;
-    pack.L = 140;
-    pack.T = 1;
-    pack.W = 60;
-    pack.H = 6;
-    sprintf(pack.Text, "%s ^2(^1%d ^C^7κμ/χ^2)", GetStreetName(UCID, players[UCID].StreetNum).c_str(), Street[ players[ UCID ].StreetNum ].SpeedLimit);
-    insim->send_packet(&pack);
+	char str[96];
+    sprintf(str, "%s ^2(^1%d ^C^7κμ/χ^2)", GetStreetName(UCID, players[UCID].StreetNum), Street[ players[ UCID ].StreetNum ].SpeedLimit);
+	SendButton(255, UCID, 50, 140, 1, 60, 6, 1, str);
 }
 
 int RCStreet::CurentStreetNum(byte UCID)

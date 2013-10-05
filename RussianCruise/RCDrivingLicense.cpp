@@ -31,7 +31,7 @@ bool RCDL::AddSkill(byte UCID)
 		char Text[64];
 		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100;
-		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
+		sprintf( Text, "^2 + ^3%2.2f%% ^7Skill", skl);
 		SendMTC( UCID, Text );
 		return true;
 	}
@@ -50,7 +50,7 @@ bool RCDL::AddSkill(byte UCID, float coef)
 		char Text[64];
 		float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100 * coef;
-		sprintf( Text, "^2 + ^3%2.3f%% ^7Skill", skl);
+		sprintf( Text, "^2 + ^3%2.2f%% ^7Skill", skl);
 		SendMTC( UCID, Text );
 		return true;
 	}
@@ -77,7 +77,7 @@ bool RCDL::RemSkill(byte UCID)
 		char Text[64];
 		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
-		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl );
+		sprintf(Text,"^1 - ^3%2.2f%% ^7Skill", skl );
 		SendMTC( UCID, Text );
 		return true;
 	}
@@ -106,7 +106,7 @@ bool RCDL::RemSkill(byte UCID, float coef)
 		char Text[64];
 		float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
 		float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
-		sprintf(Text,"^1 - ^3%2.3f%% ^7Skill", skl * coef );
+		sprintf(Text,"^1 - ^3%2.2f%% ^7Skill", skl * coef );
 		SendMTC( UCID ,Text);
 
 		return true;

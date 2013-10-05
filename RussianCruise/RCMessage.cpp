@@ -173,12 +173,12 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
     {
         cout << players[ packet->UCID ].UName << " send !lang" << endl;
 
-        char message2[128];
+        char message2[96], str[64];
         strcpy(message2,Msg);
 
         if (strlen(message2) < 8)
         {
-            SendMTC( packet->UCID ,_( packet->UCID , "2104"));
+            SendMTC( packet->UCID, _( packet->UCID , "2104"));
             return;
         }
 
@@ -188,25 +188,19 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
         comand = strtok (message2," ");
         id = strtok (NULL," ");
 
-        if ((!id) or (strlen(id) != 3))
-        {
-            SendMTC( packet->UCID , _( packet->UCID , "2105"));
+        if (!id or strstr("* eng rus", id) == 0)
+		{
+            SendMTC(packet->UCID, _( packet->UCID , "2105"));
             return;
         }
-
-        if (strstr("* eng rus",id) == 0)
-            return;
-
 
         if (strcmp(id,"eng") == 0)
-        {
             players[ packet->UCID ].LangID = LANG_ID_ENG;
-        }
         else if (strcmp(id,"rus") == 0)
-        {
             players[ packet->UCID ].LangID = LANG_ID_RUS;
-        }
 
+        sprintf(str, "^2| ^7Language: %s", id);
+        SendMTC(packet->UCID, str);
     }
 
 }

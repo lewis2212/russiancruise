@@ -142,7 +142,7 @@ void InitClasses()
 #endif // _RC_POLICE_H
 
 #ifdef _RC_PIZZA_H
-    pizza->init(RootDir, insim, msg, bank, nrg, dl);
+    pizza->init(RootDir, insim, msg, bank, nrg, dl, street);
 #endif
 
 #ifdef _RC_TAXI_H
@@ -463,8 +463,7 @@ void btn_info (struct player *splayer, int b_type)
     strncpy(about_text[8], "^C^7Thanks:",99);
     strncpy(about_text[9], "^C^3repeat, nose, R.Ratzinger",99);
 
-    char ver[16], Text[128];
-    sprintf(ver,"%s",IS_PRODUCT_NAME);
+    char Text[128];
 
 	byte c;
 		if (b_type == 1) c=MAX_CARS/2;				//количество строк для 1 вкладки
@@ -475,24 +474,22 @@ void btn_info (struct player *splayer, int b_type)
 	byte
 		UCID = splayer->UCID,
 		id=134, 			//стартовый ид кнопок
-		l=100, 				//не менять
-		t=90,				//не менять
-		hButton=5, 			//высота строки
+		l=100, t=90,		//центр поля
+		hButton=5, 			//высота одной строки
 		w=100, 				//ширина поля
 		h=16+c*hButton; 	//высота поля
 
 	SendButton(255,UCID,128,l-w/2,t-h/2,w,h+8,32,"");id++; 						//фон
 	SendButton(255,UCID,129,l-w/2,t-h/2,w,h+8,32,"");id++;
-	SendButton(255,UCID,id,l-w/2,t-h/2,25,10,3+64,"RUSSIAN CRUISE");id++; 		//заголовок
-	SendButton(255,UCID,id,l-w/2+24,t-h/2+2,20,3,5+64,ver);id++; 				//версия
-	SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+ISB_CLICK,"^2OK");id++; 		//закрывашка
+	SendButton(254,UCID,130,l-7,t-h/2+h+1,14,6,16+8,"^2OK");id++; 		        //закрывашка
+	SendButton(255,UCID,id++,l-w/2,t-h/2,25,10,3+64,"RUSSIAN CRUISE"); 		    //заголовок
+	SendButton(255,UCID,id++,l-w/2+24,t-h/2+2,20,3,5+64,IS_PRODUCT_NAME); 	    //версия
 
-	SendButton(254,UCID,131,l-w/2+1,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"200"));id++;	//вкладка раз
-	SendButton(254,UCID,132,l-w/2+17,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"201"));id++;	//два
-	SendButton(254,UCID,133,l-w/2+33,t-h/2+9,16,6,16+ISB_CLICK,msg->_(splayer->UCID,"202"));id++;	//нутыпонел
+	SendButton(254,UCID,131,l-w/2+1,t-h/2+9,16,6,16+8, msg->_(splayer->UCID,"200"));id++;	//вкладка раз
+	SendButton(254,UCID,132,l-w/2+17,t-h/2+9,16,6,16+8,msg->_(splayer->UCID,"201"));id++;	//два
+	SendButton(254,UCID,133,l-w/2+33,t-h/2+9,16,6,16+8,msg->_(splayer->UCID,"202"));id++;	//нутыпонел
 
     if (b_type == 1)
-    {
     	for (int i=0; i<MAX_CARS; i++)
 		{
 			if (ginfo->car[i].id == 0)
@@ -505,30 +502,22 @@ void btn_info (struct player *splayer, int b_type)
 				sprintf(Text,"^3%d lvl ^2%s ^3(^2%d^3/%d)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
 			else
 				sprintf(Text,"%d lvl %s (%d/%d)",(i-1)*5,ginfo->car[i].car,(int)ginfo->car[i].cash,(int)ginfo->car[i].sell);
-			SendButton(255,UCID,id,l-w/2+1+plW,t-h/2+16+hButton*(i-plH),w/2-1,hButton,16+64,Text);id++;
+			SendButton(255,UCID,id++,l-w/2+1+plW,t-h/2+16+hButton*(i-plH),w/2-1,hButton,16+64,Text);
 		}
-    }
+
 #ifdef _RC_POLICE_H
     if (b_type == 2)
-    {
     	for(int i=0;i<c;i++)
 		{
-			if (msg->GetLangID(UCID) == LANG_ID_RUS)
-				sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].NameRu, police->fines[i+1].cash);
-			else
-				sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->fines[i+1].NameEn, police->fines[i+1].cash);
+			sprintf(Text,"^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->GetFineName(UCID, i+1), police->fines[i+1].cash);
 
-			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,16+64,Text);id++;
+			SendButton(255,UCID,id++,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,16+64,Text);
 		}
-    }
 #endif
+
     if (b_type == 3)
-    {
 		for(int i=0;i<c;i++)
-		{
-			SendButton(255,UCID,id,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,0,about_text[i]);id++;
-		}
-    }
+			SendButton(255,UCID,id++,l-w/2+1,t-h/2+16+hButton*i,w-2,hButton,0,about_text[i]);
 
     for (int i=id; i<165; i++)
 	    SendBFN(UCID,i);
@@ -1710,15 +1699,7 @@ void case_mso ()
     }
     if ((strncmp(Msg, "!test",5) == 0))
     {
-    	//SendMTC(ginfo->players[i].UCID,strlwr("TdSEFdd"));
-    	/*
-    	struct streets StreetInfo;
-		street->CurentStreetInfo(&StreetInfo,ginfo->players[i].UCID);
 
-    	char str[96];
-		sprintf(str,street->GetStreetName(ginfo->players[i].UCID,StreetInfo.StreetID).c_str());
-
-		*/
     }
     //!users
     if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))

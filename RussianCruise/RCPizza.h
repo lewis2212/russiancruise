@@ -7,6 +7,7 @@
 #include "RCEnergy.h"
 #include "RCDrivingLicense.h"
 #include "RCTaxi.h"
+#include "RCStreet.h"
 
 #include "tools.h"
 
@@ -69,6 +70,7 @@ private:
 	RCMessage   *msg;
     RCBank      *bank;
     RCEnergy    *nrg;
+    RCStreet    *street;
 #ifdef _RC_LEVEL_H
     RCDL        *dl;
 #endif
@@ -93,7 +95,6 @@ private:
     void Done ( byte UCID );
     void btn_work ( byte UCID );
 
-
 	void InsimNCN( struct IS_NCN* packet );
     void InsimNPL( struct IS_NPL* packet );
     void InsimPLP( struct IS_PLP* packet );
@@ -110,7 +111,7 @@ public:
     ~RCPizza();
 
     // Основные функции класса
-    int init(const char *dir, void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic);
+    int init(const char *dir, void *CInSim, void *Message,void *Bank,void *Energy,void *DrLic, void * STreet);
     void readconfig(const char *Track);
 
 

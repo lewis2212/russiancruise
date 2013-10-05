@@ -257,6 +257,7 @@ void RCTaxi::accept_user( byte UCID )
 			DestPoint = rand()%ClientCount;
 			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
 				ok = false;
+
 			#ifdef __linux__
 			sleep(100);
 			#else
@@ -292,9 +293,9 @@ void RCTaxi::accept_user( byte UCID )
 			street->CurentStreetInfoByNum(&StreetInfo,players[UCID].WorkStreetDestinaion);
 
 			char Msg[128];
-			sprintf(Msg,msg->_(UCID,"TaxiAccept11"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+			sprintf(Msg,msg->_(UCID,"TaxiAccept11"),street->GetStreetName(UCID, StreetInfo.StreetID));
 			SendMTC(UCID,Msg);
-			sprintf(Msg,msg->_(UCID,"TaxiAccept1"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+			sprintf(Msg,msg->_(UCID,"TaxiAccept1"),street->GetStreetName(UCID, StreetInfo.StreetID));
 			ButtonInfo(UCID,Msg);
 			players[UCID].WorkAccept = 1;
 		}
@@ -341,9 +342,9 @@ void RCTaxi::accept_user2(byte UCID)
 		street->CurentStreetInfoByNum(&StreetInfo,DestStreet);
 
 		char Msg[128];
-		sprintf(Msg,msg->_(UCID,"TaxiAccept22"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+		sprintf(Msg,msg->_(UCID,"TaxiAccept22"),street->GetStreetName(UCID, StreetInfo.StreetID));
 		SendMTC(UCID,Msg);
-		sprintf(Msg,msg->_(UCID,"TaxiAccept2"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+		sprintf(Msg,msg->_(UCID,"TaxiAccept2"),street->GetStreetName(UCID, StreetInfo.StreetID));
 		ButtonInfo(UCID,Msg);
 		players[UCID].WorkAccept = 2;
 		players[UCID].PassStress = rand()%500;
@@ -546,7 +547,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				street->CurentStreetInfoByNum(&StreetInfo,players[UCID].WorkStreetDestinaion);
 
 				char Msg[128];
-				sprintf(Msg,msg->_(UCID,"TaxiAccept1"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+				sprintf(Msg,msg->_(UCID,"TaxiAccept1"),street->GetStreetName(UCID, StreetInfo.StreetID));
 				ButtonInfo(UCID,Msg);
 			}
 
@@ -557,7 +558,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 				street->CurentStreetInfoByNum(&StreetInfo,players[UCID].WorkStreetDestinaion);
 
 				char Msg[128];
-				sprintf(Msg,msg->_(UCID,"TaxiAccept2"),street->GetStreetName(UCID, StreetInfo.StreetID).c_str());
+				sprintf(Msg,msg->_(UCID,"TaxiAccept2"),street->GetStreetName(UCID, StreetInfo.StreetID));
 				if (players[UCID].PassStress <= 800) ButtonInfo(UCID,Msg);
 
 				int X = pack_mci->Info[i].X/65536;
@@ -972,7 +973,7 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 
 	if (players[UCID].WorkAccept == 2)
 	{
-		if ((packet->Index==128 or packet->Index==129) and packet->SpClose>30)
+		if ((packet->Index==128 or packet->Index==129) and packet->SpClose>50)
 		{
 			players[UCID].PassStress += packet->SpClose+20;
 			srand(time(NULL));
@@ -990,7 +991,7 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 
 void RCTaxi::InsimAXM( struct IS_AXM* packet )
 {
-	if (packet->PMOAction != 1 or StartPointsAdd == 0)
+	if (StartPointsAdd == 0 or packet->UCID == 0 or packet->PMOAction != 1)
 		return;
 
 	char text[96];
