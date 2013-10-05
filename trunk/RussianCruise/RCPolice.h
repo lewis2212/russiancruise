@@ -110,8 +110,9 @@ public:
 	bool ReadCop(byte UCID);
 	void SetSirenLight( string sirenWord );
 	bool IsCop(byte UCID);
-	int InPursuite( byte UCID );
+	int InPursuite(byte UCID);
 	int GetFineCount();
+    char* GetFineName(byte UCID, int FineID);
 
 	void Event();
 

@@ -19,8 +19,7 @@ struct square           // square of destination point
 {
     int     X;       // 4 X points
     int     Y;       // 4 Y points
-    char    PlaceNameRu[64];  // The name of Destination Point
-    char    PlaceNameEn[64];  // The name of Destination Point
+    char    PlaceName[64];  // The name of Destination Point
 };
 
 struct place

@@ -73,10 +73,10 @@ public:
     int CurentStreetInfoByNum(void *StreetInfo, int StrNum);
     int StreetCount();
 
-    string GetStreetName(byte UCID, int StreetID);
+    char* GetStreetName(byte UCID, int StreetID);
 
     int init(const char *dir,void *CInSim, void *Message);
-    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
+    void readconfig(const char *Track); 	// Чтение данных о точках "Пункт назначения"
 
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };

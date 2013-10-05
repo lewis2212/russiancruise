@@ -360,7 +360,7 @@ void RCEnergy::btn_energy ( byte UCID )
 	if (players[UCID].Zone == 3)
 		sprintf(str, "%s ^K¡è", str);
 
-	SendButton(255, UCID, 207, 100, 1, 30, 4, 32+64, str);
+	SendButton(255, UCID, 208, 100, 1, 30, 4, 32+64, str);
 }
 
 int RCEnergy::check_pos( byte UCID )
