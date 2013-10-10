@@ -1,0 +1,1692 @@
+LFS Translation file (Korean)
+Translated by: cowlevel, J.I.T, kew0914, megaepsilon, Simbahuh
+
+tx_codepage 949
+tx_langname 한국어
+tx_noun_adj an
+3g_tr_selct 트레이닝
+3g_tr_title 레슨 선택
+3a_spselect 싱글 플레이어
+3a_tit_sply 싱글 플레이어
+3a_mpselect 멀티 플레이어
+3a_tit_mply 멀티 플레이어
+3a_hlselect 타임 어택
+3a_tit_hotl 타임 어택
+3a_opselect 설정
+3g_repl_sel 리플레이
+3a_tit_sprs 싱글 플레이어 리플레이
+3a_tit_mprs 멀티 플레이어 리플레이
+3g_unlk_lfs Live for Speed 라이센스 인증
+3g_demorace 데모 레이서
+3h_x_licens %s 라이센스
+3a_mode_dmo 데모
+3h_s_coln_s %s : %s
+3g_re_sk_dl 리플레이 스킨 다운로드
+3g_one_notf 리플레이의 스킨중 하나가 컴퓨터에 존재하지 않습니다
+3g_sev_notf 리플레이의 스킨중 다수가 컴퓨터에 존재하지 않습니다
+3g_one_down 누락된 스킨을 다운로드 하시겠습니까?
+3g_sev_down 누락된 스킨들을 다운로드 하시겠습니까?
+3a_exit_btn 종료
+3a_next_btn 다음
+3g_agre_btn 동의
+3a_exitprog LFS 종료
+3a_userfind 이름 입력 후 검색
+3h_num_tips %d 도움말
+3h_tip_pesc ^7ESC^8 키를 누르면 셋업 스크린 또는 옵션 리스트가 나옵니다
+3h_tip_prst ^7T^8 키를 누르면 메시지를 입력 할 수 있습니다
+3h_tip_ffwr 포스 피드백 스티어링 휠을 사용하는 것을 추천합니다
+3h_tip_rtcg 클러치 과열을 막기 위해서 변속시에 스로틀을 떼어주세요
+3h_tip_brak 코너 진입시에 적절한 시점에 브레이크를 사용하세요...
+3g_hdr_name 레슨 이름
+3g_hdr_diff 난이도
+3g_hdr_mode 모드
+3g_dif_easy 쉬움
+3g_dif_medi 보통
+3g_dif_hard 어려움
+3g_lsn_firs 첫번째 레슨
+3g_lsn_next 다음 레슨
+3g_lsn_trya 다시
+3g_lsn_fini 마침
+3g_tit_obje ^7오브젝트
+3g_tit_purp ^7목적
+3g_tit_tips ^7도움말
+3g_tit_targ ^7목표 타임
+3g_not_time 시간안에 완주하지 못하셨습니다!
+3g_not_fini 코스를 완주하지 못하셨습니다!
+3g_comp_but 코스는 완주하셨습니다만...
+3h_false_st - 녹색 신호 전에 출발하셨습니다
+3g_too_long - 완주하는데 너무 오래 걸리셨습니다
+3g_coll_car - 다른 차량과 충돌이 있었습니다
+3g_wrong_rt - 잘못된 경로로 들어가셨습니다.
+3g_hit_1_ob - 오브젝트를 건드리셨습니다
+3g_hit_x_ob - %d 개의 오브젝트를 건드리셨습니다
+3g_not_fast - 체크포인트에서 충분히 빠르지 않았습니다
+3g_slo_stop - 멈추기까지 너무 오래 걸리셨습니다
+3g_exce_spd - 피트레인의 속도제한을 초과 하셨습니다
+3g_nopitstp - 피트스탑을 하지 않으셨습니다
+3g_not_long - 피트스탑의 시간이 충분하지 못했습니다
+3g_congrats 축하합니다!  테스트를 통과하셨습니다!
+3g_stndrd_x 이번 레슨에서의 당신의 수준은 : %s
+3g_lsnunl_x 이 레슨을 하시려면 %s 라이센스 인증이 필요합니다
+3a_nocarsel 차량이 선택 되어있지 않습니다
+3a_araceinp 레이스가 진행중 입니다
+3a_plydisco 게스트의 연결이 곧 끊깁니다
+3a_leavgame 서버 나가기
+3a_playrbtn 드라이버
+3a_garagbtn 차고
+3a_trackbtn 트랙
+3a_tit_trak 트랙
+3a_load_brk [불러오는중]
+3a_gene_brk [생성중]
+3a_notr_brk [트랙 없음]
+3a_endonlin 온라인 호스트를 종료 하겠습니까?
+3a_levonlin 온라인 호스트를 떠나겠습니까?
+3a_swap_pos 포지션 변경
+3a_joinrace 레이스 참여
+3a_addaidrv AI 드라이버 추가
+3a_setready 준비하기
+3a_starthdr 스타트 그리드
+3a_skillhdr 스킬 레벨
+3a_race_hdr 레이스
+3a_readybtn 준비
+3a_localsml 로컬
+3a_vhostsml 호스트 경유
+3g_adminsml 관리자
+3a_dirctsml 다이렉트
+3a_no_track 트랙 없음
+3a_nodriver 드라이버 없음
+3a_carerror 차량 오류
+3a_raceinpr 레이스 진행 중
+3a_remvplyr 드라이버 삭제
+3a_no_quali 예선 없음
+3a_qual1min 예선 1 분
+3a_qualxmin 예선 %d 분
+3a_practice 연습
+3a_race1lap 레이스 1 바퀴
+3a_racexlap 레이스 %d 바퀴
+3a_race1hou 레이스 1 시간
+3a_racexhou 레이스 %d 시간
+3a_zerowind 없음
+3a_low_wind 미풍
+3a_highwind 강풍
+3a_nosamenm 로컬 드라이버들의 이름이 같으면 안됩니다
+3a_ac_onest 오토크로스 : 하나의 스타트 포지션
+3a_ac_fixlp 오토크로스 : 랩 설정
+3h_kickplyr 추방 플레이어 %s^8? (%s^8)
+3h_howlongb 몇일 동안 밴 할까요 %s^8? (%s^8)
+3h_ainodriv 이 설정은 AI 드라이버가 주행할 수 없습니다
+3h_ainoxral AI 는 %s 로 랠리크로스를 주행할 수 없습니다
+3h_ainoxcfg AI 는 이 설정으로 %s 를 몰 수 없습니다
+3a_cdntsvst 셋업을 저장 할 수 없습니다
+3a_sent_set 셋업 보내기
+3a_plynotfd 드라이버를 찾을 수 없습니다
+3a_carnotfd 드라이버의 차량을 찾을 수 없습니다
+3a_namsetsv 셋업 이름 입력 후 저장
+3h_gridsave 스타트 그리드 이름 입력 후 저장
+3h_gridload 스타트 그리드 선택과 불러오기
+3h_xremovex %s^8 (이)가 %s^8 을(를) 스타트 그리드에서 제거했습니다.
+3a_endgmbtn 호스트 종료
+3a_leavebtn 종료
+3g_endr_btn 레이스 종료
+3g_spec_btn 관람자
+3h_qual_btn 예선
+3h_rest_btn 재시작
+3h_pits_btn 피트
+3g_join_btn 참여
+3g_play_btn 플레이
+3a_namesort 이름
+3a_datesort 날짜
+3a_car_caps 차량
+3a_newbtset 셋업을 만드시려면 '새 셋업'  버튼을 누르세요
+3a_selplset 바꿀수 없습니다 [default] - 개인 셋업을 선택하세요
+3a_newbtcol 색상을 만드시려면 '새 색상' 버턴을 누르세요
+3a_selplcol 바꿀수 없습니다 [default] - 개인 색상을 선택하세요
+3a_sets_hdr 셋업
+3a_cols_hdr 색상
+3a_new_setb 새 셋업
+3a_new_colb 새 색상
+3a_savedset 셋업 저장
+3a_savedcol 색상 저장
+3a_new_butt 생성
+3a_del_butt 삭제
+3a_undo_btn 취소
+3g_rename_b 이름변경
+3h_clear_bt 초기화
+3a_drvr_hdr 드라이버
+3a_frce_hdr 하중
+3g_fuel_hdr 연료
+3g_susp_hdr 서스펜션
+3a_out_butt 없음
+3a_in_buttn 있음
+3a_off_butt 꺼짐
+3a_on_buttn 켜짐
+3a_stop_btn 정지
+3a_drop_btn Drop
+3a_namenset 새 셋업 이름 입력
+3g_newnmset 셋업에 새 이름 입력
+3a_setnodel 셋업을 삭제할 수 없습니다
+3a_deletset 셋업을 삭제합니까?
+3a_setnonam 이름없는 셋업 생성불가
+3a_namencol 새 색상 이름 입력
+3h_newnmcol 색상 새 이름 입력
+3a_colnodel 색상을 삭제할 수 없습니다
+3a_deletcol 색상을 삭제합니까?
+3a_colnonam 이름없는 색상 생성불가
+3a_carninvl 현재 차량의 이름이 올바르지 않습니다
+3a_sel_skin 스킨 선택
+3a_drv_none No drive
+3a_drv_fron Rear wheel drive
+3a_drv_rear Front wheel drive
+3a_drv_four Four wheel drive
+3g_dif_open OPEN DIFF
+3g_dif_lock LOCKED DIFF
+3g_dif_visc VISCOUS LSD
+3g_dif_clsd CLUTCH PACK LSD
+3a_no_creds 크레딧 없음
+3a_one_cred 1 크레딧
+3a_xx_creds %d 크레딧
+3g_host_dis 호스트에서 %s의 운전이 허용되지 않았습니다
+3h_ndxmdcax %s 모드에서만 %s의 운전이 가능합니다.
+3h_ndulxcax LFS %s 라이센스 인증을 받으셔야 %s의 운전이 가능합니다.
+3g_all_caps ALL
+3g_newnmrep 리플레이의 새 이름을 입력합니다
+3g_repnodel 리플레이를 삭제 할 수 없습니다
+3g_deletrep 리플레이를 삭제합니까?
+3g_repnonam 이름없는 리플레이는 생성이 안됩니다
+3g_set_sh_x %s 의 설정 :
+3a_rght_brk [오른쪽]
+3a_left_brk [왼쪽]
+3a_plyrname 드라이버 이름 :
+3g_otherply 다른 드라이버 :
+3a_numplate 번호판 :
+3a_countryc 국가 :
+3a_poschoos 드라이버 포지션 :
+3a_speedcho 속도계 :
+3a_pressure 압력계 :
+3g_lang_cln 언어 :
+3g_font_cln 글꼴 :
+3g_wght_cln 글꼴 두께 :
+3g_adnewply 새로운 드라이버 추가
+3g_dlselply 선택한 드라이버 삭제?
+3g_enterply 새 드라이버 이름 입력
+3g_plyexist 드라이버가 종료 중
+3g_newnamex 드라이버의 새 이름 입력 : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake 브레이크 헬프 :
+3a_autoclch 오토 클러치 :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn 와이드 스크린 효과 :
+3a_clipwndo 마우스 창 고정 CTRL + C :
+3a_clipflsc 마우스 화면 고정 CTRL + C :
+3a_leftscrn 왼쪽 화면
+3a_rghtscrn 오른쪽 화면
+3a_keyshpls 키 할당 (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful 창 / 전체화면
+3a_shf4togg SHIFT + F4 를 누르면 전체화면과 창모드 전환이 가능합니다
+3a_shxalrdy SHIFT + F%d 이미 선택된 모드에 지정되어 있습니다
+3a_assxmodx SHIFT + F%d 를 %s 모드로 지정하시겠습니까?
+3a_unkntype 알수없음
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x %s 의 시점 설정 :
+3a_vw_incar 차량내부
+3b_vw_custm 개인편집
+3a_ishwdywy [드라이버 켜짐 휠 켜짐]
+3a_ishwdnwy [드라이버 꺼짐 휠 켜짐]
+3a_ishwdnwn [드라이버 꺼짐 휠 꺼짐]
+3a_oht_none [없음]
+3a_oht_splt [구간 타임]
+3a_normlfov 시야각(FOV) %.0f°:
+3h_onebutlk 좌/우 시야 회전각 %.0f°:
+3a_pitchviw 시점 수직 각도 %.2f°:
+3b_rotatviw 시점 수평 각도  %.2f°:
+3g_mirror_x 박스카 백미러 수평위치 %.3f m :
+3g_mirror_z 박스카 백미러 수직위치 %.3f m :
+3a_tlt1gdeg 1g 기준 머리 흔들림 %.2f°:
+3a_shiftlat 1g 기준 좌/우 관성 %.3f m :
+3a_shiftfwd 1g 기준 전/후 관성 %.3f m :
+3a_shiftvrt 1g 기준 수직 관성 %.3f m :
+3a_moveanim 콕핏시점 조향 따라가기(현실화) :
+3a_defdrvvw 드라이버 기본 시점 :
+3g_cvw_main 표현 :
+3b_cvsnthng 없음
+3b_cvswheel 휠
+3g_cvsdbody 바디
+3b_cvsexter 외부
+3g_cvshelic 헬리콥터
+3g_cvsfollo 따라가기
+3h_cvsuserv 유저 자유 시점
+3b_cvwxoffs 좌/우 위치 %.3f m :
+3b_cvwyoffs 전/후 위치 %.3f m :
+3b_cvwzoffs 수직 위치 %.3f m :
+3g_c_defaul 기본 시점
+3g_c_centre 중앙 시점
+3g_c_eyepos 운전자 시점
+3g_cvw_high 높이 %.1f m :
+3g_cvw_angl 각도 %.1f°:
+3g_cvw_dist 거리 %.1f m :
+3g_cvw_vlag 부드러움 %.1f sec :
+3a_drawdrwh 드라이버 / 휠 표시 :
+3a_lookfunc 보기 기능 :
+3a_lookaxis 축
+3a_lookstee 스티어
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav 마우스 커서가 숨겨진 상태에서도 마우스 보기를 쓸 수 있습니다.
+3a_looksens 보기 감도 %.2f :
+3a_lookcred 보기 중앙속도 감소 %.2f :
+3a_btnlooko 좌/우 시야 버튼 :
+3g_l_smooth 부드럽게
+3g_l_instan 빠르게
+3h_mainsfov 주 모니터 FOV %.0f°:
+3h_monangle 화면 각도 %.0f°:
+3h_viewoffs 시야 보정 %.2f :
+3h_multiscl 다중 모니터 구성 :
+3h_entnumls 왼쪽 모니터의 수를 입력하세요
+3h_entnumrs 오른쪽 모니터의 수를 입력하세요
+3h_onecentr 중앙 모니터
+3h_scwidths 화면 너비 :
+3h_optequal 동조
+3h_optunequ 비동조
+3h_entsidep 측면 화면의 너비를 입력하세요 (픽셀단위)
+3h_entmainp 주 모니터 화면의 너비를 입력하세요 (픽셀단위)
+3h_fullwext 외부시야 화면 폭에 맞추기 :
+3h_bezelcom 모니터 베젤(테두리 두께) 보상%.1f%% :
+3h_resulfov 최종 FOV : %.1f°
+3h_fovinval 유효하지 않은 운전 시점 설정입니다
+3h_drivuse1 단일 렌더를 통한 운전자 시점
+3h_drivusex %d 렌더를 통한 운전자 시점
+3h_notwidex %d-화면 설정을 사용하기에 적합한 폭이 아닙니다
+3h_extvfull 외부 시점에서도 전체 화면 폭을 사용합니다
+3h_extvmain 외부 시점은 주 화면만 사용합니다
+3h_extvxxar 외부 시점은 %d:%d 화면 비율을 사용합니다
+3h_extvass3 외부 시점에 대한 3-화면 설정입니다
+3a_sml_newt 생성
+3a_sml_name 이름
+3a_sml_delt 삭제
+3a_sml_undo 복원
+3a_sml_save 저장
+3a_sml_load 불러오기
+3a_msctrcks 트랙
+3a_exitnosv 저장없이 종료합니까?
+3a_chmblost 변경사항이 적용되지 않을 수 있습니다
+3a_savedrad radio.rad 저장됨
+3a_nodelstp 셋업채널을 삭제할 수 없습니다
+3a_delchnlq 채널 삭제합니까?
+3a_chanlnum 채널 %d
+3a_msctrnum 트랙 %d
+3a_norenstp 셋업채널의 이름을 바꿀수 없습니다
+3a_newnmchn 채널의 새 이름
+3a_play_num 플레이 : %s
+3a_fail_num 실패 : %s
+3a_shftauto 자동
+3a_shftsequ 시퀀셜
+3a_shftshft 쉬프터
+3g_shftffjo FF스틱(조이스틱)
+3h_transmis 트랜스미션
+3h_box_hpat H-형 기어박스
+3h_box_bike 모터바이크 기어박스
+3h_box_sequ 시퀀셜 기어박스
+3h_box_seqi 시퀀셜 기어박스와 이그니션 차단
+3h_box_semi 패들 쉬프트 기어박스
+3h_seq_hpat 시퀀셜 작용 H-형 기어박스
+3a_dc_combi 조합
+3a_dc_separ 분리
+3a_dc_butts 버튼
+3a_axb_axis 축
+3a_axb_butt 버튼
+3g_no_con_d 발견된 컨트롤러 없음
+3g_xx_con_d %.0f 컨트롤러 발견
+3g_ct_unkno 알수없는 컨트롤러
+3g_ct_first 첫번째 사용자 컨트롤러
+3g_ct_steer 스티어링 휠
+3g_ct_fligh Flight 컨트롤러
+3g_ct_gamep 게임패드
+3g_ct_joyst 조이스틱
+3a_crrdcval 스티어 센터 축소 %.2f :
+3g_whe_turn 휠 회전 %.0f°:
+3a_msbutt_1 버튼 1
+3a_mdbutt_2 버튼 2
+3e_kbt_mous [마우스 조종]
+3e_kbt_nohe [키보드 - 도움없음]
+3e_kbt_stab [키보드 - 안정적]
+3a_mdaxesff 축/포스피드백
+3a_mdshiftr 쉬프터
+3a_kasteerl 왼쪽으로 조향
+3a_kasteerr 오른쪽으로 조향
+3e_kasteerl 빨리 조향
+3e_kasteerr 천천히 조향
+3a_kaaccelk 가속
+3a_kabrakek 브레이크
+3a_kaleftvw 왼쪽 보기
+3a_karghtvw 오른쪽 보기
+3a_karearvw 후방 보기
+3a_kashiftu 기어 올리기
+3a_kashiftd 기어 내리기
+3a_kaclutch 클러치
+3a_kahandbr 핸드브레이크
+3a_kahornkk 경적
+3a_kaflashk 전조등
+3a_karesetk 차량 리셋
+3g_kapitspd 속도 제한
+3h_katcdisa 트랙션 컨트롤
+3h_kaigniti 시동
+3a_kazoom_i 확대
+3a_kazoom_o 축소
+3a_karevers 후진
+3a_kafirstk 1단
+3a_kasecond 2단
+3a_kathirdk 3단
+3a_kafourth 4단
+3a_kafifthk 5단
+3a_kasixthk 6단
+3a_kasevent 7단
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera 조향
+3a_aacombin 악셀 브레이크 연동
+3a_aathrott 스로틀
+3a_aabrakea 브레이크
+3a_aalookhe Look Heading
+3a_aalookpi Look Pitch
+3a_aalookro Look Roll
+3a_aaclutch 클러치
+3a_aahandbr 핸드브레이크
+3g_aashiftx Shifter Left-Right
+3g_aashifty Shifter Front-Back
+3a_prsxforx 다음을 위한 %s 을(를) 누르세요 : %s (ESC - 취소 / DEL - 없음)
+3a_smallkey 키
+3a_smallbut 버튼
+3a_mouse_kb 마우스 / 키보드
+3a_wheel_js 휠 / 조이스틱
+3a_force_st 피드백 강도 %.0f :
+3a_thrbrkax 엑셀 / 브레이크 축 :
+3a_clutchop 클러치 :
+3a_handbrko 핸드브레이크 :
+3a_thrbrkrv Thr / brk 페달 둔감도 %.2f :
+3a_btnratev 키 민감도 %.2f :
+3a_kbsteero 키보드 조향 :
+3a_strratev 스티어 민감도 %.2f :
+3e_retratev 복원 민감도 %.2f :
+3e_strfastv 빠른 조향 비율 %.2f :
+3e_strslowv 느린 조향 비율 %.2f :
+3a_prdtimev 예측할 시간 %.2f :
+3a_lmtmultv 비율 제한 %.2f :
+3a_selfunca 지정한 축의 기능을 선택하세요
+3a_selaxfrx %s를 위한 축을 선택하세요 (ESC - 취소 / DEL - 없음)
+3a_availaxs 가능한 축들
+3a_axis_num %d축
+3a_invert_1 반대로 1
+3a_invert_0 반대로 0
+3a_frcfdbak 포스 피드백(FF) :
+3a_ffdevice FF 장치 :
+3g_ffshiftd FF 쉬프트 장치 :
+3a_removedz 데드존 제거 :
+3h_rec_axes 축 재조정
+3h_cal_lock 잠금
+3h_cal_unlk 해제
+3a_heyb_hdr 키보드
+3a_whbt_hdr 휠 버튼
+3a_ass_zero [0]
+3a_ass_mlft 마우스 왼쪽
+3a_ass_mrgt 마우스 오른쪽
+3a_ass_mmid 마우스 가운데
+3a_ass_whup 마우스 휠 위로
+3a_ass_whdn 마우스 휠 아래로
+3a_ass_spac 스페이스
+3a_ass_upar 위 화살표
+3a_ass_dnar 아래 화살표
+3a_ass_rtar 오른쪽 화살표
+3a_ass_ltar 왼쪽 화살표
+3a_ass_pgup Page Up
+3a_ass_pgdn Page Down
+3a_butt_num 버튼 %d
+3d_aamousex 마우스 X
+3d_aamousey 마우스 Y
+3d_aa_xaxis X 축
+3d_aa_yaxis Y 축
+3d_aa_zaxis Z 축
+3d_aarxaxis RX 축
+3d_aaryaxis RY 축
+3d_aarzaxis RZ 축
+3d_aaslidr1 슬라이더 0
+3d_aaslidr2 슬라이더 1
+3a_reskeysh 고정키
+3a_rswtch_r 1 - 리플레이 보기
+3a_rssave_r 2 - 리플레이 저장
+3h_showline 4 - 레이싱 라인
+3a_rsless_f < - 포스 감소
+3a_rsmore_f > - 포스 증가
+3a_rstab_ne TAB - 다음차량
+3a_rshome_o HOME - 자기 차량
+3a_rstalk_t T - 말하기
+3a_rspausep P - 일시정지
+3a_rshistor H - 이력
+3a_rsview_v V - 시점
+3a_rsforces F - 물리력
+3a_rsnamesn N - 이름들
+3a_shftplus SHIFT +
+3a_shchhorn H - 경적 바꾸기
+3g_shshiftt G - 변속 모드
+3a_shrescon C - 컨트롤러 복구
+3a_shressnd W - 소리 복구
+3a_shsoundo N - 소리 켜기/끄기
+3a_shmirmod M - 미러 모드
+3g_shhidetx F - 텍스트 숨김
+3a_shuservw U - 사용자 시점
+3a_shskiptn K - 다음곡으로 넘기기
+3h_shshowmo Z - 마우스 보여주기
+3b_shdriver F1 - 운전자 시점
+3b_shslowrp F2 - 리플레이 천천히
+3b_shfastrp F3 - 리플레이 빠르게
+3a_shwindow F4 - 창
+3a_carsndvl 차량 볼륨 (%.1f) :
+3a_skidvboo 스키드음 증폭 (%.1f) :
+3g_windvboo 바람 볼륨 증폭 (%.1f) :
+3g_echovboo 반향 볼륨 증폭(%.1f) :
+3a_mscvolum 음악 볼륨 (%.1f) :
+3g_msgvolum 인터페이스 볼륨 (%.1f) :
+3a_mscsetup 셋업 화면시 음악 :
+3a_mscracin 레이싱 중 음악 :
+3a_mscrplay 리플레이 재생 중 음악 :
+3a_selecbrk [선택되었습니다]
+3a_noplybrk [달리는 사람이 없습니다]
+3a_msc_skip 건너뛰기
+3a_msc_sele 선택
+3a_ingmmusc 게임 내 음악
+3a_channels 채널
+3g_status_a 소리 (SHIFT + N) : %s
+3g_status_m 음악 버퍼 : %s
+3g_status_c 소리 버퍼 : %s
+3a_relaybrk [상대적]
+3a_absolbrk [절대적]
+3a_fps_disp 프레임 레이트 표시 (fps) :
+3b_virtuals 가상 출발 신호 표시 :
+3a_mirrmode 미러 모드 :
+3a_clokmode 시계 모드 :
+3g_fixedfwd 전방 고정 :
+3g_accelmov 드라이버 관성 표현 :
+3a_showpeds 페달 보이기 :
+3g_steerind 가상 조향 게이지 :
+3a_smallmap 미니맵 보이기 :
+3g_staticsm 미니맵 회전 :
+3a_pos_list 순위표 보이기 :
+3a_dropshad 그림자 표현 :
+3a_msgtsize 메시지 텍스트 크기 %.3f :
+3a_timedisp 전체 기록 표시 :
+3a_chptexto 체크포인트 텍스트 :
+3a_clndlcol 게이지 바늘 색상 :
+3a_cltxtcol 게이지 텍스트 색상 :
+3a_cttxtcol 주요 텍스트 색상 :
+3h_x_dash_c %s 계기판 :
+3h_roadgled 일반 차량 기어 숫자 표시등 :
+3g_interfac 인터페이스
+3h_in_opaci 투명도 %.2f :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset 되돌리기
+3h_betw_a_b %.1f 에서 %.1f 사이의 값이어야 합니다.
+3a_asavnono [끄기 - 저장되지 않음]
+3a_asavmanu [켜기 - 수동 저장]
+3a_asavauto [자동저장 - 권장하지 않음]
+3a_ogm_ainm AI 이름
+3g_ogm_fkey F1에서 F8까지
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [순위 고정]
+3a_rs_finis [완주 순위]
+3a_rs_revfi [완주 순위의 반대]
+3a_rs_randm [무작위]
+3a_aidrvnum AI 드라이버 %d :
+3a_f_keynum F%d :
+3a_sprsvopt 싱글플레이어 리플레이 저장 :
+3a_mprsvopt 멀티플레이어 리플레이 저장 :
+3a_nonqracr 무예선 경기의 재시작 그리드 :
+3a_changbtn AI 이름 편집 / F 키 :
+3a_optlores 저해상도
+3a_opthires 고해상도
+3g_optcompr 압축 텍스쳐
+3g_optsfull 풀 텍스쳐
+3g_opt_main 기본
+3g_plus_mir + 미러
+3a_usrldval 사용자 LOD (%.2f) :
+3a_dstldval 먼지 LOD (%.2f) :
+3a_mirldval 미러 LOD (%.2f) :
+3h_fsaa_txt 화면 전체 안티앨리어싱 :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) 인터페이스 / 문자 :
+3h_mipbias1 Mip bias (%.1f) 오브젝트 / 벽면 :
+3h_mipbias2 Mip bias (%.1f) 잔디 / 그라벨 :
+3h_mipbias3 Mip bias (%.1f) 지면 :
+3a_shtypopt 그림자 종류 :
+3g_treesopt 트랙 나무 보이기 :
+3g_flagsopt 트랙 깃발 보이기 :
+3g_rubbropt 타이어 자국 보이기 :
+3g_draw_sky 하늘 보이기 :
+3g_gadapter 어댑터 :
+3e_zbdopt_d Z-버퍼 단계 (%d) :
+3e_hazetext 안개 효과 :
+3h_mip_type 텍스쳐 필터링/이방성 필터링 :
+3h_text_res 텍스쳐 (스킨 제외) :
+3g_carskins 차량 및 헬멧 스킨 :
+3g_texmemmb 텍스쳐 메모리 사용량 : %.1f MB
+3a_crdnoshd 당신의 3D 카드는 LFS에서 그림자를 표현할 수 없습니다
+3g_crdnoftx 당신의 3D카드는 풀 사이즈 텍스쳐를 사용할 수 없습니다
+3h_hvsnotav 당신의 3D카드는 하드웨어 버텍스 쉐이딩을 사용할 수 없습니다
+3g_seladres 재시작 후 사용될 설정을 선택하세요
+3e_rslfszbd 바뀐 Z-버퍼 설정을 적용하려면 LFS를 재시작해야 합니다
+3a_flsvsync 전체화면 수직 동기화 :
+3g_prev_lag 입력신호 지연 예방 :
+3a_limitfps 게임 프레임 레이트 제한 :
+3a_maxfrmrt 최고 프레임 레이트 :
+3g_tx_x_fps %d fps
+3a_minsleep 화면 갱신 시간 :
+3g_debounce 기어 변속 지연시간 :
+3g_txt_x_ms %d ms
+3a_pixelval %d 픽셀
+3a_useplset AI의 사용자 셋업 사용 :
+3a_useplcol AI의 사용자 색상 사용 :
+3a_sndlgval 소리 지연 %.2f sec :
+3g_whe_comp 휠 회전 보정 %.2f :
+3a_anlgsval 부드러운 아날로그 스티어 %.2f :
+3a_multispd 멀티플레이 최적화 옵션 :
+3g_car_skin 차량 스킨 다운로드 :
+3g_hel_skin 헬멧 스킨 다운로드 :
+3g_multidst 멀티플레이어 차량 보이기 %.0f m :
+3g_dynamlod 동적 LOD 감소 %.2f :
+3a_updtpath 차량 갱신 방침 :
+3a_puusrcar 사용자 차량
+3a_puallcar 모든 차량
+3h_replaysk 리플레이의 스킨 다운로드 :
+3g_introopt 시작시 트랙 로드 :
+3g_local_12 국가시간 12시분법표기 :
+3g_time_fps FPS 대신 시간 보이기 :
+3g_shfflags SHIFT + F 모드에서 플래그 보이기 :
+3h_accelopt 가속도계 :
+3h_shadogen 그림자 생성 :
+3h_opt_defa 기본 방식
+3h_opt_alte 대체 방식
+3g_skin_d_q 스킨 다운로드
+3h_skin_use 메모리 상주 스킨
+3a_crestart 레이스 시작
+3a_cntrpits 피트 진입
+3a_cspectat 관전
+3a_cantjoin 참가
+3a_cantleav 나가기
+3a_novtnolo 투표 없음 - 경기중인 드라이버가 없습니다
+3a_notdnord 시험 주행 불가 - 리플레이에 실제 드라이버가 없습니다
+3a_esc_menu 나가기 메뉴
+3a_repmenig 리플레이 메뉴 (게임내)
+3a_repmenld 리플레이 메뉴 (loaded)
+3a_sel_pits 피트
+3a_sel_spec 관전
+3a_sel_join 참가
+3a_sel_repl 리플레이
+3a_sel_outp 랩 데이터 산출
+3a_sel_rstr 재시작
+3a_vote_str 레이스 시작을 위해 투표하세요
+3a_vote_end 레이스 종료를 위해 투표하세요
+3a_vote_qua 예선을 위해 투표하세요
+3a_test_drv 시험 주행
+3a_startrac 레이스 시작
+3a_hqualify 예선
+3a_resumegm 돌아가기
+3h_escapkey ESC
+3a_undefind 불확정
+3a_arenatxt 경기장
+3a_singlstg 싱글 스테이지
+3a_standard 정방향
+3a_reversed 역방향
+3a_weth_hdr 날씨
+3a_cnfg_hdr 설정
+3h_layt_hdr 레이아웃
+3h_none_sel 선택되지않음
+3a_info_cir 서킷
+3a_info_tot 전체
+3a_chng_trk 트랙 바꾸기
+3h_revconfc 반대로 설정 :
+3h_openconf 설정 열기 :
+3h_ndxmdtrx %s 모드인 경우만 %s에서 주행하실 수 있습니다.
+3h_ndulxtrx LFS %s 라이센스 인증을 받으셔야 %s에서 주행하실 수 있습니다.
+3g_cfg_grpr 그랑프리
+3g_cfg_gplo GP 롱
+3g_cfg_gptr GP 트랙
+3g_cfg_ralx 랠리크로스
+3g_cfg_carp 주차장
+3g_cfg_auto 오토크로스
+3g_cfg_skid 스키드 패드
+3g_cfg_drgs 드래그 코스
+3g_cfg_drg8 8차선 드래그
+3g_cfg_oval 오벌
+3g_cfg_cade 카뎃
+3g_cfg_club 클럽
+3g_cfg_nati 내셔널
+3g_cfg_inte 인터내셔널
+3g_cfg_clas 클래식
+3g_cfg_spr1 스프린트 1
+3g_cfg_spr2 스프린트 2
+3g_cfg_cilo 시티 롱
+3g_cfg_toco 타운 코스
+3g_cfg_chro 시케인 루트
+3g_cfg_gree 그린
+3g_cfg_gold 골드
+3g_cfg_blac 블랙
+3g_cfg_rlxg 랠리X 그린
+3g_cfg_hist 히스토릭
+3g_cfg_grto 그랜드 투어링
+3g_cfg_nort 노스
+3g_cfg_sout 사우스
+3g_cfg_east 이스트
+3g_cfg_west 웨스트
+3g_cfg_reve 역방향
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mile %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mile
+3g_dt_dawn_ 새벽
+3g_dt_sunri 일출
+3g_dt_morni 오전
+3g_dt_day__ 낮
+3g_dt_after 오후
+3g_dt_sunse 일몰
+3g_dt_dusk_ 황혼
+3g_dt_night 밤
+3g_wth_clea 맑음
+3g_wth_clou 흐림
+3g_wth_over 흐림
+3a_hlvcthis 랩-
+3a_hlvcnext 다음-
+3a_readynum 준비 : %d
+3a_noviewcr 진행 차량 없음
+3a_thexisst %s 가 시작중입니다
+3a_thexhase %s 가 끝났습니다.
+3a_smlpract 연습세션
+3a_smlqulng 예선
+3a_sml_race 레이스
+3a_replnotr 리플레이가 기록되지 않았습니다
+3g_notrecor 기록되지 않습니다.
+3g_fov_temp 시야각 %.0f°
+3a_replrest 리플레이가 다시 시작되었습니다
+3a_aisvdknw AI드라이버가 지식을 모았습니다
+3a_timetmsx 타임 x %.3f
+3a_namenldf 다음 랩 데이터의 파일명
+3g_caps_wrn 경고
+3g_caps_kik 추방
+3g_caps_ban 영구추방
+3g_caps_spe 관전하기
+3a_namesoff 이름표시 끄기
+3a_connlist 접속자 목록
+3a_namesovr 차량위에 이름표시
+3h_showmous 마우스 보이기
+3h_hidemous 마우스 숨기기
+3a_mirrinfo 미러 :
+3a_cancaujo 자동 참여가 취소되었습니다
+3a_reinicnt 컨트롤러가 재설정되었습니다
+3a_reinisnd 소리가 재설정되었습니다
+3a_namemprs 저장할 MPR 리플레이의 파일명
+3a_namesprs 저장할 SPR 리플레이의 파일명
+3a_shnsound SHIFT + N : 소리 - %s
+3g_shgsmode SHIFT + G : 기어 쉬프트 모드 - %s
+3a_shgautos SHIFT + G : 자동 기어 쉬프트 - %s
+3a_frcvalpc 포스피드백 %.0f%%
+3a_hrntypev 경적 종류 %d
+3a_actnends 종료
+3a_actnrest 재시작
+3a_actnstrt 시작
+3a_thngqual 예선
+3a_thngrace 레이스
+3a_reploose 리플레이의 OOS 에러입니다
+3a_pausetxt 일시정지
+3g_safeexit 종료중.....
+3a_retrdcap 리타이어함
+3a_dsqulcap 실격됨
+3g_unclcaps 분류되지않음
+3a_wrngwcap 잘못된 방향
+3a_capsdrvr 드라이버
+3a_capsbstl 베스트 랩
+3g_pitstops 피트
+3g_spenalty 페널티
+3a_capstotl 전체
+3g_caps_car 차량
+3g_capsxlps %d 랩
+3g_plus1lap +1 랩
+3g_plusxlps +%d 랩
+3h_falsesta 부정 출발
+3h_pe_speed 피트 레인 속도위반
+3h_pe_short 너무 이른 피트 스탑
+3h_pe_mustp 너무 늦은 피트 스탑
+3h_pe_admin 관리자에 의해 부여되었습니다
+3h_pe_unknw 알수없음
+3g_yellcaps YELLOW FLAG
+3g_bluecaps BLUE FLAG
+3a_stpgocap 피트 스탑 페널티
+3g_drthrcap 피트 통과 페널티
+3g_30stimep 30 초 시간 페널티
+3g_45stimep 45 초 시간 페널티
+3g_clearedp 페널티 해제
+3g_pit_stop 피트 스탑
+3g_pitstopx 피트 스탑 : %d
+3g_p_pnltyx 피트 스탑 [페널티] : %d
+3g_p_nowrkx 피트 스탑 [수리없음] : %d
+3g_p_finshx 피트 스탑 [완료] : %d
+3g_mancompx %s^8이(가) %s 를 완료했습니다
+3g_wmncompx %s^8이(가) %s 를 완료했습니다
+3g_unkcompx %s^8 : %s 를 완료했습니다
+3g_enterpit 피트 레인으로 들어갔습니다
+3g_enterfor 다음을 위해 피트 레인으로 :
+3g_leavepit 피트 레인을 나왔습니다
+3g_stpgotxt 피트 스탑 페널티
+3g_drthrtxt 피트 통과 페널티
+3g_nopurtxt 목적 없음
+3g_capsstop 멈춤
+3g_capsrefu 연료 보급 중
+3g_capssetu 셋업 변경
+3g_capsxdam %s 손상
+3g_capsdamx %s 부분 손상
+3g_capsxcha %s 타이어 교환
+3g_capsminr 사소한
+3g_capsmajr 주요한
+3g_capsfrnt 앞
+3g_capsrear 뒤
+3g_capsleft 왼쪽
+3g_capsrigh 오른쪽
+3g_capslefr 왼쪽 앞
+3g_capslere 왼쪽 뒤
+3g_capsrifr 오른쪽 앞
+3g_capsrire 오른쪽 뒤
+3g_refl_f_x 연료 보급 완료 : %.1f 리터
+3g_pitstp_f 피트 스탑이 완료되었습니다
+3g_nospdlim 이 트랙에는 속도제한구역이 없습니다
+3g_notequip 이 차량은 피트레인 속도제한을 사용할 수 없습니다
+3h_thisnotc 이 차량은 트랙션컨트롤이 없습니다
+3h_thisnost 이 차량은 스타터 모터가 없습니다
+3a_smllaptm 랩 타임
+3a_smlspltm 구간 타임
+3a_clhotlap 타임어택
+3a_clonemin 1 분 예선
+3a_cl_xmins %d 분 예선
+3a_clonelap 1 랩
+3a_cl_xlaps %d 랩
+3a_clonehor 1 시간
+3a_cl_xhors %d 시간
+3g_cltrning 트레이닝
+3a_windsp_x 풍속 %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8'의 투표가 무효화 되었습니다
+3a_x_voteer %s^8이(가) 레이스종료에 투표했습니다
+3a_x_voters %s^8이(가) 재시작에 투표했습니다
+3a_x_votequ %s^8이(가) 예선시작에 투표했습니다
+3a_x_joinsp %s^8이(가) 관전자로 참여
+3g_x_didnot %s^8이(가) 완주하지 못했습니다.
+3g_x_wrongr %s^8이(가) 잘못된 경로로 들어갔습니다
+3g_x_illega %s^8이(가) 제한된 영역으로 운전했습니다
+3h_x_retpit %s^8이(가)피트레인으로 돌아왔습니다
+3h_a_retpit 모든 차량이 피트레인으로 돌아왔습니다
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp 시작 랩
+3a_smalllap 랩
+3a_hlvcmodi [변경됨]
+3a_timequal 예선
+3a_timetotl 전체
+3a_timebest 최고
+3a_time_lap 랩
+3a_timesplt 구간 타임
+3h_timetime 타임
+3a_timepnlt 페널티
+3a_noldxcar %s^8의 차량을 불러올 수 없습니다
+3a_nosvnonm 이름없이 저장할 수 없습니다
+3g_nofilesl 불러올 파일이 없습니다
+3a_alrdyout 이미 랩 데이터를 산출 중입니다
+3a_nxtlpout 다음 랩의 데이터가 %s.raf 파일로 산출됩니다
+3a_nodtaout 파일로 산출될 데이터가 없습니다
+3g_dled_x_x 다운로드된 스킨 : %s_%s
+3g_ding_x_x 다운로드중인 스킨 : %s_%s
+3h_saveskin 저장중인 스킨 : %s
+3g_nomoreci 서클을 더 이상 추가할 수 없습니다
+3a_noaddmor 오브젝트를 더 이상 추가할 수 없습니다
+3a_loadinfo 불러오는중
+3h_storedvw 저장된 시점 (V) :
+3h_move_spd 이동 속도 %.1f m/s :
+3h_min_high 최소 높이 %.1f m :
+3g_roll_deg 굴리기 %.1f°:
+3h_vwsmooth 부드러운 시점 이동 %.1f s :
+3h_trantime 시점 전환 간격 %.1f s :
+3a_invlok_c 우클릭 시점 반전 :
+3h_invrot_c 좌+우 회전 반전 :
+3a_fov_valu 시야각 %.1f°:
+3a_plcobs_c 오브젝트 지정 :
+3a_chkptw_v 체크포인트 간격 %.0f m :
+3a_hdg_degr 오브젝트 회전 %.1f°:
+3a_unnm_brk [이름없음]
+3a_objs_num 오브젝트 : %d
+3a_emty_brk [비어있음]
+3a_savechan 변경사항 저장
+3a_loadlayo 레이아웃 불러오기
+3a_savelayo 레이아웃 저장하기
+3a_clearall 전체 초기화
+3a_laps_num 랩 : %d
+3a_errorsml 에러
+3a_c_clrsel C - 선택 초기화
+3a_m_mv_mod M - 이동 / 변경
+3a_del_dele DEL - 삭제
+3a_w_e_wdth W / E - 폭
+3a_l_r_rota < / > - 회전
+3a_cp_1_2_3 1 / 2 / 3 - 체크포인트
+3a_f_finish F - 피니쉬 라인
+3a_s_startp S - 출발위치
+3a_o_object O - 오브젝트
+3g_dist_x_m 거리 : %.2f m
+3a_editkeys 키값 변경
+3a_c_ar_hgt CTRL + arrow - 높이
+3g_c_ar_rol CTRL + arrow - 굴리기
+3a_arrow_mv arrow keys - 이동
+3a_spc_hdsh SPACE - 숨김 / 보기
+3a_esc_exit ESC - 종료
+3h_l_b_move 좌클릭 / 드래그 - 이동
+3h_r_b_look 우클릭 / 드래그 - 주변 둘러보기
+3h_l_r_rota 좌+우클릭 드래그 - 회전
+3a_keys_txt 키
+3h_mous_txt 마우스
+3h_edit_txt 편집
+3h_more_txt 더 보기
+3h_in_trans 시점 전환
+3h_cl_slt_x %d 번 시점이 삭제되었습니다.
+3h_st_slt_x %d 번 시점이 저장되었습니다.
+3h_no_v_x_s %d 번 시점이 없습니다.(%s)
+3h_no_vws_s 저장된 시점이 없습니다. (%s)
+3h_sh_nm_st 시점 저장은 SHIFT + 숫자
+3h_no_car_f 따라갈 차량이 없습니다.
+3h_fc_point 가리키는 곳 :
+3h_fc_neare 가장 가까운 차량 :
+3h_fc_flwng 따라가기 :
+3h_fc_lockd 시점 고정 :
+3h_clicktof 따라갈 차량 선택
+3h_followcr 차량 따라가기 시점
+3h_nocarsvw 시점상에 차가 없습니다.
+3h_stopfoll 멈춤
+3h_optimise 최적화
+3h_opt_of_t 최적화된 오브젝트 : %d / %d
+3a_noxwload 불러오는도중에는 종료할 수 없습니다
+3a_chgnotsv 변경사항이 저장되지 않습니다
+3a_exanyway 어쨌든 종료하시겠습니까?
+3a_clrall_q 레이아웃의 모든 오브젝트를 초기화 하시겠습니까?
+3g_delete_l 레이아웃을 삭제하시겠습니까?
+3a_tit_ldly 레이아웃 불러오기
+3a_nosavent 시작화면에선 레이아웃을 저장할 수 없습니다
+3a_nolodent 시작화면에선 레이아웃을 불러올 수 없습니다
+3a_noobselm 이동할 선택된 오브젝트가 없습니다
+3a_noobtype 타입이 선택된 오브젝트가 없습니다
+3a_noobseld 삭제할 선택된 오브젝트가 없습니다
+3h_unexpclr 예측하지못한 초기화 명령입니다
+3h_unexpend 예측하지못한 파일의 끝입니다
+3a_xalready %s 는 이미 생성되어 있습니다
+3g_idx_0tox 0 과 %d 사이의 값만 입력하실수 있습니다
+3g_rt_idx_x 루트 인덱스 : %d
+3g_restarea 제한된 지역
+3g_rt_check 경로 체커
+3g_rt_wrong 잘못된 경로
+3g_ob_chalk 흰선
+3g_ob_cones 파일런
+3g_ob_tyres 타이어
+3h_ob_markr 표식
+3g_ob_other 오브젝트
+3g_ob_marsh 크루
+3g_marsh_no 보이지않는 크루
+3g_marsh_st 크루
+3g_marsh_le 좌측 지시 크루
+3g_marsh_ri 우측 지시 크루
+3h_cant_add 추가할 수 없음 :
+3h_cant_mov 움직일 수 없음 :
+3h_inte_obj 오브젝트 겹침
+3h_inva_pos 잘못된 위치
+3a_dispgame 호스트 목록 보기
+3a_tit_list 호스트 목록
+3a_startnew 새로운 호스트 생성하기
+3a_tit_strt 새로운 호스트 생성하기
+3a_joingame 특정 호스트에 참여하기
+3a_tit_spec 특정 호스트에 참여하기
+3a_finduser 온라인에서 유저 찾기
+3a_tit_user 유저 검색
+3a_cls1conn 1개의 접속이 끊어졌습니다
+3a_clsxconn %d 개의 접속이 끊어졌습니다
+3a_rfrshlst 새로고침
+3a_stophost 호스트 검색 멈춤
+3a_spctostp 호스트 검색 중지는 스페이스키 입니다
+3a_liststat %s 호스트 %d / %d - 참여가능 %d - [응답없음 %d] - [잘못된 버전 %d]
+3a_waitingw 기다리는중
+3a_checking 검색중
+3a_end_stat 참여가능 %d - [응답없음 %d] - [잘못된 버전 %d] %s
+3a_clikjoin - 참여할 호스트명을 클릭하세요
+3a_glc_name 이름
+3a_glc_ping 핑
+3a_glc_trak 트랙
+3a_privatew 비밀
+3a_modified 변경됨
+3h_arcade_w 차량 리셋
+3h_cruise_w 크루즈
+3a_wrongver 잘못된 버전
+3h_noteul_x 안내 : LFS %s 라이센스 인증을 받으셔야 합니다.
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl 미러사이트에서 다운로드
+3h_cnt_titl 국가
+3h_newupdat 새 업데이트를 사용할 수 있습니다.
+3h_norecaui 자동업데이트 정보가 수신되지 않습니다
+3h_start_dl 다운로드 시작
+3h_plsselmr 가까운 다운로드 미러사이트를 선택하세요
+3h_connectn 접속중......
+3h_trylfsnt ^7www.lfs.net ^0사이트를 이용해 다시 시도하세요
+3h_dl_perce 파일 진행 : %d%%
+3h_dl_colon 다운로드됨 :
+3h_restartn 재시작중...
+3h_nostrtrs 프로그램 재시작이 실행되지 않습니다
+3h_noresdat 프로그램 재시작 데이터 파일이 생성되지 않습니다
+3h_noenumwi 윈도우를 나열할 수 없습니다
+3h_anotherl 또 다른 하나의 LFS가 실행중입니다
+3h_noopenrs 재시작 프로그램을 열수 없습니다
+3b_meetroom 대기실
+3b_m_host_x 이(가) %s로 향했습니다
+3b_f_host_x 이(가) %s로 향했습니다
+3b_leftroom 방에서 나감
+3b_entrroom 방에 들어옴
+3b_wlcmu1st 환영합니다!  이방의 첫 레이서로 들어오셨습니다
+3b_wlcmxinr 환영합니다!  이방의 %d번째 레이서로 들어오셨습니다
+3b_mr_leave 나가기
+3b_mr_findb 찾기
+3b_mr_sound 소리
+3b_mr_refre 새로고침
+3b_somehost 호스트
+3b_mastercl 마스터 서버와의 연결이 끊어졌습니다
+3b_sr_privt 비밀
+3b_mr_publc 공개
+3b_mr_empty 빈방
+3h_sr_cruis 크루즈
+3g_autoreco 재접속중...
+3a_typelocl 로컬 네트워크
+3a_typeinet 인터넷
+3a_userisat 유저는 %s에 있습니다
+3a_joinxath %s^8 호스트에 접속하시겠습니까?
+3a_inrc_num 레이스중 : %d
+3a_cons_num 접속자 : %d
+3a_resl_num 결과 : %d
+3h_skin_num 스킨 : %d
+3h_join_que 대기 상태 : %d
+3a_selhostc 선택된 호스트 :
+3a_joingamc 호스트 속성 :
+3a_hostnamc 호스트 이름 :
+3a_hostipac 호스트 IP 주소 :
+3a_hostprtc 호스트 포트 :
+3a_hostpasc 호스트 패스워드 :
+3h_clearbtn 모든 패스워드를 삭제합니다 (%d)
+3h_cconfirm 저장된 모든 호스트 패스워드를 삭제하시겠습니까?
+3a_noldtrck 트랙을 불러오지 못했습니다
+3a_nosndudp UDP 패킷을 보내지 못했습니다
+3a_nocrtudp UDP 연결을 생성하지 못했습니다
+3h_wt_sinfo 스킨 정보를 기다리고 있습니다
+3h_norcvskn 스킨 정보를 받지 못했습니다
+3a_norcvgst 게스트 정보를 받지 못했습니다
+3a_norcvply 드라이버 정보를 받지 못했습니다
+3a_norvcall 모든 게스트에게서 메세지를 받지 못했습니다
+3a_vldadreq 정확한 IP 주소를 입력해야합니다
+3a_errconrs 접속결과를 보내는 도중 오류가 발생하였습니다
+3a_mode_sel 멀티플레이 모드 선택 :
+3h_smal_dmo 데모
+3h_frxmdndx %s 모드는 LFS %s 라이센스 인증을 받으셔야 이용가능합니다.
+3h_seltrrqx 선택하신 트랙은 %s 모드에서만 이용 가능합니다.
+3a_visibilc 서버속성 :
+3a_vis_locl 로컬
+3a_vis_inet 인터넷
+3a_vid_hidn 비밀
+3a_inetconc 인터넷 연결 :
+3a_modem56k 56k 모뎀
+3a_m512_128 512 / 128 케이블
+3a_mdm1_256 1m / 256 케이블
+3a_mdm_cust 기타
+3a_maxupl_c 최대 업로드 (kbits / sec) :
+3g_x_upload %s kbits/sec 업로드
+3a_gnnoemty 호스트 이름이 비어서는 안됩니다
+3a_onecarrq 최소한 하나의 차량은 허용되어야합니다
+3a_hstgstrq 호스트 또는 게스트 드라이버는 허용되어야합니다
+3a_rusurepr 계속 진행하시겠습니까?
+3a_maxbwmex 최대 대역폭을 초과할수도 있습니다
+3b_srv_ip_c 아이피 주소 :
+3a_srvportc 포트 :
+3a_dedi_opt 데디케이트 호스트 (그래픽 없음) :
+3a_guestvot 킥/밴 투표 허용 :
+3a_guestsel 게스트 트랙 선택 허용 :
+3h_qenabled 예선 수행 여부 :
+3g_midracej 레이스 중간에 참여 허용 :
+3g_pitstopr 의무 피트스탑 :
+3g_carreset 차량 리셋 허용 :
+3h_fcockpit 강제 콕핏 뷰 :
+3h_cruisemo 크루즈(역주허용) :
+3a_maxgst_c 최대 게스트 :
+3d_admins_c 관리자 슬롯 :
+3a_maxrarac 경기 최대 참여자수 (real + AI) :
+3a_maxragst 게스트PC의 최대 차량수 (real + AI) :
+3a_maxrahst 호스트PC의 최대 차량수 (real + AI) :
+3a_dedinohc 데디케이트 : 호스트 차량 없음
+3a_smothpps 부드러움 (초당 패킷) :
+3a_uplmin16 최소 업로드 16 kbits
+3g_umax8192 최대 업로드 8192 kbits
+3a_uplavail 업로드 가능 %.1f KB/sec
+3a_uplprcar 차량 당 업로드 %.0f bytes/sec
+3a_uplcarnm 업로드할 차량의수 %.0f
+3a_requplod 필요한 업로드 %.1f KB/sec
+3a_availexc 가능한 업로드 초과
+3b_adminp_c 관리자 암호 :
+3a_sel_audi 오디오
+3a_tit_audi 오디오
+3a_sel_scrn 화면
+3a_tit_scrn 화면
+3a_sel_grfx 그래픽
+3a_tit_grfx 그래픽
+3a_sel_view 뷰
+3a_tit_view 뷰
+3a_sel_disp 디스플레이
+3a_tit_disp 디스플레이
+3a_sel_plyr 드라이버
+3a_tit_plyr 드라이버
+3a_sel_cont 컨트롤
+3a_tit_cont 콘트롤
+3a_sel_game 게임
+3a_tit_game 게임 옵션
+3a_sel_misc 기타
+3a_tit_misc 기타
+3a_unlokerr 라이센스 인증 오류
+3a_flcrterr 파일 생성중 에러
+3a_reguname 등록된 유저 네임 :
+3a_onlinepw 게임 패스워드 :
+3a_gounlock 라이센스 인증
+3g_locktext LFS 라이센스 인증 해제(데모로 돌아감)
+3g_lockques Live for Speed 를 락하시겠습니까?
+3g_lockwarn 데모 컨텐츠만 가능할것입니다
+3a_autorcon 마스터에 자동으로 접속중
+3a_notconnm 마스터에 접속안됨
+3a_yesconnm 마스터에 접속됨
+3a_connmstr 접속
+3a_connects 연결
+3a_hoptions 옵션
+3a_smlb_kik 킥
+3a_smlb_ban 밴
+3a_num_bans %d이 밴되었습니다
+3a_zerobans 밴 없음
+3a_editbans 밴 수정
+3a_tit_bans 밴 에디터
+3a_delshort 삭제
+3a_goaddban 밴 추가
+3a_user_ban 밴시킬 유저네임을 넣어주세요
+3a_time0day %d:%.2d
+3a_time1day 1 일 %d:%.2d
+3a_timexday %d 일 %d:%.2d
+3a_banip12h IP 주소가 12시간 동안 밴당했습니다
+3a_banun12h 유저이름이 12시간 동안 밴당했습니다
+3b_banusr1d 유저가 하루동안 밴당했습니다
+3b_banusrxd 유저가 %d일동안 밴당했습니다
+3h_tyre_man Manufacturer
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_SOFT
+3g_tt_slk_m SLICK_MEDIUM
+3g_tt_slk_h SLICK_HARD
+3a_tt_races RACE_SLICK
+3a_tt_raceg RACE_GROOVED
+3a_tt_racei RACE_INTERMEDIATE
+3a_tt_racew RACE_WET
+3a_tt_roads ROAD_SUPER
+3a_tt_roadn ROAD_NORMAL
+3a_tt_hybri HYBRID
+3a_tt_knobb KNOBBLY
+3a_ttlmaskl Total mass : %.0f kg (%.0f lbs)
+3a_pwrwtmti Power-weight : %.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr Weight distribution : %.1f F  %.1f R
+3h_ddistrfr Downforce distribution : %.1f F  %.1f R
+3h_rdistrfr Roll stiffness distribution : %.1f F  %.1f R
+3a_trqnmlbr Torque : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Power : %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Engine : %.0f cc%s%s%s
+3a_engltfmt Engine : %.1f litre%s%s%s
+3a_trbochrg turbocharged
+3a_etl_inli inline
+3a_etl_flat flat
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl single
+3a_etn_2cyl twin
+3a_etn_3cyl triple
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st First %.3f
+3a_grrat2nd Second %.3f
+3a_grrat3rd Third %.3f
+3a_grrat4th Fourth %.3f
+3a_grrat5th Fifth %.3f
+3a_grrat6th Sixth %.3f
+3a_grrat7th Seventh %.3f
+3a_grginfop 정보
+3a_grgcolou 색상
+3a_grgbrake 브레이크
+3h_grgbrktc Brakes / TC
+3a_grgsuspe 서스펜션
+3a_grgsteer 스티어링
+3a_grgfinal LSD / 기어비
+3a_grgtyres 타이어
+3a_grgdownf 다운포스
+3a_grgpasse 동승자
+3a_pssfront front
+3a_pssrleft rear left
+3a_pssrmidd rear middle
+3a_pssrrght rear right
+3a_whlscolt Wheels
+3a_bodycolt Body
+3a_texnamet 스킨 파일 이름
+3a_maxperwt Maximum Per Wheel %.0f Nm
+3g_b_bal_fr Brake Balance (front) %.0f%%
+3h_engbrred Engine Brake Reduction %.0f%%
+3h_tcmaxslp TC Allowed Slip %.1f%%
+3h_tcminspd TC Minimum Speed %.0f m/s
+3h_abs_text ABS
+3g_ridehred Ride Height Reduction
+3a_brkmotrg [Motion Range %.3f m]
+3g_livecamb live (L / R) %+.2f° / %+.2f°
+3g_stif_val Stiffness %.1f N/mm
+3g_damp_val Damping %.1f Ns/mm
+3g_bump_val Bump Damping %.1f Ns/mm
+3g_rebd_val Rebound Damping %.1f Ns/mm
+3g_arol_val Anti Roll %.1f N/mm
+3h_power_st Power Steering %.0f%%
+3a_maxlkval Maximum Lock %.1f°
+3g_castrval Caster %.1f°
+3a_inclnval Inclination %.2f°
+3g_prllsval Parallel Steer %.0f%%
+3g_toeinval Toe In %+.1f°
+3g_camb_abs Camber (left / right) %+.1f° / %+.1f°
+3g_camb_adj Camber Adjust (L / R) %+.1f° / %+.1f°
+3h_tyrewarm Tyre warmer temperature : %.0f°
+3a_fnldvval Final Drive Ratio %.3f
+3g_ftrqsplt Front Torque Split %.0f%%
+3g_fvistorq Viscous Torque %.0f Nms/rad
+3g_lock_one Locking %.0f%%
+3g_lock_o_o Locking (power / coast) %.0f%% / %.0f%%
+3h_dpreload Preload %.0f Nm
+3g_frnt_txt Front
+3g_cent_txt Centre
+3g_rear_txt Rear
+3g_press_lr Pressure (L / R) %.0f kPa / %.0f kPa
+3g_conv_psi psi (L / R) %.1f psi / %.1f psi
+3g_conv_bar bar (L / R) %.2f bar / %.2f bar
+3g_fwingang Front Wing Angle %.0f°
+3g_rwingang Rear Wing Angle %.0f°
+3h_tc_title Traction Control
+3g_stra_txt Strategy
+3g_fuel_sta Fuel load at start : %.0f%%
+3g_fuel_pit Fuel to add in pit stop : %.0f%%
+3g_tyre_lim Tyre change : if wear > %.0f%%
+3g_tyre_all Tyre change : always
+3g_tyre_nev Tyre change : never
+3h_rep_damg Repair damage : %s
+3h_setup_ch Setup changes requested
+3h_handicap Handicaps
+3h_hcapnone NONE
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% restriction
+3h_vol_tres Voluntary Intake Restriction %.0f%%
+3h_vol_mass Voluntary Added Mass %.0f kg
+3h_mass_pos Added Mass Position (front) %.0f%%
+3g_symmetri symmetric
+3g_asymmetr asymmetric
+3g_configur Configuration
+3g_cpct_x_l Fuel capacity : %.1f litres
+3g_optt_x_d Optimum temperature %.0f°
+3g_tst_x_ms Test speed %.1f m/s
+3g_rearwing Rear Wing
+3g_frntwing Front Wing
+3g_undrtray Undertray
+3g_bodyaero Body
+3g_totlaero Total
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Car's steering wheel turns %.0f° (lock to lock)
+3g_con_tn_x Controller wheel turns %.0f°
+3g_live_cmb Camber : %+.2f
+3g_live_inc Inclination : %.2f
+3g_live_cst Caster : %.2f
+3g_live_scr Scrub : %.3f
+3g_live_trk Track : %.3f
+3g_susrigid Rigid
+3g_sustrail Trailing Arm
+3g_susffork Front Fork
+3g_susmacph MacPherson Strut
+3g_susdwish Double Wishbone
+3g_pit_inst Pit Instructions
+3g_live_set Live Settings
+3g_wheels_x WHEELS are %s
+3g_l_tt_x_x TYRE type %s [%s]
+3g_l_pr_psi PRESSURE %.1f psi [%+.1f psi]
+3g_l_pr_bar PRESSURE %.2f bar [%+.2f bar]
+3g_l_cr_adj CAMBER ADJUST %.1f° [%+.1f°]
+3g_l_cr_abs CAMBER %.1f° [%+.1f°]
+3g_l_wg_ang WING %.0f° [%+.0f°]
+3h_estcolon Estimate :
+3g_fl_pc_pl %.1f%% per lap
+3g_fl_pc_it %.1f%% in tank
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn 알려지지않은 트랙
+3a_trcknofn 트랙 발견안됨
+3a_trckobso 쓰지않는 트랙
+3a_fnshload 완료됨
+3a_prgprelo 미리 불러오는중
+3a_prgldtex 텍스쳐 불러오는중
+3a_prgpaths 경로 탐색중
+3a_prgcolrs 색깔 구성중
+3a_prgdupli 데이터 복사중
+3a_prglgtsc 광원 구성중
+3a_prgrdobs 오브젝트를 읽는중
+3a_prglgtin 조명 정보 읽는중
+3a_prgbmptx 범프 텍스쳐 구성중
+3a_prginicl 색상 초기화중
+3a_prgchpts 체크포인트 생성중
+3a_prgextra 임시 데이터
+3a_prgstobs 오브젝트 시작하는중
+3a_prgmapsq 맵 구성중
+3a_prgpthin 경로 초기화
+3a_prgpthad 경로 조정중
+3a_prgrebld 재구성중
+3g_prggener 생성중
+3a_spcpres1 (1을 누르세요)
+3a_autojblk 참여할수없습니다 : 입구가 막혀있습니다
+3a_xcomplvt %s^8 이(가) 투표를 완료했습니다
+3a_maxgcarx 최대 게스트 차량수 : %d
+3a_maxhcarx 최대 호스트 차량수 : %d
+3a_cf_swpsd 운전석 변경
+3a_cf_gopit 피트
+3a_cf_chqul 예선시간 변경
+3a_cf_chlap 랩수 변경
+3a_cf_chwin 바람 변경
+3b_cf_finfo 정보 변경
+3a_upc_male %s^8이(가) 컨트롤을 업데이트
+3a_upc_fmal %s^8이(가) 컨트롤을 업데이트
+3a_upc_unkn %s^8이(가) 컨트롤을 업데이트
+3a_x_no_car %s^8은(는) 차가 없습니다
+3a_x_alredy %s^8은(는) 이미 차량이 있습니다
+3a_x_lftpot %s^8이(가) 피트를 나왔습니다
+3a_w_rd_rly ^6경고 : 랠리트랙에서 로드타이어 사용중
+3a_w_rly_rd ^6경고 : 로드트랙에서 랠리타이어 사용중
+3a_unkcdisc 알수없는 차량 - 게스트 연결끊김
+3a_modcdisc 개조된 차량 - 게스트 연결끊김
+3a_nocrukid 차량 정보 추가 실패 - 알려지지않은 아이디
+3a_xrenamex %s^8이(가) %s로 이름을 변경함
+3g_xtakovrx %s^8이(가) %s와(과) 교체
+3g_xwantuto %s^8이(가) 당신과 교체하길 원합니다
+3g_xwantsto %s^8 이(가) 교체하길 원합니다
+3g_oswapend 드라이버 교체는 피트스탑이 끝난 후에 가능합니다
+3a_nosharnm 다른 드라이버와 같은 이름을 사용할 수 없습니다
+3a_trkloadd 트랙 로드완료
+3a_x_pitted %s^8이(가) 차고에 들어갔습니다
+3g_x_pitstp %s^8이(가) 피트 인 했습니다
+3a_x_conn_x %s^8이(가) 접속했습니다 (%s^8)
+3a_x_connec %s^8이(가) 접속했습니다
+3g_x_blkmsg %s^8이(가) 메시지를 차단하였습니다
+3g_x_unblkm %s^8이(가) 메시지 차단을 해제하였습니다
+3a_newgconn 새로운 게스트가 접속중입니다
+3a_gfailcon 새로운 게스트가 접속실패 하였습니다
+3g_waitplyc 잠시만 기다려 주십시오 - 다른 게스트가 접속중 입니다
+3h_waitbuff 버퍼 오버플로우를 피했습니다
+3a_xss_male %s^8이(가) 당신에게 셋업을 보냈습니다
+3a_xss_fmal %s^8이(가) 당신에게 셋업을 보냈습니다
+3a_xss_unkn %s^8 에게 셋업을 보냈습니다
+3a_packs_ps 초당 패킷수 %d
+3a_noqual_x 예선을 할수 없습니다 - %s
+3a_no_x_plc %s 을(를) 할 수 없습니다 - 게스트 접속 중
+3a_no_x_cht %s 을(를) 할 수 없습니다 - 트랙 바꾸는 중
+3g_no_x_car %s 을(를) 할 수 없습니다 - 트랙에 차량이 존재
+3a_novotepg 투표가 진행중이지 않습니다
+3h_vote_kic %s^8이(가) %s^8을(를) 킥투표했습니다(%s^8) [%d/%d]
+3h_vote_ban %s^8이(가) %s^8을(를) 밴투표했습니다(%s^8) [%d/%d]
+3a_x_tmdout %s^8 타임 아웃
+3a_lostcn_x %s^8 와의 접속이 끊어졌습니다
+3a_x_discon %s^8이(가) 접속종료 되었습니다
+3g_x_kicked %s^8이(가) 킥 되었습니다
+3g_x_banned %s^8이(가) 밴 되었습니다
+3a_qulfauto 오토크로스
+3a_qulfprac 연습 세션
+3a_qulfnote 작동되지 않았습니다
+3g_skinnotf 차량 스킨이 ^7www.lfsworld.net 에 등록되어 있지 않습니다
+3g_helmnotf 헬멧 스킨이 ^7www.lfsworld.net 에 등록되어 있지 않습니다
+3g_updatset 세팅이 업데이트 되었습니다
+3g_fastlxxx 가장빠른 랩타임 : %s by %s^8 (%s)
+3g_no_reset 차량 리셋이 허용되지 않는 방 입니다
+3g_cant_res 리셋 할수 없습니다 - %s
+3g_too_dang 매우 위험합니다
+3g_could_ha 다른차량과 접촉할 위험이 있습니다
+3g_could_hr 방금 리셋한 차량과 접촉할 위험이 있습니다
+3g_would_ye yellow flag 가 발령된 상태입니다
+3a_obsolvid 사용할 수 없는 리플레이
+3a_vidlater 예전 버전 리플레이 입니다
+3h_hls_hlvc HLVC
+3h_hls_inva 실패
+3h_hls_cust 레이아웃
+3a_htlpinvl 타임어택 실패(%s)
+3a_hli_grnd 코스이탈
+3a_hli_wall 벽
+3a_hli_obje 오브젝트
+3a_hli_wron 잘못된 방향
+3h_hli_spee 속도위반
+3a_ptp_locl 로컬
+3a_ptp_remt 리모트
+3a_ptp_lcai ai (L)
+3a_ptp_rmai ai (R)
+3a_rsk_noob 왕초보
+3a_rsk_lrnr 초보
+3a_rsk_okok 중수
+3a_rsk_quik 고수
+3a_rsk_prof 초고수
+3a_x_finish %s^8이(가) 완주하였습니다
+3a_x_finplc %s^8이(가) 완주하였습니다 %s
+3g_x_fin1be 1랩 남겨두고 %s^8 이(가) 완주하였습니다
+3g_x_finxbe %s^8이(가) %d 랩 남겨두고 완주하였습니다
+3g_x_conplc %s^8이(가) %s 등 하였습니다
+3g_x_disqua %s^8이(가) 탈락하였습니다
+3a_x_wonrac %s^8이(가) 우승하였습니다
+3a_max3locl 최대 3명의 로컬 드라이버
+3a_fnshuncl 분류없음
+3a_fnsh_1st 1위
+3a_fnsh_2nd 2위
+3a_fnsh_3rd 3위
+3a_fnsh_4th 4위
+3a_fnsh_5th 5위
+3a_fnsh_6th 6위
+3a_fnsh_7th 7위
+3a_fnsh_8th 8위
+3a_fnsh_9th 9위
+3a_fnsh10th 10위
+3a_fnsh11th 11위
+3a_fnsh12th 12위
+3a_fnsh13th 13위
+3a_fnsh14th 14위
+3a_fnsh15th 15위
+3a_fnsh16th 16위
+3g_fnsh17th 17위
+3g_fnsh18th 18위
+3g_fnsh19th 19위
+3g_fnsh20th 20위
+3g_fnsh21st 21위
+3g_fnsh22nd 22위
+3g_fnsh23rd 23위
+3g_fnsh24th 24위
+3g_fnsh25th 25위
+3g_fnsh26th 26위
+3g_fnsh27th 27위
+3g_fnsh28th 28위
+3g_fnsh29th 29위
+3g_fnsh30th 30위
+3g_fnsh31st 31위
+3g_fnsh32nd 32위
+3a_wlcm_lfs Live for Speed 에 오신 것을 환영합니다
+3a_agre_lfs 사용계약
+3a_overwrex 기존파일을 덮어쓰기 하시겠습니까?
+3g_deleteex 기존파일을 삭제 하시겠습니까?
+3g_newnamef 새로운 파일이름을 입력하세요
+3g_filealre 파일이름이 중복됩니다
+3g_cnotfind 파일을 찾을 수 없습니다
+3a_layoutsv 저장할 레이아웃의 이름을 입력하세요
+3a_windocon 접속하는 동안 창모드 유지 :
+3a_cancelbt 취소
+3a_backbutt 뒤로
+3a_capitlok 확인
+3a_capitlgo 시작
+3a_invldstr 잘못되었습니다
+3a_cpfinish 완주
+3a_cpwinner 우승
+3a_namepass 사용자 이름과 비밀번호
+3a_validnam 정확한 사용자 이름을 입력하셔야 합니다
+3a_validpas 정확한 비밀번호를 입력하셔야 합니다
+3a_passmin8 비밀번호는 반드시 8자리 이상이여야 합니다
+3a_shifttyp 기어 쉬프트 모드 :
+3a_autogear 자동 기어 쉬프트 :
+3a_notiming - 랩 타임이 기록되지 않았습니다
+3a_stilload 아직 트랙을 불러오는 중입니다
+3a_waitlist 방 목록을 불러오는 중
+3a_wt_ginfo 방 정보를 기다리는 중
+3a_connmast 마스터 서버와 접속중
+3a_waitmrep 마스터 서버의 응답을 기다리는 중
+3a_waithrep 호스트의 응답을 기다리는 중
+3a_waitinfo 정보를 기다리는 중
+3a_masterro 응답을 기다리는 동안 오류가 발생했습니다
+3a_mnoreply 마스터 서버의 응답이 없습니다
+3a_waitginf 게스트의 정보를 기다리는 중
+3a_waitpinf 드라이버 정보를 기다리는 중
+3a_waitmsgs 첫번째 메시지를 기다리는 중입니다
+3a_connhost 호스트에 연결되었습니다
+3a_conn_udp UDP 연결 생성
+3a_openserv 서버 소켓을 여는 중
+3a_unexmstr 예상치 못한 마스터 패킷
+3a_unexsrvr 예상치 못한 서버 패킷
+3a_unexgest 예상치 못한 게스트 패킷
+3a_numg_oob 게스트 수가 제한값을 초과했습니다
+3a_errrhost 호스트의 응답중에 오류가 발생했습니다
+3a_unextrak 예상치 못한 트랙 변경
+3a_unkntrak 알수 없는 트랙 오류
+3a_unexpack 예상치 못한 크기의 패킷
+3a_unexrepl 예상치 못한 응답
+3a_gmnmused 방 이름이 이미 사용되고 있습니다
+3a_errmthrd 마스터 스레드를 만들 수 없습니다
+3a_lostmast 마스터 서버와의 연결이 끊어졌습니다
+3a_losthost 호스트와의 연결이 끊어졌습니다
+3g_notisync 이니셜과 동기화에 실패했습니다
+3g_lostsync 호스트와 동기화에 실패했습니다
+3a_connecto 접속시간 초과
+3a_noconnsl 연결 가능한 슬롯이 없습니다
+3a_nookpack 승인메시지를 받지 못했습니다
+3a_waitfook 승인을 기다리는 중
+3a_waittrak 트랙정보를 기다리는 중
+3a_notrakpk 트랙정보를 받지 못했습니다
+3a_loadtrak 트랙을 불러오는 중
+3a_chglight 라이트닝을 바꾸는 중
+3a_ply_join 게스트가 참가하였습니다
+3a_nochrace 레이스 동안 트랙을 바꿀 수 없습니다
+3g_trnoallo 이 호스트에서 %s 활성화 불가
+3a_chgtrack 트랙을 바꾸는 중
+3h_welcomex Live for Speed %s 에 오신것을 환영합니다.
+3a_small_no 아니오
+3a_smallyes 예
+3h_smallaut 자동
+3h_smallnev 항상 아니오
+3h_smallask 항상 묻기
+3h_smallalw 항상 예
+3a_smalloff 끄기
+3a_smalreal 실제
+3a_smalvrtl 가상
+3a_smalleft 좌
+3a_smalrght 우
+3a_smalnone 없음
+3a_smaltext 텍스트
+3a_smallall 모두
+3a_smallman 남자
+3a_smallwmn 여자
+3h_smallb16 16 비트
+3h_smallb32 32 비트
+3a_smlnobrk [아니오]
+3a_smlysbrk [예]
+3a_smlofbrk [끄기]
+3a_smlonbrk [켜기]
+3a_actobjct 오브젝트
+3a_actstart 스타트 지점
+3a_actfinsh 피니쉬 라인
+3a_actchck1 첫번째 체크포인트
+3a_actchck2 두번째 체크포인트
+3a_actchck3 세번째 체크포인트
+3g_actcircl 주기
+3a_actnofin 피니쉬 라인이 없음
+3a_actnochk 체크포인트가 없음
+3a_actfnnoc 피니쉬 라인은 있으나 체크포인트가 없음
+3a_accpxnof 체크포인트 %d 을(를) 찾을 수 없습니다
+3a_aconechk 오토크로스 : 1 개의 체크포인트
+3a_acxchckp 오토크로스 : %d 개의 체크포인트
+3a_noloadsk 스킨을 불러올 수 없습니다 :
+3a_wrngfltp 잘못된 파일 종류
+3a_cnocolon 파일을 열 수 없습니다 :
+3a_outcnopn 출력 : 파일을 열 수 없습니다
+3d_outnoply 출력 : 차량의 드라이버를 찾을 수 없습니다
+3d_outstart 출력 : 시작됨
+3d_outfinis 출력 : 종료됨
+3a_corruptf 잘못된 파일
+3a_filenohc 파일 헤더체크에 실패했습니다 :
+3g_filetoos 파일이 너무 짧습니다 :
+3g_filecorr 파일 오류가 발생하였습니다 :
+3g_err_read 파일 읽기 중 오류가 발생하였습니다 :
+3g_notpcmwv 음원이 PCM에 나타나지 않습니다 :
+3g_srnotsup 샘플 레이트를 지원하지 않습니다 :
+3g_wv_mo_st 음원이 스테레오나 모노가 아닙니다 :
+3g_wavemb16 웨이브파일이 16비트가 아닙니다 :
+3g_wavetool 음원이 너무 깁니다 :
+3a_latervfl 예전버전 파일입니다 :
+3a_nocrtfil 파일을 생성하지 못했습니다 :
+3a_votecanc 투표가 취소되었습니다
+3a_nocrtmpr 멀티플레이 리플레이 파일을 만들 수 없습니다
+3a_savedmpr 멀티플레이 리플레이가 저장되었습니다 -
+3a_nocrtspr 싱글플레이 리플레이 파일을 만들 수 없습니다
+3a_savedspr 싱글플레이 리플레이가 저장되었습니다-
+3a_nornmspr SPR 이름변경불가 -
+3a_accesden 접근 거부
+3a_invalchr 잘못된 문자
+3a_notfound 찾을 수 없음
+3a_unknowne 알수 없는 오류
+3g_downcanc 다운로드가 취소됨
+3g_filesize 잘못된 파일 크기
+3g_highresd 고 해상도 스킨 다운로드 :
+3g_nolfswcr 고 해상도 스킨을 다운받기에 LFS World 크레딧이 부족합니다
+3g_dbnotava 고 해상도 스킨 데이터베이스를 이용할 수 없습니다
+3a_entermsg 메시지를 입력하세요
+3g_seldefcp 기본 코드페이지 선택
+3a_ctabshwr CTRL + TAB - 레이스/예선 결과화면
+3a_shf8nwdb SHIFT + F8 - 네트워크 디버그 - %s
+3a_newvalfx 새로운 값을 입력하세요 %s
+3a_valtoolo 값이 너무 작습니다
+3a_valtoohi 값이 너무 큽니다
+3a_endoqual 예선 종료
+3a_ctrcclip CTRL + C - 마우스  고정
+3a_ctrcfree CTRL + C - 마우스  고정 해제
+3a_windotxt 창 모드
+3a_fullstxt 전체 화면
+3g_not_demo 데모에서는 사용 불가능 합니다
+3h_noraceln 레이싱 라인을 보여줄 수 없습니다
+3g_time_loc 로컬
+3g_time_utc UTC
+3a_namelong 이름이 너무 깁니다.
+3a_noconnms 마스터 서버에 접속하지 못했습니다
+3a_wrninsta 경고 : 다른 LFS 프로그램이 실행 중입니다
+3g_lfsbuyon Live for Speed - 온라인 구매하세요 - ^7www.lfs.net
+3g_comentry 이 명령어는 엔트리 화면에서만 지원합니다
+3g_insimnop InSim 이 열리지 않았습니다
+3g_comguest 멀티플레이어 게스트들을 위한 명령어
+3g_comsetup 게임 셋업 화면을 위한 명령어
+3g_comnoded 데디케이트 서버를 위한 명령어가 아닙니다
+3g_unknwnai 알수 없는 AI 드라이버
+3g_drv_alrd 드라이버가 이미 레이스에 참가중 입니다
+3g_drv_noin 드라이버가 레이스에 참가하지 않았습니다
+3g_setup_nf 셋업이 발견되지 않았습니다
+3g_colournf 색깔이 발견되지 않았습니다
+3g_scrtooma 너무나 많은 스크립트
+3g_scrtoolo 스크립트가 너무 깁니다
+3g_scrempty 스크립트가 비었습니다
+3g_un_axs_f 알려지지 않는 Axis 기능
+3g_un_key_f 알려지지 않은 키 기능
+3g_un_btn_f 알려지지 않은 버튼 기능
+3g_xlnxtool %s : line %d 이 너무 깁니다
+3g_x_ln_x_x %s : line %d - %s
+3g_cantopen 열 수 없습니다 : %s
+3g_notallow 허용하지 않습니다 : %s
+3h_cp_latin 라틴어
+3h_cp_cente 중앙유럽어
+3h_cp_turki 터키어
+3h_cp_balti 발트어
+3h_cp_japan 일본어
+3h_cp_cyril 러시아어
+3h_cp_greek 그리스어
+3h_cp_tr_ch 번자체
+3h_cp_si_ch 간자체
+3h_cp_korea 한글
+3a_hostfull 방이 꽉 찼습니다
+3a_hostload 호스트가 트랙을 로드하는 중입니다
+3a_plyrconn 게스트가 이미 접속중 입니다
+3g_plydisco 게스트가 접속 해제 되었습니다
+3h_racstart 레이스가 시작되었습니다
+3a_unauthcn 연결할 수 있는 권한이 없습니다
+3a_useronli 사용자가 이미 온라인에 있습니다
+3h_userband 사용자가 현재 밴된 상태입니다.
+3a_usernofd 계정을 찾을 수 없습니다
+3a_pwnomtch 게임 비밀번호가 맞지 않습니다
+3g_pwneeded 게임 비밀번호를 만들어야 합니다
+3h_unlkused 한 주에 사용할 수 있는 '라이센스 인증' 횟수를 초과하셨습니다
+3h_unpwconf 사용자 이름과 패스워드가 확인되었습니다.
+3a_unknwerr 알수 없는 오류
+3a_carnomtc 호스트가 허용한 차량과 맞지않습니다
+3a_nodbljon 이중 접속은 되지 않습니다
+3a_hlostmst 호스트가 마스터서버와의 연결이 끊겼습니다
+3a_wrngpass 잘못된 비밀번호
+3a_prvreqps 비공개 방에는 비밀번호가 필요합니다
+3a_usrunknw 알수 없는 사용자 이름
+3a_usrnotol 사용자를 찾지 못했습니다
+3a_usrolhid 숨겨진 호스트 접속자
+3g_usrol_s1 S1 호스트 접속자
+3g_usrol_s2 S2 호스트 접속자
+3g_usrol_s3 S3 호스트 접속자
+3a_hostrefu 호스트가 연결을 거부하였습니다
+3a_hstdiffv 호스트와 게임버전이 다릅니다
+3a_hstdiffc 호스트와 게임코드가 다릅니다
+3a_hstis_s1 호스트가 Live for Speed S1 입니다
+3g_hstis_s2 호스트가 Live for Speed S2 입니다
+3g_hstis_s3 호스트가 Live for Speed S3 입니다
+3a_hstisdmo 호스트가 Live for Speed DEMO 입니다
+3a_hstunknr 호스트에서 알수 없는 반응이 발생되었습니다
+3a_hstnomst 마스터 서버에서 방을 찾을 수 없습니다
+3a_nameused 사용자이름이 이미 사용되고 있습니다
+3a_racefull 사람이 가득 찼습니다
+3g_nomidjoi 이 방에서는 레이스 도중 참가가 허용되지 않습니다
+3b_usermeet 사용자가 채팅방에 있습니다
+3b_unkncomm 알수 없는 명령
+3h_unknwver 알수 없는 버전
+3b_reqparam 이 명령어에는 변수가 필요합니다
+3b_req2pars 이 명령어에는 두개의 변수가 필요합니다
+3e_notenpar 충분치 않은 요소들
+3b_unknwtrk 알수 없는 트랙 요소
+3e_unknwcar 알수 없는 자동차 요소
+3b_unoadmin 당신은 관리자 권한이 없습니다
+3b_kbinvalu 사용자 이름이 유효하지 않습니다
+3b_invalpar 변수가 유효하지 않습니다
+3g_ptoolong 변수가 너무 큽니다
+3g_notfound 파일을 찾을 수 없습니다
+3e_setuponl 설치 화면에서만 명령할 수 있습니다
+3e_axnofind 레이아웃을 불러올 수 없습니다
+3e_axnoneav 이 트랙에서 레이아웃이 발견되지 않았습니다
+3e_kbnoload 파일을 불러올 수 없습니다
+3e_kbnosave 파일이 저장되지 않았습니다
+3g_tooearly 레이스를 재시작하기에 너무 이릅니다
+3g_pplracin 사람들이 아직 레이싱중입니다
+3h_notrxudp 호스트에서 UDP 패킷을 받지 못했습니다.
+3h_nomultij 중복 참여가 시도되었습니다.
+3h_modreqpw 변경된 호스트에 비밀번호가 필요합니다.
+3h_invalidu 잘못된 사용자명입니다.

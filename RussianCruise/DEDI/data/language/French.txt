@@ -1,0 +1,1719 @@
+LFS Translation file (French)
+Translated by: Eold, HamerFowl, Oliv76000, sicotange, Tungsten
+
+tx_codepage 1252
+tx_langname Français
+tx_noun_adj na
+3g_tr_selct Entraînement
+3g_tr_title Sélectionnez une leçon
+3a_spselect Solo
+3a_tit_sply Solo
+3a_mpselect Multijoueurs
+3a_tit_mply Multijoueurs
+3a_hlselect Tour chrono
+3a_tit_hotl Tour Chrono
+3a_opselect Options
+3g_repl_sel Ralentis
+3a_tit_sprs Ralentis solo
+3a_tit_mprs Ralentis multijoueurs
+3g_unlk_lfs Déverrouiller Live for Speed
+3g_demorace Pilote démo
+3h_x_licens %s license
+3a_mode_dmo Démo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Téléchargement Skins Ralenti
+3g_one_notf Un des skins du ralenti n'a pas été trouvé sur votre ordinateur
+3g_sev_notf Plusieurs skins du ralenti n'ont pas été trouvés sur votre ordinateur
+3g_one_down Voulez-vous télécharger le skin manquant?
+3g_sev_down Voulez-vous télécharger les skins manquants?
+3a_exit_btn quitter
+3a_next_btn suivant
+3g_agre_btn j'accepte
+3a_exitprog Quitter LFS?
+3a_userfind Entrez le nom d'utilisateur à trouver
+3h_num_tips %d Astuces
+3h_tip_pesc Appuyez sur ^7ECHAP^8 à l'écran de configuration ou dans le jeu pour faire apparaître une liste d'options
+3h_tip_prst Appuyez sur ^7T^8 pour écrire un message dans une partie multijoueurs
+3h_tip_ffwr Il est recommandé d'utiliser un volant à retour de force
+3h_tip_rtcg Relâchez l'accélérateur lors d'un changement de vitesse pour éviter toute surchauffe de l'embrayage
+3h_tip_brak Utilisez vos freins au bon moment lorsque vous approchez des virages...
+3g_hdr_name Nom de la leçon
+3g_hdr_diff Difficulté
+3g_hdr_mode Mode
+3g_dif_easy Facile
+3g_dif_medi Intermédiaire
+3g_dif_hard Difficile
+3g_lsn_firs première leçon
+3g_lsn_next leçon suivante
+3g_lsn_trya essayer encore
+3g_lsn_fini terminé
+3g_tit_obje ^7OBJECTIFS
+3g_tit_purp ^7BUT
+3g_tit_tips ^7ASTUCES
+3g_tit_targ ^7TEMPS DE REF.
+3g_not_time Vous n'avez pas fini dans les temps!
+3g_not_fini Vous n'avez pas fini le tracé!
+3g_comp_but Vous avez achevé le tracé, mais...
+3h_false_st - Vous avez démarré avant le feu vert
+3g_too_long - Vous avez mis trop de temps pour finir
+3g_coll_car - Vous êtes entré en collision avec une autre voiture
+3g_wrong_rt - Vous avez pris la mauvaise route
+3g_hit_1_ob - Vous avez touché un objet
+3g_hit_x_ob - Vous avez touché %d objets
+3g_not_fast - Vous n'avez pas été assez rapide au point de contrôle
+3g_slo_stop - Vous avez mis trop longtemps pour vous arrêter
+3g_exce_spd - Vous avez dépassé la vitesse limite des stands
+3g_nopitstp - Vous n'avez pas fait d'arrêt au stand
+3g_not_long - Vous ne vous êtes pas arrêté assez longtemps
+3g_congrats Félicitations! Vous avez réussi le test!
+3g_stndrd_x Pour cette leçon, votre évaluation est de : %s
+3g_lsnunl_x Vous devez déverrouiller %s pour cette leçon
+3a_nocarsel Aucune voiture sélectionnée
+3a_araceinp Une course est en cours
+3a_plydisco Le joueur sera déconnecté
+3a_leavgame quitter le jeu
+3a_playrbtn Pilote
+3a_garagbtn Stands
+3a_trackbtn Circuit
+3a_tit_trak Circuit
+3a_load_brk [chargement]
+3a_gene_brk [génération]
+3a_notr_brk [aucun circuit]
+3a_endonlin Finir le jeu en ligne?
+3a_levonlin Quitter le jeu en ligne?
+3a_swap_pos échanger de position
+3a_joinrace rejoindre la course
+3a_addaidrv ajouter un pilote IA
+3a_setready prêt
+3a_starthdr Grille de départ
+3a_skillhdr Niveau de pilotage
+3a_race_hdr Course
+3a_readybtn prêt
+3a_localsml local
+3a_vhostsml via l'hôte
+3g_adminsml admin
+3a_dirctsml direct
+3a_no_track aucun circuit
+3a_nodriver aucun pilote
+3a_carerror erreur de voiture
+3a_raceinpr course en cours
+3a_remvplyr retirer le pilote
+3a_no_quali pas de qualif
+3a_qual1min qual 1 min
+3a_qualxmin qual %d mins
+3a_practice s'exercer
+3a_race1lap course 1 tour
+3a_racexlap course %d tours
+3a_race1hou course 1 heure
+3a_racexhou course %d heures
+3a_zerowind pas de vent
+3a_low_wind vent faible
+3a_highwind vent fort
+3a_nosamenm Les pilotes locaux ne peuvent avoir le même nom
+3a_ac_onest Autocross : seulement une position de départ
+3a_ac_fixlp Autocross : nombre de tours fixe
+3h_kickplyr Expulser le joueur %s^8? (%s^8)
+3h_howlongb Nombre de jours à bannir %s^8? (%s^8)
+3h_ainodriv Les pilotes IA ne peuvent pas utiliser cette configuration
+3h_ainoxral Les pilotes IA ne peuvent pas prendre la %s sur piste rallycross
+3h_ainoxcfg Les pilotes IA ne peuvent pas prendre la %s sur cette configuration
+3a_cdntsvst Impossible de sauvegarder le setup
+3a_sent_set Setup envoyé
+3a_plynotfd Pilote introuvable
+3a_carnotfd La voiture du pilote est introuvable
+3a_namsetsv Nom du SETUP à SAUVEGARDER
+3h_gridsave Entrer le nom de la grille de départ à sauvergarder
+3h_gridload Sélectionner la grille de départ à charger
+3h_xremovex %s^8 a retiré %s^8 de la grille de départ
+3a_endgmbtn terminer le jeu
+3a_leavebtn quitter
+3g_endr_btn terminer la course
+3g_spec_btn observer
+3h_qual_btn qualifier
+3h_rest_btn redémarrer
+3h_pits_btn stands
+3g_join_btn rejoindre
+3g_play_btn jouer
+3a_namesort nom
+3a_datesort date
+3a_car_caps Voiture
+3a_newbtset Pour créer un setup personnel, cliquez sur 'Nouveau setup'
+3a_selplset Changement impossible - selectionnez un setup personnel
+3a_newbtcol Cliquez sur 'Nouvelles couleurs' pour des couleurs personnelles
+3a_selplcol Changement impossible - selectionnez vos propres couleurs
+3a_sets_hdr Réglages
+3a_cols_hdr Couleurs
+3a_new_setb Nouveau setup
+3a_new_colb Nouvelles couleurs
+3a_savedset Setup sauvegardé
+3a_savedcol Couleurs sauvegardées
+3a_new_butt Nouveau
+3a_del_butt Supprimer
+3a_undo_btn Annuler
+3g_rename_b Renommer
+3h_clear_bt Effacer
+3a_drvr_hdr Pilote
+3a_frce_hdr Force
+3g_fuel_hdr Carb.
+3g_susp_hdr Susp.
+3a_out_butt Ext.
+3a_in_buttn Int.
+3a_off_butt Arrêt
+3a_on_buttn Marche
+3a_stop_btn Stop
+3a_drop_btn Saut
+3a_namenset Entrez le nom du nouveau setup
+3g_newnmset Entrez le nouveau nom du setup
+3a_setnodel Le setup n'a pas pu être supprimé
+3a_deletset Supprimer le setup?
+3a_setnonam Impossible de créer un setup sans nom
+3a_namencol Entrez le nom des nouvelles couleurs
+3h_newnmcol Entrez un nouveau nom pour les couleurs
+3a_colnodel Les couleurs n'ont pas pu être supprimées
+3a_deletcol Supprimer les couleurs?
+3a_colnonam Impossible de créer des couleurs sans nom
+3a_carninvl Le nom de la voiture est invalide
+3a_sel_skin Choisissez le skin
+3a_drv_none Pas de transmission
+3a_drv_fron Propulsion
+3a_drv_rear Traction
+3a_drv_four Quatre roues motrices
+3g_dif_open DIFF OUVERT
+3g_dif_lock DIFF BLOQUE
+3g_dif_visc DGL VISCEUX
+3g_dif_clsd DGL A EMBRAYAGE
+3a_no_creds Aucun crédits
+3a_one_cred 1 crédit
+3a_xx_creds %d crédits
+3g_host_dis L'hôte ne vous permet pas de conduire la %s
+3h_ndxmdcax Vous devez être en mode %s pour conduire une %s
+3h_ndulxcax Vous devez dévérouiller LFS %s pour conduire une %s
+3g_all_caps TOUS
+3g_newnmrep Entrez un nouveau nom pour le ralenti
+3g_repnodel Impossible de supprimer le ralenti
+3g_deletrep Supprimer le ralenti?
+3g_repnonam Impossible de créer un ralenti sans nom
+3g_set_sh_x Paramètres pour %s :
+3a_rght_brk [droite]
+3a_left_brk [gauche]
+3a_plyrname Nom du pilote :
+3g_otherply Autres pilotes :
+3a_numplate Plaque d'immatriculation :
+3a_countryc Pays :
+3a_poschoos Position du pilote :
+3a_speedcho Unité de vitesse :
+3a_pressure Unité de pression :
+3g_lang_cln Langage :
+3g_font_cln Police :
+3g_wght_cln Poids de la police :
+3g_adnewply ajouter un pilote
+3g_dlselply Effacer le pilote sélectionné ?
+3g_enterply Entrez le nom du nouveau pilote
+3g_plyexist Le pilote existe déjà
+3g_newnamex Entrez le nouveau nom pour le pilote : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Aide au freinage :
+3a_autoclch Embrayage automatique :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Effet écran large :
+3a_clipwndo Accrocher la souris à la fenêtre CTRL C :
+3a_clipflsc Accrocher la souris à l'écran CTRL C :
+3a_leftscrn écran gauche
+3a_rghtscrn écran droit
+3a_keyshpls Touche assignée (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful fenêtré / plein écran
+3a_shf4togg MAJ + F4 permute entre plein écran et mode fenêtré
+3a_shxalrdy MAJ + F%d est déjà assigné au mode sélectionné
+3a_assxmodx Assigner MAJ + F%d au mode %s ?
+3a_unkntype inconnu
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Paramètres de vue %s :
+3a_vw_incar intérieure
+3b_vw_custm personnalisée
+3a_ishwdywy [pilote et volant]
+3a_ishwdnwy [uniquement le volant]
+3a_ishwdnwn [aucun]
+3a_oht_none [aucun]
+3a_oht_splt [temps partiels]
+3a_normlfov Champ de vision %.0f° :
+3h_onebutlk Amplitude vision latérale %.0f° :
+3a_pitchviw Inclinaison de la vue %.2f° :
+3b_rotatviw Rotation de la vue %.2f° :
+3g_mirror_x Décalage latéral du miroir %.3f m :
+3g_mirror_z Décalage vertical du miroir %.3f m :
+3a_tlt1gdeg Inclinaison de la tête pour 1g %.2f° :
+3a_shiftlat Accél. latérale de 1g %.3fm :
+3a_shiftfwd Accél. avant de 1g %.3fm :
+3a_shiftvrt Accél. verticale de 1g %.3fm :
+3a_moveanim Déplacer la vue en animée :
+3a_defdrvvw Vue par défaut du pilote :
+3g_cvw_main Affichage (principal) :
+3b_cvsnthng aucun
+3b_cvswheel roues
+3g_cvsdbody chassis
+3b_cvsexter externe
+3g_cvshelic hélicoptère
+3g_cvsfollo poursuite
+3h_cvsuserv utilisateur
+3b_cvwxoffs X décalage %.3f m :
+3b_cvwyoffs Y décalage %.3f m :
+3b_cvwzoffs Z décalage %.3f m :
+3g_c_defaul Position par défaut
+3g_c_centre Vue du centre
+3g_c_eyepos Position des yeux
+3g_cvw_high Hauteur %.1f m :
+3g_cvw_angl Angle %.1f° :
+3g_cvw_dist Distance %.1f m :
+3g_cvw_vlag Lissage %.1f sec :
+3a_drawdrwh Dessiner le pilote/ volant :
+3a_lookfunc Vue fonction de :
+3a_lookaxis axe
+3a_lookstee direction
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav La vue souris est disponible lorsque son curseur est masqué
+3a_looksens Sensibilité %.2f :
+3a_lookcred Réduction au centre %.2f :
+3a_btnlooko Vue gauche/droite/arrière :
+3g_l_smooth fluide
+3g_l_instan instantané
+3h_mainsfov Ecran principal FOV %.0f° :
+3h_monangle Angle de l'écran %.0f° :
+3h_viewoffs Décalage de la vue %.2f :
+3h_multiscl Disposition écrans multiples :
+3h_entnumls Entrez le nombre d'écrans à GAUCHE
+3h_entnumrs Entrez le nombre d'écrans à DROITE
+3h_onecentr Un écran central
+3h_scwidths Largeurs d'écran :
+3h_optequal égal
+3h_optunequ inégal
+3h_entsidep Entrez la largeur de l'écran LATÉRAL (pixels)
+3h_entmainp Entrez la largeur de l'écran PRINCIPAL (pixels)
+3h_fullwext Pleine largeur pour les vues externes :
+3h_bezelcom Compensation bords d'écran %.1f%% :
+3h_resulfov Champ de vision résultant : %.1f°
+3h_fovinval Paramètres de la vue pilote invalides
+3h_drivuse1 L'affichage s'effectue par un rendu en 1 passe
+3h_drivusex L'affichage s'effectue par un rendu en %d passes
+3h_notwidex Pas assez de largeur pour un affichage %d écrans
+3h_extvfull Les vues externes utiliseront la largeur de l'écran
+3h_extvmain Les vues externes utiliseront l'écran principal
+3h_extvxxar Les vues externes auront un ratio de %d:%d
+3h_extvass3 En supposant une configuration 3 écrans pour les vues externes
+3a_sml_newt nouveau
+3a_sml_name nom
+3a_sml_delt supprimer
+3a_sml_undo annuler
+3a_sml_save sauvegarder
+3a_sml_load charger
+3a_msctrcks Pistes audios
+3a_exitnosv Quitter sans sauvegarder?
+3a_chmblost Les changements peuvent être perdus
+3a_savedrad Radio.rad sauvegardé
+3a_nodelstp Impossible de supprimer le canal
+3a_delchnlq Supprimer le canal?
+3a_chanlnum Canal %d
+3a_msctrnum Piste %d
+3a_norenstp Impossible de renommer le canal
+3a_newnmchn Nouveau nom du canal
+3a_play_num Joue : %s
+3a_fail_num Echec : %s
+3a_shftauto auto
+3a_shftsequ séquentiel
+3a_shftshft Boite en H
+3g_shftffjo manette FFB
+3h_transmis Transmission
+3h_box_hpat Boite mécanique en H
+3h_box_bike Boite séquentielle de moto
+3h_box_sequ Boite séquentielle
+3h_box_seqi Boite séquentielle avec coupure à l'allumage
+3h_box_semi Boite séquentielle robotisée avec palette
+3h_seq_hpat Fonctionnement séquentiel sur boite en H
+3a_dc_combi combinés
+3a_dc_separ séparés
+3a_dc_butts boutons
+3a_axb_axis axe
+3a_axb_butt bouton
+3g_no_con_d Pas de contrôleur détecté
+3g_xx_con_d %.0f contrôleurs détectés
+3g_ct_unkno Contrôleur inconnu
+3g_ct_first Contrôleur 1ère personne
+3g_ct_steer Volant
+3g_ct_fligh Manche
+3g_ct_gamep Manette
+3g_ct_joyst Manette
+3a_crrdcval Réduction du centre de direction de %.2f :
+3g_whe_turn Braquage du volant %.0f° :
+3a_msbutt_1 Boutons 1
+3a_mdbutt_2 Boutons 2
+3e_kbt_mous [direction souris]
+3e_kbt_nohe [clavier - sans aide]
+3e_kbt_stab [clavier - stabilisé]
+3a_mdaxesff Axes / FFB
+3a_mdshiftr Boîte de vit.
+3a_kasteerl Tourner à gauche
+3a_kasteerr Tourner à droite
+3e_kasteerl Direction rapide
+3e_kasteerr Direction lente
+3a_kaaccelk Accélérer
+3a_kabrakek Freiner
+3a_kaleftvw Vue de gauche
+3a_karghtvw Vue de droite
+3a_karearvw Vue arrière
+3a_kashiftu Vitesse supérieure
+3a_kashiftd Vitesse inférieure
+3a_kaclutch Embrayage
+3a_kahandbr Frein à main
+3a_kahornkk Klaxonner
+3a_kaflashk Appel de phare
+3a_karesetk Remise à zéro
+3g_kapitspd Limiteur de vitesse
+3h_katcdisa Antipatinage (AP)
+3h_kaigniti Démarrage
+3a_kazoom_i Zoomer
+3a_kazoom_o Dézoomer
+3a_karevers Inversé
+3a_kafirstk Première
+3a_kasecond Seconde
+3a_kathirdk Troisième
+3a_kafourth Quatrième
+3a_kafifthk Cinquième
+3a_kasixthk Sixième
+3a_kasevent Septième
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Direction
+3a_aacombin Acc. / Frein combinés
+3a_aathrott Accélérer
+3a_aabrakea Frein
+3a_aalookhe Direction de la vue
+3a_aalookpi Vision latérale
+3a_aalookro Vision pendulaire
+3a_aaclutch Embrayage
+3a_aahandbr Frein à main
+3g_aashiftx Levier Gauche-Droite
+3g_aashifty Levier Avant-Arrière
+3a_prsxforx Appuyez sur %s pour : %s (ECHAP - annuler / SUPPR - aucun)
+3a_smallkey touche
+3a_smallbut bouton
+3a_mouse_kb souris / clavier
+3a_wheel_js volant / koystick
+3a_force_st Valeur de la force %.0f :
+3a_thrbrkax Acc. / frein axes :
+3a_clutchop Embrayage :
+3a_handbrko Frein à main :
+3a_thrbrkrv Acc. / frein centre réduction %.2f :
+3a_btnratev Sensibilité %.2f :
+3a_kbsteero Direction au clavier :
+3a_strratev Sensibilité direction %.2f :
+3e_retratev Sensibilité retour %.2f :
+3e_strfastv Multiplicateur de direction rapide %.2f :
+3e_strslowv Multiplicateur de direction lente %.2f :
+3a_prdtimev Temps de prédiction %.2f :
+3a_lmtmultv Multiplicateur limite %.2f :
+3a_selfunca Sélect. la fonction à associer
+3a_selaxfrx Sélectionnez l'axe pour : %s (ECHAP - annuler / SUPPR - aucun)
+3a_availaxs Axes disponibles
+3a_axis_num axe %d
+3a_invert_1 inverser 1
+3a_invert_0 inverser 0
+3a_frcfdbak Retour de force :
+3a_ffdevice Périphérique à retour de force :
+3g_ffshiftd Levier de vitesse FFB :
+3a_removedz Retirer les zones mortes :
+3h_rec_axes recalibration des axes
+3h_cal_lock verrouiller
+3h_cal_unlk déverrouiller
+3a_heyb_hdr Clavier
+3a_whbt_hdr Boutons du volant
+3a_ass_zero [Zéro]
+3a_ass_mlft Souris Gauche
+3a_ass_mrgt Souris Droit
+3a_ass_mmid Souris Milieu
+3a_ass_whup Roulette Av.
+3a_ass_whdn Roulette Arr.
+3a_ass_spac Espace
+3a_ass_upar Flèche Haut
+3a_ass_dnar Flèche Bas
+3a_ass_rtar Flèche Droite
+3a_ass_ltar Flèche Gauche
+3a_ass_pgup Page Supérieure
+3a_ass_pgdn Page Inférieure
+3a_butt_num bouton %d
+3d_aamousex Souris X
+3d_aamousey Souris Y
+3d_aa_xaxis axe X
+3d_aa_yaxis axe Y
+3d_aa_zaxis axe Z
+3d_aarxaxis axe RX
+3d_aaryaxis axe RY
+3d_aarzaxis axe RZ
+3d_aaslidr1 Molette 0
+3d_aaslidr2 Molette 1
+3a_reskeysh touches réservées
+3a_rswtch_r 1 - voir ralenti
+3a_rssave_r 2 - sauver ralenti
+3h_showline 4 - voir trajectoire
+3a_rsless_f < - moins fort
+3a_rsmore_f > - plus fort
+3a_rstab_ne TAB - voiture suivante
+3a_rshome_o HOME - votre voiture
+3a_rstalk_t T - parler
+3a_rspausep P - pause
+3a_rshistor H - historique
+3a_rsview_v V - vue
+3a_rsforces F - forces
+3a_rsnamesn N - noms
+3a_shftplus MAJ +
+3a_shchhorn H - changer de klaxon
+3g_shshiftt G - mode boîte de vitesse
+3a_shrescon C - rétablir les contrôles
+3a_shressnd W - rétablir le son
+3a_shsoundo N - son activé / désactivé
+3a_shmirmod M - mode miroir
+3g_shhidetx F - cacher le texte
+3a_shuservw U - vue utilisateur
+3a_shskiptn K - passer musique
+3h_shshowmo Z - afficher pointeur de souris
+3b_shdriver F1 - vue pilote
+3b_shslowrp F2 - ralenti moins vite
+3b_shfastrp F3 - ralenti accéléré
+3a_shwindow F4 - mode fenêtre
+3a_carsndvl Volume du son de la voiture (%.1f) :
+3a_skidvboo Boost volume des dérapages (%.1f) :
+3g_windvboo Boost volume du vent (%.1f) :
+3g_echovboo Boost volume de l'écho (%.1f) :
+3a_mscvolum Volume de la musique (%.1f) :
+3g_msgvolum Volume du menu (%.1f) :
+3a_mscsetup Musique dans les stands :
+3a_mscracin Musique en course :
+3a_mscrplay Musique pendant les ralentis :
+3a_selecbrk [Sélectionné]
+3a_noplybrk [Pas de lecture]
+3a_msc_skip Passer
+3a_msc_sele Sélectionner
+3a_ingmmusc Musique dans le jeu
+3a_channels Canaux
+3g_status_a Son (MAJ + N) : %s
+3g_status_m Tampon musique : %s
+3g_status_c Tampon son : %s
+3a_relaybrk [relatif]
+3a_absolbrk [absolu]
+3a_fps_disp Frames par seconde (fps) :
+3b_virtuals Feux de départ virtuels :
+3a_mirrmode Rétroviseur :
+3a_clokmode Compteur :
+3g_fixedfwd Fixé à l'axe avant :
+3g_accelmov Aperçu de l'accélération :
+3a_showpeds Montrer les pédales :
+3g_steerind Jauge de direction virtuelle :
+3a_smallmap Montrer la mini-carte :
+3g_staticsm Tourner la mini-carte :
+3a_pos_list Montrer la position :
+3a_dropshad Ombres portées :
+3a_msgtsize Taille du message %.3f :
+3a_timedisp Affichage global des temps :
+3a_chptexto Texte du point de contrôle :
+3a_clndlcol Couleur de l'aiguille :
+3a_cltxtcol Couleur du texte du compteur :
+3a_cttxtcol Couleur du texte central :
+3h_x_dash_c Tableau de bord de la %s :
+3h_roadgled LED passage des rapports (Routières) :
+3g_interfac Interface
+3h_in_title Titre :
+3h_in_bigbt Gros bouton :
+3h_in_opaci Opacité %.2f :
+3h_in_bbtxt Texte :
+3h_in_smlbt Petit bouton :
+3h_text_uns Texte non sélectionné :
+3h_text_sel Texte sélectionné :
+3h_text_una Texte indisponible :
+3h_in_texte Chaîne de texte :
+3h_in_btn_g Bouton vert :
+3h_in_btn_r Bouton rouge :
+3h_in_btn_a Autre bouton :
+3h_smallm_l Clarté mini-carte :
+3h_smallm_d Obscurité mini-carte :
+3h_cr_lap_a Voiture 1 tour devant :
+3h_cr_ahead Voiture devant :
+3h_ai_ahead AI devant :
+3h_your_car Ma voiture :
+3h_ai_behin AI derrière :
+3h_cr_behin Voiture derrière :
+3h_cr_lap_b Voiture 1 tour derrière :
+3h_intcentr Centre interface :
+3h_intscale Echelle interface :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset annuler
+3h_test_sml Petit bouton
+3h_test_big Gros bouton
+3h_in_cen_x centre X
+3h_in_cen_y centre Y
+3h_in_sca_x X echelle
+3h_in_sca_y Y echelle
+3h_betw_a_b Valeur doit être comprise entre %.1f et %.1f
+3a_asavnono [désactivé - non stocké]
+3a_asavmanu [activé - sauvegarde manuelle]
+3a_asavauto [auto - non recommandé]
+3a_ogm_ainm Noms des IA
+3g_ogm_fkey F1 à F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [ordre fixe]
+3a_rs_finis [ordre d'arrivée]
+3a_rs_revfi [ordre d'arrivée inversé]
+3a_rs_randm [aléatoire]
+3a_aidrvnum Pilote IA %d :
+3a_f_keynum F%d :
+3a_sprsvopt Sauvegarde du ralenti solo :
+3a_mprsvopt Sauvegarde du ralenti multijoueurs :
+3a_nonqracr Course sans qualif redémarre :
+3a_changbtn Noms des IA / Touches de fonctions :
+3a_optlores basse résol.
+3a_opthires haute résol.
+3g_optcompr compressé
+3g_optsfull non-compressé
+3g_opt_main principal
+3g_plus_mir rétroviseur
+3a_usrldval Détails (%.2f) :
+3a_dstldval Détails poussière (%.2f) :
+3a_mirldval Détails rétro. (%.2f) :
+3h_fsaa_txt Antialiasing scène complète :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interface / texte :
+3h_mipbias1 Mip bias (%.1f) objets / murs :
+3h_mipbias2 Mip bias (%.1f) herbe / gravier :
+3h_mipbias3 Mip bias (%.1f) revêtements piste :
+3a_shtypopt Type d'ombre :
+3g_treesopt Afficher les arbres :
+3g_flagsopt Afficher les drapeaux :
+3g_rubbropt Afficher les traces de pneus :
+3g_draw_sky Afficher le ciel :
+3g_gadapter Adaptateur :
+3e_zbdopt_d Profondeur Z-buffer (%d) :
+3e_hazetext Effet de brume :
+3h_mip_type Filtrage texture / AF :
+3h_text_res Textures (skins exclus) :
+3g_carskins Skins des voitures et des casques :
+3g_texmemmb Utilisation de mémoire des textures : %.1f MB
+3a_crdnoshd Votre carte 3D ne peut pas afficher les nuages dans LFS
+3g_crdnoftx Votre carte 3D ne peut utiliser les textures de taille maximum
+3h_hvsnotav Votre carte 3D ne supporte pas le Vertex Shading
+3g_seladres Sélectionnez le périphérique à utiliser au prochain lancement
+3e_rslfszbd Redémarrez LFS pour que le changement du Z-buffer prenne effet
+3a_flsvsync Sync. verticale en plein écran :
+3g_prev_lag Empêcher le décalage des périphériques :
+3a_limitfps Limiter les fps en jeu :
+3a_maxfrmrt FPS maximum :
+3g_tx_x_fps %d fps
+3a_minsleep Délai minimum :
+3g_debounce Délai mini entre chaque passage de rapport :
+3g_txt_x_ms %d ms
+3a_pixelval %d pixels
+3a_useplset L'IA utilise le même setup que le pilote :
+3a_useplcol L'IA utilise les mêmes couleurs que le pilote :
+3a_sndlgval Lag du son %.2f sec :
+3g_whe_comp Compensation du braquage du volant %.2f :
+3a_anlgsval Lissage direction analogique %.2f :
+3a_multispd Option d'optimisation multijoueurs :
+3g_car_skin Téléchargement des skins des voitures :
+3g_hel_skin Téléchargement des skins des casques :
+3g_multidst Affichage des voitures multijoueurs %.0f m :
+3g_dynamlod Réduction dynamique des détails %.2f :
+3a_updtpath Dépôt de gomme sur la trajectoire :
+3a_puusrcar votre auto
+3a_puallcar ttes les autos
+3h_replaysk Télécharger les skins pour les ralentis :
+3g_introopt Charger la piste au démarrage :
+3g_local_12 Heure locale au format 12 heures :
+3g_time_fps Afficher l'heure à la place des FPS :
+3g_shfflags Montrer les drapeaux avec SHIFT + F :
+3h_accelopt Accéléromètre :
+3h_shadogen Génération d'ombre :
+3h_opt_defa défaut
+3h_opt_alte autre
+3g_skin_d_q Téléchargement des skins
+3h_skin_use Skins en mémoire
+3a_novtnolo Aucun vote - aucun pilote local en course
+3a_notdnord Test de conduite impossible - ralenti sans pilote réel
+3a_esc_menu Menu quitter
+3a_repmenig Menu du ralenti (en jeu)
+3a_repmenld Menu du ralenti (chargé)
+3a_sel_pits Garage
+3a_sel_spec Observer
+3a_sel_join Rejoindre
+3a_sel_repl Ralenti
+3a_sel_outp Données *.raf
+3a_sel_rstr Redémarrer
+3a_vote_str Voter : commencer la course
+3a_vote_end Voter : terminer la course
+3a_vote_qua Voter : se qualifier
+3a_test_drv Tester la conduite
+3a_startrac Démarrer la course
+3a_hqualify Redémarrer qualif
+3a_resumegm Continuer
+3h_escapkey ECHAP
+3a_undefind indéfini
+3a_arenatxt arène
+3a_singlstg simple étape
+3a_standard normal
+3a_reversed sens contraire
+3a_weth_hdr Temps
+3a_cnfg_hdr Configuration
+3h_layt_hdr Disposition
+3h_none_sel aucun sélectionné
+3a_info_cir circuit
+3a_info_tot total
+3a_chng_trk Changer le circuit
+3h_revconfc Configuration du sens contraire :
+3h_openconf Configuration Libre :
+3h_ndxmdtrx Vous devez être en mode %s pour conduire sur %s
+3h_ndulxtrx Vous devez dévérouiller LFS %s pour conduire sur %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mile %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mile
+3g_dt_dawn_ Aube
+3g_dt_sunri Aurore
+3g_dt_morni Matin
+3g_dt_day__ Jour
+3g_dt_after Après-midi
+3g_dt_sunse Coucher soleil
+3g_dt_dusk_ Crépuscule
+3g_dt_night Nuit
+3g_wth_clea Clair
+3g_wth_clou Nuageux
+3g_wth_over Sombre
+3a_hlvcthis Tour-
+3a_hlvcnext Suivant-
+3a_readynum Prêt : %d
+3a_noviewcr aucune voiture en course
+3a_thexisst Le %s a démarré
+3a_thexhase Le %s est terminé
+3a_smlpract entraînement
+3a_smlqulng qualification
+3a_sml_race course
+3a_replnotr Le ralenti ne s'enregistre pas
+3g_notrecor Pas d'enregistrement
+3g_fov_temp FOV %.0f° :
+3a_replrest Ralenti redémarré
+3a_aisvdknw Expérience des IA sauvée
+3a_timetmsx Temps x %.3f
+3a_namenldf Nom du fichier des données du tour prochain
+3g_caps_wrn AVERTISSEMENT
+3g_caps_kik EXPULSER
+3g_caps_ban BANNIR
+3g_caps_spe SPECTATEUR
+3a_namesoff noms désactivés
+3a_connlist liste des connexions
+3a_namesovr noms au dessus des voitures
+3h_showmous afficher pointeur de souris
+3h_hidemous cacher pointeur de souris
+3a_mirrinfo rétroviseurs :
+3a_cancaujo Reconnexion automatique annulée
+3a_reinicnt Contrôleurs réinitialisés
+3a_reinisnd Son réinitialisé
+3a_namemprs Nom du ralenti MPR à sauvegarder
+3a_namesprs Nom du ralenti SPR à sauvegarder
+3a_shnsound SHIFT + N : son - %s
+3g_shgsmode SHIFT + G : mode boîte vitesse - %s
+3a_shgautos SHIFT + G : boîte auto - %s
+3a_frcvalpc force %.0f%%
+3a_hrntypev Klaxon %d
+3a_actnends EST TERMINEE
+3a_actnrest REDEMARRE
+3a_actnstrt DEMARRE
+3a_thngqual En qualif
+3a_thngrace Course
+3a_reploose erreur OOS du ralenti
+3a_pausetxt en pause
+3g_safeexit sortie du jeu...
+3a_retrdcap RETIRE
+3a_dsqulcap DISQUALIFIE
+3g_unclcaps NON CLASSE
+3a_wrngwcap CONTRE-SENS
+3a_capsdrvr PILOTE
+3a_capsbstl MEILLEUR TOUR
+3g_pitstops STA
+3g_spenalty PEN
+3a_capstotl TOTAL
+3g_caps_car VOITURE
+3g_capsxlps %d TOURS
+3g_plus1lap +1 tour
+3g_plusxlps +%d tours
+3h_falsesta FAUX DEPART
+3h_pe_speed SURVITESSE DANS LIGNE DES STAND
+3h_pe_short ARRÊT AU STAND TROP COURT
+3h_pe_mustp ARRÊT AU STAND TROP TARD
+3h_pe_admin DONNÉ PAR L'ADMINISTRATEUR
+3h_pe_unknw INCONNU
+3g_yellcaps DRAPEAU JAUNE
+3g_bluecaps DRAPEAU BLEU
+3a_stpgocap PENALITE STOP-GO
+3g_drthrcap PENALITE PASSAGE AU STAND
+3g_30stimep 30 SECONDES DE PENALITE
+3g_45stimep 45 SECONDES DE PENALITE
+3g_clearedp PENALITE EFFECTUEE
+3g_pit_stop ARRÊT AU STAND
+3g_pitstopx ARRÊT AU STAND : %d
+3g_p_pnltyx ARRÊT AU STAND [pénalité] : %d
+3g_p_nowrkx ARRÊT AU STAND [rien faire]: %d
+3g_p_finshx ARRÊT AU STAND [fini] : %d
+3g_mancompx %s^8 a fini sa %s
+3g_wmncompx %s^8 a fini sa %s
+3g_unkcompx %s^8 : achevé %s
+3g_enterpit ENTRE dans les stands
+3g_enterfor ENTRE dans les stands pour
+3g_leavepit SORT des stands
+3g_stpgotxt pénalité stop-go
+3g_drthrtxt pénalité passage aux stands
+3g_nopurtxt pas d'objectif
+3g_capsstop STOP
+3g_capsrefu RAVITAILLEMENT
+3g_capssetu CHANGEMENTS DE RÉGLAGE
+3g_capsxdam DÉGÂTS %s
+3g_capsdamx DÉGÂTS A %s
+3g_capsxcha CHANGEMENT DE PNEUS %s
+3g_capsminr MINEURS
+3g_capsmajr MAJEURS
+3g_capsfrnt AVANT
+3g_capsrear ARRIÈRE
+3g_capsleft GAUCHE
+3g_capsrigh DROITE
+3g_capslefr AVANT GAUCHE
+3g_capslere ARRIÈRE GAUCHE
+3g_capsrifr AVANT DROIT
+3g_capsrire ARRIÈRE DROIT
+3g_refl_f_x Ravitaillement fini : %.1f litres
+3g_pitstp_f Arrêt au stand fini
+3g_nospdlim Il n'y a pas de zone de limite de vitesse sur ce circuit
+3g_notequip Cette voiture n'a pas de limiteur de vitesse
+3h_thisnotc Cette voiture n'a pas d'antipatinage
+3h_thisnost Cette voiture n'a pas de starter
+3a_smllaptm temps au tour
+3a_smlspltm temps partiel
+3a_clhotlap tour Chrono
+3a_clonemin 1 min de qualifications
+3a_cl_xmins %d mins de qualifications
+3a_clonelap 1 tour
+3a_cl_xlaps %d tours
+3a_clonehor 1 heure
+3a_cl_xhors %d heures
+3g_cltrning apprentissage
+3a_windsp_x vitesse du vent %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex Le vote de %s^8 a expiré
+3a_x_voteer %s^8 vote pour TERMINER la course
+3a_x_voters %s^8 vote pour REDEMARRER
+3a_x_votequ %s^8 vote pour se QUALIFIER
+3a_x_joinsp %s^8 est spectateur
+3g_x_didnot %s^8 n'a pas fini
+3g_x_wrongr %s^8 a pris la mauvaise direction
+3g_x_illega %s^8 est entré dans une zone réservée
+3h_x_retpit %s^8 reprend la voie des stands
+3h_a_retpit Toutes les voitures sur la voie des stands
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp démarrer
+3a_smalllap tour
+3a_hlvcmodi [modifié]
+3a_timequal temps qual
+3a_timetotl total
+3a_timebest meilleur
+3a_time_lap tour
+3a_timesplt partiel
+3h_timetime temps
+3a_timepnlt pénalité
+3a_noldxcar Impossibilité de charger la voiture de %s^8
+3a_nosvnonm Ne peut pas sauver sans nom
+3g_nofilesl Aucun fichier à charger
+3a_alrdyout Sauvegarde télémétrie en cours
+3a_nxtlpout Prochain tour : fichier %s.raf
+3a_nodtaout Aucune donnée ne sera sortie vers le fichier
+3g_dled_x_x Skin téléchargée : %s_%s
+3g_ding_x_x Skin en téléchargement : %s_%s
+3h_saveskin Sauvegarde du skin : %s
+3g_nomoreci Ajout d'autres cercles impossible
+3a_noaddmor Impossible d'ajouter plus d'objets
+3a_loadinfo Chargement
+3h_storedvw Vues mémorisées (V) :
+3h_move_spd Vitesse de déplacement %.1f m/s :
+3h_min_high Hauteur minimum %.1f m :
+3g_roll_deg Roulis %.1f° :
+3h_vwsmooth Lissage vue %.1f s :
+3h_trantime Temps de transition %.1f s :
+3a_invlok_c Inverser l'action du bouton droit :
+3h_invrot_c Inversion gauche + rotation droite :
+3a_fov_valu Champ de vision %.1f° :
+3a_plcobs_c Placer objets :
+3a_chkptw_v Largeur point de contrôle %.0f m :
+3a_hdg_degr Direction %.1f° :
+3a_unnm_brk [anonyme]
+3a_objs_num objets : %d
+3a_emty_brk [vide]
+3a_savechan Sauvegarder les changements
+3a_loadlayo Charger la disposition
+3a_savelayo Sauvegarder la disposition
+3a_clearall Tout effacer
+3a_laps_num tours : %d
+3a_errorsml erreur
+3a_c_clrsel C - effacer les sélections
+3a_m_mv_mod M - déplacer / modifier
+3a_del_dele SUPPR - supprimer
+3a_w_e_wdth W / E - largeur
+3a_l_r_rota < / > - tourner
+3a_cp_1_2_3 1 / 2 / 3 - point de contrôle
+3a_f_finish F - ligne d'arrivée
+3a_s_startp S - position de départ
+3a_o_object O - objet
+3g_dist_x_m dist : %.2f m
+3a_editkeys éditer les touches
+3a_c_ar_hgt CTRL + flèche - hauteur
+3g_c_ar_rol CTRL + flèche - roulis
+3a_arrow_mv touches fléchées - déplacer
+3a_spc_hdsh ESPACE - cacher / voir
+3a_esc_exit ESC - quitter
+3h_l_b_move bouton gauche - déplacement
+3h_r_b_look Bouton droit - regarder
+3h_l_r_rota gauche + droit - rotation
+3a_keys_txt touches
+3h_mous_txt souris
+3h_edit_txt édition
+3h_more_txt plus
+3h_in_trans transition
+3h_cl_slt_x Vue dégagée dans l'emplacement %d
+3h_st_slt_x Vue mémorisée dans l'emplacement %d
+3h_no_v_x_s Aucune vue dans l'emplacement %d (%s)
+3h_no_vws_s Aucune vue mémorisée (%s)
+3h_sh_nm_st SHIFT + NUMERO pour mémoriser une vue
+3h_no_car_f Aucune voiture à suivre
+3h_fc_point Pointage vers :
+3h_fc_neare Voiture la plus proche :
+3h_fc_flwng Poursuite :
+3h_fc_lockd Verrouillé sur :
+3h_clicktof cliquez sur la voiture à suivre
+3h_followcr suivre la voiture
+3h_nocarsvw Aucune voiture en vue
+3h_stopfoll stop
+3h_optimise optimiser
+3h_opt_of_t Objets optimisés : %d sur %d
+3a_noxwload Impossible de quitter pendant le chargement
+3a_chgnotsv Les changements n'ont pas été sauvegardés
+3a_exanyway Quitter tout de même?
+3a_clrall_q Effacer tous les objets de la configuration?
+3g_delete_l Supprimer la disposition?
+3a_tit_ldly Charger disposition
+3a_nosavent Ne peut pas sauvegarder la configuration sur l'écran d'entrée
+3a_nolodent Ne peut pas charger la configuration sur l'écran d'entrée
+3a_noobselm Aucun objet n'est sélectionné pour être déplacé
+3a_noobtype Aucun objet type n'est sélectionné
+3a_noobseld Aucun objet n'est sélectionné pour être effacé
+3h_unexpclr Commande 'clear' inattendue
+3h_unexpend Fin de fichier inattendue
+3a_xalready Un %s a déjà été créé
+3g_idx_0tox L'index doit être compris entre 0 et %d
+3g_rt_idx_x index de route : %d
+3g_restarea Zone à vitesse limitée
+3g_rt_check Contrôle de route
+3g_rt_wrong Mauvaise route
+3g_ob_chalk marquage
+3g_ob_cones cônes
+3g_ob_tyres pneus
+3h_ob_markr marqueurs
+3g_ob_other objets
+3g_ob_marsh commissaire
+3g_marsh_no invisible
+3g_marsh_st commissaire
+3g_marsh_le point gauche
+3g_marsh_ri point droit
+3h_cant_add ne peut ajouter :
+3h_cant_mov ne peut déplacer :
+3h_inte_obj intersection d'objet
+3h_inva_pos position invalide
+3a_dispgame Liste des parties online
+3a_tit_list Liste des parties
+3a_startnew Nouvelle partie
+3a_tit_strt Nouvelle Partie
+3a_joingame Rejoindre une partie spécifique
+3a_tit_spec Rejoindre Partie Spécifique
+3a_finduser Trouver un joueur
+3a_tit_user Recherche d'un Joueur
+3a_cls1conn Fermer 1 connexion
+3a_clsxconn Fermer %d connexions
+3a_rfrshlst rafraîchir
+3a_stophost Arrêt en cours
+3a_spctostp Pressez ESPACE pour stopper la recherche
+3a_liststat %s hôtes %d de %d - Joignable(s) %d - [Aucune réponse %d] - [Mauvaise version %d]
+3a_waitingw Attente
+3a_checking Vérification
+3a_end_stat Joignable(s) %d - [Aucune réponse %d] - [Mauvaise version %d] %s
+3a_clikjoin - CLIQUER sur nom pour joindre
+3a_glc_name Nom
+3a_glc_ping Latence
+3a_glc_trak Circuit
+3a_privatew privé
+3a_modified modifié
+3h_arcade_w peut reset
+3h_cruise_w Croisière
+3a_wrongver Mauvaise version
+3h_noteul_x NOTE : Il vous reste encore à dévérouiller LFS %s
+3h_mb_0_val %.0f Mo
+3h_mb_1_val %.1f Mo
+3h_kb_0_val %.0f Ko
+3h_dlm_titl Miroir
+3h_cnt_titl Pays
+3h_newupdat Une nouvelle mise à jour est disponible
+3h_norecaui N'a pas reçu l'information de mise à jour automatique
+3h_start_dl téléchargement
+3h_plsselmr Veuillez sélectionner un miroir de téléchargement
+3h_connectn Connexion...
+3h_trylfsnt Nouvelle tentative avec ^7www.lfs.net
+3h_dl_perce Progression du fichier : %d%%
+3h_dl_colon Téléchargé :
+3h_restartn Redémarrage...
+3h_nostrtrs Ne peut redémarrer
+3h_noresdat Ne peut créer le fichier de données de redémarrage
+3h_noenumwi N'a pas put lister les fenêtres
+3h_anotherl Une autre instance de LFS est en exécution
+3h_noopenrs Ne peut ouvrir le programme de redémarrage
+3b_meetroom Salon de chat
+3b_m_host_x est en train de suivre %s
+3b_f_host_x est en train de suivre %s
+3b_leftroom a quitté le salon
+3b_entrroom est entré dans le salon
+3b_wlcmu1st Bienvenue! Vous êtes le 1er pilote dans le salon
+3b_wlcmxinr Bienvenue! Il y a %d pilotes dans le salon
+3b_mr_leave Quitter
+3b_mr_findb Trouver
+3b_mr_sound Son
+3b_mr_refre Rafraîchir
+3b_somehost un hôte
+3b_mastercl Le serveur maître a fermé la connexion
+3b_sr_privt Privé
+3b_mr_publc Public
+3b_mr_empty Vide
+3h_sr_cruis Croisière
+3g_autoreco Reconnexion...
+3a_typelocl réseau local
+3a_typeinet internet
+3a_userisat Le joueur est sur %s
+3a_joinxath Rejoindre %s^8 ?
+3a_inrc_num en course : %d
+3a_cons_num connexions : %d
+3a_resl_num résultats : %d
+3h_skin_num Skin : %d
+3h_join_que Position dans la file : %d
+3a_selhostc Hôte sélectionné :
+3a_joingamc Rejoindre sur :
+3a_hostnamc Nom de l'hôte :
+3a_hostipac Adresse IP de l'hôte :
+3a_hostprtc Port de l'hôte :
+3a_hostpasc Mot de passe de l'hôte :
+3h_clearbtn effacer tous les mots de passe (%d)
+3h_cconfirm Effacer tous les mots de passe des hôtes?
+3a_noldtrck Chargement impossible
+3a_nosndudp Ne peut pas envoyer des paquets UDP
+3a_nocrtudp Ne peut pas créer une connexion UDP
+3h_wt_sinfo En attente des infos du skin
+3h_norcvskn N'a pas reçu les infos du skin
+3a_norcvgst N'a pas reçu les infos de l'invité
+3a_norcvply N'a pas reçu les infos du pilote
+3a_norvcall N'a pas reçu les messages de tous les joueurs
+3a_vldadreq Vous devez entrer une adresse IP valide
+3a_errconrs Erreur d'envoi du résultat de la connexion
+3a_mode_sel Sélection du mode en ligne :
+3h_smal_dmo demo
+3h_frxmdndx Pour le mode %s vous devez dévérouiller LFS %s
+3h_seltrrqx Le circuit sélectionné requiert le mode %s
+3a_visibilc Visibilité :
+3a_vis_locl local
+3a_vis_inet internet
+3a_vid_hidn cachée
+3a_inetconc Connexion internet :
+3a_modem56k Modem 56k
+3a_m512_128 Câble 512 / 128
+3a_mdm1_256 Câble 1m / 256
+3a_mdm_cust personnaliser
+3a_maxupl_c Upload maximum (kbits / sec) :
+3g_x_upload %s kbits/sec envoi
+3a_gnnoemty Entrez un nom de partie
+3a_onecarrq Une voiture minimum doit être autorisée
+3a_hstgstrq Des joueurs invités ou de l'hôte doivent être autorisés
+3a_rusurepr Veuillez confirmer
+3a_maxbwmex La bande passante maxi pourrait être dépassée
+3b_srv_ip_c Adresse IP :
+3a_srvportc Port :
+3a_dedi_opt Hôte dédié (aucun graphique) :
+3a_guestvot Autoriser les expulsions / bannissements :
+3a_guestsel Circuits sélectionnés par le joueur :
+3h_qenabled Qualifications activées :
+3g_midracej Autoriser de rejoindre la piste en course :
+3g_pitstopr Arrêt au stand demandé :
+3g_carreset Autoriser la réinitialisation de la voiture :
+3h_fcockpit Forcer la vue cockpit :
+3h_cruisemo Croisière (contre-sens autorisé) :
+3a_maxgst_c Max d'invités :
+3d_admins_c Connexions réservées aux admins :
+3a_maxrarac Max (réels   IAs) en course :
+3a_maxragst Max (réels   IAs) par joueur :
+3a_maxrahst Max (réels   IAs) sur pc hôte :
+3a_dedinohc Dédié : pas de voitures d'hôte
+3a_smothpps Fluidité (paquets par sec) :
+3a_uplmin16 Upload au minimum 16 kbits
+3g_umax8192 Upload maximum 8192 kbits
+3a_uplavail Upload disponible %.1f KB/sec
+3a_uplprcar Upload par voiture %.0f bytes/sec
+3a_uplcarnm Nbr de voitures à envoyer %.0f
+3a_requplod Upload requis %.1f KB/sec
+3a_availexc Upload disponible dépassé
+3b_adminp_c Mot de passe d'administration :
+3a_sel_audi Audio
+3a_tit_audi Options - Audio
+3a_sel_scrn Ecran
+3a_tit_scrn Options - Ecran
+3a_sel_grfx Graphismes
+3a_tit_grfx Options - Graphismes
+3a_sel_view Vue
+3a_tit_view Options - Vue
+3a_sel_disp Affichage
+3a_tit_disp Options - Affichage
+3a_sel_plyr Pilote
+3a_tit_plyr Options - Pilote
+3a_sel_cont Contrôles
+3a_tit_cont Options - Contrôles
+3a_sel_game Jeu
+3a_tit_game Options - Jeu
+3a_sel_misc Divers
+3a_tit_misc Options - Divers
+3a_unlokerr Erreur de déblocage
+3a_flcrterr Erreur de création du fichier
+3a_reguname Nom d'utilisateur enregistré :
+3a_onlinepw mot de passe JEU :
+3a_gounlock déverrouiller
+3g_locktext Verrouiller LFS (retour à la DEMO)
+3g_lockques Verrouiller Live for Speed?
+3g_lockwarn Seul le contenu DEMO sera disponible
+3a_autorcon Reconnection automatique au serveur maître
+3a_notconnm Non connecté au serveur maître
+3a_yesconnm Connecté au serveur maître
+3a_connmstr se connecter
+3a_connects Connexions
+3a_hoptions options
+3a_smlb_kik expulser
+3a_smlb_ban bannir
+3a_num_bans %d bannis
+3a_zerobans Aucun ban
+3a_editbans éditer les bans
+3a_tit_bans Editeur de Ban
+3a_delshort suppr
+3a_goaddban ajouter un ban
+3a_user_ban Entrez le nom d'utilisateur à bannir
+3a_time0day %d:%.2d
+3a_time1day 1 jour %d:%.2d
+3a_timexday %d jours %d:%.2d
+3a_banip12h Ban de 12 heures de l'adresse IP du joueur
+3a_banun12h Ban de 12 heures du nom du joueur
+3b_banusr1d L'utilisateur est banni pour 1 jour
+3b_banusrxd L'utilisateur est banni pour %d jours
+3h_tyre_man Manufacturier
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_TENDRE
+3g_tt_slk_m SLICK_MOYEN
+3g_tt_slk_h SLICK_DUR
+3a_tt_races COURSE_SLICK
+3a_tt_raceg COURSE_RAINURÉ
+3a_tt_racei COURSE_INTERMÉDIAIR
+3a_tt_racew COURSE_HUMIDE
+3a_tt_roads ROUTE_SUPER
+3a_tt_roadn ROUTE_NORMAL
+3a_tt_hybri MIXTE
+3a_tt_knobb TERRE
+3a_ttlmaskl Masse totale : %.0f kg (%.0f lbs)
+3a_pwrwtmti Puissance/Poids : %.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr Répartition des masses : %.1f F  %.1f R
+3h_ddistrfr Répartition de l'appui aérodynamique: %.1f F  %.1f R
+3h_rdistrfr Répartition de la rigidité du roulis : %.1f F  %.1f R
+3a_trqnmlbr Couple : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Puissance : %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Moteur : %.0f cc%s%s%s
+3a_engltfmt Moteur : %.1f litre%s%s%s
+3a_trbochrg turbocompressé
+3a_etl_inli en ligne
+3a_etl_flat plat
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl simple
+3a_etn_2cyl bi
+3a_etn_3cyl triple
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Première %.3f
+3a_grrat2nd Seconde %.3f
+3a_grrat3rd Troisième %.3f
+3a_grrat4th Quatrième %.3f
+3a_grrat5th Cinquième %.3f
+3a_grrat6th Sixième %.3f
+3a_grrat7th Septième %.3f
+3a_grginfop Info
+3a_grgcolou Couleurs
+3a_grgbrake Freins
+3h_grgbrktc Freins / TC
+3a_grgsuspe Suspensions
+3a_grgsteer Direction
+3a_grgfinal Transmission
+3a_grgtyres Pneus
+3a_grgdownf Aérodynamique
+3a_grgpasse Passagers
+3a_pssfront avant
+3a_pssrleft arrière gauche
+3a_pssrmidd arrière milieu
+3a_pssrrght arrière droit
+3a_whlscolt Roues
+3a_bodycolt Corps
+3a_texnamet Skin
+3a_maxperwt Couple maxi par roue %.0f Nm
+3g_b_bal_fr Balance de freinage (avant) %.0f%%
+3h_engbrred Réduction du frein moteur %.0f%%
+3h_tcmaxslp AP Patinage Autorisé %.1f%%
+3h_tcminspd AP Vitesse Minimale %.0f m/s
+3h_abs_text ABS
+3g_ridehred Réduction de hauteur de caisse
+3a_brkmotrg [Débattement %.3f m]
+3g_livecamb Carrossage (G / D) %+.2f° / %+.2f°
+3g_stif_val Dureté %.1f kN/m
+3g_damp_val Amortissement %.1f kNs/m
+3g_bump_val Compression %.1f kNs/m
+3g_rebd_val Détente %.1f kNs/m
+3g_arol_val Anti roulis %.1f kN/m
+3h_power_st Direction assistée %.0f%%
+3a_maxlkval Angle de braquage maxi %.1f°
+3g_castrval Chasse %.1f°
+3a_inclnval Inclinaison du pivot %.2f°
+3g_prllsval Effet Ackerman %.0f%%
+3g_toeinval Pincement %+.1f°
+3g_camb_abs Carrossage (gauche / droit) %+.1f° / %+.1f°
+3g_camb_adj Carrossage (G / D) %+.1f° / %+.1f°
+3h_tyrewarm Temperature des pneus : %.0f°
+3a_fnldvval Rapport de pont %.3f
+3g_ftrqsplt Répartition de couple %.0f%%
+3g_fvistorq Couple visqueux %.0f Nms/rad
+3g_lock_one Blocage %.0f%%
+3g_lock_o_o Blocage (accél / décell) %.0f%% / %.0f%%
+3h_dpreload Préchargement %.0f Nm
+3g_frnt_txt Avant
+3g_cent_txt Centre
+3g_rear_txt Arrière
+3g_press_lr Pression (G / D) %.0f kPa / %.0f kPa
+3g_conv_psi psi (G / D) %.1f psi / %.1f psi
+3g_conv_bar bar (G / D) %.2f bar / %.2f bar
+3g_fwingang Angle Aileron Avant %.0f°
+3g_rwingang Angle Aileron Arrière %.0f°
+3h_tc_title Antipatinage (AP)
+3g_stra_txt Stratégie
+3g_fuel_sta Essence au départ : %.0f%%
+3g_fuel_pit Essence à l'arrêt aux stands : %.0f%%
+3g_tyre_lim Pneus : usure >%.0f%%
+3g_tyre_all Changement pneus : toujours
+3g_tyre_nev Changement pneus : jamais
+3h_rep_damg Réparer les dégâts : %s
+3h_setup_ch Changement de setup demandé
+3h_handicap Handicaps
+3h_hcapnone AUCUN
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% restriction
+3h_vol_tres Réduction de la puissance moteur %.0f%%
+3h_vol_mass Masse supplémentaire %.0f kg
+3h_mass_pos Position de la masse ajoutée (devant) %.0f%%
+3g_symmetri symétriques
+3g_asymmetr asymétriques
+3g_configur Configuration
+3g_cpct_x_l Réservoir : %.1f litres
+3g_optt_x_d Température optimale %.0f°
+3g_tst_x_ms Vitesse de test %.1f m/s
+3g_rearwing Aileron Arrière
+3g_frntwing Aileron Avant
+3g_undrtray Effet de sol
+3g_bodyaero Caisse
+3g_totlaero Total
+3g_lift_x_n P : %.0f N
+3g_drag_x_n T : %.0f N
+3g_car_tn_x Le volant de la voiture tourne %.0f° (butée en butée)
+3g_con_tn_x Le volant du contrôleur tourne %.0f°
+3g_live_cmb Carrossage : %+.2f
+3g_live_inc Inclinaison : %.2f
+3g_live_cst Chasse : %.2f
+3g_live_scr Déport : %.3f
+3g_live_trk Voie : %.3f
+3g_susrigid Rigide
+3g_sustrail Bras oscillant
+3g_susffork Fourche avant
+3g_susmacph Jambe McPherson
+3g_susdwish Double Triangles
+3g_pit_inst Instructions aux stands
+3g_live_set Réglage en direct
+3g_wheels_x Les roues sont %s
+3g_l_tt_x_x PNEUS %s [%s]
+3g_l_pr_psi PRESSION %.1f psi [%+.1f psi]
+3g_l_pr_bar PRESSION %.2f bar [%+.2f bar]
+3g_l_cr_adj AJUST. CARROSAGE %.1f° [%+.1f°]
+3g_l_cr_abs CARROSSAGE %.1f° [%+.1f°]
+3g_l_wg_ang AILERON %.0f° [%+.0f°]
+3h_estcolon Estimation conso. :
+3g_fl_pc_pl %.1f%% par tour
+3g_fl_pc_it %.1f%% d'essence
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn Circuit inconnu
+3a_trcknofn Circuit non trouvé
+3a_trckobso Circuit obsolète
+3a_fnshload FINI
+3a_prgprelo Préchargement
+3a_prgldtex Chargement des textures
+3a_prgpaths Chemins
+3a_prgcolrs Couleurs
+3a_prgdupli Duplicateurs
+3a_prglgtsc Plans légers
+3a_prgrdobs Lecture
+3a_prglgtin Info d'éclairage
+3a_prgbmptx Textures bump
+3a_prginicl Initialisation des couleurs
+3a_prgchpts Points de contrôles
+3a_prgextra Données supp.
+3a_prgstobs Objets
+3a_prgmapsq Carrés de carte
+3a_prgpthin Initialisation
+3a_prgpthad Ajustement
+3a_prgrebld Reconstruction
+3g_prggener Génération
+3a_spcpres1 (pressez 1)
+3a_autojblk Impossible : Départ bloqué
+3a_xcomplvt %s^8 a complété le vote
+3a_maxgcarx Max de voitures du joueur : %d
+3a_maxhcarx Max de voitures de l'hôte : %d
+3a_upc_male %s^8 a mis à jour ses contrôles
+3a_upc_fmal %s^8 a mis à jour ses contrôles
+3a_upc_unkn %s^8 contrôles mis à jour
+3a_x_no_car %s^8 n'a pas de voiture
+3a_x_alredy %s^8 a déjà une voiture
+3a_x_lftpot %s^8 a quitté les stands
+3a_w_rd_rly ^6Attention : pneus asphaltes pour rallycross
+3a_w_rly_rd ^6Attention : pneus rallycross sur asphalte
+3a_unkcdisc Voiture inconnue - déconnexion du joueur
+3a_modcdisc Voiture modifiée - déconnexion du joueur
+3a_nocrukid Impossible d'ajouter les infos de la voiture - id inconnu
+3a_xrenamex %s^8 se renomme %s
+3g_xtakovrx %s^8 remplace %s
+3g_xwantuto %s^8 veut que vous le remplaciez
+3g_xwantsto %s^8 veut remplacer quelqu'un
+3g_oswapend Vous pouvez changer de pilotes uniquement quand l'arrêt au stand est terminé
+3a_nosharnm Nom déjà utilisé
+3a_trkloadd Circuit chargé
+3a_x_pitted %s^8 est dans les stands
+3g_x_pitstp %s^8 s'est arrêté aux stands
+3a_x_connec %s^8 s'est connecté
+3g_x_blkmsg %s^8 a bloqué les messages
+3g_x_unblkm %s^8 a débloqué les messages
+3a_newgconn Un invité se connecte
+3a_gfailcon Echec de la connexion
+3g_waitplyc Attendez - un joueur se connecte
+3h_waitbuff Dépassement de tampon évité
+3a_xss_male %s^8 a envoyé son setup
+3a_xss_fmal %s^8 a envoyé son setup
+3a_xss_unkn %s^8 setup envoyé
+3a_packs_ps Paquets par seconde %d
+3a_novotepg Aucun vote en cours
+3h_vote_kic %s^8 vote pour expulser %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 vote pour bannir %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 délai dépassé
+3a_lostcn_x Connexion de %s^8 perdue
+3a_x_discon %s^8 s'est déconnecté
+3g_x_kicked %s^8 a été éjecté
+3g_x_banned %s^8 a été banni
+3g_skinnotf Votre skin de voiture n'a pas été trouvée à ^7www.lfsworld.net
+3g_helmnotf Votre skin de casque n'a pas été trouvée à ^7www.lfsworld.net
+3g_updatset Réglage mis a jour
+3g_fastlxxx Meilleur temps : %s par %s^8 (%s)
+3g_no_reset Interdiction de réinitialiser la voiture sur ce serveur
+3g_cant_res Réinitialisation impossible: %s
+3g_too_dang trop dangereux
+3g_could_ha pourrait toucher une autre voiture
+3g_could_hr pourrait toucher une voiture réinitialisée
+3g_would_ye pourrait causer une drapeau jaune
+3a_noqual_x Qual. impossible - %s
+3a_qulfauto Autocross
+3a_qulfprac Entraînement
+3a_qulfnote Désactivé
+3a_no_x_plc Ne peut %s - un joueur se connecte
+3a_no_x_cht Ne peut %s - changement de circuit
+3g_no_x_car Ne peut %s - la voiture est sur la piste
+3a_cf_swpsd échanger de côté
+3a_cf_gopit stand
+3a_cf_chqul changer temps de qualification
+3a_cf_chlap changer tours
+3a_cf_chwin changer vent
+3b_cf_finfo changer infos
+3a_crestart démarrer la course
+3a_cntrpits entrer dans les stands
+3a_cspectat observer
+3a_cantjoin rejoindre
+3a_cantleav quitter
+3a_obsolvid Ralenti obsolète
+3a_vidlater Le ralenti date d'une version ultérieure
+3h_hls_hlvc HLVC
+3h_hls_inva INVALIDE
+3h_hls_cust PERSONNALISE
+3a_htlpinvl Tour chrono invalide (%s)
+3a_hli_grnd sol
+3a_hli_wall mur
+3a_hli_obje objet
+3a_hli_wron mauvaise direction
+3h_hli_spee excès de vitesse
+3a_ptp_locl local
+3a_ptp_remt distant
+3a_ptp_lcai IA (G)
+3a_ptp_rmai IA (D)
+3a_rsk_noob DEBUTANT
+3a_rsk_lrnr JUNIOR
+3a_rsk_okok OK
+3a_rsk_quik RAPIDE
+3a_rsk_prof PRO
+3a_x_finish %s^8 a terminé
+3a_x_finplc %s^8 a terminé %s
+3g_x_fin1be %s^8 a fini 1 tour derrière
+3g_x_finxbe %s^8 a fini %d tours derrière
+3g_x_conplc %s^8's fini en %s position
+3g_x_disqua %s^8 est disqualifié
+3a_x_wonrac %s^8 a gagné la course
+3a_max3locl Maximum 3 pilotes locaux
+3a_fnshuncl non classé
+3a_fnsh_1st 1er
+3a_fnsh_2nd 2ème
+3a_fnsh_3rd 3ème
+3a_fnsh_4th 4ème
+3a_fnsh_5th 5ème
+3a_fnsh_6th 6ème
+3a_fnsh_7th 7ème
+3a_fnsh_8th 8ème
+3a_fnsh_9th 9ème
+3a_fnsh10th 10ème
+3a_fnsh11th 11ème
+3a_fnsh12th 12ème
+3a_fnsh13th 13ème
+3a_fnsh14th 14ème
+3a_fnsh15th 15ème
+3a_fnsh16th 16ème
+3g_fnsh17th 17ème
+3g_fnsh18th 18ème
+3g_fnsh19th 19ème
+3g_fnsh20th 20ème
+3g_fnsh21st 21ème
+3g_fnsh22nd 22ème
+3g_fnsh23rd 23ème
+3g_fnsh24th 24ème
+3g_fnsh25th 25ème
+3g_fnsh26th 26ème
+3g_fnsh27th 27ème
+3g_fnsh28th 28ème
+3g_fnsh29th 29ème
+3g_fnsh30th 30ème
+3g_fnsh31st 31ème
+3g_fnsh32nd 32ème
+3a_wlcm_lfs Bienvenue dans Live for Speed
+3a_agre_lfs Accord
+3a_overwrex Remplacer le fichier existant?
+3g_deleteex Supprimer le fichier existant?
+3g_newnamef Nouveau nom du fichier
+3g_filealre Ce nom existe déjà
+3g_cnotfind Fichier introuvable
+3a_layoutsv Entrez le nom de la disposition à sauvegarder
+3a_windocon Connexion en mode fenêtré :
+3a_cancelbt annuler
+3a_backbutt retour
+3a_capitlok OK
+3a_capitlgo GO
+3a_invldstr invalide
+3a_cpfinish FINI
+3a_cpwinner VAINQUEUR
+3a_namepass Nom d'utilisateur et mot de passe
+3a_validnam Vous devez entrer un nom d'utilisateur valide
+3a_validpas Vous devez entrer un mot de passe valide
+3a_passmin8 Le mot de passe doit faire au moins 8 caractères
+3a_shifttyp Type de boite de vitesses :
+3a_autogear Boîte automatique :
+3a_notiming - tours non-chronométrés
+3a_stilload Chargement du circuit
+3a_waitlist En attente de la liste des jeux
+3a_wt_ginfo En attente des infos du jeu
+3a_connmast Connexion au serveur maître
+3a_waitmrep En attente de la réponse du serveur maître
+3a_waithrep En attente d'une réponse de l'hôte
+3a_waitinfo En attente des infos
+3a_masterro Echec de la connexion
+3a_mnoreply Aucune réponse du serveur maître
+3a_waitginf En attente des infos de l'invité
+3a_waitpinf En attente des infos du pilote
+3a_waitmsgs En attente des premiers messages
+3a_connhost Connexion vers l'hôte en cours
+3a_conn_udp Création de la connexion UDP en cours
+3a_openserv Socket serveur en cours d'ouverture
+3a_unexmstr Paquet maître inattendu
+3a_unexsrvr Paquet serveur inattendu
+3a_unexgest Paquet invité inattendu
+3a_numg_oob Nombre d'invités en dehors des limites
+3a_errrhost Une erreur est survenue en répondant à l'hôte
+3a_unextrak Changement de circuit inattendu
+3a_unkntrak Erreur de circuit inconnu
+3a_unexpack Taille de paquet inattendue
+3a_unexrepl Réponse inattendue
+3a_gmnmused Le nom du jeu est déjà utilisé
+3a_errmthrd Impossible de créer le thread maître
+3a_lostmast Connexion avec le serveur maître perdue
+3a_losthost Connexion avec l'hôte perdue
+3g_notisync La synchronisation initiale a échouée
+3g_lostsync Synchronisation perdue avec le serveur hôte
+3a_connecto Temps de connexion dépassé
+3a_noconnsl Aucun slot de connexion disponible
+3a_nookpack OK non reçu
+3a_waitfook En attente du OK
+3a_waittrak En attente des informations du circuit
+3a_notrakpk Les infos du circuit n'ont pas été reçues
+3a_loadtrak Chargement du circuit
+3a_chglight Changement des lumières
+3a_ply_join Un joueur se connecte
+3a_nochrace Impossible de changer de circuit en course
+3g_trnoallo %s n'est pas activé ici
+3a_chgtrack Changement de circuit
+3h_welcomex Bienvenue sur Live for Speed %s
+3a_small_no non
+3a_smallyes oui
+3h_smallaut auto
+3h_smallnev jamais
+3h_smallask demander
+3h_smallalw toujours
+3a_smalloff aucun
+3a_smalreal réel
+3a_smalvrtl virtuel
+3a_smalleft gauche
+3a_smalrght droite
+3a_smalnone aucun
+3a_smaltext texte
+3a_smallall tout
+3a_smallman homme
+3a_smallwmn femme
+3h_smallb16 16 bits
+3h_smallb32 32 bits
+3a_smlnobrk [non]
+3a_smlysbrk [oui]
+3a_smlofbrk [désactivé]
+3a_smlonbrk [activé]
+3a_actobjct objet
+3a_actstart position de départ
+3a_actfinsh ligne d'arrivée
+3a_actchck1 1er checkpoint
+3a_actchck2 2ème checkpoint
+3a_actchck3 3ème checkpoint
+3g_actcircl cercle
+3a_actnofin Aucune ligne d'arrivée
+3a_actnochk Aucun checkpoint
+3a_actfnnoc Ligne d'arrivée mais aucun checkpoint
+3a_accpxnof Checkpoint %d introuvable
+3a_aconechk Autocross : 1 checkpoint
+3a_acxchckp Autocross : %d checkpoints
+3a_noloadsk Impossible de charger le skin :
+3a_wrngfltp Mauvais type de fichier
+3a_cnocolon Impossible d'ouvrir le fichier :
+3a_outcnopn Sortie : Impossible d'ouvrir le fichier
+3d_outnoply Sortie : Impossible de trouver la voiture du pilote
+3d_outstart Sortie : Tour démarré
+3d_outfinis Sortie : Arrivé
+3a_corruptf Fichier corrompu
+3a_filenohc Vérification de l'entête du fichier échouée :
+3g_filetoos Le fichier est trop court :
+3g_filecorr Le fichier est corrompu :
+3g_err_read Erreur de lecture du fichier :
+3g_notpcmwv Les WAV n'ont pas l'air d'être des PCM :
+3g_srnotsup Ce taux d'échantillonnage n'est pas supporté :
+3g_wv_mo_st Le WAV n'est ni mono, ni stéréo :
+3g_wavemb16 Le WAV n'est pas 16-bit :
+3g_wavetool Le WAV est trop long :
+3a_latervfl Fichier créé par une version antérieure :
+3a_nocrtfil Impossible de créer le fichier :
+3a_votecanc Vote annulé
+3a_nocrtmpr Impossible de créer le fichier MPR
+3a_savedmpr Ralenti multijoueurs sauvegardé -
+3a_nocrtspr Impossible de créer le fichier SPR
+3a_savedspr Ralenti solo sauvegardé -
+3a_nornmspr Impossible de renommer le SPR -
+3a_accesden Accès refusé
+3a_invalchr Caractères invalides
+3a_notfound Non trouvé
+3a_unknowne Erreur inconnue
+3g_downcanc Téléchargement annulé
+3g_filesize Mauvaise taille de fichier
+3g_highresd Skins haute-résolution :
+3g_nolfswcr Pas assez de LFS WORLD crédits pour les skins haute-résolution
+3g_dbnotava Base de données des skins haute-résolution non disponible
+3a_entermsg Entrez le message
+3g_seldefcp Choisir la page de code par défaut
+3a_ctabshwr CTRL + TAB - voir les résultats
+3a_shf8nwdb MAJ + F8 - débogage réseau - %s
+3a_newvalfx Entrez la nouvelle valeur pour %s
+3a_valtoolo Nouvelle valeur trop basse
+3a_valtoohi Nouvelle valeur trop haute
+3a_endoqual FIN DES QUALS
+3a_ctrcclip CTRL + C - souris attachée
+3a_ctrcfree CTRL + C - souris libre à l'intérieur
+3a_windotxt fenêtre
+3a_fullstxt plein écran
+3g_not_demo pas accessible en DEMO
+3h_noraceln l'affichage de la ligne de course n'est pas disponible
+3g_time_loc local
+3g_time_utc UTC
+3a_namelong Le nom est trop long
+3a_noconnms Connexion au serveur maître impossible
+3a_wrninsta Attention : une autre session de LFS est active
+3g_lfsbuyon Live for Speed - achat en ligne - ^7www.lfs.net
+3g_comentry Commande pour l'écran d'entrée seulement
+3g_insimnop InSim n'est pas ouvert
+3g_comguest Cette commande est pour les invités multijoueur
+3g_comsetup Cette commande est pour l'écran des réglages
+3g_comnoded Cette commande n'est pas pour un hôte dédié
+3g_unknwnai Pilote IA inconnu
+3g_drv_alrd Pilote déjà en course
+3g_drv_noin Le pilote ne court pas
+3g_setup_nf Réglage introuvable
+3g_colournf Couleur introuvable
+3g_scrtooma Trop de scripts
+3g_scrtoolo Le script est trop long
+3g_scrempty Le script est vide
+3g_un_axs_f Fonction d'axe inconnue
+3g_un_key_f Fonction de touche inconnue
+3g_un_btn_f Fonction de bouton inconnue
+3g_xlnxtool %s : la ligne %d est trop longue
+3g_x_ln_x_x %s : ligne %d - %s
+3g_cantopen Ne peut ouvrir : %s
+3g_notallow Non autorisé : %s
+3h_cp_latin Latin 1
+3h_cp_cente Europe Centrale
+3h_cp_turki Turc
+3h_cp_balti Baltique
+3h_cp_japan Japonais
+3h_cp_cyril Cyrillique
+3h_cp_greek Grec
+3h_cp_tr_ch Chinois Traditionnel
+3h_cp_si_ch Chinois Simplifié
+3h_cp_korea Coréen
+3a_hostfull Serveur plein
+3a_hostload L'hôte charge le circuit
+3a_plyrconn Un joueur se connecte déjà
+3g_plydisco Un joueur se déconnecte
+3h_racstart Une course commence
+3a_unauthcn Connexion non-autorisée
+3a_useronli Utilisateur déjà en ligne
+3h_userband Le nom d'utilisateur est actuellement banni
+3a_usernofd Votre nom d'utilisateur n'a pas été trouvé
+3a_pwnomtch Le GAME password ne correspond pas
+3g_pwneeded Vous devez entrer un GAME password
+3h_unlkused Tous les déverrouillages de la semaine ont été utilisés
+3h_unpwconf Nom d'utilisateur et mot de passe confirmés
+3a_unknwerr Erreur inconnue
+3a_carnomtc Les voitures ne correspondent pas aux voitures de l'hôte
+3a_nodbljon Pas de double-connexions
+3a_hlostmst L'hôte a perdu la connexion au serveur maître
+3a_wrngpass Mauvais mot de passe
+3a_prvreqps Cet hôte privé requiert un pass
+3a_usrunknw Nom du joueur inconnu
+3a_usrnotol Le joueur n'a pas été trouvé en ligne
+3a_usrolhid Le joueur est en ligne dans un serveur caché
+3g_usrol_s1 Utilisateur en ligne sur un serveur S1
+3g_usrol_s2 Utilisateur en ligne sur un serveur S2
+3g_usrol_s3 Utilisateur en ligne sur un serveur S3
+3a_hostrefu Refus de la connexion
+3a_hstdiffv L'hôte a une version différente
+3a_hstdiffc Le jeu de l'hôte est codé différemment
+3a_hstis_s1 Hôte : Live for Speed S1
+3g_hstis_s2 Hôte : Live for Speed S2
+3g_hstis_s3 Hôte : Live for Speed S3
+3a_hstisdmo Hôte : Live for Speed DEMO
+3a_hstunknr Réponse de l'hôte inconnue
+3a_hstnomst Hôte introuvable sur le serveur maître
+3a_nameused Le nom est déjà utilisé
+3a_racefull La course est pleine
+3g_nomidjoi Impossible de rejoindre en pleine course sur ce serveur
+3b_usermeet L'utilisateur est dans le salon
+3b_unkncomm Commande inconnue
+3h_unknwver Version inconnue
+3b_reqparam Cette commande nécessite un paramètre
+3b_req2pars Cette commande nécessite 2 paramètres
+3e_notenpar Pas assez de paramètres
+3b_unknwtrk Paramètre de circuit inconnu
+3e_unknwcar Paramètre de voiture inconnue
+3b_unoadmin Vous n'avez pas les droits administrateur
+3b_kbinvalu Nom d'utilisateur non-valide
+3b_invalpar Paramètre non-valide
+3g_ptoolong Paramètre trop long
+3g_notfound Fichier introuvable
+3e_setuponl Commande seulement pour la config écran
+3e_axnofind Ne peut ouvrir la disposition (layout)
+3e_axnoneav Aucune disposition (layout) trouvée
+3e_kbnoload Impossible de charger le fichier
+3e_kbnosave Impossible de sauvegarder le fichier
+3g_tooearly Trop tôt pour redémarrer la course
+3g_pplracin Des joueurs sont toujours en course
+3h_notrxudp Le serveur n'a pas reçu le paquet UDP
+3h_nomultij Eviter les requêtes multiples pour rejoindre la partie
+3h_modreqpw La modification de l'hôte nécessite un mot de passe
+3h_invalidu Nom d'utilisateur non-valide

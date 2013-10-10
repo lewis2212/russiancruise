@@ -1,0 +1,1686 @@
+LFS Translation file (Turkish)
+Translated by: disqk, zippr, ZORER
+
+tx_codepage 1254
+tx_langname Türkçe
+tx_noun_adj an
+3g_tr_selct Antrenman
+3g_tr_title Ders Seçin
+3a_spselect Tek kiþilik oyun
+3a_tit_sply Tek Kiþilik Oyun
+3a_mpselect Çok kiþilik oyun
+3a_tit_mply Çok Kiþilik Oyun
+3a_hlselect Zamanlama turu at
+3a_tit_hotl Zamanlama Turu At
+3a_opselect Seçenekler
+3g_repl_sel Tekrarlamalar
+3a_tit_sprs Tek Oyunculu Tekrarlamalar
+3a_tit_mprs Çok Oyunculu Tekrarlamalar
+3g_unlk_lfs Live for Speed'i aç
+3g_demorace Demo yarýþçýsý
+3h_x_licens %s lisansý
+3a_mode_dmo Demo
+3h_s_coln_s %s: %s
+3g_re_sk_dl Tekrarlama Kaplamasý Ýndir
+3g_one_notf Tekrarlamadaki kaplamalardan biri bilgisayarýnýzda bulunamadý
+3g_sev_notf Tekrarlamadaki kaplamalardan bazýlarý bilgisayarýnýzda bulunamadý
+3g_one_down Eksik kaplamayý indirmek istiyor musunuz?
+3g_sev_down Eksik kaplamalarý indirmek istiyor musunuz?
+3a_exit_btn kapat
+3a_next_btn sonraki
+3g_agre_btn kabul ediyorum
+3a_exitprog Çýkmak istediðinize emin misiniz?
+3a_userfind Aranacak kullanýcýnýn adý
+3h_num_tips %d Ýpucu
+3h_tip_pesc Oyunun içindeyken ya da ayarlama ekranýndayken 'seçenekler' menüsünü açmak için ESC tuþuna basýn
+3h_tip_prst Çok kiþili oyun oynarken mesaj göndermek için T tuþuna basýn
+3h_tip_ffwr Titreþimli bir direksiyon kullanýlmasý önerilir
+3h_tip_rtcg Debriyajý ýsýtmamak için vites deðiþtirirken gazý kesin
+3h_tip_brak Bir dönemece yaklaþýrken freni kullanacaðýnýz zamaný iyi ayarlayýn
+3g_hdr_name Ders Adý
+3g_hdr_diff Zorluk
+3g_hdr_mode Mod
+3g_dif_easy Kolay
+3g_dif_medi Orta
+3g_dif_hard Zor
+3g_lsn_firs ilk ders
+3g_lsn_next sonraki ders
+3g_lsn_trya tekrar dene
+3g_lsn_fini tamamlandý
+3g_tit_obje ^7HEDEF
+3g_tit_purp ^7AMAÇ
+3g_tit_tips ^7ÝPUÇLARI
+3g_tit_targ ^7HEDEF ZAMANLAR
+3g_not_time Zamanýnda bitiremediniz!
+3g_not_fini Kursu bitirmediniz!
+3g_comp_but Kursu bitirdiniz fakat...
+3h_false_st - Yeþil ýþýktan önce baþladýnýz
+3g_too_long - Bitirmeniz çok uzun sürdü
+3g_coll_car - Baþka bir otomobile dokundunuz
+3g_wrong_rt - Yanlýþ rota izlediniz.
+3g_hit_1_ob - Bir cisme çarptýnýz
+3g_hit_x_ob - %d cisme çarptýnýz
+3g_not_fast - Kontrol noktasýný yeteri kadar hýzlý geçmediniz
+3g_slo_stop - Durmanýz çok uzun sürdü
+3g_exce_spd - Pit þeridi hýz limitini aþtýnýz
+3g_nopitstp - Pitstop yapmadýnýz
+3g_not_long - Yeterince uzun kalmadýnýz
+3g_congrats Tebrikler! Testi geçtiniz!
+3g_stndrd_x Bu ders için durumunuz: %s
+3g_lsnunl_x Bu dersi almak için %s açýk olmalýdýr
+3a_nocarsel Otomobil seçmediniz
+3a_araceinp Bir yarýþ sürmekte
+3a_plydisco Konuðun baðlantýsý kesilecek
+3a_leavgame Sunucudan ayrýl
+3a_playrbtn Sürücü
+3a_garagbtn Garaj
+3a_trackbtn Pist
+3a_tit_trak Pist
+3a_load_brk [yükleniyor]
+3a_gene_brk [oluþturuluyor]
+3a_notr_brk [pist yok]
+3a_endonlin Sunucuyu sonlandýrmak istiyor musunuz?
+3a_levonlin Sunucudan ayrýlmak istiyor musunuz?
+3a_swap_pos Konum deðiþtir
+3a_joinrace Yarýþa katýl
+3a_addaidrv AI sürücüsü ekle
+3a_setready Hazýr ol
+3a_starthdr Baþlangýç düzeni
+3a_skillhdr Yetenek seviyesi
+3a_race_hdr Yarýþ
+3a_readybtn Hazýr
+3a_localsml yerel
+3a_vhostsml sunucudan
+3g_adminsml yönetici
+3a_dirctsml doðrudan
+3a_no_track pist yok
+3a_nodriver yarýþçý yok
+3a_carerror otomobil hatasý
+3a_raceinpr yarýþ sürüyor
+3a_remvplyr sürücüyü çýkar
+3a_no_quali eleme turu yok
+3a_qual1min eleme 1 dk.
+3a_qualxmin eleme %d dk.
+3a_practice antrenman
+3a_race1lap yarýþ 1 tur
+3a_racexlap yarýþ %d tur
+3a_race1hou yarýþ 1 saat
+3a_racexhou yarýþ %d saat
+3a_zerowind rüzgar yok
+3a_low_wind az rüzgar
+3a_highwind çok rüzgar
+3a_nosamenm Bir sunucuda ayný isme sahip sürücüler olamaz
+3a_ac_onest Autocross: sadece bir baþlangýç noktasý
+3a_ac_fixlp Autocross: sabit tur sayýsý
+3h_kickplyr %s^8 isimli konuk atýlsýn mý? (%s^8)
+3h_howlongb %s^8 kaç günlüðüne uzaklaþtýrýlacak? (%s^8)
+3h_ainodriv AI sürücüleri bu düzenlemeyle araç süremez
+3h_ainoxral AI sürücüleri rallycross pistinde %s alamaz
+3h_ainoxcfg AI sürücüleri bu düzenlemeyle %s alamaz
+3a_cdntsvst Ayarlar kaydedilemedi
+3a_sent_set Düzenleme gönderildi
+3a_plynotfd Sürücü bulunamadý
+3a_carnotfd Sürücünün otomobili bulunamadý
+3a_namsetsv Kaydedilecek düzenlemenin adýný girin
+3h_gridsave Kaydedilecek baþlangýç sýralamasýnýn adýný girin
+3h_gridload Yüklenecek baþlangýç sýralamasýný seçin
+3h_xremovex %s^8, %s^8 isimli yarýþçýyý baþlangýç sýralamasýndan çýkardý
+3a_endgmbtn sunucuyu kapat
+3a_leavebtn ayrýl
+3g_endr_btn yarýþý bitir
+3g_spec_btn izleyici ol
+3h_qual_btn sýralama turlarý
+3h_rest_btn yeniden baþlat
+3h_pits_btn pit
+3g_join_btn yarýþa katýl
+3g_play_btn oynat
+3a_namesort isim
+3a_datesort tarih
+3a_car_caps Otomobil
+3a_newbtset Kendi düzenlemenizi yapmak için 'Yeni düzen' düðmesine basýn
+3a_selplset Hazýr ayarlar deðiþtirilemez, 'Yeni düzen' düðmesine basýn
+3a_newbtcol Kendi renginizi oluþturmak için 'Yeni renkler' düðmesine basýn
+3a_selplcol Hazýr renkler deðiþtirilemez, 'Yeni renkler' düðmesine basýn
+3a_sets_hdr Düzenlemeler
+3a_cols_hdr Otomobil renkleri
+3a_new_setb Yeni düzen
+3a_new_colb Yeni renkler
+3a_savedset Ayarlar kaydedildi
+3a_savedcol Renkler kaydedildi
+3a_new_butt Yeni
+3a_del_butt Sil
+3a_undo_btn Geri al
+3g_rename_b Ýsim deðiþtir
+3h_clear_bt Temizle
+3a_drvr_hdr Sürücü
+3a_frce_hdr Kuvvet
+3g_fuel_hdr Yakýt
+3g_susp_hdr Süsp.
+3a_out_butt Dýþarý
+3a_in_buttn Ýçeri
+3a_off_butt Kapalý
+3a_on_buttn Açýk
+3a_stop_btn Dur
+3a_drop_btn Býrak
+3a_namenset Yeni düzenlemenin adýný girin
+3g_newnmset Düzenleme için yeni isim girin
+3a_setnodel Bu düzenleme silinemez
+3a_deletset Düzenlemeyi silmek istediðinize emin misiniz?
+3a_setnonam Düzenlemeye isim vermelisiniz
+3a_namencol Yeni renk düzeninin adýný girin
+3h_newnmcol Renk düzeninin yeni adýný girin
+3a_colnodel Bu renk düzeni silinemez
+3a_deletcol Renk düzenini silmek istediðinize emin misiniz?
+3a_colnonam Renk düzenine isim vermelisiniz
+3a_carninvl Otomobilin adý geçersiz
+3a_sel_skin Kaplama seç
+3a_drv_none Çekiþ yok
+3a_drv_fron Arkadan itiþli
+3a_drv_rear Önden çekiþli
+3a_drv_four Dört çeker
+3g_dif_open Açýk Dif.
+3g_dif_lock Kilitli Dif.
+3g_dif_visc VISCOUS LSD
+3g_dif_clsd CLUTCH PACK LSD
+3a_no_creds Kredi yok
+3a_one_cred 1 kredi
+3a_xx_creds %d kredi
+3g_host_dis Bu sunucu %s sürmenize izin vermiyor
+3h_ndxmdcax Ancak %s modunda %s sürebilirsiniz
+3h_ndulxcax Ancak LFS %s kilidini açarak %s sürebilirsiniz
+3g_all_caps Hepsi
+3g_newnmrep Tekrarlama dosyasý için isim girin
+3g_repnodel Tekrarlama dosyasý silinemedi
+3g_deletrep Tekrarlama dosyasý silinsin mi?
+3g_repnonam Ýsimsiz tekrarlama dosyasý oluþturulamaz
+3g_set_sh_x %s için ayarlar:
+3a_rght_brk [sað]
+3a_left_brk [sol]
+3a_plyrname Sürücü ismi:
+3g_otherply Diðer sürücüler:
+3a_numplate Plaka:
+3a_countryc Ülke:
+3a_poschoos Sürücü koltuðu:
+3a_speedcho Hýz göstergesi:
+3a_pressure Basýnç göstergesi:
+3g_lang_cln Dil:
+3g_font_cln Yazýtipi:
+3g_wght_cln Yazý kalýnlýðý:
+3g_adnewply yeni sürücü ekle
+3g_dlselply Sürücüyü silmek istediðinizden emin misiniz?
+3g_enterply Yeni sürücünün adýný girin
+3g_plyexist Sürücü zaten kayýtlý
+3g_newnamex Sürücü için yeni isim girin (%s^8)
+3a_brak_mph [mil/s]
+3a_brak_kmh [km/s]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Fren yardýmý:
+3a_autoclch Otomatik debriyaj:
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Geniþ ekran efekti:
+3a_clipwndo Fareyi pencereyle sýnýrla CTRL+C:
+3a_clipflsc Fareyi ekranla sýnýrla CTRL+C:
+3a_leftscrn sol ekran
+3a_rghtscrn sað ekran
+3a_keyshpls Tuþlarý ayarla (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful pencere / tam ekran
+3a_shf4togg SHIFT + F4 tam ekran / pencere modlarýný ayarlar
+3a_shxalrdy SHIFT + F%d zaten bu moda ayarlanmýþ
+3a_assxmodx SHIFT + F%d tuþlarý %s moduna ayarlansýn mý?
+3a_unkntype bilinmeyen
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x %s görünüm için ayarlar:
+3a_vw_incar otomobil içi
+3b_vw_custm kiþisel
+3a_ishwdywy [sürücü AÇIK direksiyon AÇIK]
+3a_ishwdnwy [sürücü KAPALI direksiyon AÇIK]
+3a_ishwdnwn [sürücü KAPALI direksi. KAPALI]
+3a_oht_none [hiçbiri]
+3a_oht_splt [bölüm zamanlarý]
+3a_normlfov Görüþ alaný (FOV) %.0f°:
+3h_onebutlk Tek tuþ bakýþý %.0f°:
+3a_pitchviw Aþaðý-yukarý bak %.2f°:
+3b_rotatviw Döndür %.2f°:
+3g_mirror_x Ayna yatay konumu %.3f m:
+3g_mirror_z Ayna dikey konumu %.3f m:
+3a_tlt1gdeg 1g kafa eðimi %.2f°:
+3a_shiftlat 1g yatay kayma %.3f m:
+3a_shiftfwd 1g öne kayma %.3f m:
+3a_shiftvrt 1g dikey kayma %.3f m:
+3a_moveanim Görüþü vücutla hareket ettir:
+3a_defdrvvw Varsayýlan sürücü görüþü:
+3g_cvw_main Çizim (ana):
+3b_cvsnthng çizme
+3b_cvswheel tekerler
+3g_cvsdbody gövde
+3b_cvsexter harici
+3g_cvshelic heli
+3g_cvsfollo takip
+3h_cvsuserv kullanýcý
+3b_cvwxoffs X konumu %.3f m:
+3b_cvwyoffs Y konumu %.3f m:
+3b_cvwzoffs Z konumu %.3f m:
+3g_c_defaul Varsayýlan konum
+3g_c_centre Merkezden Görüþ
+3g_c_eyepos Göz Konumu
+3g_cvw_high Yükseklik %.1f m:
+3g_cvw_angl Açý %.1f°:
+3g_cvw_dist Mesafe %.1f m:
+3g_cvw_vlag Yumuþatma %.1f s:
+3a_drawdrwh Sürücü / direksiyon çizimi:
+3a_lookfunc Bakýþ fonksiyonu:
+3a_lookaxis eksen
+3a_lookstee dönüþ
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav Fare ile bakýþ sadece fare imleci gizlendiðinde mümkündür.
+3a_looksens Bakýþ hassasiyeti %.2f:
+3a_lookcred Bakýþ açýsýný azalt %.2f:
+3a_btnlooko Tuþ ile bakýþ:
+3g_l_smooth yumuþak
+3g_l_instan ani
+3h_mainsfov Ana ekran FOV %.0f°:
+3h_monangle Ekran Açýsý %.0f°:
+3h_viewoffs Görüþ offseti %.2f:
+3h_multiscl Çoklu ekran dizilimi:
+3h_entnumls Sol taraftaki ekran sayýsýný giriniz
+3h_entnumrs Sað taraftaki ekran sayýsýný giriniz
+3h_onecentr Tek orta ekran
+3h_scwidths Ekran geniþlikleri:
+3h_optequal eþit
+3h_optunequ eþit deðil
+3h_entsidep YAN ekran geniþliðini girin (piksel)
+3h_entmainp ANA ekran geniþliðini girin (piksel)
+3h_fullwext Dýþarýdan görüþlerin toplam geniþliði:
+3h_bezelcom Kenar dengeleme %.1f%%:
+3h_resulfov Elde edilen görüþ alaný: %.1f°
+3h_fovinval Geçersiz sürüþ görüþü ayarlarý
+3h_drivuse1 Sürüþ görüþleri tek render kullanacak
+3h_drivusex Sürüþ görüþleri %d render kullanacak
+3h_notwidex Gerçek %d-ekran düzeni için yeterince geniþ deðil
+3h_extvfull Harici görüþler tam geniþlik kullanacak
+3h_extvmain Harici görüþler ana ekraný kullanacak
+3h_extvxxar Harici görüþler %d:%d en-boy oraný kullanacak
+3h_extvass3 Harici görüþler için 3-ekran düzeni varsayýlýyor
+3a_sml_newt yeni
+3a_sml_name isim
+3a_sml_delt sil
+3a_sml_undo geri al
+3a_sml_save kaydet
+3a_sml_load yükle
+3a_msctrcks Müzikler
+3a_exitnosv Kaydetmeden çýkmak istediðinize emin misiniz?
+3a_chmblost Deðiþiklikler kaybolabilir
+3a_savedrad Deðiþiklikler kaydedildi
+3a_nodelstp Ayarlama kanalý silinemez
+3a_delchnlq Kanalý silmek istediðinizden emin misiniz?
+3a_chanlnum Kanal %d
+3a_msctrnum Müzik %d
+3a_norenstp Ayarlama kanalýnýn ismi deðiþtirilemez
+3a_newnmchn Kanalýn yeni ismini yazýn
+3a_play_num Çalýnan: %s
+3a_fail_num Çalýnamadý: %s
+3a_shftauto otomatik
+3a_shftsequ sýralý
+3a_shftshft vites
+3g_shftffjo ff çubuk
+3h_transmis Þanzýman
+3h_box_hpat düz vites
+3h_box_bike motosiklet þanzýmaný
+3h_box_sequ sýralý þanzýman
+3h_box_seqi devir kesicili sýralý þanzýman
+3h_box_semi kulakçýk yönetimli þanzýman
+3h_seq_hpat sýralýlaþtýrýlmýþ düz þanzýman
+3a_dc_combi birleþik
+3a_dc_separ ayrý
+3a_dc_butts düðmeler
+3a_axb_axis eksen
+3a_axb_butt düðme
+3g_no_con_d Kontrol cihazý bulunamadý
+3g_xx_con_d %.0f kontrol cihazý algýlandý
+3g_ct_unkno Bilinmeyen kontrol cihazý
+3g_ct_first Birincil kiþi kontrol cihazý
+3g_ct_steer Direksiyon
+3g_ct_fligh Uçuþ çubuðu
+3g_ct_gamep Gamepad
+3g_ct_joyst Oyun çubuðu
+3a_crrdcval Dönme merkezini küçült %.2f:
+3g_whe_turn Direksiyon açýsý %.0f°:
+3a_msbutt_1 Tuþ takýmý 1
+3a_mdbutt_2 Tuþ takýmý 2
+3e_kbt_mous [fare]
+3e_kbt_nohe [klavye - yardýmsýz]
+3e_kbt_stab [klavye - dengeli]
+3a_mdaxesff Eksenler / FF
+3a_mdshiftr Vites
+3a_kasteerl Sola döndür
+3a_kasteerr Saða döndür
+3e_kasteerl Hýzlý döndür
+3e_kasteerr Yavaþ döndür
+3a_kaaccelk Gaz
+3a_kabrakek Fren
+3a_kaleftvw Sola bak
+3a_karghtvw Saða bak
+3a_karearvw Arkaya bak
+3a_kashiftu Vites yükselt
+3a_kashiftd Vites düþür
+3a_kaclutch Debriyaj
+3a_kahandbr El freni
+3a_kahornkk Korna
+3a_kaflashk Farlar
+3a_karesetk Otomobili düzelt
+3g_kapitspd Hýz Sýnýrlayýcý
+3h_katcdisa Çekiþ Denetimi
+3h_kaigniti Kontak
+3a_kazoom_i Yakýnlaþ
+3a_kazoom_o Uzaklaþ
+3a_karevers Geri
+3a_kafirstk Birinci
+3a_kasecond Ýkinci
+3a_kathirdk Üçüncü
+3a_kafourth Dördüncü
+3a_kafifthk Beþinci
+3a_kasixthk Altýncý
+3a_kasevent Yedinci
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Dönüþ
+3a_aacombin Gaz / Fren Birleþik
+3a_aathrott Gaz
+3a_aabrakea Fren
+3a_aalookhe Bakýþ Açýsý
+3a_aalookpi Bakýþ - Aþaðý-Yukarý
+3a_aalookro Bakýþ - Yan yatma
+3a_aaclutch Debriyaj
+3a_aahandbr El freni
+3g_aashiftx Vites Sol-Sað
+3g_aashifty Vites Ön-Arka
+3a_prsxforx Bunun için %s basýn: %s (ESC - iptal / DEL - hiçbiri)
+3a_smallkey tuþa
+3a_smallbut düðmeye
+3a_mouse_kb fare / klavye
+3a_wheel_js direksiyon / çubuk
+3a_force_st Kuvvet þiddeti %.0f:
+3a_thrbrkax Gaz / fren eksenleri:
+3a_clutchop Debriyaj:
+3a_handbrko El freni:
+3a_thrbrkrv Gaz / fren merkezini küçült %.2f:
+3a_btnratev Tuþ kontrol oraný %.2f:
+3a_kbsteero Dönüþ kontrolü aygýtý:
+3a_strratev Dönüþ oraný %.2f:
+3e_retratev Geri düzeltme oraný %.2f:
+3e_strfastv Hýzlý döndürme çarpaný %.2f:
+3e_strslowv Yavaþ döndürme çarpaný %.2f:
+3a_prdtimev Tahmin süresi %.2f:
+3a_lmtmultv Denge sýnýrlamasý çarpaný %.2f:
+3a_selfunca Eksene atanacak fonk. seçin
+3a_selaxfrx %s için eksen seçin (ESC - iptal / DEL - hiçbiri)
+3a_availaxs Mevcut Eksenler
+3a_axis_num eksen %d
+3a_invert_1 ters
+3a_invert_0 düz
+3a_frcfdbak Titreþim:
+3a_ffdevice Titreþim Cihazý:
+3g_ffshiftd Titreþimli Vites Cihazý:
+3a_removedz Ölübölgeleri kaldýr:
+3h_rec_axes eksenleri kalibre et
+3h_cal_lock kilitli
+3h_cal_unlk serbest
+3a_heyb_hdr Klavye
+3a_whbt_hdr Direksiyon tuþlarý
+3a_ass_zero [Sýfýr]
+3a_ass_mlft Fare Sol
+3a_ass_mrgt Fare Sað
+3a_ass_mmid Fare Orta
+3a_ass_whup FTeker. Yukarý
+3a_ass_whdn FTeker. Aþaðý
+3a_ass_spac Boþluk
+3a_ass_upar Yukari ok
+3a_ass_dnar Aþaðý ok
+3a_ass_rtar Sað ok
+3a_ass_ltar Sol ok
+3a_ass_pgup Sayfa Yukarý
+3a_ass_pgdn Sayfa Aþaðý
+3a_butt_num tuþ %d
+3d_aamousex Fare X
+3d_aamousey Fare Y
+3d_aa_xaxis X ekseni
+3d_aa_yaxis Y ekseni
+3d_aa_zaxis Z ekseni
+3d_aarxaxis RX ekseni
+3d_aaryaxis RY ekseni
+3d_aarzaxis RZ ekseni
+3d_aaslidr1 Kaydýrýcý 0
+3d_aaslidr2 Kaydýrýcý 1
+3a_reskeysh ayrýlmýþ tuþlar
+3a_rswtch_r 1 - tekrarlamayý izle
+3a_rssave_r 2 - tekrarlama kaydet
+3h_showline 4 - yarýþ hattýný çiz
+3a_rsless_f , - kuvveti azalt (FF)
+3a_rsmore_f . - kuvveti arttýr (FF)
+3a_rstab_ne TAB - sonraki araç
+3a_rshome_o HOME - kendi aracýnýz
+3a_rstalk_t T - konuþ
+3a_rspausep P - duraklat
+3a_rshistor H - geçmiþ
+3a_rsview_v V - görüþ
+3a_rsforces F - kuvvetler
+3a_rsnamesn N - isimler
+3a_shftplus SHIFT +
+3a_shchhorn H - korna deðiþtir
+3g_shshiftt G - vites deðiþtirme modu
+3a_shrescon C - kontrolleri yenile
+3a_shressnd W - sesleri yenile
+3a_shsoundo N - sesleri aç / kapat
+3a_shmirmod M - ayna
+3g_shhidetx F - yazýlarý gizle
+3a_shuservw U - kullanýcý görüþü
+3a_shskiptn K - sonraki müzik
+3h_shshowmo Z - mouseyi göster
+3b_shdriver F1 - sürücü görüþü
+3b_shslowrp F2 - tekrarlamayý yavaþlat
+3b_shfastrp F3 - tekrarlamayý hýzlandýr
+3a_shwindow F4 - pencere / tam ekran
+3a_carsndvl Otomobil sesi (%.1f):
+3a_skidvboo Kayma sesi (%.1f):
+3g_windvboo Rüzgar sesi (%.1f):
+3g_echovboo Yanký sesi (%.1f):
+3a_mscvolum Müzik sesi (%.1f):
+3g_msgvolum Arayüz sesi (%.1f):
+3a_mscsetup Ayar menülerinde müzik çal:
+3a_mscracin Yarýþ sýrasýnda müzik çal:
+3a_mscrplay Tekrarlarda müzik çal:
+3a_selecbrk [Seçildi]
+3a_noplybrk [Bir þey çalýnmýyor]
+3a_msc_skip Durdur
+3a_msc_sele Seç
+3a_ingmmusc Oyun içi müzik
+3a_channels Kanallar
+3g_status_a Ses (SHIFT + N): %s
+3g_status_m Müzik ön belleði: %s
+3g_status_c Ses ön belleði: %s
+3a_relaybrk [göreli]
+3a_absolbrk [kesin]
+3a_fps_disp SKS göstergesi:
+3b_virtuals Sanal baþlangýç ýþýklarýný göster:
+3a_mirrmode Ayna:
+3a_clokmode Gösterge:
+3g_fixedfwd Ön açýya sabitle:
+3g_accelmov Ývmenin görüþe etkisi:
+3a_showpeds Pedallarý göster:
+3g_steerind Sanal direksiyon göstergesi:
+3a_smallmap Küçük haritayý göster:
+3g_staticsm Küçük haritayý çevir:
+3a_pos_list Konum listesini göster:
+3a_dropshad Gölgeler:
+3a_msgtsize Mesajlarýn yazý büyüklüðü %.3f:
+3a_timedisp Toplam zaman göstergesi:
+3a_chptexto Kontrol noktasý yazýsý:
+3a_clndlcol Gösterge ibresinin rengi:
+3a_cltxtcol Gösterge yazýlarýnýn rengi:
+3a_cttxtcol Ana yazý rengi:
+3h_x_dash_c %s konsol:
+3h_roadgled Yol araçlarý vites LED rengi:
+3g_interfac Arayüz
+3a_asavnono [kapalý - kaydedilmez]
+3a_asavmanu [açýk - el ile kaydet]
+3a_asavauto [otomatik kaydet - önerilmez]
+3a_ogm_ainm AI isimleri
+3g_ogm_fkey F1-F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [sabit düzen]
+3a_rs_finis [bitiriþ düzeni]
+3a_rs_revfi [ters bitiriþ düzeni]
+3a_rs_randm [rastgele]
+3a_aidrvnum AI sürücü %d:
+3a_f_keynum F%d:
+3a_sprsvopt Tek oyuncu tekrarlama kaydý:
+3a_mprsvopt Çok oyuncu tekrarlama kaydý:
+3a_nonqracr Eleme turu olmayan yarýþý baþlatma þekli:
+3a_changbtn AI isimlerini / F tuþlarýný düzenle:
+3a_optlores düþük çöz.
+3a_opthires yüksek çöz.
+3g_optcompr sýkýþtýrýlmýþ
+3g_optsfull tam
+3g_opt_main ana
+3g_plus_mir + ayna
+3a_usrldval Kullanýcý Detay Seviyesi (%.2f):
+3a_dstldval Toz Detay Seviyesi (%.2f):
+3a_mirldval Ayna Detay Seviyesi (%.2f):
+3h_fsaa_txt Tam ekran keskinlik yumuþatma:
+3h_mip_bias Mip eðilimi:
+3h_mipbias0 Mip eðilimi (%.1f) arayüz / yazý:
+3h_mipbias1 Mip eðilimi (%.1f) nesneler / duvarlar:
+3h_mipbias2 Mip eðilimi (%.1f) çim / toprak:
+3h_mipbias3 Mip eðilimi (%.1f) yol yüzeyi:
+3a_shtypopt Gölge tipi:
+3g_treesopt Aðaçlarý çiz:
+3g_flagsopt Bayraklarý çiz:
+3g_rubbropt Lastik izlerini çiz:
+3g_draw_sky Gökyüzünü çiz:
+3g_gadapter Baðdaþtýrýcý:
+3e_zbdopt_d Z-Tampon derinliði (%d):
+3e_hazetext Sis efekti:
+3h_mip_type Kaplama süzgeci / AF:
+3h_text_res Kaplamalar (otomobil ve kask dýþýnda):
+3g_carskins Otomobil ve kask kaplamalarý:
+3g_texmemmb Kaplama hafýzasý kullanýmý: %.1f MB
+3a_crdnoshd Ekran kartýnýz LFS'deki gölgeleri gösteremez
+3g_crdnoftx Ekran kartýnýz tam boyut kaplamalarý kullanamaz
+3h_hvsnotav Ekran kartýnýz Hardware Vertex Shading kullanamýyor
+3g_seladres Sonraki açýlýþta kullanmak üzere kart seçin
+3e_rslfszbd Z-Tampon deðiþiklikleri için LFS'yi yeniden baþlatmalýsýnýz
+3a_flsvsync VSYNC:
+3g_prev_lag Kontrol gecikmesini engelle:
+3a_limitfps Saniyedeki kare sayýsýný kilitle:
+3a_maxfrmrt SKS sýnýrý:
+3g_tx_x_fps %d sks
+3a_minsleep En az bekleme:
+3g_debounce Vites deðiþtirme gecikmesi:
+3g_txt_x_ms %d ms
+3a_pixelval %d piksel
+3a_useplset AI yarýþçýlarý oyuncu ayarlarýný kullansýn:
+3a_useplcol AI yarýþçýlarý oyuncu renklerini kullansýn:
+3a_sndlgval Ses gecikmesi %.2f sn:
+3g_whe_comp Direksiyon dönüþ düzeltimi %.2f:
+3a_anlgsval Analog dönüþ yumuþaklýðý %.2f:
+3a_multispd Çoklu oyun görüþ uzaklýðý kýsýtlamasý:
+3g_car_skin Araç kaplamasý indir:
+3g_hel_skin Kask kaplamasý indir:
+3g_multidst Çoklu oyuncu otomobil çizimi %.0f m:
+3g_dynamlod Dinamik detay azaltýcý %.2f:
+3a_updtpath Yolu yenile:
+3a_puusrcar kendi aracý
+3a_puallcar tüm araçlar
+3h_replaysk Tekrarlamalar için kaplama indir:
+3g_introopt Baþlangýçta pisti yükle:
+3g_local_12 Yerel saat (12'lik saat düzeninde):
+3g_time_fps SKS yerine zamaný göster:
+3g_shfflags SHIFT + F modunda bayraklarý göster:
+3h_accelopt Ývmeölçer:
+3h_shadogen Gölge modu:
+3h_opt_defa varsayýlan
+3h_opt_alte alternatif
+3g_skin_d_q Kaplama indirmeleri
+3h_skin_use Hafýzadaki kaplamalar
+3a_crestart yarýþý baþlat
+3a_cntrpits pite gir
+3a_cspectat izle
+3a_cantjoin katýl
+3a_cantleav ayrýl
+3a_novtnolo Oylama yapýlmaz - yarýþta deðilsiniz
+3a_notdnord Test sürüþü yapýlamaz - tekrarlamada gerçek sürücü yok
+3a_esc_menu Menü
+3a_repmenig Tekrarlama Menüsü (oyun içi)
+3a_repmenld Tekrarlama Menüsü (yüklenen)
+3a_sel_pits Pit
+3a_sel_spec Ýzle
+3a_sel_join Katýl
+3a_sel_repl Tekrarlamayý göster
+3a_sel_outp Tur bilgisi çýktýsý
+3a_sel_rstr Yeniden baþlat
+3a_vote_str Yarýþýn baþlamasý için oy ver
+3a_vote_end Yarýþýn bitmesi için oy ver
+3a_vote_qua Eleme turu için oy ver
+3a_test_drv Test sürüþü
+3a_startrac Yarýþý baþlat
+3a_hqualify Eleme turu
+3a_resumegm Devam et
+3h_escapkey ESC
+3a_undefind tanýmsýz
+3a_arenatxt arena
+3a_singlstg tek seviye
+3a_standard standart
+3a_reversed ters
+3a_weth_hdr Hava
+3a_cnfg_hdr Yarýþ biçimi
+3h_layt_hdr Yerleþim
+3h_none_sel seçilmedi
+3a_info_cir pist
+3a_info_tot toplam
+3a_chng_trk Pist deðiþtir
+3h_revconfc Ters yarýþ biçimi:
+3h_openconf Açýk yarýþ biçimi:
+3h_ndxmdtrx Ancak %s modunda %s pistinde sürebilirsiniz
+3h_ndulxtrx Ancak LFS %s kilidini açarak %s pistinde sürebilirsiniz
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve TERS
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mil %s
+3g_x_x_km__ %s: %.1f km
+3g_x_x_mile %s: %.1f mil
+3g_dt_dawn_ Þafak
+3g_dt_sunri Gündoðumu
+3g_dt_morni Sabah
+3g_dt_day__ Gündüz
+3g_dt_after Öðleden Sonra
+3g_dt_sunse Günbatýmý
+3g_dt_dusk_ Akþamüstü
+3g_dt_night Gece
+3g_wth_clea Açýk
+3g_wth_clou Bulutlu
+3g_wth_over Kapalý
+3a_hlvcthis Tur-
+3a_hlvcnext Sonraki-
+3a_readynum Hazýr!  (%d)
+3a_noviewcr yarýþ için otomobil yok
+3a_thexisst %s baþlýyor
+3a_thexhase %s sona erdi
+3a_smlpract Antrenman
+3a_smlqulng Eleme turu
+3a_sml_race Yarýþ
+3a_replnotr Tekrarlama kaydedilmiyordu
+3g_notrecor Kaydedilmiyor
+3g_fov_temp Görüþ alaný %.0f°
+3a_replrest Tekrarlama yeniden baþlatýldý
+3a_aisvdknw AI sürücüsü bilgi kaydetti
+3a_timetmsx Zaman %.3fx
+3a_namenldf Bir sonraki tur bilgileri çýktý dosyasý
+3g_caps_wrn UYARI
+3g_caps_kik AT
+3g_caps_ban YASAKLA
+3g_caps_spe ÝZLE
+3a_namesoff isimleri gösterme
+3a_connlist baðlantý listesi göster
+3a_namesovr isimleri araç üstünde göster
+3h_showmous fareyi göster
+3h_hidemous fareyi gizle
+3a_mirrinfo ayna:
+3a_cancaujo Otomatik katýlým iptal edildi
+3a_reinicnt Kontrol cihazlarý yeniden yüklendi
+3a_reinisnd Sesler yeniden yüklendi
+3a_namemprs Kaydedilecek MPR dosyasýnýn adý:
+3a_namesprs Kaydedilecek SPR dosyasýnýn adý:
+3a_shnsound SHIFT + N : Ses - %s
+3g_shgsmode SHIFT + G : Vites modu - %s
+3a_shgautos SHIFT + G : Otomatik vites - %s
+3a_frcvalpc kuvvet %.0f%%
+3a_hrntypev Korna tipi %d
+3a_actnends Bitiyor
+3a_actnrest Tekrarlanýyor
+3a_actnstrt Baþlýyor
+3a_thngqual Eleme turu
+3a_thngrace Yarýþ
+3a_reploose tekrarlama hatasý (OOS)
+3a_pausetxt durduruldu
+3g_safeexit çýkýlýyor...
+3a_retrdcap YARIÞ TERK
+3a_dsqulcap DÝSKALÝFÝYE
+3g_unclcaps SIRALAMA DIÞI
+3a_wrngwcap TERS YÖN
+3a_capsdrvr SÜRÜCÜ
+3a_capsbstl EN ÝYÝ TUR
+3g_pitstops PÝT
+3g_spenalty PEN
+3a_capstotl TOPLAM
+3g_caps_car OTOMOBÝL
+3g_capsxlps %d TUR
+3g_plus1lap +1 tur
+3g_plusxlps +%d tur
+3h_falsesta HATALI KALKIÞ
+3h_pe_speed PIT ALANINDA AÞIRI HIZ
+3h_pe_short PIT STOP ÇOK KISA
+3h_pe_mustp PIT STOP ÇOK UZUN
+3h_pe_admin YÖNETÝCÝ TARAFINDAN
+3h_pe_unknw BÝLÝNMEYEN
+3g_yellcaps SARI BAYRAK
+3g_bluecaps MAVÝ BAYRAK
+3a_stpgocap DUR-KALK CEZASI
+3g_drthrcap PÝTTEN GEÇME CEZASI
+3g_30stimep 30 SANÝYE SÜRE CEZASI
+3g_45stimep 45 SANÝYE SÜRE CEZASI
+3g_clearedp CEZA ONAYLANDI
+3g_pit_stop PIT STOP
+3g_pitstopx PIT STOP : %d
+3g_p_pnltyx PIT STOP [ceza] : %d
+3g_p_nowrkx PIT STOP [iþ yok] : %d
+3g_p_finshx PIT STOP [tamamlandý] : %d
+3g_mancompx %s^8 tamamladý: %s
+3g_wmncompx %s^8 tamamladý: %s
+3g_unkcompx %s^8 tamamladý: %s
+3g_enterpit Pit þeridine GÝRÝLDÝ
+3g_enterfor Pit þeridine GÝRÝLDÝ:
+3g_leavepit Pit þeridinden ÇIKILDI
+3g_stpgotxt dur-kalk cezasý
+3g_drthrtxt pitten geçme cezasý
+3g_nopurtxt amaçsýz
+3g_capsstop DUR
+3g_capsrefu YAKIT ÝKMALÝ
+3g_capssetu DÜZENLEME DEÐÝÞÝKLÝKLERÝ
+3g_capsxdam %s HASAR
+3g_capsdamx HASAR: %s
+3g_capsxcha %s LASTÝK DEÐÝÞÝMÝ
+3g_capsminr KÜÇÜK
+3g_capsmajr BÜYÜK
+3g_capsfrnt ÖN
+3g_capsrear ARKA
+3g_capsleft SOL
+3g_capsrigh SAÐ
+3g_capslefr SOL ÖN
+3g_capslere SOL ARKA
+3g_capsrifr SAÐ ÖN
+3g_capsrire SAÐ ARKA
+3g_refl_f_x %.1f litrelik yakýt ikmali tamamlandý
+3g_pitstp_f Pitstop tamamlandý
+3g_nospdlim Pistte hýz sýnýrlý alan yok
+3g_notequip Araçta pit hýz limitleyici bulunmuyor
+3h_thisnotc Araçta çekiþ kontrol sistemi bulunmuyor
+3h_thisnost Araçta marþ motoru bulunmuyor
+3a_smllaptm tur zamaný
+3a_smlspltm bölüm zamaný
+3a_clhotlap zamanlama turu
+3a_clonemin 1 dk. eleme turu
+3a_cl_xmins %d dk. eleme turu
+3a_clonelap 1 tur
+3a_cl_xlaps %d tur
+3a_clonehor 1 saat
+3a_cl_xhors %d saat
+3g_cltrning antrenman
+3a_windsp_x rüzgar hýzý %.0f %s
+3a_smallmph mil/s
+3a_smallkmh km/s
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex OY: süre doldu: '%s^8'
+3a_x_voteer OY: YARIÞI BÝTÝR '%s^8'
+3a_x_voters OY: YENÝDEN BAÞLAT '%s^8'
+3a_x_votequ OY: ELEME TURU '%s^8'
+3a_x_joinsp %s^8 izleyicilere katýldý
+3g_x_didnot %s^8 tamamlamadý
+3g_x_wrongr %s^8 yanlýþ rota izledi
+3g_x_illega %s^8 yasak bir alana girdi
+3h_x_retpit %s^8 pit alanýna geri döndü
+3h_a_retpit Bütün araçlar pit alanýna geri döndü
+3a_lagvalue GECÝKME (%.2f)
+3a_hlvcstlp tura baþla
+3a_smalllap tur
+3a_hlvcmodi [modifiyeli]
+3a_timequal eleme turu
+3a_timetotl toplam
+3a_timebest en iyi
+3a_time_lap tur
+3a_timesplt bölüm
+3h_timetime zaman
+3a_timepnlt ceza
+3a_noldxcar %s^8 isimli sürücünün otomobili yüklenemedi
+3a_nosvnonm Bir isim yazmalýsýnýz
+3g_nofilesl Yüklemek için dosya yok
+3a_alrdyout Tur bilgisi çýktýsý zaten alýnýyor
+3a_nxtlpout Sonraki tur bilgisi çýktý dosyasý: %s.raf
+3a_nodtaout Tur bilgileri dosyasýna çýktý alýnmayacak
+3g_dled_x_x Kaplama indirildi: %s_%s
+3g_ding_x_x Kaplama indiriliyor: %s_%s
+3h_saveskin Kaplama kaydediliyor: %s
+3g_nomoreci Daha fazla çember eklenemez
+3a_noaddmor Daha fazla cisim eklenemez
+3a_loadinfo Yükleniyor
+3h_storedvw Kaydedilmiþ bakýþlar (V):
+3h_move_spd Hareket hýzý %.1f m/s:
+3h_min_high En az yükseklik %.1f m:
+3g_roll_deg Yatma %.1f°:
+3h_vwsmooth Görüþ yumuþatma %.1f s:
+3h_trantime Geçiþ süresi %.1f s:
+3a_invlok_c Sað tuþla bakýþýn yönünü ters çevir:
+3h_invrot_c Sol + sað dönüþün yönünü ters çevir:
+3a_fov_valu Görüþ alaný (FOV) %.1f°:
+3a_plcobs_c Cisim düzenleme modu:
+3a_chkptw_v Kontrol noktasý geniþliði %.0f m:
+3a_hdg_degr Açý %.1f°:
+3a_unnm_brk [isimsiz]
+3a_objs_num cisimler: %d
+3a_emty_brk [bos]
+3a_savechan Deðiþiklikleri kaydet
+3a_loadlayo Layout yükle
+3a_savelayo Layout kaydet
+3a_clearall Hepsini temizle
+3a_laps_num turlar: %d
+3a_errorsml hata
+3a_c_clrsel C - seçimi iptal et
+3a_m_mv_mod M - hareket ettir / deðiþtir
+3a_del_dele DEL - sil
+3a_w_e_wdth W / E - geniþlik
+3a_l_r_rota . / , - döndür
+3a_cp_1_2_3 1 / 2 / 3 - kontrol noktasý
+3a_f_finish F - bitiþ çizgisi
+3a_s_startp S - baþlama konumu
+3a_o_object O - obje
+3g_dist_x_m uzaklýk: %.2f m
+3a_editkeys tuþlarý düzenle
+3a_c_ar_hgt CTRL + ok tuþlarý - yükseklik
+3g_c_ar_rol CTRL + ok tuþlarý - yatýr
+3a_arrow_mv ok tuþlarý - hareket
+3a_spc_hdsh SPACE - göster / gizle
+3a_esc_exit ESC - çýkýþ
+3h_l_b_move sol düðme - taþý
+3h_r_b_look sað düðme - bak
+3h_l_r_rota sol + sað - çevir
+3a_keys_txt tuþlar
+3h_mous_txt fare
+3h_edit_txt düzenle
+3h_more_txt daha fazla
+3h_in_trans geçiþ
+3h_cl_slt_x %d. yuvadaki bakýþ silindi
+3h_st_slt_x Bakýþ %d. yuvaya kaydedildi
+3h_no_v_x_s %d. yuvada bakýþ yok (%s)
+3h_no_vws_s Kaydedilmiþ bakýþ yok (%s)
+3h_sh_nm_st Bakýþý kaydetmek için SHIFT + SAYI
+3h_no_car_f Takip edilecek araç yok
+3h_fc_point Ýþaret edilen:
+3h_fc_neare En yakýndaki:
+3h_fc_flwng Takip ediliyor:
+3h_fc_lockd Kilitlendi:
+3h_clicktof takip etmek için týklayýn
+3h_followcr aracý takip et
+3h_nocarsvw görünürde araç yok
+3h_stopfoll dur
+3h_optimise optimize et
+3h_opt_of_t Optimize edilen nesneler: %d of %d
+3a_noxwload Yükleme sýrasýnda çýkýlamaz
+3a_chgnotsv Deðiþiklikler kaydedilmedi
+3a_exanyway Yine de çýkmak istiyor musunuz?
+3a_clrall_q Tüm cisimleri layout'tan silmek istediðinizden emin misiniz?
+3g_delete_l Layout'u silmek istiyor musunuz?
+3a_tit_ldly Layout Yükle
+3a_nosavent Giriþ ekranýnda layout kaydedilemez
+3a_nolodent Giriþ ekranýnda layout yüklenemez
+3a_noobselm Taþýmak için cisim seçilmedi
+3a_noobtype Cisim tipi seçilmedi
+3a_noobseld Silmek için cisim seçilmedi
+3h_unexpclr Beklenmeyen clear komutu
+3h_unexpend Dosya sonu bozuk
+3a_xalready Bir %s zaten oluþturulmuþ
+3g_idx_0tox Index 0 ve %d arasýnda olmalý
+3g_rt_idx_x Rota index: %d
+3g_restarea Yasak bölge
+3g_rt_check Rota kontrol
+3g_rt_wrong Yanlýþ Rota
+3g_ob_chalk tebeþir
+3g_ob_cones koniler
+3g_ob_tyres lastikler
+3h_ob_markr iþaretler
+3g_ob_other cisimler
+3g_ob_marsh görevli
+3g_marsh_no görünmez
+3g_marsh_st görevli
+3g_marsh_le sola iþaret
+3g_marsh_ri saða iþaret
+3h_cant_add Eklenemiyor:
+3h_cant_mov Hareket ettirilemiyor:
+3h_inte_obj kesiþen obje
+3h_inva_pos geçersiz konum
+3a_dispgame Sunucu listesini göster
+3a_tit_list Sunucu Listesi
+3a_startnew Yeni sunucu aç
+3a_tit_strt Yeni Sunucu Aç
+3a_joingame Bir sunucuya gir
+3a_tit_spec Bir Sunucuya Gir
+3a_finduser Online kullanýcý bul
+3a_tit_user Kullanýcý ara
+3a_cls1conn 1 baðlantý kapatýlýyor
+3a_clsxconn %d baðlantý kapatýlýyor
+3a_rfrshlst yenile
+3a_stophost Sunucu denetlemesi durduruluyor
+3a_spctostp Sunucu denetlemesini durdurmak için SPACE'e basin
+3a_liststat %s.. Sunucu %d/%d - Girebileceðiniz %d - [yanýt gelmeyen %d] - [yanlýþ sürüm %d]
+3a_waitingw Bekleniyor
+3a_checking Denetleniyor
+3a_end_stat Girebileceðiniz %d - [yanýt gelmeyen %d] - [yanlýþ sürüm %d] %s
+3a_clikjoin - Girmek için isme týklayýn
+3a_glc_name isim
+3a_glc_ping Gecikme
+3a_glc_trak Pist
+3a_privatew özel
+3a_modified modifiyeli
+3h_arcade_w araç düzelt
+3h_cruise_w gezinti
+3a_wrongver Yanlýþ sürüm
+3h_noteul_x NOT: LFS %s kilidini açmanýz gerekli
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Diðer indirme sunucusu
+3h_cnt_titl Ülke
+3h_newupdat Yeni bir güncelleme mevcut
+3h_norecaui Otomatik güncelleme bilgisi alýnamadý
+3h_start_dl indirmeye baþla
+3h_plsselmr Lütfen size yakýn bir indirme sunucusu seçin
+3h_connectn Baðlanýyor...
+3h_trylfsnt www.lfs.net kullanarak tekrar deneyin
+3h_dl_perce dosya durumu: %d%%
+3h_dl_colon Ýndirildi:
+3h_restartn Yeniden baþlatýlýyor...
+3h_nostrtrs Yeniden baþlatýcý baþlatýlamýyor
+3h_noresdat Yeniden baþlatýcýnýn veri dosyasý oluþturulamadý
+3h_noenumwi Açýk olan pencerelere bakýlamadý
+3h_anotherl Baþka bir LFS zaten çalýþýyor
+3h_noopenrs Yeniden baþlatýcý program açýlamadý
+3b_meetroom Buluþma odasý
+3b_m_host_x , %s sunucusuna baðlanýyor
+3b_f_host_x , %s sunucusuna baðlanýyor
+3b_leftroom odadan ayrýldý
+3b_entrroom odaya girdi
+3b_wlcmu1st Hoþgeldiniz! Odadaki ilk yarýþçý sizsiniz
+3b_wlcmxinr Hoþgeldiniz! Odada %d yarýþçý var
+3b_mr_leave Ayrýl
+3b_mr_findb Bul
+3b_mr_sound Ses
+3b_mr_refre Tazele
+3b_somehost sunucu
+3b_mastercl Ana sunucu baðlantýyý kesti
+3b_sr_privt Özel
+3b_mr_publc Genel
+3b_mr_empty Boþ
+3h_sr_cruis Gezinti
+3g_autoreco Tekrar baðlanýlýyor...
+3a_typelocl yerel að
+3a_typeinet internet
+3a_userisat ^8Kullanýcý %s^8 sunucusunda
+3a_joinxath %s^8'e katýlmak ister misiniz?
+3a_inrc_num yarýþanlar: %d
+3a_cons_num baðlantýlar: %d
+3a_resl_num sonuçlar: %d
+3h_skin_num Kaplama: %d
+3h_join_que Bekleme sýrasý: %d
+3a_selhostc Seçilen sunucu:
+3a_joingamc Oyun yeri:
+3a_hostnamc Sunucu ismi:
+3a_hostipac Sunucu IP adresi:
+3a_hostprtc Sunucu portu:
+3a_hostpasc Sunucu þifresi:
+3h_clearbtn bütün þifreleri sil (%d)
+3h_cconfirm Tüm kayýtlý sunucu þifrelerini silmek istiyor musunuz?
+3a_noldtrck Pist yüklenemedi
+3a_nosndudp UDP paketi gönderilemedi
+3a_nocrtudp UDP paketi oluþturulamadý
+3h_wt_sinfo Kaplama bilgisi bekleniyor
+3h_norcvskn Kaplama bilgisi alýnamadý
+3a_norcvgst Konuk bilgisi alýnamadý
+3a_norcvply Sürücü bilgisi alýnamadý
+3a_norvcall Tüm konuklardan mesaj alýnamadý
+3a_vldadreq Geçerli bir IP adresi girmelisiniz
+3a_errconrs Baðlantý sonucunu gönderirken hata oluþtu
+3a_mode_sel Mod seçimi:
+3h_smal_dmo demo
+3h_frxmdndx %s modu için LFS %s kilidini açmalýsýnýz
+3h_seltrrqx Seçilen pist için %s modu gerekli
+3a_visibilc Görülebilirlik:
+3a_vis_locl yerel
+3a_vis_inet internet
+3a_vid_hidn gizli
+3a_inetconc Ýnternet baðlantýsý:
+3a_modem56k 56k modem
+3a_m512_128 512 / 128 kablo
+3a_mdm1_256 1m / 256 kablo
+3a_mdm_cust kendin belirle
+3a_maxupl_c En yüksek gönderme (kbit/sn):
+3g_x_upload %s kbit/sn gönderme
+3a_gnnoemty Sunucu ismi boþ olmamalý
+3a_onecarrq En az bir otomobil modeli gerekli
+3a_hstgstrq En az bir konuk sürücü ya da bir sunucu sürücüsü gerekli
+3a_rusurepr Devam etmek istediðinizden emin misiniz?
+3a_maxbwmex En yüksek bant geniþliði aþýlmýþ olabilir
+3b_srv_ip_c IP Adresi:
+3a_srvportc Port:
+3a_dedi_opt Adanmýþ sunucu (grafik yok):
+3a_guestvot Ceza oylamasý:
+3a_guestsel Konuklar pist seçebilsin mi?
+3h_qenabled Sýralama açýldý:
+3g_midracej Yarýþ sýrasýnda yarýþa katýlmaya izin ver:
+3g_pitstopr Pit stop gerekiyor:
+3g_carreset Araç sýfýrlamaya izin ver:
+3h_fcockpit Araç içi görünüþüne zorla:
+3h_cruisemo Gezinti (ters yönde gidilebilir):
+3a_maxgst_c En fazla konuk:
+3d_admins_c Yönetici yeri:
+3a_maxrarac En fazla (gerçek+AI) yarýþan:
+3a_maxragst Bilg. baþýna en fazla (gerçek+AI) yarýþan:
+3a_maxrahst Sunucu bilg.ýnda en fazla (gerçek+AI) yarýþan:
+3a_dedinohc Adanmýþ: sunucu otomobili yok
+3a_smothpps Yumuþaklýk (paket/sn):
+3a_uplmin16 En az gönderme 16 kbit
+3g_umax8192 En fazla gönderme 8192 kbits
+3a_uplavail Mevcut gönderme %.1f KB/sn
+3a_uplprcar Araç baþýna gönderme %.0f byte/sn
+3a_uplcarnm Gönderilecek araç sayýsý %.0f
+3a_requplod Gereken gönderme %.1f KB/sn
+3a_availexc Mevcut gönderme yeterli deðil
+3b_adminp_c Yönetici þifresi:
+3a_sel_audi Ses
+3a_tit_audi Seçenekler - Ses
+3a_sel_scrn Ekran
+3a_tit_scrn Seçenekler - Ekran
+3a_sel_grfx Grafik
+3a_tit_grfx Seçenekler - Grafik
+3a_sel_view Görüþ
+3a_tit_view Seçenekler - Görüþ
+3a_sel_disp Görünüm
+3a_tit_disp Seçenekler - Görünüm
+3a_sel_plyr Sürücü
+3a_tit_plyr Seçenekler - Sürücü
+3a_sel_cont Kontroller
+3a_tit_cont Seçenekler - Kontroller
+3a_sel_game Oyun
+3a_tit_game Seçenekler - Oyun Ayarlarý
+3a_sel_misc Diðer
+3a_tit_misc Seçenekler - Diðer
+3a_unlokerr Kilidi açma hatasý
+3a_flcrterr Dosya oluþturma hatasý
+3a_reguname Kayýtlý kullanýcý adý:
+3a_onlinepw OYUN þifresi:
+3a_gounlock kilidi aç
+3g_locktext LFS'yi kilitle (DEMO'ya dön)
+3g_lockques Live for Speed'i kilitlemek istediðinizden emin misiniz?
+3g_lockwarn Sadece DEMO içeriði kullanýlabilecek
+3a_autorcon Ana sunucuya yeniden baðlanýlýyor
+3a_notconnm Ana sunucuya baðlý deðil
+3a_yesconnm Ana sunucuya baðlandý
+3a_connmstr baðlan
+3a_connects Baðlantýlar
+3a_hoptions seçenekler
+3a_smlb_kik at
+3a_smlb_ban uzaklaþtýr
+3a_num_bans %d oyuncu uzaklaþtýrýldý
+3a_zerobans Uzaklaþtýrýlan yok
+3a_editbans uzaklaþtýrmalarý düzenle
+3a_tit_bans Uzaklaþtýrma Düzenleyicisi
+3a_delshort sil
+3a_goaddban yasaklý ekle
+3a_user_ban Uzaklaþtýrýlacak kullanýcýnýn adýný yazýn
+3a_time0day %d:%.2d
+3a_time1day 1 gün %d:%.2d
+3a_timexday %d gün %d:%.2d
+3a_banip12h IP adresine 12 saat uzaklaþtýrma uygulandý
+3a_banun12h Kullanýcý adýna 12 saat uzaklaþtýrma uygulandý
+3b_banusr1d Kullanýcý uzaklaþtýrýldý (1 gün)
+3b_banusrxd Kullanýcý uzaklaþtýrýldý (%d gün)
+3h_tyre_man Üretici
+3g_tt_sl_r1 SÝLÝK_R1
+3g_tt_sl_r2 SÝLÝK_R2
+3g_tt_sl_r3 SÝLÝK_R3
+3g_tt_sl_r4 SÝLÝK_R4
+3g_tt_slk_s SÝLÝK_YUMUÞAK
+3g_tt_slk_m SÝLÝK_ORTA SERT
+3g_tt_slk_h SÝLÝK_SERT
+3a_tt_races YARIÞ_SÝLÝK
+3a_tt_raceg YARIÞ_OLUKLU
+3a_tt_racei YARIÞ_GEÇÝÞ
+3a_tt_racew YARIÞ_YAÐMUR
+3a_tt_roads YOL_SÜPER
+3a_tt_roadn YOL_NORMAL
+3a_tt_hybri MELEZ
+3a_tt_knobb DÝÞLÝ
+3a_ttlmaskl Toplam aðýrlýk: %.0f kg (%.0f lbs)
+3a_pwrwtmti Güç-aðýrlýk: %.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr Aðýrlýk daðýlýmý: %.1f Ö  %.1f A
+3h_ddistrfr Yere basma kuvveti daðýlýmý: %.1f F  %.1f R
+3h_rdistrfr Yan yatma direnç daðýlýmý: %.1f F  %.1f R
+3a_trqnmlbr Tork: %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Güç: %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Motor: %.0f cc %s %s %s
+3a_engltfmt Motor: %.1f litre %s %s %s
+3a_trbochrg turbo beslemeli
+3a_etl_inli sýralý düz
+3a_etl_flat boksör
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl tek
+3a_etn_2cyl çift
+3a_etn_3cyl üç
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Birinci %.3f
+3a_grrat2nd Ýkinci %.3f
+3a_grrat3rd Üçüncü %.3f
+3a_grrat4th Dördüncü %.3f
+3a_grrat5th Beþinci %.3f
+3a_grrat6th Altýncý %.3f
+3a_grrat7th Yedinci %.3f
+3a_grginfop Bilgi
+3a_grgcolou Renkler
+3a_grgbrake Frenler
+3h_grgbrktc Frenler / TC
+3a_grgsuspe Süspansiyon
+3a_grgsteer Dönüþ
+3a_grgfinal Diferansiyel
+3a_grgtyres Lastik
+3a_grgdownf Kanatlar
+3a_grgpasse Yolcular
+3a_pssfront ön
+3a_pssrleft arka sol
+3a_pssrmidd arka orta
+3a_pssrrght arka sað
+3a_whlscolt Tekerlekler
+3a_bodycolt Gövde
+3a_texnamet Kaplama ismi
+3a_maxperwt Fren gücü %.0f Nm
+3g_b_bal_fr Fren dengesi (ön) %.0f%%
+3h_engbrred Motor Freni Yavaþlatmasý %.0f%%
+3h_tcmaxslp Çekiþ Denetimi - Ýzin Verilen Kayma %.1f%%
+3h_tcminspd Çekiþ Denetimi - En Düþük Hýz %.0f m/sn
+3h_abs_text ABS
+3g_ridehred Sürüþ Yüksekliði Kesintisi
+3a_brkmotrg [Hareket Aralýðý %.3f m]
+3g_livecamb anlýk deðer (sol / sað) %+.2f° / %+.2f°
+3g_stif_val Sertlik %.1f N/m
+3g_damp_val Sönüm %.1f Ns/mm
+3g_bump_val Sýkýþma Sönümü %.1f Ns/mm
+3g_rebd_val Açýlma Sönümü %.1f Ns/mm
+3g_arol_val Anti Roll %.1f N/m
+3h_power_st Power Steering %.0f%%
+3a_maxlkval En Yüksek Dönüþ Açýsý %.1f°
+3g_castrval Kaster %.1f°
+3a_inclnval Süsp. Takýmý Eðimi %.2f°
+3g_prllsval Teker Paralelliði %.0f%%
+3g_toeinval Rot %+.1f°
+3g_camb_abs Kamber (sol / sað) %+.1f° / %+.1f°
+3g_camb_adj Kamber Ayarý (sol / sað) %+.1f° / %+.1f°
+3h_tyrewarm Lastik ýsýtýcý sýcaklýðý: %.0f°
+3a_fnldvval Son Diþli Oraný %.3f
+3g_ftrqsplt Ön Tork Daðýlýmý %.0f%%
+3g_fvistorq Viskoz Tork %.0f Nms/rad
+3g_lock_one Kilit %.0f%%
+3g_lock_o_o Kilit (power / coast) %.0f%% / %.0f%%
+3h_dpreload Ön yükleme %.0f Nm
+3g_frnt_txt Ön
+3g_cent_txt Orta
+3g_rear_txt Arka
+3g_press_lr Basýnç (sol / sað) %.0f kPa / %.0f kPa
+3g_conv_psi psi (sol / sað) %.1f psi / %.1f psi
+3g_conv_bar bar (sol / sað) %.2f bar / %.2f bar
+3g_fwingang Ön Kanat Açýsý %.0f°
+3g_rwingang Arka Kanat Açýsý %.0f°
+3h_tc_title Çekiþ Kontrolü
+3g_stra_txt Strateji
+3g_fuel_sta Baþlangýç yakýt miktarý: %.0f%%
+3g_fuel_pit Pitstopta yüklenecek yakýt: %.0f%%
+3g_tyre_lim Lastik deðiþtir: aþýnma > %.0f%% ise
+3g_tyre_all Lastik deðiþtir: her zaman
+3g_tyre_nev Lastik deðiþtir: hiçbir zaman
+3h_rep_damg Hasar gider: %s
+3h_setup_ch Ayar deðiþikliði talep edildi
+3h_handicap Handikap
+3h_hcapnone HÝÇ
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% sýnýrlama
+3h_vol_tres Gönüllü Hava Emiþ Kýsýtlamasý %.0f%%
+3h_vol_mass Gönüllü Eklenen Aðýrlýk %.0f kg
+3h_mass_pos Eklenen Aðýrlýk Konumu (ön) %.0f%%
+3g_symmetri simetrik
+3g_asymmetr asimetrik
+3g_configur Konfigürasyon
+3g_cpct_x_l Yakýt deposu: %.1f litre
+3g_optt_x_d En uygun sýcaklýk %.0f°
+3g_tst_x_ms Deneme hýzý %.1f m/sn
+3g_rearwing Arka Kanat
+3g_frntwing Ön Kanat
+3g_undrtray Taban
+3g_bodyaero Gövde
+3g_totlaero Toplam
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Araç direksiyon dönüþü %.0f° (kilitten kilide)
+3g_con_tn_x Denetleyici direksiyon dönüþü %.0f°
+3g_live_cmb Kamber: %+.2f
+3g_live_inc Süsp. Takým Eðimi: %.2f
+3g_live_cst Kaster: %.2f
+3g_live_scr Scrub: %.3f
+3g_live_trk Ýz Açýklýðý: %.3f
+3g_susrigid Rijit
+3g_sustrail Trailing Arm
+3g_susffork Ön Çatal
+3g_susmacph MacPherson Strut
+3g_susdwish Çiftli Salýncak
+3g_pit_inst Pit Talimatlarý
+3g_live_set Gerçek Zamanlý Ayarlar
+3g_wheels_x TEKERLEKLER %s
+3g_l_tt_x_x LASTÝK tipi %s [%s]
+3g_l_pr_psi BASINÇ %.1f psi [%+.1f psi]
+3g_l_pr_bar BASINÇ %.2f bar [%+.2f bar]
+3g_l_cr_adj KAMBER AYARI %.1f° [%+.1f°]
+3g_l_cr_abs KAMBER %.1f° [%+.1f°]
+3g_l_wg_ang KANAT %.0f° [%+.0f°]
+3h_estcolon Tahmini:
+3g_fl_pc_pl %.1f%% tur baþýna
+3g_fl_pc_it %.1f%% depoda
+3h_a3_lower ALT
+3h_a3_upper ÜST
+3h_a3_toein ROT
+3h_a3_ctemp DS
+3a_trckunkn Bilinmeyen pist
+3a_trcknofn Pist bulunamadý
+3a_trckobso Eski pist
+3a_fnshload YÜKLEME TAMAMLANDI
+3a_prgprelo Önyükleme
+3a_prgldtex Kaplamalar yükleniyor
+3a_prgpaths Yollar
+3a_prgcolrs Renkler
+3a_prgdupli Çoðaltýcýlar
+3a_prglgtsc Iþýk düzenleri
+3a_prgrdobs Cisimler okunuyor
+3a_prglgtin Iþýklandýrma bilgileri
+3a_prgbmptx Bump kaplamalarý
+3a_prginicl Renkler hazýrlanýyor
+3a_prgchpts Kontrol noktalarý
+3a_prgextra Ýlave veriler
+3a_prgstobs Baþlangýç cisimleri
+3a_prgmapsq Harita alanlarý
+3a_prgpthin Yol hazýrlanýyor
+3a_prgpthad Yol ayarý
+3a_prgrebld Tekrar oluþturuluyor
+3g_prggener Oluþturuluyor
+3a_spcpres1 (1'e basýn)
+3a_autojblk Katýlýnamadý: Baþlangýç kapalý
+3a_xcomplvt %s^8 oylamayý tamamladý
+3a_maxgcarx En fazla konuk otomobili:%d
+3a_maxhcarx En fazla sunucu otomobili:%d
+3a_cf_swpsd taraf deðiþtir
+3a_cf_gopit pit
+3a_cf_chqul eleme süresini deðiþtir
+3a_cf_chlap turlarý degistir
+3a_cf_chwin rüzgarý deðiþtir
+3b_cf_finfo bilgiyi deðiþtir
+3a_upc_male %s^8 kontrollerini deðiþtirdi
+3a_upc_fmal %s^8 kontrollerini deðiþtirdi
+3a_upc_unkn %s^8 kontrollerini deðiþtirdi
+3a_x_no_car %s^8 bir otomobil seçmemiþ
+3a_x_alredy %s^8 zaten bir otomobil seçmiþ
+3a_x_lftpot %s^8 pitten ayrýldý
+3a_w_rd_rly ^6Uyarý: ralli pistinde asfalt yol tekerlekleri
+3a_w_rly_rd ^6Uyarý: asfalt yolda ralli tekerlekleri
+3a_unkcdisc Bilinmeyen otomobil - konuk ayrýldý
+3a_modcdisc Modifiye edilmiþ otomobil - konuk ayrýldý
+3a_nocrukid Otomobil bilgisi eklenemez - bilinmeyen kimlik
+3a_xrenamex %s^8 ismini %s^8 yaptý
+3g_xtakovrx %s^8, %s^8'den devraldý
+3g_xwantuto %s^8 sizin devralmanýzý istiyor
+3g_xwantsto %s^8 devralmak istiyor
+3g_oswapend Sürücü deðiþtirmek için pit stop bitimini beklemelisiniz
+3a_nosharnm Ayný isme sahip bir sürücü var
+3a_trkloadd Pist yüklendi
+3a_x_pitted %s^8 pite girdi
+3g_x_pitstp %s^8 pit stop yaptý
+3a_x_connec %s^8 baðlandý
+3g_x_blkmsg %s^8 mesajlarý kapattý
+3g_x_unblkm %s^8 mesajlarý açtý
+3a_newgconn Yeni bir konuk baðlanýyor
+3a_gfailcon Yeni konuk baðlanmayý baþaramadý
+3g_waitplyc Lütfen bekleyin - bir konuk baðlanýyor
+3h_waitbuff Tampon taþmasý engelleniyor
+3a_xss_male %s^8 düzenleme gönderdi
+3a_xss_fmal %s^8 düzenleme gönderdi
+3a_xss_unkn %s^8 düzenleme gönderdi
+3a_packs_ps Paket / saniye: %d
+3a_noqual_x Eleme turu atýlamaz - %s
+3a_no_x_plc '%s' yapýlamaz - bir konuk baðlanýyor
+3a_no_x_cht '%s' yapýlamaz - pist deðiþiyor
+3g_no_x_car '%s' yapýlamaz - pistte otomobil var
+3a_novotepg Þu anda oylama yok
+3h_vote_kic %s^8, %s^8 (%s^8) hakkýnda atýlma cezasý istiyor [%d/%d]
+3h_vote_ban %s^8, %s^8 (%s^8) hakkýnda uzaklaþtýrma cezasý istiyor [%d/%d]
+3a_x_tmdout %s^8 zaman aþýmýna uðradý
+3a_lostcn_x %s^8 ile baðlantý kaybedildi
+3a_x_discon %s^8 ayrýldý
+3g_x_kicked %s^8 atýldý
+3g_x_banned %s^8 uzaklaþtýrýldý
+3a_qulfauto Oto-kros
+3a_qulfprac Antrenman
+3a_qulfnote Etkin deðil
+3g_skinnotf Otomobil kaplamanýz www.lfsworld.net'te bulunamadý
+3g_helmnotf Kask kaplamanýz www.lfsworld.net'te bulunamadý
+3g_updatset Ayarlar Güncellendi
+3g_fastlxxx En iyi tur: %s ile %s^8 (%s) tarafýndan
+3g_no_reset Bu sunucuda araç yenilemeye izin verilmiyor
+3g_cant_res Yenilenemiyor - %s
+3g_too_dang fazla tehlikeli
+3g_could_ha baþka bir araca çarpýlabilirdi
+3g_could_hr yeni sýfýrlanmýþ araca çarpýlabilirdi
+3g_would_ye sarý bayraða sebep olabilirdi
+3a_obsolvid Eski tekrarlama
+3a_vidlater Tekrarlama yeni bir sürümle kaydedilmiþ
+3h_hls_hlvc HLVC
+3h_hls_inva GEÇERSÝZ
+3h_hls_cust ÖZEL
+3a_htlpinvl Zamanlama turu geçersiz (%s)
+3a_hli_grnd yer
+3a_hli_wall duvar
+3a_hli_obje cisim
+3a_hli_wron ters yön
+3h_hli_spee hýzlý
+3a_ptp_locl yerel
+3a_ptp_remt uzaktan
+3a_ptp_lcai ai (So)
+3a_ptp_rmai ai (Sa)
+3a_rsk_noob YENÝ
+3a_rsk_lrnr ÖGRENCÝ
+3a_rsk_okok ÝYÝ
+3a_rsk_quik HIZLI
+3a_rsk_prof PROFESYONEL
+3a_x_finish %s^8 bitirdi
+3a_x_finplc %s^8 %s bitirdi
+3g_x_fin1be %s^8 1 tur geride tamamladý
+3g_x_finxbe %s^8 %d tur geride tamamladý
+3g_x_conplc %s^8 bitiriþ konumu: %s
+3g_x_disqua %s^8 diskalifiye edildi
+3a_x_wonrac %s^8 yarýþý kazandý
+3a_max3locl En fazla 3 yerel sürücü
+3a_fnshuncl dereceye girmedi
+3a_fnsh_1st 1.
+3a_fnsh_2nd 2.
+3a_fnsh_3rd 3.
+3a_fnsh_4th 4.
+3a_fnsh_5th 5.
+3a_fnsh_6th 6.
+3a_fnsh_7th 7.
+3a_fnsh_8th 8.
+3a_fnsh_9th 9.
+3a_fnsh10th 10.
+3a_fnsh11th 11.
+3a_fnsh12th 12.
+3a_fnsh13th 13.
+3a_fnsh14th 14.
+3a_fnsh15th 15.
+3a_fnsh16th 16.
+3g_fnsh17th 17.
+3g_fnsh18th 18.
+3g_fnsh19th 19.
+3g_fnsh20th 20.
+3g_fnsh21st 21.
+3g_fnsh22nd 22.
+3g_fnsh23rd 23.
+3g_fnsh24th 24.
+3g_fnsh25th 25.
+3g_fnsh26th 26.
+3g_fnsh27th 27.
+3g_fnsh28th 28.
+3g_fnsh29th 29.
+3g_fnsh30th 30.
+3g_fnsh31st 31.
+3g_fnsh32nd 32.
+3a_wlcm_lfs Live for Speed'e Hoþgeldiniz
+3a_agre_lfs Sözleþme
+3a_overwrex Mevcut dosyanýn üzerine yazýlsýn mý?
+3g_deleteex Mevcut dosya silinsin mi?
+3g_newnamef Yeni dosya için isim girin
+3g_filealre Dosya adý zaten var
+3g_cnotfind Dosya bulunamadý
+3a_layoutsv Kaydedilecek layout'un adýný yazýn
+3a_windocon Baðlanýrken pencere moduna geç:
+3a_cancelbt iptal
+3a_backbutt geri
+3a_capitlok tamam
+3a_capitlgo yürü
+3a_invldstr geçersiz
+3a_cpfinish BÝTÝRDÝNÝZ
+3a_cpwinner KAZANAN
+3a_namepass Kullanýcý adý ve þifre
+3a_validnam Geçerli bir kullanýcý adý yazmalýsýnýz
+3a_validpas Geçerli bir þifre yazmalýsýnýz
+3a_passmin8 Þifreniz en az 8 karakter olmalýdýr
+3a_shifttyp Vites tipi:
+3a_autogear Otomatik vites:
+3a_notiming - turlar zamanlanmayacak
+3a_stilload Pist halen yükleniyor
+3a_waitlist Sunucularýn listesi için bekleniyor
+3a_wt_ginfo Sunucu bilgisi için bekleniyor
+3a_connmast Ana sunucuya baðlanýyor
+3a_waitmrep Ana sunucudan yanýt bekleniyor
+3a_waithrep Sunucudan yanýt bekleniyor
+3a_waitinfo Bilgi için bekleniyor
+3a_masterro Yanýt beklenirken hata oluþtu
+3a_mnoreply Ana sunucudan yanýt alýnamadý
+3a_waitginf Konuk bilgisi için bekleniyor
+3a_waitpinf Sürücü bilgisi için bekleniyor
+3a_waitmsgs Ýlk mesajlar için bekleniyor
+3a_connhost Sunucuya baðlanýlýyor
+3a_conn_udp UDP baðlantýsý kuruluyor
+3a_openserv Sunucu soketi açýlýyor
+3a_unexmstr Beklenmedik ana sunucu paketi
+3a_unexsrvr Beklenmedik sunucu paketi
+3a_unexgest Beklenmedik konuk paketi
+3a_numg_oob Konuk sayýsý sýnýrlarýn dýþýnda
+3a_errrhost Sunucuya yanýt verilirken hata oluþtu
+3a_unextrak Beklenmedik pist deðiþimi
+3a_unkntrak Bilinmeyen pist hatasý
+3a_unexpack Beklenmedik boyut paketi
+3a_unexrepl Beklenmedik yanýt
+3a_gmnmused Sunucu ismi kullanýmda
+3a_errmthrd Ana thread oluþturulamadý
+3a_lostmast Ana sunucu ile baðlantý kesildi
+3a_losthost Sunucu ile baðlantý kesildi
+3g_notisync Senkronizasyon giriþimi baþarýsýz
+3g_lostsync Sunucu ile senkronizasyon kaybedildi
+3a_connecto Baðlantý zaman aþýmýna uðradý
+3a_noconnsl Müsait baðlantý yeri yok
+3a_nookpack Onay alýnamadý
+3a_waitfook Onay için bekleniyor
+3a_waittrak Pist bilgileri için bekleniyor
+3a_notrakpk Pist bilgileri alýnamadý
+3a_loadtrak Pist yükleniyor
+3a_chglight Iþýklandýrma deðiþtiriliyor
+3a_ply_join Bir konuk baðlanýyor
+3a_nochrace Yarýþ sýrasýnda pist deðiþtirilemez
+3g_trnoallo Bu sunucuda %s etkin deðil
+3a_chgtrack Pist deðiþtiriliyor
+3h_welcomex Hoþgeldiniz - Live for Speed %s
+3a_small_no hayýr
+3a_smallyes evet
+3h_smallaut otomatik
+3h_smallnev asla
+3h_smallask sor
+3h_smallalw daima
+3a_smalloff kapalý
+3a_smalreal gerçek
+3a_smalvrtl sanal
+3a_smalleft sol
+3a_smalrght sað
+3a_smalnone hiçbiri
+3a_smaltext yazý
+3a_smallall hepsi
+3a_smallman erkek
+3a_smallwmn kadýn
+3h_smallb16 16 bit
+3h_smallb32 32 bit
+3a_smlnobrk [hayýr]
+3a_smlysbrk [evet]
+3a_smlofbrk [kapalý]
+3a_smlonbrk [açýk]
+3a_actobjct cisim
+3a_actstart baþlama konumu
+3a_actfinsh bitiþ çizgisi
+3a_actchck1 1. kontrol noktasý
+3a_actchck2 2. kontrol noktasý
+3a_actchck3 3. kontrol noktasý
+3g_actcircl çember
+3a_actnofin Bitiþ çizgisi yok
+3a_actnochk Kontrol noktasý yok
+3a_actfnnoc Bitiþ çizgisi var, kontrol noktasý yok
+3a_accpxnof %d. kontrol noktasý bulunamadý
+3a_aconechk Autocross: 1 kontrol noktasý
+3a_acxchckp Autocross: %d kontrol noktasý
+3a_noloadsk Kaplama yüklenemedi:
+3a_wrngfltp Yanlýþ dosya tipi
+3a_cnocolon Dosya açýlamadý:
+3a_outcnopn Çýktý: Dosya açýlamadý
+3d_outnoply Çýktý: Otomobilin sürücüsü bulunamadý
+3d_outstart Çýktý: Tur baþlatýldý
+3d_outfinis Çýktý: Tamamlandý
+3a_corruptf Bozuk dosya
+3a_filenohc Dosya baþlýk kontrolü hatasý:
+3g_filetoos Dosya çok kýsa:
+3g_filecorr Dosya hatalý:
+3g_err_read Dosya okunamadý:
+3g_notpcmwv Ses PCM gibi görünmüyor:
+3g_srnotsup Örnekleme süresi desteklenmiyor:
+3g_wv_mo_st Ses mono veya stereo deðil:
+3g_wavemb16 Ses 16 bit deðil:
+3g_wavetool Ses çok uzun:
+3a_latervfl Dosya, önceki bir sürümle kaydedilmiþ:
+3a_nocrtfil Dosya oluþturulamadý:
+3a_votecanc Oylama iptal edildi
+3a_nocrtmpr MPR dosyasý oluþturulamadý
+3a_savedmpr MPR kaydedildi -
+3a_nocrtspr SPR dosyasý oluþturulamadý
+3a_savedspr SPR kaydedildi -
+3a_nornmspr SPR ismi deðiþtirilemedi -
+3a_accesden Giriþ engellendi
+3a_invalchr Geçersiz karakterler
+3a_notfound Bulunamadý
+3a_unknowne Bilinmeyen hata
+3g_downcanc Ýndirme iptal edildi
+3g_filesize Yanlýþ dosya boyutu
+3g_highresd Yüksek çözünürlüklü kaplamalarý indir:
+3g_nolfswcr Yüksek çözünürlüklü kaplamalar için LFS World kredisi yetersiz
+3g_dbnotava Yüksek çözünürlüklü kaplama veritabaný müsait deðil
+3a_entermsg Mesaj yaz
+3g_seldefcp Varsayýlan kod sayfasýný seçin
+3a_ctabshwr CTRL+TAB - sonuçlarý göster
+3a_shf8nwdb SHIFT+F8 - að debug - %s
+3a_newvalfx %s için yeni deðer girin
+3a_valtoolo Yeni deðer çok düþük
+3a_valtoohi Yeni deðer çok yüksek
+3a_endoqual Eleme turu bitti
+3a_ctrcclip CTRL+C - fare ekrana kilitlendi:
+3a_ctrcfree CTRL+C - fare serbest:
+3a_windotxt pencere
+3a_fullstxt tam ekran
+3g_not_demo DEMO'da bulunmuyor
+3h_noraceln yarýþ hattý gösterimi kullanýlamaz
+3g_time_loc yerel
+3g_time_utc UTC
+3a_namelong Ýsim çok uzun
+3a_noconnms Ana sunucuya baðlanamadý
+3a_wrninsta Dikkat: Baþka bir LFS daha çalýþýyor
+3g_lfsbuyon Live for Speed - internetten satýn alabilirsiniz - ^7www.lfs.net
+3g_comentry Bu komut sadece giriþ ekraný için
+3g_insimnop InSim açýk deðil
+3g_comguest Bu komut ÇO konuklarý içindir
+3g_comsetup Bu komut sadece ayar ekraný içindir
+3g_comnoded Bu komut, adanmýþ sunucu için deðildir
+3g_unknwnai Bilinmeyen AI sürücüsü
+3g_drv_alrd Sürücü zaten yarýþýyor
+3g_drv_noin Sürücü yarýþta deðil
+3g_setup_nf Düzenleme bulunamadý
+3g_colournf Renk bulunamadý
+3g_scrtooma Çok fazla kod var
+3g_scrtoolo Kod çok uzun
+3g_scrempty Kod boþ
+3g_un_axs_f Bilinmeyen eksen fonksiyonu
+3g_un_key_f Bilinmeyen tuþ fonksiyonu
+3g_un_btn_f Bilinmeyen düðme fonksiyonu
+3g_xlnxtool %s: satýr %d çok uzun
+3g_x_ln_x_x %s: satýr %d - %s
+3g_cantopen Açýlamadý: %s
+3g_notallow Ýzin verilmiyor: %s
+3h_cp_latin Latin 1
+3h_cp_cente Orta Avrupa
+3h_cp_turki Türkçe
+3h_cp_balti Baltýk
+3h_cp_japan Japonca
+3h_cp_cyril Kiril
+3h_cp_greek Yunan
+3h_cp_tr_ch Geleneksel Çince
+3h_cp_si_ch Modern Çince
+3h_cp_korea Kore
+3a_hostfull Sunucu dolu
+3a_hostload Sunucu pisti yüklüyor
+3a_plyrconn Bir konuk zaten baðlanýyor
+3g_plydisco Bir konuðun baðlantýsý kesiliyor
+3h_racstart Bir yarýþ baþlýyor
+3a_unauthcn Baðlantý kabul edilmedi
+3a_useronli Bu kullanýcý zaten baðlý
+3h_userband Kullanýcý adýnýz yasaklanmýþ
+3a_usernofd Kullanýcý adýnýz bulunamadý
+3a_pwnomtch OYUN þifresi hatalý
+3g_pwneeded OYUN þifresi oluþturmalýsýnýz
+3h_unlkused Bu hafta için olan bütün anahtarlar tükendi
+3h_unpwconf Kullanýcý adý ve þifre onaylandý
+3a_unknwerr Bilinmeyen hata
+3a_carnomtc Otomobiller sunucu otomobilleriyle uyuþmuyor
+3a_nodbljon Sunucuya çift baðlantý yapýlamaz
+3a_hlostmst Sunucu, ana sunucuyla baðlantýsýný kaybetti
+3a_wrngpass Yanlýþ þifre
+3a_prvreqps Özel sunucu için þifre gerekli
+3a_usrunknw Bilinmeyen kullanýcý adý
+3a_usrnotol Kullanýcý baðlý deðil
+3a_usrolhid Kullanýcý gizli bir sunucuda
+3g_usrol_s1 Kullanýcý bir S1 sunucusunda
+3g_usrol_s2 Kullanýcý bir S2 sunucusunda
+3g_usrol_s3 Kullanýcý bir S3 sunucusunda
+3a_hostrefu Sunucu baðlantýyý reddetti
+3a_hstdiffv Sunucu farklý bir sürüm kullanýyor
+3a_hstdiffc Sunucu farklý bir oyun koduna sahip
+3a_hstis_s1 Live for Speed S1 sunucusu
+3g_hstis_s2 Live for Speed S2 sunucusu
+3g_hstis_s3 Live for Speed S3 sunucusu
+3a_hstisdmo Live for Speed DEMO sunucusu
+3a_hstunknr Sunucudan bilinmeyen bir yanýt alýndý
+3a_hstnomst Sunucu, ana sunucuda bulunamadý
+3a_nameused isim zaten kullanýlmýþ
+3a_racefull Yarýþ dolu
+3g_nomidjoi Bu sunucuda yarýþ sürerken yarýþa katýlamazsýnýz
+3b_usermeet Kullanýcý buluþma odasýnda
+3b_unkncomm Bilinmeyen komut
+3h_unknwver Bilinmeyen sürüm
+3b_reqparam Bu komut için 1 parametre gerekir
+3b_req2pars Bu komut için 2 parametre gerekir
+3e_notenpar Yetersiz parametre
+3b_unknwtrk Bilinmeyen pist parametresi
+3e_unknwcar Bilinmeyen otomobil parametresi
+3b_unoadmin Yönetici haklarýna sahip deðilsiniz
+3b_kbinvalu Kullanýcý adý geçerli deðil
+3b_invalpar Parametre geçerli deðil
+3g_ptoolong Parametre çok uzun
+3g_notfound Dosya bulunamadý
+3e_setuponl Bu komut sadece düzenleme penceresi için
+3e_axnofind Layout açýlamadý
+3e_axnoneav Bu pist için layout bulunamadý
+3e_kbnoload Dosya yüklenemedi
+3e_kbnosave Dosya kaydedilemedi
+3g_tooearly Yarýþý yeniden baþlatmak için çok erken
+3g_pplracin Bazý kullanýcýlar hala yarýþýyor
+3h_notrxudp Sunucu UDP paketi almadý
+3h_nomultij Çoklu katýlým isteklerinden kaçýnýlýyor
+3h_modreqpw Deðiþtirilmiþ sunucu için þifre gerekli
+3h_invalidu Geçersiz kullanýcý adý

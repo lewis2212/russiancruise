@@ -1,0 +1,1719 @@
+LFS Translation file (Slovak)
+Translated by: RAYfighter, Sisolak
+
+tx_codepage 1250
+tx_langname Slovenèina
+tx_noun_adj an
+3g_tr_selct Pretekárska škola
+3g_tr_title Zvo¾ lekciu
+3a_spselect Offline hra
+3a_tit_sply Offline hra
+3a_mpselect Online hra
+3a_tit_mply Online hra
+3a_hlselect Merané kolá
+3a_tit_hotl Merané kolá
+3a_opselect Nastavenie
+3g_repl_sel Záznamy
+3a_tit_sprs Záznamy offline hry
+3a_tit_mprs Záznamy online hry
+3g_unlk_lfs Odomknú Live for Speed
+3g_demorace Jazdec bez licence
+3h_x_licens %s licencia
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Download skinov pouitıch v zázname
+3g_one_notf Jeden zo skinov nebol nájdenı vo Vašom poèítaèi
+3g_sev_notf Niektoré zo skinov neboli nájdené vo Vašom poèítaèi
+3g_one_down Prajete si stiahnu chıbajúci skin?
+3g_sev_down Prajete si stiahnu chıbajúce skiny?
+3a_exit_btn koniec
+3a_next_btn ïalej
+3g_agre_btn súhlasím
+3a_exitprog Ukonèi program?
+3a_userfind Vlote h¾adané uívate¾ské meno
+3h_num_tips %d Tipy
+3h_tip_pesc V hre alebo v garái stlaète klávesu Esc pre vyvolanie monosti nastavenia
+3h_tip_prst Keï chcete napísa správu pre ostatnıch hráèov v online hre, stlaète klávesu T
+3h_tip_ffwr Doporuèujeme pouitie volantu so spätnou väzbou (tzv. Force Feedback)
+3h_tip_rtcg Uberte plyn pri preradeni rıchlostného stupòa aby ste neznièili spojku
+3h_tip_brak Keï sa blíite k zátaèke, nezapomeòte vèas brzdi...
+3g_hdr_name Meno lekcie
+3g_hdr_diff Obtianos
+3g_hdr_mode Mód
+3g_dif_easy ¼ahké
+3g_dif_medi Stredné
+3g_dif_hard aké
+3g_lsn_firs prvá lekcia
+3g_lsn_next ïalšia lekcia
+3g_lsn_trya skúsi znova
+3g_lsn_fini dokonèené
+3g_tit_obje ^7ÚLOHA
+3g_tit_purp ^7ÚÈEL LEKCIE
+3g_tit_tips ^7RADY
+3g_tit_targ ^7CIE¼OVÉ ÈASY
+3g_not_time Nedokonèili ste v èasovom limite!
+3g_not_fini Nedokonèili ste lekciu!
+3g_comp_but Dokonèili ste lekciu, ale...
+3h_false_st - Odštartovali ste skôr ne zasvietili zelené svetlá
+3g_too_long - Trvalo Vám to príliš dlho
+3g_coll_car - Narazili ste do iného auta
+3g_wrong_rt - Šli ste zlou cestou
+3g_hit_1_ob - Narazili ste do objektu
+3g_hit_x_ob - Narazili ste do %d objektov
+3g_not_fast - Na checkpointe ste nešiel dostatoène rıchlo
+3g_slo_stop - Zastavili ste príliš neskoro
+3g_exce_spd - Prekroèili sste povolenú rıchlos v boxoch
+3g_nopitstp - Nezastavili ste v boxoch
+3g_not_long - Nezastavili ste na dostatoène dlhú dobu
+3g_congrats Gratulujem! Zvládoli ste lekciu!
+3g_stndrd_x V tejto lekcii teraz patríte do skupiny %s
+3g_lsnunl_x Musíte odomknú %s pre zahájenie tejto lekcie
+3a_nocarsel Nie je zvolené iadne auto
+3a_araceinp Preteky práve prebiehajú
+3a_plydisco Hráè bude odpojenı
+3a_leavgame opusti hru
+3a_playrbtn Hráè
+3a_garagbtn Gará
+3a_trackbtn Tra
+3a_tit_trak Tra
+3a_load_brk [naèítavanie]
+3a_gene_brk [generovanie]
+3a_notr_brk [iadna tra]
+3a_endonlin Ukonèi online hru?
+3a_levonlin Opusti server?
+3a_swap_pos prehodi pozíciu
+3a_joinrace prida sa
+3a_addaidrv prida AI jazdca
+3a_setready hotovo
+3a_starthdr Štartovné pole
+3a_skillhdr Stupeò obtianosti
+3a_race_hdr Preteky
+3a_readybtn pripravenı
+3a_localsml lokálny
+3a_vhostsml cez hostite¾a
+3g_adminsml admin
+3a_dirctsml priamo
+3a_no_track iadna tra
+3a_nodriver iadni jazdci
+3a_carerror chyba auta
+3a_raceinpr preteky práve prebiehajú
+3a_remvplyr odobra hráèa
+3a_no_quali bez kvalifikácie
+3a_qual1min kval. 1 minúta
+3a_qualxmin kval. %d minút
+3a_practice tréning
+3a_race1lap preteky na 1 kolo
+3a_racexlap preteky na %d kôl
+3a_race1hou preteky na 1 hodinu
+3a_racexhou preteky na %d hodín
+3a_zerowind bezvetrie
+3a_low_wind slabı vietor
+3a_highwind silnı vietor
+3a_nosamenm Lokálni hráèi nemôu ma rovnaké mená
+3a_ac_onest Autocross : iba 1 miesto štartu
+3a_ac_fixlp Autocross : pevnı poèet kôl
+3h_kickplyr Kicknú hráèa %s^8? (%s^8)
+3h_howlongb Na ko¾ko dní udeli ban %s^8? (%s^8)
+3h_ainodriv AI jazdci nemôu poui túto konfiguráciu
+3h_ainoxral AI jazdci nemôu jazdi s %s na rallycross trati
+3h_ainoxcfg AI jazdci nemôu ma %s na tejto konfigurácii
+3a_cdntsvst Nepodarilo sa uloi nastavenie
+3a_sent_set Nastavenie auta odoslané
+3a_plynotfd Hráè nebol nájdenı
+3a_carnotfd Hráèovo auto nebolo nájdené
+3a_namsetsv Vlote názov nového nastavenia auta
+3h_gridsave Zadajte názov štartovného roštu k uloeniu
+3h_gridload Vyberte štartovnı rošt k naèítaniu
+3h_xremovex %s^8 odstránil %s^8 zo štartovného pola
+3a_endgmbtn ukonèi hru
+3a_leavebtn opusti
+3g_endr_btn ukonèi preteky
+3g_spec_btn pozera sa
+3h_qual_btn kvalifikuj sa
+3h_rest_btn reštart
+3h_pits_btn boxy
+3g_join_btn prida sa
+3g_play_btn prehra
+3a_namesort Meno
+3a_datesort dátum
+3a_car_caps Auto
+3a_newbtset Pre vytvorenie vlastného nastavenia kliknite na
+3a_selplset Nedá sa zmeni [základné] - zvo¾te vlastné nastavenie auta
+3a_newbtcol Pre vytvorenie vlastnej sady farieb kliknite na
+3a_selplcol Nedá sa zmeni [základné] - zvo¾te vlastné farby
+3a_sets_hdr Nastavenia auta
+3a_cols_hdr Farby
+3a_new_setb Nové nastavenie
+3a_new_colb Nové farby
+3a_savedset Nastavenia uloené
+3a_savedcol Farby uloené
+3a_new_butt Nové
+3a_del_butt Odstráni
+3a_undo_btn Spä
+3g_rename_b Premenuj
+3h_clear_bt Zma
+3a_drvr_hdr Jazdec
+3a_frce_hdr Sily
+3g_fuel_hdr Palivo
+3g_susp_hdr Podvozok
+3a_out_butt Nie
+3a_in_buttn Áno
+3a_off_butt Vyp
+3a_on_buttn Zap
+3a_stop_btn Stop
+3a_drop_btn Hop
+3a_namenset Zadajte meno nového nastavenia auta
+3g_newnmset Zadajte nové meno nastavenia auta
+3a_setnodel Toto nastavenie auta sa nedá vymaza
+3a_deletset Odstráni toto nastavenie auta?
+3a_setnonam Nedá sa vytvori nastavenie auta bez mena
+3a_namencol Zadajte meno novej sady farieb
+3h_newnmcol Zadajte nové meno pre farbu
+3a_colnodel Táto sada farieb sa nedá odstráni
+3a_deletcol Odstáni túto sadu farieb?
+3a_colnonam Nedá sa vytvori sada farieb bez mena
+3a_carninvl Súèasnı názov auta nie je platnı
+3a_sel_skin Vyberte skin
+3a_drv_none iadny pohon
+3a_drv_fron Pohon zadnıch kolies
+3a_drv_rear Pohon prednıch kolies
+3a_drv_four Pohon všetkıch kolies (4x4)
+3g_dif_open OTVORENİ DIFER.
+3g_dif_lock ZAMKNUTİ DIFER.
+3g_dif_visc VISKÓZNY DIFER.
+3g_dif_clsd SAMOSVORNİ DIFER.
+3a_no_creds iadne kredity
+3a_one_cred 1 kredit
+3a_xx_creds %d kreditov
+3g_host_dis Na tomto serveri nie je povolené jazdi s %s
+3h_ndxmdcax Musíte by v %s móde pre vıber %s
+3h_ndulxcax Musíte odomnknú LFS %s pre vıber %s
+3g_all_caps VŠETKO
+3g_newnmrep Zadajte názov záznamu
+3g_repnodel Záznam nemôe by odstránenı
+3g_deletrep Odstráni záznam?
+3g_repnonam Nedá sa vytvori záznam bez mena
+3g_set_sh_x Nastavenie pre %s :
+3a_rght_brk [vpravo]
+3a_left_brk [v¾avo]
+3a_plyrname Meno hráèa :
+3g_otherply Da¾ší hráèi :
+3a_numplate Text na poznávacej znaèke :
+3a_countryc Štát :
+3a_poschoos Pozícia jazdca :
+3a_speedcho Jednotky rıchlosti :
+3a_pressure Jednotky tlaku :
+3g_lang_cln Jazyk :
+3g_font_cln Písmo :
+3g_wght_cln Hrúbka písma :
+3g_adnewply prida nového hráèa
+3g_dlselply Odstráni vybraného hráèa?
+3g_enterply Zadajte meno nového hráèa
+3g_plyexist Hráè s tımto menom u existuje
+3g_newnamex Vlote nové meno pre hráèa : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Pomoc s brzdou :
+3a_autoclch Automatická spojka :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Širokouhlı efekt :
+3a_clipwndo Obmedzi myš na okno CTRL+C :
+3a_clipflsc Obmedzi myš na obrazovku CTRL+C :
+3a_leftscrn ¾avá obrazovka
+3a_rghtscrn pravá obrazovka
+3a_keyshpls Priradenie klávesy (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful v okne / celá obrazovka
+3a_shf4togg SHIFT + F4  prepína medzi reimom v okne a celou obrazovkou
+3a_shxalrdy SHIFT + F%d je u priradené k vybranému reimu
+3a_assxmodx Priradi SHIFT + F%d k reimu %s?
+3a_unkntype neznámy
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Nastavenie pre %s poh¾ad :
+3a_vw_incar v aute
+3b_vw_custm volite¾nı
+3a_ishwdywy [jazdec zap. volant zap.]
+3a_ishwdnwy [jazdec vyp. volant vyp.]
+3a_ishwdnwn [jazdec vyp. volant vyp.]
+3a_oht_none [iadny]
+3a_oht_splt [medzièasy]
+3a_normlfov Zorné pole %.0f° :
+3h_onebutlk Poh¾ad jednım tlaèidlom %.0f° :
+3a_pitchviw Sklon poh¾adu %.2f° :
+3b_rotatviw Rotácia poh¾adu %.2f° :
+3g_mirror_x Boènı posun zrkadla %.3f m :
+3g_mirror_z Vıškovı posun zrkadla %.3f m :
+3a_tlt1gdeg Náklon hlavy pri 1g %.2f° :
+3a_shiftlat Boènı posun pri 1g %.3f m :
+3a_shiftfwd Posun dopredu pri 1g %.3f m :
+3a_shiftvrt Vıškovı posun pri 1g %.3f m :
+3a_moveanim Animova poh¾ad do strán :
+3a_defdrvvw Predvolenı poh¾ad v hre :
+3g_cvw_main Zobraz (hlavnı) :
+3b_cvsnthng niè
+3b_cvswheel kolesá
+3g_cvsdbody karoséria
+3b_cvsexter externı
+3g_cvshelic heli
+3g_cvsfollo sleduj
+3h_cvsuserv pouívate¾
+3b_cvwxoffs X-ová odchılka %.3f m :
+3b_cvwyoffs Y-ová odchılka %.3f m :
+3b_cvwzoffs Z-ová odchılka %.3f m :
+3g_c_defaul Štandartná pozícia
+3g_c_centre Vycentruj poh¾ad
+3g_c_eyepos Pozícia oka
+3g_cvw_high Vıška %.1f m :
+3g_cvw_angl Uhol %.1f° :
+3g_cvw_dist Vzdialenos %.1f m :
+3g_cvw_vlag Vyhladzovanie %.1f sec :
+3a_drawdrwh Zobrazi jazdca / volant :
+3a_lookfunc Otáèanie pohladu :
+3a_lookaxis osy
+3a_lookstee volant
+3a_lookms_x myš X
+3a_lookmsxy myš XY
+3h_mslookav Poh¾ad myšou je dostupnı pri skrytom kurzore
+3a_looksens Citlivos poh¾adu %.2f :
+3a_lookcred Zvıšená citlivos v strede %.2f :
+3a_btnlooko Poh¾ad tlaèidlom :
+3g_l_smooth plynulı
+3g_l_instan okamitı
+3h_mainsfov FOV hlavnej obrazovky%.0f° :
+3h_monangle Natoèenie obrazovky %.0f° :
+3h_viewoffs Odskok obrazovky %.2f :
+3h_multiscl Rozmiestnenie viacerıch obrazoviek :
+3h_entnumls Zadajte poèet ¼AVİCH obrazoviek
+3h_entnumrs Zadajte poèet PRAVİCH obrazoviek
+3h_onecentr Jedna stredová obrazovka
+3h_scwidths Šírka obrazovky :
+3h_optequal rovné
+3h_optunequ rôzne
+3h_entsidep Zadajte šírku BOÈNEJ obrazovky (v pixeloch)
+3h_entmainp Zadajte šírku HLAVNEJ obrazovky (v pixeloch)
+3h_fullwext Celková šírka poh¾adu zvonku :
+3h_bezelcom Redukcia zkreslenia hrán obrazovky %.1f%% :
+3h_resulfov Vısledné zorné pole : %.1f°
+3h_fovinval Neplatné nastavenie zobrazovania
+3h_drivuse1 Poh¾ady pri jazde pouijú jedno vykreslovanie
+3h_drivusex Poh¾ady pri jazde pouijú %d vykreslovaní
+3h_notwidex Nedostatoèná šírka pre %d-nastavenie obrazovky
+3h_extvfull Poh¾ady z vonku vyuijú celú šírku obrazovky
+3h_extvmain Poh¾ady z vonku vyuijú hlavnú obrazovku
+3h_extvxxar Poh¾ady z vonku vyuijú %d:%d pomer strán
+3h_extvass3 Pre poh¾ady z vonku je pouité troj-obrazovkové zobrazenie
+3a_sml_newt novı
+3a_sml_name meno
+3a_sml_delt odstráni
+3a_sml_undo spä
+3a_sml_save uloi
+3a_sml_load nahraj
+3a_msctrcks Skladby
+3a_exitnosv Ukonèi bez uloenia?
+3a_chmblost Zmeny môu by stratené
+3a_savedrad Uloené radio.rad
+3a_nodelstp Nedá sa odstráni setup kanál
+3a_delchnlq Odstráni kanál?
+3a_chanlnum Kanál %d
+3a_msctrnum Skladba %d
+3a_norenstp Nedá sa premenova setup kanál
+3a_newnmchn Nové meno kanála
+3a_play_num Prehra: %s
+3a_fail_num Nepodarilo sa : %s
+3a_shftauto automatické
+3a_shftsequ sekvenèné
+3a_shftshft radiaca páka
+3g_shftffjo ff radiaca páka
+3h_transmis Radenie
+3h_box_hpat H prevodovka
+3h_box_bike motocyklová prevodovka
+3h_box_sequ sekvenèná prevodovka
+3h_box_seqi sekvenèná prevodovka so zapalovaním
+3h_box_semi pádlová prevodovka
+3h_seq_hpat sekvenèná spolupracujúca s H prevodovkou
+3a_dc_combi kombinované
+3a_dc_separ oddelené
+3a_dc_butts tlaèidlá
+3a_axb_axis osy
+3a_axb_butt tlaèidlo
+3g_no_con_d iadne hracie zariadenie nebolo zistené
+3g_xx_con_d %.0f hracie zariadenie nebolo zistené
+3g_ct_unkno Neznáme hracie zariadenie
+3g_ct_first First person zariadenie
+3g_ct_steer Volant
+3g_ct_fligh Flight controller
+3g_ct_gamep Gamepad
+3g_ct_joyst Joystick
+3a_crrdcval Nelinearita zatáèania %.2f :
+3g_whe_turn Rozsah volantu %.0f° :
+3a_msbutt_1 Tlaèidlá 1
+3a_mdbutt_2 Tlaèidlá 2
+3e_kbt_mous [riadenie myšou]
+3e_kbt_nohe [klávesnica - bez pomoci]
+3e_kbt_stab [klávesnica - so stabilizáciou]
+3a_mdaxesff Osy / FF
+3a_mdshiftr Radiaca páka
+3a_kasteerl Zatáèa v¾avo
+3a_kasteerr Zatáèa vpravo
+3e_kasteerl Zatáèa  rıchlo
+3e_kasteerr Zatáèa pomaly
+3a_kaaccelk Plyn
+3a_kabrakek Brzda
+3a_kaleftvw Poh¾ad v¾avo
+3a_karghtvw Poh¾ad vpravo
+3a_karearvw Poh¾ad dozadu
+3a_kashiftu Radi nahor
+3a_kashiftd Radi nadol
+3a_kaclutch Spojka
+3a_kahandbr Ruèná brzda
+3a_kahornkk Klaksón
+3a_kaflashk Svetlá
+3a_karesetk Reset auta
+3g_kapitspd Obmedzovaè
+3h_katcdisa Trakèná kontrola
+3h_kaigniti Zapa¾ovanie
+3a_kazoom_i Priblíi
+3a_kazoom_o Oddiali
+3a_karevers Spiatoèka
+3a_kafirstk Prvı
+3a_kasecond Druhı
+3a_kathirdk Tretí
+3a_kafourth Štvrtı
+3a_kafifthk Piaty
+3a_kasixthk Šiesty
+3a_kasevent Siedmy
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Riadenie
+3a_aacombin Plyn / Brzda kombin.
+3a_aathrott Plyn
+3a_aabrakea Brzda
+3a_aalookhe Smer poh¾adu
+3a_aalookpi Sklon poh¾adu
+3a_aalookro Rotácia poh¾adu
+3a_aaclutch Spojka
+3a_aahandbr Ruèná brzda
+3g_aashiftx Preradi v¾avo-vpravo
+3g_aashifty Preradi dopredu-dozadu
+3a_prsxforx Stlaète %s pre : %s (ESC - zruši / DEL - odstráni)
+3a_smallkey klávesa
+3a_smallbut tlaèidlo
+3a_mouse_kb myš / klávesnica
+3a_wheel_js volant / joystick
+3a_force_st Sila FF %.0f :
+3a_thrbrkax Plyn / brzda osy :
+3a_clutchop Spojka :
+3a_handbrko Ruèná brzda :
+3a_thrbrkrv Plyn / Brzda - obmedzenie stredovej vôle %.2f :
+3a_btnratev Rıchlos odozvy tlaèidla %.2f :
+3a_kbsteero Riadenie klávesnicou :
+3a_strratev Rıchlos zatoèenia %.2f :
+3e_retratev Rıchlos vyrovnania %.2f :
+3e_strfastv Rıchle riadenie x %.2f :
+3e_strslowv Jemné riadenie x %.2f :
+3a_prdtimev Èas predpovede %.2f :
+3a_lmtmultv Stabilizácia x %.2f :
+3a_selfunca Fukncia pre priradenie osi
+3a_selaxfrx Zvoli os pre : %s (ESC - zruši / DEL - odstráni)
+3a_availaxs Dostupné osy
+3a_axis_num os %d
+3a_invert_1 invertova 1
+3a_invert_0 invertova 0
+3a_frcfdbak Zpätná odozva FF
+3a_ffdevice FF zariadenie
+3g_ffshiftd FF radiace zariadenie
+3a_removedz Odstráni màtve zóny :
+3h_rec_axes rekalibruj osy
+3h_cal_lock zablokuj
+3h_cal_unlk odblokuj
+3a_heyb_hdr Klávesnica
+3a_whbt_hdr Tlaèidlá na volante
+3a_ass_zero [Nula]
+3a_ass_mlft ¼avé tl. myši
+3a_ass_mrgt Pravé tl. myši
+3a_ass_mmid Stred. tl. myši
+3a_ass_whup Koliesko hore
+3a_ass_whdn Koliesko dolu
+3a_ass_spac Medzerník
+3a_ass_upar Šípka hore
+3a_ass_dnar Šípka dolu
+3a_ass_rtar Šípka doprava
+3a_ass_ltar Šípka do¾ava
+3a_ass_pgup Strana hore
+3a_ass_pgdn Strana dolu
+3a_butt_num tlaèidlo %d
+3d_aamousex Myš X
+3d_aamousey Myš Y
+3d_aa_xaxis Os X
+3d_aa_yaxis Os Y
+3d_aa_zaxis Os Z
+3d_aarxaxis Os RX
+3d_aaryaxis Os RY
+3d_aarzaxis Os RZ
+3d_aaslidr1 Posuvník 0
+3d_aaslidr2 Posuvník 1
+3a_reskeysh rezervované klávesy
+3a_rswtch_r 1 - sledova záznam
+3a_rssave_r 2 - uloi záznam
+3h_showline 4 - uká jazdeckú stopu
+3a_rsless_f < - menej sily
+3a_rsmore_f > - viac sily
+3a_rstab_ne TAB - ïalšie auto
+3a_rshome_o HOME - vlastné auto
+3a_rstalk_t T - hovori
+3a_rspausep P - pauza
+3a_rshistor H - história
+3a_rsview_v V - poh¾ad
+3a_rsforces F - sily
+3a_rsnamesn N - mená
+3a_shftplus SHIFT +
+3a_shchhorn H - zmeni klaksón
+3g_shshiftt G - mód radenia
+3a_shrescon C - obnovi ovládaèe
+3a_shressnd W - obnovi zvuky
+3a_shsoundo N - zvuk zap. / vyp.
+3a_shmirmod M - mód zrkadiel
+3g_shhidetx F - skry text
+3a_shuservw U - uívate¾skı poh¾ad
+3a_shskiptn K - preskoèi skladbu
+3h_shshowmo Z - uká kurzor
+3b_shdriver F1 - poh¾ad jazdca
+3b_shslowrp F2 - spomali záznam
+3b_shfastrp F3 - zrıchli záznam
+3a_shwindow F4 - okno / celá obrazovka
+3a_carsndvl Hlasitos motora (%.1f) :
+3a_skidvboo Hlasitos šmyku (%.1f) :
+3g_windvboo Hlasitos vetra x (%.1f) :
+3g_echovboo Intenzita ozveny x (%.1f) :
+3a_mscvolum Hlasitos hudby (%.1f) :
+3g_msgvolum Hlasitos rozhrania (%.1f) :
+3a_mscsetup Hudba v obrazovkách nastavení :
+3a_mscracin Hudba v priebehu preteku :
+3a_mscrplay Hudba v priebehu záznamu :
+3a_selecbrk [Zvolené]
+3a_noplybrk [Niè nehrá]
+3a_msc_skip Preskoèi
+3a_msc_sele Zvoli
+3a_ingmmusc Hudba v hre
+3a_channels Kanály
+3g_status_a Zvuk (SHIFT + N) : %s
+3g_status_m Buffer hudby : %s
+3g_status_c Buffer zvukov : %s
+3a_relaybrk [relatívne]
+3a_absolbrk [absolútne]
+3a_fps_disp Zobrazi snímky za sekundu (fps) :
+3b_virtuals Zobrazi virtuálne štartovacie svetlá :
+3a_mirrmode Mód zrkadiel :
+3a_clokmode Typ budíkov :
+3g_fixedfwd Upevnená na prednej ose :
+3g_accelmov Akcelerácia mení poh¾ad :
+3a_showpeds Zobrazi pedále :
+3g_steerind Virtuálny ukazovate¾ zatáèania :
+3a_smallmap Zobrazi malú mapu :
+3g_staticsm Otáèanie mapky :
+3a_pos_list Zobrazi pozície :
+3a_dropshad Zobrazi tiene :
+3a_msgtsize Ve¾kos textu správy %.3f :
+3a_timedisp Celkové èasy :
+3a_chptexto Text na medzièase :
+3a_clndlcol Farba ruèièiek prístrojov :
+3a_cltxtcol Farba popisu prístrojov :
+3a_cttxtcol Farba centrálneho textu :
+3h_x_dash_c %s prístrojovka :
+3h_roadgled Ukazovate¾ zaradeného prevodu :
+3g_interfac Rozhranie
+3h_in_title Názov :
+3h_in_bigbt Ve¾ké tlaèidlo :
+3h_in_opaci Neprieh¾adnos %.2f :
+3h_in_bbtxt Text :
+3h_in_smlbt Malé tlaèidlo :
+3h_text_uns Neoznaèenı text :
+3h_text_sel Oznaèenı text :
+3h_text_una Nedostupnı text :
+3h_in_texte Textovı reazec :
+3h_in_btn_g Zelené tlaèidlo :
+3h_in_btn_r Èervené tlaèidlo :
+3h_in_btn_a Náhradné tlaèidlo :
+3h_smallm_l Svetlá malá mapa :
+3h_smallm_d Tmavá malá mapa :
+3h_cr_lap_a Auto 1 kolo vpredu :
+3h_cr_ahead Auto vpredu :
+3h_ai_ahead AI vpredu :
+3h_your_car Vlastné auto :
+3h_ai_behin AI vzadu :
+3h_cr_behin Auto vzadu :
+3h_cr_lap_b Auto 1 kolo vzadu
+3h_intcentr Stred rozhrania :
+3h_intscale Mierka rozhrania :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset reset
+3h_test_sml Malé tlaèidlo
+3h_test_big Ve¾ké tlaèidlo
+3h_in_cen_x stred X
+3h_in_cen_y stred Y
+3h_in_sca_x X mierka
+3h_in_sca_y Y mierka
+3h_betw_a_b Hodnota musí by medzi %.1f a %.1f
+3a_asavnono [vypnuté - neukladá sa]
+3a_asavmanu [zapnuté - manuálne uloenie]
+3a_asavauto [auto save - nedoporuèuje sa]
+3a_ogm_ainm AI mená
+3g_ogm_fkey F1 - F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [pevné poradie]
+3a_rs_finis [poradie ako v cieli]
+3a_rs_revfi [opaèné poradie ako v cieli]
+3a_rs_randm [náhodné poradie]
+3a_aidrvnum AI jazdec %d :
+3a_f_keynum F%d :
+3a_sprsvopt Uloenie záznamu offline hry :
+3a_mprsvopt Uloenie záznamu online hry :
+3a_nonqracr Reštart preteku bez kvalifikácie :
+3a_changbtn Editova AI mená / F klávesy :
+3a_optlores nízke rozl.
+3a_opthires vysoké rozl.
+3g_optcompr komprimované
+3g_optsfull celı
+3g_opt_main hlavnı
+3g_plus_mir + zrkadlá
+3a_usrldval Úroveò detailov (%.2f) :
+3a_dstldval Detaily prachu (%.2f) :
+3a_mirldval Detaily v zrkadlách (%.2f) :
+3h_fsaa_txt Antialiasing celej scény:
+3h_mip_bias Håbka textúr :
+3h_mipbias0 Håbka textúr (%.1f) interface / text :
+3h_mipbias1 Håbka textúr (%.1f) objekty / steny :
+3h_mipbias2 Håbka textúr (%.1f) tráva / šotolina :
+3h_mipbias3 Håbka textúr (%.1f) plochy ciest :
+3a_shtypopt Typ tieòov :
+3g_treesopt Zobraz stromy :
+3g_flagsopt Zobraz vlajky :
+3g_rubbropt Zobraz pneumatiky :
+3g_draw_sky Zobraz oblohu :
+3g_gadapter Graf. karta :
+3e_zbdopt_d Håbka Z-Buffera (%d) :
+3e_hazetext Efekt hmly
+3h_mip_type Filtrácia textúr / AF :
+3h_text_res Textúry(okrem skinov) :
+3g_carskins Skin auta a prilby :
+3g_texmemmb Textúry zaberajú v pamäti : %.1f MB
+3a_crdnoshd Vaša 3D karta nedokáe zobrazi tiene v LFS
+3g_crdnoftx Vaša 3D karta nezvláda textúry v plnej ve¾kosti
+3h_hvsnotav Vaša 3D karta nedokáe pui Hardware Vertex Shading
+3g_seladres Zvo¾te adaptér pre pouitie po reštarte
+3e_rslfszbd Aby sa zmeny Z-buffera prejavili, musíte reštartova LFS
+3a_flsvsync Vertikálna synchronizácia :
+3g_prev_lag Zamedzi oneskorenie vstupu :
+3a_limitfps Obmedzi FPS v hre :
+3a_maxfrmrt Maximálny poèet FPS :
+3g_tx_x_fps %d fps
+3a_minsleep Minimálna pauza :
+3g_debounce Tlmenie radenia :
+3g_txt_x_ms %d ms
+3a_pixelval %d pixelov
+3a_useplset AI má hráèove nastavenie auta :
+3a_useplcol AI má hráèove farby :
+3a_sndlgval Oneskorenie zvuku %.2f sek. :
+3g_whe_comp Nelinearita riadenia %.2f :
+3a_anlgsval Vyhladenie analógového riadenia %.2f :
+3a_multispd Zrıchlenie grafiky online hry :
+3g_car_skin Sahovanie skinov aút :
+3g_hel_skin Sahovanie skinov heliem :
+3g_multidst Vzdialenos zobr. áut %.0f m :
+3g_dynamlod Dynamická redukcia detailov %.2f :
+3a_updtpath Obnovenie stopy :
+3a_puusrcar uiv. auto
+3a_puallcar všetky autá
+3h_replaysk Sahovanie skinov pri zázname :
+3g_introopt Naèítaj tra pri štarte :
+3g_local_12 Miestny èas :
+3g_time_fps Uká èas namiesto FPS :
+3g_shfflags Uká vlajky v SHIFT+F móde :
+3h_accelopt Akcelerometer :
+3h_shadogen Generovanie tieòov :
+3h_opt_defa vıchodzie
+3h_opt_alte alternatívne
+3g_skin_d_q Sahovanie skinov
+3h_skin_use Skiny v pamäti
+3a_novtnolo Nemôeš hlasova - nie si pripojenı do preteku
+3a_notdnord Nemono testova - iba AI autá na zázname
+3a_esc_menu Menu na tlaèidle Esc
+3a_repmenig Menu záznamu (v hre)
+3a_repmenld Menu záznamu (naèítaného)
+3a_sel_pits Gará
+3a_sel_spec Pozorova
+3a_sel_join Prida sa
+3a_sel_repl Záznam
+3a_sel_outp Zaznamena telemetriu
+3a_sel_rstr Reštart
+3a_vote_str Hlasova pre štart pretekov
+3a_vote_end Hlasova pre koniec pretekov
+3a_vote_qua Hlasova pre kvalifikáciu
+3a_test_drv Testovacia jazda
+3a_startrac Štart pretekov
+3a_hqualify Kvalifikácia
+3a_resumegm Pokraèova
+3h_escapkey ESC
+3a_undefind nedefinované
+3a_arenatxt aréna
+3a_singlstg jeden úsek
+3a_standard po smere
+3a_reversed proti smeru
+3a_weth_hdr Poèasie
+3a_cnfg_hdr Konfigurácia
+3h_layt_hdr Layout
+3h_none_sel nie je niè oznaèené
+3a_info_cir okruh
+3a_info_tot celkom
+3a_chng_trk Zmeni tra
+3h_revconfc Obrátená konfigurácia :
+3h_openconf Otvorená konfigurácia :
+3h_ndxmdtrx Musíte by v %s móde pre vıber %s
+3h_ndulxtrx Musíte odomknú LFS %s pre vıber %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mí¾ %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mí¾
+3g_dt_dawn_ Svitanie
+3g_dt_sunri Vıchod slnka
+3g_dt_morni Ráno
+3g_dt_day__ Deò
+3g_dt_after Popoludnie
+3g_dt_sunse Západ slnka
+3g_dt_dusk_ Súmrak
+3g_dt_night Noc
+3g_wth_clea Jasno
+3g_wth_clou Oblaèno
+3g_wth_over Zamraèené
+3a_hlvcthis Toto kolo-
+3a_hlvcnext Ïalšie kolo-
+3a_readynum Pripravi : %d
+3a_noviewcr iadne autá v preteku
+3a_thexisst %s štartuje
+3a_thexhase %s skonèil
+3a_smlpract tréning
+3a_smlqulng kvalifikácia
+3a_sml_race pretek
+3a_replnotr Záznam sa nenahrával
+3g_notrecor Nezaznamenáva sa
+3g_fov_temp FOV %.0f° :
+3a_replrest Záznam reštartovanı
+3a_aisvdknw AI jazdec získal ïalšie skúsenosti
+3a_timetmsx Èas x %.3f
+3a_namenldf Meno súboru pre telemetriu z ïalšieho kola
+3g_caps_wrn VAROVANIE
+3g_caps_kik KICK
+3g_caps_ban BAN
+3g_caps_spe POZOROVA
+3a_namesoff mená nad autami vyp.
+3a_connlist zoznam pripoj. hráèov zap.
+3a_namesovr mená nad autami zap.
+3h_showmous uká kurzor
+3h_hidemous skri kurzor
+3a_mirrinfo zrkadlá :
+3a_cancaujo Automatické pripájanie zrušené
+3a_reinicnt Ovládaèe reinicializované
+3a_reinisnd Zvuk reinicializovanı
+3a_namemprs Meno MPR záznamu na uloenie
+3a_namesprs Meno SPR záznamu na uloenie
+3a_shnsound SHIFT + N : Zvuk - %s
+3g_shgsmode SHIFT + G : Mód radenia - %s
+3a_shgautos SHIFT + G : Automat - %s
+3a_frcvalpc sila FF %.0f%%
+3a_hrntypev Typ klaksónu %d
+3a_actnends KONÈÍ
+3a_actnrest sa REŠTARTUJE
+3a_actnstrt ŠTARTUJE
+3a_thngqual Kvalifikácia
+3a_thngrace Pretek
+3a_reploose zlyhala synchronizácia
+3a_pausetxt pauza
+3g_safeexit ukonèujem ...
+3a_retrdcap ODSTÚPIL
+3a_dsqulcap DISKVALIFIKOVANİ
+3g_unclcaps NEKLASIFIKOVANİ
+3a_wrngwcap IDETE V PROTISMERE
+3a_capsdrvr JAZDEC
+3a_capsbstl NAJLEPŠIE KOLO
+3g_pitstops PIT
+3g_spenalty PTY
+3a_capstotl CELKOVİ ÈAS
+3g_caps_car AUTO
+3g_capsxlps %d KÔL
+3g_plus1lap +1 kolo
+3g_plusxlps +%d kôl
+3h_falsesta CHYBNİ ŠTART
+3h_pe_speed RİCHLOS V BOXOCH
+3h_pe_short PIT STOP PRÍLIŠ SKORO
+3h_pe_mustp PIT STOP PRÍLIŠ NESKORO
+3h_pe_admin STANOVENİ ADMINOM
+3h_pe_unknw NEZNÁMY
+3g_yellcaps LTÁ VLAJKA
+3g_bluecaps MODRÁ VLAJKA
+3a_stpgocap TREST - STOP&GO
+3g_drthrcap TREST - PREJAZD BOXOVOU ULIÈKOU
+3g_30stimep TREST - 30 SEKÚND
+3g_45stimep TREST - 45 SEKÚND
+3g_clearedp TREST ZRUŠENİ
+3g_pit_stop PIT STOP
+3g_pitstopx PIT STOP : %d
+3g_p_pnltyx PIT STOP [trestnı] : %d
+3g_p_nowrkx PIT STOP [bez opráv] : %d
+3g_p_finshx PIT STOP [hotovo] : %d
+3g_mancompx %s^8 dokonèil svoj %s
+3g_wmncompx %s^8 dokonèila svoj %s
+3g_unkcompx %s^8 : dokonèil/a svoj %s
+3g_enterpit Boxová ulièka
+3g_enterfor Boxová ulièka -
+3g_leavepit Opustil boxovú ulièku
+3g_stpgotxt trest stop&go
+3g_drthrtxt trest prejazdu boxovou ulièkou
+3g_nopurtxt bezdôvodne
+3g_capsstop STOP
+3g_capsrefu TANKOVANIE PALIVA
+3g_capssetu ZMENY NASTAVENIA
+3g_capsxdam %s POŠKODENIE
+3g_capsdamx POŠKODENIE %s
+3g_capsxcha VİMENA PNEUMATÍK %s
+3g_capsminr DROBNÉ
+3g_capsmajr VE¼KÉ
+3g_capsfrnt VPREDU
+3g_capsrear VZADU
+3g_capsleft V¼AVO
+3g_capsrigh VPRAVO
+3g_capslefr V¼AVO VPREDU
+3g_capslere V¼AVO VZADU
+3g_capsrifr VPRAVO VPREDU
+3g_capsrire VPRAVO VZADU
+3g_refl_f_x Bolo doplnenıch %.1f litrov paliva
+3g_pitstp_f PIT STOP DOKONÈENİ
+3g_nospdlim Na tejto trati nie je zóna s obmedzenou rıchlosou
+3g_notequip Toto auto nemá obmedzovaè rıchlosti
+3h_thisnotc Toto auto nemá trakènú kontrolu
+3h_thisnost Toto auto nemá štartér
+3a_smllaptm èas kola
+3a_smlspltm medzièas
+3a_clhotlap merané kolá
+3a_clonemin 1 minúta kvalifikácie
+3a_cl_xmins %d minút kvalifikácie
+3a_clonelap 1 kolo
+3a_cl_xlaps %d kôl
+3a_clonehor 1 hodina
+3a_cl_xhors %d hod.
+3g_cltrning tréning
+3a_windsp_x rıchlos vetra %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8 - platnos hlasu vypršala
+3a_x_voteer %s^8 hlasoval pre KONIEC pretekov
+3a_x_voters %s^8 hlasoval pre REŠTART pretekov
+3a_x_votequ %s^8 hlasoval pre KVALIFIKÁCIU
+3a_x_joinsp %s^8 prešiel do reimu pozorovania
+3g_x_didnot %s^8 nedokonèil
+3g_x_wrongr %s^8 išiel zlou cestou
+3g_x_illega %s^8 vošiel do zakázanej zóny
+3h_x_retpit %s^8 sa vrátil do pit lane
+3h_a_retpit Všetky auta su v pit lane
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp zaèiatok kola
+3a_smalllap kolo
+3a_hlvcmodi [modifikované]
+3a_timequal kval. - zostáva
+3a_timetotl celkom
+3a_timebest najlepší
+3a_time_lap toto kolo
+3a_timesplt medzièas
+3h_timetime èas
+3a_timepnlt trest
+3a_noldxcar Nedá sa naèíta auto hráèa %s
+3a_nosvnonm Nedá sa uloi bez pomenovania
+3g_nofilesl iadne súbory k naèítaniu
+3a_alrdyout Telemetria sa u zaznamenáva
+3a_nxtlpout Telemetria ïalšieho kola bude zaznamenaná do %s.raf
+3a_nodtaout Telemetria nebude zaznamenaná
+3g_dled_x_x Sahovanie dokonèené : %s_%s
+3g_ding_x_x Sahovanie skinu : %s_%s
+3h_saveskin Ukladanie skinu : %s
+3g_nomoreci Nedá sa prida viac kruhov
+3a_noaddmor Nedá sa prida viac objektov
+3a_loadinfo Naèítavanie
+3h_storedvw Uloené poh¾ady (V) :
+3h_move_spd Rıchlos pohybu %.1f m/s :
+3h_min_high Minimálna vıška %.1f m :
+3g_roll_deg Náklon %.1f° :
+3h_vwsmooth Vyhladzovanie poh¾adu %.1f s :
+3h_trantime Prechodovı èas %.1f s :
+3a_invlok_c Invertova poh¾ad myšou :
+3h_invrot_c Invertova ¾ava+prava rotácia :
+3a_fov_valu Zorné pole %.1f° :
+3a_plcobs_c Poloi objekty :
+3a_chkptw_v Šírka checkpointu %.0f m :
+3a_hdg_degr Smer %.1f° :
+3a_unnm_brk [bez mena]
+3a_objs_num poèet objektov : %d
+3a_emty_brk [prázdny]
+3a_savechan Uloi zmeny
+3a_loadlayo Otvori layout
+3a_savelayo Uloi layout
+3a_clearall Odstráni všetko
+3a_laps_num poèet kôl : %d
+3a_errorsml chyba
+3a_c_clrsel C - zruši vıber
+3a_m_mv_mod M - presunú / modifikova
+3a_del_dele DEL - odstráni
+3a_w_e_wdth W / E - šírka
+3a_l_r_rota < / > - rotova
+3a_cp_1_2_3 1 / 2 / 3 - medzièas
+3a_f_finish F - cie¾ová èiara
+3a_s_startp S - štartovná pozícia
+3a_o_object O - objekt
+3g_dist_x_m vzdial.: %.2f m
+3a_editkeys zmeni klávesy
+3a_c_ar_hgt CTRL + šípka - vıška
+3g_c_ar_rol CTRL + šípka - priblíenie
+3a_arrow_mv šípky - pohyb
+3a_spc_hdsh SPACE - skry / zobrazi
+3a_esc_exit ESC - koniec
+3h_l_b_move ¾ave tlaèidlo - pohyb
+3h_r_b_look pravé tlaèidlo - poh¾ad
+3h_l_r_rota ¾avé + pravé - rotácia
+3a_keys_txt klávesy
+3h_mous_txt myš
+3h_edit_txt zmeni
+3h_more_txt viac
+3h_in_trans prechod
+3h_cl_slt_x Poh¾ad odstránenı v bloku %d
+3h_st_slt_x Poh¾ad uloenı v bloku %d
+3h_no_v_x_s iaden poh¾ad v bloku %d (%s)
+3h_no_vws_s iadne uloené poh¾ady (%s)
+3h_sh_nm_st SHIFT + ÈÍSLO - pre uloenie poh¾adu
+3h_no_car_f iadne auto k sledovaniu
+3h_fc_point Ukazujúc na :
+3h_fc_neare Najblišie auto :
+3h_fc_flwng Sledujúc :
+3h_fc_lockd Zamknutı na :
+3h_clicktof oznaè auto k nasledovaniu
+3h_followcr nasleduj auto
+3h_nocarsvw iadne auto v poh¾ade
+3h_stopfoll stop
+3h_optimise optimalizova
+3h_opt_of_t Optimalizované objekty : %d of %d
+3a_noxwload Nedá sa ukonèi v priebehu naèítania
+3a_chgnotsv Zmeny nie sú uloené
+3a_exanyway Aj tak ukonèi?
+3a_clrall_q Zmaza všetky objekty z layoutu?
+3g_delete_l Odstráni layout?
+3a_tit_ldly Otvori layout
+3a_nosavent Nedá sa uloi layout zo vstupnej obrazovky
+3a_nolodent Nedá sa otvori layout zo vstupnej obrazovky
+3a_noobselm Nie je zvolenı objekt k posunu
+3a_noobtype Nie je zvolenı typ objektu
+3a_noobseld Nie je zvolenı objekt k odstráneniu
+3h_unexpclr Neoèakávanı príkaz
+3h_unexpend Neoèakávanı koniec súboru
+3a_xalready %s bol u vytvorenı
+3g_idx_0tox Hodnota musí by v rozsahu 0 a %d
+3g_rt_idx_x hodnota cesty : %d
+3g_restarea Zakázaná zóna
+3g_rt_check Kontrola trate
+3g_rt_wrong Chybná tra
+3g_ob_chalk èiary
+3g_ob_cones kuele
+3g_ob_tyres pneumatiky
+3h_ob_markr znaèenie
+3g_ob_other ostatné
+3g_ob_marsh usporiadate¾
+3g_marsh_no nevidite¾nı
+3g_marsh_st usporiadate¾
+3g_marsh_le šípka v¾avo
+3g_marsh_ri šípka vpravo
+3h_cant_add Nedá sa prida :
+3h_cant_mov Nedá sa posunú :
+3h_inte_obj prienik objektov
+3h_inva_pos neplatná pozícia
+3a_dispgame Zobrazi zoznam serverov
+3a_tit_list Zoznam serverov
+3a_startnew Vytvori novı server
+3a_tit_strt Vytvori novı server
+3a_joingame Pripoji sa na konkrétny server
+3a_tit_spec Pripoji sa na konkrétny server
+3a_finduser Nájs online uívate¾a
+3a_tit_user H¾adanie uívate¾ov
+3a_cls1conn Ukonèuje sa 1 pripojenie
+3a_clsxconn Ukonèuje sa %d pripojení
+3a_rfrshlst obnovi
+3a_stophost Zastavujem vıpis serverov ...
+3a_spctostp Stlaète MEDZERNÍK na zastavenie vıpisu serverov
+3a_liststat %s server %d z %d - Dá sa pripoji: %dx - [iadna odozva %dx] - [Zlá verzia %dx]
+3a_waitingw Èakanie na
+3a_checking Overovanie
+3a_end_stat Dá sa pripoji: %dx - [iadna odozva %dx] - [Zlá verzia %dx] %s
+3a_clikjoin - vyberte si server
+3a_glc_name Meno
+3a_glc_ping Ping
+3a_glc_trak Tra
+3a_privatew súkromnı
+3a_modified pozmenenı
+3h_arcade_w reset monı
+3h_cruise_w cruise
+3a_wrongver Zlá verzia
+3h_noteul_x POZN.: Ešte vdy treba odomknú LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Server pre stiahnutie
+3h_cnt_titl Štát
+3h_newupdat Je dostupná nová aktualizácia
+3h_norecaui Nebola prijatá informácia o automatickej aktualizácii
+3h_start_dl zaèni sahova
+3h_plsselmr Prosím zvo¾te najbliší server
+3h_connectn Pripájam...
+3h_trylfsnt Skúšam opä cez ^7www.lfs.net
+3h_dl_perce Progres súboru : %d%%
+3h_dl_colon Stiahnutıch :
+3h_restartn Reštartujem...
+3h_nostrtrs Nemôem spusti reštartér
+3h_noresdat Nemôem vytvori dátov súbor reštartéra
+3h_noenumwi Nemôem oèíslova okná
+3h_anotherl LFS u beí viackrát
+3h_noopenrs Nemôem otvori program reštartéra
+3b_meetroom Konferenèná miestnos
+3b_m_host_x je na ceste na %s
+3b_f_host_x je na ceste na %s
+3b_leftroom opustil miestnos
+3b_entrroom vstúpil do miestnosti
+3b_wlcmu1st Vitajte!  Ste prvım pretekárom v miestnosti
+3b_wlcmxinr Vitajte!  V miestnosti je práve %d pretekárov
+3b_mr_leave Opusti
+3b_mr_findb Nájs
+3b_mr_sound Zvuk
+3b_mr_refre Obnov
+3b_somehost hostite¾skı server
+3b_mastercl Hlavnı server ukonèil pripojenie
+3b_sr_privt Súkromné
+3b_mr_publc Verejné
+3b_mr_empty Prázdne
+3h_sr_cruis Cruise
+3g_autoreco Znovu pripájam ...
+3a_typelocl lokálna sie
+3a_typeinet internet
+3a_userisat Uívate¾ je na %s
+3a_joinxath Pripoji k %s na tento server?
+3a_inrc_num preteká : %d
+3a_cons_num pripojení : %d
+3a_resl_num vısledky : %d
+3h_skin_num Skin : %d
+3h_join_que Pozícia vo fronte : %d
+3a_selhostc Zvolenı hostite¾ :
+3a_joingamc Pripoji sa na :
+3a_hostnamc Názov servera :
+3a_hostipac IP adresa serveru :
+3a_hostprtc Port serveru :
+3a_hostpasc Heslo na server :
+3h_clearbtn odstáni všetky heslá (%d)
+3h_cconfirm Odstráni všetky uloené heslá na servery?
+3a_noldtrck Nedá sa naèíta tra
+3a_nosndudp Nedá sa odosla UDP paket
+3a_nocrtudp Nedá sa vytvori UDP pripojenie
+3h_wt_sinfo Èakanie na informáciu o skine
+3h_norcvskn Nebola prijatá informácia o skine
+3a_norcvgst Neprijaté informácie o hosovi
+3a_norcvply Neprijaté informácie o hráèovi
+3a_norvcall Neprijaté správy od niektorıch hráèov
+3a_vldadreq Musíte zada platnú IP adresu lokálnej siete
+3a_errconrs Chyba pri odosielaní správy o pripojení
+3a_mode_sel Online mód :
+3h_smal_dmo demo
+3h_frxmdndx Pre %s mód musíte odomknú LFS %s
+3h_seltrrqx Vybraná tra vyaduje %s mód
+3a_visibilc Vidite¾nos :
+3a_vis_locl lokálna
+3a_vis_inet internet
+3a_vid_hidn skryté
+3a_inetconc Internetové pripojenie :
+3a_modem56k 56k modem
+3a_m512_128 512 / 128kb/s
+3a_mdm1_256 1M / 256kb/s
+3a_mdm_cust vlastné
+3a_maxupl_c Maximálny upload (kbit/s) :
+3g_x_upload upload %s kbits/sec
+3a_gnnoemty Meno serveru musí by vyplnené
+3a_onecarrq Musí by povolenı minimálne 1 typ auta
+3a_hstgstrq Musia by povolení hráèi na hostite¾skom alebo hosujúcom PC
+3a_rusurepr Naozaj si prajete pokraèova?
+3a_maxbwmex Môe by prekroèená max. prenosová rıchlos
+3b_srv_ip_c IP Adresa :
+3a_srvportc Port :
+3a_dedi_opt Èistı server (bez grafiky) :
+3a_guestvot Povoli hlasovanie kick / ban :
+3a_guestsel Povoli vıber tratí hosami :
+3h_qenabled Kvalifikácia povolená:
+3g_midracej Povoli pripojenie v priebehu preteku :
+3g_pitstopr Povinná zástavka v boxoch :
+3g_carreset Povo¾ resetovanie auta :
+3h_fcockpit Núteny poh¾ad z kabíny :
+3h_cruisemo Cruise (povolená jazda protismerom) :
+3a_maxgst_c Max. hráèov celkom :
+3d_admins_c Admin miest :
+3a_maxrarac Max. pretekárov (ivıch + AI) :
+3a_maxragst Max. (ivıch + AI) na 1 pripojené PC :
+3a_maxrahst Max. (ivıch + AI) na PC hostite¾a :
+3a_dedinohc Iba server : iadne autá na PC hostite¾a
+3a_smothpps Plynulos (pakety/s) :
+3a_uplmin16 Minimálny upload 16 kbit
+3g_umax8192 Minimálny upload 8192 kbits
+3a_uplavail Dostupnı upload %.1f KB/s
+3a_uplprcar Upload na 1 auto %.0f bytù/s
+3a_uplcarnm Poèet áut na upload: %.0f
+3a_requplod Potrebnı upload %.1f KB/s
+3a_availexc Dostupnı upload je prekroèenı
+3b_adminp_c Administrátorské heslo :
+3a_sel_audi Audio
+3a_tit_audi Nastavenie - ^7Audia
+3a_sel_scrn Obrazovka
+3a_tit_scrn Nastavenie - ^7Obrazovky
+3a_sel_grfx Grafika
+3a_tit_grfx Nastavenie - ^7Grafiky
+3a_sel_view Poh¾ad
+3a_tit_view Nastavenie - ^7Poh¾adu
+3a_sel_disp Zobrazenie
+3a_tit_disp Nastavenie - ^7Zobrazenia
+3a_sel_plyr Hráè
+3a_tit_plyr Nastavenie - ^7Hráèa
+3a_sel_cont Ovládanie
+3a_tit_cont Nastavenie - ^7Ovládania
+3a_sel_game Hra
+3a_tit_game Nastavenie - ^7Hry
+3a_sel_misc Ostatné
+3a_tit_misc Nastavenie - ^7Ostatného
+3a_unlokerr Chyba pri odomykaní
+3a_flcrterr Chyba pri vytváraní súboru
+3a_reguname Registrované uívate¾ské meno :
+3a_onlinepw Herné heslo (GAME password) :
+3a_gounlock odomknú
+3g_locktext Zamknú LFS (návrat k DEMO verzii)
+3g_lockques Zamknú Live for Speed?
+3g_lockwarn Bude dostupnı len obsah DEMO verzie
+3a_autorcon Automatické znovupripojenie k master serveru
+3a_notconnm Nepripojené k hlavnému serveru
+3a_yesconnm Pripojené k hlavnému serveru
+3a_connmstr pripoji
+3a_connects Pripojenie
+3a_hoptions nastavenie
+3a_smlb_kik kick
+3a_smlb_ban ban
+3a_num_bans %d banánik
+3a_zerobans iadne banány
+3a_editbans editova banány
+3a_tit_bans Ban Editor
+3a_delshort zmaza
+3a_goaddban prida ban
+3a_user_ban Vlote meno uívate¾a, ktorému chcete udeli ban
+3a_time0day %d:%.2d
+3a_time1day 1 deò %d:%.2d
+3a_timexday %d dní %d:%.2d
+3a_banip12h IP adrese bol udelenı 12 hodinovı ban
+3a_banun12h Uívate¾skému menu bol udelenı 12 hodinovı ban
+3b_banusr1d Uívate¾ovi bol udelenı ban na 1 deò
+3b_banusrxd Uívate¾ovi bol udelenı ban na %d dní
+3h_tyre_man Vırobca
+3g_tt_sl_r1 SLIKY_R1
+3g_tt_sl_r2 SLIKY_R2
+3g_tt_sl_r3 SLIKY_R3
+3g_tt_sl_r4 SLIKY_R4
+3g_tt_slk_s SLIKY_MÄKKÉ
+3g_tt_slk_m SLIKY_STREDNÉ
+3g_tt_slk_h SLIKY_TVRDÉ
+3a_tt_races ZÁVODNÉ_SLIKY
+3a_tt_raceg ZÁVODNÉ_REZANÉ
+3a_tt_racei ZÁVODNÉ_PRECHODNÉ
+3a_tt_racew ZÁVODNÉ_MOKRÉ
+3a_tt_roads CESTNÉ_SUPER
+3a_tt_roadn CESTNÉ_NORMÁLNE
+3a_tt_hybri HYBRIDNÉ
+3a_tt_knobb OFFROAD
+3a_ttlmaskl Celková hmotnos : %.0f kg (%.0f lbs)
+3a_pwrwtmti Vıkon/váha : %.0f W/kg (%.0f koní na tonu)
+3a_wdistrfr Rozloenie hmotnosti : %.1f vpredu  %.1f vzadu
+3h_ddistrfr Rozloenie prítlaku : %.1f F  %.1f R
+3h_rdistrfr Rozloenie tlmenia náklonu : %.1f F  %.1f R
+3a_trqnmlbr Krút. mom.: %.0f Nm (%.0f lbft) pri %.0f ot/min
+3a_pwrkwbhr Vıkon : %.0f kW (%.0f koní) pri %.0f ot/min
+3a_engccfmt Motor : %.0fcc %s%s%s
+3a_engltfmt Motor : %.1f %s%s%s
+3a_trbochrg prepåòanı
+3a_etl_inli radovı
+3a_etl_flat plochı
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl jednovalec
+3a_etn_2cyl dvojvalec
+3a_etn_3cyl trojvalec
+3a_etn_4cyl štvorvalec
+3a_etn_5cyl pävalec
+3a_etn_6cyl šesvalec
+3a_etn_8cyl osemvalec
+3a_etn10cyl desavalec
+3a_etn12cyl dvanásvalec
+3a_grrat1st Jednotka %.3f
+3a_grrat2nd Dvojka %.3f
+3a_grrat3rd Trojka %.3f
+3a_grrat4th Štvorka %.3f
+3a_grrat5th Päka %.3f
+3a_grrat6th Šestka %.3f
+3a_grrat7th Sedmièka %.3f
+3a_grginfop Informácie
+3a_grgcolou Sady farieb
+3a_grgbrake Brzdy
+3h_grgbrktc Brzdy / TC
+3a_grgsuspe Podvozok
+3a_grgsteer Riadenie
+3a_grgfinal Prevody
+3a_grgtyres Pneumatiky
+3a_grgdownf Prítlaèná sila
+3a_grgpasse Pasaieri
+3a_pssfront vpredu
+3a_pssrleft vzadu v¾avo
+3a_pssrmidd vzadu uprostred
+3a_pssrrght vzadu vpravo
+3a_whlscolt Kolesá
+3a_bodycolt Karoséria
+3a_texnamet Názov textúry
+3a_maxperwt Max. brzdnı úèinok na koleso %.0f Nm
+3g_b_bal_fr Rozdelenie brzdného úèinku (vpredu) %.0f%%
+3h_engbrred Brzdenie motorom %.0f%%
+3h_tcmaxslp TC povolenı sklz %.1f%%
+3h_tcminspd TC minimálna rıchlos %.0f m/s
+3h_abs_text ABS
+3g_ridehred Zníenie svetlej vıšky
+3a_brkmotrg [Rozsah pohybu %.3f m]
+3g_livecamb aktuálny odklon (¼ / P) %+.2f° / %+.2f°
+3g_stif_val Tuhos pruín %.1f kN/m
+3g_damp_val Tlmenie %.1f kNs/m
+3g_bump_val Tlmenie nárazov %.1f kNs/m
+3g_rebd_val Tlmenie odskoku %.1f kNs/m
+3g_arol_val Prieèny stabilizátor %.1f kN/m
+3h_power_st Posilòovaè riadenia %.0f%%
+3a_maxlkval Maximálny doraz %.1f°
+3g_castrval Závlek %.1f°
+3a_inclnval Inklinácia %.2f°
+3g_prllsval Paralelné zatáèanie (Ackermann) %.0f%%
+3g_toeinval Zbiehavos %+.1f°
+3g_camb_abs Odklon (¼ / P) %+.1f° / %+.1f°
+3g_camb_adj Nastavenie odklonu (¼ / P) %+.1f° / %+.1f°
+3h_tyrewarm Teplota nahriatia pneumatík : %.0f°
+3a_fnldvval Stály prevod %.3f
+3g_ftrqsplt Rozdelenie krút. momentu vpredu %.0f%%
+3g_fvistorq Tuhos %.0f Nms/rad
+3g_lock_one Svornos %.0f%%
+3g_lock_o_o Svornos (v zábere/zotrvaènos) %.0f%% / %.0f%%
+3h_dpreload Predbené zaaenie%.0f Nm
+3g_frnt_txt Vpredu
+3g_cent_txt Uprostred
+3g_rear_txt Vzadu
+3g_press_lr Tlak (¼ / P) %.0f kPa / %.0f kPa
+3g_conv_psi psi (¼ / P) %.1f psi / %.1f psi
+3g_conv_bar bar (¼ / P) %.2f bar / %.2f bar
+3g_fwingang Uhol predného krídla %.0f°
+3g_rwingang Uhol zadného krídla %.0f°
+3h_tc_title Trakèná kontrola
+3g_stra_txt Stratégia
+3g_fuel_sta Palivo v nádri pri štarte : %.0f%%
+3g_fuel_pit Doplnenie paliva v boxoch o : %.0f%%
+3g_tyre_lim Vımena pneu : opotrebovanie > %.0f%%
+3g_tyre_all Vımena pneu : vdy
+3g_tyre_nev Vımena pneu : nikdy
+3h_rep_damg Oprav poškodenie : %s
+3h_setup_ch Poadované zmeny setupu
+3h_handicap Znevıhodnenia
+3h_hcapnone IADNE
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% obmedzenie
+3h_vol_tres Dobrovo¾né obmedzenie nasávania %.0f%%
+3h_vol_mass Dobrovo¾na záa %.0f kg
+3h_mass_pos Umiestnenie záae (vpredu) %.0f%%
+3g_symmetri symetrická
+3g_asymmetr asymetrické
+3g_configur Konfigurácia
+3g_cpct_x_l Kapacita nádre : %.1f litrov
+3g_optt_x_d Optimálna teplota %.0f°
+3g_tst_x_ms Test. rıchlos %.1f m/s
+3g_rearwing Zadné krídlo
+3g_frntwing Predné krídlo
+3g_undrtray Difúzor
+3g_bodyaero Karoséria
+3g_totlaero Celkom
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Otáèanie volantu v aute %.0f° (po dorazy)
+3g_con_tn_x Otáèanie volantom %.0f°
+3g_live_cmb Odklon : %+.2f
+3g_live_inc Inklinácia : %.2f
+3g_live_cst Závlek : %.2f
+3g_live_scr Podloka : %.3f
+3g_live_trk Rozchod : %.3f
+3g_susrigid Pevné
+3g_sustrail Vleèné rameno
+3g_susffork Predná vidlica
+3g_susmacph MacPherson
+3g_susdwish Dvojité rameno
+3g_pit_inst Pokyny do boxov
+3g_live_set Vlastné nastavenie
+3g_wheels_x Kolesá sú %s
+3g_l_tt_x_x Typ pneu %s [%s]
+3g_l_pr_psi Tlak %.1f psi [%+.1f psi]
+3g_l_pr_bar Tlak %.2f bar [%+.2f bar]
+3g_l_cr_adj Nast. odklonu %.1f° [%+.1f°]
+3g_l_cr_abs Odklon %.1f° [%+.1f°]
+3g_l_wg_ang Krídlo %.0f° [%+.0f°]
+3h_estcolon Odhad :
+3g_fl_pc_pl %.1f%% na kolo
+3g_fl_pc_it %.1f%% v nádri
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn Neznáma tra
+3a_trcknofn Tra nebola nájdena
+3a_trckobso Staršia verzia trate
+3a_fnshload Dokonèené
+3a_prgprelo Prednahrávanie
+3a_prgldtex Naèítanie textúr
+3a_prgpaths Cesty
+3a_prgcolrs Farby
+3a_prgdupli Duplikátory
+3a_prglgtsc Naèítanie
+3a_prgrdobs Naèítanie objektov
+3a_prglgtin Informácie o osvetlení
+3a_prgbmptx Textúry po kolízii
+3a_prginicl Inicializácia farieb
+3a_prgchpts Kontrolné body
+3a_prgextra Mimoriadne dáta
+3a_prgstobs Pripravovanie objektov
+3a_prgmapsq Štvorce máp
+3a_prgpthin Inicializácia ciest
+3a_prgpthad Prispôsobenie ciest
+3a_prgrebld Pretváranie
+3g_prggener Generovanie
+3a_spcpres1 (stlaète klávesu 1)
+3a_autojblk Nedá sa pripoji : Štart je zablokovanı
+3a_xcomplvt %s^8 dokonèil hlasovanie
+3a_maxgcarx Max. áut na PC hosa : %d
+3a_maxhcarx Max. áut na PC hostite¾a : %d
+3a_upc_male %s^8 upravil svoje ovládanie
+3a_upc_fmal %s^8 upravila svoje ovládanie
+3a_upc_unkn %s^8 upravil/a svoje ovládanie
+3a_x_no_car %s^8 nemá auto
+3a_x_alredy %s^8 u má svoje auto
+3a_x_lftpot %s^8 opustil gará
+3a_w_rd_rly ^6Pozor : pneumatiky na asfalt na rallycrossovej trati
+3a_w_rly_rd ^6Pozor : pneumatiky na rallycross na asfaltovej trati
+3a_unkcdisc Neznamé auto - hráè bol odpojenı
+3a_modcdisc Modifikované auto - hráè bol odpojenı
+3a_nocrukid Nedá sa prida informácia o vozidle - neznáme ID
+3a_xrenamex %s^8 sa premenoval na %s
+3g_xtakovrx %s^8 prevzal riadenie od %s
+3g_xwantuto %s^8 chce, aby ste prevzali riadenie
+3g_xwantsto %s^8 chce prevzia riadenie
+3g_oswapend Jazdci sa môu vymeni len po dokonèení zastávky v boxoch
+3a_nosharnm Nemôete ma rovnaké meno ako inı hráè na tomto serveri
+3a_trkloadd Tra bola naèítaná
+3a_x_pitted %s^8 je v garái
+3g_x_pitstp %s^8 uskutoènil zastávku v boxoch
+3a_x_connec %s^8 sa pripojil
+3g_x_blkmsg %s^8 si zablokoval príjem zpráv
+3g_x_unblkm %s^8 si odblokoval príjem zpráv
+3a_newgconn Pripojuje sa novı hráè
+3a_gfailcon Novému hráèovi sa nepodarilo pripoji
+3g_waitplyc Poèkajte prosím, a sa hráè pripojí
+3h_waitbuff Vyrovnávanie preteèenia pamäti
+3a_xss_male %s^8 vám poslal svoje nastavenie auta
+3a_xss_fmal %s^8 vám zaslala svoje nastavenie auta
+3a_xss_unkn %s^8 vám zaslal/a svoje nastavenie auta
+3a_packs_ps %d Paketov/s
+3a_novotepg Neprebieha iadne hlasovanie
+3h_vote_kic %s^8 hlasoval za odpojenie %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 hlasoval za ban %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 - èas vypršal
+3a_lostcn_x Prerušené spojenie s %s^8
+3a_x_discon %s^8 sa odpojil/a
+3g_x_kicked %s^8 bol/a odpojenı/a
+3g_x_banned %s^8 dostal/a ban
+3g_skinnotf Skin vašeho auta nebol nájdenı na ^7www.lfsworld.net
+3g_helmnotf Skin vašej helmy nebol nájdenı na ^7www.lfsworld.net
+3g_updatset Nastavenie aktualizované
+3g_fastlxxx Najrıchlejšie kolo: %s %s^8 (%s)
+3g_no_reset Reset auta na tomto serveri nie je povolenı
+3g_cant_res Nedá sa resetova - %s
+3g_too_dang príliš nebezpeèné
+3g_could_ha riziko kolízie s inım autom
+3g_could_hr riziko kolízie s resetnutım autom
+3g_would_ye viedlo by k ltej vlajke
+3a_noqual_x Nedá sa odštartova kval. - %s
+3a_qulfauto Autocross
+3a_qulfprac Trénink
+3a_qulfnote Nie je povolené
+3a_no_x_plc Nedá sa %s - pripája sa novı hráè
+3a_no_x_cht Nedá sa %s - mení sa tra
+3g_no_x_car Nedá sa %s - autá sú na trati
+3a_cf_swpsd prehodi stranu
+3a_cf_gopit ís do boxov
+3a_cf_chqul zmeni dåku kvalifikácie
+3a_cf_chlap zmeni poèet kôl
+3a_cf_chwin zmeni silu vetra
+3b_cf_finfo zmeni informácie
+3a_crestart štart pretekov
+3a_cntrpits ís do garáe
+3a_cspectat pozorova
+3a_cantjoin pripoji sa
+3a_cantleav opusti
+3a_obsolvid Zastaralé video
+3a_vidlater Video bolo vytvorené staršou verziou
+3h_hls_hlvc HLVC
+3h_hls_inva NEPLATNÉ
+3h_hls_cust VLASTNÉ
+3a_htlpinvl Kolo je neplatné (%s)
+3a_hli_grnd tráva
+3a_hli_wall stena
+3a_hli_obje objekt
+3a_hli_wron zlı smer
+3h_hli_spee prekroèenie rıchlosti
+3a_ptp_locl miestny
+3a_ptp_remt vzdial.
+3a_ptp_lcai AI (L)
+3a_ptp_rmai AI (R)
+3a_rsk_noob NOVÁÈIK
+3a_rsk_lrnr ZAÈIATOÈNÍK
+3a_rsk_okok POKROÈILİ
+3a_rsk_quik SKÚSENİ
+3a_rsk_prof PROFESIONÁL
+3a_x_finish %s^8 dokonèil pretek
+3a_x_finplc %s^8 dokonèil pretek %s
+3g_x_fin1be %s^8 dokonèil pretek o 1 kolo spä
+3g_x_finxbe %s^8 dokonèil pretek o %d kôl spä
+3g_x_conplc Koneèná pozícia %s^8 je %s
+3g_x_disqua %s^8 je diskvalifikovanı
+3a_x_wonrac %s^8 vyhral pretek
+3a_max3locl Maximálne 3 miestni hráèi
+3a_fnshuncl neklasifikovanı
+3a_fnsh_1st 1.
+3a_fnsh_2nd 2.
+3a_fnsh_3rd 3.
+3a_fnsh_4th 4.
+3a_fnsh_5th 5.
+3a_fnsh_6th 6.
+3a_fnsh_7th 7.
+3a_fnsh_8th 8.
+3a_fnsh_9th 9.
+3a_fnsh10th 10.
+3a_fnsh11th 11.
+3a_fnsh12th 12.
+3a_fnsh13th 13.
+3a_fnsh14th 14.
+3a_fnsh15th 15.
+3a_fnsh16th 16.
+3g_fnsh17th 17.
+3g_fnsh18th 18.
+3g_fnsh19th 19.
+3g_fnsh20th 20.
+3g_fnsh21st 21.
+3g_fnsh22nd 22.
+3g_fnsh23rd 23.
+3g_fnsh24th 24.
+3g_fnsh25th 25.
+3g_fnsh26th 26.
+3g_fnsh27th 27.
+3g_fnsh28th 28.
+3g_fnsh29th 29.
+3g_fnsh30th 30.
+3g_fnsh31st 31.
+3g_fnsh32nd 32.
+3a_wlcm_lfs Vitajte v Live for Speed
+3a_agre_lfs Podmienky
+3a_overwrex Prepísa existujúcí súbor?
+3g_deleteex Odstráni existujúci súbor?
+3g_newnamef Zadaj nové meno súboru
+3g_filealre Meno súboru u existuje
+3g_cnotfind Nie je moné nájs súbor
+3a_layoutsv Zadajte meno nového layoutu
+3a_windocon Okno poèas pripojovania :
+3a_cancelbt zruši
+3a_backbutt spä
+3a_capitlok OK
+3a_capitlgo ŠTART
+3a_invldstr neplatné
+3a_cpfinish PRETEK SKONÈENİ
+3a_cpwinner VYHRALI STE
+3a_namepass Uívate¾ské meno a heslo
+3a_validnam Musíte zada platné uívate¾ské meno
+3a_validpas Musíte zada platné heslo
+3a_passmin8 Heslo musí ma aspoò 8 znakov
+3a_shifttyp Typ radenia :
+3a_autogear Automatické radenie :
+3a_notiming - kolá nebudu merané
+3a_stilload Stále prebieha naèítanie trate
+3a_waitlist Èakanie na zoznam serverov
+3a_wt_ginfo Èakanie na informácie o hre
+3a_connmast Pripájanie k hlavnému serveru
+3a_waitmrep Èakanie na odpoveï od hlavného servera
+3a_waithrep Èakanie na odpoveï od hostite¾ského servera
+3a_waitinfo Èakanie na informácie
+3a_masterro Chyba pri èakaní na odpoveï
+3a_mnoreply iadna odpoveï od hlavného servera
+3a_waitginf Èakanie na informácie o hosovi
+3a_waitpinf Èakanie na informácie o hráèovi
+3a_waitmsgs Èakanie na prvé správy
+3a_connhost Pripojovanie k serveru
+3a_conn_udp Vytváranie UDP pripojenia
+3a_openserv Otváranie server socketu
+3a_unexmstr Neoèakávanı paket hlavného servera
+3a_unexsrvr Neoèakávanı paket servera
+3a_unexgest Neoèakávanı hosov paket
+3a_numg_oob Poèet hostí je mimo rozsah
+3a_errrhost Chyba pri odpovedi serveru
+3a_unextrak Neoèakávaná zmena trate
+3a_unkntrak Neznáma chyba trate
+3a_unexpack Neoèakávaná ve¾kos paketu
+3a_unexrepl Neoèakávaná odozva
+3a_gmnmused Meno hry je u pouité
+3a_errmthrd Nie je moné vytvori hlavnı tok
+3a_lostmast Stratené spojenie s hlavnım serverom
+3a_losthost Stratené spojenie s hostite¾skım serverom
+3g_notisync Prvnotná synchronizácia zlyhala
+3g_lostsync Strata synchronizácie s hostite¾om
+3a_connecto Vypršal èas pripojenia
+3a_noconnsl Nie je miesto na pripojenie
+3a_nookpack Nebolo prijaté OK
+3a_waitfook Èakanie na OK
+3a_waittrak Èakanie na informácie o trati
+3a_notrakpk Neboli prijaté informácie o trati
+3a_loadtrak Naèítanie trate
+3a_chglight Zmena osvetlenia
+3a_ply_join Hráè sa pripája
+3a_nochrace Tra sa nedá zmeni poèas preteku
+3g_trnoallo Na serveri nie je povolená %s
+3a_chgtrack zmena trate
+3h_welcomex Vitajte v Live for Speed %s
+3a_small_no nie
+3a_smallyes áno
+3h_smallaut auto
+3h_smallnev nikdy
+3h_smallask spıtaj sa
+3h_smallalw vdy
+3a_smalloff vypnuté
+3a_smalreal skutoèné
+3a_smalvrtl virtuálne
+3a_smalleft v¾avo
+3a_smalrght vpravo
+3a_smalnone iadne
+3a_smaltext textové
+3a_smallall všetky
+3a_smallman mu
+3a_smallwmn ena
+3h_smallb16 16 bit
+3h_smallb32 32 bit
+3a_smlnobrk [nie]
+3a_smlysbrk [áno]
+3a_smlofbrk [vypnuté]
+3a_smlonbrk [zapnuté]
+3a_actobjct objekt
+3a_actstart štartovná pozícia
+3a_actfinsh cie¾ová èiara
+3a_actchck1 1. checkpoint
+3a_actchck2 2. checkpoint
+3a_actchck3 3. checkpoint
+3g_actcircl kruh
+3a_actnofin Chıba cie¾ová èiara
+3a_actnochk Chıbajú checkpointy
+3a_actfnnoc Cie¾ová èiara bez checkpointov
+3a_accpxnof Checkpoint %d nebol nájdenı
+3a_aconechk Autocross : 1 checkpoint
+3a_acxchckp Autocross : %d checkpointy
+3a_noloadsk Nedá sa naèíta skin :
+3a_wrngfltp Zlı typ súboru
+3a_cnocolon Nedá sa otvori súbor :
+3a_outcnopn Vıstup : Nedá sa otvori súbor
+3d_outnoply Vıstup : Nedá sa najs hráè
+3d_outstart Vıstup : Štart zápisu
+3d_outfinis Vıstup : Dokonèené
+3a_corruptf Súbor je porušenı
+3a_filenohc Chyba pri skúmaní súboru :
+3g_filetoos Súbor je príliš krátky:
+3g_filecorr Súbor je poškodenı :
+3g_err_read Chyba naèítania súboru :
+3g_notpcmwv Zvuk sa nezdá by typu PCM :
+3g_srnotsup Vzorkovanie nie je podporované :
+3g_wv_mo_st Zvuk nie je mono ani stereo :
+3g_wavemb16 Vzorka nie je 16-bitová :
+3g_wavetool Vzorka je príliš dlhá :
+3a_latervfl Súbor bol vytvorenı novšou verziou :
+3a_nocrtfil Nedá sa vytvori súbor :
+3a_votecanc Hlasovanie bolo zrušené
+3a_nocrtmpr Nedá sa vytvori MPR súbor
+3a_savedmpr Online záznam bol uloenı do -
+3a_nocrtspr Nedá sa vytvori SPR súbor
+3a_savedspr Offline záznam bol uloenı do -
+3a_nornmspr Nedá sa premenova SPR súbor -
+3a_accesden Prístup bol odoprenı
+3a_invalchr Neplatnı znak
+3a_notfound Nenájdené
+3a_unknowne Neznáma chyba
+3g_downcanc Sahovanie zrušené
+3g_filesize Zlá ve¾kos súboru
+3g_highresd Sahovanie skinov s vysokım rozlíšením :
+3g_nolfswcr Nemáš dostatok LFSWorld kreditu pre skiny s vysokım rozlíšením
+3g_dbnotava Databáza so skinmi vo vysokom rozlíšení nie je dostupná
+3a_entermsg Text správy
+3g_seldefcp Zvo¾te vıchodziu kódovu stránku
+3a_ctabshwr CTRL+TAB - zobrazi vısledky
+3a_shf8nwdb SHIFT+F8 - servis siete - %s
+3a_newvalfx Zadajte novú hodnotu pre %s
+3a_valtoolo Nová hodnota je príliš nízka
+3a_valtoohi Nová hodnota je príliš vysoká
+3a_endoqual KONIEC KVALIFIKÁCIE
+3a_ctrcclip CTRL+C - myš zamknutá v
+3a_ctrcfree CTRL+C - vo¾ná myš v
+3a_windotxt okne
+3a_fullstxt celej obrazovke
+3g_not_demo nedostupné v DEME
+3h_noraceln nie je moné zobrazi jazdeckú stopu
+3g_time_loc miestny
+3g_time_utc UTC
+3a_namelong Meno je príliš dlhé
+3a_noconnms Nedá sa pripoji k hlavnému serveru
+3a_wrninsta Pozor : ïa¾šie LFS je u spustené
+3g_lfsbuyon Live for Speed - online nákup - ^7www.lfs.net
+3g_insimnop InSim nie je otvorená
+3g_comguest Príkaz je len pre hostí
+3g_comentry Príkaz len pri vstupnej obrazovke
+3g_comsetup Príkaz len pri obrazovke nastavení
+3g_comnoded Príkaz nie je pre dedikovanı server
+3g_unknwnai Neznámy AI jazdec
+3g_drv_alrd Jazdec u preteká
+3g_drv_noin Jazdec nepreteká
+3g_setup_nf Nastavenie nebolo nájdené
+3g_colournf Sada farieb nebola nájdená
+3g_scrtooma Príliš ve¾a scriptov
+3g_scrtoolo Script je príliš dlhı
+3g_scrempty Script je prázdny
+3g_un_axs_f Neznáma funkcia osi
+3g_un_key_f Neznáma funkcia klávesy
+3g_un_btn_f Neznáma funkcia tlaèidla
+3g_xlnxtool %s : riadok %d príliš dlhı
+3g_x_ln_x_x %s : riadok %d - %s
+3g_cantopen Nedá sa otvori : %s
+3g_notallow Nie je povolené : %s
+3h_cp_latin Latinská
+3h_cp_cente Stredo Európska
+3h_cp_turki Turecká
+3h_cp_balti Baltická
+3h_cp_japan Japonská
+3h_cp_cyril Cyrilika
+3h_cp_greek Grécka
+3h_cp_tr_ch Tradièná Èínština
+3h_cp_si_ch Zjednodušená Èínština
+3h_cp_korea Kórejska
+3a_hostfull Server je plnı
+3a_hostload Server práve naèítava tra
+3a_plyrconn Inı hráè sa pripája
+3g_plydisco Inı hráè sa odpája
+3h_racstart Pretek štartuje
+3a_unauthcn Neautorizované pripojenie
+3a_useronli Vaše uívate¾ské meno u je online
+3h_userband Uívate¾ské meno má zakázanı prístup
+3a_usernofd Vaše uívate¾ské meno nebolo nájdené (máte legálne LFS?)
+3a_pwnomtch Herné heslo (GAME password) nesúhlasí
+3g_pwneeded Musíte nastavi herné heslo (GAME password)
+3h_unlkused Všetky odomknutia v tıdni vyuité
+3h_unpwconf Uívate¾ a heslo potvrdené
+3a_unknwerr Neznáma chyba
+3a_carnomtc Autá nezodpovedajú autám na serveri
+3a_nodbljon Nedá sa 2x pripoji k internetovému serveru
+3a_hlostmst Server stratil pripojenie k hlavnému serveru
+3a_wrngpass Nesprávne heslo
+3a_prvreqps Súkromı hostite¾skı server - zadajte heslo
+3a_usrunknw Neznáme uívate¾ské meno
+3a_usrnotol Uívate¾ práve nehrá online
+3a_usrolhid Uívate¾ hrá online na skrytom serveri
+3g_usrol_s1 Uívate¾ hrá online na S1 serveri
+3g_usrol_s2 Uívate¾ hrá online na S2 serveri
+3g_usrol_s3 Uívate¾ hrá online na S3 serveri
+3a_hostrefu Server odmietol vaše pripojenie
+3a_hstdiffv Server beí na inej verzii
+3a_hstdiffc Server má inı hernı kód
+3a_hstis_s1 Server beí na Live for Speed S1
+3g_hstis_s2 Server beí na Live for Speed S2
+3g_hstis_s3 Server beí na Live for Speed S3
+3a_hstisdmo Server beí na Live for Speed DEMO
+3a_hstunknr Neznáma odpoveï od hostite¾ského serveru
+3a_hstnomst Hostite¾skı server nebol nájdenı na hlavnom serveri
+3a_nameused Meno je u pouité
+3a_racefull Pretek je u zaplnenı
+3g_nomidjoi Na tomto serveri sa neda pripoji uprostred preteku
+3b_usermeet Uívate¾ je v konferenènej miestnosti
+3b_unkncomm Neznámy príkaz
+3h_unknwver Neznáma verzia
+3b_reqparam Tento príkaz musí obsahova parameter
+3b_req2pars Tento príkaz musí obsahova 2 parametre
+3e_notenpar Málo parametrov
+3b_unknwtrk Neznámy parameter trate
+3e_unknwcar Neznámy parameter auta
+3b_unoadmin Nemáte administrátorské práva
+3b_kbinvalu Uívate¾ské meno nie je platné
+3b_invalpar Parameter nie je platnı
+3g_ptoolong Parameter je príliš dlhı
+3g_notfound Súbor nebol nájdnenı
+3e_setuponl Príkaz môete poui pri nastavovani preteku
+3e_axnofind Nedá sa otvori layout
+3e_axnoneav Pre túto tra neboli nájdené iadne layout-y
+3e_kbnoload Nedá sa otvori súbor
+3e_kbnosave Nedá sa uloi súbor
+3g_tooearly Je príliš skoro na reštart pretekov
+3g_pplracin Niektorí ešte stále jazdia
+3h_notrxudp Server neobdral UDP paket
+3h_nomultij Bránenie násobnım pokusom o pripojenie
+3h_modreqpw Pozmenenı server vyaduje heslo
+3h_invalidu Neplatné pouívate¾ské meno

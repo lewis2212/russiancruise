@@ -1,0 +1,20 @@
+LFS HELP file (Romanian)
+Translated by: kitu_gudu
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Bine ai venit în Live for Speed!^8
+
+Ca sã poþi folosi acest software, trebuie sã fii de acord cu urmãtoarele :
+
+- Live for Speed este într-o continuã dezvoltare.  Features pot fi adãugate, actulizate sau eliminate oricând.  Some functional but incomplete features may be included in order to enhance the variety and content of the simulator.
+
+- Acest software nu vine cu nici un fel de garanþie.
+
+- Instalezi ºi foloseºti acest software pe propriul risc.  The developers of Live for Speed can not accept any responsibility for personal injury or damage to your computer system that may arise during the use of the software.
+
+- Conþinutul DEMO este oferit tuturor, fãrã nici un cost.  Conþinutul BLOCAT este doar pentru utilizatorii licenþiaþi.  You must not make any attempt to gain access to the locked content, or help anyone else to do so, other than by purchasing a license and using the in-game unlocking screen.
+
+^7Mulþumim.^8

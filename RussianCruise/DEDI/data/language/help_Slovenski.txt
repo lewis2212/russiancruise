@@ -1,0 +1,261 @@
+LFS HELP file (Slovenski)
+Translated by: Bojc(slo), primmy
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Dobrodošli v Live for Speed!^8
+
+Za uporabo tega programa, se morate strinjati z naslednjim :
+
+- Live for Speed se stalno razvija.  Opcije so lahko dodane, posodobljene ali odstranjene kadarkoli.  Nekatere funkcionalne, vendar nepopolne funkcije so lahko dodane v smislu poveèanja raznolikosti vsebine simulatorja.
+
+- Ta program dobite brez kakršne-koli garancije.
+
+- Program inštalirate in uporabljate na lastno odgovornost.  Ustvarjalci LFS-ja ne prevzemajo nikakršne odgovornosti za osebne poškodbe ali poškodbe vašega raèunalnika, ki bi lahko nastopile med uporabo tega programa.
+
+- DEMO vsebina tega programa je na razpolago vsem, brez plaèila.  ZAKLENJENA vsebina programa pa je samo za licenène uporabnike.  Ne smete poskušati dobiti dostop do zaklenjenih vsebinin, ali pomagati komu drugemu dobiti dostop do zaklenjenih vsebin, le v primeru nakupa licence in uporabo menija za odklep znotraj programa.
+
+^7Hvala.^8
+\con_wind
+To je preventiva za dve mogoèe situacije ki se lahko pojavijo na nekaterih raèunalnikih ko igra poteka v naèinu na celotni zaslon.
+
+1) Èe uporabljate požarni zid (firewall), lahko javlja opozorilo ko poskušate zagnati ali se povezati na online igre.
+
+2) Na nekaterih raèunalnikih se lahko pojavi klicno okno za povezovanje ko se poskušate priklopiti.
+
+Ta sporoèila lahko na nekaterih raèunalnikih povzroèi da se preneha odzivati èe igra deluje v naèinu celotnega zaslona, zato ta možnost zaèasno spremeni v naèin v oknu v èasu povezovanja.
+
+Èe vaš raèunalnik ne prikazuje nobenih sporoèil med povezovanjem lahko to možnost zagotovo izklopite.
+\host_pw
+Nekateri serverji so nastavljeni tako, da zahtevajo geslo in so znani kot privatni serverji.
+
+Èe se povezujete na privatni server morate v to polje vpisati geslo.
+
+Javni serverji ne zahtevajo gesla - ne skrbite o tej možnosti!
+\game_nm
+^7Javna igra -^8 vnesite ime v polje da dodate vaši igri identiteto na Internetu.
+
+^7Privatna igra -^8 ime omogoèa vašim prijateljem najti igro.
+\ip_name
+^3Možnosti :
+
+^7lokalna mreža -^8 lahko se prikljuèite lokalni igri z vpisom IP naslova serverja.
+
+^7internet -^8 lahko se prikljuèite igri na Internetu z vpisom imena igre.
+\host_ip
+Lahko se prikljuèite igri, ki je zagnana na doloèenem raèunalniku v lokalni mreži.
+
+IP naslov je unikatna številka in je zapisan kot 4 številke ki so razdeljene z 3 pikami.
+
+Kliknite na polje in vpišite IP naslov raèunalnika na katerega se želite prikljuèiti.
+
+Dva naèina da izveste IP nasov raèunalnika :
+
+1) Zaženete WINIPCFG v "Run" iz "Start" menija.
+2) Zaženite IPCONFIG iz DOS prompt-a.
+\host_port
+Ko se povezujete direktno prek IP naslova, morate poznati IP naslov in port ki ga server uporablja.
+
+Server lahko uporablja že nastavljen port 63392, ali pa neko drugo število porta, ki ga je izbrala oseba katera je zagnala server.
+
+To število je obièajno prevzeta vrednost ali pa število ki je manjše od 65536.
+\host_nm
+Lahko se povežete v igro, ki je zagnana na doloèenem raèunalniku na Internetu.
+
+Za iskanje igre po imenu namesto da uporabite IP naslov, v to polje vpišite njeno ime.
+
+Imena iger vam omogoèajo da se dogovorite za sreèanje s prijatelji na liniji tudi èe ne poznate IP naslov.
+\game_pw
+^7Privatna igra -^8 vpišite geslo v polje.
+
+^7Javna igra -^8 Polje pustite prazno.
+\use_master
+Glavni server je poseben program ki deljuje na raèunalniku na Internetu.  On vsebuje list iger ki so trenutno v teku in vam omogoèa da ustvarite ali da se povežete na online igre.
+
+^3Opcije :
+
+^7Lokalna^8 - vaš server se ne bo povezal na glavni server.  Ostali igralci se lahko povežejo z izbiro opcije "vstop na doloèen server", potem z izbiro opcije "lokalna mreža" in vpisom IP naslova vašega raèunalnika.
+
+^7Internet^8 - vaš server se bo povezal na glavni server in se pojavil v listu iger.
+
+^7Skriti^8 - vaš server se bo povezal na glavni server ampak se ne bo pojavil v listu iger.  Ostali igralci se lahko povežejo na vašo igro z izbiro opcije "Vstop na doloèen server", potem z izbiro opcije "Internet" in vpisom imena vaše igre.
+
+^3Opomba :^8 Èe je vaš raèunalnik posredno povezan na Internet prek deljene Internet povezave ali prek poslovne mreže z firewall-om, morate odpreti pravilne TCP in UDP porte, da lahko uporabljate opcije Internet ali skrit.
+\game_ip
+Èe je neobhodno, lahko doloèite IP naslov ki ga želite uporabljati za vaš server.  To je koristno ko ima raèunalnik na razpolago veè IP naslovov.
+
+Èe to polje pustite prazno, bo server uporabil IP naslov ki je na voljo.
+\admin_pass
+Lahko doloèite posebno geslo za administratorje.
+
+Èe se gost poveže na server z uporabo tega posebnega gesla namesto opcijonalnega "navadnega" gesla, on ali ona lahko nadzira server daljinsko z uporabo posebnih tekst komand za nadzor servera.  Prosimo preberite README.txt datoteko za veè informacij, v poglavju "Host commands".
+\game_port
+Lahko doloèite TCP in UDP port, ki želite da ga vaš server uporablja. To vam omogoèa uporabo veè LFS dedicated serverjev na enem raèunalniku.
+
+Uporabljajte predpostavljeno vrednost 63392 ali izberite poljubno vrednost manjšo od 65536.
+\master_help
+Program se ni mogel povezati na glavni server.
+
+Za to je lahko veè razlogov:
+
+1) Èe ste zašèiteni z firewall-om (on morda blokira povezavo).
+2) Morda je trenutno nemogoèe vspostaviti zvezo do glavnega serverja zaradi vašega ponudnika internetnih storitev.
+3) Glavni server morda ne deljuje zaradi tehniènih problemov.
+
+Prosimo vas da preverite status in IP naslov glavnega serverja na :
+
+^7www.lfs.net^8
+\modem_type
+Uporaba vašega raèunalnika za server z veè igralci je odvisna od vaše "upload" hitrosti. Ta je odvisna od vašega modema in hitrosti internetne povezave vašega internet ponudnika.
+
+Prosimo izberite tip vašega modema ali pa izberite "custom" modem in roèno vpišite vašo "upload" hitrost v kbit/s.
+
+^7Predpostavljeni tipi modema :^8
+
+- modem za telefonsko linijo : 56 Kbit / 33.6 Kbit upload
+- kabelski modem : 512 Kbit download / 128 Kbit upload
+- kabelski modem : 1 Mbit download / 256 Kbit upload
+\upload_bw
+Èe vaš modem ni na listu predpostavljenih tipov vaš prosimo, da roèno vpišete vašo "upload" hitrost v kilobitih na sekundo (Kbit/s). (Kbyte/s x 8 = Kbit/s)
+
+Ta nastavitev vam pomaga izbrati nastavitve vašega serveja na tak naèin, da ne prekoraèite kapaciteto vaše povezave.
+\max_guests
+Izberete lahko število raèunalnikov kateri se lahko povežejo na vaš server.
+
+^7Minimalno število :^8 1 - na vaš server se bo lahko povezal samo en igralec.
+
+^7Maksimalno število :^8 11 v DEMO-naèinu, 15 v S1, 23 v S2 naèinu.
+
+To število je zelo pomembno pri izbiri nastavitve za "upload" kapaciteto vaše povezave.
+\max_cars
+Lahko izberete število avtomobilov, ki lahko sodelujejo v dirki.
+
+To je vkljuèno za prave in AI voznike.
+
+^7Minimalno število :^8 1 - samo en avtomobil se lahko udeleži dirke.
+
+^7Maksimalno število :^8 12 v DEMO-naèinu, 28 v S1 in S2 naèinu.
+
+To število je zelo pomembno pri izbiri nastavitve za "upload" kapaciteto vaše povezave.
+\guest_cars
+Možete odrediti broj automobila koje æe svaki gost moæi da doda u trku.
+
+To je vkljuèno za prave in AI voznike.
+
+^7Minimalno število :^8 0 - gosti lahko opazujejo, v dirki pa ne morejo sodelovati.
+
+^7Maksimalno število :^8 3 - najveè 3 AI voznikov ali 1 pravi in 2 AI po enem gostu.
+\host_cars
+Lahko izberete število avtomobilov, katere bo server (host) lahko dodal v dirko.
+
+To je vkljuèno za prave in AI voznike.
+
+^7Minimalno število :^8 0 - server (host) lahko opazuje, ne more pa tudi sodelovati v dirki.
+
+^7Maksimalno število :^8 3 - najveè 3 AI voznikov ali 1 pravi in 2 AI voznika.
+
+Zmanjševenje tega števila, bo zmanjšalo zahteve za "upload" kapaciteto vaše povezave.
+\max_packs
+To je maksimalno število paketov ki se pošiljajo vsako sekundo za vsak avtomobil.
+
+^7Minimalno število :^8 3 paketov v sekundi.
+
+^7Maksimalno število :^8 6 - tekoèe / zahteva 2-krat veèjo "upload" kapaciteto / bolj obremenjuje centralni procesor.
+\ded_host
+Igro lahko zaženete kot navaden server ali pa kot dedicated server.
+
+^7naveden server :^8 Lahko igrate kot v naèinu za enega igralca, le da se vam lahko pridružijo drugi igralci z interneta.
+
+^7dedicated server :^8 Dedicated server ne prikazuje grafiko in ne izraèunava fizike. Na njemu tudi ne morete igrati. To je najboljša opcija, èe ne želite igrati na serverju ampak se želite na njega povezati z drugega raèunalnika. Za dedicated server lahko uporabite tudi bolj poèasnejši raèunalnik.
+\admin_slots
+Nekaj mest vaše povezave lahko rezervirate za administratorje.
+
+^7Minimalna nastavitev :^8 0 - brez mest na voljo za administratorje.
+
+^7Maximalna nastavitev :^8 8 - ali eno manj kot je maksimalno število gostov.
+
+Ta nastavitev vam omogoèa, da se lahko vedno povežete na vaš server, èe doloèite admin geslo.
+\skin_info
+Za avtomatièni download skinov visoke loèljivosti, morate biti licenèni dirkaè in imeti nekaj LFS World kredita.
+
+LFS World kredit pomeni : pozitivno balanco vašega LFS raèuna.
+
+Za uporabo te storitve, lahko vplaèate na ^7www.lfs.net^8 ali ^7www.lfsworld.net^8 ali uporabite voucher.
+
+Za vsak^3 £1 ^8vašega kredita boste pridobili ^3 2000 ^8downloadow skinov.  Minimalno plaèilo je £3.
+
+^7Kako deljuje :^8
+
+Potrebujete vsaj £1 LFS World kredita.  Ko prviè downloadate high-res skin, £1 bo odtrgano r vašega raèuna in 2000 download skinov bo na vašem raèunu.Za vsak £1 bo na vašem raèunu ponovno 2000 downoadov.
+
+^7Opozorilo :^8
+
+Skini visoke loèljivosti potrebujejo veè èasa za download, veè èasa za nalaganje ko drugi igralac pride iz boksov in uporabi štirikrat veè spomina grafiène kartice. Ta možnost je priporoèena le, èe imate hiter raèunalnik, grafièno kartico in  internetno povezavo.
+\skin_help
+^7skin^8 je posebna datoteka slike, ki vsebuje barve zunanjosti avta ali èelade.
+
+LFS ima avtomatièni sistem download-a skinov na voljo za licenène voznike. Kadar dirkate online v S1 in S2 naèinu, se skini ostalih voznikov avtomatièno prenesejo na vaš raèunalnik, tako da lahko vidite njihove avte in èelade razliènih poslikav.
+
+Èe želite ustvariti svoj lastni skin, priporoèamo da obišèete ^7www.lfs.net^8 in download-ate ^7CMX Viewer^8 iz Dodatni Download sekcije (Additional Downloads). CMX Viewer je poseben program, ki vam pomaga pri izdelavi lastnega skina.  Vsebuj že ustvarjene skine.
+
+Ko shranite skin v vaš ^7skins^8 mapo (znotraj ^7data^8 mape) ga lahko izberete v garaži / boksi zaslonu.
+
+Da ostali vozniki vidijo vaš skin online, obišèite ^7www.lfsworld.net^8 in naložite vaš skin.  Potem bo skin za vaš avto avtomatsko naložen na raèunalnike ostalih voznikov, ki jih sreèate online.
+\user_pass
+Zatem, ko ste ustvarili uporabniški raèun na ^7www.lfs.net^8 morate vnesti vašo GAME geslo tukaj.
+
+To vam omogoèa, da greste online (ali odklep licenène vsebine).
+\user_name
+Za online igro (ali odklep licenène vsebine) morate vnesti prijavljeno uporabniško ime.
+
+Uporabniški raèun si lahko ustvarite na ^7www.lfs.net^8 - potrebujete le email naslov.
+
+OPOMBA: Nikoli ne bomo dali vašega email naslova nikomur, razen èe smo po zakonu to dolžni.
+\host_mode
+^3Nastavitve :
+
+^7demo -^8 ta opcija vas omejuje na demo vsebine LFS-ja.
+
+^7S1 -^8 po odklepu S1, vam ta opcija omogoèa dostop do S1 vsebine.
+
+^7S2 -^8 po odklepu S2, vam ta opcija omogoèa popoln dostop do S2 vsebine.
+\tex_filter
+Teksture so risane na razliènih nivojih detalja, odvisnega od velikosti risanja na zaslonu. Ti nivoji detalja se imenujejo mipmaps. Èe je tekstura risana manjše (npr. kadar je objekt dlje) je uporabljena manjša mipmap.
+
+Opcija filtriranja teksture deluje tako, da se mipmape mešajo..
+
+^7brez :^8 Bilinearno filtriranje - brez mešanja - uporaba samo najbližje mipmape
+^71x :^8 Trilinearno filtriranje - rezultat je prikaz mešanja dveh najbljižjih mipmapov
+^72x - 16x :^8 Anisotropno filtriranje - zmanjša meglenje površin risanih na kotih
+
+Anisotropno filtriranje (AF) izgleda najboljše, vendar je zahtevnejše, zato se vam bo fps zmanjšal..
+Èe uporabljate AF boste dobili boljše rezultate z manj mip bias (premaknite mip bias na desno).
+\mip_bias
+Te nastavitve vplivajo na prehod toèke med razliènimi mipmapami tekstur (mipmape so opisane v help tekstu za nadaljne nastavitve filtra)
+
+Premakni drsnik levo za ostrejši prikaz in za zmanjševanje meglenja.
+Premakni drsnik na desno za gladkejši prikaz in za zmanjševanje svetlikanja.
+
+Kadar je površina risana v nagnjenem kotu (npr. oddaljena površina ceste) se filter teksture nagiba k uporabi preveè meglenja. Zato so predvidene nastevitve razliènih tipov površin odvisno od tega kako bi bilo najbolje videti.
+
+^7vmesnik / tekst :^8 default mip bias -1.0 (ni videno v nagnjenem kotu)
+^7objekti / zidovi :^8 default mip bias -2.0
+^7trava / pesek :^8 default mip bias -3.0
+^7površina ceste :^8 default mip bias -4.0 (velikokrat ni vidno v zelo nagnjenem kotu)
+
+Anisotropic filter(AF) je bolj napredna metoda zmanjševanja meglenja površin risanih v nagnjenih kotih. Èe izberete AF (filtriranje tekstur 2x x 16x) boste dobili boljše rezultate z manj negativnega mip bias-a (premaknite drsnike na desno).
+\comp_full
+Skini avta in èelad v LFS-ju, in skini drugih dirkaèev se avtomatièno prenašajo, kadar ste online in so shranjeni v DDS formatu. DDS je poseben stisnjen format, ki ga grafièna kartica lahko uporablja direktno. To omogoèa hitro nalaganje, hitro rendanje in porabi manj spomina. Priskrbljeni skini se uporabljajo stisnjene v vseh primerih.
+
+Skini, ki jih ustvarite Vi ali prenesete roèno na raèunalnik v direktorij skinov so shranjeni v JPG formatu.  Èeprav je JPG stisnjen format, ni namenjen za hitrost in ga grafièna kartica ne more uporabljati direktno. Ta opcija vam omogoèa uporabo JPG skinov brez pretvarjanja v DDS, tako da ne pride do izgube detaljev. V tem primeru se JPG skin razširi in naloži.
+
+Ne-stisnjeni skini porabijo veè spomina grafiène kartice in zmanjšajo FPS, uporabni pa so pri 'screen shot'-ih.
+
+^7stisnjeno :^8 JPG skini, ki obstajajo v vašem skins direktoriju so spremenjeni v DDS in uporabljeni stisnjeni
+^7polno :^8 JPG skini, ki ne obstajajo v vašem skins direktoriju so razširjene pri nalaganju in risane kot nestisnjene teksture
+\shadow_gen
+Te možnosti sproducirajo enak rezultat po drugaèni poti. Najboljše je izbrati možnost, ki bo dala najvišjo hitrost FPS, ko je vidnih veliko senc, naprimer polna štartna vrsta.
+
+Za testiranje grafiènih FPS morate stisniti pavzo, da se izognete rabi CPU-ja za fiziko in zvok.

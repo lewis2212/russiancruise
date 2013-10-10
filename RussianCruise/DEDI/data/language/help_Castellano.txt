@@ -1,0 +1,261 @@
+LFS HELP file (Castellano)
+Translated by: DeXteRrBDN
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\con_wind
+Ésto es una precaución por dos posibles situaciones que pueden suceder en algunos ordenadores cuando utilizan juegos a pantalla completa.
+
+1) Si utilizas un cortafuegos, es posible que aparezca un mensaje de aviso cuando intentes empezar una partida o conectarte al servidor.
+
+2) En algunos ordenadores puede que aparezca una ventana de petición de conexión cuando intentes acceder a Internet.
+
+Estos mensajes pueden colgar el ordenador si el juego está en modo pantalla completa, por tanto, esta opción pon el juego en modo ventana temporalmente mientras conecta.
+
+Si tu ordenador no muestra ningún mensaje cuando el juego se conecta, puedes desactivar esta opción.
+\host_pw
+Algunos servidores requieren password, se les conoce como servidores privados.
+
+Si te conectas a un servidor privado, debes introducir un password en esta casilla.
+
+Los servidores públicos no requieren password - no importa lo que hayas puesto en esta casilla!
+\game_nm
+^7Partida pública -^8 introduce un nombre en la caja de texto para dar un nombre que te identifique en el servidor.
+
+^7Partida privada -^8 el nombre permite a tus amigos encontrar el servidor.
+\ip_name
+^3Opciones :
+
+^7red local -^8 puedes entrar en una partida local escribiendo la dirección IP del servidor.
+
+^7internet -^8 puedes entrar en una partida de Internet escribiendo el nombre del servidor.
+\host_ip
+Puedes conectarte a una partida en un ordenador de la red local.
+
+La dirección IP es un número único escrito en 4 partes separadas por puntos.
+
+Clica en el botón y escribe la dirección IP del ordenador al que quieres conectar.
+
+Hay 2 maneras para saber la dirección IP del PC :
+
+1) Ejecutar WINIPCFG desde el menú inicio.
+2) Ejecutar IPCONFIG desde una ventana de DOS.
+\agreement
+^3¡Bienvenido a Live for Speed!^8
+
+Para utilizar este programa, debe aceptar el siguiente texto :
+
+- Live for Speed está en continuo desarrollo. Podrán ser añadidas, modificadas o eliminadas algunas características en cualquier momento. Podrían ser añadidas algunas características que pueden estar incompletas, aunque funcionales, para mejorar la variedad y el contenido del simulador.
+
+- Este programa no viene con ningún tipo de garantía.
+
+- Instalar y utilizar este programa es bajo su propia responsabilidad. Los desarrolladores de Live for Speed no tienen ningún tipo de responsabilidad de los daños personales o a su ordenador que éste pueda causar durante su utilización.
+
+- El contenido de la DEMO lo puede utilizar cualquiera, es totalmente gratuito. El contenido BLOQUEADO es sólo para usuarios con la correspondiente licencia.  No debe intentar acceder al contenido bloqueado, o ayudar a otras personas a hacerlo, de ninguna otra manera que no sea adquiriendo una licencia y utilizando la ventana del juego destinada a desbloquearlo.
+
+^7Gracias.^8
+\host_port
+Cuando te conectas directamente a una dirección IP, debes saber que IP es y el puerto que utiliza el servidor.
+
+Debe utilizar el puerto 63392 por defecto o algún otro puerto escogido por el administrador del servidor.
+
+En cualquier caso, debe ser el puerto por defecto o un puerto alto inferior a 65536.
+\game_pw
+^7Partida privada -^8 pon un password en la casilla.
+
+^7Partida pública -^8 deja la casilla en blanco.
+\max_packs
+Éste es el número máximo de paquetes enviados por segundo y coche.
+
+^7Mínimo:^8 3 paquetes por segundo.
+
+^7Máximo:^8 6 - más suave / requiere el doble de ancho de banda (subida) / requiere más cpu.
+\host_cars
+Puedes establecer el número máximo de coches que el servidor puede poner en pista.
+
+Éso incluye pilotos reales o IA.
+
+^7Mínimo:^8 0 - el servidor puede mirar la carrera pero no participar.
+
+^7Máximo:^8 3 - hasta 3 pilotos IA o 1 piloto real y 2 pilotos IA.
+
+Reduciendo este valor mejorarás los requisitos de ancho de banda para la subida.
+\guest_cars
+Puedes establecer el número máximo de coches que cada cliente puede poner en pista.
+
+Éso incluye pilotos reales e IA.
+
+^7Mínimo:^8 0 - los clientes pueden mirar la carrera pero no participar.
+
+^7Máximo:^8 3 - hasta 3 pilotos IA o 1 piloto real y 2 pilotos IA.
+\host_nm
+Puedes conectarte a un ordenador en particular conectado a Internet.
+
+Para buscar una partida por nombre y no por IP, introduce su nombre en la caja.
+
+Los nombres de las partidas te ayudarán a encontrarte con tus amigos online, aunque no sepas que IP utilicen.
+\use_master
+El servidor principal es un servidor especial conectado a Internet.  Mantiene actualizada la lista de partidas y servidores que se están haciendo en todo momento y te permite acceder a ellas.
+
+^3Opciones :
+
+^7Local^8 - no se intentará conectar al servidor principal. Otros jugadores pueden conectarse pulsando en  "Entrar en un servidor concreto", escogiendo la opción de "red local" y escribiendo la dirección IP de tu ordenador.
+
+^7Internet^8 - se establece una conexión con el servidor principal y aparecerás en la lista de partidas OnLine.
+
+^7Oculto^8 - se establece una conexión con el servidor principal, pero NO aparecerás en la lista de partidas OnLine. Otros jugadores se podrán conectar a tu partida pulsando en "Entrar en un servidor concreto", escogiendo la opción de "Internet" y escribiendo el nombre de la partida.
+
+^3Nota :^8 Si tu ordenador está conectado indirectamente a Internet a través de conexión compartida de Internet o una red con cortafuegos, para usar las opciones "Internet" o "oculto", debes asegurarte que los puertos TCP y UDP apropiados están abiertos.
+\game_ip
+Si lo necesitas, puedes especificar la dirección IP que quieres que se utilice.  Esto te será útil cuando un ordenador tiene más de una dirección IP disponible.
+
+Si dejas la casilla en blanco se utilizará cualquier dirección IP disponible.
+\admin_pass
+Puedes especificar una contraseña diferente para administradores.
+
+Si un cliente se conecta utilizando esta contraseña y no la habitual del servidor, podrá configurar remotamente el servidor utilizando los comandos basados en texto.  Por favor, leete el archivo README.txt para más información, en el parágrafo "Host commands".
+\game_port
+Puedes escoger que puerto TCP y UDP quieres utilizar.  Así podrás utilizar más de un servidor LFS dedicado en un mismo ordenador.
+
+Utiliza el valor por defecto 63392 o escoge un valor inferior a 65536.
+\master_help
+No se puede conectar con el servidor principal.
+
+Puede ser por varias razones:
+
+1) Si está detrás de un cortafuegos puede haber bloqueado la conexión.
+2) Puede ser temporalmente imposible conectarse al servidor principal desde tu ISP.
+3) El servidor principal puede no estar en ejecución en estos momentos por algún problema técnico.
+
+Por favor, comprueba el estado del servidor principal en :
+
+^7www.lfs.net^8  o  ^7www.lfsforum.net^8
+\max_cars
+Puedes establecer el número máximo de coches que pueden correr en pista.
+
+Éso incluye pilotos reales e IA.
+
+^7Mínimo:^8 1 - sólo podrá correr un coche.
+
+^7Máximo:^8 12 en la versión DEMO, 28 en las versiones S1 y S2
+
+Este valor es importante para determinar el ancho de banda de subida necesario.
+\ded_host
+Puedes empezar una partida como servidor normal o dedicado.
+
+^7servidor normal :^8 Puedes jugar como si estuvieras en modo un jugador y además los otros jugadores de Internet podrán entrar en tu partida.
+
+^7servidor dedicado :^8 No se muestran gráficos ni se calculan los datos de la física, no puedes jugar desde el servidor.  Ésta es la mejor opción si no quieres jugar desde el servidor y quieres hacerlo conectado desde otro ordenador.  Puedes utilizar un ordenador mucho menos potente para hacer el servidor dedicado.
+\max_guests
+Puedes establecer el número máximo de ordenadores que podrán conectar con tu servidor.
+
+^7Mínimo:^8 1 - sólo un jugador podrá entrar en tu servidor.
+
+^7Máximo:^8 15 en la versión DEMO, 47 en las versiones S1 y S2
+
+Este valor es importante para determinar el ancho de banda de subida necesario.
+\upload_bw
+Si tu ancho de banda no es uno de los predefinidos, deberás introducir de forma manual tu ancho de banda de subida en Kilobits por segundo (Kbits/s).  Si no sabes que velocidad de subida tiene en Kbits/s pero si lo sabes en Kbytes/s, multiplícalo por 8 para pasarlo a Kbits/s.
+
+Ésto te ayudará a escoger la configuración del servidor para que no excedas tu ancho de banda.
+\modem_type
+La capacidad de poder hacer de servidor para algunos jugadores depende de tu ancho de banda de subida.  Ésto depende de tu módem/router y el servicio que te de tu ISP.
+
+Por favor, escoge un tipo de módem/router o escoge "personalizada" y añade manualmente el ancho de banda de subida en kilobits por segundo (Kbits se utiliza habitualmente para indicar la velocidad de las comunicaciones digitales).
+
+^7Módems predefinidos :^8
+
+- módem línea telefónica : 56 Kbit de bajada / 33.6 Kbit de subida
+- módem cable/adsl : 512 Kbit de bajada / 128 Kbit de subida
+- módem cable/adsl : 1 Mbit de bajada / 256 Kbit de subida
+\admin_slots
+Puedes reservar algunas conexiones para administradores.
+
+^7Valor mínimo :^8 0 - no se reserva ninguna conexión.
+
+^7Valor máximo :^8 8 - o uno menos que el número máximo de jugadores.
+
+Esta configuración te permite asegurar que siempre podrás entrar en el servidor para administrarlo, si estableces una contraseña de administrador.
+\skin_info
+Para que el LFS descargue automáticamente los skins con alta resolución, debes tener créditos en LFS World.
+
+Tener créditos LFS World significa tener un balance positivo en tu cuenta LFS.
+
+Para utilizar este servicio, debes realizar un pago a ^7www.lfs.net^8 o ^7www.lfsworld.net^8 o utilizar un voucher.
+
+Por cada^3 £1 ^8de crédito se te asignarán ^3 2000 ^8descargas de skins.  Y el pago mínimo es de £3.
+
+^7Cómo funciona :^8
+
+Necesitas por lo menos £1 de crédito LFS World.  Cuándo descargues por primera vez un skin con alta resolución, se te descontará £1 de tu cuenta y se te asignarán 2000 descargas de skins.  Después de descargar 2000 skins, se te descontará otra £1 y tu número de descargas volverá a subir a 2000.
+
+^7Aviso :^8
+
+Los skins con alta resolución tardan más en descargar, más en cargar cuando sale alguien a pista y necesitan cuatro veces más de memoria en tu tarjeta gráfica. Esta opción solo se recomienda si tienes un buen ordenador, una tarjeta gráfica buena y una conexión a Internet rápida.
+\skin_help
+Un ^7skin^8 es una imagen especial que da color al exterior de un coche o un casco.
+
+El LFS dispone de un sistema de descarga automático.  Cuando corras online, los skins de otros corredores se descargarán automáticamente en tu ordenador, así podrás ver sus coches y sus cascos tal y como los hayan personalizado.
+
+Si deseas hacer tus propios skins, te recomendamos que visites ^7www.lfs.net^8 y descargues el ^7CMX Viewer^8 de la sección de Descargas Adicionales (Additional Downloads).  El CMX Viewer es un programa especial que te ayudará a hacer skins.  Incluye unas plantillas.
+
+Después de guardar un skin en la carpeta ^7skins^8  ( dentro de la carpeta ^7data^8 ), podrás seleccionarla en la pantalla de garaje / boxes.
+
+Para que otros corredores puedan ver tus skins online, debes visitar ^7www.lfsworld.net^8 y subir tus skins.  Entonces serán descargados automáticamente en los ordenadores de los otros corredores cuando te vean online.
+\tex_filter
+Las texturas se muestran a diferentes niveles de detalle dependiendo del tamaño al que se visualicen en la pantalla. Estos niveles de detalle tienen el nombre de mipmaps. Si una textura se visualiza pequeña (p.e. cuando un objeto está muy lejos) se utiliza un mipmap más pequeño.
+
+La opción de filtro de texturas afecta a cómo se combinan los mipmaps.
+
+^7ninguno :^8 Filtro bilineal - no hay combinación - sólo se utiliza el mipmap más cercano
+^71x :^8 Filtro trilineal - la imagen resultante es una combinación de los dos mipmaps más cercanos
+^72x - 16x :^8 Filtro anisotrópico - las superficies dibujadas en ángulos oblicuos se ven menos borrosas
+
+El filtro anisotrópico (FA) mejora la calidad de imagen, pero afecta el rendimiento del ordenador reduciendo los frames por segundo.
+Si utilizas el FA tendrás mejores resultados con menos mip bias negativo (desplaza el mip bias hacia la derecha).
+\mip_bias
+Estas opciones afectan el punto de transición entre los diferentes mipmaps de una textura (los mipmaps están descritos en el texto de ayuda para la opción de filtro de texturas).
+
+Desplázalo hacia la izquierda para una apariencia más clara y reducir la borrosidad.
+Desplázalo hacia la derecha para una apariencia más suave y reducir la claridad.
+
+Cuando una superficie se dibuja en un ángulo oblicuo (p.e. la superficie más distante de la calzada) el filtro de texturas tiende a hacerlo demasiado borroso.  Por lo tanto, se proporcionan diferentes configuraciones para los distintos tipos de superficie dependiendo en cómo vayan a ser vistos.
+
+^7interficie / texto :^8 mip bias por defecto -1.0 (no visible en ángulos oblicuos)
+^7objetos / paredes :^8 mip bias por defecto -2.0
+^7hierba / grava :^8 mip bias por defecto -3.0
+^7calzadas :^8 mip bias por defecto -4.0 (a menudo visto desde ángulos oblicuos)
+
+El filtro anisotrópico (FA) es un método avanzado para reducir la borrosidad de las superficies dibujadas en ángulos oblicuos.  Si seleccionas FA (filtro de texturas 2x - 16x) tendrás mejores resultados con menos mip bias negativo (desplaza el mip bias hacia la derecha).
+\comp_full
+Los skins del coche y el casco incluidos en el LFS, y los skins de otros corredores descargados automáticamente cuando estás online, son guardados en formato DDS.  DDS es un formato de compresión especial que puede ser utilizado directamente en las tarjetas gráficas.  Ésto permite cargar y renderizar de forma rápida y usar menos memoria.  Así los skins siempre se utilizan comprimidos en todos los casos.
+
+Sin embargo, los skins que crees o los que pongas manualmente en la carpeta donde se guardan en formato JPG.  Aunqeu JPG es un formato de compresión, no está diseñado para ser rápido y no puede usarse directamente en las tarjetas gráficas.  Esta opción te permite usar skins en formato JPG sin tener que convertirlo a DDS, así no se pierde detalle.  En este caso el skin JPG es descomprimido al cargar.
+
+Los skins descomprimidos utilizan más memoria de la tarjeta gráfica y reducen los frames, pero nos serán útiles para hacer capturas de pantalla.
+
+^7comprimidas :^8 los skins JPG que existan en la carpeta de skins se convertirán al formato DDS y se usarán comprimidos
+^7enteras :^8 los skins JPG que existan en la carpeta de skins se descomprimirán al cargar y se mostrarán como texturas descomprimidas
+\user_name
+Para conectarte online (o desbloquear el contenido después de adquirir una licencia) debes introducir un nombre de usuario válido.
+
+Puedes crearte una cuenta de usuario en ^7www.lfs.net^8 - solo necesitas tu dirección de correo.
+
+NOTA : No facilitaremos nunca tu dirección de correo a nadie a no ser que así sea requerido por ley para dar información a una autoridad.
+\user_pass
+Después de crear tu cuenta de usuario en ^7www.lfs.net^8 debes introducir tu password GAME aquí.
+
+Ésto te permitirá entrar online (o desbloquear el contenido después de adquirir una licencia).
+\host_mode
+^3Opciones :
+
+^7demo -^8 esta opción restringe tu servidor al contenido demo del LFS.
+
+^7S1 -^8 después de desbloquear la S1 esta opción te permitirá crear un servidor con el contenido de la S1.
+
+^7S2 -^8 después de desbloquear la S2 esta opción te permitirá crear un servidor con todo el contenido de la S2.
+\shadow_gen
+Estas opciones producen el mismo efecto pero de forma diferente.  Escoge la opción que dé más frames por segundo cuando aparecen muchas sobras en pantalla, por ejemplo, con una parrilla de salida llena de coches.
+
+Para probar el número de frames que afectan gráficamente, deberías poner el LFS en pausa para evitar consumir CPU en las físicas o en el sonido.

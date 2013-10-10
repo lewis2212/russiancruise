@@ -1,0 +1,22 @@
+Oct 10 19:03:11 LFS DEDICATED HOST : 0.6E
+Oct 10 19:03:11 timer resolution 1 ms
+Oct 10 19:03:11 read config
+Oct 10 19:03:11 get command line
+Oct 10 19:03:12 load bans
+Oct 10 19:03:12 load font
+Oct 10 19:03:12 -----
+Oct 10 19:03:12 create english file
+Oct 10 19:03:12 initialisations
+Oct 10 19:03:12 tables
+Oct 10 19:03:12 load objects
+Oct 10 19:03:13 start intro
+Oct 10 19:03:13 South City
+Oct 10 19:03:13 end of initialisation
+Oct 10 19:03:26 shutting down
+Oct 10 19:03:26 free objects
+Oct 10 19:03:26 free languages
+Oct 10 19:03:26 free font
+Oct 10 19:03:26 kill graphics
+Oct 10 19:03:26 save config
+Oct 10 19:03:26 free mouse
+Oct 10 19:03:26 EXIT

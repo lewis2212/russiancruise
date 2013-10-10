@@ -1,0 +1,1720 @@
+LFS Translation file (Traditional_Chinese)
+Translated by: carplayer, JJ72
+
+tx_codepage 950
+tx_langname 繁體中文
+tx_noun_adj an
+3g_tr_selct 訓練
+3g_tr_title 選擇課程
+3a_spselect 單人遊戲
+3a_tit_sply 單人遊戲
+3a_mpselect 多人遊戲
+3a_tit_mply 多人遊戲
+3a_hlselect 單圈計時
+3a_tit_hotl 單圈計時
+3a_opselect 選項
+3g_repl_sel 錄像
+3a_tit_sprs 單人模式錄像
+3a_tit_mprs 多人模式錄像
+3g_unlk_lfs 解鎖 Live for Speed
+3g_demorace DEMO車手
+3h_x_licens %s 許可証
+3a_mode_dmo Demo
+3h_s_coln_s %s：%s
+3g_re_sk_dl 錄像中車身貼圖下載
+3g_one_notf 錄像中有一張車身貼圖在此電腦上找不到
+3g_sev_notf 錄像中有多張車身貼圖在此電腦上找不到
+3g_one_down 是否下載缺失車身貼圖?
+3g_sev_down 是否下載缺失車身貼圖?
+3a_exit_btn 退出
+3a_next_btn 下一步
+3g_agre_btn 同意
+3a_exitprog 退出LFS?
+3a_userfind 輸入要搜索的用戶名
+3h_num_tips %d 提示
+3h_tip_pesc 於車庫及遊戲進行中按下 ^7ESC^8 可喚出遊戲選項
+3h_tip_prst 於伺服器內按下 ^7T^8 以輸入信息
+3h_tip_ffwr 建議使用支持力反饋的方向盤
+3h_tip_rtcg 於換檔時鬆開油門可避免離合器過熱
+3h_tip_brak 當接近彎角請適時煞車...
+3g_hdr_name 課程名稱
+3g_hdr_diff 難度
+3g_hdr_mode 模式
+3g_dif_easy 容易
+3g_dif_medi 中等
+3g_dif_hard 困難
+3g_lsn_firs 第一課
+3g_lsn_next 下一課
+3g_lsn_trya 重試
+3g_lsn_fini 已完成
+3g_tit_obje ^7目標
+3g_tit_purp ^7目的
+3g_tit_tips ^7提示
+3g_tit_targ ^7目標時間
+3g_not_time 你未能及時完成!
+3g_not_fini 你未完成課程!
+3g_comp_but 你完成了課程,不過...
+3h_false_st - 你在綠燈前已起步
+3g_too_long - 你花了太多時間
+3g_coll_car - 你與另一輛車發生了碰撞
+3g_wrong_rt - 你跑錯了路線
+3g_hit_1_ob - 你碰到了一個物件
+3g_hit_x_ob - 你碰到了%d個物件
+3g_not_fast - 你在計時點的速度不夠快
+3g_slo_stop - 你的煞車距離過長
+3g_exce_spd - 你在維修區超速
+3g_nopitstp - 你未完成停站
+3g_not_long - 你停車的時間不夠長
+3g_congrats 恭喜! 你通過了考核!
+3g_stndrd_x 在這一課中,你達到的標準是：%s
+3g_lsnunl_x 你需要解鎖%s才能學習這一課
+3a_nocarsel 未有選擇車輛
+3a_araceinp 比賽正在進行
+3a_plydisco 該玩家將被切斷連接
+3a_leavgame 離開伺服器
+3a_playrbtn 車手
+3a_garagbtn 車庫
+3a_trackbtn 賽道
+3a_tit_trak 選擇賽道
+3a_load_brk [載入中]
+3a_gene_brk [生成中]
+3a_notr_brk [無賽道]
+3a_endonlin 結束伺服器?
+3a_levonlin 離開伺服器?
+3a_swap_pos 交換位置
+3a_joinrace 加入比賽
+3a_addaidrv 添加AI車手
+3a_setready 設置準備就緒
+3a_starthdr 起始排位
+3a_skillhdr 技術等級
+3a_race_hdr 比賽
+3a_readybtn 就緒
+3a_localsml 地區網絡
+3a_vhostsml 通過伺服器
+3g_adminsml 管理員
+3a_dirctsml 直接連接
+3a_no_track 無賽道
+3a_nodriver 無車手
+3a_carerror 車輛錯誤
+3a_raceinpr 比賽進行中
+3a_remvplyr 移除車手
+3a_no_quali 無排位賽
+3a_qual1min 排位賽1分鐘
+3a_qualxmin 排位%d分鐘
+3a_practice 練習
+3a_race1lap 比賽 1 圈
+3a_racexlap 比賽 %d 圈
+3a_race1hou 比賽 1 小時
+3a_racexhou 比賽 %d 小時
+3a_zerowind 無風
+3a_low_wind 微風
+3a_highwind 大風
+3a_nosamenm 地區網絡上車手不能使用相同名稱
+3a_ac_onest 場地賽：只有一個起始位置
+3a_ac_fixlp 場地賽：固定圈數
+3h_kickplyr 驅逐車手 %s^8? (%s^8)
+3h_howlongb 禁止連結之日數 %s^8? (%s^8)
+3h_ainodriv AI 不能於本賽道駕駛
+3h_ainoxral AI 不能於越野賽道使用%s
+3h_ainoxcfg AI 不能於本賽道使用 %s
+3a_cdntsvst 無法保存調校
+3a_sent_set 已發送調校
+3a_plynotfd 無法找到車手
+3a_carnotfd 無法找到車手車輛
+3a_namsetsv 命名及保存調校
+3h_gridsave 輸入出場設定名稱
+3h_gridload 選擇及載入出場設定
+3h_xremovex %s^8 將 %s^8 調離起跑位置
+3a_endgmbtn 結束主持中的線上遊戲
+3a_leavebtn 離開
+3g_endr_btn 結束比賽
+3g_spec_btn 觀賽
+3h_qual_btn 重開排位賽
+3h_rest_btn 重開比賽
+3h_pits_btn 進入修理站
+3g_join_btn 加入
+3g_play_btn 播放
+3a_namesort 名稱序
+3a_datesort 日期序
+3a_car_caps 車輛
+3a_newbtset 新建自定義調校,請按"新建"按鈕
+3a_selplset 不能修改默認調校 - 請選擇自定義調校
+3a_newbtcol 新建自定義外觀,請按"新建"按鈕
+3a_selplcol 不能修改默認外觀 - 請選擇自定義外觀
+3a_sets_hdr 車輛調校
+3a_cols_hdr 車輛外觀
+3a_new_setb 新建調校
+3a_new_colb 新建外觀
+3a_savedset 已保存調校
+3a_savedcol 已保存外觀
+3a_new_butt 新建
+3a_del_butt 刪除
+3a_undo_btn 撤銷更改
+3g_rename_b 重新命名
+3h_clear_bt 清除
+3a_drvr_hdr 車手
+3a_frce_hdr 受力
+3g_fuel_hdr 載油
+3g_susp_hdr 懸掛
+3a_out_butt 無
+3a_in_buttn 有
+3a_off_butt 關
+3a_on_buttn 開
+3a_stop_btn 停止
+3a_drop_btn 放下
+3a_namenset 新調校的名稱
+3g_newnmset 重新命名調校
+3a_setnodel 該調校無法刪除
+3a_deletset 刪除調校?
+3a_setnonam 無法創建未命名調校
+3a_namencol 輸入新外觀名稱
+3h_newnmcol 重新命名外觀
+3a_colnodel 該外觀無法刪除
+3a_deletcol 刪除外觀?
+3a_colnonam 無法創建未命名外觀
+3a_carninvl 當前車輛名稱無效
+3a_sel_skin 選擇塗裝
+3a_drv_none 無驅動
+3a_drv_fron 後輪驅動
+3a_drv_rear 前輪驅動
+3a_drv_four 四輪驅動
+3g_dif_open 開放式差速器
+3g_dif_lock 鎖定式差速器
+3g_dif_visc 液動耦合式LSD
+3g_dif_clsd 多片離合式LSD
+3a_no_creds 無積分
+3a_one_cred 1 積分
+3a_xx_creds %d 積分
+3g_host_dis 這伺服器不允許你駕駛%s
+3h_ndxmdcax 你必須有 %s 授權才能駕駛 %s
+3h_ndulxcax 你必須解鎖 LFS %s 才能駕駛 %s
+3g_all_caps 全部
+3g_newnmrep 錄像的新名稱
+3g_repnodel 無法刪除錄像
+3g_deletrep 刪除錄像?
+3g_repnonam 不能創建無名錄像
+3g_set_sh_x %s 的設定：
+3a_rght_brk [右]
+3a_left_brk [左]
+3a_plyrname 車手名稱：
+3g_otherply 其他車手：
+3a_numplate 車牌：
+3a_countryc 國家：
+3a_poschoos 車手位置：
+3a_speedcho 速度顯示單位：
+3a_pressure 壓力顯示單位：
+3g_lang_cln 語言：
+3g_font_cln 字體 ：
+3g_wght_cln 字體粗幼 ：
+3g_adnewply 添加新車手
+3g_dlselply 刪除選定車手?
+3g_enterply 輸入新車手名稱
+3g_plyexist 車手已存在
+3g_newnamex 輸入新車手名稱：%s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake 煞車輔助：
+3a_autoclch 自動離合：
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn 寬屏效果：
+3a_clipwndo 限制鼠標在窗口內 CTRL+C:
+3a_clipflsc 限制鼠標在屏幕內 CTRL+C:
+3a_leftscrn 左屏幕
+3a_rghtscrn 右屏幕
+3a_keyshpls 快捷鍵(SHIFT+)
+3a_keytxtf4 F4
+3a_windoful 窗口/全屏
+3a_shf4togg SHIFT+F4 在全屏和窗口間切換
+3a_shxalrdy SHIFT+F%d 已經分配
+3a_assxmodx 將 SHIFT+F%d 指定到%s?
+3a_unkntype 未知
+3h_mode_bit 位元
+3h_refre_hz Hz
+3b_set_vw_x 設置%s視點：
+3a_vw_incar 車內
+3b_vw_custm 自定義
+3a_ishwdywy [車手 開  方向盤 開]
+3a_ishwdnwy [車手 關  方向盤 開]
+3a_ishwdnwn [車手 關  方向盤 關]
+3a_oht_none [無]
+3a_oht_splt [計時點時間顯示]
+3a_normlfov 視點範圍 %.0f°：
+3h_onebutlk 單按鍵側望 %.0f°：
+3a_pitchviw 傾斜視點 %.2f°：
+3b_rotatviw 旋轉視點 %.2f°：
+3g_mirror_x 倒後鏡橫向偏移 %.3f m：
+3g_mirror_z 倒後鏡垂直偏移 %.3f m：
+3a_tlt1gdeg 1g 頭部傾角 %.2f°：
+3a_shiftlat 1g 橫向位移 %.3f m：
+3a_shiftfwd 1g 縱向位移 %.3f m：
+3a_shiftvrt 1g 垂直位移 %.3f m：
+3a_moveanim 視點隨車手移動：
+3a_defdrvvw 默認車手視點：
+3g_cvw_main 顯示 (主視點)：
+3b_cvsnthng 隱形
+3b_cvswheel 車輪
+3g_cvsdbody 車身
+3b_cvsexter 外部
+3g_cvshelic 高空
+3g_cvsfollo 跟隨
+3h_cvsuserv 用戶
+3b_cvwxoffs X 坐標偏移 %.3f m：
+3b_cvwyoffs Y 坐標偏移 %.3f m：
+3b_cvwzoffs Z 坐標偏移 %.3f m：
+3g_c_defaul 默認位置
+3g_c_centre 居中視點
+3g_c_eyepos 駕駛員眼睛位置
+3g_cvw_high 高度 %.1f m：
+3g_cvw_angl 角度 %.1f°：
+3g_cvw_dist 距离 %.1f m：
+3g_cvw_vlag 平滑 %.1f 秒：
+3a_drawdrwh 顯示車手/方向盤：
+3a_lookfunc 視點運動模式：
+3a_lookaxis 軸
+3a_lookstee 轉向
+3a_lookms_x 鼠標X
+3a_lookmsxy 鼠標XY
+3h_mslookav 指針隱藏時滑鼠視角可用
+3a_looksens 視點運動靈敏度 %.2f：
+3a_lookcred 視點中心縮減 %.2f：
+3a_btnlooko 按鍵控制視點的方式：
+3g_l_smooth 漸漸
+3g_l_instan 即時
+3h_mainsfov 主顯示器視野範圍 %.0f°：
+3h_monangle 顯示器角度 %.0f°：
+3h_viewoffs 視野偏移 %.2f：
+3h_multiscl 多螢幕佈局：
+3h_entnumls 輸入左邊螢幕的號碼
+3h_entnumrs 輸入右邊螢幕的號碼
+3h_onecentr 單個中央螢幕
+3h_scwidths 螢幕寬度：
+3h_optequal 相同
+3h_optunequ 不同
+3h_entsidep 輸入側螢幕寬度(像素)
+3h_entmainp 輸入主螢幕寬度(像素)
+3h_fullwext 全寬度外部視角：
+3h_bezelcom 螢幕邊框補償 %.1f%%：
+3h_resulfov 生成視野範圍： %.1f°
+3h_fovinval 駕駛視角設置不當
+3h_drivuse1 駕駛視角使用單獨的渲染器
+3h_drivusex 駕駛視角使用%d個渲染器
+3h_notwidex 寬度不夠真實 %d-螢幕設置
+3h_extvfull 外部視角使用全螢幕寬度
+3h_extvmain 外部視角使用主螢幕
+3h_extvxxar 外部視角使用%d：%d的螢幕比例
+3h_extvass3 對於外部視角，假定使用 3-螢幕設置
+3a_sml_newt 新建
+3a_sml_name 重命名
+3a_sml_delt 刪除
+3a_sml_undo 撤銷
+3a_sml_save 保存
+3a_sml_load 載入
+3a_msctrcks 賽道
+3a_exitnosv 退出但不保存?
+3a_chmblost 更改可能丟失
+3a_savedrad 已保存 radio.rad
+3a_nodelstp 無法刪除設置頻道
+3a_delchnlq 刪除頻道?
+3a_chanlnum 頻道 %d
+3a_msctrnum 賽道 %d
+3a_norenstp 無法重命名設置頻道
+3a_newnmchn 頻道的新名稱
+3a_play_num 播放:%s
+3a_fail_num 失敗:%s
+3a_shftauto 自動
+3a_shftsequ 序列式
+3a_shftshft 排檔箱
+3g_shftffjo 力反饋手柄
+3h_transmis 傳動裝置
+3h_box_hpat H型 排檔
+3h_box_bike 電單車式排檔
+3h_box_sequ 序列式排檔
+3h_box_seqi 序列式排檔
+3h_box_semi 方向盤加減式
+3h_seq_hpat 以序列式操作H型 排檔
+3a_dc_combi 組合式
+3a_dc_separ 分離式
+3a_dc_butts 按鍵式
+3a_axb_axis 軸
+3a_axb_butt 按鍵
+3g_no_con_d 沒有檢測到控制器
+3g_xx_con_d 檢測到 %.0f 控制器
+3g_ct_unkno 未知控制器
+3g_ct_first 第一人稱控制器
+3g_ct_steer 方向盤
+3g_ct_fligh 飛行控制器
+3g_ct_gamep 手柄
+3g_ct_joyst 搖杆
+3a_crrdcval 轉向中心縮減 %.2f：
+3g_whe_turn 方向盤角度 %.0f°：
+3a_msbutt_1 按鍵組 1
+3a_mdbutt_2 按鍵組 2
+3e_kbt_mous [鼠標轉向]
+3e_kbt_nohe [鍵盤 - 無輔助]
+3e_kbt_stab [鍵盤 - 穩定輔助]
+3a_mdaxesff 轉軸/力反饋
+3a_mdshiftr 排檔箱
+3a_kasteerl 左轉
+3a_kasteerr 右轉
+3e_kasteerl 快轉
+3e_kasteerr 慢轉
+3a_kaaccelk 油門
+3a_kabrakek 煞車
+3a_kaleftvw 看左側
+3a_karghtvw 看右側
+3a_karearvw 看後方
+3a_kashiftu 升檔
+3a_kashiftd 降檔
+3a_kaclutch 離合
+3a_kahandbr 手煞車
+3a_kahornkk 喇叭
+3a_kaflashk 頭燈
+3a_karesetk 重置車輛
+3g_kapitspd 限速器
+3h_katcdisa 牽引力控制系統
+3h_kaigniti 點火
+3a_kazoom_i 畫面推近
+3a_kazoom_o 畫面拉遠
+3a_karevers 倒檔
+3a_kafirstk 一擋
+3a_kasecond 二檔
+3a_kathirdk 三檔
+3a_kafourth 四檔
+3a_kafifthk 五檔
+3a_kasixthk 六檔
+3a_kasevent 七檔
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera 轉向
+3a_aacombin 組合式油門/煞車
+3a_aathrott 油門
+3a_aabrakea 煞車
+3a_aalookhe 視點轉動
+3a_aalookpi 視點傾斜
+3a_aalookro 視點翻滾
+3a_aaclutch 離合
+3a_aahandbr 手煞車
+3g_aashiftx 排檔箱 左-右
+3g_aashifty 排檔箱 前-後
+3a_prsxforx 按%s定義：%s (ESC-取消/DEL-刪除)
+3a_smallkey 鍵盤按鍵
+3a_smallbut 控制器按鈕
+3a_mouse_kb 鼠標/鍵盤
+3a_wheel_js 方向盤/手柄
+3a_force_st 力反饋 %.0f：
+3a_thrbrkax 油門/煞車軸：
+3a_clutchop 離合：
+3a_handbrko 手煞車：
+3a_thrbrkrv 油門/煞車中央縮減 %.2f：
+3a_btnratev 按鍵控制率 %.2f：
+3a_kbsteero 鍵盤轉向設定：
+3a_strratev 轉向率 %.2f：
+3e_retratev 回中率 %.2f：
+3e_strfastv 快速轉向因數 %.2f：
+3e_strslowv 慢速轉向因數 %.2f：
+3a_prdtimev 提前時間 %.2f：
+3a_lmtmultv 轉向限制因數 %.2f：
+3a_selfunca 選擇需要指派軸的控制功能
+3a_selaxfrx 選擇軸定義：%s (ESC-取消/DEL-刪除)
+3a_availaxs 可用軸
+3a_axis_num 軸 %d
+3a_invert_1 反向
+3a_invert_0 正向
+3a_frcfdbak 力反饋
+3a_ffdevice 力反饋設備
+3g_ffshiftd 力反饋換檔設備
+3a_removedz 移除非響應區：
+3h_rec_axes 重新校準軸
+3h_cal_lock 鎖定
+3h_cal_unlk 解除鎖定
+3a_heyb_hdr 鍵盤
+3a_whbt_hdr 方向盤按鈕
+3a_ass_zero [Zero]
+3a_ass_mlft 鼠標左鍵
+3a_ass_mrgt 鼠標右鍵
+3a_ass_mmid 鼠標中鍵
+3a_ass_whup 滾輪上
+3a_ass_whdn 滾輪下
+3a_ass_spac 空格
+3a_ass_upar 上
+3a_ass_dnar 下
+3a_ass_rtar 右
+3a_ass_ltar 左
+3a_ass_pgup 上一頁
+3a_ass_pgdn 下一頁
+3a_butt_num 按鍵 %d
+3d_aamousex 鼠標橫向
+3d_aamousey 鼠標縱向
+3d_aa_xaxis X軸
+3d_aa_yaxis Y軸
+3d_aa_zaxis Z軸
+3d_aarxaxis X軸 反向
+3d_aaryaxis Y軸 反向
+3d_aarzaxis Z軸 反向
+3d_aaslidr1 滑杆 0
+3d_aaslidr2 滑杆 1
+3a_reskeysh 保留鍵
+3a_rswtch_r 1 - 觀看錄像
+3a_rssave_r 2 - 保存錄像
+3h_showline 4 - 顯示行車線
+3a_rsless_f < - 減小反饋力度
+3a_rsmore_f > - 增大反饋力度
+3a_rstab_ne TAB - 下一輛車
+3a_rshome_o HOME - 自己的車
+3a_rstalk_t T - 聊天
+3a_rspausep P - 暫停
+3a_rshistor H - 消息記錄
+3a_rsview_v V - 切換視點
+3a_rsforces F - 受力顯示
+3a_rsnamesn N - 車手名字
+3a_shftplus SHIFT +
+3a_shchhorn H - 改變喇叭
+3g_shshiftt G - 換檔方式
+3a_shrescon C - 恢復控制器設置
+3a_shressnd W - 恢復音量設置
+3a_shsoundo N - 聲音 開/關
+3a_shmirmod M - 後視鏡
+3g_shhidetx F - 隱藏文字
+3a_shuservw U - 自由視點
+3a_shskiptn K - 跳過歌曲
+3h_shshowmo Z - 顯示滑鼠
+3b_shdriver F1 - 車手視點
+3b_shslowrp F2 - 錄像慢放
+3b_shfastrp F3 - 錄像快進
+3a_shwindow F4 - 窗口模式
+3a_carsndvl 車輛音量(%.1f)：
+3a_skidvboo 煞車音量(%.1f)：
+3g_windvboo 風聲音量(%.1f)：
+3g_echovboo 回聲音量(%.1f)：
+3a_mscvolum 音樂音量(%.1f)：
+3g_msgvolum 界面音量 (%.1f)：
+3a_mscsetup 選單背景音樂：
+3a_mscracin 比賽背景音樂：
+3a_mscrplay 錄像背景音樂：
+3a_selecbrk [已選擇]
+3a_noplybrk [未播放]
+3a_msc_skip 跳過
+3a_msc_sele 選擇
+3a_ingmmusc 游戲中的音樂
+3a_channels 頻道
+3g_status_a 聲音 (SHIFT + N)： %s
+3g_status_m 音樂緩衝： %s
+3g_status_c 聲音緩衝： %s
+3a_relaybrk [相對值]
+3a_absolbrk [絕對值]
+3a_fps_disp 幀頻顯示(fps)：
+3b_virtuals 顯示虛擬起步信號燈：
+3a_mirrmode 後視鏡模式：
+3a_clokmode 儀錶形式：
+3g_fixedfwd 固定向前：
+3g_accelmov 加速度影響視點：
+3a_showpeds 顯示踏板：
+3g_steerind 虛擬轉向儀：
+3a_smallmap 顯示小地圖：
+3g_staticsm 旋轉小地圖：
+3a_pos_list 顯示排位列表：
+3a_dropshad 顯示陰影：
+3a_msgtsize 信息文字大小 %.3f：
+3a_timedisp 總時間顯示：
+3a_chptexto 計時點文字信息：
+3a_clndlcol 儀錶指針顏色：
+3a_cltxtcol 儀錶文字顏色：
+3a_cttxtcol 中心文字顏色：
+3h_x_dash_c %s 儀錶板：
+3h_roadgled 公路車輛檔位指示LED：
+3g_interfac 界面
+3h_in_title 題目：
+3h_in_bigbt 大按鈕：
+3h_in_opaci 不透明度 %.2f ：
+3h_in_bbtxt 文字：
+3h_in_smlbt 小按鈕：
+3h_text_uns 未選中文字：
+3h_text_sel 已選中文字：
+3h_text_una 無效文字：
+3h_in_texte 文字短霂迭G
+3h_in_btn_g 按鈕綠色：
+3h_in_btn_r 按鈕紅色：
+3h_in_btn_a 按鈕間隔：
+3h_smallm_l 小地圖亮：
+3h_smallm_d 小地圖暗：
+3h_cr_lap_a 領先一圈車輛：
+3h_cr_ahead 領先車輛：
+3h_ai_ahead 領先 AI ：
+3h_your_car 自己車輛：
+3h_ai_behin 落後 AI ：
+3h_cr_behin 落後車輛：
+3h_cr_lap_b 落後一圈車輛：
+3h_intcentr 介面中心：
+3h_intscale 介面大小：
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset 重置
+3h_test_sml 小按鈕
+3h_test_big 大按鈕
+3h_in_cen_x X 中心
+3h_in_cen_y Y 中心
+3h_in_sca_x X 大小
+3h_in_sca_y Y 大小
+3h_betw_a_b 數值必須在 %.1f 與 %.1f 之間
+3a_asavnono [不啟用 - 不保存]
+3a_asavmanu [啟用 - 手動保存]
+3a_asavauto [自動保存 - 不推薦]
+3a_ogm_ainm AI名稱
+3g_ogm_fkey F1至F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [固定順序]
+3a_rs_finis [完賽成績順序]
+3a_rs_revfi [完賽成績倒序]
+3a_rs_randm [隨機順序]
+3a_aidrvnum AI車手%d：
+3a_f_keynum F%d：
+3a_sprsvopt 單人游戲錄像保存：
+3a_mprsvopt 多人游戲錄像保存：
+3a_nonqracr 無排位下重新開始順序：
+3a_changbtn 編輯AI名稱/F鍵：
+3a_optlores 低解像度
+3a_opthires 高解像度
+3g_optcompr 壓縮
+3g_optsfull 無壓縮
+3g_opt_main 主視點
+3g_plus_mir + 後視鏡
+3a_usrldval 用戶層次細節(%.2f)：
+3a_dstldval 塵埃層次細節(%.2f)：
+3a_mirldval 後視層次細節(%.2f)：
+3h_fsaa_txt 全屏抗鋸齒：
+3h_mip_bias 貼圖分級偏置：
+3h_mipbias0 貼圖分級偏置(%.1f) 介面/文字：
+3h_mipbias1 貼圖分級偏置(%.1f) 物體/圍牆：
+3h_mipbias2 貼圖分級偏置(%.1f) 草/沙礫：
+3h_mipbias3 貼圖分級偏置(%.1f) 路面：
+3a_shtypopt 陰影類型：
+3g_treesopt 顯示樹木：
+3g_flagsopt 顯示旗幟：
+3g_rubbropt 顯示胎痕：
+3g_draw_sky 顯示天空：
+3g_gadapter 顯示卡：
+3e_zbdopt_d Z緩衝深度(%d)：
+3e_hazetext 霧化效果：
+3h_mip_type 紋理過濾/各向異性過濾：
+3h_text_res 紋理(不包括貼圖)：
+3g_carskins 車身和頭盔貼圖：
+3g_texmemmb 紋理存儲使用量：%.1fMB
+3a_crdnoshd 你的顯示卡無法在LFS中繪制陰影
+3g_crdnoftx 你的顯示卡無法使用高解像紋理
+3h_hvsnotav 你的顯示卡無法使用著色器的硬件支持
+3g_seladres 選擇下次啟動所使用的顯示卡
+3e_rslfszbd 你必須重啟LFS以令Z緩衝的變更生效
+3a_flsvsync 全屏垂直同步：
+3g_prev_lag 防止輸入延遲：
+3a_limitfps 在游戲中限制幀頻：
+3a_maxfrmrt 最大幀頻：
+3g_tx_x_fps %d fps
+3a_minsleep 最小休眠值：
+3g_debounce 換檔間隔：
+3g_txt_x_ms %d ms
+3a_pixelval %d 像素
+3a_useplset AI使用玩家調校：
+3a_useplcol AI使用玩家外觀：
+3a_sndlgval 聲音延遲 %.2f s：
+3g_whe_comp 方向盤轉向補償 %.2f：
+3a_anlgsval 類比轉向平滑 %.2f：
+3a_multispd 多人模式加速選項：
+3g_car_skin 下載車身貼圖：
+3g_hel_skin 下載頭盔貼圖：
+3g_multidst 多人模式車輛繪製距離 %.0f m：
+3g_dynamlod 圖像質量動態縮減 %.2f：
+3a_updtpath 更新路徑：
+3a_puusrcar 玩家車輛
+3a_puallcar 所有車輛
+3h_replaysk 為錄像下載貼圖：
+3g_introopt 啟動時載入賽道：
+3g_local_12 12小時格式本地時間：
+3g_time_fps 顯示時間而不是FPS：
+3g_shfflags SHIFT + F 模式顯示旗語：
+3h_accelopt 加速計：
+3h_shadogen 陰影生成：
+3h_opt_defa 默認
+3h_opt_alte 交替
+3g_skin_d_q 車身貼圖下載
+3h_skin_use 記憶體內的車身貼圖
+3a_crestart 開始比賽
+3a_cntrpits 進入車庫
+3a_cspectat 旁觀比賽
+3a_cantjoin 加入
+3a_cantleav 離開
+3a_novtnolo 沒有投票 - 比賽中沒有本地車手
+3a_notdnord 無法試駕 - 錄像中沒有真實車手
+3a_esc_menu 選單
+3a_repmenig 錄像選單(比賽中)
+3a_repmenld 錄像選單(已載入)
+3a_sel_pits 回車庫
+3a_sel_spec 旁觀比賽
+3a_sel_join 加入
+3a_sel_repl 錄像
+3a_sel_outp 輸出單圈數據
+3a_sel_rstr 重新開始
+3a_vote_str 投票開始比賽
+3a_vote_end 投票結束比賽
+3a_vote_qua 投票要求排位
+3a_test_drv 試駕
+3a_startrac 開始比賽
+3a_hqualify 重新排位
+3a_resumegm 繼續
+3h_escapkey ESC
+3a_undefind 未定義
+3a_arenatxt 場地
+3a_singlstg 單場
+3a_standard 標準
+3a_reversed 反向
+3a_weth_hdr 天氣
+3a_cnfg_hdr 配置
+3h_layt_hdr 佈局
+3h_none_sel 未選擇
+3a_info_cir 賽道
+3a_info_tot 總長
+3a_chng_trk 更換賽道
+3h_revconfc 反向配置：
+3h_openconf 開放配置：
+3h_ndxmdtrx 您必須有 %s 授權才能進入 %s
+3h_ndulxtrx 您必須解鎖 LFS %s 才能進入 %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg RallyX Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mile %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mile
+3g_dt_dawn_ 黎明
+3g_dt_sunri 日出
+3g_dt_morni 早晨
+3g_dt_day__ 白天
+3g_dt_after 下午
+3g_dt_sunse 日落
+3g_dt_dusk_ 黃昏
+3g_dt_night 夜晚
+3g_wth_clea 晴朗
+3g_wth_clou 多雲
+3g_wth_over 陰天
+3a_hlvcthis 本圈 -
+3a_hlvcnext 下一圈 -
+3a_readynum 就緒: %d
+3a_noviewcr 場上沒有車
+3a_thexisst %s即將開始
+3a_thexhase %s已經結束
+3a_smlpract 練習賽
+3a_smlqulng 排位賽
+3a_sml_race 比賽
+3a_replnotr 未記錄錄像
+3g_notrecor 不記錄錄像
+3g_fov_temp FOV %.0f
+3a_replrest 重新播放錄像
+3a_aisvdknw 更新AI的行駛數據
+3a_timetmsx 播放速度 x %.3f
+3a_namenldf 下一圈數據文件的名字
+3g_caps_wrn 警告
+3g_caps_kik 驅逐
+3g_caps_ban 封禁
+3g_caps_spe 觀看
+3a_namesoff 關閉名字顯示
+3a_connlist 連接列表
+3a_namesovr 在車頂顯示名字
+3h_showmous 顯示滑鼠
+3h_hidemous 隱藏滑鼠
+3a_mirrinfo 後視鏡:
+3a_cancaujo 取消自動加入
+3a_reinicnt 重新初始化控制器
+3a_reinisnd 重新初始化聲音
+3a_namemprs 要保存的多人游戲錄像名稱
+3a_namesprs 要保存的單人游戲錄像名稱
+3a_shnsound SHIFT + N ：聲音 - %s
+3g_shgsmode SHIFT + G ：換檔模式 - %s
+3a_shgautos SHIFT + G ：自動換檔 - %s
+3a_frcvalpc 反饋力度 %.0f%%
+3a_hrntypev 喇叭類型 %d
+3a_actnends 結束
+3a_actnrest 重新開始
+3a_actnstrt 開始
+3a_thngqual 排位賽中
+3a_thngrace 比賽
+3a_reploose 錄像OOS錯誤
+3a_pausetxt 暫停
+3g_safeexit 退出中...
+3a_retrdcap 放棄
+3a_dsqulcap 取消成績
+3g_unclcaps 未分級
+3a_wrngwcap 逆行
+3a_capsdrvr 車手
+3a_capsbstl 最佳圈速
+3g_pitstops 入站
+3g_spenalty 處罰
+3a_capstotl 合計
+3g_caps_car 車輛
+3g_capsxlps %d 圈
+3g_plus1lap +1 圈
+3g_plusxlps +%d 圈
+3h_falsesta 偷步
+3h_pe_speed 於修理站內超速
+3h_pe_short 修理時間太短
+3h_pe_mustp 修理時間太遲
+3h_pe_admin 管理員指定
+3h_pe_unknw 未知原因
+3g_yellcaps 黃旗
+3g_bluecaps 藍旗
+3a_stpgocap 停站處罰
+3g_drthrcap 穿越維修區處罰
+3g_30stimep 30秒罰時
+3g_45stimep 45秒罰時
+3g_clearedp 處罰已清除
+3g_pit_stop 停站
+3g_pitstopx 停站：%d
+3g_p_pnltyx 停站[處罰]：%d
+3g_p_nowrkx 停站[無作業]：%d
+3g_p_finshx 停站[完成]：%d
+3g_mancompx %s^8完成了他的%s
+3g_wmncompx %s^8完成了她的%s
+3g_unkcompx %s^8：已完成%s
+3g_enterpit 進入維修區
+3g_enterfor 進入維修區
+3g_leavepit 離開維修區
+3g_stpgotxt 停站處罰
+3g_drthrtxt 穿越維修區處罰
+3g_nopurtxt 無目的
+3g_capsstop 停止
+3g_capsrefu 加油中
+3g_capssetu 改變調校
+3g_capsxdam %s損壞
+3g_capsdamx 損壞：%s
+3g_capsxcha 更換%s輪胎
+3g_capsminr 輕微
+3g_capsmajr 嚴重
+3g_capsfrnt 前
+3g_capsrear 後
+3g_capsleft 左
+3g_capsrigh 右
+3g_capslefr 左前
+3g_capslere 左後
+3g_capsrifr 右前
+3g_capsrire 右後
+3g_refl_f_x 完成加油：%.1f 升
+3g_pitstp_f 完成停站
+3g_nospdlim 此賽道上沒有限速區
+3g_notequip 此賽車沒有限速器
+3h_thisnotc 此賽車沒有牽引力控制系統
+3h_thisnost 此賽車沒有起動裝置
+3a_smllaptm 單圈時間
+3a_smlspltm 計時點時間
+3a_clhotlap 單圈計時
+3a_clonemin 1 分鐘排位賽
+3a_cl_xmins %d 分鐘排位賽
+3a_clonelap 1 圈
+3a_cl_xlaps %d 圈
+3a_clonehor 1 小時
+3a_cl_xhors %d 小時
+3g_cltrning 訓練
+3a_windsp_x 風速 %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8投的票過期
+3a_x_voteer %s^8投票結束比賽
+3a_x_voters %s^8投票重新比賽
+3a_x_votequ %s^8投票開始排位賽
+3a_x_joinsp %s^8觀看比賽
+3g_x_didnot %s^8未完賽
+3g_x_wrongr %s^8走錯了路線
+3g_x_illega %s^8開進了受限區域
+3h_x_retpit %s^8返回了修理站
+3h_a_retpit 全部賽車返回了修理站
+3a_lagvalue 延時(%.2f)
+3a_hlvcstlp 起始圈
+3a_smalllap 圈
+3a_hlvcmodi [已修改]
+3a_timequal 排位賽
+3a_timetotl 總計
+3a_timebest 最佳
+3a_time_lap 本圈
+3a_timesplt 計時點
+3h_timetime 時間
+3a_timepnlt 處罰
+3a_noldxcar 無法載入%s^8的車輛
+3a_nosvnonm 未命名無法保存
+3g_nofilesl 沒有可載入的文件
+3a_alrdyout 已經輸出單圈數據
+3a_nxtlpout 下一圈數據輸出到文件%s.raf
+3a_nodtaout 沒有向文件輸出數據
+3g_dled_x_x 已下載車身貼圖：%s_%s
+3g_ding_x_x 正在下載車身貼圖：%s_%s
+3h_saveskin 儲存車身貼圖中：%s
+3g_nomoreci 無法加入更多環路
+3a_noaddmor 無法添加更多道具
+3a_loadinfo 載入中
+3h_storedvw 保存視角(V)：
+3h_move_spd 移動速度 %.1f m/s：
+3h_min_high 最小高度 %.1f m：
+3g_roll_deg 橫滾 %.1f°：
+3h_vwsmooth 視角平滑 %.1f s：
+3h_trantime 過渡時間 %.1f ：
+3a_invlok_c 鼠標右鍵視點控制方向反轉：
+3h_invrot_c 滑鼠左鍵+滑鼠右鍵 反向轉動：
+3a_fov_valu 視點范圍FOV %.1f°：
+3a_plcobs_c 擺放道具：
+3a_chkptw_v 計時點寬度 %.0f m：
+3a_hdg_degr 轉動 %.1f°：
+3a_unnm_brk [未命名]
+3a_objs_num 道具數：%d
+3a_emty_brk [空]
+3a_savechan 保存改變
+3a_loadlayo 載入賽道佈置
+3a_savelayo 保存賽道佈置
+3a_clearall 全部清空
+3a_laps_num 圈: %d
+3a_errorsml 錯誤
+3a_c_clrsel C - 清除選擇
+3a_m_mv_mod M - 移動/更改
+3a_del_dele DEL - 刪除
+3a_w_e_wdth W / E - 寬度
+3a_l_r_rota < / > - 轉動
+3a_cp_1_2_3 1 / 2 / 3 - 計時點
+3a_f_finish F - 終點線
+3a_s_startp S - 起步點
+3a_o_object O - 物件
+3g_dist_x_m 距離：%.2f m
+3a_editkeys 編輯按鍵
+3a_c_ar_hgt CTRL + 方向鍵 - 高度
+3g_c_ar_rol CTRL + 方向 - 橫滾
+3a_arrow_mv 方向鍵 - 移動
+3a_spc_hdsh 空格鍵 - 隱藏/顯示
+3a_esc_exit ESC - 退出
+3h_l_b_move 滑鼠左鍵 - 移動
+3h_r_b_look 滑鼠右鍵 - 查看
+3h_l_r_rota 滑鼠左鍵+滑鼠右鍵 - 轉動
+3a_keys_txt 按鍵
+3h_mous_txt 滑鼠
+3h_edit_txt 編輯
+3h_more_txt 更多
+3h_in_trans 轉變
+3h_cl_slt_x 臨時視角 %d 已清除
+3h_st_slt_x 臨時視角 %d 已保存
+3h_no_v_x_s 沒有臨時視角 %d (%s)
+3h_no_vws_s 沒有已保存的視角 (%s)
+3h_sh_nm_st SHIFT+數字鍵 - 保存視角
+3h_no_car_f 沒有可跟隨的車輛
+3h_fc_point 指向：
+3h_fc_neare 最近的車輛：
+3h_fc_flwng 跟隨：
+3h_fc_lockd 鎖定：
+3h_clicktof 點擊要跟隨的車輛
+3h_followcr 跟隨車輛
+3h_nocarsvw 視角內沒有車輛
+3h_stopfoll 停止
+3h_optimise 優化
+3h_opt_of_t 已優化物件：%d-%d
+3a_noxwload 載入時無法退出
+3a_chgnotsv 更改未被保存
+3a_exanyway 依然要退出?
+3a_clrall_q 清除賽道布置中所有道具?
+3g_delete_l 刪除布置?
+3a_tit_ldly 載入賽道布置
+3a_nosavent 在進入屏幕無法保存賽道布置
+3a_nolodent 在進入屏幕無法載入賽道布置
+3a_noobselm 沒有選擇要移動的道具
+3a_noobtype 沒有選擇道具種類
+3a_noobseld 沒有選擇要刪除的道具
+3h_unexpclr 意外的清除指令
+3h_unexpend 檔案意外的完結
+3a_xalready 已經創建了%s
+3g_idx_0tox 序號必須在 0 到 %d 之間
+3g_rt_idx_x 路線序號：%d
+3g_restarea 受限區域
+3g_rt_check 路線檢查點
+3g_rt_wrong 錯誤路線
+3g_ob_chalk 白線
+3g_ob_cones 圓錐筒
+3g_ob_tyres 輪胎
+3h_ob_markr 標記
+3g_ob_other 物件
+3g_ob_marsh 指揮
+3g_marsh_no 不可見
+3g_marsh_st 工作人員
+3g_marsh_le 向左
+3g_marsh_ri 向右
+3h_cant_add 無法添加：
+3h_cant_mov 無法移動：
+3h_inte_obj 物體重疊
+3h_inva_pos 位置無效
+3a_dispgame 顯示伺服器列表
+3a_tit_list 伺服器列表
+3a_startnew 開始新伺服器
+3a_tit_strt 開始新伺服器
+3a_joingame 加入指定的伺服器
+3a_tit_spec 加入指定的伺服器
+3a_finduser 尋找在線玩家
+3a_tit_user 用戶搜索
+3a_cls1conn 關閉1個連接
+3a_clsxconn 關閉%d個連接
+3a_rfrshlst 刷新
+3a_stophost 停止檢測伺服器
+3a_spctostp 按空格鍵，停止檢測伺服器
+3a_liststat %s 伺服器 %d/%d - 可以加入 %d - [沒有回复 %d] - [錯誤版本 %d]
+3a_waitingw 等待中
+3a_checking 檢查中
+3a_end_stat 可以加入 %d - [沒有回覆 %d] - [錯誤版本 %d] %s
+3a_clikjoin - 點擊要加入的伺服器名稱
+3a_glc_name 名稱
+3a_glc_ping Ping
+3a_glc_trak 賽道
+3a_privatew 私有
+3a_modified 已修改
+3h_arcade_w 允許重設
+3h_cruise_w 漫遊
+3a_wrongver 錯誤版本
+3h_noteul_x 注意：你仍需要解鎖 LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl 下載鏡像
+3h_cnt_titl 國家
+3h_newupdat 有新的升級
+3h_norecaui 沒有收到自動升級信息
+3h_start_dl 開始下載
+3h_plsselmr 請選擇最近的鏡像
+3h_connectn 連接...
+3h_trylfsnt 正通過^7www.lfs.net^8重試
+3h_dl_perce 文件進度：%d%%
+3h_dl_colon 已下載：
+3h_restartn 重啟LFS...
+3h_nostrtrs 無法啟動重啟器
+3h_noresdat 無法建立重啟器數據文件
+3h_noenumwi 無法列舉窗口
+3h_anotherl 另一個LFS程序正在運行
+3h_noopenrs 無法打開重啟器程序
+3b_meetroom 聊天室
+3b_m_host_x 正前往%s
+3b_f_host_x 正前往%s
+3b_leftroom 離開聊天室
+3b_entrroom 進入聊天室
+3b_wlcmu1st 歡迎! 你是聊天室里的第一個車手
+3b_wlcmxinr 歡迎! 聊天室里有%d個車手
+3b_mr_leave 離開
+3b_mr_findb 尋找
+3b_mr_sound 聲音
+3b_mr_refre 刷新
+3b_somehost 一個伺服器
+3b_mastercl 官方服務器關閉了連接
+3b_sr_privt 私有
+3b_mr_publc 公開
+3b_mr_empty 空
+3h_sr_cruis 漫遊
+3g_autoreco 重新連接...
+3a_typelocl 地區網絡
+3a_typeinet 互聯網
+3a_userisat 用戶在%s
+3a_joinxath 加入這個伺服器的%s^8?
+3a_inrc_num 比賽中：%d
+3a_cons_num 連接：%d
+3a_resl_num 結果：%d
+3h_skin_num 貼圖：%d
+3h_join_que 隊列位置：%d
+3a_selhostc 選中伺服器：
+3a_joingamc 加入游戲：
+3a_hostnamc 伺服器名稱：
+3a_hostipac 伺服器IP地址：
+3a_hostprtc 伺服器端口：
+3a_hostpasc 伺服器密碼：
+3h_clearbtn 清空所有密碼 (%d)
+3h_cconfirm 清空所有保存的主機密碼？
+3a_noldtrck 無法載入賽道
+3a_nosndudp 無法發送UDP數据包
+3a_nocrtudp 無法創建UDP連接
+3h_wt_sinfo 等待貼圖信息
+3h_norcvskn 沒有收到貼圖信息
+3a_norcvgst 沒有收到客戶信息
+3a_norcvply 沒有收到玩家信息
+3a_norvcall 沒有收到所有玩家的信息
+3a_vldadreq 你必須輸入一個有效的本地網絡IP地址
+3a_errconrs 發送連接結果錯誤
+3a_mode_sel 選擇聯機模式：
+3h_smal_dmo demo
+3h_frxmdndx 要得到 %s 授權，你必須解鎖 LFS %s
+3h_seltrrqx 所選賽道需要 %s 授權
+3a_visibilc 可見性：
+3a_vis_locl 地區網
+3a_vis_inet 互聯網
+3a_vid_hidn 隱藏
+3a_inetconc 互聯網連接：
+3a_modem56k 56k modem
+3a_m512_128 512/128 cable
+3a_mdm1_256 1m/256 cable
+3a_mdm_cust 自定義
+3a_maxupl_c 最大上傳(kbits/sec)：
+3g_x_upload %s kbits/sec 上傳
+3a_gnnoemty 游戲名稱不能為空
+3a_onecarrq 至少要允許使用一個車型
+3a_hstgstrq 必須允許主機或者遠程玩家登錄
+3a_rusurepr 你確定要繼續嗎?
+3a_maxbwmex 可能超出最大頻寬
+3b_srv_ip_c IP地址：
+3a_srvportc 端口：
+3a_dedi_opt 專用伺服器(無圖像)：
+3a_guestvot 允許投票驅逐/封禁：
+3a_guestsel 客戶選擇賽道：
+3h_qenabled 啟用排位賽：
+3g_midracej 允許比賽途中加入：
+3g_pitstopr 強制停站：
+3g_carreset 允許重置車輛：
+3h_fcockpit 強制車內視點 ：
+3h_cruisemo 漫遊 (允許逆行)：
+3a_maxgst_c 最大客戶數：
+3d_admins_c 管理員預留位：
+3a_maxrarac 最大參賽車手數(真人+AI)：
+3a_maxragst 最大單客戶機車手數(真人+AI)：
+3a_maxrahst 最大主機車手數(真人+AI)：
+3a_dedinohc 專用伺服器：主機不能加入比賽
+3a_smothpps 平滑度(每秒數據包數)：
+3a_uplmin16 最小上傳 16 kbits
+3g_umax8192 最大上傳 8192 kbits
+3a_uplavail 可用上傳 %.1f KB/sec
+3a_uplprcar 每車上傳 %.0f bytes/sec
+3a_uplcarnm 需上傳的車數 %.0f
+3a_requplod 必要的上傳 %.1f KB/sec
+3a_availexc 超過可用上傳
+3b_adminp_c 管理密碼：
+3a_sel_audi 聲音
+3a_tit_audi 聲音
+3a_sel_scrn 屏幕
+3a_tit_scrn 屏幕
+3a_sel_grfx 圖像
+3a_tit_grfx 圖像
+3a_sel_view 視點
+3a_tit_view 視點
+3a_sel_disp 顯示
+3a_tit_disp 顯示
+3a_sel_plyr 玩家
+3a_tit_plyr 玩家
+3a_sel_cont 控制
+3a_tit_cont 控制
+3a_sel_game 游戲
+3a_tit_game 游戲選項
+3a_sel_misc 雜項
+3a_tit_misc 雜項
+3a_unlokerr 解鎖錯誤
+3a_flcrterr 創建文件錯誤
+3a_reguname 已注冊用戶名：
+3a_onlinepw 游戲密碼：
+3a_gounlock 解鎖
+3g_locktext 鎖上 LFS (恢复到DEMO)
+3g_lockques 鎖上 Live for Speed?
+3g_lockwarn 只有 DEMO 內容可用
+3a_autorcon 自動重新連接到官方服務器
+3a_notconnm 未連接到官方服務器
+3a_yesconnm 已連接到官方服務器
+3a_connmstr 連接
+3a_connects 連接
+3a_hoptions 選項
+3a_smlb_kik 踢出
+3a_smlb_ban 封禁
+3a_num_bans 封禁：%d
+3a_zerobans 沒有封禁
+3a_editbans 編輯封禁
+3a_tit_bans 封禁編輯器
+3a_delshort 刪
+3a_goaddban 添加封禁
+3a_user_ban 輸入要封禁的用戶名
+3a_time0day %d：%.2d
+3a_time1day 1 天 %d：%.2d
+3a_timexday %d 天 %d：%.2d
+3a_banip12h 封禁IP地址12小時
+3a_banun12h 封禁用戶名12小時
+3b_banusr1d 用戶被封禁1天
+3b_banusrxd 用戶被封禁%d天
+3h_tyre_man 製造商
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_SOFT
+3g_tt_slk_m SLICK_MEDIUM
+3g_tt_slk_h SLICK_HARD
+3a_tt_races RACE_SLICK
+3a_tt_raceg RACE_GROOVED
+3a_tt_racei RACE_INTERMEDIATE
+3a_tt_racew RACE_WET
+3a_tt_roads ROAD_SUPER
+3a_tt_roadn ROAD_NORMAL
+3a_tt_hybri HYBRID
+3a_tt_knobb KNOBBLY
+3a_ttlmaskl 總質量：%.0f kg (%.0f lbs)
+3a_pwrwtmti 馬力重量比：%.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr 重量分布：%.1f 前 %.1f 后
+3h_ddistrfr 下壓力分布：%.1f F  %.1f R
+3h_rdistrfr 抗傾剛度分布：%.1f F  %.1f R
+3a_trqnmlbr 扭矩：%.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr 功率：%.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt 引擎：%.0f cc%s%s%s
+3a_engltfmt 引擎：%.1f 升%s%s%s
+3a_trbochrg 渦輪增壓
+3a_etl_inli 直列
+3a_etl_flat 水平
+3a_etl_veng V型
+3a_etn_qcyl ?
+3a_etn_1cyl 單氣缸
+3a_etn_2cyl 雙氣缸
+3a_etn_3cyl 3氣缸
+3a_etn_4cyl 4氣缸
+3a_etn_5cyl 5氣缸
+3a_etn_6cyl 6氣缸
+3a_etn_8cyl 8氣缸
+3a_etn10cyl 10氣缸
+3a_etn12cyl 12氣缸
+3a_grrat1st 一擋 %.3f
+3a_grrat2nd 二檔 %.3f
+3a_grrat3rd 三檔 %.3f
+3a_grrat4th 四檔 %.3f
+3a_grrat5th 五檔 %.3f
+3a_grrat6th 六檔 %.3f
+3a_grrat7th 七檔 %.3f
+3a_grginfop 資訊
+3a_grgcolou 外觀
+3a_grgbrake 煞車
+3h_grgbrktc 煞車/TC
+3a_grgsuspe 懸掛系統
+3a_grgsteer 轉向系統
+3a_grgfinal 傳動系統
+3a_grgtyres 輪胎
+3a_grgdownf 下壓力
+3a_grgpasse 乘客
+3a_pssfront 前座
+3a_pssrleft 左後座
+3a_pssrmidd 正後座
+3a_pssrrght 右後座
+3a_whlscolt 車輪
+3a_bodycolt 車身
+3a_texnamet 圖案名稱
+3a_maxperwt 每車輪最大值 %.0f Nm
+3g_b_bal_fr 煞車平衡(前) %.0f%%
+3h_engbrred 引擎制動衰減 %.0f%%
+3h_tcmaxslp TC允許滑動量 %.1f%%
+3h_tcminspd TC起始工作速度 %.0f m/s
+3h_abs_text ABS
+3g_ridehred 離地距
+3a_brkmotrg [活動範圍 %.3f m]
+3g_livecamb 當前傾角(左/右) %+.2f°/ %+.2f°
+3g_stif_val 彈簧硬度 %.1f kN/m
+3g_damp_val 阻尼 %.1f kNs/m
+3g_bump_val 壓縮阻尼 %.1f kNs/m
+3g_rebd_val 回彈阻尼 %.1f kNs/m
+3g_arol_val 防側桿 %.1f kN/m
+3h_power_st 轉向助力 %.0f%%
+3a_maxlkval 最大方向盤角度 %.1f°
+3g_castrval 後傾角 %.1f°
+3a_inclnval 內傾角 %.2f°
+3g_prllsval 平行轉向 %.0f%%
+3g_toeinval 束角 %+.1f°
+3g_camb_abs 外傾角(左/右) %+.1f°/ %+.1f°
+3g_camb_adj 外傾角(左/右) %+.1f°/ %+.1f°
+3h_tyrewarm 輪胎加熱器溫度：%.0f°
+3a_fnldvval 最終傳動比 %.3f
+3g_ftrqsplt 前輪力矩分离 %.0f%%
+3g_fvistorq 液動偶合劃分 %.0f Nms/rad
+3g_lock_one 鎖定 %.0f%%
+3g_lock_o_o 鎖定(驅動/滑行) %.0f%% / %.0f%%
+3h_dpreload 預制負荷 %.0f Nm
+3g_frnt_txt 前
+3g_cent_txt 中
+3g_rear_txt 後
+3g_press_lr 氣壓(左/右) %.0f kPa / %.0f kPa
+3g_conv_psi 當前輪胎氣壓(左/右) %.1f psi / %.1f psi
+3g_conv_bar 當前輪胎氣壓(左/右) %.2f bar / %.2f bar
+3g_fwingang 前定風翼角度 %.0f°
+3g_rwingang 後定風翼角度 %.0f°
+3h_tc_title 牽引力控制
+3g_stra_txt 策略
+3g_fuel_sta 起始載油量：%.0f%%
+3g_fuel_pit 入站加油量：%.0f%%
+3g_tyre_lim 更換輪胎：當損耗 > %.0f%%
+3g_tyre_all 更換輪胎：總是
+3g_tyre_nev 更換輪胎：從不更換
+3h_rep_damg 修理損壞：%s
+3h_setup_ch 已要求更改調校
+3h_handicap 不利條件
+3h_hcapnone 無
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% 限制
+3h_vol_tres 自身入氣限制%.0f%%
+3h_vol_mass 自身增加負載%.0f kg
+3h_mass_pos 負載位置 (前) %.0f%%
+3g_symmetri 對稱
+3g_asymmetr 不對稱
+3g_configur 配置
+3g_cpct_x_l 油箱容量：%.1f 升
+3g_optt_x_d 最佳工作溫度 %.0f°
+3g_tst_x_ms 測試速度 %.1f m/s
+3g_rearwing 後定風翼
+3g_frntwing 前定風翼
+3g_undrtray 底盤
+3g_bodyaero 車身
+3g_totlaero 合計
+3g_lift_x_n 升：%.0fN
+3g_drag_x_n 阻：%.0fN
+3g_car_tn_x 車內方向盤轉角 %.0f°(從左到右)
+3g_con_tn_x 控制器轉角 %.0f
+3g_live_cmb 外傾角：%+.2f
+3g_live_inc 內傾角：%.2f
+3g_live_cst 後傾角：%.2f
+3g_live_scr 主銷偏距：%.3f
+3g_live_trk 輪距：%.3f
+3g_susrigid 剛性
+3g_sustrail 拖曳臂式
+3g_susffork 前叉式
+3g_susmacph 麥花臣式
+3g_susdwish 雙願骨式
+3g_pit_inst 維修站指示
+3g_live_set 即時設置
+3g_wheels_x 車輪是%s的
+3g_l_tt_x_x 輪胎類型%s[%s]
+3g_l_pr_psi 壓力 %.1f psi [%+.1f psi]
+3g_l_pr_bar 壓力 %.2f bar [%+.2f bar]
+3g_l_cr_adj 車輪外傾角調整 %.1f°[%+.1f°]
+3g_l_cr_abs 外傾角 %.1f°[%+.1f°]
+3g_l_wg_ang 定風翼角度 %.0f°[%+.0f°]
+3h_estcolon 估計：
+3g_fl_pc_pl 每圈 %.1f%%
+3g_fl_pc_it 剩餘 %.1f%%
+3h_a3_lower 下懸臂
+3h_a3_upper 上懸臂
+3h_a3_toein 偏轉角
+3h_a3_ctemp 離合器
+3a_trckunkn 未知賽道
+3a_trcknofn 找不到賽道
+3a_trckobso 舊版本的賽道
+3a_fnshload 完成
+3a_prgprelo 預載中
+3a_prgldtex 載入紋理
+3a_prgpaths 路徑
+3a_prgcolrs 外觀
+3a_prgdupli 倍增器
+3a_prglgtsc 光照方案
+3a_prgrdobs 讀取對象
+3a_prglgtin 光影信息
+3a_prgbmptx 混合紋理
+3a_prginicl 初始化色彩
+3a_prgchpts 檢查路點
+3a_prgextra 附加數據
+3a_prgstobs 啟動物件
+3a_prgmapsq 繪制地形
+3a_prgpthin 路徑初始化
+3a_prgpthad 路徑調整
+3a_prgrebld 重建
+3g_prggener 生成
+3a_spcpres1 (請按1)
+3a_autojblk 無法加入：發車位被占
+3a_xcomplvt %s^8完成了投票
+3a_maxgcarx 最大客戶車數：%d
+3a_maxhcarx 最大主機車數：%d
+3a_cf_swpsd 交換發車順序
+3a_cf_gopit 回到車庫
+3a_cf_chqul 更改排位賽時間
+3a_cf_chlap 更改圈數
+3a_cf_chwin 更改風力
+3b_cf_finfo 更改信息
+3a_upc_male %s^8更新了他的控制器
+3a_upc_fmal %s^8更新了她的控制器
+3a_upc_unkn %s^8更新了控制器
+3a_x_no_car %s^8沒有選擇賽車
+3a_x_alredy %s^8已經選擇了賽車
+3a_x_lftpot %s^8離開車庫
+3a_w_rd_rly ^6警告：公路賽輪胎用在越野賽上
+3a_w_rly_rd ^6警告：越野賽輪胎用在公路賽上
+3a_unkcdisc 使用未知賽車 - 該玩家已被切斷
+3a_modcdisc 使用修改過的賽車 - 該玩家已被切斷
+3a_nocrukid 無法添加賽車信息 - 未知ID
+3a_xrenamex %s^8改名為%s
+3g_xtakovrx %s^8代替%s出賽
+3g_xwantuto %s^8想讓你代替出賽
+3g_xwantsto %s^8想代替你出賽
+3g_oswapend 只有在停站結束後才能更換車手
+3a_nosharnm 不能與其他玩家重複名稱
+3a_trkloadd 賽道讀取完畢
+3a_x_pitted %s^8返回車庫
+3g_x_pitstp %s^8在維修區停車
+3a_x_conn_x %s^8已連接(%s^8)
+3a_x_connec %s^8已連接
+3g_x_blkmsg %s^8屏蔽消息
+3g_x_unblkm %s^8解除消息屏蔽
+3a_newgconn 新客戶正在連接
+3a_gfailcon 新客戶連接失敗
+3g_waitplyc 請稍等 - 其他玩家正在連接
+3h_waitbuff 正避免緩衝超額
+3a_xss_male %s^8發來他的調校
+3a_xss_fmal %s^8發來她的調校
+3a_xss_unkn %s^8發來調校
+3a_packs_ps 每秒數據包量：%d
+3a_noqual_x 無法排位 - %s
+3a_no_x_plc 無法%s - 一位玩家正在連接
+3a_no_x_cht 無法%s - 正在更換賽道
+3g_no_x_car 無法%s - 車輛正在賽道上
+3a_novotepg 沒有投票正在進行
+3h_vote_kic %s^8 投票驅逐%s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 投票封禁%s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8連接超時
+3a_lostcn_x 与%s^8失去連接
+3a_x_discon %s^8切斷連接
+3g_x_kicked %s^8 被驅逐
+3g_x_banned %s^8 被封禁
+3a_qulfauto 場地賽
+3a_qulfprac 練習賽
+3a_qulfnote 未啟用
+3g_skinnotf 你的車身貼圖在^7www.lfsworld.net^8上未找到
+3g_helmnotf 你的頭盔貼圖在^7www.lfsworld.net^8上未找到
+3g_updatset 更新設置
+3g_fastlxxx 最快圈速：%s  %s^8 (%s)
+3g_no_reset 此伺服器禁止重置賽車
+3g_cant_res 無法重置 - %s
+3g_too_dang 過於危險
+3g_could_ha 可能會撞車
+3g_could_hr 可能會撞上剛重置的賽車
+3g_would_ye 會造成黃旗
+3a_obsolvid 舊版本游戲的錄像
+3a_vidlater 新版本游戲的錄像
+3h_hls_hlvc 錄像驗證
+3h_hls_inva 無效錄像
+3h_hls_cust 定制錄像
+3a_htlpinvl 本圈計時無效(%s)
+3a_hli_grnd 出界
+3a_hli_wall 碰牆
+3a_hli_obje 觸物
+3a_hli_wron 逆行
+3h_hli_spee 超速
+3a_ptp_locl 本機
+3a_ptp_remt 遙距
+3a_ptp_lcai 本機AI
+3a_ptp_rmai 遙距AI
+3a_rsk_noob 新手
+3a_rsk_lrnr 初學者
+3a_rsk_okok 普通
+3a_rsk_quik 高手
+3a_rsk_prof 專業
+3a_x_finish %s^8完成比賽
+3a_x_finplc %s^8完成比賽 (%s)
+3g_x_fin1be %s^8落後1圈完成比賽
+3g_x_finxbe %s^8落後%d圈完成比賽
+3g_x_conplc %s^8最終獲得%s
+3g_x_disqua %s^8被取消成績
+3a_x_wonrac %s^8贏得比賽
+3a_max3locl 最多三名本地車手
+3a_fnshuncl 未分級
+3a_fnsh_1st 第1名
+3a_fnsh_2nd 第2名
+3a_fnsh_3rd 第3名
+3a_fnsh_4th 第4名
+3a_fnsh_5th 第5名
+3a_fnsh_6th 第6名
+3a_fnsh_7th 第7名
+3a_fnsh_8th 第8名
+3a_fnsh_9th 第9名
+3a_fnsh10th 第10名
+3a_fnsh11th 第11名
+3a_fnsh12th 第12名
+3a_fnsh13th 第13名
+3a_fnsh14th 第14名
+3a_fnsh15th 第15名
+3a_fnsh16th 第16名
+3g_fnsh17th 第17名
+3g_fnsh18th 第18名
+3g_fnsh19th 第19名
+3g_fnsh20th 第20名
+3g_fnsh21st 第21名
+3g_fnsh22nd 第22名
+3g_fnsh23rd 第23名
+3g_fnsh24th 第24名
+3g_fnsh25th 第25名
+3g_fnsh26th 第26名
+3g_fnsh27th 第27名
+3g_fnsh28th 第28名
+3g_fnsh29th 第29名
+3g_fnsh30th 第30名
+3g_fnsh31st 第31名
+3g_fnsh32nd 第32名
+3a_wlcm_lfs 歡迎進入 Live for Speed
+3a_agre_lfs 協議書
+3a_overwrex 覆蓋文件?
+3g_deleteex 刪除已存在的文件?
+3g_newnamef 文件的新名字
+3g_filealre 文件名已存在
+3g_cnotfind 找不到文件
+3a_layoutsv 輸入賽道佈置名稱
+3a_windocon 連接時窗口化:
+3a_cancelbt 取消
+3a_backbutt 返回
+3a_capitlok 同意
+3a_capitlgo 出發
+3a_invldstr 無效
+3a_cpfinish 完成
+3a_cpwinner 冠軍
+3a_namepass 用戶名及密碼
+3a_validnam 你必須輸入有效的用戶名
+3a_validpas 你必須輸入有效的密碼
+3a_passmin8 密碼至少要由8個字符組成
+3a_shifttyp 換檔方式：
+3a_autogear 自動換檔：
+3a_notiming - 該圈不計時
+3a_stilload 仍在載入賽道
+3a_waitlist 正在等待游戲列表
+3a_wt_ginfo 正在等待游戲信息
+3a_connmast 正在連接官方服務器
+3a_waitmrep 正在等待官方服務器回應
+3a_waithrep 正在等待伺服器回應
+3a_waitinfo 正在等待信息
+3a_masterro 等待回應時發生錯誤
+3a_mnoreply 官方服務器沒有回應
+3a_waitginf 正在等待客戶信息
+3a_waitpinf 正在等待車手信息
+3a_waitmsgs 正在等待伺服器的第一個信息
+3a_connhost 正在連接伺服器
+3a_conn_udp 正在建立UDP連接
+3a_openserv 正在打開服務端口
+3a_unexmstr 意外的官方數據包
+3a_unexsrvr 意外的服務器數據包
+3a_unexgest 意外的客戶數據包
+3a_numg_oob 客戶數量達到上限
+3a_errrhost 向伺服器發送回應時出錯
+3a_unextrak 意外的賽道變更
+3a_unkntrak 未知賽道錯誤
+3a_unexpack 意外的數據包大小
+3a_unexrepl 意外的回應
+3a_gmnmused 伺服器名稱已被使用
+3a_errmthrd 無法創建官方服務器線程
+3a_lostmast 與官方服務器失去連接
+3a_losthost 與伺服器失去連接
+3g_notisync 初始同步失敗
+3g_lostsync 與伺服器失去同步
+3a_connecto 連接超時
+3a_noconnsl 沒有可用連接通道
+3a_nookpack 未收到完成信息
+3a_waitfook 等待完成信息
+3a_waittrak 等待賽道信息
+3a_notrakpk 未收到賽道信息
+3a_loadtrak 賽道載入中
+3a_chglight 正在改變賽道照明
+3a_ply_join 一名客戶正在加入
+3a_nochrace 比賽中不能更換賽道
+3g_trnoallo %s 在伺服器上未啟用
+3a_chgtrack 更換賽道中
+3h_welcomex 歡迎進入 Live for Speed %s
+3a_small_no 否
+3a_smallyes 是
+3h_smallaut 自動
+3h_smallnev 永不
+3h_smallask 詢問
+3h_smallalw 經常
+3a_smalloff 關
+3a_smalreal 真實
+3a_smalvrtl 虛擬
+3a_smalleft 左
+3a_smalrght 右
+3a_smalnone 無
+3a_smaltext 文字
+3a_smallall 全部
+3a_smallman 男
+3a_smallwmn 女
+3h_smallb16 16位元
+3h_smallb32 32位元
+3a_smlnobrk [否]
+3a_smlysbrk [是]
+3a_smlofbrk [關]
+3a_smlonbrk [開]
+3a_actobjct 物件
+3a_actstart 起點
+3a_actfinsh 終點
+3a_actchck1 第一計時點
+3a_actchck2 第二計時點
+3a_actchck3 第三計時點
+3g_actcircl 環路
+3a_actnofin 未設置終點
+3a_actnochk 未設置計時點
+3a_actfnnoc 已設置終點，但未設置計時點
+3a_accpxnof 未找到第%d計時點
+3a_aconechk 場地賽：第1計時點
+3a_acxchckp 場地賽：第%d計時點
+3a_noloadsk 無法載入車輛貼圖：
+3a_wrngfltp 錯誤的文件類型
+3a_cnocolon 無法打開文件：
+3a_outcnopn 輸出：無法打開文件
+3d_outnoply 輸出：無法找到車輛之車手
+3d_outstart 輸出：已開始圈
+3d_outfinis 輸出：完成
+3a_corruptf 損壞的文件
+3a_filenohc 文件頭檢查失敗：
+3g_filetoos 文件過短：
+3g_filecorr 文件數據不完整：
+3g_err_read 讀文件出錯：
+3g_notpcmwv 波形不是PCM格式的：
+3g_srnotsup 不支持樣本頻率：
+3g_wv_mo_st 波形既非單聲道也不是立体聲：
+3g_wavemb16 波形不是16位的：
+3g_wavetool 波形過長：
+3a_latervfl 文件由新版游戲創建：
+3a_nocrtfil 無法創建文件：
+3a_votecanc 投票被取消
+3a_nocrtmpr 無法創建多人游戲錄像文件
+3a_savedmpr 已保存多人游戲錄像 -
+3a_nocrtspr 無法創建單人游戲錄像文件
+3a_savedspr 已保存單人游戲錄像 -
+3a_nornmspr 無法重命名單人游戲錄像 -
+3a_accesden 存取被拒絕
+3a_invalchr 無效字符
+3a_notfound 未找到
+3a_unknowne 未知錯誤
+3g_downcanc 下載已取消
+3g_filesize 檔案大小錯誤
+3g_highresd 高解像貼圖下載：
+3g_nolfswcr 未夠LFS World credit作高解像貼圖下載
+3g_dbnotava 高解像貼圖資料庫不可用
+3a_entermsg 輸入信息
+3g_seldefcp 選擇默認代碼頁
+3a_ctabshwr CTRL+TAB - 顯示結果
+3a_shf8nwdb SHIFT+F8 - 網絡調試 - %s
+3a_newvalfx 為"%s"輸入新值
+3a_valtoolo 新設值過低
+3a_valtoohi 新設值過高
+3a_endoqual 排位賽結束
+3a_ctrcclip CTRL+C - 鼠標被限制：
+3a_ctrcfree CTRL+C - 鼠標被釋放：
+3a_windotxt 窗口
+3a_fullstxt 全屏
+3g_not_demo DEMO內不可用
+3h_noraceln 路線顯示不可用
+3g_time_loc 本地時間
+3g_time_utc 世界時間
+3a_namelong 名字太長
+3a_noconnms 無法與官方服務器連接
+3a_wrninsta 警告: 另一個 LFS 正在運行
+3g_lfsbuyon Live for Speed - 在線購買 - ^7www.lfs.net
+3g_comentry 指令僅用於登陸窗口
+3g_insimnop InSim 未打開
+3g_comguest 指令適用於多人游戲
+3g_comsetup 指令適用於設置窗口
+3g_comnoded 指令不適用於專用伺服器
+3g_unknwnai 未知AI車手
+3g_drv_alrd 車手已在比賽中
+3g_drv_noin 車手不在比賽中
+3g_setup_nf 未發現該調校
+3g_colournf 外觀未找到
+3g_scrtooma 編碼過多
+3g_scrtoolo 編碼過長
+3g_scrempty 空腳本
+3g_un_axs_f 未知軸指令
+3g_un_key_f 未知鍵指令
+3g_un_btn_f 未知按鈕指令
+3g_xlnxtool %s：行%d 過長
+3g_x_ln_x_x %s：行%d - %s
+3g_cantopen 無法打開：%s
+3g_notallow 不允許：%s
+3h_cp_latin 拉丁語
+3h_cp_cente 中歐語
+3h_cp_turki 土耳其語
+3h_cp_balti 波羅的海語
+3h_cp_japan 日語
+3h_cp_cyril 斯拉夫語
+3h_cp_greek 希臘語
+3h_cp_tr_ch 繁體中文
+3h_cp_si_ch 簡體中文
+3h_cp_korea 韓語
+3a_hostfull 伺服器已滿
+3a_hostload 伺服器正在載入賽道
+3a_plyrconn 一名用戶正在連接
+3g_plydisco 一名用戶正切斷連接
+3h_racstart 比賽現在開始
+3a_unauthcn 未授權連接
+3a_useronli 該用戶名已在線
+3h_userband 用戶名已被封禁
+3a_usernofd 未找到你的用戶名
+3a_pwnomtch 游戲密碼不符
+3g_pwneeded 您需要設置一個游戲密碼
+3h_unlkused 本周解鎖次數已滿
+3h_unpwconf 用戶名及密碼已確認
+3a_unknwerr 未知錯誤
+3a_carnomtc 伺服器不允許使用該車型
+3a_nodbljon 無法重複登陸伺服器
+3a_hlostmst 主机與官方服務器失去連接
+3a_wrngpass 密碼錯誤
+3a_prvreqps 進入私有伺服器需要密碼
+3a_usrunknw 未知用戶名稱
+3a_usrnotol 用戶不在線
+3a_usrolhid 用戶正連接在一個隱藏伺服器上
+3g_usrol_s1 用戶正連接在一個S1伺服器上
+3g_usrol_s2 用戶正連接在一個S2伺服器上
+3g_usrol_s3 用戶正連接在一個S3伺服器上
+3a_hostrefu 伺服器拒絕連接
+3a_hstdiffv 你與伺服器使用的游戲版本不同
+3a_hstdiffc 你與伺服器使用的游戲代碼不同
+3a_hstis_s1 伺服器是 Live for Speed S1
+3g_hstis_s2 伺服器是 Live for Speed S2
+3g_hstis_s3 伺服器是 Live for Speed S3
+3a_hstisdmo 伺服器是 Live for Speed DEMO
+3a_hstunknr 未知的伺服器回應信息
+3a_hstnomst 官方服務器上未找到該伺服器
+3a_nameused 該用戶名已被使用
+3a_racefull 比賽人數已滿
+3g_nomidjoi 該伺服器上無法在比賽中加入
+3b_usermeet 該用戶正在聊天室
+3b_unkncomm 未知指令
+3h_unknwver 未知的版本
+3b_reqparam 該指令需要一個參數
+3b_req2pars 該指令需要兩個參數
+3e_notenpar 參數不足
+3b_unknwtrk 未知的賽道參數
+3e_unknwcar 未知的車輛參數
+3b_unoadmin 你沒有管理員權限
+3b_kbinvalu 無效用戶名
+3b_invalpar 無效參數
+3g_ptoolong 參數過長
+3g_notfound 文件未找到
+3e_setuponl 指令僅用於設置界面
+3e_axnofind 無法打開賽道佈置
+3e_axnoneav 未發現用於該賽道的佈置
+3e_kbnoload 無法載入文件
+3e_kbnosave 無法保存文件
+3g_tooearly 過早投票重新比賽
+3g_pplracin 其他車手還在比賽中
+3h_notrxudp 主機未收到 UDP 數據包
+3h_nomultij 避免重複的加入請求
+3h_modreqpw 修改過的主機需要密碼
+3h_invalidu 無效用戶名

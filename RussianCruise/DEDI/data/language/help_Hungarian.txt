@@ -1,0 +1,264 @@
+LFS HELP file (Hungarian)
+Translated by: kalmi
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Üdvözöljük a Live for Speed-ben!^8
+
+A szoftver használatához el kell fogadnia az alábbiakat:
+
+- A program folyamatos fejlesztés alatt áll, ezért tartalma bármikor megváltozhat. Számos mûködõ, de még befejezetlen részt is tartalmazhat, hogy élvezetesebb legyen a játékmenetet.
+
+- A szoftverhez nem jár semmiféle garancia.
+
+- A szoftvert csak saját felelõsségére telepítse és használja. A Live for Speed fejlesztõi nem vállalnak semmiféle felelõsséget bárminemû személyi sérülésért ami a szoftver használata közben következik be, vagy bárminemû kárért ami az Ön számítógépében következik be.
+
+- A DEMO tartalmát mindenki ingyen és szabadon használhatja. A ZÁROLT tartalomhoz csak licencelt felhasználók férhetnek hozzá. Tilos feltörni ezt a korlátozást, továbbá Ön nem segíthet hozzá senkit sem a zárolt tartalomhoz való hozzáféréshez anélkül, hogy ne vásárolt volna meg egy licencet  és nem aktiválta volna a játékot az aktiváló funkción keresztül.
+
+^7Köszönjük.^8
+\con_wind
+Ezzel a beállítással megelõzhetsz egy lehetséges problémát, ami két okból is elõfordulhat amikor a játékot teljes-képernyõs módban futtatod:
+
+1) Ha személyi tûzfalat használsz, akkor az egy figyelmeztetõ üzenetet hozhat fel online játék indításakor vagy a kapcsolat létrehozásakor.
+
+2) Egyes számítógépen a rendszer egy ablakban kér megerõsítést a kapcsolat létrehozásához, akkor amikor az internethez próbálsz kapcsolódni.
+
+Ezek az üzenetek néhány számítógépet "lebéníthatnak" ha a játék teljes-képernyõs módban fut, ezért ezzel a beállítással a játékot ideiglenesen ablakban futtathatod a kapcsolódás idejére, így láthatod a megjelenõ ablakokat.
+
+Ha a számítógépen nem bukkan fel semmilyen üzenetet a kapcsolódás alatt, akkor nyugodtan kikapcsolhatod ez a beállítást.
+\host_pw
+Bizonyos hosztok jelszót igényelnek, ezek privát hosztok.
+
+Ha egy privát hoszthoz szeretnél kapcsolódni, akkor ide kell beírnod a jelszót.
+
+A publikus hosztok nem igényelnek jelszót - ilyenkor hagyd üresen ezt a mezõt.
+\game_nm
+^7Publikus játék -^8 add meg a játék nevét amivel az interneten azonosítható.
+
+^7Privát játék -^8 ezzel a névvel a barátaid megtalálhatják ezt a játékot.
+\ip_name
+^3Beállítások :
+
+^7helyi hálózat -^8 beléphetsz egy helyi játékba a hoszt IP címének beírásával.
+
+^7internet -^8 beléphetsz egy játékba az interneten a játék nevének beírásával.
+\host_ip
+Kapcsolódhatsz egy hoszthoz, amely egy adott számítógépen fut a helyi hálózaton.
+
+Az IP cím egy egyedi azonosító szám, mely négy számból és a számokat elválasztó 3 pontból áll.
+
+Kattints a gombra és gépeld be az IP címét annak a számítógépnek amelyikhez csatlakozni szeretnél.
+
+Két módon tudhatod meg egy gép IP címét:
+
+1) Futtasd a WINIPCFG-t a Start -> Futtatás... menübõl (Windows 9x és ME esetén)
+2) Futtasd az IPCONFIG-ot konzol ablakban.
+\host_port
+Amikor adott IP címhez kapcsolódsz, akkor ismerned kell a hoszt IP címét és annak a portnak a számát amit használ.
+
+Ez valószínûleg alapból a 63392-es port vagy valamilyen más számú port, amit az választott ki aki a hosztot beállította.
+
+Ez vagy az alapértelmezett érték lesz vagy pedig egy nagy szám ami kisebb mint 65536.
+\host_nm
+Kapcsolódhatsz egy hoszthoz amely egy adott számítógépen fut az interneten.
+
+Az IP cím helyett a név alapján való kereséshez írd be a mezõbe a keresendõ hoszt nevét.
+
+A játékok elnevezései lehetõséget adnak arra, hogy megállapodjatok egy találkozóban egy online barátoddal akkor is, ha nem ismered az IP címét.
+\game_pw
+Ha ^7privát játékot^8 szeretnél, akkor írj be egy jelszót a beviteli mezõbe.
+
+Ha pedig ^7Publikus játékot^8 szeretnél indítani, akkor hagyd üresen a jelszó helyét.
+\use_master
+A fõszerver egy speciális program ami egy számítógépen fut az interneten. Nyilvántart egy listát az éppen futó játékokról és lehetõséget ad arra, hogy elindíts vagy kapcsolódj más online játékokhoz.
+
+^3Lehetõségek :
+
+^7Helyi^8 - a hosztod nem fog kapcsolódni a fõszerverhez. A többi játékos a következõ módon tud kapcsolódni hozzád: Kiválasztja a "Belépés adott játékba", majd ott a "Helyi hálózat" kiválasztása után beírja a megfelelõ helyre a számítógéped IP címét.
+
+^7Internet^8 - a hosztod kapcsolódni fog a fõszerverhez és látható lesz a játékok listáján.
+
+^7Rejtett^8 - a hosztod kapcsolódni fog a fõszerverhez, de nem fog megjelenni a játékok listáján.
+A többi játékos a következõ módon tud kapcsolódni hozzád: Kiválasztja a "Belépés adott játékba", majd ott az "Internet" kiválasztása után beírja a játék nevét.
+
+^3Megjegyzés :^8 Ha a számítógéped indirekt módon kapcsolódik az internethez - például internet kapcsolat megosztáson keresztül vagy helyi hálózatról amely tûzfallal védett - akkor az "Internet" és a "Rejtett" módok használatához meg kell nyitni a megfelelõ TCP és UDP portokat. Ez ügyben kérd a helyi rendszergazda segítségét.
+\admin_pass
+Beállíthatsz egy speciális jelszót az adminisztrátoroknak.
+
+Ha egy vendég ezzel a speciális jelszóval lép be (az opcionális játék jelszó helyett), akkor távolról befolyásolni tudja a hoszt mûködését speciális szöveges alapú hoszt parancsokkal. Ezekrõl bõvebben a Commands_Hungarian.txt fájlban a "Hoszt parancsok" fejezetben olvashatsz.
+\game_port
+Kiválaszthatod hogy melyik TCP és UDP portot használja a hosztod. Ez lehetõséget ad arra, hogy egyszerre több dedikált hosztot futtass egy számítógépen.
+
+Használd az alapértelmezett 63392-es értéket vagy válassz egy nagy számot ami kisebb mint 65536.
+\master_help
+A program nem tudott kapcsolódni a fõszerverhez.
+
+Ennek több oka is lehet:
+
+1) Ha védve vagy egy tûzfallal, akkor az blokkolhatta a kapcsolatot.
+2) Lehet hogy átmenetileg nem lehet kapcsolódni a fõszerverhez az internet szolgáltatódtól.
+3) A fõszerver lehet, hogy nem fut valamilyen technikai probléma miatt.
+
+Kérjük ellenõrizd a fõszerver állapotát az alábbi weboldalak valamelyikén:
+
+^7www.lfs.net^8  vagy  ^7www.lfsforum.net^8
+\modem_type
+A számítógéped azon képessége, hogy hosztként mûködjön több játékossal attól függ, hogy milyen feltöltési sávszélesség áll rendelkezésére. Ez viszont a modemed típusától és az internet szolgáltatód által nyújtott szolgáltatás sebességétõl függ.
+
+Válaszd ki a modemed típusát vagy pedig válaszd az "egyéni" beállítást és add meg kézzel a feltöltési sebességet kilobit/másodpercben (Általában Kbit-ben mérik a digitális kommunikáció sebességét)
+
+^7Elõre definiált modem típusok :^8
+
+- telefonvonalas modem : 56 Kbit / 33.6 Kbit feltöltés
+- kábel modem : 512 Kbit letöltés/ 128 Kbit feltöltés
+- kábel modem : 1 Mbit letöltés/ 256 Kbit feltöltés
+\upload_bw
+Ha a modemed típusa nem felel meg egyik elõredefiniált típusnak sem, akkor add meg kézzel a feltöltési sebességedet kilobit/másodpercben (Kbit/mp). Ha nem tudod Kbit/mp-ben a feltöltési sebességed, de KByte/mp-ben igen, akkor szorozd meg azt az értéket 8-cal, hogy átváltsd Kbit/mp-re.
+
+Ez a beállítás segítségedre lesz, hogy úgy válaszd meg a hoszt beállításait, hogy ne lépd túl ezt a sávszélességet.
+\max_guests
+Beállíthatod, hogy egyidejûleg hány gép kapcsolódhat a hosztodhoz.
+
+^7Minimum beállítás :^8 1 - csak egy játékos léphet be a hosztodon.
+
+^7Maximum beállítás : ^8 15 a demóban, illetve 47 az S1-ben és az S2-ben.
+
+Ez a szám erõsen befolyásolja, hogy mekkora feltöltési sávszélességre lesz majd szükséged.
+\max_cars
+Beállíthatod hogy hány autó lehet egyszerre a versenyben.
+
+Ez a szám tartalmazza a valós és MI játékosokat is.
+
+^7Minimum beállítás :^8 1 - csak egy autó lehet versenyben.
+
+^7Maximum beállítás :^8 12 a demóban, illetve 32 az S1-ben és S2-ben.
+
+Ez a szám erõsen befolyásolja, hogy mekkora feltöltési sávszélességre lesz majd szükséged.
+\guest_cars
+Beállíthatod hogy vendég gépenként hány autót lehessen hozzáadni a versenyhez.
+
+Ez a szám tartalmazza a valós és MI játékosokat is.
+
+^7Minimum beállítás :^8 0 - a vendég lehet nézõ, de nem léphet be.
+
+^7Maximum beállítás :^8 3 - max 3 MI játékos vagy 1 valós és 2 MI játékos vendég gépenként.
+\host_cars
+Beállíthatod hogy a hoszton hány autót lehessen hozzáadni a versenyhez.
+
+Ez a szám tartalmazza a valós és MI játékosokat is.
+
+^7Minimum beállítás :^8 0 - a hoszton csak nézni lehet a versenyt, de belépni nem.
+
+^7Maximum beállítás :^8 3 - max 3 MI játékos vagy 1 valós és 2 MI játékos.
+
+Kisebb érték beállításával csökkentheted a szükséges feltöltési sávszélességet.
+\max_packs
+Egy másodperc alatt elküldött csomagok maximális száma autónként.
+
+^7Minimum beállítás :^8 3 csomag / másodperc.
+
+^7Maximum beállítás :^8 6 - folytonosabb, de kétszeres feltöltési sávszélességet igényel és processzor igényes.
+\ded_host
+Egy játékot indíthatsz normál hosztként vagy dedikált hosztként.
+
+^7normál hoszt :^8 Ugyanúgy játszhatsz mint egyjátékos módban és közben többiek interneten kapcsolódhatnak hozzád.
+
+^7dedikált hoszt :^8 Nincs grafikai megjelenítés és nem végez fizikai modellezést, továbbá nem tudsz játszani ilyen hoszton.  Ez a legjobb választás, ha nem akarsz játszani a hoszt gépen és inkább másik géprõl szeretnél kapcsolódni.  Így egy kevésbé erõsebb PC-t is használhatsz dedikált hosztnak.
+\game_ip
+Ha szükséged van rá, akkor megadhatod, hogy milyen IP címet használjon a hosztod.
+Ez akkor hasznos ha egy számítógépnek több IP címe is van.
+
+Ha üresen hagyod ezt a mezõt, akkor a hoszt valamelyik elérhetõ IP címet fogja használni.
+\admin_slots
+Bizonyos számú kapcsolatot fenntarthatsz az adminisztrátorok számára.
+
+^7Minimum beállítás :^8 0 - egy kapcsolatot sem tart fenn az adminisztrátoroknak.
+
+^7Maximum beállítás :^8 8 - vagy eggyel kevesebb mint a max vendégek száma.
+
+Ezzel a beállítással biztosíthatod, hogy mindig kapcsolódni tudj a saját hosztodhoz, abban az esetben ha beállítottad az adminisztrátori jelszót.
+\skin_info
+A nagy felbontású skinek automatikus letöltéséhez licencelt versenyzõnek kell lenned, továbbá szükséged lesz néhány LFS World kreditre.
+
+LFS World kreditek jelentése : pozitív egyenleg az LFS számládon
+
+A szolgáltatásra a ^7www.lfs.net^8 vagy a ^7www.lfsworld.net^8 oldalon fizethetsz elõ, vagy ugyanitt kupont is használhatsz.
+
+Minden^3 1 font ^8után^3 2000 ^8skint tölthetsz le. A legkisebb befizethetõ összeg 3 font.
+
+^7Hogyan mûködik ez?^8
+
+Mindehhez legalább 1 fontnyi LFS Word kreditre lesz szükséged. Az elsõ nagy felbontású skin letöltésekor automatikusan 1 fontot vonunk le az egyenlegedrõl, majd 2000-re növeljük az általad letölthetõ skinek számát. 2000 skin letöltése után további 1 fontot vonunk le, majd ismét 2000-re növeljük a letölthetõ skinek számát.
+
+^7Figyelmezetés :^8
+
+A nagy felbontású skinek letöltése tovább tart és hosszadalmasabb feltölteni õket, amikor egy másik versenyzõ elhagyja a boxot. Továbbá négyszer több memóriát igényelnek a grafikus kártyán. Csak akkor kapcsold be ezt az opciót, ha erõs géppel rendelkezel és gyors internet elérésed van.
+\skin_help
+A skin egy speciális képfájl amelyben egy autó vagy egy bukósisakok festése található meg.
+
+Az LFS automatikus skin letöltõ rendszerrel rendelkezik a licencelt versenyzõk számára. Amikor egy online versenyben veszel részt, akár S1 vagy S2 módban, a többi versenyzõ által használt skinek automatikusan letöltõdnek a számítógépedre, így mindenkinek láthatod az egyéni festéseit az autóján és bukósisakján egyaránt.
+
+Ha saját sikenket szeretnél készíteni, akkor látogass el a ^7www.lfs.net^8 weboldalra és töltsd le a ^7CMX Viewer^8-t az ^7Additional Downloads^8 részrõl. A CMX Viewer egy program amely segítségedre lesz a skinek készítése során. Néhány sablont kiindulási alapként mellékeltünk.
+
+Miután elmentettél egy skint a ^7skins^8 könyvtárban (a ^7data^8 könyvtárban), máris használhatod, csak ki kell jelölnöd a garázsban a festéseknél a megfelelõ textúrát.
+
+Ahhoz, hogy a többi versenyzõ is láthassa a festéseidet, látogass el a ^7www.lfsworld.net^8 weboldalra és töltsd fel a megfelelõ képeket. Ezután ezek a skinek automatikusan letöltõdnek a többiek gépére, amikor együtt versenyeztek.
+\tex_filter
+Egy-egy textúra különbözõ minõségben jelenik meg attól függõen, hogy a képernyõn mekkora méretû. Ezeket az eltérõ minõségû textúrákat mipmapeknek nevezzük. Ha például egy textúra kisebb, mert távolabb van az adott tárgy, akkor a kisebb mipmap jelenik meg.
+
+A textúraszûrés módja határozza meg a mipmapek áttûnésének módját.
+
+^7nincs :^8 Bilineáris szûrés - mipmapek összemosás nélkül
+^71x :^8 Trilineáris szûrés - két mipmap között finom átmenetet képez
+^72x - 16x :^8 Anizotropikus szûrés - a távolabb lévõ alacsony szögbõl nézett textúrák élességén javít
+
+Mind közül az anizotropikus szûrés (AF) adja a legjobb képet, de számításigényesebb is, ezért kisebb FPS értékeket fogsz elérni vele.
+AF használatakor jobb eredményt érhetsz el kevésbé negatív MIP bias értékekkel (a MIP bias csúszkáit told jobbra).
+\user_name
+Ahhoz, hogy online legyél (vagy hogy aktiváld a licencelt tartalmat egy licenc frissítés után) érvényes felhasználói nevet kell megadnod.
+
+Felhasználói fiókot a ^7www.lfs.net^8 oldalon tudsz létrehozni - csupán csak az e-mail címedre lesz szükséged.
+
+MEGJEGYZÉS: Sosem adjuk ki az e-mail címedet senkinek sem, kivéve abban az esetben, ha a törvény információszolgáltatásra kötelez minket a hatóságok felé.
+\user_pass
+Miután létrehoztad a felhasználói fiókodat a ^7www.lfs.net^8 oldalon, itt kell megadnod a JÁTÉK jelszavadat.
+
+Ez lehetõvé teszi, hogy online legyél (vagy hogy aktiváld a licencelt tartalmat egy licenc frissítés után).
+\host_mode
+^3Beállítások :
+
+^7demo -^8 ebben a módban csak a demó tartalma lesz elérhetõ a hoszton.
+
+^7S1 -^8 az S1 aktiválása után ebben a módban az S1 tartalommal indíthatsz hosztot.
+
+^7S2 -^8 az S2 aktiválása után ebben a módban a teljes S2 tartalommal indíthatsz hosztot.
+\mip_bias
+Ezek a beállítások határozzák meg azt a távolságot, ahol a különbözõ mipmapek egymást váltják. (A mipmapek leírását megtalálod a textúraszûrés súgójában.)
+
+Told a csúszkát..
+.. balra az élesebb képért és az elmosottság csökkentéséhez.
+.. jobbra a lágyabb képért és a vibrálás csökkentéséhez.
+
+Amikor egy felületet alacsony szögbõl látsz (pl.: a távoli aszfaltot), akkor a textúraszûrés túl erõs elmosást eredményez. Ezért a különféle felületekhez különféle beállításokat rendelhetsz hozzá, attól függõen, hogy azok hogyan láthatóak.
+
+^7kezelõfelület / szövegek :^8 alapértelmezett MIP bias -1.0 (szembõl nézed)
+^7tárgyak / falak :^8 alapértelmezett MIP bias -2.0
+^7fû / kavicságy :^8 alapértelmezett MIP bias -3.0
+^7útfelületek :^8 alapértelmezett MIP bias -4.0 (általában nagyon alacsony szögbõl látod)
+
+Az anizotropikus szûrés (AF) egy fejlettebb módszer, amely csökkenti az alacsony szögbõl nézett textúrák elmosódását. Ha ezt választod (textúra szûrés: 2x – 16x), akkor jobb eredményt érhetsz el kevésbé negatív MIP bias értékekkel (a MIP bias csúszkáit told jobbra).
+\comp_full
+Néhány autó és a bukósisak skin az LFS része, a többi versenyzõ skinei pedig automatikusan töltõdnek le amikor online vagy. Ezek egy speciális tömörített ún. DDS formátumban vannak tárolva, amit a videokártyák közvetlenül tudnak használni. Ezért gyorsan betölthetõek és a megjelenítésük is gyorsabb, ráadásként még kevesebb memóriát is foglalnak.
+
+Azok a sinek amiket te készítettél vagy te helyeztél el a skinek könyvtárában, azok JPG formátumban vannak tárolva. Habár a JPG is egy tömörített formátum, nem a gyors megjelenítéshez lett optimalizálva és videokártyák sem tudják közvetlenül használni. Ezzel a beállítással átkonvertálás nélkül tudod használni ezeket a skineket. A játék tömörítetlenül fogja használni õket, így a minõségük is jobb mint a DDS formátumú skineknek.
+
+A tömörítetlen skinek több videómemóriát igényelnek és visszafogják a megjelenítés sebességét, de a játékból vett képek készítéséhez sokkal jobbak, mint a tömörítettek.
+
+^7tömörített :^8 a siknek könyvtárában lévõ JPG skineket DDS formátumba konvertálva tömörítve használja a játék
+^7teljes :^8  a siknek könyvtárában lévõ JPG skineket tömörítetlenül használja a játék
+\shadow_gen
+Ezek a lehetõségek ugyanazt a végeredményt adják, csak azt más-más módszerrel érik el. A legnagyobb FPS-t adó beállítást célszerû akkor kiválasztanod, amikor egyszerre sok árnyék látható a képernyõn, mint például teljes rajtrácsnál.
+
+Mint mindig a grafikai teljesítménymérõ teszteknél, most is szüneteltesd a játékot (P gomb), hogy kizárd a fizikai és hang szimuláció miatti processzor terhelést.
