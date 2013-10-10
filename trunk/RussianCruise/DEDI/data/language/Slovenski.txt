@@ -1,0 +1,1681 @@
+LFS Translation file (Slovenski)
+Translated by: Bojc(slo), primmy
+
+tx_codepage 1250
+tx_langname Slovenski
+tx_noun_adj an
+3g_tr_selct Trening
+3g_tr_title Izbor lekcije
+3a_spselect En igralec
+3a_tit_sply En igralec
+3a_mpselect Mrežna igra
+3a_tit_mply Mrežna igra
+3a_hlselect Hitri krog
+3a_tit_hotl Hitri Krog
+3a_opselect Nastavitve
+3g_repl_sel Posnetki
+3a_tit_sprs Posnetki enega igralca
+3a_tit_mprs Posnetki mrežne igre
+3g_unlk_lfs Odkleni Live for Speed
+3g_demorace Demo voznik
+3h_x_licens %s licenca
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Download skinov iz posnetka
+3g_one_notf En skin iz posnetka ni najden na vašem raèunalniku
+3g_sev_notf Nekaj skinov iz posnetka ni najdenih na vašem raèunalniku
+3g_one_down Želite download skina ki manjka?
+3g_sev_down Želita download skinov ki manjkajo?
+3a_exit_btn konec
+3a_next_btn naprej
+3g_agre_btn Se strinjam
+3a_exitprog Izhod iz programa?
+3a_userfind Vpišite ime iskanega igralca
+3h_num_tips %d Napotki
+3h_tip_pesc Pritisnite ^7Esc^8 tipko med igro ali iz nastavitvenega zaslona za prikaz opcij
+3h_tip_prst Pritisnite ^7T^8 tipko za vpis tekst sporoèila v igri za veè igralcev
+3h_tip_ffwr Priporoèena je uporaba volana z force feedback-om
+3h_tip_rtcg Popusti plin pri prestavljanju, da ne pregreješ sklopke
+3h_tip_brak Zavirajte pravoèasno ko se približujete zavoju...
+3g_hdr_name Ime lekcije
+3g_hdr_diff Težavnost
+3g_hdr_mode Naèin
+3g_dif_easy Lahko
+3g_dif_medi Srednje
+3g_dif_hard Težko
+3g_lsn_firs prva lekcija
+3g_lsn_next nasl. lekcija
+3g_lsn_trya ponovno
+3g_lsn_fini konèano
+3g_tit_obje ^7CILJ
+3g_tit_purp ^7NAMEN
+3g_tit_tips ^7NASVET
+3g_tit_targ ^7DOLOÈEN ÈAS
+3g_not_time Niste konèali pravoèasno!
+3g_not_fini Niste konèali lekcijo!
+3g_comp_but Konèali ste lekcijo, ampak...
+3h_false_st - Štartali ste pred zeleno luèjo
+3g_too_long - Potrebovali ste preveè èasa
+3g_coll_car - Imeli ste trk z drugimi vozili
+3g_wrong_rt - Izbrali ste napaèno smer
+3g_hit_1_ob - Zadeli ste objekt
+3g_hit_x_ob - Zadeli ste %d objektov
+3g_not_fast - Niste vozili dovolj hitro na kontrolni toèki
+3g_slo_stop - Predolgo ste se ustavljali
+3g_exce_spd - Prekoraèili ste omejitev hitrosti pri prihodu v bokse
+3g_nopitstp - Niste bili dovolj dolgo v boksu
+3g_not_long - Niste bili dovolj dolgo ustavljeni
+3g_congrats Èestitke! Opravili ste test!
+3g_stndrd_x Vaša ocena za to lekcijo je : %s
+3g_lsnunl_x Za to lekcijo morate odkleniti %s
+3a_nocarsel Avtomobil ni izbran
+3a_araceinp Dirka že poteka
+3a_plydisco Igralec bo odklopljen
+3a_leavgame Zapusti igro
+3a_playrbtn Igralec
+3a_garagbtn Garaža
+3a_trackbtn Proga
+3a_tit_trak Proga
+3a_load_brk [nalagam]
+3a_gene_brk [generiram]
+3a_notr_brk [ni proge]
+3a_endonlin Konec online igre?
+3a_levonlin Zapusti online igro?
+3a_swap_pos Zamenjaj pozicijo
+3a_joinrace vkljuèi se v dirko
+3a_addaidrv dodaj AI voznika
+3a_setready priprava
+3a_starthdr Štartne pozicije
+3a_skillhdr Nivo znanja
+3a_race_hdr Dirka
+3a_readybtn pripravljen
+3a_localsml lokalno
+3a_vhostsml s serverjem
+3g_adminsml administrator
+3a_dirctsml direktno
+3a_no_track ni proge
+3a_nodriver ni voznika
+3a_carerror napaka z avtom
+3a_raceinpr dirka že poteka
+3a_remvplyr odstrani igralca
+3a_no_quali brez kvalifikacij
+3a_qual1min kvalifikacije 1 min
+3a_qualxmin kvalifikacije %d min
+3a_practice vaja
+3a_race1lap dirka 1 krog
+3a_racexlap dirka %d krogov
+3a_race1hou dirka 1 uro
+3a_racexhou dirka %d ure
+3a_zerowind brez vetra
+3a_low_wind slab veter
+3a_highwind moèan veter
+3a_nosamenm Lokalni vozniki ne smejo imeti enakega imena
+3a_ac_onest Avtokros : samo ena štartna pozicija
+3a_ac_fixlp Avtokros : doloèeno število krogov
+3h_kickplyr Izvrzi igralca %s^8? (%s^8)
+3h_howlongb Koliko dni za ban %s^8? (%s^8)
+3h_ainodriv AI vozniki ne morejo uporabljati trenutno konfiguracijo
+3h_ainoxral AI vozniki ne morejo uporabiti %s na relli progah
+3h_ainoxcfg AI vozniki ne morejo uporabiti %s z trenutno konfiguracijo
+3a_cdntsvst Nastavitve ne morem shraniti
+3a_sent_set Nastavitve so poslane
+3a_plynotfd Igralec ni najden
+3a_carnotfd Igralèev avtomobil ni najden
+3a_namsetsv Imenujte ime za nastavitve
+3h_gridsave Vpiši ime zaèetnega poligona za shranitev
+3h_gridload Izberi zaèetni poligon za nalaganje
+3h_xremovex %s^8 odstranil %s^8
+3a_endgmbtn konec igre
+3a_leavebtn zapusti
+3g_endr_btn konèaj igro
+3g_spec_btn opazuj
+3h_qual_btn kvalifikacije
+3h_rest_btn ponovni štart
+3h_pits_btn boksi
+3g_join_btn prikljuèi se
+3g_play_btn predvajaj
+3a_namesort ime
+3a_datesort datum
+3a_car_caps Avtomobil
+3a_newbtset Pritisnite 'Nove nastavitve' za ustvarjanje novih nastavitev
+3a_selplset Ne morete zamenjati [default] - izberite osebne nastavitve
+3a_newbtcol Pritisnite 'Nove barve' za ustvarjanje novih barv
+3a_selplcol Ne morete zamenjati [default] - izberite osebne barve
+3a_sets_hdr Nastavitve avtomobila
+3a_cols_hdr Barve avtomobila
+3a_new_setb Nove nastavitve
+3a_new_colb Nove barve
+3a_savedset Nastavitve so shranjene
+3a_savedcol Barve so shranjene
+3a_new_butt Novo
+3a_del_butt Izbriši
+3a_undo_btn Vrni
+3g_rename_b Preimenuj
+3h_clear_bt Zbriši
+3a_drvr_hdr Voznik
+3a_frce_hdr Sile
+3g_fuel_hdr Gorivo
+3g_susp_hdr Podvozje
+3a_out_butt Brez
+3a_in_buttn Z
+3a_off_butt Ne
+3a_on_buttn Ja
+3a_stop_btn Stop
+3a_drop_btn Doskok
+3a_namenset Vpišite ime novih nastavitev
+3g_newnmset Vpiši novo ime za nastavitev
+3a_setnodel Nastavitve se ne morejo izbrisati
+3a_deletset Izbrišem nastavitve?
+3a_setnonam Ne morejo se ustvariti nastavitve brez imena
+3a_namencol Vpišite ime za nove barve
+3h_newnmcol Vpišite novo ime za barve
+3a_colnodel Barve se ne morejo izbrisati
+3a_deletcol Izbrišem barve?
+3a_colnonam Ne morejo se ustvariti barve brez imena
+3a_carninvl Trenutno ime avtomobila ni veljavno
+3a_sel_skin Izberi skin
+3a_drv_none Brez pogona
+3a_drv_fron Zadnji pogon
+3a_drv_rear Prvi pogon
+3a_drv_four Pogon na 4 kolesa
+3g_dif_open ODPRTI DIF
+3g_dif_lock BLOKIRAN DIF
+3g_dif_visc VISKOZNI LSD
+3g_dif_clsd SKLOPKA Z LSD
+3a_no_creds Nimate kredita
+3a_one_cred Imate 1 kredit
+3a_xx_creds Imate %d kreditov
+3g_host_dis Ta server ne dovoli vožnje z %s
+3h_ndxmdcax Izberi %s nacin za voznjo z %s
+3h_ndulxcax Odkleni LFS %s za voznjo z %s
+3g_all_caps VSI
+3g_newnmrep Vpiši novo ime za posnetek
+3g_repnodel Posnetek ni mogoèe izbrisati
+3g_deletrep Zbrišem posnetek?
+3g_repnonam Ni mogoèe ustvariti neimenovan posnetek
+3g_set_sh_x Nastavitve za %s :
+3a_rght_brk [desno]
+3a_left_brk [levo]
+3a_plyrname Ime igralca :
+3g_otherply Ostali igralci :
+3a_numplate Napis na tablicah :
+3a_countryc Država :
+3a_poschoos Pozicija voznika :
+3a_speedcho Prikaz hitrosti :
+3a_pressure Prikaz pritiska :
+3g_lang_cln Jezik :
+3g_font_cln Font :
+3g_wght_cln Font teža :
+3g_adnewply dodaj novega igralca
+3g_dlselply Brisanje izbranega igralca?
+3g_enterply Vpišite ime novega igralca
+3g_plyexist Igralec že obstaja
+3g_newnamex Vpišite novo ime za igralca : %s
+3a_brak_mph [m/h]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Pomoè pri zaviranju :
+3a_autoclch Avtomatièna sklopka :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Širok ekran (16:9) :
+3a_clipwndo Omeji miško na okno CTRL+C :
+3a_clipflsc Omeji miško na ekran CTRL+C :
+3a_leftscrn levi zaslon
+3a_rghtscrn desni zaslon
+3a_keyshpls Doloèi tipke (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful okno/celoten zaslon
+3a_shf4togg SHIFT + F4 sprememba med celotnim zaslonom in oknom
+3a_shxalrdy SHIFT + F%d je že dodeljen izbranemu naèinu
+3a_assxmodx Dodelitev SHIFT + F%d naèinu %s?
+3a_unkntype Neznano
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Nastavitve za pogled %s :
+3a_vw_incar iz avta
+3b_vw_custm po želji
+3a_ishwdywy [voznik JA volan JA]
+3a_ishwdnwy [voznik NE volan JA]
+3a_ishwdnwn [voznik NE volan NE]
+3a_oht_none [niè]
+3a_oht_splt [vmesni èas]
+3a_normlfov Vidno polje %.0f° :
+3h_onebutlk Pogled ene tipke %.0f° :
+3a_pitchviw Pogled gor-dol %.2f° :
+3b_rotatviw Rotacija pogleda %.2f° :
+3g_mirror_x Horizontalni premik ogledala %.3f m :
+3g_mirror_z Vertikalni pomik ogledala %.3f m :
+3a_tlt1gdeg Zamik glave pri 1g %.2f° :
+3a_shiftlat Boèni pomik pri 1g %.3f m :
+3a_shiftfwd Vzdolžni pomik pri 1g %.3f m :
+3a_shiftvrt Vertikalni pomik pri 1g %.3f m :
+3a_moveanim Pomik pogleda z animacijo :
+3a_defdrvvw Default pogled :
+3g_cvw_main Riši (glavno) :
+3b_cvsnthng brez prikaza
+3b_cvswheel kolesa
+3g_cvsdbody karoserija
+3b_cvsexter zunanji
+3g_cvshelic helikopter
+3g_cvsfollo sledi
+3h_cvsuserv uporabnik
+3b_cvwxoffs Pomik X %.3f m :
+3b_cvwyoffs Pomik Y %.3f m :
+3b_cvwzoffs Pomik Z %.3f m :
+3g_c_defaul Prenastavljena pozicija
+3g_c_centre Centralni pogled
+3g_c_eyepos Pozicija oèi
+3g_cvw_high Višina %.1f m :
+3g_cvw_angl Kot %.1f° :
+3g_cvw_dist Dolžina %.1f m :
+3g_cvw_vlag Glajenje %.1f sec :
+3a_drawdrwh Prikaz voznika / volana :
+3a_lookfunc Funkcija pogleda :
+3a_lookaxis os
+3a_lookstee zavijanje
+3a_lookms_x X
+3a_lookmsxy XY
+3h_mslookav Pogled z miško je omogoèen, ko je kurzor skrit
+3a_looksens Osvetljenost pogleda %.2f :
+3a_lookcred Redukcija centra pogleda %.2f :
+3a_btnlooko Tipka za pogled :
+3g_l_smooth gladko
+3g_l_instan takoj
+3h_mainsfov Glavni zaslon FOV %.0f° :
+3h_monangle Kot zaslona %.0f° :
+3h_viewoffs Zamik zaslona %.2f :
+3h_multiscl Veè-zaslonski layout :
+3h_entnumls Vnesi število LEVIH zaslonov
+3h_entnumrs Vnesi število DESNIH zaslonov
+3h_onecentr En sredinski zaslon
+3h_scwidths Širina zaslona :
+3h_optequal enako
+3h_optunequ neenako
+3h_entsidep Vnesi širino STRANSKI zaslon (pixels)
+3h_entmainp Vneši širino GLAVNI zaslon (pixels)
+3h_fullwext Polna širina zunanjih pogledov :
+3h_bezelcom Bezel kompenzacija %.1f%% :
+3h_resulfov Resulting field of view : %.1f°
+3h_fovinval Nepravilne nastavitve pogleda
+3h_drivuse1 Pogledi vožnje bodo uporabljali en render
+3h_drivusex Pogledi vožnje bodo uporabljali %d renderjev
+3h_notwidex Ni dovolj široko za pravo %d-zaslonsko nastavitev
+3h_extvfull Zunanji pogledi bodo uporabili polno širino
+3h_extvmain Zunanji pogledi bodo uporabili glavni zaslon
+3h_extvxxar Zunanji pogledi bodo uporabili %d:%d razmerje
+3h_extvass3 Predpostavljena 3-zaslonska nastavitev za zunanje poglede
+3a_sml_newt nova
+3a_sml_name ime
+3a_sml_delt briši
+3a_sml_undo vrni
+3a_sml_save shrani
+3a_sml_load Naloži
+3a_msctrcks Pesmi
+3a_exitnosv Izhod brez shranjevanja?
+3a_chmblost Spremembe so lahko izgubljene
+3a_savedrad Shranjen radio.rad
+3a_nodelstp Ne morem izbrisati nastavitve postaje
+3a_delchnlq Izbriši postajo?
+3a_chanlnum Postaja %d
+3a_msctrnum Pesem %d
+3a_norenstp Ne morejo se preimenovati nastavitve postaje
+3a_newnmchn Novo ime postaje
+3a_play_num Igra : %s
+3a_fail_num Ni uspelo : %s
+3a_shftauto avtomatièno
+3a_shftsequ polavtomatièno
+3a_shftshft roèni
+3g_shftffjo ff palica
+3h_transmis Prenos
+3h_box_hpat menjalnik H-izvedbe
+3h_box_bike menjalnik za motorna kolesa
+3h_box_sequ sekvenèni menjalnik
+3h_box_seqi sekvenèni menjalnik z ignition cut
+3h_box_semi predalni menjalnik
+3h_seq_hpat sekvenèni menjalnik H-izvedbe
+3a_dc_combi združene
+3a_dc_separ posamezne
+3a_dc_butts tipke
+3a_axb_axis os
+3a_axb_butt gumb
+3g_no_con_d Ni zaznane kontrole
+3g_xx_con_d %.0f kontrol zaznanih
+3g_ct_unkno Neznana kontrola
+3g_ct_first First person kontrola
+3g_ct_steer Volan
+3g_ct_fligh Flight kontrola
+3g_ct_gamep Gamepad
+3g_ct_joyst Joystick
+3a_crrdcval Redukcija centra zavijanja %.2f :
+3g_whe_turn Obrat volana %.0f° :
+3a_msbutt_1 Tipke 1
+3a_mdbutt_2 Tipke 2
+3e_kbt_mous [zavijanje z miško]
+3e_kbt_nohe [s tipkovnico - brez pomoèi]
+3e_kbt_stab [s tipkovnico - stabilizirano]
+3a_mdaxesff Osi / FF
+3a_mdshiftr Menjalnik
+3a_kasteerl Zavijanje levo
+3a_kasteerr Zavijanje desno
+3e_kasteerl Zavijanje hitro
+3e_kasteerr Zavijanje poèasi
+3a_kaaccelk Plin
+3a_kabrakek Zavora
+3a_kaleftvw Pogled levo
+3a_karghtvw Pogled desno
+3a_karearvw Pogled nazaj
+3a_kashiftu Prestavlj. v višjo
+3a_kashiftd Prestavlj. v nižjo
+3a_kaclutch Sklopka
+3a_kahandbr Roèna zavora
+3a_kahornkk Hupa
+3a_kaflashk Blendanje
+3a_karesetk Resetiranje avta
+3g_kapitspd Omejitev hitrosti
+3h_katcdisa Kontrola oprijema
+3h_kaigniti Vžig
+3a_kazoom_i Zoom-iranje (+)
+3a_kazoom_o Zoom-iranje (-)
+3a_karevers Važnja nazaj
+3a_kafirstk Prva
+3a_kasecond Druga
+3a_kathirdk Tretja
+3a_kafourth Èetrta
+3a_kafifthk Peta
+3a_kasixthk Šesta
+3a_kasevent Sedma
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Zavijanje
+3a_aacombin Plin / Zavora združeno
+3a_aathrott Plin
+3a_aabrakea Zavora
+3a_aalookhe Pogled levo-desno
+3a_aalookpi Pogled gor-dol
+3a_aalookro Rotacija pogleda
+3a_aaclutch Sklopka
+3a_aahandbr Roèna zavora
+3g_aashiftx Menjalnik Levo-Desno
+3g_aashifty Menjalnik Neprej-Nazaj
+3a_prsxforx Pritisni %s za %s (ESC - preklièi / DEL - niè)
+3a_smallkey tipka
+3a_smallbut tipka
+3a_mouse_kb miška / tipkovnica
+3a_wheel_js volan / palica
+3a_force_st Moè sile %.0f :
+3a_thrbrkax Osi plina / zavore :
+3a_clutchop Sklopka :
+3a_handbrko Roèna zavora :
+3a_thrbrkrv Plin / zavora redukcija centra %.2f :
+3a_btnratev Hitrost reagiranja tipk %.2f :
+3a_kbsteero Zavijanje s tipkovnico :
+3a_strratev Hitrost zavijanja %.2f :
+3e_retratev Hitrost vraèanja %.2f :
+3e_strfastv Množitelj hitrega zavijanja %.2f :
+3e_strslowv Množitelj poèasnega zavijanja %.2f :
+3a_prdtimev Predviden èas %.2f :
+3a_lmtmultv Limit množitelja %.2f :
+3a_selfunca Dodeljene funkcije
+3a_selaxfrx Izberite os za : %s (ESC - prekini / DEL - niè)
+3a_availaxs Razpoložljive osi
+3a_axis_num os %d
+3a_invert_1 invertiraj 1
+3a_invert_0 invertiraj 0
+3a_frcfdbak Force Feedback
+3a_ffdevice FF naprava
+3g_ffshiftd FF manjalnik
+3a_removedz Odstrani prazni tek :
+3h_rec_axes rekalibracija osi
+3h_cal_lock zakleni
+3h_cal_unlk odkleni
+3a_heyb_hdr Tipkovnica
+3a_whbt_hdr Tipke na volanu
+3a_ass_zero (Niè)
+3a_ass_mlft Levi miška
+3a_ass_mrgt Desni miška
+3a_ass_mmid Srednji miška
+3a_ass_whup Kolo gor
+3a_ass_whdn Kolo dol
+3a_ass_spac Razmik
+3a_ass_upar Kurzor gor
+3a_ass_dnar Kurzor dol
+3a_ass_rtar Kurzor desno
+3a_ass_ltar Kurzor levo
+3a_ass_pgup Stran gor
+3a_ass_pgdn Stran dol
+3a_butt_num tipka %d
+3d_aamousex Miška X
+3d_aamousey Miška Y
+3d_aa_xaxis X os
+3d_aa_yaxis Y os
+3d_aa_zaxis Z os
+3d_aarxaxis RX os
+3d_aaryaxis RY os
+3d_aarzaxis RZ os
+3d_aaslidr1 Drsalec 0
+3d_aaslidr2 Drsalec 1
+3a_reskeysh rezervirane tipke
+3a_rswtch_r 1 - pregled posnetka
+3a_rssave_r 2 - shrani posnetek
+3h_showline 4 - prikaži linijo
+3a_rsless_f < - manj sile
+3a_rsmore_f > - veè sile
+3a_rstab_ne TAB - naslednji avto
+3a_rshome_o HOME - lastni avto
+3a_rstalk_t T - pogovor
+3a_rspausep P - pavza
+3a_rshistor H - zgodovina sporoèil
+3a_rsview_v V - pogled
+3a_rsforces F - sile
+3a_rsnamesn N - imena
+3a_shftplus SHIFT +
+3a_shchhorn H - zamenjava hupe
+3g_shshiftt G - naèin prestavljanja
+3a_shrescon C - vrni kontrole
+3a_shressnd W - vrni zvok
+3a_shsoundo N - vklopi / izklopi zvok
+3a_shmirmod M - naèin ogledala
+3g_shhidetx F - skrij tekst
+3a_shuservw U - prosti pogled
+3a_shskiptn K - preskoèi pesem
+3h_shshowmo Z - prikaži miško
+3b_shdriver F1 - pogled voznika
+3b_shslowrp F2 - upoèasni posnetek
+3b_shfastrp F3 - pohitri posnetek
+3a_shwindow F4 - okno
+3a_carsndvl Glasnost zvoka vozila (%.1f) :
+3a_skidvboo Poveèanje zvoka zdrsavanja (%.1f) :
+3g_windvboo Poveèanje zvoka vetra (%.1f) :
+3g_echovboo Poveèanje odmeva (%.1f) :
+3a_mscvolum Glasnost glasbe (%.1f) :
+3g_msgvolum Interface glasnost (%.1f) :
+3a_mscsetup Glasba v meniju :
+3a_mscracin Glasba med dirko :
+3a_mscrplay Glasba med pregledom posnetkov :
+3a_selecbrk [Izbrano]
+3a_noplybrk [Ne igra]
+3a_msc_skip Preskoèi
+3a_msc_sele Izberi
+3a_ingmmusc Glasba med igro
+3a_channels Radio-postaje
+3g_status_a Zvok (SHIFT + N) : %s
+3g_status_m Glasba buffer : %s
+3g_status_c Zvok buffer : %s
+3a_relaybrk [relativno]
+3a_absolbrk [absolutno]
+3a_fps_disp Prikaz slik na sek. (fps) :
+3b_virtuals Prikaz virtualnega semaforja :
+3a_mirrmode Prikaz ogledala :
+3a_clokmode Prikaz indikatorja :
+3g_fixedfwd Fiksirano na sprednje osi :
+3g_accelmov Pokazatelj prestavljanja pri pospeševanju :
+3a_showpeds Prikaz stopalk :
+3g_steerind Virtualni indikator zavijanja :
+3a_smallmap Prikaz male mape :
+3g_staticsm Rotacija male mape :
+3a_pos_list Prikaz liste pozicij :
+3a_dropshad Prikaz senc :
+3a_msgtsize Velièina èrk za sporoèila %.3f :
+3a_timedisp Prikaz skupnih èasov :
+3a_chptexto Napis na prehodnih toèkah :
+3a_clndlcol Barva kazalcev na indikatorju :
+3a_cltxtcol Barva napisa na indikatorju :
+3a_cttxtcol Barva srednjega napisa :
+3h_x_dash_c %s armaturka :
+3h_roadgled Cestni avtomobili LED prestave :
+3g_interfac Vmesnik
+3a_asavnono [ni omogoèeno - ni shranjeno]
+3a_asavmanu [omogoèeno - roèno shranjevanje]
+3a_asavauto [avtomatièno - ni priporoèljivo]
+3a_ogm_ainm imena AI voznika
+3g_ogm_fkey F1 do F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [fiksno zaporedje]
+3a_rs_finis [zaporedje po konèanju]
+3a_rs_revfi [obratno zaporedje konèanja]
+3a_rs_randm [nakljuèno zaporedje]
+3a_aidrvnum AI voznik %d :
+3a_f_keynum F%d :
+3a_sprsvopt Shranjevanje posnetka enega igralca :
+3a_mprsvopt Shranjevanje posnetka mrežne igre :
+3a_nonqracr Ponovni štart brez kvalifikacij :
+3a_changbtn Zamenjava AI imen / F tipke :
+3a_optlores nizka loèljivost
+3a_opthires visoka loèljivost
+3g_optcompr stisnjeno
+3g_optsfull polno
+3g_opt_main glavno
+3g_plus_mir + ogledalo
+3a_usrldval Nivo detaljev (%.2f) :
+3a_dstldval Nivo detaljev praha (%.2f) :
+3a_mirldval Nivo detaljev v ogledalu (%.2f) :
+3h_fsaa_txt Polno-scene antialising:
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interface / tekst :
+3h_mipbias1 Mip bias (%.1f) objekti / zidovi :
+3h_mipbias2 Mip bias (%.1f) trava / pesek :
+3h_mipbias3 Mip bias (%.1f) površina ceste :
+3a_shtypopt Tip senc :
+3g_treesopt Riši drevesa :
+3g_flagsopt Riši zastave :
+3g_rubbropt Riši sledi :
+3g_draw_sky Riši nebo :
+3g_gadapter Adapter :
+3e_zbdopt_d Globina Z-Buffer (%d) :
+3e_hazetext Efekt meglice :
+3h_mip_type Filter tekstur / AF :
+3h_text_res Teksture (brez skinov) :
+3g_carskins Skini avta in èelad :
+3g_texmemmb Uporaba spomina tekstur : %.1f MB
+3a_crdnoshd Vaša 3D kartica ne more prikazati sence
+3g_crdnoftx Vaša 3D kartica ne more uporabljati polno velikost tekstur
+3h_hvsnotav Vaša 3d kartica ne more uporabiti Hardverski Vertex Senèenja
+3g_seladres Izberite kartico ki se bo uporabila po ponovnem zagonu
+3e_rslfszbd Ponovno zagnati LFS da sprememba Z-Buffer-ja zaène veljati
+3a_flsvsync Vert. sinhronizacija za polni ekran :
+3g_prev_lag Prepreèi vhodno kasnitev :
+3a_limitfps Omeji slike na sek. v igri :
+3a_maxfrmrt Max slik na sek. :
+3g_tx_x_fps %d fps
+3a_minsleep Najkrajše èakanje :
+3g_debounce Prestavljanje debounce :
+3g_txt_x_ms %d ms
+3a_pixelval %d pikslov
+3a_useplset AI uporablja nastavitve igralca :
+3a_useplcol AI uporablja barve igralca :
+3a_sndlgval Zakasnitev zvoka %.2f sek. :
+3g_whe_comp Kompenzacija obrata volana %.2f :
+3a_anlgsval Ublažitev analognega obraèanja %.2f :
+3a_multispd Mrežna opcija za pospeševanje :
+3g_car_skin Download skinov za avte :
+3g_hel_skin Download skinov za èelade :
+3g_multidst Prikaz mrežnih avtomobilov %.0f m :
+3g_dynamlod Dinamièna LOD redukcija %.2f :
+3a_updtpath Posodobi pot :
+3a_puusrcar za moj avto
+3a_puallcar za vse avte
+3h_replaysk Download skinov za posnetke :
+3g_introopt Naloži progo med zagonom :
+3g_local_12 Lokalni èas v 12 urnem formatu :
+3g_time_fps Prikaži èas namesto FPS :
+3g_shfflags Prikaži zastave v SHIFT + F naèinu :
+3h_accelopt Merilnik pospeševanja :
+3h_shadogen Generacija senc :
+3h_opt_defa prevzeto
+3h_opt_alte spremenjeno
+3g_skin_d_q Download skinov
+3h_skin_use Skini v spominu
+3a_crestart štart dirke
+3a_cntrpits pojdi v boks
+3a_cspectat opazuj
+3a_cantjoin prikljuèi se
+3a_cantleav zapusti
+3a_novtnolo Ni glasovanja - ni lokalnih igralcev
+3a_notdnord Poiskusna vožnja nemogoèa - ni pravega voznika v posnetku
+3a_esc_menu Meni za izhod
+3a_repmenig Meni posnetkov (v igri)
+3a_repmenld Meni posnetkov (naloženo)
+3a_sel_pits Boksi
+3a_sel_spec Opazuj
+3a_sel_join Prikljuèi se
+3a_sel_repl Pregled posnetka
+3a_sel_outp Telemetrija kroga
+3a_sel_rstr Ponovni štart
+3a_vote_str Glasuj za štart dirke
+3a_vote_end Glasuj za prekinitev dirke
+3a_vote_qua Glasuj za kvalifikacije
+3a_test_drv Poiskusna vožnja
+3a_startrac Štart dirke
+3a_hqualify Kvalifikacije
+3a_resumegm Nadaljuj
+3h_escapkey ESC
+3a_undefind nedefinirano
+3a_arenatxt arena
+3a_singlstg ena dirka
+3a_standard standardno
+3a_reversed nazaj
+3a_weth_hdr Vreme
+3a_cnfg_hdr Konfiguracija
+3h_layt_hdr Ureditev
+3h_none_sel ni izbrano
+3a_info_cir krog
+3a_info_tot skupaj
+3a_chng_trk Zamenjaj progo
+3h_revconfc Obratna konfiguracija :
+3h_openconf Odprta konfiguracija :
+3h_ndxmdtrx Izberi %s nacin za voznjo na %s
+3h_ndulxtrx Odkleni LFS %s za voznjo na %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati Nationalno
+3g_cfg_inte Internacionalno
+3g_cfg_clas Klasièno
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Pot šikane
+3g_cfg_gree Zeleno
+3g_cfg_gold Zlato
+3g_cfg_blac Èrno
+3g_cfg_rlxg Rallycross Zeleno
+3g_cfg_hist Zgodovinsko
+3g_cfg_grto Grand Touring
+3g_cfg_nort Sever
+3g_cfg_sout Jug
+3g_cfg_east Vzhod
+3g_cfg_west Zahod
+3g_cfg_reve OBR.
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mile %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mile
+3g_dt_dawn_ Mrak
+3g_dt_sunri Vzhod
+3g_dt_morni Jutro
+3g_dt_day__ Dan
+3g_dt_after Popoldne
+3g_dt_sunse Zahod
+3g_dt_dusk_ Zora
+3g_dt_night Noè
+3g_wth_clea Jasno
+3g_wth_clou Oblaèno
+3g_wth_over Oblaènost
+3a_hlvcthis Krog-
+3a_hlvcnext Naslednji-
+3a_readynum Priprava : %d
+3a_noviewcr ni vozil v dirki
+3a_thexisst %s je zaèel
+3a_thexhase %s je konèal
+3a_smlpract vaja
+3a_smlqulng kvalifikacije
+3a_sml_race dirka
+3a_replnotr Se ne snema
+3g_notrecor Brez snemanja
+3g_fov_temp FOV %.0f°
+3a_replrest Ponovni prikaz posnetka
+3a_aisvdknw AI voznik je shranil izkušnje
+3a_timetmsx Èas x %.3f
+3a_namenldf Ime izhodne datoteke za naslednji krog
+3g_caps_wrn OPOZORILO
+3g_caps_kik IZVRŽEN
+3g_caps_ban BLOKIRAN
+3g_caps_spe OPAZOVALEC
+3a_namesoff imena izklopljena
+3a_connlist lista povezav
+3a_namesovr imena nad avtomobili
+3h_showmous prikaži miško
+3h_hidemous skrij miško
+3a_mirrinfo ogledalo :
+3a_cancaujo Prekinjen avtomatièni vhod
+3a_reinicnt Resetirane kontrole
+3a_reinisnd Resetiran zvok
+3a_namemprs Ime posnetka za veè igralcev
+3a_namesprs Ime posnetka za enega igralca
+3a_shnsound SHIFT N - zvok - %s
+3g_shgsmode SHIFT + G : Naèin prestavljanj - %s
+3a_shgautos SHIFT G - avtomatik - %s
+3a_frcvalpc sila %.0f%%
+3a_hrntypev Tip hupe %d
+3a_actnends SE KONÈUJE
+3a_actnrest SE SPET ZAÈENJA
+3a_actnstrt ZAÈENJA
+3a_thngqual Kvalifikacije
+3a_thngrace Dirka
+3a_reploose replay OOS napaka
+3a_pausetxt pavza
+3g_safeexit konèanje...
+3a_retrdcap IZTOPIL
+3a_dsqulcap DISKVALIFICIRAN
+3g_unclcaps NEKLASIFICIRAN
+3a_wrngwcap NAPAÈNA SMER
+3a_capsdrvr VOZNIK
+3a_capsbstl NAJBOLJŠI KROG
+3g_pitstops BOX
+3g_spenalty KZN
+3a_capstotl SKUPAJ
+3g_caps_car AVTO
+3g_capsxlps %d KROGOV
+3g_plus1lap +1 krog
+3g_plusxlps +%d krogov
+3h_falsesta NAPAÈEN ŠTART
+3h_pe_speed PREHITRO V BOKSIH
+3h_pe_short PIT STOP PREKRATEK
+3h_pe_mustp PIT STOP PREPOZEN
+3h_pe_admin DANO OD ADMINISTRATORJA
+3h_pe_unknw NEZNANO
+3g_yellcaps RUMENA ZASTAVA
+3g_bluecaps MODRA ZASTAVA
+3a_stpgocap USTAVI-POJDI KAZEN
+3g_drthrcap PREVOZI-SKOZI KAZEN
+3g_30stimep KAZEN 30 SEKUND
+3g_45stimep KAZEN 45 SEKUND
+3g_clearedp KAZEN IZBRISANA
+3g_pit_stop PIT STOP
+3g_pitstopx PIT STOP : %d
+3g_p_pnltyx PIT STOP [kazen] : %d
+3g_p_nowrkx PIT STOP [brez dela] : %d
+3g_p_finshx PIT STOP [konèan] : %d
+3g_mancompx %s^8 je konèal svojo %s
+3g_wmncompx %s^8 je konèala svojo %s
+3g_unkcompx %s^8 : je konèal %s
+3g_enterpit PRIPELJAL v bokse
+3g_enterfor PRIPELJAL v bokse za :
+3g_leavepit ODPELJAL iz boksov
+3g_stpgotxt ustavi-pojdi kazen
+3g_drthrtxt prevozi-skozi kazen
+3g_nopurtxt brez razloga
+3g_capsstop STOP
+3g_capsrefu POLNJENJE GORIVA
+3g_capssetu ZAMENJAVO NASTAVITEV
+3g_capsxdam %s POŠKODBE
+3g_capsdamx POŠKODBE %s
+3g_capsxcha %s ZAMENJAVE GUM
+3g_capsminr MAJHNE
+3g_capsmajr VELIKE
+3g_capsfrnt SPREDAJ
+3g_capsrear ZADAJ
+3g_capsleft LEVO
+3g_capsrigh DESNO
+3g_capslefr SPREDAJ LEVO
+3g_capslere ZADAJ LEVO
+3g_capsrifr SPREDAJ DESNO
+3g_capsrire ZADAJ DESNO
+3g_refl_f_x Dokonèano dolivanje goriva : %.1f litrov
+3g_pitstp_f Konèan pit stop
+3g_nospdlim Na tej progi ni omejitve hitrosti
+3g_notequip Ta avto nima omejitev hitrosti za prihod v bokse
+3h_thisnotc Ta avto nima kontrole trenja
+3h_thisnost Ta avto nima zaganjaèa
+3a_smllaptm èas kroga
+3a_smlspltm vmesni èas
+3a_clhotlap hitri krog
+3a_clonemin 1 min kvalifikacij
+3a_cl_xmins %d min kvalifikacij
+3a_clonelap 1 krog
+3a_cl_xlaps %d krogov
+3a_clonehor 1 ura
+3a_cl_xhors %d ure
+3g_cltrning trening
+3a_windsp_x hitrost vetra %.0f %s
+3a_smallmph m/h
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8-ov glas je potekel
+3a_x_voteer %s^8 glasuje za PREKINITEV DIRKE
+3a_x_voters %s^8 glasuje za PONOVNI ŠTART
+3a_x_votequ %s^8 glasuje za KVALIFIKACIJE
+3a_x_joinsp %s^8 se prikljuèuje gledalcem
+3g_x_didnot %s^8 ni konèal
+3g_x_wrongr %s^8 izbral napaèno pot
+3g_x_illega %s^8 zapeljal na prepovedano obmoèje
+3h_x_retpit %s^8 se je vrnil v bokse
+3h_a_retpit Vsi avtomobli so se vrnili v bokse
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp zaèetek kroga
+3a_smalllap krog
+3a_hlvcmodi [spremenjen]
+3a_timequal kvalifikacije
+3a_timetotl skupaj
+3a_timebest najhitrejši
+3a_time_lap krog
+3a_timesplt vmesni
+3h_timetime èas
+3a_timepnlt kazen
+3a_noldxcar ne morem prebrati avto za igralca %s^8
+3a_nosvnonm Ne morem shraniti brez imena
+3g_nofilesl Ni datotek za nalaganje
+3a_alrdyout Že shranjujem podatke kroga
+3a_nxtlpout Podatke naslednjega kroga shranjujem v %s.raf
+3a_nodtaout Niè ni shranjeno v datoteko
+3g_dled_x_x Download skin : %s_%s
+3g_ding_x_x Downloada se skin : %s_%s
+3h_saveskin Shranjevanje skina : %s
+3g_nomoreci Ni možno dodati veè krogov
+3a_noaddmor Ne morem dodati veè objektov
+3a_loadinfo Nalaganje
+3h_storedvw Shranjeni pogledi (V) :
+3h_move_spd Hitrost pomikanja %.1f m/s :
+3h_min_high Minimalna višina %.1f m :
+3g_roll_deg Obrat %.1f° :
+3h_vwsmooth Glajenje pogleda %.1f s :
+3h_trantime Èas prehoda %.1f s :
+3a_invlok_c Invertiraj pogled desnega gumba :
+3h_invrot_c Invertiraj levo + zavrti desno :
+3a_fov_valu Vidno polje %.1f° :
+3a_plcobs_c Postavi objekte :
+3a_chkptw_v Širina kontrolne toèke %.0f m :
+3a_hdg_degr Orientacija %.1f° :
+3a_unnm_brk [nima imena]
+3a_objs_num objekti : %d
+3a_emty_brk [prazno]
+3a_savechan Shrani spremembe
+3a_loadlayo Naloži layout
+3a_savelayo Shrani layout
+3a_clearall Zbriši vse
+3a_laps_num krogi : %d
+3a_errorsml napaka
+3a_c_clrsel C - umakni izbor
+3a_m_mv_mod M - premakni / spremeni
+3a_del_dele DEL - izbriši
+3a_w_e_wdth W / E - širina
+3a_l_r_rota </> - rotiranje
+3a_cp_1_2_3 1/2/3 - vmesni èas
+3a_f_finish F - ciljna èrta
+3a_s_startp S - štartna pozicija
+3a_o_object O - objekt
+3g_dist_x_m dist : %.2f m
+3a_editkeys tipke za spreminjanje
+3a_c_ar_hgt CTRL + pušèica - višina
+3g_c_ar_rol CTRL + arrow - obrat
+3a_arrow_mv pušèice - pomikanje
+3a_spc_hdsh SPACE - skrij / prikaži
+3a_esc_exit ESC - izhod
+3h_l_b_move levi gumb - premakni
+3h_r_b_look desni gumb - pogled
+3h_l_r_rota leva + desna - zavrti
+3a_keys_txt tipke
+3h_mous_txt miška
+3h_edit_txt uredi
+3h_more_txt veè
+3h_in_trans prehod
+3h_cl_slt_x Poèišèen pogled v slotu %d
+3h_st_slt_x Shranjen pogled v slotu %d
+3h_no_v_x_s Ni pogleda v slotu %d (%s)
+3h_no_vws_s Ni shranjenih pogledov (%s)
+3h_sh_nm_st SHIFT + NUMBER da shraniš pogled
+3h_no_car_f Ni avta za slediti
+3h_fc_point Kaže na :
+3h_fc_neare Najbljižji avto :
+3h_fc_flwng Sledi :
+3h_fc_lockd Osredotoèen na :
+3h_clicktof klikni avto za sledenje
+3h_followcr sledi avtu
+3h_nocarsvw nobenega avta v pogledu
+3h_stopfoll stop
+3a_noxwload Ni mogoè izhod med nalaganjem
+3a_chgnotsv Spremembe niso shranjene
+3a_exanyway Vseeno izhod?
+3a_clrall_q Izbrišem vse objekte iz layout-a?
+3g_delete_l izbriši naèrt?
+3a_tit_ldly Naloži layout
+3a_nosavent Ne morem shraniti layout iz vhodne slike
+3a_nolodent Ne morem naložiti layout iz vhodne slike
+3a_noobselm Objekt pa pomikanje ni izbran
+3a_noobtype Vrsta objekta ni izbrana
+3a_noobseld Objekt za brisanje ni izbran
+3h_unexpclr Neprièakovan èist ukaz
+3h_unexpend Neprièakovan konec datoteke
+3a_xalready %s - je že narejeno
+3g_idx_0tox Indeks mora biti med 0 in %d
+3g_rt_idx_x Indeks poti : %d
+3g_restarea Prepovedano obmoèje
+3g_rt_check Preverjanje poti
+3g_rt_wrong Napaèna pot
+3g_ob_chalk kreda
+3g_ob_cones zone
+3g_ob_tyres gume
+3g_ob_other objekti
+3g_ob_marsh marshall
+3g_marsh_no nevidno
+3g_marsh_st marshall
+3g_marsh_le point levo
+3g_marsh_ri point desno
+3h_cant_add Ne morem dodati :
+3h_cant_mov Ne morem premakniti :
+3h_inte_obj sekajoèi objekti
+3h_inva_pos nepravilna pozicija
+3a_dispgame Pokaži list iger
+3a_tit_list List iger
+3a_startnew Zaèni novo igro
+3a_tit_strt Zaèni Novo igro
+3a_joingame Prikljuèi se doloèeni igri
+3a_tit_spec Prikljuèevanje doloèeni igri
+3a_finduser Najdi igralca online
+3a_tit_user Iskanje igralca
+3a_cls1conn Zapiranje 1 povezave
+3a_clsxconn Zapiranje %d povezav
+3a_rfrshlst osveži
+3a_stophost Zaustavi preverjanje serverjev
+3a_spctostp Pritisni SPACE za zaustavitev preverjanja serverjev
+3a_liststat %s serverjev %d od %d - Lahko vstopite na %d - [Ni odg %d] - [Napaèna verzija %d]
+3a_waitingw Èakanje
+3a_checking Preverjanje
+3a_end_stat Lahko vstopite na %d - [Brez odgovora %d] - [Napaèna verzija %d] %s
+3a_clikjoin - KLIKNITE na ime za vstop
+3a_glc_name Ime
+3a_glc_ping Ping
+3a_glc_trak Proga
+3a_glc_cars Avto
+3a_glc_info Info
+3a_glc_cons Povezave
+3a_privatew privatni
+3a_modified spremenjen
+3h_arcade_w reset avta
+3h_cruise_w vožnja
+3a_wrongver Napaèna verzija
+3h_noteul_x OPOMBA : Se vedno morate odkleniti LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Download zrcalno
+3h_cnt_titl Zemlja
+3h_newupdat Nova možna posodobitev
+3h_norecaui Ni prejeta avtomatièna informacija posodobitve
+3h_start_dl zaèni download
+3h_plsselmr Prosimo izberite download zrcalo v vaši bližini
+3h_connectn Povezujem...
+3h_trylfsnt Poskušam ponovno uporabiti ^7www.lfs.net
+3h_dl_perce Napredek datoteke : %d%%
+3h_dl_colon Download-irano :
+3h_restartn Ponovni zagon...
+3h_nostrtrs Ni mogoèe ponovno zagnati
+3h_noresdat Ni mogoèe ustvariti datoteke ponovnega zagona
+3h_noenumwi Ni možno 'enumerate' windowsov
+3h_anotherl Že zagnana datoteka LFS-ja
+3h_noopenrs Ni mogoèe odpreti programa ponovnega zagona
+3b_meetroom Soba za sestanke
+3b_m_host_x gre na %s
+3b_f_host_x gre na %s
+3b_leftroom odšel
+3b_entrroom prišel
+3b_wlcmu1st Dobrodošli! Vi ste prvi voznik v tej sobi
+3b_wlcmxinr Dobrodošli! V tej sobi je %d voznikov
+3b_mr_leave Odidi
+3b_mr_findb Najdi
+3b_mr_sound Zvok
+3b_mr_refre Osveži
+3b_somehost server
+3b_mastercl Glavni server je zaprl povezavo
+3b_sr_privt Privatni
+3b_mr_publc Javni
+3b_mr_empty Prazni
+3h_sr_arcad Lahko resetiram
+3h_sr_cruis Vožnja
+3g_autoreco Povovno povezovanje...
+3a_typelocl lokalni mreži
+3a_typeinet Internetu
+3a_userisat Igralec je na %s
+3a_joinxath Pridruži se %s^8 na serverju?
+3a_inrc_num v dirki : %d
+3a_cons_num povezav : %d
+3a_resl_num rezultatov : %d
+3h_skin_num Skin : %d
+3h_join_que Mesto v vrsti : %d
+3a_selhostc Izbrani server :
+3a_joingamc Prikljuèevanje igri na :
+3a_hostnamc Ime serverja :
+3a_hostipac IP naslov serverja :
+3a_hostprtc Port serverja :
+3a_hostpasc Koda serverja :
+3h_clearbtn Poèisti vsa gesla (%d)
+3h_cconfirm Poèisti vsa shranjena hesla za server?
+3a_noldtrck Ne morem prebrati proge
+3a_nosndudp Ne morem poslati UDP paket
+3a_nocrtudp Ne morem ustvariti UDP povezavo
+3h_wt_sinfo Èakam info o skinu
+3h_norcvskn Ni prejet info o skinu
+3a_norcvgst Info o gostih ni sprejet
+3a_norcvply Info o igralcu ni sprejet
+3a_norvcall Sporoèila od vseh voznikov niso sprejeta
+3a_vldadreq Morate vnesti veljaven IP naslov v lokalni mreži
+3a_errconrs Napaka pri pošiljanju rezultata povezave
+3a_mode_sel Izbor online naèina :
+3h_smal_dmo demo
+3h_frxmdndx Za %s nacin morate odkleniti LFS %s
+3h_seltrrqx Izbrana proga zahteva %s nacin
+3a_visibilc Vidljivost :
+3a_vis_locl lokalno
+3a_vis_inet Internet
+3a_vid_hidn skrito
+3a_inetconc Internet povezava :
+3a_modem56k 56k modem
+3a_m512_128 512 / 128 ADSL
+3a_mdm1_256 1M / 256 ADSL
+3a_mdm_cust po želji
+3a_maxupl_c Najveèji upload (Kb/ss) :
+3g_x_upload %s kbit/s upload
+3a_gnnoemty Ime igre ne more biti prazno
+3a_onecarrq Omogoèen mora biti vsaj eden model avtomobila
+3a_hstgstrq Igralci ali gosti na serverju morajo biti dovoljeni
+3a_rusurepr Ste sigurni za nadaljevanje?
+3a_maxbwmex Kapaciteta povezave je verjetno premajhna
+3b_srv_ip_c IP Naslov :
+3a_srvportc Port :
+3a_dedi_opt Namenski server (brez grafike) :
+3a_guestvot Glasovanje za izvrženje / blokiranje :
+3a_guestsel Gosti lahko izbirajo progo :
+3h_qenabled Kvalifikacije omogoèene :
+3g_midracej Dovoli vstop med dirko :
+3g_pitstopr Obvezen postanek v boksu :
+3g_carreset Dovoli reset avta :
+3h_fcockpit Obvezen cockpit pogled :
+3h_cruisemo Vožnja (dovoljena obratna smer) :
+3a_maxgst_c Najveèje število gostov :
+3d_admins_c Admin mesta :
+3a_maxrarac Max (pravi + AI) v dirki :
+3a_maxragst Max (pravi + AI) po gostu :
+3a_maxrahst Max (pravi + AI) na serverju :
+3a_dedinohc Namenski : brez vozila serverja
+3a_smothpps Gladkost (paketa/s) :
+3a_uplmin16 Upload vsaj 16 Kbitov
+3g_umax8192 Upload maksimum 8192 kbits
+3a_uplavail Razpoložljiv upload %.1f KB/s
+3a_uplprcar Upload po avtu %.0f bajtov/s
+3a_uplcarnm Število avtomobilov za upload %.0f
+3a_requplod Potreben upload %.1f KB/s
+3a_availexc Razpoložljiv upload prekoraèen
+3b_adminp_c Administrator koda :
+3a_sel_audi Zvok
+3a_tit_audi Zvok
+3a_sel_scrn Ekran
+3a_tit_scrn Ekran
+3a_sel_grfx Grafika
+3a_tit_grfx Grafika
+3a_sel_view Pogled
+3a_tit_view Pogled
+3a_sel_disp Monitor
+3a_tit_disp Monitor
+3a_sel_plyr Igralec
+3a_tit_plyr Igralec
+3a_sel_cont Kontrole
+3a_tit_cont Kontrole
+3a_sel_game Igra
+3a_tit_game Nastavitve igre
+3a_sel_misc Razno
+3a_tit_misc Razno
+3a_unlokerr Napaka pri odklepanju
+3a_flcrterr Napaka pri ustvarjanju datoteke
+3a_reguname Registrirano uporabniško ime :
+3a_onlinepw GAME koda :
+3a_gounlock odkleni
+3g_locktext Zakleni LFS (vrnitev v DEMO)
+3g_lockques Zakleni Live for Speed?
+3g_lockwarn Dostopena bo samo DEMO vsebina
+3a_autorcon Avtomatièno ponovno prikljuèevanje na glavni server
+3a_notconnm Niste prikljuèeni na glavni server
+3a_yesconnm Prikljuèeni ste na glavni server
+3a_connmstr Prikljuèi se
+3a_connects Povezave
+3a_hoptions Možnosti
+3a_smlb_kik izvrzi
+3a_smlb_ban blokiraj
+3a_num_bans %d izvržen
+3a_zerobans Brez blokiranja
+3a_editbans uredi blokiranje
+3a_tit_bans Urejevalec blokiranja
+3a_delshort izbriši
+3a_goaddban dodaj
+3a_user_ban Vpišite uporabniško ime za blokiranje
+3a_time0day %d:%.2d
+3a_time1day 1 dan %d:%.2d
+3a_timexday %d dni %d:%.2d
+3a_banip12h 12 ur blokiranja za IP naslov
+3a_banun12h 12 ur blokiranja za uporabniško ime
+3b_banusr1d Uporabnik je blokiran za 1 dan
+3b_banusrxd Uporabnik je blokiran za %d dni
+3h_tyre_man Proizvajalec
+3g_tt_sl_r1 Gladke R1
+3g_tt_sl_r2 Gladke R2
+3g_tt_sl_r3 Gladke R3
+3g_tt_sl_r4 Gladke R4
+3g_tt_slk_s Gladke (mehke)
+3g_tt_slk_m Gladke (srednje)
+3g_tt_slk_h Gladke (trde)
+3a_tt_races Dirkaške (gladke)
+3a_tt_raceg Dirkaške (izbrazd.)
+3a_tt_racei Dirkaške (srednje)
+3a_tt_racew Dirkaške (dežne)
+3a_tt_roads Cestne (Super)
+3a_tt_roadn Cestne (Normalne)
+3a_tt_hybri Hibridne
+3a_tt_knobb Offroad (rally)
+3a_ttlmaskl Skupna masa : %.0f kg (%.0f lbs)
+3a_pwrwtmti Specifièna moè : %.0f W/kg (%.0f KS/ton)
+3a_wdistrfr Razpodelitev mase : %.1f spredaj %.1f zadaj
+3h_ddistrfr Distribucija Downforc-a : %.1f F  %.1f R
+3h_rdistrfr Obrni distribucijo trdote : %.1f F  %.1f R
+3a_trqnmlbr Navor : %.0f Nm (%.0f lbft) @ %.0f o/m
+3a_pwrkwbhr Moè : %.0f kW (%.0f KS) pri %.0f obr/min
+3a_engccfmt Motor : %.0f cc%s%s%s
+3a_engltfmt Motor : %.1f litrov%s%s%s
+3a_trbochrg turbo
+3a_etl_inli vrstni
+3a_etl_flat ravni
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl enojni
+3a_etn_2cyl dvojni
+3a_etn_3cyl trojni
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Prva %.3f
+3a_grrat2nd Druga %.3f
+3a_grrat3rd Tretja %.3f
+3a_grrat4th Èetrta %.3f
+3a_grrat5th Peta %.3f
+3a_grrat6th Šesta %.3f
+3a_grrat7th Sedma %.3f
+3a_grginfop Info
+3a_grgcolou Barve
+3a_grgbrake Zavore
+3h_grgbrktc Zavore / TC
+3a_grgsuspe Podvozje
+3a_grgsteer Upravljanje
+3a_grgfinal Prenos
+3a_grgtyres Gume
+3a_grgdownf Downforce
+3a_grgpasse Potniki
+3a_pssfront spredaj
+3a_pssrleft zadaj levo
+3a_pssrmidd zadaj sredina
+3a_pssrrght zadaj desno
+3a_whlscolt Kolesa
+3a_bodycolt Karoserija
+3a_texnamet Ime teksture
+3a_maxperwt Max po kolesu %.0f Nm
+3g_b_bal_fr Zavorno ravnotežje (spredaj) %.0f%%
+3h_engbrred Redukcija zaviranja z motorjem %.0f%%
+3h_tcmaxslp TC dovoljeno zdrsavanje %.1f%%
+3h_tcminspd TC Najmanjša hitrost %.0f m/s
+3h_abs_text ABS
+3g_ridehred Nastavitev višine
+3a_brkmotrg [Obseg gibanja %.3f m]
+3g_livecamb v živo (L / R) %+.2f° / %+.2f°
+3g_stif_val Trdota %.1f kN/m
+3g_damp_val Amortizacija %.1f kNs/m
+3g_bump_val Amortizacija udara %.1f kNs/m
+3g_rebd_val Amortizacija raztezanja %.1f kNs/m
+3g_arol_val Stabilizator %.1f kN/m
+3h_power_st Power Steering %.0f%%
+3a_maxlkval Max obrat %.1f°
+3g_castrval Nagib nazaj %.1f°
+3a_inclnval Inklinacija %.2f°
+3g_prllsval Paralelno upravljanje %.0f%%
+3g_toeinval Zaprtost %+.1f°
+3g_camb_abs Nagib (levo / desno) %+.1f° / %+.1f°
+3g_camb_adj Nastavitev nagiba (L / D) %+.1f° / %+.1f°
+3a_fnldvval Skupni stek %.3f
+3g_ftrqsplt Prednja porazdelitev navora %.0f%%
+3g_fvistorq Viskozni navor %.0f Nms/rad
+3g_lock_one Blokada %.0f%%
+3g_lock_o_o Blokada (z plinom / brez plina) %.0f%% / %.0f%%
+3h_dpreload Prenalaganje %.0f Nm
+3g_frnt_txt Sprednji
+3g_cent_txt Srednji
+3g_rear_txt Zadnji
+3g_press_lr Pritisk (L / D) %.0f kPa / %.0f kPa
+3g_conv_psi psi (L / D) %.1f psi / %.1f psi
+3g_conv_bar bar (L / D) %.2f bar / %.2f bar
+3g_fwingang Kot sprednjega spojlerja %.0f°
+3g_rwingang Kot zadnjega spojlerja %.0f°
+3h_tc_title Kontrola trenja
+3g_stra_txt Strategija
+3g_fuel_sta GORIVO kolièina na štartu : %.0f%%
+3g_fuel_pit GORIVO kolièina na postanku : %.0f%%
+3g_tyre_lim GUME zamenjava : potrošene > %.0f%%
+3g_tyre_all GUME zamenjava : vedno
+3g_tyre_nev Zamenjaj gume : nikoli
+3h_rep_damg Popravilo poškodbe : %s
+3h_setup_ch Potrebna sprememba nastavitev
+3h_handicap Handicaps
+3h_hcapnone BREZ
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% omejitev
+3h_vol_tres Voluntary Omejitev Dotoka %.0f%%
+3h_vol_mass Voluntary Dodana Masa %.0f kg
+3h_mass_pos Dodana Pozicija Mase (spredaj) %.0f%%
+3g_symmetri simetrièno
+3g_asymmetr asimetrièno
+3g_configur Konfiguracija
+3g_cpct_x_l Kapaciteta tanka za gorivo : %.1f litrov
+3g_optt_x_d Optimalna temperatura %.0f°
+3g_tst_x_ms Testna hitrost %.1f m/s
+3g_rearwing Zadnji spojler
+3g_frntwing Prednji spojler
+3g_undrtray Podvozje
+3g_bodyaero Karoserija
+3g_totlaero Skupaj
+3g_lift_x_n Vzgon:%.0fN
+3g_drag_x_n Upor:%.0fN
+3g_car_tn_x Obrat volana avtomobila %.0f° (od zaèetka do konca)
+3g_con_tn_x Obrat volana kontrole %.0f°
+3g_live_cmb Nagib : %+.2f
+3g_live_inc Zator : %.2f
+3g_live_cst Nagib osi : %.2f
+3g_live_scr Trenje : %.3f
+3g_live_trk Širina sledi : %.3f
+3g_susrigid Robustno
+3g_sustrail Rame
+3g_susffork Sprednje vilce
+3g_susmacph Macpherson rame
+3g_susdwish Dvojna vilice
+3g_pit_inst Boks inštrukcije
+3g_live_set Nastavitve v živo
+3g_wheels_x KOLESA SO %s
+3g_l_tt_x_x GUME tip %s [%s]
+3g_l_pr_psi PRITISK %.1f psi [%+.1f psi]
+3g_l_pr_bar PRITISK %.2f bara [%+.2f bar]
+3g_l_cr_adj ZAMENJAVA NAGIBA %.1f° [%+.1f°]
+3g_l_cr_abs NAGIB %.1f° [%+.1f°]
+3g_l_wg_ang SPOJLER %.0f° [%+.0f°]
+3h_estcolon Približek :
+3g_fl_pc_pl %.1f%% po krogu
+3g_fl_pc_it %.1f%% v tanku
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn Neznana proga
+3a_trcknofn Proga ni najdena
+3a_trckobso Zastarela proga
+3a_fnshload KONÈANO
+3a_prgprelo Prenalaganje
+3a_prgldtex Nalaganje tekstur
+3a_prgpaths Poti
+3a_prgcolrs Barve
+3a_prgdupli Duplikatorji
+3a_prglgtsc Svetlobne sheme
+3a_prgrdobs Branje objektov
+3a_prglgtin Podatki o osvetlitvi
+3a_prgbmptx Bump teksture
+3a_prginicl Inicializacija barv
+3a_prgchpts Kontrolne toèke
+3a_prgextra Dodatni podatki
+3a_prgstobs Štartni objekti
+3a_prgmapsq Kvadrati mape
+3a_prgpthin Inicializacija poti
+3a_prgpthad Prilagojevanje poti
+3a_prgrebld Obnavljanje
+3g_prggener Ustvarjanje
+3a_spcpres1 (pritisnite 1)
+3a_autojblk Ne morem se prikljuèiti : Štart je blokiran
+3a_xcomplvt %s^8 je dokonèal glasovanje
+3a_maxgcarx Max avtomobilov gostov : %d
+3a_maxhcarx Max avtomobilov serverja : %d
+3a_cf_swpsd zamenjava strani
+3a_cf_gopit boks
+3a_cf_chqul zamenjaj èas kvalifikacij
+3a_cf_chlap zamejaj število krogov
+3a_cf_chwin zamenjaj veter
+3b_cf_finfo zamenjaj info
+3a_upc_male %s^8 je zamenjal kontrole
+3a_upc_fmal %s^8 je zamenjala kontrole
+3a_upc_unkn %s^8 je spremenil kontrole
+3a_x_no_car %s^8 nima avtomobila
+3a_x_alredy %s^8 že ima avto
+3a_x_lftpot %s^8 prihaja iz garaže
+3a_w_rd_rly ^6Opozorilo : cestne gume na rally progi
+3a_w_rly_rd ^6Opozorilo : rally gume na cesti
+3a_unkcdisc Neznan avto - igralec je odklopljen
+3a_modcdisc Modificiran avto - igralec je odklopljen
+3a_nocrukid Ne morem dodati info o avtu - neznan ID
+3a_xrenamex %s^8 zamenjal ime v %s
+3g_xtakovrx %s^8 namesto %s
+3g_xwantuto %s^8 Želi da prevzamete
+3g_xwantsto %s^8 Želi namesto vas
+3g_oswapend Voznike lahko zamenjate samo po konèanem pit stop-u
+3a_nosharnm Ne morete imeti isto ime kot drug igralec
+3a_trkloadd Proga naložena
+3a_x_pitted %s^8 šel v bokse
+3g_x_pitstp %s^8 opravil pit stop
+3a_x_conn_x %s^8 je priklopljen (%s^8)
+3a_x_connec %s^8 je priklopljen
+3g_x_blkmsg %s^8 je blokiral sporoèila
+3g_x_unblkm %s^8 je odblokiral sporoèila
+3a_newgconn Nov gost se priklaplja
+3a_gfailcon Nov gost se ni uspel priklopiti
+3g_waitplyc Prosim poèakajte - igralec se priklaplja
+3h_waitbuff Izogib buffer overflow
+3a_xss_male %s^8 je poslal svoje nastavitve
+3a_xss_fmal %s^8 je poslala svoje nastavitve
+3a_xss_unkn %s^8 je poslal nastavitve
+3a_packs_ps Paketov na sekundo : %d
+3a_noqual_x Ne morete se kvalificirati - %s
+3a_no_x_plc Ne morem %s - igralec se priklaplja
+3a_no_x_cht Ne morem %s - menjava proge
+3g_no_x_car Ne morem %s - avto je na progi
+3a_novotepg Glasovanje ne poteka
+3h_vote_kic %s^8 glasoval za izvrženje %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 glasoval za blokiranje %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 potekel èas
+3a_lostcn_x Zveza z %s^8 prekinjena
+3a_x_discon %s^8 odklopljen
+3g_x_kicked %s^8 je bil izvržen
+3g_x_banned %s^8 je bil blokiran
+3a_rmvxbadc odstranjen %s^8 (slaba povezava)
+3a_qulfauto Avtokros
+3a_qulfprac Vaja
+3a_qulfnote Ni na voljo
+3g_skinnotf Skin vašega avta ni najden na ^7www.lfsworld.net
+3g_helmnotf Skin èelade ni najden na ^7www.lfsworld.net
+3g_updatset Nastavitve posodobljene
+3g_fastlxxx Najhitrejši krog : %s vozi %s^8 (%s)
+3g_no_reset Reset avta na tem serverju ni dovoljen
+3g_cant_res Ni mogoèe resetirati - %s
+3g_too_dang Preveè nevarno
+3g_could_ha možen trk z drugim avtom
+3g_could_hr možen trk z pravkar resetiranim avtom
+3g_would_ye bi povzroèilo rumeno zastavo
+3a_obsolvid Zastarel video
+3a_vidlater Video ni narejen z novo verzijo
+3a_htlpinvl Hitri krog ni veljaven (%s)
+3a_hli_grnd zemlja
+3a_hli_wall zid
+3a_hli_obje objekt
+3a_hli_wron napaèna smer
+3h_hli_spee prekoraèena hitrost
+3a_ptp_locl lokalni
+3a_ptp_remt oddalj.
+3a_ptp_lcai ai (L)
+3a_ptp_rmai ai (R)
+3a_rsk_noob ZAÈETNIK
+3a_rsk_lrnr UÈENEC
+3a_rsk_okok DOBER
+3a_rsk_quik HITER
+3a_rsk_prof PRO
+3a_x_finish %s^8 je prišel na cilj
+3a_x_finplc %s^8 je prišel na cilj %s
+3g_x_fin1be %s^8 je prišel 1 kroz pozneje
+3g_x_finxbe %s^8 je prišel %d krogov pozneje
+3g_x_conplc %s^8 - konèna pozicija : %s
+3g_x_disqua %s^8 je diskvalificiran
+3a_x_wonrac %s^8 je zmagal
+3a_max3locl Najveè 3 lokalni igralci
+3a_fnshuncl neklasificiran
+3a_fnsh_1st 1. mesto
+3a_fnsh_2nd 2. mesto
+3a_fnsh_3rd 3. mesto
+3a_fnsh_4th 4. mesto
+3a_fnsh_5th 5. mesto
+3a_fnsh_6th 6. mesto
+3a_fnsh_7th 7. mesto
+3a_fnsh_8th 8. mesto
+3a_fnsh_9th 9. mesto
+3a_fnsh10th 10. mesto
+3a_fnsh11th 11. mesto
+3a_fnsh12th 12. mesto
+3a_fnsh13th 13. mesto
+3a_fnsh14th 14. mesto
+3a_fnsh15th 15. mesto
+3a_fnsh16th 16. mesto
+3g_fnsh17th 17. mesto
+3g_fnsh18th 18. mesto
+3g_fnsh19th 19. mesto
+3g_fnsh20th 20. mesto
+3g_fnsh21st 21. mesto
+3g_fnsh22nd 22. mesto
+3g_fnsh23rd 23. mesto
+3g_fnsh24th 24. mesto
+3g_fnsh25th 25. mesto
+3g_fnsh26th 26. mesto
+3g_fnsh27th 27. mesto
+3g_fnsh28th 28. mesto
+3g_fnsh29th 29. mesto
+3g_fnsh30th 30. mesto
+3g_fnsh31st 31. mesto
+3g_fnsh32nd 32. mesto
+3a_wlcm_lfs Dobrodošli v Live for Speed
+3a_agre_lfs Sporazum
+3a_overwrex Presnemi obstojeèo datoteko?
+3g_deleteex Zbrišem obstojeèo datoteko?
+3g_newnamef Vpiši novo ime datoteke
+3g_filealre Datoteka že ostaja
+3g_cnotfind Ne najdem datoteke
+3a_layoutsv Vnesi ime za shranjenje layouta
+3a_windocon Okno med priklopom :
+3a_cancelbt prenehaj
+3a_backbutt nazaj
+3a_capitlok OK
+3a_capitlgo POJDI
+3a_invldstr narobe
+3a_cpfinish KONÈAL
+3a_cpwinner ZMAGOVALEC
+3a_namepass Uporabniško ime in koda
+3a_validnam Morate vnesti veljavno uporabniško ime
+3a_validpas Morate vnesti veljavno kodo
+3a_passmin8 Koda mora imeti vsaj 8 znakov
+3a_shifttyp Vrsta menjalnika :
+3a_autogear Avtomatièni menjalnik :
+3a_notiming - krogi ne bodo èasovno merjeni
+3a_stilload Proga se še nalaga
+3a_waitlist Èakam list iger
+3a_wt_ginfo Èakam info o igri
+3a_connmast Povezovanje z glavnim serverjem
+3a_waitmrep Èakam odgovor glavnega serverja
+3a_waithrep Èakam odgovor serverja
+3a_waitinfo Èakam info
+3a_masterro Napaka pri èakanju odgovora
+3a_mnoreply Ni odgovora od glavnega serverja
+3a_waitginf Èakam info gostov
+3a_waitpinf Èakam info iger
+3a_waitmsgs Èakam prva sporoèila
+3a_connhost Priklapljanje na server
+3a_conn_udp Ustvarjanje UDP povezave
+3a_openserv Odpiranje server socket-a
+3a_unexmstr Naprièakovan glavni paket
+3a_unexsrvr Naprièakovan paket serverja
+3a_unexgest Naprièakovan paket gosta
+3a_numg_oob Premajhno dovoljeno št gostov
+3a_errrhost Napaka pri odgovarjanju serverju
+3a_unextrak Naprièakovana zamanjava proge
+3a_unkntrak Naprièakovana napaka s progo
+3a_unexpack Neprièakovana velikost paketa
+3a_unexrepl Neprièakovan odgovor
+3a_gmnmused Ime igre se že uporablja
+3a_errmthrd Ne morem ustvariti glavna povezava
+3a_lostmast Izgubljena povezava z glavnim serverjem
+3a_losthost Izgubljena zveza z serverjem
+3g_notisync Zaèetna sinhronizacija ni uspela
+3g_lostsync Sinhronizacija z serverjem izgubljena
+3a_connecto Potekel èas priklapljanja
+3a_noconnsl Ni prostih mest pa priklop
+3a_nookpack Ni sprejet OK
+3a_waitfook Èakam OK
+3a_waittrak Èakam info o progi
+3a_notrakpk Ni sprejet info o progi
+3a_loadtrak Nalagam progo
+3a_chglight Sprememba osvetljevanja
+3a_ply_join Priklaplja se nov igralec
+3a_nochrace Proga se ne more zamenjati dokler traja dirka
+3g_trnoallo %s ni omogoÈeno na tem serverju
+3a_chgtrack Menjava proge
+3h_welcomex Dobrodosli v Live for Speed %s
+3a_small_no ne
+3a_smallyes ja
+3h_smallaut auto
+3h_smallnev nikoli
+3h_smallask vprašaj
+3h_smallalw vedno
+3a_smalloff izklopljeno
+3a_smalreal realni
+3a_smalvrtl virtualni
+3a_smalleft levo
+3a_smalrght desno
+3a_smalnone niè
+3a_smaltext napis
+3a_smallall vse
+3a_smallman moški
+3a_smallwmn ženska
+3h_smallb16 16 bit
+3h_smallb32 32 bit
+3a_smlnobrk [ne]
+3a_smlysbrk [ja]
+3a_smlofbrk [izklopljeno]
+3a_smlonbrk [vklopljeno]
+3a_actobjct objekt
+3a_actstart štartna pozicija
+3a_actfinsh ciljna èrta
+3a_actchck1 1. prehod
+3a_actchck2 2. prehod
+3a_actchck3 3. prehod
+3g_actcircl krog
+3a_actnofin Ni ciljne èrte
+3a_actnochk Ni prehodnih toèk
+3a_actfnnoc Ciljna èrta brez prehodnih toèk
+3a_accpxnof Prehodna toèka %d ni najdena
+3a_aconechk Avtokros : 1 prehod
+3a_acxchckp Avtokros : %d prehoda
+3a_noloadsk Ne morem naložiti skin-a :
+3a_wrngfltp Napaèen tip datoteke
+3a_cnocolon Ne morem odpreti dototeko :
+3a_outcnopn Izhod : Ne morem odpreti datoteko
+3d_outnoply Izhod : Voznik avtomobila ni najden
+3d_outstart Izhod : Zaèel krog
+3d_outfinis Izhod : Konèal
+3a_corruptf Poškodovana datoteka
+3a_filenohc Preveri glavo datoteke-napaka :
+3g_filetoos Datoteka je prekratke:
+3g_filecorr Datoteka je pokvarjena :
+3g_err_read Napaka pri branju datoteke :
+3g_notpcmwv Wave ni v PCM formatu:
+3g_srnotsup Sample rate ni podpiran :
+3g_wv_mo_st Wave ni niti mono niti stereo :
+3g_wavemb16 Wave ni 16-bit :
+3g_wavetool Wave je predolg :
+3a_latervfl Datoteka ustvarjena z novejšo verzijo :
+3a_nocrtfil Ne morem ustvariti datoteke :
+3a_votecanc Glasovanje je prekinjeno
+3a_nocrtmpr Ne morem ustvariti MPR datoteko
+3a_savedmpr Shranjen MP posnetek -
+3a_nocrtspr Ne morem ustvariti SPR datoteko
+3a_savedspr Shranjen SP posnetek -
+3a_nornmspr Ne morem preimenovati SPR-ja -
+3a_accesden Vstop zavrnjen
+3a_invalchr Neveljavni znaki
+3a_notfound Ni najden
+3a_unknowne Neznana napaka
+3g_downcanc Download preklican
+3g_filesize Napaèna velikost datoteke
+3g_highresd Download skinov visoke loèljivosti :
+3g_nolfswcr Premalo LFS World kredita za skine visoke loèljivosti
+3g_dbnotava Baza skinov visoke loèljivosti ni na voljo
+3a_entermsg Vpišite sporoèilo
+3g_seldefcp Izberite default kodno stran
+3a_ctabshwr CTRL+TAB - prikaži rezulrate
+3a_shf8nwdb SHIFT'F8 - mrežni debug - %s
+3a_newvalfx Vnesi novo vrednost za %s
+3a_valtoolo Nova vrednost je premajhna
+3a_valtoohi Nova vrednost je prevelika
+3a_endoqual KONEC KVALIFIKACIJ
+3a_ctrcclip CTRL+C - miška je omejena na podroèje
+3a_ctrcfree CTRL+C - miška je neomejena
+3a_windotxt okno
+3a_fullstxt celoten zaslon
+3g_not_demo ni na voljo v DEMO naèinu
+3h_noraceln Idealna linija ni na voljo
+3g_time_loc lokalno
+3g_time_utc UTC
+3a_namelong Ime je predolgo
+3a_noconnms Na morem se prikljuèiti na glavni server
+3a_wrninsta Opozorilo : Druga LFS je že zagnana
+3g_lfsbuyon Live for Speed - kupite online - ^7www.lfs.net
+3g_comentry Ukaz je le za uvodni zaslon
+3g_insimnop InSim ni odprt
+3g_comguest Ukaz je ua multiplayer gosta
+3g_comsetup Ukaz je za meni nastavitev
+3g_comnoded Ukaz je za namenski server
+3g_unknwnai Neznan AI voznik
+3g_drv_alrd Voznik je že v dirki
+3g_drv_noin Voznik ni v dirki
+3g_setup_nf Nastavitve niso najdene
+3g_colournf Barva ni najdena
+3g_scrtooma Preveè skript
+3g_scrtoolo Skripta je predolga
+3g_scrempty Skripta je prazna
+3g_un_axs_f Neznana funkcija osi
+3g_un_key_f Neznana funkcija tipke
+3g_un_btn_f Neznana funkcija gumba
+3g_xlnxtool %s : linija %d je predolga
+3g_x_ln_x_x %s : linija %d - %s
+3g_cantopen Ni možno odpreti: %s
+3g_notallow Ni dovoljeno: %s
+3h_cp_latin Latinsko 1
+3h_cp_cente Centralna Evropa
+3h_cp_turki Turško
+3h_cp_balti Baltiško
+3h_cp_japan Japinsko
+3h_cp_cyril Cirilica
+3h_cp_greek Grško
+3h_cp_tr_ch Tradicionalno Kitajsko
+3h_cp_si_ch Splošno Kitajsko
+3h_cp_korea Korejsko
+3a_hostfull Server je poln
+3a_hostload Server nalaga progo
+3a_plyrconn Drugi igralec se že priklaplja
+3g_plydisco Drugi igralec se odklaplja
+3h_racstart Dirka se zaèenja
+3a_unauthcn Neodobrena povezava
+3a_useronli Uporabniško ime je že online
+3h_userband Uporabnisko ime je trenutno banned
+3a_usernofd Vaše uporabniško ime ni najdeno
+3a_pwnomtch GAME koda se ne ujema
+3g_pwneeded Morate uporabiti GAME kodo
+3h_unlkused Odklepi za ta teden so porabljeni
+3h_unpwconf Uporabnisko ime in koda potrjena
+3a_unknwerr Neznana napaka
+3a_carnomtc Avtomobili niso isti kot na serverju
+3a_nodbljon Ni dvojnega vstopa na Internetni server
+3a_hlostmst Server je izgubil glavno povezavo
+3a_wrngpass Napaèna koda
+3a_prvreqps Privatni server zahteva kodo
+3a_usrunknw Neznano uporabniško ime
+3a_usrnotol Uporabnik ni najden online
+3a_usrolhid Uporabik je online na skritem serverju
+3g_usrol_s1 Uporabnik je online na S1 serverju
+3g_usrol_s2 Uporabnik je online na S2 serverju
+3g_usrol_s3 Uporabnik je online na S3 serverju
+3a_hostrefu Serverj je odbil povezavo
+3a_hstdiffv Server je na drugaèni verziji
+3a_hstdiffc Server ima drugaèen Game Code
+3a_hstis_s1 Server je Live for Speed S1
+3g_hstis_s2 Server je Live for Speed S2
+3g_hstis_s3 Server je Live for Speed S3
+3a_hstisdmo Server je Live for Speed DEMO
+3a_hstunknr Neznan odgovor serverja
+3a_hstnomst Server ni najden na glavnem serverju
+3a_nameused Ime je že uporabljeno
+3a_racefull Dirka je polna
+3g_nomidjoi Na tem serverju je vstop med dirko onemogoèen
+3b_usermeet Uporabnik je v sobi za sestanke
+3b_unkncomm Neznan ukaz
+3h_unknwver Neznana verzija
+3b_reqparam Ta ukaz potrebuje parametre
+3b_req2pars Ta ukaz potrebuje 2 parametra
+3e_notenpar Premalo parametrov
+3b_unknwtrk Neznan parameter o progi
+3e_unknwcar Neznan parameter o avtu
+3b_unoadmin Nimate admin pravic
+3b_kbinvalu Uporabniško ime ni veljavno
+3b_invalpar Parameter ni veljaven
+3g_ptoolong Parameter je predolg
+3g_notfound Datoteka ni najdena
+3e_setuponl Ukaz samo za meni nastavitev
+3e_axnofind Ne morem odpreti layout
+3e_axnoneav Ni layout-a za to progo
+3e_kbnoload Ne morem naložiti datoteke
+3e_kbnosave Ne morem shraniti datoteke
+3g_tooearly Prehitro je za ponovni štart dirke
+3g_pplracin Nekateri še vedno dirkajo
+3h_notrxudp Gostitelj ni prejel UDP paketa
+3h_nomultij Izogibanje veèim zahtevam za pridružitev

@@ -1,0 +1,1720 @@
+LFS Translation file (Nederlands)
+Translated by: illegal, traxxion
+
+tx_codepage 1252
+tx_langname Nederlands
+tx_noun_adj an
+3g_tr_selct Oefenen
+3g_tr_title Selecteer Les
+3a_spselect Enkele speler
+3a_tit_sply Enkele Speler
+3a_mpselect Multiplayer
+3a_tit_mply Multiplayer
+3a_hlselect Hotlap
+3a_tit_hotl Hotlap
+3a_opselect Opties
+3g_repl_sel Replays
+3a_tit_sprs Enkele Speler Replays
+3a_tit_mprs Multiplayer Replays
+3g_unlk_lfs Live for Speed unlocken
+3g_demorace Demo racer
+3h_x_licens %s licentie
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Download Skins uit Replay
+3g_one_notf Eén van de skins in de replay is niet op je computer aangetroffen
+3g_sev_notf Een aantal skins in de replay zijn niet op je computer aangetroffen
+3g_one_down Wil je de ontbrekende skin downloaden?
+3g_sev_down Wil je de ontbrekende skins downloaden?
+3a_exit_btn sluit
+3a_next_btn volgende
+3g_agre_btn ik ga akkoord
+3a_exitprog Sluit programma?
+3a_userfind Naam van gebruiker die je wilt vinden
+3h_num_tips %d Tips
+3h_tip_pesc Gebuik de ^7ESC^8-knop in het spel of het setupscherm om een lijst met opties te krijgen
+3h_tip_prst Druk op de ^7T^8-knop om een teksbericht te typen in een multiplayer spel
+3h_tip_ffwr Het gebruik van een force feedback stuurwiel wordt aangeraden
+3h_tip_rtcg Laat de gaspedaal los bij het schakelen zodat de koppeling niet oververhit raakt
+3h_tip_brak Gebruik je remmen op het juiste moment voor een bocht...
+3g_hdr_name Naam v/d Les
+3g_hdr_diff Moeilijkheid
+3g_hdr_mode Modus
+3g_dif_easy Gemakkelijk
+3g_dif_medi Gemiddeld
+3g_dif_hard Moeilijk
+3g_lsn_firs eerste les
+3g_lsn_next volgende les
+3g_lsn_trya probeer opnieuw
+3g_lsn_fini beëindigd
+3g_tit_obje ^7DOEL
+3g_tit_purp ^7WAAROM?
+3g_tit_tips ^7TIPS
+3g_tit_targ ^7RICHTTIJDEN
+3g_not_time Je bent niet op tijd gefinisht!
+3g_not_fini Je hebt de les niet uitgereden!
+3g_comp_but Je hebt de les uitgereden, maar...
+3h_false_st - Je bent te vroeg gestart (voor groen licht)
+3g_too_long - Je bent niet op tijd gefinisht
+3g_coll_car - Je hebt een andere wagen aangeraakt
+3g_wrong_rt - Je nam de verkeerde route
+3g_hit_1_ob - Je bent tegen een object gereden
+3g_hit_x_ob - Je bent tegen %d objecten gereden
+3g_not_fast - Je reed niet snel genoeg aan de controlepost
+3g_slo_stop - Je bent niet op tijd gestopt
+3g_exce_spd - Je hebt de maximumsnelheid in de pits overschreden
+3g_nopitstp - Je hebt geen pitstop gemaakt
+3g_not_long - Je bent niet lang genoeg blijven staan
+3g_congrats Proficiat! Je bent in de test geslaagd!
+3g_stndrd_x Voor deze les is je standaard : %s
+3g_lsnunl_x Je moet %s unlocken voor deze les
+3a_nocarsel Geen wagen geselecteerd
+3a_araceinp Een race is bezig
+3a_plydisco Gast zal worden uitgesloten
+3a_leavgame verlaat host
+3a_playrbtn Coureur
+3a_garagbtn Garage
+3a_trackbtn Circuit
+3a_tit_trak Circuit
+3a_load_brk [laden]
+3a_gene_brk [wordt gemaakt]
+3a_notr_brk [geen circuit]
+3a_endonlin Stop online host?
+3a_levonlin Verlaat online host?
+3a_swap_pos ruil positie
+3a_joinrace deelnemen
+3a_addaidrv voeg AI coureur toe
+3a_setready zet klaar
+3a_starthdr Startposities
+3a_skillhdr Moeilijkheidsgraad
+3a_race_hdr Race
+3a_readybtn klaar
+3a_localsml lokaal
+3a_vhostsml via host
+3g_adminsml admin
+3a_dirctsml direct
+3a_no_track geen circuit
+3a_nodriver geen coureurs
+3a_carerror wagenfout
+3a_raceinpr race is bezig
+3a_remvplyr Verwijderen coureur
+3a_no_quali geen kwalificatie
+3a_qual1min kwalificatie 1 minuut
+3a_qualxmin kwalificatie %d minuten
+3a_practice oefening
+3a_race1lap race 1 ronde
+3a_racexlap race %d ronden
+3a_race1hou race 1 uur
+3a_racexhou race %d uren
+3a_zerowind geen wind
+3a_low_wind weinig wind
+3a_highwind veel wind
+3a_nosamenm Lokale coureurs mogen niet dezelfde naam hebben
+3a_ac_onest Autocross : maar één startpositie
+3a_ac_fixlp Autocross : bepaald aantal ronden
+3h_kickplyr Kick gast %s^8? (%s^8)
+3h_howlongb %s^8 voor hoeveel dagen bannen? (%s^8)
+3h_ainodriv AI coureurs kunnen deze configuratie niet gebruiken
+3h_ainoxral AI coureurs kunnen de %s niet gebruiken op rallycross configuraties
+3h_ainoxcfg AI coureurs kunnen de %s niet gebruiken op deze configuratie
+3a_cdntsvst Kan de instellingen niet opslaan
+3a_sent_set Setup verzonden
+3a_plynotfd Coureur niet gevonden
+3a_carnotfd Wagen coureur niet gevonden
+3a_namsetsv Naam van SETUP om OP TE SLAAN
+3h_gridsave Geef een naam om de startlijst op te slaan
+3h_gridload Selecteer de te laden startposities
+3h_xremovex %s^8 heeft %s^8 van de startlijst verwijderd
+3a_endgmbtn beëindig host
+3a_leavebtn verlaat
+3g_endr_btn beëindig race
+3g_spec_btn toekijken
+3h_qual_btn kwalificeren
+3h_rest_btn herstarten
+3h_pits_btn pits
+3g_join_btn neem deel
+3g_play_btn afspelen
+3a_namesort naam
+3a_datesort datum
+3a_car_caps Wagen
+3a_newbtset Om persoonlijke instellingen te maken, druk op 'Nieuwe setup'
+3a_selplset Kan [default] niet veranderen - selecteer persoonlijke setup
+3a_newbtcol Om persoonlijke kleuren te maken, druk op 'Nieuwe kleuren'
+3a_selplcol Kan [default] niet veranderen - selecteer persoonlijke kleuren
+3a_sets_hdr Setups wagen
+3a_cols_hdr Kleuren wagen
+3a_new_setb Nieuwe setup
+3a_new_colb Nieuwe kleuren
+3a_savedset Instellingen opgeslagen
+3a_savedcol Kleuren opgeslagen
+3a_new_butt Nieuw
+3a_del_butt Verwijder
+3a_undo_btn Annuleren
+3g_rename_b Hernoem
+3h_clear_bt Wissen
+3a_drvr_hdr Coureur
+3a_frce_hdr Kracht
+3g_fuel_hdr Brandstof
+3g_susp_hdr Ophanging
+3a_out_butt Uit
+3a_in_buttn In
+3a_off_butt Uit
+3a_on_buttn Aan
+3a_stop_btn Stop
+3a_drop_btn Laat vallen
+3a_namenset Naam voor nieuwe setup
+3g_newnmset Geef nieuwe naam voor setup
+3a_setnodel De setup kan niet verwijderd worden
+3a_deletset Verwijder setup?
+3a_setnonam Kan geen setup maken zonder naam
+3a_namencol Naam voor nieuw kleurschema
+3h_newnmcol Geef een nieuwe naam voor de kleur
+3a_colnodel Het kleurschema kan niet verwijderd worden
+3a_deletcol Verwijder kleur?
+3a_colnonam Kan geen kleuren maken zonder naam
+3a_carninvl Naam van de huidige wagen is onjuist
+3a_sel_skin Selecteer Skin
+3a_drv_none Geen aandrijving
+3a_drv_fron Achterwielaandrijving
+3a_drv_rear Voorwielaandrijving
+3a_drv_four Vierwielaandrijving
+3g_dif_open OPEN DIFF
+3g_dif_lock GESLOTEN DIFF
+3g_dif_visc VISCOSE LSD
+3g_dif_clsd KOPPELINGSPAK LSD
+3a_no_creds Geen credits
+3a_one_cred 1 credit
+3a_xx_creds %d credits
+3g_host_dis Deze host laat je niet toe met de %s te rijden
+3h_ndxmdcax Je moet in %s mode zijn om de %s te kunnen gebruiken
+3h_ndulxcax Je moet LFS %s unlocken om de %s te kunnen gebruiken
+3g_all_caps ALLE
+3g_newnmrep Geef nieuwe naam voor replay
+3g_repnodel De replay kan niet verwijderd worden
+3g_deletrep Verwijder replay?
+3g_repnonam Kan geen replay maken zonder naam
+3g_set_sh_x Instellingen voor %s :
+3a_rght_brk [rechts]
+3a_left_brk [links]
+3a_plyrname Naam coureur :
+3g_otherply Andere coureurs :
+3a_numplate Nummerplaat :
+3a_countryc Land :
+3a_poschoos Positie coureur :
+3a_speedcho Snelheidsaanduiding :
+3a_pressure Drukaanduiding :
+3g_lang_cln Taal :
+3g_font_cln Lettertype :
+3g_wght_cln Lettertype gewicht :
+3g_adnewply voeg nieuwe coureur toe
+3g_dlselply Verwijder deze coureur?
+3g_enterply Naam voor nieuwe coureur
+3g_plyexist Coureur bestaat al
+3g_newnamex Geef een andere naam voor coureur : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/u]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Remhulp :
+3a_autoclch Automatische koppeling :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Breedbeeldeffect :
+3a_clipwndo Muis vast in venster (CTRL + C) :
+3a_clipflsc Muis vast in scherm (CTRL + C) :
+3a_leftscrn linkerscherm
+3a_rghtscrn rechterscherm
+3a_keyshpls Toewijzing toetsen (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful venster / volledig scherm
+3a_shf4togg SHIFT + F4 : schakelen tussen venster en volledig scherm
+3a_shxalrdy SHIFT + F%d is al aan een modus toegekend
+3a_assxmodx Ken SHIFT + F%d toe aan %s modus?
+3a_unkntype onbekend
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Instellingen %s zicht :
+3a_vw_incar in wagen
+3b_vw_custm anders
+3a_ishwdywy [coureur AAN stuur AAN]
+3a_ishwdnwy [coureur UIT stuur AAN]
+3a_ishwdnwn [coureur UIT stuur UIT]
+3a_oht_none [geen]
+3a_oht_splt [tussentijden]
+3a_normlfov Zichtveld %.0f° :
+3h_onebutlk Met enkele knop %.0f° rondkijken :
+3a_pitchviw Hoek v/h zicht %.2f° :
+3b_rotatviw Draai zicht %.2f° :
+3g_mirror_x Laterale spiegelcompensatie %.3f m :
+3g_mirror_z Verticale spiegelcompensatie %.3f m :
+3a_tlt1gdeg 1g hoek v/h hoofd %.2f° :
+3a_shiftlat 1g laterale verschuiving %.3f m :
+3a_shiftfwd 1g voorwaartse verschuiving %.3f m :
+3a_shiftvrt 1g verticale verschuiving %.3f m :
+3a_moveanim Verschuif beeld met animatie :
+3a_defdrvvw Standaardzicht :
+3g_cvw_main Teken(hoofd-) :
+3b_cvsnthng geen getekend
+3b_cvswheel wielen
+3g_cvsdbody body
+3b_cvsexter extern
+3g_cvshelic heli
+3g_cvsfollo volgcamera
+3h_cvsuserv gebruiker
+3b_cvwxoffs X compensatie %.3f m :
+3b_cvwyoffs Y compensatie %.3f m :
+3b_cvwzoffs Z compensatie %.3f m :
+3g_c_defaul Standaardpositie
+3g_c_centre Middelpunt zicht
+3g_c_eyepos Oogpunt
+3g_cvw_high Hoogte %.1f m :
+3g_cvw_angl Hoek %.1f° :
+3g_cvw_dist Afstand %.1f m :
+3g_cvw_vlag Soepelheid %.1f sec :
+3a_drawdrwh Teken coureur / stuur :
+3a_lookfunc Kijkfunctie :
+3a_lookaxis as
+3a_lookstee stuur
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav Rondkijken met de muis kan alleen als de aanwijzer verborgen is
+3a_looksens Gevoeligheid zicht %.2f :
+3a_lookcred Centrale reductie zicht %.2f :
+3a_btnlooko Rondkijken met toetsen :
+3g_l_smooth vloeiend
+3g_l_instan direct
+3h_mainsfov Hoofdscherm FOV %.0f° :
+3h_monangle Schermhoek %.0f° :
+3h_viewoffs Zicht compensatie %.2f :
+3h_multiscl Layout meerdere schermen :
+3h_entnumls Aantal schermen LINKS
+3h_entnumrs Aantal schermen RECHTS
+3h_onecentr Een scherm in het midden
+3h_scwidths Schermbreedtes :
+3h_optequal gelijk
+3h_optunequ ongelijk
+3h_entsidep Breedte van zijscherm (pixels)
+3h_entmainp Breedte van hoofdscherm (pixels)
+3h_fullwext Volledige breedte extern zicht :
+3h_bezelcom Compensatie voor omlijsting %.1f%% :
+3h_resulfov Uiteindelijke zichtveld : %.1f°
+3h_fovinval Ongeldige instelling voor coureurszicht
+3h_drivuse1 Coureurszicht gebruikt een enkele render
+3h_drivusex Coureurszicht gebruikt %d renders
+3h_notwidex Niet wijd genoeg voor opstelling met %d schermen
+3h_extvfull Externe zicht gebruikt de volledige breedte
+3h_extvmain Externe zicht gebruikt het hoofdscherm
+3h_extvxxar Externe zicht gebruikt %d:%d formaat
+3h_extvass3 Opstelling met 3 schermen voor externe beelden
+3a_sml_newt nieuw
+3a_sml_name naam
+3a_sml_delt verw.
+3a_sml_undo annuleren
+3a_sml_save opslaan
+3a_sml_load laden
+3a_msctrcks Liedjes
+3a_exitnosv Verlaat zonder opslaan?
+3a_chmblost Wijzigingen kunnen verloren gaan
+3a_savedrad radio.rad opgeslagen
+3a_nodelstp Kan het gemaakte kanaal niet verwijderen
+3a_delchnlq Verwijder kanaal?
+3a_chanlnum Kanaal %d
+3a_msctrnum Lied %d
+3a_norenstp Kan naam gemaakte kanaal niet veranderen
+3a_newnmchn Nieuwe naam voor kanaal
+3a_play_num Speel : %s
+3a_fail_num Mislukt : %s
+3a_shftauto automatisch
+3a_shftsequ sequentieel
+3a_shftshft versnellingspook
+3g_shftffjo ff stick
+3h_transmis Versnellingen
+3h_box_hpat H-patroon versnellingsbak
+3h_box_bike motorfiets versnellingsbak
+3h_box_sequ sequentiële versnellingsbak
+3h_box_seqi sequentiële versnellingsbak met ontstekingsonderbreking
+3h_box_semi versnellingsbak met schakelknoppen
+3h_seq_hpat sequentiële bediening van H-patroon versnellingsbak
+3a_dc_combi gecombineerd
+3a_dc_separ afzonderlijk
+3a_dc_butts toetsen
+3a_axb_axis as
+3a_axb_butt toets
+3g_no_con_d Geen controllers gedetecteerd
+3g_xx_con_d %.0f controllers gedetecteerd
+3g_ct_unkno Onbekende controller
+3g_ct_first Eerste persoonscontroller
+3g_ct_steer Stuurwiel
+3g_ct_fligh Vliegtuigcontroller
+3g_ct_gamep Gamepad
+3g_ct_joyst Joystick
+3a_crrdcval Centrale reductie stuur %.2f :
+3g_whe_turn Wielen draaien %.0f° :
+3a_msbutt_1 Toetsen 1
+3a_mdbutt_2 Toetsen 2
+3e_kbt_mous [met muis]
+3e_kbt_nohe [toetsenbord - geen hulp]
+3e_kbt_stab [toetsenbord - gestabiliseerd]
+3a_mdaxesff Assen / FF
+3a_mdshiftr Schakelaar
+3a_kasteerl Stuur Links
+3a_kasteerr Stuur Rechts
+3e_kasteerl Stuur Snel
+3e_kasteerr Stuur Traag
+3a_kaaccelk Gaspedaal
+3a_kabrakek Rempedaal
+3a_kaleftvw Zicht naar links
+3a_karghtvw Zicht naar rechts
+3a_karearvw Zicht naar achteren
+3a_kashiftu Opschakelen
+3a_kashiftd Neerschakelen
+3a_kaclutch Koppeling
+3a_kahandbr Handrem
+3a_kahornkk Claxon
+3a_kaflashk Lichten
+3a_karesetk Reset Wagen
+3g_kapitspd Snelheidsbegrenzer
+3h_katcdisa Tractiecontrole
+3h_kaigniti Ontsteking
+3a_kazoom_i Zoom In
+3a_kazoom_o Zoom Uit
+3a_karevers Achteruitrijden
+3a_kafirstk Eerste
+3a_kasecond Tweede
+3a_kathirdk Derde
+3a_kafourth Vierde
+3a_kafifthk Vijfde
+3a_kasixthk Zesde
+3a_kasevent Zevende
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Stuur
+3a_aacombin Gas / Rem Gecombineerd
+3a_aathrott Gaspedaal
+3a_aabrakea Remmen
+3a_aalookhe Kijkrichting
+3a_aalookpi Kijkhoek
+3a_aalookro Kijkrol
+3a_aaclutch Koppeling
+3a_aahandbr Handrem
+3g_aashiftx Schalelaar Links-Rechts
+3g_aashifty Schakelaar Voor-Achter
+3a_prsxforx Druk op %s voor : %s (ESC - annuleer / DEL - geen)
+3a_smallkey toets
+3a_smallbut knop
+3a_mouse_kb muis / toetsenbord
+3a_wheel_js stuur / joystick
+3a_force_st Sterkte kracht %.0f :
+3a_thrbrkax Gaspedaal- / remassen :
+3a_clutchop Koppeling :
+3a_handbrko Handrem :
+3a_thrbrkrv Centrale redutie gaspedaal / rem %.2f :
+3a_btnratev Besturingswaarde knoppen %.2f :
+3a_kbsteero Toetsenbordbesturing :
+3a_strratev Stuurwaarde %.2f :
+3e_retratev Terugveerkracht %.2f :
+3e_strfastv Snel sturen multiplicator %.2f :
+3e_strslowv Traag sturen multiplicator %.2f :
+3a_prdtimev Voorspeltijd %.2f :
+3a_lmtmultv Limietmultiplicator %.2f :
+3a_selfunca Selecteer functie voor as
+3a_selaxfrx Selecteer as voor : %s (ESC - annuleer / DEL - geen)
+3a_availaxs Beschikbare Assen
+3a_axis_num as %d
+3a_invert_1 inversie 1
+3a_invert_0 inversie 0
+3a_frcfdbak Force feedback :
+3a_ffdevice FF apparaat :
+3g_ffshiftd FF schakelapparaat :
+3a_removedz Verwijder dode zones :
+3h_rec_axes assen opnieuw kalibreren
+3h_cal_lock vast
+3h_cal_unlk vrij
+3a_heyb_hdr Toetsenbord
+3a_whbt_hdr Stuurwielknoppen
+3a_ass_zero [Nul]
+3a_ass_mlft Muis Links
+3a_ass_mrgt Muis Rechts
+3a_ass_mmid Muis Midden
+3a_ass_whup Stuur Omhoog
+3a_ass_whdn Stuur Omlaag
+3a_ass_spac Spatie
+3a_ass_upar Pijl Omhoog
+3a_ass_dnar Pijl Omlaag
+3a_ass_rtar Pijl Rechts
+3a_ass_ltar Pijl Links
+3a_ass_pgup Page Up
+3a_ass_pgdn Page Down
+3a_butt_num knop %d
+3d_aamousex Muis X
+3d_aamousey Muis Y
+3d_aa_xaxis X-as
+3d_aa_yaxis Y-as
+3d_aa_zaxis Z-as
+3d_aarxaxis RX-as
+3d_aaryaxis RY-as
+3d_aarzaxis RZ-as
+3d_aaslidr1 Schuifbalk 0
+3d_aaslidr2 Schuifbalk 1
+3a_reskeysh gereserveerde toetsen
+3a_rswtch_r 1 - replay bekijken
+3a_rssave_r 2 - replay opslaan
+3h_showline 4 - geef racelijn weer
+3a_rsless_f < - minder kracht
+3a_rsmore_f > - meer kracht
+3a_rstab_ne TAB - volgende wagen
+3a_rshome_o HOME - eigen wagen
+3a_rstalk_t T - praat
+3a_rspausep P - pauze
+3a_rshistor H - geschiedenis
+3a_rsview_v V - zicht
+3a_rsforces F - krachten
+3a_rsnamesn N - namen
+3a_shftplus SHIFT +
+3a_shchhorn H - verander toeter
+3g_shshiftt G - schakel methode
+3a_shrescon C - herstel controllers
+3a_shressnd W - herstel geluid
+3a_shsoundo N - geluid aan / uit
+3a_shmirmod M - modus achteruitkijkspiegel
+3g_shhidetx F - verberg tekst
+3a_shuservw U - gebruikerszicht
+3a_shskiptn K - sla tune over
+3h_shshowmo Z - toon muis
+3b_shdriver F1 - coureurszicht
+3b_shslowrp F2 - vertraag replay
+3b_shfastrp F3 - versnel replay
+3a_shwindow F4 - venster
+3a_carsndvl Volume wagen (%.1f) :
+3a_skidvboo Volume wielspin (%.1f) :
+3g_windvboo Volume wind (%.1f) :
+3g_echovboo Volume echo (%.1f) :
+3a_mscvolum Muziekvolume (%.1f) :
+3g_msgvolum Interface volume (%.1f) :
+3a_mscsetup Muziek in setupschermen :
+3a_mscracin Muziek tijdens race :
+3a_mscrplay Muziek tijdens replays :
+3a_selecbrk [Geselecteerd]
+3a_noplybrk [Niets aan het spelen]
+3a_msc_skip Sla over
+3a_msc_sele Selecteer
+3a_ingmmusc Muziek in het spel
+3a_channels Kanalen
+3g_status_a Geluid (SHIFT + N) : %s
+3g_status_m Muziekbuffer : %s
+3g_status_c Geluidsbuffer : %s
+3a_relaybrk [relatief]
+3a_absolbrk [absoluut]
+3a_fps_disp Aanduiding framerate (fps) :
+3b_virtuals Toon virtuele startlichten :
+3a_mirrmode Spiegelmodus :
+3a_clokmode Wijzermodus :
+3g_fixedfwd Vast aan voorwaartse as :
+3g_accelmov Acceleratie verschuift het oogpunt :
+3a_showpeds Toon pedalen :
+3g_steerind Virtuele stuurindicator :
+3a_smallmap Toon kleine kaart :
+3g_staticsm Draaiende kleine kaart :
+3a_pos_list Toon positielijst :
+3a_dropshad Toon schaduwen :
+3a_msgtsize Tekstgrootte berichten %.3f :
+3a_timedisp Uiteindelijke tijden tonen :
+3a_chptexto Tekst controlepost :
+3a_clndlcol Kleur wijzernaald :
+3a_cltxtcol Kleur tekst :
+3a_cttxtcol Kleur centrale tekst :
+3h_x_dash_c %s dashboard :
+3h_roadgled Versnellings indicator in normale wagens :
+3g_interfac Interface
+3h_in_title Titel :
+3h_in_bigbt Grote knop :
+3h_in_opaci Doorschijnend %.2f :
+3h_in_bbtxt Tekst :
+3h_in_smlbt Kleine knop :
+3h_text_uns Ongeselecteerde tekst :
+3h_text_sel Geselecteerde tekst :
+3h_text_una Onbeschikbare tekst :
+3h_in_texte Tekst string :
+3h_in_btn_g Groene knop :
+3h_in_btn_r Rode knop :
+3h_in_btn_a Alternatieve knop :
+3h_smallm_l Kleine kaart (licht) :
+3h_smallm_d Kleine kaart (donker) :
+3h_cr_lap_a Wagen 1 ronde voorop :
+3h_cr_ahead Wagen voorop :
+3h_ai_ahead AI voorop :
+3h_your_car Eigen wagen :
+3h_ai_behin AI achter :
+3h_cr_behin Wagen achter :
+3h_cr_lap_b Wagen 1 ronde achter :
+3h_intcentr Interface centraal :
+3h_intscale Interface schaal :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset reset
+3h_test_sml Kleine knop
+3h_test_big Grote knop
+3h_in_cen_x centraal X
+3h_in_cen_y centraal Y
+3h_in_sca_x X schaal
+3h_in_sca_y Y schaal
+3h_betw_a_b Waarde moet tussen %.1f en %.1f liggen
+3a_asavnono [nt. ingeschakeld - nt. opgeslagen]
+3a_asavmanu [ingeschakeld - manueel opslaan]
+3a_asavauto [auto. opslaan - nt. aangeraden]
+3a_ogm_ainm AI namen
+3g_ogm_fkey F1 tot F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [bepaalde volgorde]
+3a_rs_finis [finishvolgorde]
+3a_rs_revfi [omgekeerde finishvolgorde]
+3a_rs_randm [variabel]
+3a_aidrvnum AI coureur %d :
+3a_f_keynum F%d :
+3a_sprsvopt Sla replay enkele speler op :
+3a_mprsvopt Sla multiplayer replay op :
+3a_nonqracr Herstart race zonder kwalificeren :
+3a_changbtn Verander AI namen / F-toetsen :
+3a_optlores lage resolutie
+3a_opthires hoge resolutie
+3g_optcompr gecomprimeerd
+3g_optsfull origineel
+3g_opt_main algemeen
+3g_plus_mir + spiegel
+3a_usrldval Gebruiker LOD (%.2f) :
+3a_dstldval Stof LOD (%.2f) :
+3a_mirldval Spiegel LOD (%.2f) :
+3h_fsaa_txt Volledige antialias :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interface / tekst :
+3h_mipbias1 Mip bias (%.1f) objecten / muren :
+3h_mipbias2 Mip bias (%.1f) gras / grind :
+3h_mipbias3 Mip bias (%.1f) wegoppervlakken :
+3a_shtypopt Schaduwtype :
+3g_treesopt Bomen zichtbaar :
+3g_flagsopt Vlaggen zichtbaar :
+3g_rubbropt Rubber zichtbaar :
+3g_draw_sky Lucht zichtbaar :
+3g_gadapter Adapter :
+3e_zbdopt_d Z-buffer diepte (%d) :
+3e_hazetext Misteffect :
+3h_mip_type Textuurfilter / AF :
+3h_text_res Texturen (zonder skins) :
+3g_carskins Auto en helm skins :
+3g_texmemmb Geheugengebruik texturen : %.1f MB
+3a_crdnoshd Uw 3d-kaart kan geen schaduwen weergeven in LFS
+3g_crdnoftx Uw 3d-kaart kan geen volledige texturen weergeven in LFS
+3h_hvsnotav Uw 3d-kaart kan Hardware Vertex Shading niet gebruiken
+3g_seladres Selecteer een adapter om te gebruiken na het herstarten
+3e_rslfszbd LFS moet herstarten voor wijzigingen in Z-buffer
+3a_flsvsync Volledig scherm verticale sync :
+3g_prev_lag Inputvertraging voorkomen :
+3a_limitfps Limiteer framerate in spel :
+3a_maxfrmrt Maximaal aantal framerate :
+3g_tx_x_fps %d fps
+3a_minsleep Minimale tijd tussen beelden :
+3g_debounce Minimale tijd tussen schakelen :
+3g_txt_x_ms %d ms
+3a_pixelval %d pixels
+3a_useplset AI gebruikt setup speler :
+3a_useplcol AI gebruikt kleuren speler :
+3a_sndlgval Geluidsvertraging %.2f sec :
+3g_whe_comp Compensatie voor draaien wielen %.2f :
+3a_anlgsval Vloeiende analoge besturing %.2f :
+3a_multispd Multiplayer versnellen :
+3g_car_skin Downloaden van wagenskins :
+3g_hel_skin Downloaden van helmskins :
+3g_multidst Teken wagen in multiplayer %.0f m :
+3g_dynamlod Dynamische LOD reductie %.2f :
+3a_updtpath Update pad :
+3a_puusrcar wagen gebruiker
+3a_puallcar alle wagens
+3h_replaysk Skins downloaden voor replays :
+3g_introopt Laad circuit bij opstarten :
+3g_local_12 Lokale tijd in 12 uur formaat :
+3g_time_fps Toon tijd in plaats van FPS :
+3g_shfflags Toon vlaggen in SHIFT+F modus :
+3h_accelopt Acceleratiemeter :
+3h_shadogen Schaduw aanmaken :
+3h_opt_defa standaard
+3h_opt_alte verschillend
+3g_skin_d_q Skin downloads
+3h_skin_use Skins in geheugen
+3a_crestart start race
+3a_cntrpits in de pits gaan
+3a_cspectat toeschouwen
+3a_cantjoin doe mee
+3a_cantleav verlaat spel
+3a_novtnolo Geen stemming - geen lokale coureurs in spel
+3a_notdnord Kan niet testrijden - geen echte coureur in replay
+3a_esc_menu Verlaat Menu
+3a_repmenig Replay Menu (in spel)
+3a_repmenld Replay Menu (geladen)
+3a_sel_pits Pits
+3a_sel_spec Toeschouwen
+3a_sel_join Doe mee
+3a_sel_repl Replay
+3a_sel_outp Data van ronde
+3a_sel_rstr Herstart
+3a_vote_str Stemmen om race te starten
+3a_vote_end Stemmen om race te beëindigen
+3a_vote_qua Stemmen om te kwalificeren
+3a_test_drv Testrit
+3a_startrac Start race
+3a_hqualify Kwalificeer
+3a_resumegm Doorgaan
+3h_escapkey ESC
+3a_undefind ongedefinieerd
+3a_arenatxt arena
+3a_singlstg enkele stage
+3a_standard standaard
+3a_reversed omgekeerd
+3a_weth_hdr Weer
+3a_cnfg_hdr Configuratie
+3h_layt_hdr Layout
+3h_none_sel geen geselecteerd
+3a_info_cir circuit
+3a_info_tot totaal
+3a_chng_trk Verander circuit
+3h_revconfc Omgekeerde configuratie :
+3h_openconf Open configuratie :
+3h_ndxmdtrx Je moet in %s mode zijn om op %s te rijden
+3h_ndulxtrx Je moet LFS %s unlocken om op %s te rijden
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Parkeerplaats
+3g_cfg_auto Autocross
+3g_cfg_skid Oefencirkel
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Banen Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mijl %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mijl
+3g_dt_dawn_ ochtendluwte
+3g_dt_sunri zonsopgang
+3g_dt_morni ochtend
+3g_dt_day__ middag
+3g_dt_after namiddag
+3g_dt_sunse zonsondergang
+3g_dt_dusk_ avondluwte
+3g_dt_night nacht
+3g_wth_clea Helder,
+3g_wth_clou Bewolkt,
+3g_wth_over Half bewolkt,
+3a_hlvcthis Ronde-
+3a_hlvcnext Volgende-
+3a_readynum Klaar : %d
+3a_noviewcr geen wagens in race
+3a_thexisst De %s gaat starten
+3a_thexhase De %s is beëindigd
+3a_smlpract oefensessie
+3a_smlqulng kwalificatie
+3a_sml_race race
+3a_replnotr Replay wordt niet opgenomen
+3g_notrecor Wordt niet opgenomen
+3g_fov_temp FOV %.0f° :
+3a_replrest Replay is herstart
+3a_aisvdknw AI coureur heeft kennis opgeslagen
+3a_timetmsx Tijd x %.3f
+3a_namenldf Naam voor data van volgende ronde
+3g_caps_wrn WAARSCHUWING
+3g_caps_kik KICK
+3g_caps_ban BAN
+3g_caps_spe KIJK TOE
+3a_namesoff namen uit
+3a_connlist connectielijst
+3a_namesovr namen boven wagens
+3h_showmous toon muis
+3h_hidemous verberg muis
+3a_mirrinfo spiegel :
+3a_cancaujo Automatische verbinding beëindigd
+3a_reinicnt Controllers Gereïnitialiseerd
+3a_reinisnd Geluid Gereïnitialiseerd
+3a_namemprs Naam van MPR replay om OP TE SLAAN
+3a_namesprs Naam van SPR replay om OP TE SLAAN
+3a_shnsound SHIFT N - geluid - %s
+3g_shgsmode SHIFT + G : Schakel modus - %s
+3a_shgautos SHIFT G - auto. schakelen - %s
+3a_frcvalpc kracht %.0f%%
+3a_hrntypev Type toeter %d
+3a_actnends EINDIGT
+3a_actnrest HERSTART
+3a_actnstrt START
+3a_thngqual Kwalificaties
+3a_thngrace Race
+3a_reploose replay OOS fout
+3a_pausetxt gepauzeerd
+3g_safeexit sluiten...
+3a_retrdcap GESTOPT
+3a_dsqulcap GEDISKWALIFICEERD
+3g_unclcaps NT. GECLASSIFICEERD
+3a_wrngwcap VERKEERDE RICHTING
+3a_capsdrvr COUREUR
+3a_capsbstl BESTE RONDE
+3g_pitstops PIT
+3g_spenalty PTY
+3a_capstotl TOTAAL
+3g_caps_car WAGEN
+3g_capsxlps %d RONDEN
+3g_plus1lap +1 ronde
+3g_plusxlps +%d ronden
+3h_falsesta VALSE START
+3h_pe_speed TE SNEL IN PITSTRAAT
+3h_pe_short PITSTOP TE KORT
+3h_pe_mustp PITSTOP TE LAAT
+3h_pe_admin GEGEVEN DOOR ADMINISTATOR
+3h_pe_unknw ONBEKEND
+3g_yellcaps GELE VLAG
+3g_bluecaps BLAUWE VLAG
+3a_stpgocap STOP-GO PENALTY
+3g_drthrcap DOORRIJPENALTY
+3g_30stimep 30 SECONDEN PENALTY
+3g_45stimep 45 SECONDEN PENALTY
+3g_clearedp PENALTY VERWIJDERD
+3g_pit_stop PITSTOP
+3g_pitstopx PITSTOP : %d
+3g_p_pnltyx PITSTOP [penalty] : %d
+3g_p_nowrkx PITSTOP [geen werk] : %d
+3g_p_finshx PITSTOP [beëindigd] : %d
+3g_mancompx %s^8 heeft zijn %s beëindigd
+3g_wmncompx %s^8 heeft haar %s beëindigd
+3g_unkcompx %s^8 : %s beëindigd
+3g_enterpit PITSTRAAT IN
+3g_enterfor PITSTRAAT IN voor
+3g_leavepit PITSTRAAT UIT
+3g_stpgotxt stop-go penalty
+3g_drthrtxt doorrijpenalty
+3g_nopurtxt geen reden
+3g_capsstop STOP
+3g_capsrefu BIJTANKEN
+3g_capssetu VERANDERINGEN SETUP
+3g_capsxdam %s SCHADE
+3g_capsdamx Schade aan %s
+3g_capsxcha %s BANDEN VERWISSELEN
+3g_capsminr KLEINE
+3g_capsmajr GROTE
+3g_capsfrnt VOOR
+3g_capsrear ACHTER
+3g_capsleft LINKS
+3g_capsrigh RECHTS
+3g_capslefr LINKS VOOR
+3g_capslere LINKS ACHTER
+3g_capsrifr RECHTS VOOR
+3g_capsrire RECHTS ACHTER
+3g_refl_f_x Bijtanken Gedaan : %.1f liter
+3g_pitstp_f Pitstop gedaan
+3g_nospdlim Er is geen maximale snelheid in de pits op dit circuit
+3g_notequip Deze wagen heeft geen snelheidsbegrenzer
+3h_thisnotc Deze wagen heeft geen tractiecontrole
+3h_thisnost Deze wagen heeft geen startmotor
+3a_smllaptm rondetijd
+3a_smlspltm tussentijd
+3a_clhotlap hotlap
+3a_clonemin 1 minuut kwalificatie
+3a_cl_xmins %d minuten kwalificatie
+3a_clonelap 1 ronde
+3a_cl_xlaps %d ronden
+3a_clonehor 1 uur
+3a_cl_xhors %d uren
+3g_cltrning oefenen
+3a_windsp_x windsnelheid %.0f %s
+3a_smallmph mph
+3a_smallkmh km/u
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex De stemming van %s^8 is gestopt
+3a_x_voteer %s^8 stemt om de race te BEËINDIGEN
+3a_x_voters %s^8 stemt om de race te HERSTARTEN
+3a_x_votequ %s^8 stemt om te KWALIFICEREN
+3a_x_joinsp %s^8 is een toeschouwer
+3g_x_didnot %s^8 is niet gefinisht
+3g_x_wrongr %s^8 nam de verkeerde route
+3g_x_illega %s^8 reed in een verboden gebied
+3h_x_retpit %s^8 is terug de pits in
+3h_a_retpit Alle wagens zijn terug naar de pits
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp start ronde
+3a_smalllap ronde
+3a_hlvcmodi [gemodific.]
+3a_timequal kwalificeer
+3a_timetotl totaal
+3a_timebest beste
+3a_time_lap ronde
+3a_timesplt split
+3h_timetime tijd
+3a_timepnlt penalty
+3a_noldxcar Kan wagen van %s^8 niet laden
+3a_nosvnonm Kan niet opslaan zonder naam
+3g_nofilesl Geen bestanden om te laden
+3a_alrdyout Data van ronde wordt al opgenomen
+3a_nxtlpout Data volgende ronde wordt opgeslagen in %s.raf
+3a_nodtaout Er zal geen data in bestand gezet worden
+3g_dled_x_x Skin Gedownload : %s_%s
+3g_ding_x_x Skin Downloaden : %s_%s
+3h_saveskin Skin opslaan : %s
+3g_nomoreci Kan geen cirkels meer toevoegen
+3a_noaddmor Kan geen objecten meer toevoegen
+3a_loadinfo Laden
+3h_storedvw Opgeslagen oogpunten (V) :
+3h_move_spd Bewegingssnelheid %.1f m/s :
+3h_min_high Minimum hoogte %.1f m :
+3g_roll_deg Draaiing %.1f° :
+3h_vwsmooth Soepelheid %.1f s :
+3h_trantime Overgangstijd %.1f s :
+3a_invlok_c Inverteer rechtermuisknop :
+3h_invrot_c Inverteer linkse + rechtse rotatie :
+3a_fov_valu Zichtveld %.1f° :
+3a_plcobs_c Plaats objecten :
+3a_chkptw_v Breedte controlepost %.0f m :
+3a_hdg_degr Richting %.1f° :
+3a_unnm_brk [geen naam]
+3a_objs_num objecten : %d
+3a_emty_brk [leeg]
+3a_savechan Wijzigingen opslaan
+3a_loadlayo Layout laden
+3a_savelayo Layout opslaan
+3a_clearall Alles verwijderen
+3a_laps_num ronden : %d
+3a_errorsml fout
+3a_c_clrsel C - selecties verwijderen
+3a_m_mv_mod M - verplaats / verander
+3a_del_dele DEL - verwijder
+3a_w_e_wdth W / E - breedte
+3a_l_r_rota < / > - draai
+3a_cp_1_2_3 1 / 2 / 3 - controlepost
+3a_f_finish F - finishlijn
+3a_s_startp S - startpositie
+3a_o_object O - plaatsen
+3g_dist_x_m afst : %.2f m
+3a_editkeys verander toetsen
+3a_c_ar_hgt CTRL + pijltjes - hoogte
+3g_c_ar_rol CTRL + pijltjes - draaiing
+3a_arrow_mv pijltjestoetsen - verplaats
+3a_spc_hdsh SPACE - verberg / toon
+3a_esc_exit ESC - verlaat
+3h_l_b_move linkerknop - beweeg
+3h_r_b_look rechterknop - kijk
+3h_l_r_rota links + rechts - draai
+3a_keys_txt toetsen
+3h_mous_txt muis
+3h_edit_txt aanpassen
+3h_more_txt meer
+3h_in_trans overgang
+3h_cl_slt_x Oogpunt op plaats %d verwijderd
+3h_st_slt_x Oogpunt opgeslagen op plaats %d
+3h_no_v_x_s Geen oogpunt op plaats %d (%s)
+3h_no_vws_s Geen opgeslagen oogpunten (%s)
+3h_sh_nm_st SHIFT + NUMMER: oogpunt opslaan
+3h_no_car_f Geen wagen om te volgen
+3h_fc_point Wijst naar :
+3h_fc_neare Dichtstbijzijnde wagen :
+3h_fc_flwng Aan het volgen :
+3h_fc_lockd Vergendeld op :
+3h_clicktof klik op de wagen om te volgen
+3h_followcr volg wagen
+3h_nocarsvw geen wagens in zicht
+3h_stopfoll stop
+3h_optimise optimaliseer
+3h_opt_of_t Geoptimaliseerde objecten : %d van %d
+3a_noxwload Kan niet weg gaan tijdens het laden
+3a_chgnotsv Wijzigingen kunnen niet opgeslagen worden
+3a_exanyway Toch weg gaan?
+3a_clrall_q Alle objecten verwijderen?
+3g_delete_l Layout verwijderen?
+3a_tit_ldly Laad Layout
+3a_nosavent Kan layout niet opslaan vanaf beginscherm
+3a_nolodent Kan layout niet laden vanaf beginscherm
+3a_noobselm Geen object geselecteerd om te verplaatsen
+3a_noobtype Geen objecttype geselecteerd
+3a_noobseld Geen object geselecteerd om te verwijderen
+3h_unexpclr Onverwacht wissen-commando
+3h_unexpend Onverwacht einde van bestand
+3a_xalready Een %s is al gecreëerd
+3g_idx_0tox Index moet tussen 0 en %d liggen
+3g_rt_idx_x route index : %d
+3g_restarea Verboden gebied
+3g_rt_check Routecontroleur
+3g_rt_wrong Verkeerde route
+3g_ob_chalk kalk
+3g_ob_cones kegels
+3g_ob_tyres banden
+3h_ob_markr wegmarkering
+3g_ob_other objecten
+3g_ob_marsh baan official
+3g_marsh_no onzichtbaar
+3g_marsh_st baan official
+3g_marsh_le toon links
+3g_marsh_ri toon rechts
+3h_cant_add Kan niet toevoegen :
+3h_cant_mov Kan niet verplaatsen :
+3h_inte_obj kruisende objecten
+3h_inva_pos onjuiste positie
+3a_dispgame Toon lijst met hosts
+3a_tit_list Lijst met Hosts
+3a_startnew Start nieuwe host
+3a_tit_strt Start Nieuwe Host
+3a_joingame Ga naar specifieke host
+3a_tit_spec Ga Naar Specifieke Host
+3a_finduser Vind gebruiker online
+3a_tit_user Gebruiker Zoeken
+3a_cls1conn 1 verbinding sluiten
+3a_clsxconn %d verbindingen sluiten
+3a_rfrshlst ververs
+3a_stophost Zoeken naar hosts stoppen
+3a_spctostp SPATIE indrukken om zoeken naar hosts te stoppen
+3a_liststat %s host %d van %d - OK : %d - [Geen antwoord : %d] - [Verkeerde versie : %d]
+3a_waitingw Wachten
+3a_checking Checken
+3a_end_stat OK : %d - [Geen antwoord : %d] - [Verkeerde versie : %d] %s
+3a_clikjoin - KLIK naam om binnen te gaan
+3a_glc_name Naam
+3a_glc_ping Ping
+3a_glc_trak Circuit
+3a_privatew privé
+3a_modified gemodific.
+3h_arcade_w reset aan
+3h_cruise_w cruise
+3a_wrongver Verkeerde versie
+3h_noteul_x LET OP : Je moet LFS %s nog unlocken
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Download mirror
+3h_cnt_titl Land
+3h_newupdat Een nieuwe update is beschikbaar
+3h_norecaui Geen automatische update informatie ontvangen
+3h_start_dl start download
+3h_plsselmr Kies de dichtstbijzijnde download mirror
+3h_connectn Verbinding maken...
+3h_trylfsnt Opnieuw proberen met ^7www.lfs.net
+3h_dl_perce Download voortgang : %d%%
+3h_dl_colon Gedownload :
+3h_restartn Herstarten...
+3h_nostrtrs Kon de herstarter niet starten
+3h_noresdat Kon het herstarter bestand niet maken
+3h_noenumwi Kan de vensters niet specificeren
+3h_anotherl Er is nog een LFS venster open
+3h_noopenrs Kan het herstarter programma niet openen
+3b_meetroom Ontmoetingsruimte
+3b_m_host_x gaat naar %s
+3b_f_host_x gaat naar %s
+3b_leftroom heeft de kamer verlaten
+3b_entrroom is binnengekomen
+3b_wlcmu1st Welkom! Je bent de eerste racer in de chat
+3b_wlcmxinr Welkom! Er zijn %d racers in de chat
+3b_mr_leave Verlaten
+3b_mr_findb Vinden
+3b_mr_sound Geluid
+3b_mr_refre Vernieuwen
+3b_somehost een host
+3b_mastercl Hoofdserver sloot de verbinding
+3b_sr_privt Privé
+3b_mr_publc Publiek
+3b_mr_empty Leeg
+3h_sr_cruis Cruise
+3g_autoreco Opnieuw verbinden...
+3a_typelocl lokaal netwerk
+3a_typeinet Internet
+3a_userisat Gebruiker is in %s
+3a_joinxath Ga bij %s^8 op deze host?
+3a_inrc_num in race : %d
+3a_cons_num verbindingen : %d
+3a_resl_num resultaten : %d
+3h_skin_num Skin : %d
+3h_join_que Positie in wachtrij : %d
+3a_selhostc Geselecteerde host :
+3a_joingamc Ga naar host op :
+3a_hostnamc Naam host :
+3a_hostipac IP-adres host :
+3a_hostprtc Poort host :
+3a_hostpasc Paswoord host :
+3h_clearbtn verwijder alle wachtwoorden (%d)
+3h_cconfirm Verwijder alle opgeslagen host wachtwoorden?
+3a_noldtrck Kan het circuit niet laden
+3a_nosndudp Kan UDP-pakket niet verzenden
+3a_nocrtudp Kan UDP-verbinding niet maken
+3h_wt_sinfo Wachten op skininfo
+3h_norcvskn Skininfo niet ontvangen
+3a_norcvgst Geen gasteninfo ontvangen
+3a_norcvply Geen coureursinfo ontvangen
+3a_norvcall Berichten niet van alle gasten ontvangen
+3a_vldadreq Je moet een geldig netwerk-IP-adres invullen
+3a_errconrs Fout bij verzenden van verbindingsresultaat
+3a_mode_sel Selecteer online modus :
+3h_smal_dmo demo
+3h_frxmdndx Voor %s mode moet je eerst LFS %s unlocken
+3h_seltrrqx Je moet in %s mode zijn voor deze track
+3a_visibilc Zichtbaarheid :
+3a_vis_locl lokaal
+3a_vis_inet Internet
+3a_vid_hidn verborgen
+3a_inetconc Internetverbinding :
+3a_modem56k 56k modem
+3a_m512_128 512 / 128 kabel
+3a_mdm1_256 1m / 256 kabel
+3a_mdm_cust ander
+3a_maxupl_c Max. upload (kbits / sec) :
+3g_x_upload %s kbits/sec upload
+3a_gnnoemty Hostnaam mag niet leeg zijn
+3a_onecarrq Ten minste één wagenmodel toelaten
+3a_hstgstrq Host of gasten moeten toegelaten zijn
+3a_rusurepr Weet je zeker dat je verder wil gaan?
+3a_maxbwmex Maximale bandbreedte kan overschreden worden
+3b_srv_ip_c IP-adres:
+3a_srvportc Poort :
+3a_dedi_opt Dedicated host (geen beeld) :
+3a_guestvot Laat kick- en banstemmen toe :
+3a_guestsel Gasten kunnen circuits selecteren :
+3h_qenabled Kwalificatie actief :
+3g_midracej Laat binnenkomen tijdens race toe :
+3g_pitstopr Pitstop verplicht :
+3g_carreset Wagen reset toestaan :
+3h_fcockpit Cockpit zicht verplicht :
+3h_cruisemo Cruise (verkeerde richting toegelaten) :
+3a_maxgst_c Max. aantal gasten :
+3d_admins_c Adminplaatsen :
+3a_maxrarac Max. (echt + AI) aantal in race :
+3a_maxragst Max. (echt + AI) per pc van gast :
+3a_maxrahst Max. (echt + AI) per pc van host :
+3a_dedinohc Dedicated : geen wagens van host
+3a_smothpps Vloeiendheid (pakketten/sec) :
+3a_uplmin16 Upload tenminste 16 kbits
+3g_umax8192 Upload maximaal 8192 kbits
+3a_uplavail Beschikbare upload %.1f KB/sec
+3a_uplprcar Upload per wagen %.0f bytes/sec
+3a_uplcarnm Aantal wagens te uploaden %.0f
+3a_requplod Benodigde upload %.1f KB/sec
+3a_availexc Beschikbare upload overschreden
+3b_adminp_c Admin paswoord :
+3a_sel_audi Geluid
+3a_tit_audi Geluid
+3a_sel_scrn Scherm
+3a_tit_scrn Scherm
+3a_sel_grfx Grafisch
+3a_tit_grfx Grafisch
+3a_sel_view Zicht
+3a_tit_view Zicht
+3a_sel_disp Beeld
+3a_tit_disp Beeld
+3a_sel_plyr Coureur
+3a_tit_plyr Coureur
+3a_sel_cont Besturing
+3a_tit_cont Besturing
+3a_sel_game Spel
+3a_tit_game Spelopties
+3a_sel_misc Overige
+3a_tit_misc Overige
+3a_unlokerr Fout bij unlocken
+3a_flcrterr Fout bij maken bestand
+3a_reguname Geregistreerde gebruikersnaam :
+3a_onlinepw GAME paswoord :
+3a_gounlock unlock
+3g_locktext Lock LFS (terug naar DEMO)
+3g_lockques Lock Live for Speed?
+3g_lockwarn Alleen DEMO inhoud zal beschikbaar zijn
+3a_autorcon Automatisch verbinding met hoofdserver herstellen
+3a_notconnm Niet verbonden met hoofdserver
+3a_yesconnm Verbonden met hoofdserver
+3a_connmstr verbinden
+3a_connects Verbindingen
+3a_hoptions opties
+3a_smlb_kik kick
+3a_smlb_ban ban
+3a_num_bans %d verbannen
+3a_zerobans Geen bans
+3a_editbans pas bans aan
+3a_tit_bans Bans Aanpassen
+3a_delshort verw.
+3a_goaddban voeg ban toe
+3a_user_ban Geef gebruikersnaam om te bannen
+3a_time0day %d:%.2d
+3a_time1day 1 dag %d:%.2d
+3a_timexday %d dagen %d:%.2d
+3a_banip12h ban van 12 uur opgelegd aan IP speler
+3a_banun12h ban van 12 uur opgelegd aan gebruikersnaam speler
+3b_banusr1d Gebruiker is verbannen voor 1 dag
+3b_banusrxd Gebruiker is verbannen voor %d dagen
+3h_tyre_man Fabrikant
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_ZACHT
+3g_tt_slk_m SLICK_MEDIUM
+3g_tt_slk_h SLICK_HARD
+3a_tt_races RACE_SLICK
+3a_tt_raceg RACE_GROEVEN
+3a_tt_racei RACE_GEMIDDELD
+3a_tt_racew RACE_NAT
+3a_tt_roads WEG_SUPER
+3a_tt_roadn WEG_NORMAAL
+3a_tt_hybri HYBRIDE
+3a_tt_knobb KNOBBELS
+3a_ttlmaskl Totale massa : %.0f kg (%.0f lbs)
+3a_pwrwtmti Kracht-gewicht : %.0f W/kg (%.0f pk/ton)
+3a_wdistrfr Gewichtsverdeling : %.1f V  %.1f A
+3h_ddistrfr Downforce verdeling : %.1f F  %.1f R
+3h_rdistrfr Rolhardheid verdeling : %.1f F  %.1f R
+3a_trqnmlbr Trekkracht : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Kracht : %.0f kW (%.0f pk) @ %.0f rpm
+3a_engccfmt Motor : %.0f cc%s%s%s
+3a_engltfmt Motor : %.1f liter%s%s%s
+3a_trbochrg turbogeladen
+3a_etl_inli in lijn
+3a_etl_flat platte
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl enkele
+3a_etn_2cyl twee
+3a_etn_3cyl drie
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Eerste %.3f
+3a_grrat2nd Tweede %.3f
+3a_grrat3rd Derde %.3f
+3a_grrat4th Vierde %.3f
+3a_grrat5th Vijfde %.3f
+3a_grrat6th Zesde %.3f
+3a_grrat7th Zevende %.3f
+3a_grginfop Info
+3a_grgcolou Kleuren
+3a_grgbrake Remmen
+3h_grgbrktc Remmen / TC
+3a_grgsuspe Ophanging
+3a_grgsteer Besturing
+3a_grgfinal Eindverhouding
+3a_grgtyres Banden
+3a_grgdownf Downforce
+3a_grgpasse Passagiers
+3a_pssfront vooraan
+3a_pssrleft achter links
+3a_pssrmidd achter midden
+3a_pssrrght achter rechts
+3a_whlscolt Wielen
+3a_bodycolt Chassis
+3a_texnamet Textuurnaam
+3a_maxperwt Max. per wiel %.0f Nm
+3g_b_bal_fr Rembalans (voor) %.0f%%
+3h_engbrred Motorrem Reductie %.0f%%
+3h_tcmaxslp TC Toegelaten Slip %.1f%%
+3h_tcminspd TC Minimumsnelheid %.0f m/s
+3h_abs_text ABS
+3g_ridehred Reductie Rijhoogte
+3a_brkmotrg [Bewegingsvrijheid %.3f m]
+3g_livecamb live (L / R) %+.2f° / %+.2f°
+3g_stif_val Stijfheid %.1f kN/m
+3g_damp_val Schokdempers %.1f kNs/m
+3g_bump_val Schokdempers In %.1f kNs/m
+3g_rebd_val Schokdempers Uit %.1f kNs/m
+3g_arol_val Antirol %.1f kN/m
+3h_power_st Stuurbekrachtiging %.0f%%
+3a_maxlkval Maximale Stuurhoek %.1f°
+3g_castrval Caster %.1f°
+3a_inclnval Inclinatie %.2f°
+3g_prllsval Parallelstuur %.0f%%
+3g_toeinval Toe In %+.1f°
+3g_camb_abs Camber (links / rechts) %+.1f° / %+.1f°
+3g_camb_adj Camber Aanpassen (L / R) %+.1f° / %+.1f°
+3h_tyrewarm Temperatuur van banden warmers : %.0f°
+3a_fnldvval Eindverhouding %.3f
+3g_ftrqsplt Torsie Vooraan %.0f%%
+3g_fvistorq Viscose Torsie %.0f Nms/rad
+3g_lock_one Locking %.0f%%
+3g_lock_o_o Locking (kracht / coast) %.0f%% / %.0f%%
+3h_dpreload Preload %.0f Nm
+3g_frnt_txt Voor
+3g_cent_txt Centraal
+3g_rear_txt Achter
+3g_press_lr Druk (L / R) %.0f kPa / %.0f kPa
+3g_conv_psi psi (L / R) %.1f psi / %.1f psi
+3g_conv_bar bar (L / R) %.2f bar / %.2f bar
+3g_fwingang Hoek Voorvleugel %.0f°
+3g_rwingang Hoek Achtervleugel %.0f°
+3h_tc_title Tractiecontrole
+3g_stra_txt Strategie
+3g_fuel_sta BRANDSTOF bij start : %.0f%%
+3g_fuel_pit BRANDSTOF bij pitstop : %.0f%%
+3g_tyre_lim BANDEN wisselen : als slijtage > %.0f%%
+3g_tyre_all BANDEN wisselen : altijd
+3g_tyre_nev BANDEN wisselen : nooit
+3h_rep_damg Schade repareren : %s
+3h_setup_ch Setupaanpassingen gevraagd
+3h_handicap Handicaps
+3h_hcapnone GEEN
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% restrictie
+3h_vol_tres Vrijwillige Restrictie op Luchtinlaat %.0f%%
+3h_vol_mass Vrijwillig Massa Toevoegen %.0f kg
+3h_mass_pos Massa Positie Toegevoegd (voor) %.0f%%
+3g_symmetri symmetrisch
+3g_asymmetr asymmetrisch
+3g_configur Configuratie
+3g_cpct_x_l Brandstofcapaciteit : %.1f liter
+3g_optt_x_d Optimale temperatuur %.0f°
+3g_tst_x_ms Testsnelheid %.1f m/s
+3g_rearwing Achtervleugel
+3g_frntwing Voorvleugel
+3g_undrtray Bodemplaat
+3g_bodyaero Chassis
+3g_totlaero Totaal
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Stuurwiel van wagen draait %.0f° (lock to lock)
+3g_con_tn_x Controller draait %.0f°
+3g_live_cmb Camber : %+.2f
+3g_live_inc Inclination : %.2f
+3g_live_cst Caster : %.2f
+3g_live_scr Scrub : %.3f
+3g_live_trk Wielbasis : %.3f
+3g_susrigid Rigide
+3g_sustrail Trailing Arm
+3g_susffork Voorvork
+3g_susmacph MacPherson Strut
+3g_susdwish Dubbele Wishbone
+3g_pit_inst Pitinstructies
+3g_live_set Live Instellingen
+3g_wheels_x WIELEN zijn %s
+3g_l_tt_x_x BANDENTYPE %s [%s]
+3g_l_pr_psi DRUK %.1f psi [%+.1f psi]
+3g_l_pr_bar DRUK %.2f bar [%+.2f bar]
+3g_l_cr_adj CAMBER AANPASSEN %.1f° [%+.1f°]
+3g_l_cr_abs CAMBER %.1f° [%+.1f°]
+3g_l_wg_ang VLEUGEL %.0f° [%+.0f°]
+3h_estcolon Naar schatting :
+3g_fl_pc_pl %.1f%% per ronde
+3g_fl_pc_it %.1f%% in tank
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp KT
+3a_trckunkn Onbekend circuit
+3a_trcknofn Circuit niet gevonden
+3a_trckobso Verouderd circuit
+3a_fnshload VOLTOOID
+3a_prgprelo Voorladen
+3a_prgldtex Texturen laden
+3a_prgpaths Paden
+3a_prgcolrs Kleuren
+3a_prgdupli Duplicatoren
+3a_prglgtsc Lichtschema's
+3a_prgrdobs Objecten lezen
+3a_prglgtin Verlichtingsinfo
+3a_prgbmptx Bulttexturen
+3a_prginicl Initialisatie kleuren
+3a_prgchpts Controlepunten
+3a_prgextra Extra data
+3a_prgstobs Startobjecten
+3a_prgmapsq Vierkanten op kaart
+3a_prgpthin Initialisatie paden
+3a_prgpthad Aanpassing paden
+3a_prgrebld Herbouwen
+3g_prggener Genereren
+3a_spcpres1 (druk 1)
+3a_autojblk Kan niet toetreden : Start is geblokkeerd
+3a_xcomplvt %s^8 heeft stemming voltooid
+3a_maxgcarx Max. wagens gast : %d
+3a_maxhcarx Max. wagens host : %d
+3a_cf_swpsd ruil kant
+3a_cf_gopit pit
+3a_cf_chqul verander kwalificatieduur
+3a_cf_chlap verander ronden
+3a_cf_chwin verander wind
+3b_cf_finfo verander info
+3a_upc_male %s^8 heeft besturing geupdate
+3a_upc_fmal %s^8 heeft besturing geupdate
+3a_upc_unkn %s^8 heeft besturing geupdate
+3a_x_no_car %s^8 heeft geen wagen
+3a_x_alredy %s^8 heeft al een wagen
+3a_x_lftpot %s^8 heeft de pits verlaten
+3a_w_rd_rly ^6Waarschuwing : wegbanden op rallycrosscircuit
+3a_w_rly_rd ^6Waarschuwing : rallycrossbanden op wegcircuit
+3a_unkcdisc Onbekende wagen - gast niet verbonden
+3a_modcdisc Aangepaste wagen - gast niet verbonden
+3a_nocrukid Kan wageninfo niet toevoegen - onbekende identificatie
+3a_xrenamex %s^8 hernoemd naar %s
+3g_xtakovrx %s^8 neemt over van %s
+3g_xwantuto %s^8 wil dat jij overneemt
+3g_xwantsto %s^8 wil overnemen
+3g_oswapend Je kan alleen van coureur wisselen als de pitstop gedaan is
+3a_nosharnm Kan naam niet delen met andere coureurs
+3a_trkloadd Circuit geladen
+3a_x_pitted %s^8 ging in de pits
+3g_x_pitstp %s^8 maakt een pitstop
+3a_x_conn_x %s^8 is verbonden (%s^8)
+3a_x_connec %s^8 is verbonden
+3g_x_blkmsg %s^8 blokkeert berichten
+3g_x_unblkm %s^8 blokkeert geen berichten meer
+3a_newgconn Een nieuwe gast verbindt
+3a_gfailcon Nieuwe gast kon geen verbinding maken
+3g_waitplyc Wacht aub - een gast verbindt
+3h_waitbuff Buffer overflow aan het voorkomen
+3a_xss_male %s^8 heeft zijn setup verzonden
+3a_xss_fmal %s^8 heeft haar setup verzonden
+3a_xss_unkn %s^8 heeft een setup verzonden
+3a_packs_ps Pakketten Per Seconde %d
+3a_noqual_x Kan niet kwalificeren - %s
+3a_no_x_plc %s mislukt - een gast verbindt
+3a_no_x_cht %s mislukt - circuit verandert
+3g_no_x_car %s mislukt - wagen is op de baan
+3a_novotepg Geen stemming bezig
+3h_vote_kic %s^8 stemt om %s^8 (%s^8) te kicken [%d/%d]
+3h_vote_ban %s^8 stemt om %s^8 (%s^8) te bannen [%d/%d]
+3a_x_tmdout Time-out van %s^8
+3a_lostcn_x Verbinding verloren met %s^8
+3a_x_discon %s^8 heeft afgesloten
+3g_x_kicked %s^8 is gekicked
+3g_x_banned %s^8 is verbannen
+3a_qulfauto Autocross
+3a_qulfprac Oefensessie
+3a_qulfnote Niet ingeschakeld
+3g_skinnotf Je wagenskin werd niet gevonden op ^7www.lfsworld.net
+3g_helmnotf Je helmskin werd niet gevonden op ^7www.lfsworld.net
+3g_updatset Instellingen Ge-update
+3g_fastlxxx Snelste ronde : %s door %s^8 (%s)
+3g_no_reset Wagen reset is niet toegelaten op deze host
+3g_cant_res Kan niet resetten - %s
+3g_too_dang te gevaarlijk
+3g_could_ha kan een andere wagen raken
+3g_could_hr kan een net geresette wagen raken
+3g_would_ye zou een gele vlag veroorzaken
+3a_obsolvid Verouderde video
+3a_vidlater Video werd gemaakt met latere versie
+3h_hls_hlvc HLVC
+3h_hls_inva ONGELDIG
+3h_hls_cust AANGEPAST
+3a_htlpinvl Hotlap ongeldig (%s)
+3a_hli_grnd grond
+3a_hli_wall muur
+3a_hli_obje object
+3a_hli_wron foute richting
+3h_hli_spee snelheidsovertreding
+3a_ptp_locl lokaal
+3a_ptp_remt remote
+3a_ptp_lcai ai (L)
+3a_ptp_rmai ai (R)
+3a_rsk_noob NIEUW
+3a_rsk_lrnr LEERLING
+3a_rsk_okok OK
+3a_rsk_quik SNEL
+3a_rsk_prof PRO
+3a_x_finish %s^8 is gefinisht
+3a_x_finplc %s^8 is gefinisht als %s
+3g_x_fin1be %s^8 eindigt 1 ronde later
+3g_x_finxbe %s^8 eindigt %d ronden later
+3g_x_conplc Laatste positie van %s^8 is %s
+3g_x_disqua %s^8 is gediskwalificeerd
+3a_x_wonrac %s^8 heeft de race gewonnen
+3a_max3locl Maximum 3 lokale coureurs
+3a_fnshuncl nt. geclassificeerd
+3a_fnsh_1st 1e
+3a_fnsh_2nd 2e
+3a_fnsh_3rd 3e
+3a_fnsh_4th 4e
+3a_fnsh_5th 5e
+3a_fnsh_6th 6e
+3a_fnsh_7th 7e
+3a_fnsh_8th 8e
+3a_fnsh_9th 9e
+3a_fnsh10th 10e
+3a_fnsh11th 11e
+3a_fnsh12th 12e
+3a_fnsh13th 13e
+3a_fnsh14th 14e
+3a_fnsh15th 15e
+3a_fnsh16th 16e
+3g_fnsh17th 17e
+3g_fnsh18th 18e
+3g_fnsh19th 19e
+3g_fnsh20th 20e
+3g_fnsh21st 21e
+3g_fnsh22nd 22e
+3g_fnsh23rd 23e
+3g_fnsh24th 24e
+3g_fnsh25th 25e
+3g_fnsh26th 26e
+3g_fnsh27th 27e
+3g_fnsh28th 28e
+3g_fnsh29th 29e
+3g_fnsh30th 30e
+3g_fnsh31st 31e
+3g_fnsh32nd 32e
+3a_wlcm_lfs Welkom bij Live for Speed
+3a_agre_lfs Gebruikersovereenkomst
+3a_overwrex Bestaand bestand overschrijven?
+3g_deleteex Bestaande bestand verwijderen?
+3g_newnamef Vul een nieuwe naam voor het bestand in
+3g_filealre Bestandsnaam bestaat al
+3g_cnotfind Kon bestand niet vinden
+3a_layoutsv Voer naam in voor layout om OP TE SLAAN
+3a_windocon Venster bij verbinden :
+3a_cancelbt annuleer
+3a_backbutt terug
+3a_capitlok OK
+3a_capitlgo START
+3a_invldstr onjuist
+3a_cpfinish GEFINISHT
+3a_cpwinner WINNAAR
+3a_namepass Gebruikersnaam en paswoord
+3a_validnam Je moet een geldige gebruikersnaam invoeren
+3a_validpas Je moet een geldig paswoord invoeren
+3a_passmin8 Paswoord moet minstens 8 karakters bevatten
+3a_shifttyp Versnellingsbaktype :
+3a_autogear Automatische versnellingsbak :
+3a_notiming - ronden worden niet getimed
+3a_stilload Circuit nog aan het laden
+3a_waitlist Wachten op lijst met hosts
+3a_wt_ginfo Wachten op info van host
+3a_connmast Verbinden met hoofdserver
+3a_waitmrep Wachten op antwoord van hoofdserver
+3a_waithrep Wachten op antwoord van host
+3a_waitinfo Wachten op info
+3a_masterro Fout bij het wachten op antwoord
+3a_mnoreply Geen antwoord van hoofdserver
+3a_waitginf Wachten op info gasten
+3a_waitpinf Wachten op coureursinfo
+3a_waitmsgs Wachten op eerste berichten
+3a_connhost Verbinden met host
+3a_conn_udp UDP-verbinding maken
+3a_openserv Contact met server opent
+3a_unexmstr Onverwacht pakket van hoofdserver
+3a_unexsrvr Onverwacht pakket van server
+3a_unexgest Onverwacht pakket van gast
+3a_numg_oob Aantal gasten buiten grenzen
+3a_errrhost Fout bij antwoorden host
+3a_unextrak Onverwachte circuitverandering
+3a_unkntrak Onbekende circuitfout
+3a_unexpack Onverwachte pakketgrootte
+3a_unexrepl Onverwacht antwoord
+3a_gmnmused Hostnaam is al in gebruik
+3a_errmthrd Kan geen hoofdserver thread maken
+3a_lostmast Verbinding met hoofdserver verloren
+3a_losthost Verbinding met host verloren
+3g_notisync Initiële synchronisatie mislukt
+3g_lostsync Synchronisatie met host verloren
+3a_connecto Time-out van verbinding
+3a_noconnsl Geen verbindingen beschikbaar
+3a_nookpack OK niet ontvangen
+3a_waitfook Wachten op OK
+3a_waittrak Wachten op circuitinfo
+3a_notrakpk De circuitinfo niet ontvangen
+3a_loadtrak Circuit laadt
+3a_chglight Verlichting verandert
+3a_ply_join Een gast treedt toe
+3a_nochrace Kan het circuit niet veranderen tijdens race
+3g_trnoallo %s niet toegelaten op deze host
+3a_chgtrack Circuit verandert
+3h_welcomex Welkom bij Live for Speed %s
+3a_small_no nee
+3a_smallyes ja
+3h_smallaut auto
+3h_smallnev nooit
+3h_smallask vragen
+3h_smallalw altijd
+3a_smalloff uit
+3a_smalreal echt
+3a_smalvrtl virtueel
+3a_smalleft links
+3a_smalrght rechts
+3a_smalnone geen
+3a_smaltext tekst
+3a_smallall alle
+3a_smallman man
+3a_smallwmn vrouw
+3h_smallb16 16-bits
+3h_smallb32 32-bits
+3a_smlnobrk [nee]
+3a_smlysbrk [ja]
+3a_smlofbrk [uit]
+3a_smlonbrk [aan]
+3a_actobjct object
+3a_actstart startpositie
+3a_actfinsh finishlijn
+3a_actchck1 1ste controlepost
+3a_actchck2 2de controlepost
+3a_actchck3 3de controlepost
+3g_actcircl cirkel
+3a_actnofin Geen finishlijn
+3a_actnochk Geen controleposten
+3a_actfnnoc Finishlijn, maar geen controleposten
+3a_accpxnof Controlepost %d niet gevonden
+3a_aconechk Autocross : 1 controlepost
+3a_acxchckp Autocross : %d controleposten
+3a_noloadsk Kan skin niet laden :
+3a_wrngfltp Verkeerd bestandstype
+3a_cnocolon Kan bestand niet openen
+3a_outcnopn Output : Kan bestand niet openen
+3d_outnoply Output : Kan wagen van coureur niet vinden
+3d_outstart Output : Gestarte ronde
+3d_outfinis Output : Gefinisht
+3a_corruptf Gecorrupteerd bestand
+3a_filenohc Controle van hoofding van bestand mislukt :
+3g_filetoos Bestand is te kort :
+3g_filecorr Bestand is corrupt :
+3g_err_read Fout bij het lezen van het bestand :
+3g_notpcmwv Wave is geen PCM :
+3g_srnotsup Signaalfrequentie wordt niet ondersteund :
+3g_wv_mo_st Wave is niet mono of stereo :
+3g_wavemb16 Wave is niet 16-bits :
+3g_wavetool Wave is te lang :
+3a_latervfl Bestand werd aangemaakt door latere versie :
+3a_nocrtfil Kan bestand niet aanmaken :
+3a_votecanc Stemming geannuleerd
+3a_nocrtmpr Kan MPR bestand niet aanmaken
+3a_savedmpr MP replay opgeslagen -
+3a_nocrtspr Kan SPR bestand niet aanmaken
+3a_savedspr SP replay opgeslagen -
+3a_nornmspr Kan geen nieuwe naam geven aan SPR -
+3a_accesden Toegang geweigerd
+3a_invalchr Onjuiste waarden
+3a_notfound Niet gevonden
+3a_unknowne Onbekende fout
+3g_downcanc Download geannuleerd
+3g_filesize Verkeerde bestandsgrootte
+3g_highresd Hoge resolutie skin downloads :
+3g_nolfswcr Niet genoeg LFS World krediet voor hoge resolutie skins
+3g_dbnotava Hoge resolutie skins database is niet beschikbaar
+3a_entermsg Typ bericht
+3g_seldefcp Selecteer standaard codepagina
+3a_ctabshwr CTRL+TAB - toon resultaten
+3a_shf8nwdb SHIFT+F8 - netwerk debug - %s
+3a_newvalfx Geef nieuwe waarde voor %s
+3a_valtoolo Nieuwe waarde is te laag
+3a_valtoohi Nieuwe waarde is te hoog
+3a_endoqual KWALIFICATIE OVER
+3a_ctrcclip CTRL+C - muis geklemd naar
+3a_ctrcfree CTRL+C - vrije muis in
+3a_windotxt venster
+3a_fullstxt volledig scherm
+3g_not_demo niet beschikbaar in DEMO
+3h_noraceln tonen van racelijn is niet beschikbaar
+3g_time_loc lokaal
+3g_time_utc UTC
+3a_namelong Naam is te lang
+3a_noconnms Kan geen verbinding maken met hoofdserver
+3a_wrninsta Opgelet : andere instantie LFS al open
+3g_lfsbuyon Live for Speed - koop online - ^7www.lfs.net
+3g_comentry Commando is alleen te gebruiken in beginscherm
+3g_insimnop InSim is niet open
+3g_comguest Commando is voor multiplayer gasten
+3g_comsetup Commando is alleen te gebruiken in setupscherm
+3g_comnoded Commando is niet voor de dedicated host
+3g_unknwnai Onbekende AI coureur
+3g_drv_alrd Coureur is al in de race
+3g_drv_noin Coureur is niet in de race
+3g_setup_nf Setup niet gevonden
+3g_colournf Kleur niet gevonden
+3g_scrtooma Te veel scripts
+3g_scrtoolo Script is te lang
+3g_scrempty Script is leeg
+3g_un_axs_f Onbekende asfunctie
+3g_un_key_f Onbekende toetsenfunctie
+3g_un_btn_f Onbekende knopfunctie
+3g_xlnxtool %s : lijn %d is te lang
+3g_x_ln_x_x %s : lijn %d - %s
+3g_cantopen Kan niet openen : %s
+3g_notallow Niet toegestaan : %s
+3h_cp_latin Latijns 1
+3h_cp_cente Centraal Europees
+3h_cp_turki Turks
+3h_cp_balti Baltisch
+3h_cp_japan Japans
+3h_cp_cyril Cyrillisch
+3h_cp_greek Grieks
+3h_cp_tr_ch Traditioneel Chinees
+3h_cp_si_ch Vereenvoudigd Chinees
+3h_cp_korea Koreaans
+3a_hostfull Host is vol
+3a_hostload Host laadt een circuit
+3a_plyrconn Een gast is al aan het toetreden
+3g_plydisco Een gast verlaat de host
+3h_racstart Een race is aan het starten
+3a_unauthcn Ongeoorloofde verbinding
+3a_useronli Gebruikersnaam is al online
+3h_userband Gebruikersnaam is gebanned
+3a_usernofd Je gebruikersnaam werd niet gevonden
+3a_pwnomtch GAME paswoord is verschillend
+3g_pwneeded Je moet een GAME paswoord instellen
+3h_unlkused Unlocks voor deze week opgebruikt
+3h_unpwconf Gebruikersnaam en paswoord bevestigd
+3a_unknwerr Onbekende fout
+3a_carnomtc Wagens zijn niet dezelfde als die van de host
+3a_nodbljon Geen dubbele toetreding tot Internet host
+3a_hlostmst Host is de verbinding met hoofdserver verloren
+3a_wrngpass Verkeerd paswoord
+3a_prvreqps Privé host heeft paswoord nodig
+3a_usrunknw Onbekende gebruikersnaam
+3a_usrnotol De gebruiker is niet online gevonden
+3a_usrolhid Gebruiker is online op verborgen host
+3g_usrol_s1 Gebruiker is online op een S1 host
+3g_usrol_s2 Gebruiker is online op een S2 host
+3g_usrol_s3 Gebruiker is online op een S3 host
+3a_hostrefu Host heeft de verbinding geweigerd
+3a_hstdiffv Host heeft een andere versie
+3a_hstdiffc Host heeft een andere spelcode
+3a_hstis_s1 Host is Live for Speed S1
+3g_hstis_s2 Host is Live for Speed S2
+3g_hstis_s3 Host is Live for Speed S3
+3a_hstisdmo Host is Live for Speed DEMO
+3a_hstunknr Onbekend antwoord van host
+3a_hstnomst Host niet gevonden op hoofdserver
+3a_nameused Naam is al in gebruik
+3a_racefull Race is vol
+3g_nomidjoi Niet tijdens de race binnenkomen in deze host
+3b_usermeet De gebruiker is in de ontmoetingsruimte
+3b_unkncomm Onbekend commando
+3h_unknwver Onbekende versie
+3b_reqparam Dit commando heeft een parameter nodig
+3b_req2pars Dit commando heeft 2 parameters nodig
+3e_notenpar Niet genoeg parameters
+3b_unknwtrk Onbekende circuitparameter
+3e_unknwcar Onbekende wagenparameter
+3b_unoadmin Je hebt geen adminrechten
+3b_kbinvalu Gebruikersnaam is niet geldig
+3b_invalpar Parameter is niet geldig
+3g_ptoolong Parameter is te lang
+3g_notfound Bestand niet gevonden
+3e_setuponl Commando alleen voor setupscherm
+3e_axnofind Kan de layout niet openen
+3e_axnoneav Geen layouts gevonden voor dit circuit
+3e_kbnoload Kan bestand niet laden
+3e_kbnosave Kan bestand niet opslaan
+3g_tooearly Te vroeg om de race te herstarten
+3g_pplracin Er zijn nog mensen aan het racen
+3h_notrxudp Host ontving je UDP pakket niet
+3h_nomultij Vermijden van gelijktijdige toetredingen
+3h_modreqpw Gemodificeerde host moet een wachtwoord hebben
+3h_invalidu Ongeldige gebruikersnaam

@@ -1,0 +1,236 @@
+LFS HELP file (Latvian)
+Translated by: Eclipsed, Ferroc
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Laipni lûgts Live for Speed!^8
+
+Lai lietotu ðo programmu, Jums ir jâpiekrît sekojoðiem noteikumiem :
+
+- Live for Speed joprojâm ir attîstîbas stadijâ. Daþâdas iespçjas var tikt pievienotas, atjaunotas vai noòemtas jebkurâ laikâ. Var tikt iekïautas vairâkas funkcionâlas, bet nepabeigtas iespçjas, lai uzlabotu simulâtora saturu un daþâdîbu.
+
+- Ðai programmatûrai nav nekâdas garantijas.
+
+- Jûs instalçjat un izmantojat ðo programmu uz savu risku.  Live For Speed izstrâdâtâji nenes nekâdu atbildîbu par personiskiem ievainojumiem vai aparatûras bojâjumiem, kas varçtu notikt lietojot programmatûru.
+
+- DEMO saturu var izmantot visi un par to nav jâmaksâ. Bloíçtais saturs ir pieejams tikai licencçtajiem lietotâjiem. Jûs nedrîkstat iegût bloíçto saturu, vai palîdzçt to kâdam citam, savâdâkâ veidâ kâ nopçrkot to un izmantojot atbloíçðanas iespçju spçlç.
+
+^7Paldies.^8
+\user_name
+Lai spçlçtu tieðsaistç (vai arî lai atbloíçtu licencçto saturu pçc licences iegâdes), Jums jâievada derîgs lietotâjvârds.
+
+Jûs varat izveidot lietotâja kontu apmeklçjot ^7www.lfs.net^8 - nepiecieðama tikai Jûsu e-pasta adrese.
+
+PIEZÎME : Mçs nekad neizpaudîsim Jûsu e-pasta adresi citiem, izòemot ja to pieprasîs likums.
+\user_pass
+Pçc lietotâja konta izveides ^7www.lfs.net^8, Jums ðeit jâievada sava SPÇLES parole.
+
+Tas Jums ïaus spçlçt tieðsaistç (vai arî atbloíçt licencçto saturu pçc licences iegâdes).
+\host_mode
+^3Opcijas :
+
+^7demo -^8 ðî opcija ierobeþo Jûsu serveri, lai pieejams tikai LFS demo saturs.
+
+^7S1 -^8 pçc S1 atbloíçðanas, ðî opcija ïaus Jums palaist serveri ar S1 saturu.
+
+^7S2 -^8 pçc S2 atbloíçðanas, ðî opcija ïaus Jums palaist serveri ar S2 saturu.
+\con_wind
+Ðis ir piesardzîbas risinâjums divâm iespçjamâm situâcijâm, kas var gadîties daþos datoros, izmantojot pilnekrâna reþîmu.
+
+1) Ja Jums ir ugunsmûris, tas var parâdît ziòojumu kad Jûs mçìinat pieslçgties tieðsaistes serverim.
+
+2) Daþi datori var parâdît dialoga logu kad Jûs mçìinat piekïût internetam.
+
+Ðie ziòojumi var nobloíçt atseviðíus datorus ja LFS tiek izmantots pilnekrâna reþîmâ.
+Ðî opcija novçrð ðâdu iespçju piespieþot LFS uz laiku atvçrties logâ, kamçr pieslçdzas pie interneta.
+Ja Jûsu dators neparâda nekâdus ziòojumus pieslçgðanâs laikâ, Jûs varat droði atslçgt ðo opciju.
+\host_pw
+Daþi serveri ir uzstâdîti, lai bûtu nepiecieðama parole, un tie atpazîstami kâ privâtie serveri.
+
+Ja Jûs vçlaties pieslçgties privâtajam hostam, Jums ðajâ logâ jâievada parole.
+
+Publiskajiem serveriem nav nepiecieðama parole - varat neuztraukties par paroles opciju!
+\game_nm
+^7Publiskais serveris -^8 ievadiet nosaukumu ðajâ logâ, lai dotu savam serverim identitâti internetâ.
+
+^7Privâtais serveris -^8 vârds ïaus Jûsu draugiem atrast Jûsu serveri.
+\ip_name
+^3Opcijas :
+
+^7vietçjais tîkls -^8 Jûs varat pievienoties vietçjam serverim ierakstot servera IP adresi.
+
+^7internets -^8 Jûs varat pievienoties serverim internetâ ierakstot servera nosaukumu.
+\host_ip
+Jûs varat pieslçgties serverim uz konkrçta datora vietçjâ tîklâ.
+
+IP adrese ir unikâls skaitlis un tiek uzrakstîta ar 4 skaitïiem, kas atdalîti ar 3 punktiem.
+
+Uzklikðíiniet uz pogas un ievadiet IP adresi datoram, kuram vçlaties pievienoties.
+
+Divi veidi,kâ uzzinât datora IP adresi :
+
+1) Palaidiet WINIPCFG no starta izvçlnes.
+2) Palaidiet IPCONFIG no DOS prompt.
+\host_port
+Kad pieslçdzaties izmantojot IP adresi, Jums nepiecieðams zinât servera izmantoto IP adresi un portu.
+
+Tas var izmantot noklusçto portu 63392 vai kâdu citu porta numuru, kuru izvçlçjusies persona,kas uztur serveri.
+
+Ports bûs vai nu noklusçtais vai arî liels skaitlis, kas mazâks par 65536.
+\host_nm
+Jûs varat pieslçgties serverim uz konkrçta datora internetâ.
+
+Lai meklçtu serveri pçc nosaukuma, ieraksti tâ nosaukumu logâ.
+
+Serveru nosaukumi atïaus jums tikties tieðsaistç bez Pieslçgumu Saraksta izmantoðanas.
+\game_pw
+^7Privâtais serveris -^8 ievadiet paroli logâ.
+
+^7Publiskais serveris -^8 atstâjiet logu tukðu.
+\use_master
+Galvenais serveris ir speciâla programma, kas darbojas uz datora internetâ.  Tâ satur sarakstu par serveriem, kas ðobrîd darbojas un ïauj pieslçgties kâdam no tiem vai arî palaist paðam savu.
+
+^3Opcijas :
+
+^7Vietçjs^8 - Jûsu serveris nepieslçgsies galvenajam serverim.  Viesi var pieslçgties klikojot "Pievienoties kâdam serverim", izvçloties "vietçjais tîkls" opciju un ierakstot Jûsu datora IP adresi.
+
+^7Internets^8 - Jûsu serveris pieslçgsies galvenajam serverim un parâdîsies Serveru sarakstâ.
+
+^7Slçpts^8 - Jûsu serveris pieslçgsies galvenajam serverim, bet neparâdîsies Serveru sarakstâ.  Viesi var pieslçgties Jûsu serverim klikojot "Pievienoties kâdam serverim", izvçloties "internets" opciju un ierakstot Jûsu servera nosaukumu.
+
+^3Piezîme :^8 Ja Jûsu dators internetam pieslçgts netieði izmantojot dalîtu interneta pieslçgumu vai arî uzòçmuma tîklu ar ugunsmûri, lai izmantotu Internets vai Slçpts opcijas, Jums nepiecieðams atvçrt attiecîgus TCP un UDP portus.
+\game_ip
+Ja nepiecieðams, Jûs varat precizçt IP adresi, kuru vçlaties izmantot.  Tas noderçs gadîjumâ, ja datoram ir pieejama vairâk kâ viena IP adrese.
+
+Ja atstâsiet ðo logu tukðu, serveris izmantos jebkuru pieejamo IP adresi.
+\admin_pass
+Jûs varat uzlikt speciâlu paroli administratoriem.
+
+Ja viesis pieslçdzas izmantojot ðo speciâlo paroli parastâs paroles vietâ, viòð vai viòa varçs operçt serveri attâlinâti izmantojot speciâlâs teksta servera komandas.  Lûdzu apskatiet README.txt faila sadaïu "Host commands", lai uzzinâtu vairâk.
+\game_port
+Jûs varat izvçlçties, kuru TCP un UDP portu Jûs vçlaties izmantot savam serverim.  Ðî iespçja ïauj izmantot vairâk kâ vienu LFS specializçto serveri uz viena datora.
+
+Izmantojiet noklusçto portu 63392 vai izvçlieties lielu skaitli, kas mazâks par 65536.
+\master_help
+Programma nespçja pieslçgties galvenajam serverim.
+
+Tam var bût vairâki iemesli:
+
+1) Jûs aizsargâ ugunsmûris, kas iespçjams nobloíçja savienojumu.
+2) Iespçjams, ka ðobrîd neiespçjami pieslçgties galvenajam serverim no Jûsu ISP.
+3) Galvenais serveris nedarbojas dçï tehniskas problçmas.
+
+Lûdzu pârbaudiet galvenâ servera statusu apmeklçjot :
+
+^7www.lfs.net^8  vai  ^7www.lfsforum.net^8
+\modem_type
+Jûsu datora spçja veidot serveri ar noteiktu viesu skaitu, balstâs uz Jûsu augðuplâdes lieluma.  Tas balstâs uz Jûsu modçma tipu un interneta pieslçguma âtrumu, kâdu Jums piegâdâ Jûsu interneta pakalpojumu sniedzçjs.
+
+Lûdzu izvçlieties Jûsu modçma tipu vai arî izvçlieties "savâdâks" un ievadiet augðuplâdes âtrumu kilobitos sekundç (Kbits ir plaði izmantota mçrvienîba digitâlo komunikâciju âtruma mçrîðanai.
+
+^7Iepriekðdefinçto modçmu tipi :^8
+
+- telefona lînijas modçms : 56 Kbit lejuplâde / 33.6 Kbit augðuplâde
+- kabeïmodçms : 512 Kbit lejuplâde / 128 Kbit augðuplâde
+- kabeïmodçms : 1 Mbit lejuplâde / 256 Kbit augðuplâde
+\upload_bw
+Ja Jûsu modçms nav starp iepriekðdefinçto modçmu tipiem, lûdzu ievadiet Jûsu augðuplâdes âtrumu kilobitos sekundç. (Kbits/s).  Ja Jûs nezinât Jûsu augðuplâdes âtrumu Kbits/s, bet zinât to KB/s mçrvienîbâ, vienkârði pareiziniet ar 8, lai pârvçrstu Kbits/s.
+
+Ðis uzstâdîjums palîdzçs izvçlçties Jûsu servera iestatîjumus tâ, lai Jûs nepârsniegtu Jums pieejamo augðuplâdes âtrumu.
+\max_guests
+Jûs varat uzstâdît viesu skaitu, kas varçs pievienoties Jûsu serverim.
+
+^7Minimâlais iestatîjums :^8 1 - tikai viens viesis varçs pievienoties Jûsu serverim.
+
+^7Maksimâlais iestatîjums :^8 15 DEMO reþîmâ, 47 - S1 un S2 reþîmos
+
+Ðis skaits ir svarîgs,lai noteiktu Jûsu augðuplâdes âtruma nepiecieðamîbu.
+\admin_slots
+Jûs varat rezervçt daþas no pieejamajâm pieslçguma vietâm administratoriem.
+
+^7Minimâlais iestatîjums :^8 0 - neviena vieta netiek glabâta adminiem.
+
+^7Maksimâlais iestatîjums :^8 8 - vai par vienu mazâk nekâ maksimâlais viesu skaits.
+
+Ðis iestatîjums garantçs Jums iespçju vienmçr pievienoties serverim, ja izmantojat admina paroli.
+\max_cars
+Jûs varat uzstâdît braucçju skaitu, kas varçs piedalîties braucienâ.
+
+Ðis iekïauj gan îstos gan arî AI braucçjus.
+
+^7Minimâlais iestatîjums :^8 1 - tikai 1 auto varçs piedalîties braucienâ.
+
+^7Maksimâlais iestatîjums :^8 12 DEMO reþîmâ, 32 - S1 un S2 reþîmos
+
+Ðis skaits ir svarîgs,lai noteiktu Jûsu augðuplâdes âtruma nepiecieðamîbu.
+\guest_cars
+Jûs varat uzstâdît braucçju skaitu, ko katrs viesis var pievienot braucienam.
+
+Ðis iekïauj gan îstos gan arî AI braucçjus.
+
+^7Minimâlais iestatîjums :^8 0 - viesi var novçrot, taèu nevar pievienoties braucienam.
+
+^7Maksimâlais iestatîjums :^8 3 - lîdz 3 AI braucçjiem vai 1 îstais un 2 AI braucçji no katra.
+\host_cars
+Jûs varat uzstâdît braucçju skaitu, ko servera turçtâjs var pievienot braucienam.
+
+Ðis iekïauj gan îstos gan arî AI braucçjus.
+
+^7Minimâlais iestatîjums :^8 0 - servera turçtâjs var novçrot, taèu nevar pievienoties braucienam.
+
+^7Maksimâlais iestatîjums :^8 3 - lîdz 3 AI braucçjiem vai 1 îstais un 2 AI braucçji.
+
+Samazinot ðo skaitu Jûs varat samazinât nepiecieðamo augðuplâdes âtrumu.
+\max_packs
+Ðis ir maksimâlais pakeðu skaits sekundç, ko nosûta katra maðîna.
+
+^7Minimâlais iestatîjums :^8 3 paketes sekundç.
+
+^7Maksimâlais iestatîjums :^8 6 - gludâk / nepiecieðams divreiz lielâks augðuplâdes âtrums / noslogo vairâk datora procesoru.
+\ded_host
+Jûs varat palaist serveri parastajâ vai specializçtajâ reþîmâ.
+
+^7parastais serveris :^8 Jûs varat piedalîties no sava datora kâ vienspçlçtâja reþîmâ un viesi no interneta varçs pievienoties Jûsu serverim.
+
+^7specializçtais serveris :^8 Netiek râdîta nekâda grafika un netiek aprçíinâta fizika, Jûs nevarat piedalîties servera braucienâ. Ðis ir labâkais risinâjums, ja nevçlaties piedalîties no servera, bet tâ vietâ pievienoties no cita datora. Jûs varat izmantot krietni mazâk jaudîgu datoru, lai palaistu serveri ðajâ reþîmâ.
+\comp_full
+LFS iekïautie auto un íiveru skini, kâ arî citu braucçju skini, kas automâtiski lejuplâdçti spçlçjot tieðsaistç, tiek saglabâti DDS formâtâ.  DDS ir speciâls kompresçts formâts,ko grafikas kartes var izmantot tieðâ veidâ.  Tas atïauj âtrâku ielâdçðanu, âtru attçloðanu un izmanto mazâk datora atmiòas.  Piegâdâtie skini vienmçr tiek izmantoti kompresçtâ veidâ.
+
+Tomçr skini, ko Jûs izveidojat vai lejuplâdçjat pats Jûsu skinu mapç, tiek saglabâti JPG formâtâ.  Lai arî JPG arî ir kompresçts formâts, tas nav radîts âtrai apstrâdei in grafikas kartes to nevar izmantot tieðâ veidâ.  Ðî opcija Jums ïauj izmantot JPG skinus bez pârkonvertçðanas DDS formâtâ, iegûstot augstâku kvalitâti.  Ðajâ gadîjumâ JPG skins tiek dekompresçts to ielâdçjot.
+
+Nekompresçti skini izmanto vairâk grafikas kartes atmiòu un samazina FPS, bet ir noderîgi uzòemot attçlus.
+
+^7kompresçts :^8 JPG skini, kas atrodas Jûsu skinu mapç, tiek konvertçti DDS formâtâ un izmantoti kompresçtâ veidâ
+^7pilns :^8 JPG skini, kas atrodas Jûsu skinu mapç, ielâdçjot tiek dekompresçti un zîmçti kâ nekompresçtas tekstûras
+\skin_help
+^7Skins^8 ir speciâls attçla fails, kas dod krâsojumu auto ârpusei vai íiverei.
+
+LFS ir automâtiska skinu lejuplâdes sistçma.  Kad spçlçjat tieðsaistç S1 vai S2 reþîmâ, citu braucçju skini tiek automâtiski lejuplâdçti uz Jûsu datora, lai Jûs varçtu redzçt viòu maðînas un íiveres krâsojumu.
+
+Ja Jûs vçlaties veidot savus skinus, mçs iesakâm apciemot ^7www.lfs.net^8 un lejuplâdçt ^7CMX Viewer^8 no Additional Downloads sadaïas.  CMX Viewer ir speciâla programma, kas palîdzçs Jums veidot skinus.
+
+Kas savu skinu saglabâjat ^7skins^8 mapç (kas atrodas ^7data^8 mapç), Jûs varat to uzlikt garâþâ.
+
+Lai citi braucçji varçtu Jûsu skinus redzçt tieðsaistç, apmeklçjiet ^7www.lfsworld.net^8 un augðuplâdçjat Jûsu skinus.  Tad Jûsu maðînas skins tiks automâtiski lejuplâdçts citu braucçju datoros kad viòi redzçs Jûs tieðsaistç.
+\skin_info
+Lai LFS automâtiski lejuplâdçtu augstâkas izðíirtspçjas skinus, Jums nepiecieðams nedaudz LFS World kredîta.
+
+LFS World kredîts nozîmç : pozitîvs atlikums Jûsu LFS kontâ.
+
+Lai izmantotu ðo pakalpojumu, Jums jâizdara maksâjums^7www.lfs.net^8 vai ^7www.lfsworld.net^8 vai arî jâizmanto kupons.
+
+Par katru^3 £1 ^8kredîta Jûs saòemsiet^3 2000 ^8skinu lejuplâdes.  Minimâlais maksâjums ir £3.
+
+^7Kâ tas darbojas :^8
+
+Jums nepiecieðams vismaz £1 LFS World kredîta.  Kad Jûs pirmoreiz lejuplâdçjat augstas izðíirtspçjas skinu, £1 tiks atskaitîts no Jûsu konta atlikuma un  2000 skinu lejuplâdes tiks pieðíirtas Jûsu kontam.  Pçc 2000 skinu lejuplâdçðanas, vçlreiz £1 atskaitîts un pieðíirto lejuplâþu skaits atkal paaugstinâts lîdz 2000.
+
+^7Brîdinâjums :^8
+
+Augstas izðíirtspçjas skinu lejuplâde notiek ilgâk, kâ arî ilgâk ielâdçjas kad braucçjs atstâj pitus un izmanto èetras reizes vairâk grafikas kartes atmiòu.  Ðî opcija ieteicama tikai tad, ja Jums ir labs dators, grafikas karte un interneta pieslçgums.
+\shadow_gen
+Ðîs opcijas rada vienâdu rezultâdu daþâdos veidos.  Labâk izvçlçties variantu, kas dod labâku FPS rezultâtu, kad redzamas daudzas çnas, piemçram ar pilnu starta vietu.
+
+Kâ parasti grafikas FPS testos, Jums vajadzçtu nopauzçt LFS, lai izvairîtos no fizikas un skaòas procesora izmantoðanas.

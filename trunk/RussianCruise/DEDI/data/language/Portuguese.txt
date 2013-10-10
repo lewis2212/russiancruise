@@ -1,0 +1,1691 @@
+LFS Translation file (Portuguese)
+Translated by: KiDCoDEa
+
+tx_codepage 1252
+tx_langname Português
+tx_noun_adj na
+3g_tr_selct Treino
+3g_tr_title Escolher Teste
+3a_spselect Jogar localmente
+3a_tit_sply Jogar localmente
+3a_mpselect Jogar em rede
+3a_tit_mply Jogar em rede
+3a_hlselect Contra-relógio
+3a_tit_hotl Contra-relógio
+3a_opselect Opções
+3g_repl_sel Repetições
+3a_tit_sprs Repetições de jogo local
+3a_tit_mprs Repetições de jogos em rede
+3g_unlk_lfs Desbloquear Live for Speed
+3g_demorace Jogador de demo
+3h_x_licens %s licença
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Descarregar pinturas da repetição
+3g_one_notf Uma das pinturas da repetição não foi encontrada no seu pc
+3g_sev_notf Algumas das pinturas da repetição não foram encontradas no seu pc
+3g_one_down Gostaria de descarregar a pintura em falta?
+3g_sev_down Gostaria de descarregar as pinturas que faltam?
+3a_exit_btn sair
+3a_next_btn mais
+3g_agre_btn concordo
+3a_exitprog Sair do programa?
+3a_userfind Escreve o nome do jogador que procuras
+3h_num_tips %d Dicas
+3h_tip_pesc Carrega ^7ESC^8 no ecrã de opções ou no jogo para acederes à lista de opções
+3h_tip_prst Carrega ^7T^8 para escreveres uma mensagem num servidor multi-jogador
+3h_tip_ffwr Uso de volante com force feedback recomendado.
+3h_tip_rtcg Liberta o acelerador ao trocar de mudança para evitares sobreaquecimento da embraiagem
+3h_tip_brak Usa os travões na altura certa quando te aproximas de uma curva...
+3g_hdr_name Nome do Teste
+3g_hdr_diff Dificuldade
+3g_hdr_mode Modo
+3g_dif_easy Fácil
+3g_dif_medi Média
+3g_dif_hard Difícil
+3g_lsn_firs primeiro teste
+3g_lsn_next teste seguinte
+3g_lsn_trya tentar de novo
+3g_lsn_fini concluído
+3g_tit_obje ^7MISSÃO
+3g_tit_purp ^7OBJECTIVO
+3g_tit_tips ^7DICAS
+3g_tit_targ ^7TEMPO REFERÊNCIA
+3g_not_time Não completado dentro do tempo!
+3g_not_fini Percurso não completado!
+3g_comp_but Percurso completado, mas...
+3h_false_st - Arrancou antes do sinal verde
+3g_too_long - Demorou demasiado a completar
+3g_coll_car - Teve uma colisão com um outro carro
+3g_wrong_rt - Errou no percurso
+3g_hit_1_ob - Tocou num objecto
+3g_hit_x_ob - Tocou em %d objectos
+3g_not_fast - Velocidade insuficiente no checkpoint
+3g_slo_stop - Demasiado tempo para parar
+3g_exce_spd - Excedeu o limite de velocidade no pitlane
+3g_nopitstp - Não foi às boxes
+3g_not_long - Não parou tempo suficiente
+3g_congrats Parabéns!  Passou no teste!
+3g_stndrd_x Neste teste, a sua avaliação é : %s
+3g_lsnunl_x Precisa de desbloquear %s para este teste
+3a_nocarsel Escolhe um carro
+3a_araceinp Uma corrida está a acontecer
+3a_plydisco Jogador vai ser desconectado
+3a_leavgame Abandonar o jogo
+3a_playrbtn Jogador
+3a_garagbtn Garagem
+3a_trackbtn Pista
+3a_tit_trak Pista
+3a_load_brk [carregando]
+3a_gene_brk [gerando]
+3a_notr_brk [sem pista]
+3a_endonlin Terminar jogo em rede?
+3a_levonlin Abandonar o jogo em rede?
+3a_swap_pos trocar posição
+3a_joinrace participar
+3a_addaidrv adicionar jogador IA
+3a_setready estou pronto
+3a_starthdr Grelha de partida
+3a_skillhdr Nível de perícia
+3a_race_hdr Corrida
+3a_readybtn pronto
+3a_localsml local
+3a_vhostsml via servidor
+3g_adminsml administrador
+3a_dirctsml directo
+3a_no_track pista não selecionada
+3a_nodriver não há jogadores
+3a_carerror erro no carro
+3a_raceinpr Corrida em progressão
+3a_remvplyr retirar jogador
+3a_no_quali sem qualificação
+3a_qual1min qual 1 min
+3a_qualxmin qual %d mins
+3a_practice practicar
+3a_race1lap corrida 1 volta
+3a_racexlap corrida %d voltas
+3a_race1hou corrida 1 hora
+3a_racexhou corrida %d horas
+3a_zerowind sem vento
+3a_low_wind pouco vento
+3a_highwind muito vento
+3a_nosamenm Jogadores locais não podem ter mesmo nome
+3a_ac_onest Autocross : apenas uma posição de partida
+3a_ac_fixlp Autocross : número de voltas fixo
+3h_kickplyr Chutar jogador %s^8? (%s^8)
+3h_howlongb Por quantos dias, banir %s^8? (%s^8)
+3h_ainodriv Pilotos IA não podem usar esta configuração
+3h_ainoxral Pilotos IA não podem levar %s em pistas rallycross
+3h_ainoxcfg IA não pode levar %s nesta configuração
+3a_cdntsvst Não foi possível gravar set de afinações
+3a_sent_set Set de afinações enviadas
+3a_plynotfd Jogador não encontrado
+3a_carnotfd Carro do jogador não encontrado
+3a_namsetsv Nome do SET de afinações a GRAVAR
+3h_gridsave Escreve nome da grelha de partida a gravar
+3h_gridload Selecciona a grelha de partida a carregar
+3h_xremovex %s^8 retirou %s^8 da grelha de partida
+3a_endgmbtn terminar jogo
+3a_leavebtn abandonar
+3g_endr_btn acabar corrida
+3g_spec_btn assistir
+3h_qual_btn qualificar
+3h_rest_btn recomeçar
+3h_pits_btn boxes
+3g_join_btn participar
+3g_play_btn tocar
+3a_namesort nome
+3a_datesort data
+3a_car_caps Carro
+3a_newbtset Para criar um SET pessoal, prima o botão 'Novo SET'
+3a_selplset Não é possível mudar [base] - seleciona um SET pessoal
+3a_newbtcol Para criares uma pintura pessoal, carrega o botão 'Cores novas'
+3a_selplcol Não podes mudar a [base] - escolhe cores pessoais
+3a_sets_hdr SETs do carro
+3a_cols_hdr Cores do carro
+3a_new_setb Novo SET
+3a_new_colb Cores novas
+3a_savedset Modificações gravadas
+3a_savedcol Cores gravadas
+3a_new_butt Novo
+3a_del_butt Apagar
+3a_undo_btn Voltar Atrás
+3g_rename_b Renomear
+3h_clear_bt Limpar
+3a_drvr_hdr Piloto
+3a_frce_hdr Força
+3g_fuel_hdr Combustível
+3g_susp_hdr Susp
+3a_out_butt Fora
+3a_in_buttn Dentro
+3a_off_butt Não
+3a_on_buttn Sim
+3a_stop_btn Parar
+3a_drop_btn Cair
+3a_namenset Escreve nome do novo SET
+3g_newnmset Escreve novo nome para o SET
+3a_setnodel O SET não pôde ser apagado
+3a_deletset Apagar o SET?
+3a_setnonam Não é possível criar SET sem nome
+3a_namencol Escreve nome para as novas cores
+3h_newnmcol Escreve o novo nome para as cores
+3a_colnodel As cores não puderam ser apagadas
+3a_deletcol Apagar as cores?
+3a_colnonam Não é possível criar cores sem nome
+3a_carninvl O nome de carro selecionado é inválido
+3a_sel_skin Escolhe pintura
+3a_drv_none Sem tracção
+3a_drv_fron Tracção traseira
+3a_drv_rear Tracção dianteira
+3a_drv_four Tracção integral
+3g_dif_open DIF ABERTO
+3g_dif_lock DIF BLOQUEADO
+3g_dif_visc VISCOSO LSD
+3g_dif_clsd AUTO-BLOCANTE LSD
+3a_no_creds Sem créditos
+3a_one_cred 1 crédito
+3a_xx_creds %d créditos
+3g_host_dis Este servidor não permite a condução de %s
+3h_ndxmdcax Tens de estr em modo %s para conduzires o %s
+3h_ndulxcax Tens de desbloquear o LFS %s para conduzires o %s
+3g_all_caps TUDO
+3g_newnmrep Novo nome para a repetição
+3g_repnodel A repetição não pôde ser apagada
+3g_deletrep Apagar repetição?
+3g_repnonam Impossível criar repetição sem nome
+3g_set_sh_x Modificações para %s :
+3a_rght_brk [direita]
+3a_left_brk [esquerda]
+3a_plyrname Nome do jogador :
+3g_otherply Outros jogadores :
+3a_numplate Matrícula :
+3a_countryc País :
+3a_poschoos Posição do condutor :
+3a_speedcho Velocímetro em :
+3a_pressure Pressão em :
+3g_lang_cln Idioma :
+3g_font_cln Tipo de letra :
+3g_wght_cln Visibilidade :
+3g_adnewply adicionar novo jogador
+3g_dlselply Apagar o jogador selecionado?
+3g_enterply Escreva o nome do novo jogador
+3g_plyexist Jogador já existe
+3g_newnamex Escreva um novo nome para o jogador : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Ajuda de travagem :
+3a_autoclch Auto embraiagem :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Efeito panorâmico virtual :
+3a_clipwndo Rato limitado à janela CTRL+C :
+3a_clipflsc Rato limitado ao ecrã CTRL+C :
+3a_leftscrn ecrã esquerdo
+3a_rghtscrn ecrã direito
+3a_keyshpls Atalho de teclas (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful Janela / Ecrã total
+3a_shf4togg SHIFT + F4 muda entre o modo ecrã total e janela
+3a_shxalrdy SHIFT + F%d já está atribuído ao modo selecionado
+3a_assxmodx Atribuir SHIFT + F%d ao modo %s?
+3a_unkntype desconhecido
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Configuração para vista %s :
+3a_vw_incar dentro do carro
+3b_vw_custm livre
+3a_ishwdywy [piloto SIM volante SIM]
+3a_ishwdnwy [piloto NÃO volante SIM]
+3a_ishwdnwn [piloto NÃO volante NÃO]
+3a_oht_none [nenhum]
+3a_oht_splt [tempos parciais]
+3a_normlfov Ângulo visão %.0f°
+3h_onebutlk Visão com uma tecla %.0f°
+3a_pitchviw Rodar visão na vertical %.2f°
+3b_rotatviw Rodar visão lateral %.2f°
+3g_mirror_x Mover retrovisor na lateral %.3f m
+3g_mirror_z Mover retrovisor na vertical %.3f m
+3a_tlt1gdeg 1g inclinação da cabeça %.2f°
+3a_shiftlat 1g translacção lateral %.3fm
+3a_shiftfwd 1g translacção frontal %.3fm
+3a_shiftvrt 1g translacção vertical %.3fm
+3a_moveanim Mover a visão com a animação
+3a_defdrvvw Vista preferida do piloto
+3g_cvw_main Desenhar vista
+3b_cvsnthng invisível
+3b_cvswheel rodas
+3g_cvsdbody carroçeria
+3b_cvsexter externa
+3g_cvshelic heli
+3g_cvsfollo exterior
+3h_cvsuserv jogador
+3b_cvwxoffs Translação X %.3f m
+3b_cvwyoffs Translação Y %.3f m
+3b_cvwzoffs Translação Z %.3f m
+3g_c_defaul Posição base
+3g_c_centre Centrar vista
+3g_c_eyepos Posição dos olhos
+3g_cvw_high Altura %.1f m :
+3g_cvw_angl Ângulo %.1f° :
+3g_cvw_dist Distância %.1f m :
+3g_cvw_vlag Suavidade %.1f sec :
+3a_drawdrwh Piloto / rodas visíveis
+3a_lookfunc Vista de acordo com
+3a_lookaxis eixo
+3a_lookstee direcção
+3a_lookms_x rato X
+3a_lookmsxy rato XY
+3h_mslookav Vista com o rato, disponível quando cursor se esconde
+3a_looksens Sensibilidade na vista %.2f
+3a_lookcred Redução ao centro %.2f :
+3a_btnlooko Olhar com botão
+3g_l_smooth suave
+3g_l_instan imediato
+3h_mainsfov Ecrã principal FOV %.0f° :
+3h_monangle Ângulo do ecrã %.0f° :
+3h_viewoffs Translação da vista %.2f :
+3h_multiscl Organização de ecrãs múltiplos :
+3h_entnumls Introduza o número de ecrãs à ESQUERDA
+3h_entnumrs Introduza o número de ecrãs à DIREITA
+3h_onecentr Um ecrã central
+3h_scwidths Larguras de ecrã :
+3h_optequal igual
+3h_optunequ desigual
+3h_entsidep Introduzir largura do ecrã LATERAL (pixels)
+3h_entmainp Introduzir largura do ecrã PRINCIPAL (pixels)
+3h_fullwext Vistas exteriores a toda largura :
+3h_bezelcom Compensação da moldura %.1f%% :
+3h_resulfov Ângulo de vista resultante : %.1f°
+3h_fovinval Opções de vista de condução inválidas
+3h_drivuse1 Vistas de condução usam perspectiva única
+3h_drivusex Vistas de condução usam %d perspectivas
+3h_notwidex Insuficientemente largo para esquema de %d-ecrãs
+3h_extvfull Vistas exteriores usam largura total de ecrã
+3h_extvmain Vistas exteriores usam ecrã principal
+3h_extvxxar Vistas exteriores usam rácio %d:%d
+3h_extvass3 Utilizando esquema de 3-ecrãs para vistas exteriores
+3a_sml_newt novo
+3a_sml_name nome
+3a_sml_delt apagar
+3a_sml_undo desfazer
+3a_sml_save gravar
+3a_sml_load Carregar
+3a_msctrcks Pistas
+3a_exitnosv Sair sem gravar?
+3a_chmblost Modificações podem ser perdidas
+3a_savedrad Radio.rad gravado
+3a_nodelstp Não é possível apagar a estação da garagem
+3a_delchnlq Apagar a estação?
+3a_chanlnum Estação %d
+3a_msctrnum Faixa %d
+3a_norenstp Não é possível alterar o nome da estação da garagem
+3a_newnmchn Novo nome da estação
+3a_play_num Tocar : %s
+3a_fail_num Falhou : %s
+3a_shftauto automáticas
+3a_shftsequ sequencial
+3a_shftshft manete
+3g_shftffjo joystick ff
+3h_transmis Transmissão
+3h_box_hpat caixa padrão-H
+3h_box_bike caixa de moto
+3h_box_sequ caixa sequencial
+3h_box_seqi caixa sequencial com corte de ignição
+3h_box_semi caixa sequencial no volante
+3h_seq_hpat Uso sequencial de caixa padrão-H
+3a_dc_combi combinados
+3a_dc_separ separados
+3a_dc_butts botões
+3a_axb_axis eixos
+3a_axb_butt botão
+3g_no_con_d Controles não detectados
+3g_xx_con_d %.0f controles detectados
+3g_ct_unkno Controle desconhecido
+3g_ct_first Controle primeira-pessoa
+3g_ct_steer Volante
+3g_ct_fligh Manete de avião
+3g_ct_gamep Gamepad
+3g_ct_joyst Joystick
+3a_crrdcval Desmulticação da direcção %.2f :
+3g_whe_turn Brecagem %.0f° :
+3a_msbutt_1 Botões 1
+3a_mdbutt_2 Botões 2
+3e_kbt_mous [direcção rato]
+3e_kbt_nohe [teclado - sem ajuda]
+3e_kbt_stab [teclado - estabilizado]
+3a_mdaxesff Eixos / FF
+3a_mdshiftr Manete
+3a_kasteerl Virar Esquerda
+3a_kasteerr Virar Direita
+3e_kasteerl Virar Rápido
+3e_kasteerr Virar Lento
+3a_kaaccelk Acelerar
+3a_kabrakek Travar
+3a_kaleftvw Vista Esquerda
+3a_karghtvw Vista Direita
+3a_karearvw Vista Traseira
+3a_kashiftu Subir Mudança
+3a_kashiftd Descer Mudança
+3a_kaclutch Embraiagem
+3a_kahandbr Travão de mão
+3a_kahornkk Buzina
+3a_kaflashk Sinal de luzes
+3a_karesetk Reposicionar carro
+3g_kapitspd Limitador velocidade
+3h_katcdisa Controle de Tracção
+3h_kaigniti Ignição
+3a_kazoom_i Fechar ângulo
+3a_kazoom_o Abrir ângulo
+3a_karevers Marcha-atrás
+3a_kafirstk Primeira
+3a_kasecond Segunda
+3a_kathirdk Terceira
+3a_kafourth Quarta
+3a_kafifthk Quinta
+3a_kasixthk Sexta
+3a_kasevent Sétima
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Direcção
+3a_aacombin Acel / Trav Combinados
+3a_aathrott Acelerador
+3a_aabrakea Travão
+3a_aalookhe Visão Lateral
+3a_aalookpi Visão Vertical
+3a_aalookro Visão Pendular
+3a_aaclutch Embraiagem
+3a_aahandbr Travão de mão
+3g_aashiftx Manete Esquerda-Direita
+3g_aashifty Manete Frente-Trás
+3a_prsxforx Carrega %s para : %s (ESC - cancela / DEL - nenhum)
+3a_smallkey chave
+3a_smallbut botão
+3a_mouse_kb rato / teclado
+3a_wheel_js volante / joystick
+3a_force_st Intensidade da Força %.0f :
+3a_thrbrkax Acel. / Travão eixos :
+3a_clutchop Embraiagem :
+3a_handbrko Travão de mão :
+3a_thrbrkrv Acel. / Travão desmultiplicação %.2f :
+3a_btnratev Frequência botão %.2f :
+3a_kbsteero Direcção por teclado :
+3a_strratev Frequência direcção %.2f :
+3e_retratev Frequência retorno %.2f :
+3e_strfastv Multiplicador viragem rápida %.2f :
+3e_strslowv Multiplicador viragem lenta %.2f :
+3a_prdtimev Previsão (tempo) %.2f :
+3a_lmtmultv Limitar multiplicador %.2f :
+3a_selfunca Seleciona função para o eixo
+3a_selaxfrx Seleciona o eixo para : %s (ESC - cancelar / DEL - nenhum)
+3a_availaxs Eixos disponíveis
+3a_axis_num eixo %d
+3a_invert_1 inverte 1
+3a_invert_0 inverte 0
+3a_frcfdbak Força de Feedback
+3a_ffdevice Dispositivo FF
+3g_ffshiftd Dispositivo Mudança FF
+3a_removedz Remover zonamorta :
+3h_rec_axes recalibrar eixos
+3h_cal_lock fixar
+3h_cal_unlk limpar
+3a_heyb_hdr Teclado
+3a_whbt_hdr Botões do volante
+3a_ass_zero [Zero]
+3a_ass_mlft Rato Esquerda
+3a_ass_mrgt Rato Direita
+3a_ass_mmid Rato Central
+3a_ass_whup Volante Cima
+3a_ass_whdn Volante Baixo
+3a_ass_spac Barra Espaço
+3a_ass_upar Seta Cima
+3a_ass_dnar Seta Baixo
+3a_ass_rtar Seta Direita
+3a_ass_ltar Seta Esquerda
+3a_ass_pgup Página acima
+3a_ass_pgdn Página abaixo
+3a_butt_num botão %d
+3d_aamousex Rato X
+3d_aamousey Rato Y
+3d_aa_xaxis Eixo X
+3d_aa_yaxis Eixo Y
+3d_aa_zaxis Eixo Z
+3d_aarxaxis Eixo RX
+3d_aaryaxis Eixo RY
+3d_aarzaxis Eixo RZ
+3d_aaslidr1 Eixo extra 0
+3d_aaslidr2 Eixo extra 1
+3a_reskeysh teclas reservadas
+3a_rswtch_r 1 - ver repetição
+3a_rssave_r 2 - gravar repetição
+3h_showline 4 - mostrar linha ideal
+3a_rsless_f < - menos força
+3a_rsmore_f > - mais força
+3a_rstab_ne TAB - próximo carro
+3a_rshome_o HOME - próprio carro
+3a_rstalk_t T - transmitir mensagem
+3a_rspausep P - pausa
+3a_rshistor H - história
+3a_rsview_v V - vista
+3a_rsforces F - forças físicas
+3a_rsnamesn N - nomes
+3a_shftplus Shift +
+3a_shchhorn H - mudar buzina
+3g_shshiftt G - tipo de mudanças
+3a_shrescon C - reactivar controles
+3a_shressnd W - reactivar som
+3a_shsoundo N - som : SIM / NÃO
+3a_shmirmod M - modo do espelho
+3g_shhidetx F - Esconder texto
+3a_shuservw U - vista livre
+3a_shskiptn K - próxima faixa
+3h_shshowmo Z - mostrar rato
+3b_shdriver F1 - Vista do condutor
+3b_shslowrp F2 - Abrandar repetição
+3b_shfastrp F3 - Acelerar repetição
+3a_shwindow F4 - janela
+3a_carsndvl Volume de som do carro (%.1f)
+3a_skidvboo Amplificação do som de derrapagem (%.1f)
+3g_windvboo Amplificação do volume do vento (%.1f)
+3g_echovboo Amplificação do volume de reverbação (%.1f)
+3a_mscvolum Volume da música (%.1f)
+3g_msgvolum Volume dos menus (%.1f)
+3a_mscsetup Música em ecrãs de opções
+3a_mscracin Música enquanto corres
+3a_mscrplay Música durante repetições
+3a_selecbrk [Selecionado]
+3a_noplybrk [Nada a tocar]
+3a_msc_skip Outra
+3a_msc_sele Seleciona
+3a_ingmmusc Música ao jogar
+3a_channels Estações
+3g_status_a Som (SHIFT + N) : %s
+3g_status_m Buffer para música : %s
+3g_status_c Buffer para som : %s
+3a_relaybrk [relativo]
+3a_absolbrk [absoluto]
+3a_fps_disp Imagens por segundo (fps)
+3b_virtuals Mostrar semáforo virtual
+3a_mirrmode Modo do espelho
+3a_clokmode Modo dos mostradores
+3g_fixedfwd Fixo ao eixo frontal
+3g_accelmov Aceleração move visão
+3a_showpeds Mostrar pedais
+3g_steerind Mostrador virtual de direcção
+3a_smallmap Mostrar mapa pequeno
+3g_staticsm Mini-mapa com rotação
+3a_pos_list Mostrar lista de posições
+3a_dropshad Com sombra
+3a_msgtsize Tamanho de letra do texto %.3f
+3a_timedisp Mostrar tempos totais
+3a_chptexto Texto de sector
+3a_clndlcol Côr de ponteiro dos mostradores
+3a_cltxtcol Côr de texto nos mostradores
+3a_cttxtcol Côr do texto central
+3h_x_dash_c %s painel
+3h_roadgled LED da mudança no carro de estrada :
+3g_interfac Interface
+3a_asavnono [não activado - não gravado]
+3a_asavmanu [activado - gravação manual]
+3a_asavauto [auto gravação - não recomendada]
+3a_ogm_ainm nomes dos pilotos IA
+3g_ogm_fkey F1 a F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [ordem fixa]
+3a_rs_finis [ordem de chegada]
+3a_rs_revfi [ordem inversa à chegada]
+3a_rs_randm [aleatória]
+3a_aidrvnum piloto IA %d :
+3a_f_keynum F%d :
+3a_sprsvopt Gravação de Repetição SPR :
+3a_mprsvopt Gravação de Repetição MPR :
+3a_nonqracr Recomeço de corrida sem-qualificação :
+3a_changbtn Mudar :
+3a_optlores Baixa res.
+3a_opthires Alta res.
+3g_optcompr comprimido
+3g_optsfull total
+3g_opt_main principal
+3g_plus_mir + espelho
+3a_usrldval LOD utilizador (%.2f) :
+3a_dstldval LOD pós (%.2f) :
+3a_mirldval LOD espelho (%.2f) :
+3h_fsaa_txt Full-scene antialiasing :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interface / texto :
+3h_mipbias1 Mip bias (%.1f) objectos / muros :
+3h_mipbias2 Mip bias (%.1f) relva / gravilha :
+3h_mipbias3 Mip bias (%.1f) pavimentos da estrada :
+3a_shtypopt Tipo de sombra :
+3g_treesopt Desenhar árvores :
+3g_flagsopt Desenhar bandeiras :
+3g_rubbropt Desenhar borracha :
+3g_draw_sky Desenhar céu :
+3g_gadapter Adaptador :
+3e_zbdopt_d Z-buffer depth (%d) :
+3e_hazetext Efeito neblina :
+3h_mip_type Filtragem de texturas / AF :
+3h_text_res Texturas (excluindo pinturas do carro) :
+3g_carskins Pintura de carro e capacete :
+3g_texmemmb Memória de texturas usada : %.1f MB
+3a_crdnoshd A tua placa 3d não suporta sombras no LFS
+3g_crdnoftx A tua placa 3d não consegue usar texturas de tamanho máximo
+3h_hvsnotav A tua placa 3d não suporta Hardware Vertex Shading
+3g_seladres Seleciona o dispositivo a ser usado ao reiniciar
+3e_rslfszbd Reinicia o LFS para a mudança de Z-buffer ficar activa
+3a_flsvsync Sinc. vertical de ecrã total :
+3g_prev_lag Prevenir latência no input :
+3a_limitfps Limitar imagens por segundo a :
+3a_maxfrmrt Max. imagens por segundo :
+3g_tx_x_fps %d fps
+3a_minsleep Espera mínima :
+3g_debounce Mudança salta :
+3g_txt_x_ms %d ms
+3a_pixelval %d pontos
+3a_useplset IA usa SET de afinação do jogador :
+3a_useplcol IA usa pintura da carroçeria do jogador :
+3a_sndlgval Atraso do Som %.2f seg. :
+3g_whe_comp Compensação de brecagem %.2f :
+3a_anlgsval Interpolação da direcção analógica %.2f :
+3a_multispd Opção de optimização multi-jogador :
+3g_car_skin Download da pintura do carro :
+3g_hel_skin Download da pintura do capacete :
+3g_multidst Distância máxima carro multi-jogador %.0f m :
+3g_dynamlod Redução LOD dinâmica %.2f :
+3a_updtpath Actualizar trajectória :
+3a_puusrcar próprio carro
+3a_puallcar todos os carros
+3h_replaysk Download das pinturas para os replays :
+3g_introopt Carregar pista quando lfs começa :
+3g_local_12 Horário local em formato 12 horas :
+3g_time_fps Mostrar relógio em vez de FPS :
+3g_shfflags Mostrar bandeiras no modo SHIFT+F :
+3h_accelopt Acelerómetro :
+3h_shadogen Produção de sombra :
+3h_opt_defa normal
+3h_opt_alte alternativa
+3g_skin_d_q Descarregar pinturas
+3h_skin_use Pinturas em memória
+3a_crestart Dar partida
+3a_cntrpits ir às boxes
+3a_cspectat assistir
+3a_cantjoin participar
+3a_cantleav abandonar
+3a_novtnolo Sem votação - sem jogadores locais na corrida
+3a_notdnord Não é possível testar - sem jogador real na repetição
+3a_esc_menu 'Escape' Menu
+3a_repmenig Menu Repetições (em-jogo)
+3a_repmenld Menu Repetições (carregado
+3a_sel_pits Boxes
+3a_sel_spec Assistir
+3a_sel_join Participar
+3a_sel_repl Repetição
+3a_sel_outp Recolher telemetria de volta
+3a_sel_rstr Recomeçar
+3a_vote_str Votar para começar corrida
+3a_vote_end Votar para terminar corrida
+3a_vote_qua Votar para a qualificação
+3a_test_drv Fazer 'Test drive'
+3a_startrac Partida
+3a_hqualify Qualificação
+3a_resumegm Continuar
+3h_escapkey Esc
+3a_undefind indefinido
+3a_arenatxt arena
+3a_singlstg Etapa única
+3a_standard normal
+3a_reversed inverso
+3a_weth_hdr Metereologia
+3a_cnfg_hdr Configuração
+3h_layt_hdr Configuração
+3h_none_sel nenhuma selecionada
+3a_info_cir circuito
+3a_info_tot total
+3a_chng_trk Mudar a pista
+3h_revconfc Configuração inversa :
+3h_openconf Configuração livre :
+3h_ndxmdtrx Tem de estar no modo %s para conduzir em %s
+3h_ndulxtrx Tem de desbloquear o LFS %s para conduzir em %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f milhas %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f milhas
+3g_dt_dawn_ Raiar da aurora
+3g_dt_sunri Amanhecer
+3g_dt_morni Manhã
+3g_dt_day__ Dia
+3g_dt_after Tarde
+3g_dt_sunse Entardecer
+3g_dt_dusk_ Pôr do sol
+3g_dt_night Noite
+3g_wth_clea Limpo
+3g_wth_clou Nublado
+3g_wth_over Encoberto
+3a_hlvcthis Volta-
+3a_hlvcnext Próxima-
+3a_readynum Pronto : %d
+3a_noviewcr Corrida sem carros
+3a_thexisst A %s está a começar
+3a_thexhase A %s terminou
+3a_smlpract sessão de treino livre
+3a_smlqulng qualificação
+3a_sml_race corrida
+3a_replnotr Repetição não está a ser gravada
+3g_notrecor Não está a gravar
+3g_fov_temp Ângulo de visão %.0f°
+3a_replrest Repetição recomeçou
+3a_aisvdknw Piloto IA gravou conhecimento
+3a_timetmsx Tempo x %.3f
+3a_namenldf Nome do ficheiro de telemetria da próxima volta
+3g_caps_wrn AVISO
+3g_caps_kik CHUTO
+3g_caps_ban BANIR
+3g_caps_spe ASSISTIR
+3a_namesoff sem nomes
+3a_connlist jogadores ligados
+3a_namesovr nomes sobre os carros
+3h_showmous mostrar rato
+3h_hidemous esconder rato
+3a_mirrinfo retrovisor :
+3a_cancaujo Conexão automática cancelada
+3a_reinicnt Controles re-inicializados
+3a_reinisnd Som re-inicializado
+3a_namemprs Nome da repetição MPR a gravar
+3a_namesprs Nome da repetição SPR a gravar
+3a_shnsound SHIFT N - som - %s
+3g_shgsmode SHIFT + G : Tipo de mudanças - %s
+3a_shgautos SHIFT G - automáticas - %s
+3a_frcvalpc força %.0f%%
+3a_hrntypev Tipo de Buzina %d
+3a_actnends TERMINA
+3a_actnrest RECOMEÇA
+3a_actnstrt COMEÇA
+3a_thngqual Qualificação
+3a_thngrace Corrida
+3a_reploose Erro OOS na repetição
+3a_pausetxt em pausa
+3g_safeexit a sair...
+3a_retrdcap RETIRADO
+3a_dsqulcap DESQUALIFICADO
+3g_unclcaps NÃO CLASSIFICADO
+3a_wrngwcap SENTIDO CONTRÁRIO
+3a_capsdrvr PILOTO
+3a_capsbstl MELHOR VOLTA
+3g_pitstops BOX
+3g_spenalty PTY
+3a_capstotl TOTAL
+3g_caps_car CARRO
+3g_capsxlps %d VOLTAS
+3g_plus1lap +1 volta
+3g_plusxlps +%d voltas
+3h_falsesta FALSA PARTIDA
+3h_pe_speed EXCESSO VELOCIDADE NAS BOXES
+3h_pe_short PIT STOP DEMASIADO CURTO
+3h_pe_mustp PIT STOP DEMASIADO TARDE
+3h_pe_admin DADO PELO ADMINISTRADOR
+3h_pe_unknw DESCONHECIDO
+3g_yellcaps BANDEIRA AMARELA
+3g_bluecaps BANDEIRA AZUL
+3a_stpgocap PENALIZAÇÃO 'STOP-GO'
+3g_drthrcap PENALIDADE PASSAGEM-BOXES
+3g_30stimep 30 SEGUNDOS DE PENALIZAÇÃO
+3g_45stimep 45 SEGUNDOS DE PENALIZAÇÃO
+3g_clearedp PENALIZAÇÃO ANULADA
+3g_pit_stop PARAGEM BOX
+3g_pitstopx PARAGEM BOX : %d
+3g_p_pnltyx PARAGEM BOX [penalização] : %d
+3g_p_nowrkx PARAGEM BOX [sem trabalho] : %d
+3g_p_finshx PARAGEM BOX [terminado] : %d
+3g_mancompx %s^8 completou a %s
+3g_wmncompx %s^8 completou a %s
+3g_unkcompx %s^8 : completou %s
+3g_enterpit ENTROU nas boxes
+3g_enterfor ENTROU nas boxes para
+3g_leavepit DEIXOU as boxes
+3g_stpgotxt penalização stop-go
+3g_drthrtxt penalização passagem-boxes
+3g_nopurtxt sem objectivo
+3g_capsstop STOP
+3g_capsrefu REABASTECENDO
+3g_capssetu AJUSTE DE AFINAÇÕES
+3g_capsxdam %s DANOS
+3g_capsdamx DANOS ATÉ %s
+3g_capsxcha %s MUDANÇA DE PNEUS
+3g_capsminr PEQUENOS
+3g_capsmajr GRANDES
+3g_capsfrnt FRENTE
+3g_capsrear TRÁS
+3g_capsleft ESQUERDA
+3g_capsrigh DIREITA
+3g_capslefr FRENTE ESQUERDO
+3g_capslere TRASEIRO ESQUERDO
+3g_capsrifr FRENTE DIREITO
+3g_capsrire TRASEIRO DIREITO
+3g_refl_f_x Reabastecimento concluído : %.1f litros
+3g_pitstp_f Paragem nas boxes concluída
+3g_nospdlim Não há zona de limite de velocidade nesta pista
+3g_notequip Este carro não tem um limitador de velocidade
+3h_thisnotc Este carro não tem controle de tracção
+3h_thisnost Este carro não tem motor de arranque
+3a_smllaptm tempo de volta
+3a_smlspltm tempo parcial
+3a_clhotlap contra-relógio
+3a_clonemin qualificação de 1 min
+3a_cl_xmins %d mins de qualificação
+3a_clonelap 1 volta
+3a_cl_xlaps %d voltas
+3a_clonehor 1 hora
+3a_cl_xhors %d horas
+3g_cltrning treino
+3a_windsp_x intensidade do vento %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8's voto expirado
+3a_x_voteer %s^8 votou para TERMINAR CORRIDA
+3a_x_voters %s^8 votou para RECOMEÇAR
+3a_x_votequ %s^8 votou para QUALIFICAÇÃO
+3a_x_joinsp %s^8 fica a assistir
+3g_x_didnot %s^8 não terminou
+3g_x_wrongr %s^8 errou o percurso
+3g_x_illega %s^8 foi para uma área restrita
+3h_x_retpit %s^8 regressou às boxes
+3h_a_retpit Todos os carros regressaram às boxes
+3a_lagvalue LATÊNCIA (%.2f)
+3a_hlvcstlp 1ª volta
+3a_smalllap volta
+3a_hlvcmodi [modificado]
+3a_timequal qualificação
+3a_timetotl total
+3a_timebest melhor
+3a_time_lap volta
+3a_timesplt parcial
+3h_timetime tempo
+3a_timepnlt penalização
+3a_noldxcar Não foi possível carregar o carro de %s^8
+3a_nosvnonm Não é possível gravar sem nome
+3g_nofilesl Ficheiros para carregar inexistentes
+3a_alrdyout Telemetria de volta já sendo extraída
+3a_nxtlpout Telemetria da próxima volta irá ser gravada em %s.raf
+3a_nodtaout Nenhuma informação será escrita no ficheiro
+3g_dled_x_x Pintura descarregada : %s_%s
+3g_ding_x_x Descarregando pintura : %s_%s
+3h_saveskin gravando pintura : %s
+3g_nomoreci Não pode adicionar mais círculos
+3a_noaddmor Não é possível adicionar mais objectos
+3a_loadinfo A Carregar
+3h_storedvw Cameras definidas (V) :
+3h_move_spd Velocidade %.1f m/s :
+3h_min_high Altura mínima %.1f m :
+3g_roll_deg Inclinação %.1f° :
+3h_vwsmooth View smoothing %.1f s :
+3h_trantime Duração da transição %.1f s :
+3a_invlok_c Inverter a acção do botão direito :
+3h_invrot_c Inverter esquerdo + direito roda :
+3a_fov_valu Ângulo de visão %.1f°
+3a_plcobs_c Colocar objectos :
+3a_chkptw_v Largura do Ponto-de-controle %.0f m
+3a_hdg_degr Direcção %.1f°
+3a_unnm_brk [sem nome]
+3a_objs_num objectos : %d
+3a_emty_brk [vazio]
+3a_savechan Gravar alterações
+3a_loadlayo Carregar configuração
+3a_savelayo Gravar configuração
+3a_clearall Apagar tudo
+3a_laps_num voltas : %d
+3a_errorsml erro
+3a_c_clrsel C - limpar selecções
+3a_m_mv_mod M - mover / modificar
+3a_del_dele DEL - apagar
+3a_w_e_wdth W / E - largura
+3a_l_r_rota < / > - rodar
+3a_cp_1_2_3 1 / 2 / 3 - ponto-de-controle
+3a_f_finish F - linha de meta
+3a_s_startp S - posição de partida
+3a_o_object O - objecto
+3g_dist_x_m dist : %.2f m
+3a_editkeys mudar as teclas
+3a_c_ar_hgt CTRL + cursor - altura
+3g_c_ar_rol CTRL + arrow - inclinação
+3a_arrow_mv cursores - mover
+3a_spc_hdsh SPACE - esconder / mostrar
+3a_esc_exit ESC - sair
+3h_l_b_move botão esquerdo - mover
+3h_r_b_look botão direito - olhar
+3h_l_r_rota esquerdo + direito - rodar
+3a_keys_txt teclas
+3h_mous_txt rato
+3h_edit_txt editar
+3h_more_txt mais
+3h_in_trans transição
+3h_cl_slt_x Câmera apagada no banco %d
+3h_st_slt_x Câmera guardada no banco %d
+3h_no_v_x_s Não há câmera no banco %d (%s)
+3h_no_vws_s Não há câmeras (%s)
+3h_sh_nm_st SHIFT + NÚMERO para guardar a câmera
+3h_no_car_f Não existe um carro para seguir
+3h_fc_point Apontando ao :
+3h_fc_neare Carro mais próximo :
+3h_fc_flwng Seguindo :
+3h_fc_lockd Fixo ao :
+3h_clicktof clique no carro a seguir
+3h_followcr seguir carro
+3h_nocarsvw não há carros nesta vista
+3h_stopfoll parar
+3h_optimise optimizar
+3h_opt_of_t Objectos optimizados : %d of %d
+3a_noxwload Não é possível sair enquanto carrega
+3a_chgnotsv Alterações não gravadas
+3a_exanyway Sair mesmo assim?
+3a_clrall_q Apagar todos os objectos da configuração?
+3g_delete_l Apagar configuração?
+3a_tit_ldly Carregar configuração
+3a_nosavent Não é possível gravar configuração pelo ecrã de entrada
+3a_nolodent Não é possível carregar configuração pelo ecrã de entrada
+3a_noobselm Nenhum objecto está selecionado para ser movido
+3a_noobtype Nenhum tipo de objecto está selecionado
+3a_noobseld Nenhum objecto está selecionado ser apagado
+3h_unexpclr Comando
+3h_unexpend Fim de ficheiro inesperado
+3a_xalready Um %s já foi criado
+3g_idx_0tox Indíce tem de ser entre 0 e %d
+3g_rt_idx_x Indíce de percurso : %d
+3g_restarea Área restrita
+3g_rt_check Revisor de percurso
+3g_rt_wrong Percurso errado
+3g_ob_chalk giz
+3g_ob_cones cones
+3g_ob_tyres pneus
+3h_ob_markr placas
+3g_ob_other objectos
+3g_ob_marsh comissário
+3g_marsh_no invisível
+3g_marsh_st comissário
+3g_marsh_le indica esquerda
+3g_marsh_ri indica direita
+3h_cant_add Não pode adicionar :
+3h_cant_mov Não pode mover :
+3h_inte_obj objecto intersectado
+3h_inva_pos posição inválida
+3a_dispgame Mostrar lista de jogos
+3a_tit_list Lista de jogos
+3a_startnew Criar jogo novo na rede
+3a_tit_strt Criar Jogo Novo na rede
+3a_joingame Ligar a jogo específico
+3a_tit_spec Ligar a Jogo Específico
+3a_finduser Encontrar jogador na rede
+3a_tit_user Procurar jogador
+3a_cls1conn Fechando uma conexão
+3a_clsxconn Fechando %d conexões
+3a_rfrshlst refrescar
+3a_stophost Parando listagem de servidores
+3a_spctostp BARRA DE ESPAÇOS para parar listagem de servidores
+3a_liststat %s servidor %d de %d - Podes ligar a %d - [Sem resposta %d] - [Versão errada %d]
+3a_waitingw Esperando
+3a_checking Verificando
+3a_end_stat Podes ligar a %d - [Sem resposta %d] - [Versão errada %d] %s
+3a_clikjoin - CLICA nome para te ligares
+3a_glc_name Nome
+3a_glc_ping Ping
+3a_glc_trak Pista
+3a_glc_cars Carros
+3a_glc_info Informação
+3a_glc_cons Conexões
+3a_privatew privado
+3a_modified modificado
+3h_arcade_w reinicíavel
+3h_cruise_w passeio
+3a_wrongver Versão errada
+3h_noteul_x NOTA : Necessita ainda de desbloquear o LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Servidor alternativo
+3h_cnt_titl País
+3h_newupdat Nova versão disponível
+3h_norecaui Informação de actualização automática não recebida
+3h_start_dl Começar download
+3h_plsselmr Seleciona um servidor próximo, para o download
+3h_connectn Conectando...
+3h_trylfsnt Reconectando usando ^7www.lfs.net
+3h_dl_perce Progresso do ficheiro : %d%%
+3h_dl_colon Descarregado :
+3h_restartn Recomeçando...
+3h_nostrtrs Não foi possível carregar o restarter
+3h_noresdat Não foi possível criar o ficheiro (restarter data)
+3h_noenumwi Erro ao procurar windows (EnumWindows)
+3h_anotherl Outra instância do LFS está a correr
+3h_noopenrs Não foi possível encontrar o programa
+3b_meetroom Zona de conversação
+3b_m_host_x está a ligar-se a %s
+3b_f_host_x está a ligar-se a %s
+3b_leftroom deixou o canal
+3b_entrroom entrou no canal
+3b_wlcmu1st Bemvindo! És o primeiro jogador no canal
+3b_wlcmxinr Bemvindo! Existem %d jogadores no canal
+3b_mr_leave Deixar canal
+3b_mr_findb Encontrar
+3b_mr_sound Som
+3b_mr_refre Refrescar
+3b_somehost um servidor
+3b_mastercl Servidor principal fechou a ligação
+3b_sr_privt Privado
+3b_mr_publc Publico
+3b_mr_empty Vazio
+3h_sr_arcad Reinicíavel
+3h_sr_cruis Passeio
+3g_autoreco Reconectando...
+3a_typelocl Rede local
+3a_typeinet internet
+3a_userisat Jogador está em %s
+3a_joinxath Ligar %s^8 a este servidor?
+3a_inrc_num em corrida : %d
+3a_cons_num ligações : %d
+3a_resl_num resultados : %d
+3h_skin_num Pintura : %d
+3h_join_que Posição na fila de espera : %d
+3a_selhostc Servidor selecionado :
+3a_joingamc Ligar ao jogo :
+3a_hostnamc Nome do servidor :
+3a_hostipac Endereço IP do servidor :
+3a_hostprtc Porta do servidor :
+3a_hostpasc Palavra-chave do servidor :
+3h_clearbtn apagar todas as palavras-chave (%d)
+3h_cconfirm Apagar as palavras-chave do servidor?
+3a_noldtrck Não foi possível carregar a pista
+3a_nosndudp Não foi possível enviar pacote UDP
+3a_nocrtudp Não foi possível criar ligação UDP
+3h_wt_sinfo Aguardando por info da pintura
+3h_norcvskn Info da pintura não recebida
+3a_norcvgst Informação de cliente não recebida
+3a_norcvply Informação de jogador não recebida
+3a_norvcall Não recebidas, mensagens de todos jogadores
+3a_vldadreq Escreve um endereço IP válido da tua rede local
+3a_errconrs Erro ao enviar resultado da conexão
+3a_mode_sel Seleciona o modo em rede :
+3h_smal_dmo demo
+3h_frxmdndx Para modo %s tem de desbloquear o LFS %s
+3h_seltrrqx A pista selecionada requere o modo %s
+3a_visibilc Visibilidade :
+3a_vis_locl local
+3a_vis_inet internet
+3a_vid_hidn invisível
+3a_inetconc Conexão Internet :
+3a_modem56k modem 56k
+3a_m512_128 cabo 512 / 128
+3a_mdm1_256 cabo 1m / 256
+3a_mdm_cust personalizar
+3a_maxupl_c Máximo de upload (kbits / seg) :
+3g_x_upload %s kbits/seg upload
+3a_gnnoemty Nome de jogo não pode estar por preencher
+3a_onecarrq Pelo menos 1 tipo de carro tem de ser permitido
+3a_hstgstrq Servidor ou clientes têm de ser admitidos
+3a_rusurepr Tens a certeza de que queres prosseguir?
+3a_maxbwmex Largura de banda máxima pode ser excedida
+3b_srv_ip_c Endereço IP :
+3a_srvportc Porta :
+3a_dedi_opt Servidor dedicado (sem gráficos) :
+3a_guestvot Permitir voto de chuto / exclusão :
+3a_guestsel Cliente seleciona pistas :
+3h_qenabled Qualificação activada :
+3g_midracej Permitir conexão durante corrida :
+3g_pitstopr Paragem nas boxes obrigatória :
+3g_carreset Permitir reinício de carro :
+3h_fcockpit Vista cockpit obrigatória :
+3h_cruisemo Passeio (ambos sentidos permitidos) :
+3a_maxgst_c Máx clientes :
+3d_admins_c Postos de admin:
+3a_maxrarac Máx (real + IA) na corrida :
+3a_maxragst Máx (real + IA) por pc de cliente :
+3a_maxrahst Máx (real + IA) no pc servidor :
+3a_dedinohc Dedicado : no host cars
+3a_smothpps Suavidade (pacotes por seg) :
+3a_uplmin16 Upload pelo menos de 16 kbits
+3g_umax8192 Upload máximo de 8192 kbits
+3a_uplavail Capacidade de upload %.1f KB/seg
+3a_uplprcar Upload por carro %.0f bytes/seg
+3a_uplcarnm Número de carros para upload %.0f
+3a_requplod Upload necessário %.1f KB/seg
+3a_availexc Capacidade de upload excedida
+3b_adminp_c Palavra-chave de admnistrador :
+3a_sel_audi Audio
+3a_tit_audi Audio
+3a_sel_scrn Ecrã
+3a_tit_scrn Ecrã
+3a_sel_grfx Gráficos
+3a_tit_grfx Gráficos
+3a_sel_view Visão
+3a_tit_view Visão
+3a_sel_disp Informação
+3a_tit_disp Informação
+3a_sel_plyr Jogador
+3a_tit_plyr Jogador
+3a_sel_cont Controle
+3a_tit_cont Controle
+3a_sel_game Jogo
+3a_tit_game Opções de jogo
+3a_sel_misc Outras
+3a_tit_misc Outras
+3a_unlokerr Erro de desbloqueamento
+3a_flcrterr Erro ao criar o ficheiro
+3a_reguname Nome de utilizador registado :
+3a_onlinepw Palavra-chave no sítio de internet :
+3a_gounlock desbloquear
+3g_locktext Bloquear LFS (regressar a DEMO)
+3g_lockques Bloquear Live for Speed?
+3g_lockwarn Apenas conteúdo DEMO estará disponível
+3a_autorcon Tentando de novo conexão com servidor
+3a_notconnm Não há ligação ao servidor
+3a_yesconnm Ligado ao servidor
+3a_connmstr Conectado
+3a_connects Ligações
+3a_hoptions opções
+3a_smlb_kik chutar
+3a_smlb_ban banir
+3a_num_bans %d excluído
+3a_zerobans Sem exclusões
+3a_editbans editar exclusões
+3a_tit_bans Editor de Exclusões
+3a_delshort apagar
+3a_goaddban adicionar exclusão
+3a_user_ban Escreve o nome do jogador a excluír
+3a_time0day %d:%.2d
+3a_time1day 1 dia %d:%.2d
+3a_timexday %d dias %d:%.2d
+3a_banip12h Ban de 12 horas imposto ao endereço IP do jogador
+3a_banun12h Ban de 12 horas imposto ao NOME do jogador
+3b_banusr1d Jogador banido por um dia
+3b_banusrxd Jogador banido por %d dias
+3h_tyre_man Marca
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_MOLE
+3g_tt_slk_m SLICK_MÉDIO
+3g_tt_slk_h SLICK_DURO
+3a_tt_races COMPETIÇÃO_SLICK
+3a_tt_raceg COMPETIÇÃO_SECO
+3a_tt_racei COMPETIÇÃO_INTERMÉD
+3a_tt_racew COMPETIÇÃO_CHUVA
+3a_tt_roads ESTRADA_SUPER
+3a_tt_roadn ESTRADA_NORMAL
+3a_tt_hybri HÍBRIDO
+3a_tt_knobb TODO-TERRENO
+3a_ttlmaskl Massa total : %.0f kg (%.0f lbs)
+3a_pwrwtmti Pêso-potência : %.0f W/kg (%.0f cv/ton)
+3a_wdistrfr Dist. pêso : %.1f F  %.1f R
+3h_ddistrfr Distribuição da carga aerodinâmica : %.1f F  %.1f R
+3h_rdistrfr Distribuicão da dureza de rolamento : %.1f F  %.1f R
+3a_trqnmlbr Binário : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Potência : %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Motor : %.0f cc%s%s%s
+3a_engltfmt Cilindrada : %.1f litre%s%s%s
+3a_trbochrg turbocomprimido
+3a_etl_inli em linha
+3a_etl_flat cil. opostos
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl único
+3a_etn_2cyl duplo
+3a_etn_3cyl triplo
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Primeira %.3f
+3a_grrat2nd Segunda %.3f
+3a_grrat3rd Terceira %.3f
+3a_grrat4th Quarta %.3f
+3a_grrat5th Quinta %.3f
+3a_grrat6th Sexta %.3f
+3a_grrat7th Sétima %.3f
+3a_grginfop Informação
+3a_grgcolou Cores
+3a_grgbrake Travões
+3h_grgbrktc Travões / TC
+3a_grgsuspe Suspensão
+3a_grgsteer Direcção
+3a_grgfinal Mudança final
+3a_grgtyres Pneus
+3a_grgdownf Carga aero.
+3a_grgpasse Passageiros
+3a_pssfront frente
+3a_pssrleft esquerdo atrás
+3a_pssrmidd meio atrás
+3a_pssrrght direita atrás
+3a_whlscolt Rodas
+3a_bodycolt Carroçeria
+3a_texnamet Nome da textura
+3a_maxperwt Max por roda %.0f Nm
+3g_b_bal_fr Distribuição travagem (frente) %.0f%%
+3h_engbrred Redução travagem motor %.0f%%
+3h_tcmaxslp TC derrapagem permitida %.1f%%
+3h_tcminspd TC Velocidade mínima %.0f m/s
+3h_abs_text ABS
+3g_ridehred Redução da Altura ao Solo
+3a_brkmotrg [Curso %.3f m]
+3g_livecamb real (L / R) %+.2f° / %+.2f°
+3g_stif_val Dureza %.1f kN/m
+3g_damp_val Amortecimento %.1f kNs/m
+3g_bump_val Amortecimento choque %.1f kNs/m
+3g_rebd_val Amortecimento retorno %.1f kNs/m
+3g_arol_val Anti Rolamento %.1f kN/m
+3h_power_st Direção assistida %.0f%%
+3a_maxlkval Ângulo de viragem %.1f°
+3g_castrval Caster (ang. pino mestre) %.1f°
+3a_inclnval Inclinação frontal pino mestre %.2f°
+3g_prllsval Paralelismo Direccional %.0f%%
+3g_toeinval Convergência (toe) %+.1f°
+3g_camb_abs Camber (esq / dir) %+.1f° / %+.1f°
+3g_camb_adj Ajuste de Camber (E / D) %+.1f° / %+.1f°
+3h_tyrewarm Temperatura do cobertor de pneu : %.0f°
+3a_fnldvval Relação Final de Caixa %.3f
+3g_ftrqsplt Repartição Torque Frontal %.0f%%
+3g_fvistorq Torque Viscoso %.0f Nms/rad
+3g_lock_one Blocagem %.0f%%
+3g_lock_o_o Blocagem (acel/livre) %.0f%% / %.0f%%
+3h_dpreload Preload %.0f Nm
+3g_frnt_txt Frente
+3g_cent_txt Centro
+3g_rear_txt Traseira
+3g_press_lr Pressão (L / R) %.0f kPa / %.0f kPa
+3g_conv_psi psi (L / R) %.1f psi / %.1f psi
+3g_conv_bar bar (L / R) %.2f bar / %.2f bar
+3g_fwingang Ângulo Asa Dianteira %.0f°
+3g_rwingang Ângulo Asa Traseira %.0f°
+3h_tc_title Controle Tracção
+3g_stra_txt Estratégia
+3g_fuel_sta FUEL à partida : %.0f%%
+3g_fuel_pit FUEL de reabastecimento: %.0f%%
+3g_tyre_lim PNEU mudar : se desgaste > %.0f%%
+3g_tyre_all PNEU mudar : sempre
+3g_tyre_nev PNEU mudar : nunca
+3h_rep_damg Reparar danos : %s
+3h_setup_ch Afinações de setup requeridas
+3h_handicap Handicaps
+3h_hcapnone NENHUM
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% restrição
+3h_vol_tres Admissão de ar voluntária %.0f%%
+3h_vol_mass Peso adicional voluntário %.0f kg
+3h_mass_pos Posição do peso adicional (frente) %.0f%%
+3g_symmetri simétrico
+3g_asymmetr assimétrico
+3g_configur Configuração
+3g_cpct_x_l Capacidade para FUEL : %.1f litres
+3g_optt_x_d Temperatura ideal %.0f°
+3g_tst_x_ms Velocidade de teste %.1f m/s
+3g_rearwing Asa Traseira
+3g_frntwing Asa Dianteira
+3g_undrtray Fundo Plano
+3g_bodyaero Carroçaria
+3g_totlaero Total
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Ângulo brequagem do Carro %.0f° (total)
+3g_con_tn_x Ângulo brequagem do Volante %.0f°
+3g_live_cmb Camber : %+.2f
+3g_live_inc Inclinação : %.2f
+3g_live_cst Caster : %.2f
+3g_live_scr Raio de esfrega : %.3f
+3g_live_trk Largura de eixo : %.3f
+3g_susrigid Rigidez
+3g_sustrail Braço Arrastado
+3g_susffork Garfo Dianteiro
+3g_susmacph MacPherson
+3g_susdwish Duplo Triângulo
+3g_pit_inst Instruções de box
+3g_live_set Acerto Directo
+3g_wheels_x RODAS são %s
+3g_l_tt_x_x PNEU tipo %s [%s]
+3g_l_pr_psi Pressão %.1f psi [%+.1f psi]
+3g_l_pr_bar Pressão %.2f bar [%+.2f bar]
+3g_l_cr_adj AJUSTE CAMBER %.1f° [%+.1f°]
+3g_l_cr_abs CAMBER %.1f° [%+.1f°]
+3g_l_wg_ang ASA %.0f° [%+.0f°]
+3h_estcolon Estimativa :
+3g_fl_pc_pl %.1f%% por volta
+3g_fl_pc_it %.1f%% no tanque
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn Pista desconhecida
+3a_trcknofn Pista não encontrada
+3a_trckobso Pista obsoleta
+3a_fnshload TERMINADO
+3a_prgprelo Pré-carregamento
+3a_prgldtex Carregando texturas
+3a_prgpaths Trajectórias
+3a_prgcolrs Cores
+3a_prgdupli Duplicadores
+3a_prglgtsc Configurações de luzes
+3a_prgrdobs Lendo objectos
+3a_prglgtin Informação de luz
+3a_prgbmptx Relevo de texturas
+3a_prginicl Activando cores
+3a_prgchpts Sectores
+3a_prgextra Info extra
+3a_prgstobs Activando objectos
+3a_prgmapsq Quadrados de mapa
+3a_prgpthin Inicialização de trajectórias
+3a_prgpthad Ajustamento de trajectórias
+3a_prgrebld Reconstruíndo
+3g_prggener Gerando
+3a_spcpres1 (carrega 1)
+3a_autojblk Ligação não possível : Meta bloqueada
+3a_xcomplvt %s^8 completou o voto
+3a_maxgcarx Max. de carros convidados : %d
+3a_maxhcarx Max. de carros anfitrião : %d
+3a_cf_swpsd trocar de lugar
+3a_cf_gopit ir à box
+3a_cf_chqul mudar tempo de qualificação
+3a_cf_chlap mudar nº voltas
+3a_cf_chwin mudar o vento
+3b_cf_finfo mudar info
+3a_upc_male %s^8 renovou os seus controles
+3a_upc_fmal %s^8 renovou os seus controles
+3a_upc_unkn %s^8 renovou controles
+3a_x_no_car %s^8 não tem um carro
+3a_x_alredy %s^8 já tem um carro
+3a_x_lftpot %s^8 saiu das boxes
+3a_w_rd_rly ^6Aviso : pneus de estrada em pista de rallycross
+3a_w_rly_rd ^6Warning : pneus de rallycross em pista de estrada
+3a_unkcdisc Carro desconhecido - jogador desconectado
+3a_modcdisc Carro modificado - jogador desconectado
+3a_nocrukid Não foi possível atribuir info de carro - id desconhecida
+3a_xrenamex %s^8 mudou nome para %s
+3g_xtakovrx %s^8 mudou com %s
+3g_xwantuto %s^8 quer que conduzas o carro
+3g_xwantsto %s^8 quer conduzir o carro
+3g_oswapend Mudança de pilotos permitida só após operação-box
+3a_nosharnm Não pode partilhar nome
+3a_trkloadd Pista carregada
+3a_x_pitted %s^8 foi às boxes
+3g_x_pitstp %s^8 saiu das boxes
+3a_x_conn_x %s^8 ligou-se (%s^8)
+3a_x_connec %s^8 ligou-se
+3g_x_blkmsg %s^8 mensagens bloqueadas
+3g_x_unblkm %s^8 mensagens desbloqueadas
+3a_newgconn Um novo cliente está a conectar
+3a_gfailcon Novo cliente falhou a conexão
+3g_waitplyc Aguarde por favor - um jogador está a ligar-se
+3h_waitbuff Evitando buffer overflow
+3a_xss_male %s^8 enviou set de afinação dele
+3a_xss_fmal %s^8 enviou set de afinação dela
+3a_xss_unkn %s^8 enviou o set de afinação
+3a_packs_ps Pacotes Por Segundo %d
+3a_noqual_x Não pode qualificar-se - %s
+3a_no_x_plc Não pode %s - um jogador está a conectar
+3a_no_x_cht Não pode %s - mudando pista
+3g_no_x_car Não pode %s - carro está na pista
+3a_novotepg Não há qualquer votação a decorrer
+3h_vote_kic %s^8 votaram para chutar %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 votaram para banir %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 não respondeu
+3a_lostcn_x Ligação perdida para %s^8
+3a_x_discon %s^8 desligou
+3g_x_kicked %s^8 foi chutado
+3g_x_banned %s^8 foi banido
+3a_rmvxbadc %s^8 removido (má ligação)
+3a_qulfauto Autocross
+3a_qulfprac Treino livre
+3a_qulfnote Não activado
+3g_skinnotf Pintura do carro não encontrada em ^7www.lfsworld.net
+3g_helmnotf Pintura do capacete não encontrada em ^7www.lfsworld.net
+3g_updatset Configurações renovadas
+3g_fastlxxx Volta mais rápida : %s por %s^8 (%s)
+3g_no_reset Reinício de carro não permitido neste servidor
+3g_cant_res Não pode reiniciar - %s
+3g_too_dang demasiado perigoso
+3g_could_ha pode atingir outro carro
+3g_could_hr pode atingir carro recentemente reiníciado
+3g_would_ye provocará uma bandeira amarela
+3a_obsolvid Vídeo obsoleto
+3a_vidlater Vídeo foi feito com uma versão posterior
+3h_hls_hlvc HLVC
+3h_hls_inva INVALIDO
+3h_hls_cust PERSONALIZADO
+3a_htlpinvl Contra-relógio inválido (%s)
+3a_hli_grnd terra
+3a_hli_wall parede
+3a_hli_obje objecto
+3a_hli_wron sentido proibido
+3h_hli_spee demasiada velocidade
+3a_ptp_locl local
+3a_ptp_remt remoto
+3a_ptp_lcai ia (L)
+3a_ptp_rmai ia (R)
+3a_rsk_noob INICIADO
+3a_rsk_lrnr APRENDIZ
+3a_rsk_okok MEDIANO
+3a_rsk_quik RÁPIDO
+3a_rsk_prof PRO
+3a_x_finish %s^8 terminou
+3a_x_finplc %s^8 terminou em %s
+3g_x_fin1be %s^8 terminou a 1 volta
+3g_x_finxbe %s^8 terminou a %d voltas
+3g_x_conplc %s^8's posição final é %s
+3g_x_disqua %s^8 foi desqualificado
+3a_x_wonrac %s^8 ganhou a corrida
+3a_max3locl Máximo de 3 jogadores locais
+3a_fnshuncl não-classificado
+3a_fnsh_1st 1º
+3a_fnsh_2nd 2º
+3a_fnsh_3rd 3º
+3a_fnsh_4th 4º
+3a_fnsh_5th 5º
+3a_fnsh_6th 6º
+3a_fnsh_7th 7º
+3a_fnsh_8th 8º
+3a_fnsh_9th 9º
+3a_fnsh10th 10º
+3a_fnsh11th 11º
+3a_fnsh12th 12º
+3a_fnsh13th 13º
+3a_fnsh14th 14º
+3a_fnsh15th 15º
+3a_fnsh16th 16º
+3g_fnsh17th 17º
+3g_fnsh18th 18º
+3g_fnsh19th 19º
+3g_fnsh20th 20º
+3g_fnsh21st 21º
+3g_fnsh22nd 22º
+3g_fnsh23rd 23º
+3g_fnsh24th 24º
+3g_fnsh25th 25º
+3g_fnsh26th 26º
+3g_fnsh27th 27º
+3g_fnsh28th 28º
+3g_fnsh29th 29º
+3g_fnsh30th 30º
+3g_fnsh31st 31º
+3g_fnsh32nd 32º
+3a_wlcm_lfs Bemvindo ao Live for Speed
+3a_agre_lfs Aviso
+3a_overwrex Escrever por cima de ficheiro existente?
+3g_deleteex Apagar ficheiro existente?
+3g_newnamef Novo nome para o ficheiro
+3g_filealre Nome do ficheiro já existe
+3g_cnotfind Não foi possível encontrar ficheiro
+3a_layoutsv Escreve o nome da configuração a GRAVAR
+3a_windocon Janela durante a ligação :
+3a_cancelbt cancelar
+3a_backbutt voltar
+3a_capitlok OK
+3a_capitlgo VAI
+3a_invldstr inválido
+3a_cpfinish CONCLUÍDA
+3a_cpwinner VENCEDOR
+3a_namepass Nome de jogador e palavra-chave
+3a_validnam Escreve um nome de jogador válido
+3a_validpas Escreve uma palavra-chave válida
+3a_passmin8 A palavra-chave com pelo menos 8 caracteres
+3a_shifttyp Tipo de caixa :
+3a_autogear Caixa automática :
+3a_notiming -voltas não sendo cronometradas
+3a_stilload Ainda carregando a pista
+3a_waitlist Esperando pela lista de jogos
+3a_wt_ginfo Esperando pela informação de jogo
+3a_connmast Em ligação ao servidor principal
+3a_waitmrep Esperando resposta do servidor principal
+3a_waithrep Esperando resposta do servidor
+3a_waitinfo Esperando por informação
+3a_masterro Erro enquanto esperava por resposta
+3a_mnoreply Não houve resposta do servidor principal
+3a_waitginf Esperando por informação do cliente
+3a_waitpinf Esperando por informação do jogador
+3a_waitmsgs Esperando pelas primeiras mensagens
+3a_connhost Estabelecendo ligação ao servidor
+3a_conn_udp Estabelecendo ligação UDP
+3a_openserv Abrindo ligação de servidor
+3a_unexmstr Pacote de servidor principal inesperado
+3a_unexsrvr Pacote de servidor inesperado
+3a_unexgest Pacote de cliente inesperado
+3a_numg_oob Número de clientes excedido
+3a_errrhost Erro em resposta ao servidor
+3a_unextrak Pista alterada inesperadamente
+3a_unkntrak Erro de pista desconhecido
+3a_unexpack Pacote de tamanho inesperado
+3a_unexrepl Resposta inesperada
+3a_gmnmused Nome do jogo já está em uso
+3a_errmthrd Processo principal não foi possível ser criado
+3a_lostmast Ligação com o servidor principal perdida
+3a_losthost Ligação com o servidor de jogo perdida
+3g_notisync Sincronização inicial falhada
+3g_lostsync Sincronização perdida com o servidor
+3a_connecto Ligação caiu (timeout)
+3a_noconnsl Não há
+3a_nookpack OK não recebido
+3a_waitfook Esperando por OK
+3a_waittrak Aguardando, informação de pista
+3a_notrakpk Informação de pista não recebida
+3a_loadtrak Carregando a pista
+3a_chglight Mudando a luz
+3a_ply_join Um jogador está a ligar-se
+3a_nochrace Pista não pode ser mudada durante a corrida
+3g_trnoallo %s não está activo no servidor
+3a_chgtrack Mudando de pista
+3h_welcomex Bemvindo ao Live for Speed %s
+3a_small_no não
+3a_smallyes sim
+3h_smallaut auto
+3h_smallnev nunca
+3h_smallask perguntar
+3h_smallalw sempre
+3a_smalloff desligado
+3a_smalreal real
+3a_smalvrtl virtual
+3a_smalleft esquerda
+3a_smalrght direita
+3a_smalnone nenhum
+3a_smaltext texto
+3a_smallall tudo
+3a_smallman Homem
+3a_smallwmn Mulher
+3h_smallb16 16 bits
+3h_smallb32 32 bits
+3a_smlnobrk [não]
+3a_smlysbrk [sim]
+3a_smlofbrk [desligado]
+3a_smlonbrk [ligado]
+3a_actobjct objecto
+3a_actstart posição de partida
+3a_actfinsh linha de meta
+3a_actchck1 1º sector
+3a_actchck2 2º sector
+3a_actchck3 3º sector
+3g_actcircl círculo
+3a_actnofin Sem linha de meta
+3a_actnochk Sem marcação de sectores
+3a_actfnnoc Linha de meta mas sem marcação de sectores
+3a_accpxnof Sector %d não encontrado
+3a_aconechk Autocross : 1 sector
+3a_acxchckp Autocross : %d sectores
+3a_noloadsk Não foi possível carregar a
+3a_wrngfltp Ficheiro de tipo errado
+3a_cnocolon Não foi possível abrir o ficheiro :
+3a_outcnopn Output : Não foi possível abrir o ficheiro
+3d_outnoply Output : Carro de jogador não encontrado
+3d_outstart Output : Volta iniciada
+3d_outfinis Output : Volta concluída
+3a_corruptf Ficheiro corrupto
+3a_filenohc Erro na verificação do cabeçalho de ficheiro :
+3g_filetoos Ficheiro demasiado curto :
+3g_filecorr Ficheiro corrupto :
+3g_err_read Erro lendo ficheiro :
+3g_notpcmwv Wave não é PCM :
+3g_srnotsup Sample rate não suportado :
+3g_wv_mo_st Wave não é mono ou stereo :
+3g_wavemb16 Wave não é 16-bit :
+3g_wavetool Wave demasiado longo :
+3a_latervfl O ficheiro foi criado por uma versão posterior :
+3a_nocrtfil Não foi possível a criação do ficheiro :
+3a_votecanc Voto cancelado
+3a_nocrtmpr Não foi possível criar ficheiro MPR
+3a_savedmpr Repetição MP gravada
+3a_nocrtspr Não foi possível criar ficheiro SPR
+3a_savedspr Repetição SP gravada -
+3a_nornmspr Não foi possível renomear SPR -
+3a_accesden Accesso recusado
+3a_invalchr Caracteres inválidos
+3a_notfound Não encontrado
+3a_unknowne Erro desconhecido
+3g_downcanc Download cancelado
+3g_filesize Ficheiro de tamanho errado
+3g_highresd Download de pinturas de alta resolução :
+3g_nolfswcr Crédito LFS World insuficiente para pinturas de alta resolução
+3g_dbnotava Base de dados das pinturas de alta resolução não disponível
+3a_entermsg Escreve a mensagem
+3g_seldefcp Seleciona code page base
+3a_ctabshwr CTRL+TAB - mostrar resultados
+3a_shf8nwdb SHIFT+F8 - debug de rede - %s
+3a_newvalfx Escreve novo valor para %s
+3a_valtoolo Nove valor é demasiado baixo
+3a_valtoohi Novo valor é demasiado alto
+3a_endoqual QUALIFYING acabou
+3a_ctrcclip CTRL+C - rato limitado a
+3a_ctrcfree CTRL+C - rato livre quando dentro de
+3a_windotxt janela
+3a_fullstxt ecrã total
+3g_not_demo não disponível na DEMO
+3h_noraceln linha ideal não disponível
+3g_time_loc local
+3g_time_utc UTC
+3a_namelong Nome demasiadamente comprido
+3a_noconnms Não foi possível a conexão ao servidor principal
+3a_wrninsta Aviso : Outro LFS parece estar aberto
+3g_lfsbuyon Live for Speed - compre online - ^7www.lfs.net
+3g_comentry Comando para ecrã de entrada apenas
+3g_insimnop InSim não está activo
+3g_comguest Comando para clientes de multiplayer
+3g_comsetup Comando para ecrã de setup apenas
+3g_comnoded Comando não é válido para host dedicado
+3g_unknwnai Condutor IA desconhecido
+3g_drv_alrd Condutor já na corrida
+3g_drv_noin Condutor não está na corrida
+3g_setup_nf Afinação não encontrada
+3g_colournf Cor não encontrada
+3g_scrtooma Demasiados scripts
+3g_scrtoolo Script demasiado longo
+3g_scrempty Script em branco
+3g_un_axs_f Função do eixo desconhecida
+3g_un_key_f Função de tecla desconhecida
+3g_un_btn_f Função de botão desconhecida
+3g_xlnxtool %s : linha %d comprida demais
+3g_x_ln_x_x %s : linha %d - %s
+3g_cantopen Não abre : %s
+3g_notallow Não permite : %s
+3h_cp_latin Latin 1
+3h_cp_cente Central Europe
+3h_cp_turki Turkish
+3h_cp_balti Baltic
+3h_cp_japan Japanese
+3h_cp_cyril Cyrillic
+3h_cp_greek Greek
+3h_cp_tr_ch Chinês Tradicional
+3h_cp_si_ch Chinês Simplificado
+3h_cp_korea Coreano
+3a_hostfull Servidor lotado
+3a_hostload Servidor está a carregar uma pista
+3a_plyrconn Um jogador já está a ligar-se
+3g_plydisco Um jogador está a desligar
+3h_racstart Uma corrida está a começar
+3a_unauthcn Ligação não autorizada
+3a_useronli Nome de jogador já em rede
+3h_userband Nome de jogador presentemente banido
+3a_usernofd O teu nome não foi encontrado
+3a_pwnomtch Palavra-chave de JOGO não coincide
+3g_pwneeded Palavra-chave de JOGO requerida
+3h_unlkused Desbloqueios semanais, todos usados
+3h_unpwconf Nome e palavra-chave corfirmados
+3a_unknwerr Erro desconhecido
+3a_carnomtc Carro não coincide com servidor
+3a_nodbljon Dupla ligação não permitida
+3a_hlostmst Servidor desligado do principal
+3a_wrngpass Palavra-chave errada
+3a_prvreqps Privado - requere palavra-chave
+3a_usrunknw Jogador desconhecido
+3a_usrnotol O jogador nao foi encontrado na rede
+3a_usrolhid Jogador está online num servidor escondido
+3g_usrol_s1 Jogador está online num servidor S1
+3g_usrol_s2 Jogador está online num servidor S2
+3g_usrol_s3 Jogador está online num servidor S3
+3a_hostrefu Servidor recusou conexão
+3a_hstdiffv Servidor de versão diferente
+3a_hstdiffc Servidor tem código de jogo diferente
+3a_hstis_s1 Servidor usa Live for Speed S1
+3g_hstis_s2 Servidor usa Live for Speed S2
+3g_hstis_s3 Servidor usa Live for Speed S3
+3a_hstisdmo Servidor usa Live for Speed DEMO
+3a_hstunknr Resposta desconhecida do servidor
+3a_hstnomst Servidor não está no Servidor principal
+3a_nameused Nome já em uso
+3a_racefull Corrida lotada
+3g_nomidjoi Conexão durante a corrida não permitida
+3b_usermeet O jogador está na zona de conversação
+3b_unkncomm Comando desconhecido
+3h_unknwver Versão desconhecida
+3b_reqparam Este comando necessita parâmetro
+3b_req2pars Este comando necessita de parâmetros
+3e_notenpar Parâmetros insuficientes
+3b_unknwtrk Parâmetro de pista desconhecido
+3e_unknwcar Parâmetro de carro desconhecido
+3b_unoadmin Não tens direitos admnistrativos
+3b_kbinvalu Nome de jogador inválido
+3b_invalpar Parâmetro inválido
+3g_ptoolong Parâmetro demasiado longo
+3g_notfound Ficheiro não encontrado
+3e_setuponl Comando para ecrâ de opções de pista
+3e_axnofind Não foi possível abrir configuração
+3e_axnoneav Configurações de pista não encontradas
+3e_kbnoload Ficheiro não carregado
+3e_kbnosave Ficheiro não gravado
+3g_tooearly Demasiado cedo para recomeçar
+3g_pplracin Alguns jogadores ainda correndo
+3h_notrxudp Anfitrião não recebeu pacote UDP
+3h_nomultij Evitando pedidos de ligação múltiplos
+3h_modreqpw Servidor modificado precisa de palavra-chave

@@ -1,0 +1,1719 @@
+LFS Translation file (Latvian)
+Translated by: Eclipsed, Ferroc
+
+tx_codepage 1257
+tx_langname Latviski
+tx_noun_adj an
+3g_tr_selct Trençðanâs
+3g_tr_title Izvçlçties mâcîbu stundu
+3a_spselect Vienspçlçtâja reþîms
+3a_tit_sply Vienspçlçtâja Reþîms
+3a_mpselect Daudzspçlçtâju reþîms
+3a_tit_mply Daudzspçlçtâju Reþîms
+3a_hlselect Lidojoðais aplis
+3a_tit_hotl Lidojoðais Aplis
+3a_opselect Opcijas
+3g_repl_sel Ieraksti
+3a_tit_sprs Vienspçlçtâja Reþîma Ieraksti
+3a_tit_mprs Daudzspçlçtâju Reþîma Ieraksti
+3g_unlk_lfs Atbloíçt Live For Speed
+3g_demorace Demo braucçjs
+3h_x_licens %s licence
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Ieraksta skinu lejuplâde
+3g_one_notf Kâds no skiniem ierakstâ nav atrasts tavâ datorâ
+3g_sev_notf Daþi skini no ieraksta nav atrasti tavâ datorâ
+3g_one_down Vai tu vçlies lejuplâdçt trûkstoðo skinu?
+3g_sev_down Vai tu vçlies lejuplâdçt trûkstoðos skinus?
+3a_exit_btn iziet
+3a_next_btn tâlâk
+3g_agre_btn piekrîtu
+3a_exitprog Iziet no LFS?
+3a_userfind Ievadi meklçjamo lietotâjvârdu
+3h_num_tips %d Padomi
+3h_tip_pesc Spied ^7ESC^8 spçles laikâ, lai parâdîtu izvçlni
+3h_tip_prst Spied ^7T^8 lai rakstîtu ziòu
+3h_tip_ffwr Ir ieteicams lietot stûri ar Force Feedback
+3h_tip_rtcg Pârslçdzot âtrumu uz augðu, atlaid gâzi, lai izvairîtos no sajûga pârkarsçðanas
+3h_tip_brak Izmanto bremzes pareizajâ laikâ, kad tuvojies lîkumam
+3g_hdr_name Mâcîbas
+3g_hdr_diff Sareþìîtîba
+3g_hdr_mode Veids
+3g_dif_easy Viegls
+3g_dif_medi Vidçjs
+3g_dif_hard Grûts
+3g_lsn_firs pirmâ stunda
+3g_lsn_next nâkoðâ stunda
+3g_lsn_trya mçìinât vçlreiz
+3g_lsn_fini finiðçjis
+3g_tit_obje ^7UZDEVUMS
+3g_tit_purp ^7MÇRÍIS
+3g_tit_tips ^7PADOMI
+3g_tit_targ ^7MÇRÍU LAIKI
+3g_not_time Tu nefiniðçji laikâ!
+3g_not_fini Tu nepabeidzi trasi!
+3g_comp_but Tu pabeidzi trasi, bet...
+3h_false_st - Tu sâki pirms zaïâs gaismas
+3g_too_long - Tu par vçlu finiðçji
+3g_coll_car - Tev bija sadursme ar citu auto
+3g_wrong_rt - Tu aizbrauci nepareizâ virzienâ
+3g_hit_1_ob - Tu aizíçri kâdu objektu
+3g_hit_x_ob - Tu aizíçri %d objektus
+3g_not_fast - Tu nebiji pietiekami âtrs èekpointâ
+3g_slo_stop - Tu parâk ilgi apstâjies
+3g_exce_spd - Tu pârsniedzi âtruma ierobeþojumu boksos
+3g_nopitstp - Tu neuztaisîji pitstopu
+3g_not_long - Tu nebiji pietiekami ilgi apstâjies
+3g_congrats Apsveicu! Tu nokârtoji testu!
+3g_stndrd_x Priekð pirmâs stundas, tavs standarts ir : %s
+3g_lsnunl_x Tev ir jâatbloíç %s priekð ðîs stundas
+3a_nocarsel Nav paòemts neviens auto
+3a_araceinp Notiek sacîkste
+3a_plydisco Spçlçtâjs tiks atslçgts
+3a_leavgame atstât spçli
+3a_playrbtn Braucçjs
+3a_garagbtn Garâþa
+3a_trackbtn Trase
+3a_tit_trak Trase
+3a_load_brk [ielâdç]
+3a_gene_brk [ìenerç]
+3a_notr_brk [nav trases]
+3a_endonlin Beigt onlaina spçli?
+3a_levonlin Pamest onlaina spçli?
+3a_swap_pos apmainît vietu
+3a_joinrace pievienoties braucienam
+3a_addaidrv pievienot AI braucçju
+3a_setready gatavs
+3a_starthdr Starta izkârtojums
+3a_skillhdr Pieredzes pakâpe
+3a_race_hdr Sacîkste
+3a_readybtn gatavs
+3a_localsml vietçjais
+3a_vhostsml caur hostu
+3g_adminsml admins
+3a_dirctsml tieðs
+3a_no_track nav trases
+3a_nodriver nav braucçju
+3a_carerror auto kïûda
+3a_raceinpr notiek sacîkste
+3a_remvplyr noòemt spçlçtâju
+3a_no_quali bez kvalifikâcijas
+3a_qual1min kvalifikâcija 1 min
+3a_qualxmin kvalifikâcija %d min
+3a_practice treniòð
+3a_race1lap 1 apïa sacîkste
+3a_racexlap sacîkste %d apïus
+3a_race1hou sacîkste 1 stundu
+3a_racexhou sacîkste %d stundas
+3a_zerowind bezvçjð
+3a_low_wind neliels vçjð
+3a_highwind stiprs vçjð
+3a_nosamenm Vietçjiem braucçjiem nevar bût vienâdi vârdi
+3a_ac_onest Autokross: tikai starta pozîcija
+3a_ac_fixlp Autokross: fiksçts apïu skaits
+3h_kickplyr Izkikot spçlçtâju %s^8? (%s^8)
+3h_howlongb Uz cik dienâm banot %s^8? (%s^8)
+3h_ainodriv AI nevar braukt ðajâ konfigurâcijâ
+3h_ainoxral AI nevar %s rallycross trasçs
+3h_ainoxcfg AI nevar %s ðajâ konfigurâcijâ
+3a_cdntsvst Nevarçja saglabât setupu
+3a_sent_set Setups aizsûtîts
+3a_plynotfd Spçlçtâjs nav atrasts
+3a_carnotfd Spçlçtaja auto nav atrasts
+3a_namsetsv Saglabâjamâ setupa nosaukums
+3h_gridsave Ievadi saglabâjamâ starta izkârtojuma nosaukumu
+3h_gridload Izvçlies ielâdçjamo starta izkârtojumu
+3h_xremovex %s^8 noòçma %s^8 no starta lînijas
+3a_endgmbtn beigt spçli
+3a_leavebtn atstât
+3g_endr_btn beigt sacîksti
+3g_spec_btn novçrot
+3h_qual_btn kvalifikâcija
+3h_rest_btn restarts
+3h_pits_btn boksi
+3g_join_btn pievienoties
+3g_play_btn parâdît
+3a_namesort vârds
+3a_datesort datums
+3a_car_caps Auto
+3a_newbtset Lai izveidotu savu setupu, spied 'Jauns setups' pogu
+3a_selplset Nevar mainît [standarts] - izvçlies savu setupu
+3a_newbtcol Lai izveidotu savu krâsojumu, spied 'Jauns krâsojums' pogu
+3a_selplcol Nevar mainît [standarts] - izvçlies savu krâsojumu
+3a_sets_hdr Setupi
+3a_cols_hdr Auto krâsojumi
+3a_new_setb Jauns setups
+3a_new_colb Jauns krâsojums
+3a_savedset Setups saglabâts
+3a_savedcol Krâsojums saglabâts
+3a_new_butt Jauns
+3a_del_butt Dzçst
+3a_undo_btn Atcelt
+3g_rename_b Pârdçvçt
+3h_clear_bt Notîrît
+3a_drvr_hdr Braucçjs
+3a_frce_hdr Spçki
+3g_fuel_hdr Degviela
+3g_susp_hdr Piek.
+3a_out_butt Ârâ
+3a_in_buttn Iekðâ
+3a_off_butt Izsl.
+3a_on_buttn Iesl.
+3a_stop_btn Stât
+3a_drop_btn Nomest
+3a_namenset Ievadi jaunâ setupa nosaukumu
+3g_newnmset Ievadi jaunu nosaukumu setupam
+3a_setnodel Setupu nevar izdzçst
+3a_deletset Dzçst setupu?
+3a_setnonam Nevar izveidot nenosauktu setupu
+3a_namencol Ievadi jaunâ krâsojuma nosaukumu
+3h_newnmcol Ievadi jaunu nosaukumu krâsojumam
+3a_colnodel Krâsojumu nevar izdzçst
+3a_deletcol Dzçst krâsojumu?
+3a_colnonam Nevar izveidot nenosauktu krâsojumu
+3a_carninvl Auto vârds ir nederîgs
+3a_sel_skin Izvçlçties skinu
+3a_drv_none Nav piedziòa
+3a_drv_fron Aizmugures piedziòa
+3a_drv_rear Priekðpiedziòa
+3a_drv_four Pilnpiedziòa
+3g_dif_open ATVÇRTS DIFERENC.
+3g_dif_lock BLOÍÇTS DIFERENC.
+3g_dif_visc VISKOZAIS LSD
+3g_dif_clsd CLUTCH PACK LSD
+3a_no_creds Nav kredîtu
+3a_one_cred 1 kredîts
+3a_xx_creds %d kredîti
+3g_host_dis Ðis serveris tev neatïauj braukt ar %s
+3h_ndxmdcax Tev ir jâbût %s reþîmâ lai izmantotu %s
+3h_ndulxcax Tev ir jâatbloíç LFS %s lai izmantotu %s
+3g_all_caps VISI
+3g_newnmrep Ievadi jaunu nosaukumu ierakstam
+3g_repnodel Ieraksts nevar tikt izdzçsts
+3g_deletrep Dzçst ierakstu?
+3g_repnonam Nevar izveidot nenosauktu ierakstu
+3g_set_sh_x Iestatîjumi priekð %s :
+3a_rght_brk [pa labi]
+3a_left_brk [pa kreisi]
+3a_plyrname Braucçja vârds :
+3g_otherply Citi braucçji :
+3a_numplate Numura zîme :
+3a_countryc Valsts :
+3a_poschoos Braucçja pozîcija :
+3a_speedcho Spidometrs :
+3a_pressure Spiediena kontrole :
+3g_lang_cln Valoda :
+3g_font_cln Fonts :
+3g_wght_cln Fonta lielums :
+3g_adnewply pievienot jaunu braucçju
+3g_dlselply Dzçst izvçlçto braucçju?
+3g_enterply Ievadît jaunâ braucçja vârdu
+3g_plyexist Braucçja jau eksistç
+3g_newnamex Ievadi jaunu vârdu braucçjam : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Bremzçðanas palîgs :
+3a_autoclch Automâtisks sajûgs :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Platekrâna efekts
+3a_clipwndo Spiest peli lai parâdîtos logâ :
+3a_clipflsc Spiest peli lai parâdîtos pa visu ekrânu :
+3a_leftscrn kreisais ekrâns
+3a_rghtscrn labais ekrâns
+3a_keyshpls Pogu izvçle (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful logs / pilns
+3a_shf4togg SHIFT + F4 pârslçdz starp logu un pilnekrânu
+3a_shxalrdy SHIFT + F%d ir jau pievienots izvçlçtajam reþîmam
+3a_assxmodx Pievienot SHIFT + F%d priekð reþîma : %s?
+3a_unkntype nezinâms
+3h_mode_bit bits
+3h_refre_hz Hz
+3b_set_vw_x Opcijas priekð %s skata
+3a_vw_incar maðînâ
+3b_vw_custm paða izvçlçts
+3a_ishwdywy [braucçjs JÂ stûre JÂ ]
+3a_ishwdnwy [braucçjs NÇ stûre JÂ ]
+3a_ishwdnwn [braucçjs NÇ stûre NÇ ]
+3a_oht_none [nav]
+3a_oht_splt [sektoru laiki]
+3a_normlfov Skata leòíis %.0f :
+3h_onebutlk Vienas pogas skats %.0f° :
+3a_pitchviw Skata slîpums %.2f° :
+3b_rotatviw Skata rotçjums %.2f° :
+3g_mirror_x Spoguïa horizontâlâ nobîde %.3f m :
+3g_mirror_z Spoguïa vertikâlâ nobîde %.3f m :
+3a_tlt1gdeg 1G galvas kustîba %.2f° :
+3a_shiftlat 1g lateral shift %.3f m :
+3a_shiftfwd 1g forward shift %.3f m :
+3a_shiftvrt 1g vertical shift %.3f m :
+3a_moveanim Kustinât skatu ar animâciju
+3a_defdrvvw Sâkuma braucçja skats
+3g_cvw_main Zîmçt :
+3b_cvsnthng nav
+3b_cvswheel riteòi
+3g_cvsdbody virsbûve
+3b_cvsexter ârçjs
+3g_cvshelic augðas
+3g_cvsfollo sekot
+3h_cvsuserv lietotâjs
+3b_cvwxoffs X nobîde %.3f m :
+3b_cvwyoffs Y nobîde %.3f m :
+3b_cvwzoffs Z nobîde %.3f m :
+3g_c_defaul Sâkuma pozîcija
+3g_c_centre Centra skats
+3g_c_eyepos Redzespunkta pozîcija
+3g_cvw_high Augstums %.1f m :
+3g_cvw_angl Leníis %.1f° :
+3g_cvw_dist Distance %.1f m :
+3g_cvw_vlag Gludums %.1f sec :
+3a_drawdrwh Attçlot braucçju / stûri
+3a_lookfunc Skata funkcija :
+3a_lookaxis asis
+3a_lookstee stûrçjot
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav Peles skats ir pieejams, kad peles kursors ir paslçpts
+3a_looksens Skata jûtîgums %.2f :
+3a_lookcred Skata centra redukcija %.2f :
+3a_btnlooko Skata pagrieðana :
+3g_l_smooth gluds
+3g_l_instan tieðs
+3h_mainsfov Galvenâ ekrâna FOV %.0f° :
+3h_monangle Ekrâna leòíis %.0f° :
+3h_viewoffs Skata nobîde %.2f :
+3h_multiscl Vairâku ekrânu izkârtojums:
+3h_entnumls Ievadi KREISO ekrânu skaitu
+3h_entnumrs Ievadi LABO ekrânu skaitu
+3h_onecentr Centra ekrâns
+3h_scwidths Ekrânu platums :
+3h_optequal vienâds
+3h_optunequ nevienâds
+3h_entsidep Ievadi SÂNU ekrânu platumu (pikseïos)
+3h_entmainp Ievadi GALVENÂ ekrâna platumu (pikseïos)
+3h_fullwext Pilna platuma ârçjie skati :
+3h_bezelcom Monitora malas kompensâcija %.1f%% :
+3h_resulfov Rezultçjoðais skata leòíis : %.1f°
+3h_fovinval Nederîgi braukðanas skata iestatîjumi
+3h_drivuse1 Braukðanas skati izmantos vienu renderu
+3h_drivusex Braukðanas skati izmantos %d renderus
+3h_notwidex Nav pietiekoði plats priekð %d- ekrâna uzstâdîjumiem
+3h_extvfull Ârçjie skati izmantos pilnu platumu
+3h_extvmain Ârçjie skati izmantos galveno ekrânu
+3h_extvxxar Ârçjie skati izmantos %d:%d attiecîbu
+3h_extvass3 Pieòem, ka izmanto 3-ekrânu uzstâdîjumu ârçjiem skatiem
+3a_sml_newt jauns
+3a_sml_name vârds
+3a_sml_delt dzçst
+3a_sml_undo atcelt
+3a_sml_save saglabât
+3a_sml_load ielâdçt
+3a_msctrcks Dziesmas
+3a_exitnosv Iziet bez saglabâðanas?
+3a_chmblost Izmaiòas var tikt zaudçtas
+3a_savedrad Saglabâts radio.rad
+3a_nodelstp Nevar izdzçst setupa kanâlu
+3a_delchnlq Dzçst kanâlu?
+3a_chanlnum Kanâls %d
+3a_msctrnum Dziesma %d
+3a_norenstp Nevar pârdçvçt setupa kanâlu
+3a_newnmchn Jauns kanâla vârds
+3a_play_num Spçlçt : %s
+3a_fail_num Neizdevâs : %s
+3a_shftauto automâtisks
+3a_shftsequ sekvenciâls
+3a_shftshft pârslçdzçjs
+3g_shftffjo ff pârslçgs
+3h_transmis Transmisija
+3h_box_hpat H-veida âtrumkârba
+3h_box_bike motocikla âtrumkârba
+3h_box_sequ sekvenciâla âtrumkârba
+3h_box_seqi secîga âtrumkârba ar aizdedzes nogriezi
+3h_box_semi paddle shift âtrumkârba
+3h_seq_hpat H-veida âtrumkârbas sekvenciâla vadîba
+3a_dc_combi kombinçts
+3a_dc_separ atdalîts
+3a_dc_butts pogas
+3a_axb_axis asis
+3a_axb_butt poga
+3g_no_con_d Nav atrasts neviens kontrolieris
+3g_xx_con_d %.0f kontrolieri atrasti
+3g_ct_unkno Nezinâms kontrolieris
+3g_ct_first Pirmâs personas kontrolieris
+3g_ct_steer Stûre
+3g_ct_fligh Lidoðanas kontrolieris
+3g_ct_gamep Geimpads
+3g_ct_joyst Dþojstiks
+3a_crrdcval Stûrçðanas centra redukcija %.2f :
+3g_whe_turn Stûres grieziens %.0f° :
+3a_msbutt_1 Pogas 1
+3a_mdbutt_2 Pogas 2
+3e_kbt_mous [peles stûrçðana]
+3e_kbt_nohe [klaviatûra - bez palîdzîbas]
+3e_kbt_stab [klaviatûra - stabilizçta]
+3a_mdaxesff Asis / FF
+3a_mdshiftr Âtrumkloíis
+3a_kasteerl Stûrçt pa kreisi
+3a_kasteerr Sûrçt pa labi
+3e_kasteerl Stûrçt âtri
+3e_kasteerr Stûrçt lçni
+3a_kaaccelk Gâzçt
+3a_kabrakek Bremzçt
+3a_kaleftvw Kreisais skats
+3a_karghtvw Labais skats
+3a_karearvw Skats uz aizmuguri
+3a_kashiftu Pârslçgt âtrumu
+3a_kashiftd Pârslçgt âtr.lejup
+3a_kaclutch Sajûgs
+3a_kahandbr Rokasbremze
+3a_kahornkk Signâls
+3a_kaflashk Gaismas signâls
+3a_karesetk Noresetot maðînu
+3g_kapitspd Âtruma ierobeþotâjs
+3h_katcdisa Vilcçjspçka kontrole
+3h_kaigniti Aizdedze
+3a_kazoom_i Pietuvinât
+3a_kazoom_o Attâlinât
+3a_karevers Atpakaïgaita
+3a_kafirstk Pirmais
+3a_kasecond Otrais
+3a_kathirdk Treðais
+3a_kafourth Ceturtais
+3a_kafifthk Piektais
+3a_kasixthk Sestais
+3a_kasevent Septîtais
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Stûrçt
+3a_aacombin Gâze/Bremzes kombinçts
+3a_aathrott Gâze
+3a_aabrakea Bremzes
+3a_aalookhe Skata pozîcija :
+3a_aalookpi Skata slîpums :
+3a_aalookro Skata sânsvere :
+3a_aaclutch Sajûgs
+3a_aahandbr Rokasbremze
+3g_aashiftx Pârslçdzçjs pa K-L
+3g_aashifty Pârsl.uz Priek.-Atpak.
+3a_prsxforx Spied %s priekð: %s (ESC - atcelt / DEL - nav)
+3a_smallkey taustiòð
+3a_smallbut poga
+3a_mouse_kb pele / klaviatûra
+3a_wheel_js stûre / dþojstiks
+3a_force_st Spçku stiprums %.0f :
+3a_thrbrkax Gâzes / bremþu asis :
+3a_clutchop Sajûgs :
+3a_handbrko Rokasbremze :
+3a_thrbrkrv Gâzes/bremþu centra redukcija %.2f :
+3a_btnratev Pogu kontroles intensitâte %.2f :
+3a_kbsteero Klaviatûras stûrçðana :
+3a_strratev Stûres intensitâte %.2f :
+3e_retratev Atgrieðanâs intensitâte %.2f :
+3e_strfastv Âtrâs stûr. multiplikators %.2f :
+3e_strslowv Lçnâs stûr. multiplikators %.2f :
+3a_prdtimev Paredzçðanas laiks %.2f :
+3a_lmtmultv Limitçts multiplikators %.2f :
+3a_selfunca Izvçlies funkc. lai pieðí. asis
+3a_selaxfrx Izvçlies asis priekð : %s (ESC - atcelt / DEL - nav)
+3a_availaxs Pieejamâs asis
+3a_axis_num asis %d
+3a_invert_1 apgriest 1
+3a_invert_0 apgriest 0
+3a_frcfdbak Pretestîbas spçks :
+3a_ffdevice FF Ierîce :
+3g_ffshiftd FF pârslçgðanas ierîce :
+3a_removedz Aizvâkt nederîgo zonu :
+3h_rec_axes pârkalibrçt asis
+3h_cal_lock slçgt
+3h_cal_unlk atslçgt
+3a_heyb_hdr Klaviatûra
+3a_whbt_hdr Stûres pogas
+3a_ass_zero [Nulle]
+3a_ass_mlft Kreisâ peles poga
+3a_ass_mrgt Labâ peles poga
+3a_ass_mmid Peles vidus poga
+3a_ass_whup Rullîtis augðup
+3a_ass_whdn Rullîtis lejup
+3a_ass_spac Space
+3a_ass_upar Augðçjâ bultiòa
+3a_ass_dnar Apakðçjâ bultiòa
+3a_ass_rtar Labâ bultiòa
+3a_ass_ltar Kreisâ bultiòa
+3a_ass_pgup Page Up
+3a_ass_pgdn Page Down
+3a_butt_num poga %d
+3d_aamousex Pele X
+3d_aamousey Pele Y
+3d_aa_xaxis X asis
+3d_aa_yaxis Y asis
+3d_aa_zaxis Z asis
+3d_aarxaxis RX asis
+3d_aaryaxis RY asis
+3d_aarzaxis RZ asis
+3d_aaslidr1 Slîdnis 0
+3d_aaslidr2 Slîdnis 1
+3a_reskeysh rezervçtie taustiòi
+3a_rswtch_r 1 - skatîties ierakstu
+3a_rssave_r 2 - saglabât ierakstu
+3h_showline 4 - râdît trajektoriju
+3a_rsless_f < - mazâk spçka
+3a_rsmore_f > - vairâk spçka
+3a_rstab_ne TAB - nâkoðais auto
+3a_rshome_o HOME - paða auto
+3a_rstalk_t T - runât
+3a_rspausep P - pauze
+3a_rshistor H - vçsture
+3a_rsview_v V - skats
+3a_rsforces F - spçku sadalîjums
+3a_rsnamesn N - vârdi
+3a_shftplus SHIFT +
+3a_shchhorn H - mainît signâlu
+3g_shshiftt G - âtrumu pârslçgðanas reþîmi
+3a_shrescon C - atjaunot kontrolierus
+3a_shressnd W - atjaunot skaòu
+3a_shsoundo N - skaòa izslçgta / ieslçgta
+3a_shmirmod M - spoguïu reþîms
+3g_shhidetx F - slçpt tekstu
+3a_shuservw U - lietotâja skats
+3a_shskiptn K - izlaist skaòojumu
+3h_shshowmo Z - parâdît peli
+3b_shdriver F1 - braucçja skats
+3b_shslowrp F2 - palçlinât ierakstu
+3b_shfastrp F3 - paâtrinât ierakstu
+3a_shwindow F4 - logs
+3a_carsndvl Auto skaòas stiprums (%.1f) :
+3a_skidvboo Slîdçðanas skaòas stiprums (%.1f) :
+3g_windvboo Vçja skaòas stiprums (%.1f) :
+3g_echovboo Atbalss skaòas stiprums (%.1f) :
+3a_mscvolum Mûzikas skaïums (%.1f) :
+3g_msgvolum Interfeisa skaïums (%.1f) :
+3a_mscsetup Mûzika izvçlnçs :
+3a_mscracin Mûzika braucot :
+3a_mscrplay Mûzika ierakstos :
+3a_selecbrk [Izvçlçts]
+3a_noplybrk [Netiek atskaòots]
+3a_msc_skip Izlaist
+3a_msc_sele Izvçlçties
+3a_ingmmusc Spçles mûzika
+3a_channels Kanâli
+3g_status_a Skaòa (SHIFT + N) : %s
+3g_status_m Mûzikas buferis : %s
+3g_status_c Skaòas buferis : %s
+3a_relaybrk [relatîvs]
+3a_absolbrk [absolûts]
+3a_fps_disp Kadri sekundç (fps) :
+3b_virtuals Râdît virtuâlâs starta gaismas :
+3a_mirrmode Spoguïu reþîms :
+3a_clokmode Râdîtâju reþîms :
+3g_fixedfwd Fiksçtas priekðpuses asis :
+3g_accelmov Âtrumu pârslçgðanas skatupunkts :
+3a_showpeds Râdît pedâïus :
+3g_steerind Virtuâlâs stûrçðanas râdîtâjs :
+3a_smallmap Râdît mazo karti :
+3g_staticsm Rotçt mazo karti :
+3a_pos_list Râdît pozîciju sarakstu :
+3a_dropshad Râdît çnas :
+3a_msgtsize Norâþu teksta izmçrs %.3f :
+3a_timedisp Vispârçjâ laika displejs :
+3a_chptexto Èekpointa teksts
+3a_clndlcol Râdîtâja adatas krâsu
+3a_cltxtcol Râdîtâju teksta krâsa
+3a_cttxtcol Centrâlâ teksta krâsa
+3h_x_dash_c %s panelis :
+3h_roadgled Pârnesuma indikatora LED :
+3g_interfac Interfeiss
+3h_in_title Nosaukums :
+3h_in_bigbt Lielâ poga :
+3h_in_opaci Caurspîdîgums %.2f :
+3h_in_bbtxt Teksts :
+3h_in_smlbt Mazâ poga :
+3h_text_uns Neizvçlçtais tekts :
+3h_text_sel Izvçlçtais teksts :
+3h_text_una Nepieejamais teksts :
+3h_in_texte Teksta rinda :
+3h_in_btn_g Zaïâ poga :
+3h_in_btn_r Sarkanâ poga :
+3h_in_btn_a Alternatîvâ poga :
+3h_smallm_l Gaiðâ trases karte :
+3h_smallm_d Tumðâ trases karte :
+3h_cr_lap_a Auto 1 apli priekðâ :
+3h_cr_ahead Auto priekðâ :
+3h_ai_ahead AI priekðâ :
+3h_your_car Savs auto :
+3h_ai_behin AI aizmugurç :
+3h_cr_behin Auto aizmugurç :
+3h_cr_lap_b Auto 1 apli aizmugurç :
+3h_intcentr Interfeisa centrs :
+3h_intscale Interfeisa izmçrs :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset atjaunot
+3h_test_sml Mazâ poga
+3h_test_big Lielâ poga
+3h_in_cen_x X centrs
+3h_in_cen_y Y centrs
+3h_in_sca_x X izmçrs
+3h_in_sca_y Y izmçrs
+3h_betw_a_b Vçrtîbai jâbût starp %.1f un %.1f
+3a_asavnono [nav ieslçgts - nesaglabâjas]
+3a_asavmanu [ieslçgts - manuâlâ saglab.]
+3a_asavauto [autom. saglabâðana - neieteicams]
+3a_ogm_ainm AI vârdi
+3g_ogm_fkey F1 lîdz F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [fiksçta kârtîba]
+3a_rs_finis [finiðçðanas kârtîba]
+3a_rs_revfi [pretçji finisçðanas kârtîbai]
+3a_rs_randm [jaukti]
+3a_aidrvnum AI braucçjs %d :
+3a_f_keynum F%d :
+3a_sprsvopt Vienspçlçtâja reþîma ierakstu saglabâðana :
+3a_mprsvopt Dauzspçlçtâju reþîma ierakstu saglabâðana :
+3a_nonqracr Bezkvalificçðanâs brauciena restarts :
+3a_changbtn Rediìçt AI vârdus / F pogas :
+3a_optlores zema kval.
+3a_opthires augsta kval.
+3g_optcompr kompresçts
+3g_optsfull pilns
+3g_opt_main galvenais
+3g_plus_mir + mainîgs
+3a_usrldval Lietotâja LOD (%.2f) :
+3a_dstldval Putekïu LOD (%.2f) :
+3a_mirldval Spoguïa LOD (%.2f) :
+3h_fsaa_txt Pilna izmçra antialiasing :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interfeiss / teksts :
+3h_mipbias1 Mip bias (%.1f) objekti / sienas :
+3h_mipbias2 Mip bias (%.1f) zâle / grants :
+3h_mipbias3 Mip bias (%.1f) ceïa segums :
+3a_shtypopt Çnu kvalitâte :
+3g_treesopt Zîmçt kokus :
+3g_flagsopt Zîmçt karogus :
+3g_rubbropt Zîmçt ðvîkas :
+3g_draw_sky Zîmçt debesis :
+3g_gadapter Adapteris :
+3e_zbdopt_d Z-Buffer Dziïums (%d) :
+3e_hazetext Dûmakas efekts
+3h_mip_type Tekstûru filtrçðana / AF :
+3h_text_res Tekstûras (izòemot skinus) :
+3g_carskins Auto un íiveru skini :
+3g_texmemmb Tekstûru atmiòas izmantoðana : %.1f MB
+3a_crdnoshd Tava 3D karte nevar râdît çnas LFS
+3g_crdnoftx Tava 3D karte nevar izmantot pilna izmçra tekstûras
+3h_hvsnotav Tava 3d karte nevar izmantot iekârtas Vertex Shading
+3g_seladres Izvçlies adapteri, kas tiks izmantots nâkoðajâ restartâ
+3e_rslfszbd Tev ir jâpârstartç LFS lai Z-buffer varçtu iedarboties
+3a_flsvsync Pilna ekrâna vertikâlâ sync :
+3g_prev_lag Novçrst ievadîðanas lagus :
+3a_limitfps Limitçt FPS spçlç :
+3a_maxfrmrt Maksimâlais FPS :
+3g_tx_x_fps %d fps
+3a_minsleep Minimâlais pârtraukums :
+3g_debounce Âtrumu pârslçg. atsitiens :
+3g_txt_x_ms %d ms
+3a_pixelval %d pikseïi
+3a_useplset AI lieto spçlçtâja setupu :
+3a_useplcol AI lieto spçlçtâja krâsojumu :
+3a_sndlgval Skaòu lags %.2f sec :
+3g_whe_comp Stûres pagrieziena kompensâcija %.2f :
+3a_anlgsval Analogâs stûrçðanas gludums %.2f :
+3a_multispd Daudzspçlçtâju reþîma paâtrinâðanas iespçja :
+3g_car_skin Auto skinu ielâde :
+3g_hel_skin Íiveru skinu ielâde :
+3g_multidst Daudzspçlçtâju reþ. auto parâdîðana %.0f m :
+3g_dynamlod Dinamiskâ LOD samazinâðana %.2f :
+3a_updtpath Atjaunoðanas vieta :
+3a_puusrcar lietotâja auto
+3a_puallcar visi auto
+3h_replaysk Ielâdçt ierakstu skinus :
+3g_introopt Ielâdçt trasi palaiþot spçli :
+3g_local_12 Vietçjais laiks 12 stundu formâtâ :
+3g_time_fps Râdît laiku FPS vietâ :
+3g_shfflags Râdît karogus SHIF + F reþîmâ :
+3h_accelopt Akselerometrs :
+3h_shadogen Çnu ìenerâcija
+3h_opt_defa standarta
+3h_opt_alte alternatîva
+3g_skin_d_q Skinu lejuplâde
+3h_skin_use Skini atmiòâ
+3a_crestart sâkt sacîksti
+3a_cntrpits ieet boksos
+3a_cspectat novçrot
+3a_cantjoin pievienoties
+3a_cantleav atstât
+3a_novtnolo Nevar balsot - nav braucçju trasç
+3a_notdnord Nevar veikt izmçìinâjumu -  nav reâla braucçja ierakstâ
+3a_esc_menu Izejas izvçlne
+3a_repmenig Ieraksta Izvçlne (spçlç)
+3a_repmenld Ieraksta Izvçlne (ielâdçts)
+3a_sel_pits Boksi
+3a_sel_spec Novçrot
+3a_sel_join Pievienoties
+3a_sel_repl Ieraksts
+3a_sel_outp Izvadît apïa datus
+3a_sel_rstr Restarts
+3a_vote_str Balsot par sacîkstes sâkðanu
+3a_vote_end Balsot par sacîkstes beigðanu
+3a_vote_qua Balsot par kvalifikâciju
+3a_test_drv Izmçìinâjuma brauciens
+3a_startrac Sâkt sacîksti
+3a_hqualify Kvalifikâcija
+3a_resumegm Atsâkt
+3h_escapkey ESC
+3a_undefind nedefinçts
+3a_arenatxt arçna
+3a_singlstg atseviðís etaps
+3a_standard standarts
+3a_reversed apgriests
+3a_weth_hdr Laikapstâkïi
+3a_cnfg_hdr Konfigurâcija
+3h_layt_hdr Izkârtojums
+3h_none_sel nav izvçlçts
+3a_info_cir aplis
+3a_info_tot kopâ
+3a_chng_trk Mainît trasi
+3h_revconfc Apgriesta konfigurâcija :
+3h_openconf Atvçrtâ konfigurâcija :
+3h_ndxmdtrx Tev ir jâbût %s reþîmâ lai izmantotu %s
+3h_ndulxtrx Tev ir jâatbloíç LFS %s lai izmantotu %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Car Park
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f jûdþu %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f jûdzes
+3g_dt_dawn_ Rîtausma
+3g_dt_sunri Saulriets
+3g_dt_morni Rîts
+3g_dt_day__ Diena
+3g_dt_after Pçcpusdiena
+3g_dt_sunse Saulriets
+3g_dt_dusk_ Krçsla
+3g_dt_night Nakts
+3g_wth_clea Skaidrs
+3g_wth_clou Mâkoòains
+3g_wth_over Apmâcies
+3a_hlvcthis Aplis-
+3a_hlvcnext Nâkoðais-
+3a_readynum Gatavs : %d
+3a_noviewcr nav maðînu spçlç
+3a_thexisst %s sâkas
+3a_thexhase %s beidzas
+3a_smlpract trençðanâs sesija
+3a_smlqulng kvalifikâcija
+3a_sml_race sacîkste
+3a_replnotr Ieraksts netika ierakstîts
+3g_notrecor Neieraksta
+3g_fov_temp FOV %.0f
+3a_replrest Ieraksts restartçjas
+3a_aisvdknw AI braucçjs saglabâja zinâðanas
+3a_timetmsx Laiks x %.3f
+3a_namenldf Nâkoðâ apïa datu faila nosaukums
+3g_caps_wrn BRÎDINÂJUMS
+3g_caps_kik KICK
+3g_caps_ban BAN
+3g_caps_spe NOVÇROT
+3a_namesoff vârdi izslçgti
+3a_connlist pieslçgumu saraksts
+3a_namesovr vârdi virs maðînâm
+3h_showmous parâdît peles kursoru
+3h_hidemous slçpt peles kursoru
+3a_mirrinfo spogulis :
+3a_cancaujo Pârtraukta autom. pievienoðanâs
+3a_reinicnt Reinicializçti Kontrolieri
+3a_reinisnd Reinicializçta Skaòa
+3a_namemprs MPR ieraksta nosaukums
+3a_namesprs SPR ieraksta nosaukums
+3a_shnsound SHIFT + N : Skaòa - %s
+3g_shgsmode SHIFT + G : Âtrumu pârslçgð. reþ %s
+3a_shgautos SHIFT + Automâts - %s
+3a_frcvalpc spçks %.0f%%
+3a_hrntypev Skaòas signâls %d
+3a_actnends BEIDZAS
+3a_actnrest RESTARTÇJAS
+3a_actnstrt SÂKAS
+3a_thngqual Kvalifikâcija
+3a_thngrace Sacîkste
+3a_reploose ieraksta OOS kïûda
+3a_pausetxt pauze
+3g_safeexit iziet...
+3a_retrdcap IZSTÂJIES
+3a_dsqulcap DISKVALIFICÇTS
+3g_unclcaps NEKLASIFICÇTS
+3a_wrngwcap NEPAREIZS VIRZIENS
+3a_capsdrvr BRAUCÇJS
+3a_capsbstl LABÂKAIS
+3g_pitstops PIT
+3g_spenalty SOD
+3a_capstotl KOPÂ
+3g_caps_car AUTO
+3g_capsxlps %d APÏI
+3g_plus1lap + 1 aplis
+3g_plusxlps + %d apïi
+3h_falsesta PÂRAGRS STARTS
+3h_pe_speed ÂTRUMA PÂRSNIEGÐANA BOKSOS
+3h_pe_short PIT STOPS IR PAR ÎSU
+3h_pe_mustp PIT STOPS IR PAR VÇLU
+3h_pe_admin ADMINISTRÂTORA DOTS
+3h_pe_unknw NEZINÂMS
+3g_yellcaps DZELTENAIS KAROGS
+3g_bluecaps ZILAIS KAROGS
+3a_stpgocap STOP-GO SODS
+3g_drthrcap DRIVE_THROUGH SODS
+3g_30stimep 30 SEKUNÞU SODS
+3g_45stimep 45 SEKUNÞU SODS
+3g_clearedp SODS DZÇSTS
+3g_pit_stop PIT STOPS
+3g_pitstopx PITSTOPS : %d
+3g_p_pnltyx PITSTOPS [sods] : %d
+3g_p_nowrkx PITSTOPS [nav darba] : %d
+3g_p_finshx PITSTOPS [pabeigts] : %d
+3g_mancompx %s^8 pabeidza savu %s
+3g_wmncompx %s^8 pabeidza savu %s
+3g_unkcompx %s^8 : pabeidza savu %s
+3g_enterpit IEBRAUCA boksu joslâ
+3g_enterfor IEBRAUCA boksu joslâ
+3g_leavepit ATSTÂJA boksu joslu
+3g_stpgotxt stop-go sods
+3g_drthrtxt drive-trough sods
+3g_nopurtxt nevajadzîgi
+3g_capsstop STOP
+3g_capsrefu UZPILDÂS
+3g_capssetu SETUPA IZMAIÒAS
+3g_capsxdam %s BOJÂJUMI
+3g_capsdamx BOJÂJUMI : %s
+3g_capsxcha %s RIEPU MAIÒA
+3g_capsminr MAZSVARÎGIE
+3g_capsmajr NOZÎMÎGIE
+3g_capsfrnt PRIEKÐAS
+3g_capsrear AIZMUGURES
+3g_capsleft KREIS. PUS.
+3g_capsrigh LABÂS PUS.
+3g_capslefr KREISÂS PRIEKÐ.
+3g_capslere KREISÂS AIZMUG.
+3g_capsrifr LABÂS PRIEKÐ.
+3g_capsrire LABÂS AIZMUG.
+3g_refl_f_x Pabeigta uzpilde : %.1f litri
+3g_pitstp_f Pabeidza pitstopu
+3g_nospdlim Ðajâ trasç nav âtruma ierobeþojuma zona
+3g_notequip Ðim auto nav âtruma ierobeþotâjs
+3h_thisnotc Ðim auto nav vilcçjspçka kontrole
+3h_thisnost Ðim auto nav startera
+3a_smllaptm apïa laiks
+3a_smlspltm sektora laiks
+3a_clhotlap lidojoðais aplis
+3a_clonemin 1 min kvalificçðanâs
+3a_cl_xmins %d min. kvalificçðanâs
+3a_clonelap 1 aplis
+3a_cl_xlaps %d apïus
+3a_clonehor 1 stunda
+3a_cl_xhors %d stundas
+3g_cltrning trençðanâs
+3a_windsp_x vçja âtrums %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8 balsojums beidzâs
+3a_x_voteer %s^8 balsoja BEIGT SACÎKSTI
+3a_x_voters %s^8 balsoja RESTARTÇT
+3a_x_votequ %s^8 balsoja KVALIFICÇTIES
+3a_x_joinsp %s^8 pievienojâs novçrotâjiem
+3g_x_didnot %s^8 nefiniðçja
+3g_x_wrongr %s^8 brauca nepareizâ virzienâ
+3g_x_illega %s^8 iebrauca aizliegtâ teritorijâ
+3h_x_retpit %s^8 atgriezâs boksu joslâ
+3h_a_retpit Visi auto atgriezâs boksu joslâ
+3a_lagvalue LAGS (%.2f)
+3a_hlvcstlp sâkt apli
+3a_smalllap aplis
+3a_hlvcmodi [modificçts]
+3a_timequal kvalificçðanâs
+3a_timetotl kopçjais
+3a_timebest labâkais
+3a_time_lap aplis
+3a_timesplt sektors
+3h_timetime laiks
+3a_timepnlt sods
+3a_noldxcar Nevar  ielâdçt %s^8 auto
+3a_nosvnonm Nevar saglabât bez nosaukuma
+3g_nofilesl Nav failu ko ielâdçt
+3a_alrdyout Jau ìenerç apïu datus
+3a_nxtlpout Nâkoðo apïu dati bûs failâ %s.raf
+3a_nodtaout Dati netiks ìenerçti failâ
+3g_dled_x_x Ielâdçts Skins : %s_%s
+3g_ding_x_x Ieladç Skinu : %s_%s
+3h_saveskin Saglabâ skinu : %s
+3g_nomoreci Nevar pievienot vairâk apïu
+3a_noaddmor Nevar pievienot vairâk objektu
+3a_loadinfo Ielâdç
+3h_storedvw Saglabâtie skati (V) :
+3h_move_spd Kustîbas âtrums %.1f m/s :
+3h_min_high Minimâlais augstums %.1f m :
+3g_roll_deg Pozîcija %.1f° :
+3h_vwsmooth Skata stabilizçðana %.1f s :
+3h_trantime Pârejas laiks %.1f s :
+3a_invlok_c Apgriezt labâs pogas skata reþîmu :
+3h_invrot_c Invertçt labâ un kreisâ rotâciju :
+3a_fov_valu Skata leòíis %.1f° :
+3a_plcobs_c Objektu novietoðana :
+3a_chkptw_v Èekpointa platums %.0f m :
+3a_hdg_degr Pozîcija %.1f° :
+3a_unnm_brk [bez nosaukuma]
+3a_objs_num objekti : %d
+3a_emty_brk [tukðs]
+3a_savechan Saglabât izmaiòas
+3a_loadlayo Ielâdçt izkârtojumu
+3a_savelayo Saglabât izkârtojumu
+3a_clearall Nodzçst visu
+3a_laps_num apïi : %d
+3a_errorsml kïûda
+3a_c_clrsel C - notîrît iezîmçto
+3a_m_mv_mod M - pârvietot / modificçt
+3a_del_dele DEL - dzçst
+3a_w_e_wdth W / E - platums
+3a_l_r_rota < / > - rotçt
+3a_cp_1_2_3 1 / 2 / 3 - èekpoints
+3a_f_finish F - finiða lînija
+3a_s_startp S - starta pozîcija
+3a_o_object O - objekts
+3g_dist_x_m attâl. : %.2f m
+3a_editkeys mainît pogas
+3a_c_ar_hgt CTRL + bultiòa - augstums
+3g_c_ar_rol CTRL + bultiòa - slîpums
+3a_arrow_mv bultiòas - kustçties
+3a_spc_hdsh SPACE - slçpt / râdît
+3a_esc_exit ESC - iziet
+3h_l_b_move kreisâ poga - kustinât
+3h_r_b_look labâ poga - skats
+3h_l_r_rota labâ + kreisâ - rotçt
+3a_keys_txt pogas
+3h_mous_txt pele
+3h_edit_txt labot
+3h_more_txt vairâk
+3h_in_trans pâreja
+3h_cl_slt_x Nodzçsts skats ailç: %d
+3h_st_slt_x Saglabâts skaits ailç : %d
+3h_no_v_x_s Nav skata ailç : %d (%s)
+3h_no_vws_s Nav saglabâtu skatu (%s)
+3h_sh_nm_st SHIFT + CIPARS lai saglabâtu skatu
+3h_no_car_f Nav auto kam sekot
+3h_fc_point Novirzîts uz :
+3h_fc_neare Tuvâkais auto :
+3h_fc_flwng Seko :
+3h_fc_lockd Piestiprinâts uz :
+3h_clicktof izvçlies auto, kam sekot
+3h_followcr sekot auto
+3h_nocarsvw nav auto skatâ
+3h_stopfoll stop
+3h_optimise optimizçt
+3h_opt_of_t Optimizçtie objekti : %d no %d
+3a_noxwload Nevar iziet kamçr ielâdç
+3a_chgnotsv Izmaiòas nav saglabâtas
+3a_exanyway Iziet tik un tâ?
+3a_clrall_q Aizvâkt objektus no izkârtojuma?
+3g_delete_l Izdzçst izkârtojumu?
+3a_tit_ldly Ielâdçt izkârtojumu
+3a_nosavent Nevar saglabât izkârtojumu no galvenâs izvçlnes
+3a_nolodent Nevar ielâdçt izkârtojumu no galvenâs izvçlnes
+3a_noobselm Nav izvçlçts objekts, kuru pârvietot
+3a_noobtype Nav izvçlçts objekts
+3a_noobseld Nav izvçlçts objekts priekð dzçðanas
+3h_unexpclr Negaidîta komanda
+3h_unexpend Negaidîtas faila beigas
+3a_xalready %s jau ir izveidots
+3g_idx_0tox Indeksam ir jâbût starp 0 un %d
+3g_rt_idx_x marðruta indekss : %d
+3g_restarea Aizliegta teritorija
+3g_rt_check Marðruta pârbaudîtâjs
+3g_rt_wrong Nepareizs marðruts
+3g_ob_chalk lînijas
+3g_ob_cones konusi
+3g_ob_tyres riepas
+3h_ob_markr atzîmes
+3g_ob_other objekti
+3g_ob_marsh marðals
+3g_marsh_no neredzams
+3g_marsh_st marðals
+3g_marsh_le pa labi
+3g_marsh_ri pa kreisi
+3h_cant_add Nevar pievienot :
+3h_cant_mov Nevar pârvietot :
+3h_inte_obj objekti krustojâs
+3h_inva_pos nederîga pozîcija
+3a_dispgame Parâdît serveru sarakstu
+3a_tit_list Serveru saraksts
+3a_startnew Palaist serveri
+3a_tit_strt Palaist Serveri
+3a_joingame Pievienoties kâdam serverim
+3a_tit_spec Pievienoties kâdam Serverim
+3a_finduser Meklçt lietotâju onlainâ
+3a_tit_user Lietotâja Meklçðana
+3a_cls1conn Pârtrauc pieslçgumu
+3a_clsxconn Pârtrauc %d pieslçgumus
+3a_rfrshlst atjaunot
+3a_stophost Pârtrauc serveru meklçðanu
+3a_spctostp Spied SPACE, lai pârtrauktu meklçt
+3a_liststat %s serveri %d no %d - Var pievienoties %d - [Nav atbildes %d] - [Nepareiza vers. %d]
+3a_waitingw Gaida
+3a_checking Pârbauda
+3a_end_stat Var pievienoties %d - [Nav atbildes %d] - [Nepareiza vers. %d] %s
+3a_clikjoin - SPIED lai pievienotos
+3a_glc_name Nosaukums
+3a_glc_ping Pings
+3a_glc_trak Trase
+3a_privatew privâts
+3a_modified modificçts
+3h_arcade_w var resetot
+3h_cruise_w kruizçðana
+3a_wrongver Nepareiza versija
+3h_noteul_x PIEZÎME : Tev joprojâm ir nepiecieðams atbloíçt LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Ielâdes serveris
+3h_cnt_titl Valsts
+3h_newupdat Ir pieejams atjauninâjums
+3h_norecaui Netika saòemta automâtiskâs atjaunoðanas info
+3h_start_dl sâkt lejuplâdçt
+3h_plsselmr Lûdzu izvçlies kâdu no serveriem tavâ tuvumâ
+3h_connectn Pieslçdzas...
+3h_trylfsnt Mçìini vçlreiz izmantojot ^7www.lfs.net
+3h_dl_perce Faila progress : %d%%
+3h_dl_colon Ielâdçts :
+3h_restartn Restartç...
+3h_nostrtrs Nevar restartçt
+3h_noresdat Nevar izveidot restarta datu failu
+3h_noenumwi Nevar uzskaitît logus
+3h_anotherl Cits LFS process jau darbojas
+3h_noopenrs Nevar atvçrt restarta programmu
+3b_meetroom Uzgaidâmâ telpa
+3b_m_host_x dodas uz %s
+3b_f_host_x dodas uz %s
+3b_leftroom pameta istabu
+3b_entrroom iegâja istabâ
+3b_wlcmu1st Sveiks! Tu esi pirmais braucçjs ðajâ istabâ
+3b_wlcmxinr Sveiks! Ðeit jau ir %d braucçji
+3b_mr_leave Atstât
+3b_mr_findb Meklçt
+3b_mr_sound Skaòa
+3b_mr_refre Atjauninât
+3b_somehost serveris
+3b_mastercl Galvenais serveris slçdza pieslçgumu
+3b_sr_privt Privâts
+3b_mr_publc Publisks
+3b_mr_empty Tukðs
+3h_sr_cruis Kruîzs
+3g_autoreco Rekonnektçjas
+3a_typelocl vietçjais tîkls
+3a_typeinet internets
+3a_userisat Spçlçtâjs atrodas: %s
+3a_joinxath Pievienoties %s ?
+3a_inrc_num sacîkstç : %d
+3a_cons_num pieslçgumi : %d
+3a_resl_num rezultâti : %d
+3h_skin_num Skins : %d
+3h_join_que Rindas pozîcija : %d
+3a_selhostc Izvçlçtais serveris :
+3a_joingamc Pievienoties serverim :
+3a_hostnamc Servera nosaukums :
+3a_hostipac Servera IP adrese :
+3a_hostprtc Servera ports :
+3a_hostpasc Servera parole :
+3h_clearbtn izdzçst visas paroles (%d)
+3h_cconfirm Izdzçst visas saglabâtâs serveru paroles?
+3a_noldtrck Nevar ielâdçt trasi
+3a_nosndudp Nevar aizsûtît UDP paketi
+3a_nocrtudp Nevar izveidot UDP pieslçgumu
+3h_wt_sinfo Gaida skina info
+3h_norcvskn Nesaòçma skina info
+3a_norcvgst Nesaòçma viesa info
+3a_norcvply Nesaòçma braucçja info
+3a_norvcall Nesaòçma datus par visiem viesiem
+3a_vldadreq Jums ir jaievada derîga vietçjâ tîkla IP adrese
+3a_errconrs Kïuda sûtot pieslçguma rezultâtu
+3a_mode_sel Onlaina reþîmu izvçle :
+3h_smal_dmo demo
+3h_frxmdndx Priekð %s reþîma tev ir jâatbloíç LFS %s
+3h_seltrrqx Izvçlçti trasei nepiecieðams %s reþîms
+3a_visibilc Redzamîba :
+3a_vis_locl vietçjs
+3a_vis_inet internets
+3a_vid_hidn slçpts
+3a_inetconc Interneta pieslçgums :
+3a_modem56k 56k modçms
+3a_m512_128 512 / 128 kabelis
+3a_mdm1_256 1m / 256 kabelis
+3a_mdm_cust savâdâks
+3a_maxupl_c Maksimâlâ augðuplâde (kbits / sec) :
+3g_x_upload %s kbits/sec augðuplâde
+3a_gnnoemty Servera nosaukums nedrîkst bût tukðs
+3a_onecarrq Vismaz vienam auto jâbût atïautam
+3a_hstgstrq Servera vai viesa braucçjiem jâbût atïautiem
+3a_rusurepr Vai tieðâm vçlies turpinât?
+3a_maxbwmex Maksimâlais joslas platums var tikt pârsniegts
+3b_srv_ip_c IP Adrese :
+3a_srvportc Ports :
+3a_dedi_opt Specializçtais serveris (bez grafikas) :
+3a_guestvot Atïaut balsot kick / ban :
+3a_guestsel Atïaut viesiem izvçlçties trases :
+3h_qenabled Atïauta kvalificçðanâs :
+3g_midracej Atïaut pievienoðanos sacîkstes laikâ :
+3g_pitstopr Obligâts pitstops :
+3g_carreset Atïaut maðînu resetu :
+3h_fcockpit Piespiedu kokpita skats :
+3h_cruisemo Kruizçðana (nepareizs virziens atïauts) :
+3a_maxgst_c Max viesi :
+3d_admins_c Adminu vietas :
+3a_maxrarac Max (reâlie + AI) sacîkstç :
+3a_maxragst Max (reâlie + AI) no viesa PC :
+3a_maxrahst Max (reâlie + AI) uz servera PC :
+3a_dedinohc Speciâlais : nav servera auto
+3a_smothpps Gludums (paketes sekundç) :
+3a_uplmin16 Augðuplâde vismaz 16 kbits
+3g_umax8192 Augðuplâde maksimums 8192 kbits
+3a_uplavail Pieejamâ augðuplâde %.1f KB/sec
+3a_uplprcar Augðuplâde no auto %.0f bytes/sec
+3a_uplcarnm Auto skaits ko augðuplâdçt %.0f
+3a_requplod Nepiecieðamâ augðuplâde %.1f KB/sec
+3a_availexc Pieejamâ augðuplâde pârsniegta
+3b_adminp_c Admina parole :
+3a_sel_audi Audio
+3a_tit_audi Iestatîjumi - Audio
+3a_sel_scrn Ekrâns
+3a_tit_scrn Iestatîjumi - Ekrâns
+3a_sel_grfx Grafika
+3a_tit_grfx Iestatîjumi - Grafika
+3a_sel_view Skats
+3a_tit_view Iestatîjumi - Skats
+3a_sel_disp Displejs
+3a_tit_disp Iestatîjumi - Displejs
+3a_sel_plyr Braucçjs
+3a_tit_plyr Iestatîjumi - Braucçjs
+3a_sel_cont Kontroles
+3a_tit_cont Iestatîjumi - Kontroles
+3a_sel_game Spçle
+3a_tit_game Iestatîjumi - Spçle
+3a_sel_misc Daþâdi
+3a_tit_misc Iestatîjumi - Daþâdi
+3a_unlokerr Atbloíçðanas kïûda
+3a_flcrterr Kïûda izveidojot failu
+3a_reguname Reìistrçtais lietotâjvârds :
+3a_onlinepw SPÇLES parole :
+3a_gounlock atbloíçt
+3g_locktext Bloíçt LFS (atgriezties DEMO)
+3g_lockques Bloíçt Live for Speed?
+3g_lockwarn Tikai DEMO saturs bûs pieeejams
+3a_autorcon Automâtiski pieslçdzas galvenajam serverim
+3a_notconnm Nav pieslçgts galvenajam serverim
+3a_yesconnm Pieslçdzies galvenajam serverim
+3a_connmstr pieslçgties
+3a_connects Pieslçgumi
+3a_hoptions izvçlne
+3a_smlb_kik kick
+3a_smlb_ban ban
+3a_num_bans %d nobanots
+3a_zerobans Nav banu
+3a_editbans labot banus
+3a_tit_bans Banu Rediìçtâjs
+3a_delshort dzçst
+3a_goaddban pievienot banu
+3a_user_ban Ievadi lietotâjvârdu, kuru banot
+3a_time0day %d:%.2d
+3a_time1day 1 diena %d:%.2d
+3a_timexday %d dienas %d:%.2d
+3a_banip12h 12 stundu bans uz IP adresi
+3a_banun12h 12 stundu bans uz lietotâjvârdu
+3b_banusr1d Lietotâjs ir nobanots uz 1 dienu
+3b_banusrxd Lietotâjs ir nobanots uz %d dienâm
+3h_tyre_man Raþotâjs
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_SOFT
+3g_tt_slk_m SLICK_MEDIUM
+3g_tt_slk_h SLICK_HARD
+3a_tt_races RACE_SLICK
+3a_tt_raceg RACE_GROOVED
+3a_tt_racei RACE_INTERMEDIATE
+3a_tt_racew RACE_WET
+3a_tt_roads ROAD_SUPER
+3a_tt_roadn ROAD_NORMAL
+3a_tt_hybri HYBRID
+3a_tt_knobb KNOBBLY
+3a_ttlmaskl Kopçjais svars : L %.0f kg (%.0f lbs)
+3a_pwrwtmti Jauda/svars : %.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr Svara sadalîjums : %.1f F %.1f R
+3h_ddistrfr Piespiedçjspçka sadalîjums : %.1f F  %.1f R
+3h_rdistrfr Velðanâs stîvuma sadalîjums : %.1f F  %.1f R
+3a_trqnmlbr Griezes moments : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Jauda : %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Dzinçjs : %.0f kub. cm%s%s%s
+3a_engltfmt Dzinçjs : %.1f litru%s%s%s
+3a_trbochrg ar turbînu
+3a_etl_inli rindas
+3a_etl_flat boksertipa
+3a_etl_veng V-veida
+3a_etn_qcyl ?
+3a_etn_1cyl viencilindra
+3a_etn_2cyl divcilindru
+3a_etn_3cyl 3 cilindru
+3a_etn_4cyl 4 cilindru
+3a_etn_5cyl 5 cilindru
+3a_etn_6cyl 6 cilindru
+3a_etn_8cyl 8 cilindru
+3a_etn10cyl 10 cilindru
+3a_etn12cyl 12 cilindru
+3a_grrat1st Pirmais %.3f
+3a_grrat2nd Otrais %.3f
+3a_grrat3rd Treðais %.3f
+3a_grrat4th Ceturtais %.3f
+3a_grrat5th Piektais %.3f
+3a_grrat6th Sestais %.3f
+3a_grrat7th Septîtais %.3f
+3a_grginfop Info
+3a_grgcolou Krâsojums
+3a_grgbrake Bremzes
+3h_grgbrktc Bremzes / TC
+3a_grgsuspe Piekare
+3a_grgsteer Stûrçðana
+3a_grgfinal Reduktors
+3a_grgtyres Riepas
+3a_grgdownf Piespiedçjspçks
+3a_grgpasse Pasaþieri
+3a_pssfront priekða
+3a_pssrleft aizm. kreisâ
+3a_pssrmidd aizm. vidus
+3a_pssrrght aizm. labâ
+3a_whlscolt Riteòi
+3a_bodycolt Virsbûve
+3a_texnamet Skina nosaukums
+3a_maxperwt Max uz riteni %.0f Nm
+3g_b_bal_fr Bremþu Balanss (priekða) %.0f%%
+3h_engbrred Dzinçja bremzçðanas pazem. %.0f%%
+3h_tcmaxslp TC Atïautâ izslîdçðana %.1f%%
+3h_tcminspd TC Minimâlais âtrums %.0f m/s
+3h_abs_text ABS
+3g_ridehred Augstuma samazinâjums
+3a_brkmotrg [Kustîbas Râdiuss %.3f m]
+3g_livecamb aktuâls (L / R) %+.2f° / %+.2f°
+3g_stif_val Stîvums %.1f kN/m
+3g_damp_val Amortizâcija %.1f Ns/mm
+3g_bump_val Trieciena Amortizâcija %.1f Ns/mm
+3g_rebd_val Atsitiena Amortizâcija %.1f kNs/m
+3g_arol_val Anti Roll %.1f kN/m
+3h_power_st Stûres pastiprinâtâjs %.0f%%
+3a_maxlkval Maksimâlais pagrieziens %.1f°
+3g_castrval Caster %.1f°
+3a_inclnval Novirziens %.2f°
+3g_prllsval Paralçlâ stûrçðana %.0f%%
+3g_toeinval Savçrsums %+.1f°
+3g_camb_abs Sagâzums (left / right) %+.1f° / %+.1f°
+3g_camb_adj Sagâzuma reg. (L / R) %+.1f° / %+.1f°
+3h_tyrewarm Riepu sildîtâja temperatûra : %.0f°
+3a_fnldvval Reduktora pârnesumsk. %.3f
+3g_ftrqsplt Griezes daïa priekðâ %.0f%%
+3g_fvistorq Viscous Torque %.0f Nms/rad
+3g_lock_one Bloíçðanâs %.0f%%
+3g_lock_o_o Bloíçðanâs (power / coast) %.0f%% / %.0f%%
+3h_dpreload Preload %.0f Nm
+3g_frnt_txt Priekða
+3g_cent_txt Centrs
+3g_rear_txt Aizmugure
+3g_press_lr Spiediens (K / L) %.0f kPa / %.0f kPa
+3g_conv_psi psi (L / R) %.1f psi / %.1f psi
+3g_conv_bar bar (L / R) %.2f bar / %.2f bar
+3g_fwingang Priekðçjâ Antispârna Leòíis %.0f°
+3g_rwingang Aizmugurçjâ Antispârna Leòíis %.0f°
+3h_tc_title Pretizslîdçðanas kontr.
+3g_stra_txt Stratçìija
+3g_fuel_sta Degviela startâ : %.0f%%
+3g_fuel_pit Degviela pitstopa uzpildç : %.0f%%
+3g_tyre_lim Riepu maiòa : ja nodiluðas > %.0f%%
+3g_tyre_all Riepu maiòas : vienmçr
+3g_tyre_nev Riepu maiòa : nekad
+3h_rep_damg Atjaunot bojâjumus : %s
+3h_setup_ch Pieprasîtas setupa izmaiòas
+3h_handicap Handikaps
+3h_hcapnone NAV
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% ierobeþojums
+3h_vol_tres Pievienotais Ieplûdes Ierobeþotâjs %.0f%%
+3h_vol_mass Pievienotâ Masa %.0f kg
+3h_mass_pos Pievienotâs Masas Pozîcija (priekðâ) %.0f%%
+3g_symmetri simetriski
+3g_asymmetr asimetriski
+3g_configur Konfigurâcija
+3g_cpct_x_l Degvielas ietilpîba : %.1f litri
+3g_optt_x_d Optimâlâ temperatûra %.0f°
+3g_tst_x_ms Testa âtrums %.1f m/s
+3g_rearwing Aizmug. spoil.
+3g_frntwing Priekð. spoil.
+3g_undrtray Apakðplâksne
+3g_bodyaero Virsbûve
+3g_totlaero Kopâ
+3g_lift_x_n L : %.0f N
+3g_drag_x_n D : %.0f N
+3g_car_tn_x Maðînas stûres pagrieziens %.0f° (lock to lock)
+3g_con_tn_x Kontroliera stûres pagrieziens %.0f°
+3g_live_cmb Sagâzums : %+.2f
+3g_live_inc Novirziens : %.2f
+3g_live_cst Caster : %.2f
+3g_live_scr Scrub : %.3f
+3g_live_trk Track : %.3f
+3g_susrigid Stingrs
+3g_sustrail Trailing Arm
+3g_susffork Priekðçjâ dakða
+3g_susmacph MacPherson balsts
+3g_susdwish Double Wishbone
+3g_pit_inst Boksu instrukcijas
+3g_live_set Tagadçjie iestatîjumi
+3g_wheels_x RITEÒI ir %s
+3g_l_tt_x_x RIEPU tips %s [%s]
+3g_l_pr_psi SPIEDIENS %.1f psi [%+.1f psi]
+3g_l_pr_bar SPIEDIENS %.2f bar [%+.2f bar]
+3g_l_cr_adj SAGÂZUMA REG. %.1f° [%+.1f°]
+3g_l_cr_abs SAGÂZUMS %.1f° [%+.1f°]
+3g_l_wg_ang ANTISPÂRNS %.0f° [%+.0f°]
+3h_estcolon Kalkulâcija :
+3g_fl_pc_pl %.1f%% apïa laikâ
+3g_fl_pc_it %.1f%% palicis bâkâ
+3h_a3_lower LWR
+3h_a3_upper UPR
+3h_a3_toein TOE
+3h_a3_ctemp CT
+3a_trckunkn Nezinâma trase
+3a_trcknofn Trase nav atrasta
+3a_trckobso Nederîga trase
+3a_fnshload PABEIGTS
+3a_prgprelo Ielâdç
+3a_prgldtex Ielâdç tekstûras
+3a_prgpaths Ceïð
+3a_prgcolrs Krâsojumi
+3a_prgdupli Duplikatori
+3a_prglgtsc Gaismas sistçmas
+3a_prgrdobs Lasa objektus
+3a_prglgtin Gaismojuma info
+3a_prgbmptx Grumbu tekstûras
+3a_prginicl Inicializç krâsojumus
+3a_prgchpts Èekpointi
+3a_prgextra Ekstra dati
+3a_prgstobs Starta objekti
+3a_prgmapsq Trases objekti
+3a_prgpthin Ceïa inicializâcija
+3a_prgpthad Ceïa novietojumi
+3a_prgrebld Pârlâdç
+3g_prggener Ìenerç
+3a_spcpres1 (spied 1)
+3a_autojblk Nevar pievienoties : Starts jau ir aizòemts
+3a_xcomplvt %s^8 pabeidza balsojumu
+3a_maxgcarx Max viesa auto : %d
+3a_maxhcarx Max hosta auto : %d
+3a_cf_swpsd mainît pusi
+3a_cf_gopit boksi
+3a_cf_chqul mainît kvalificçðanâs laiku
+3a_cf_chlap mainît apïus
+3a_cf_chwin mainît vçju
+3b_cf_finfo mainît info
+3a_upc_male %s^8 mainîja kontroles iestatîjumus
+3a_upc_fmal %s^8 mainîja kontroles iestatîjumus
+3a_upc_unkn %s^8 mainîja kontroles iestatîjumus
+3a_x_no_car %s^8 nav auto
+3a_x_alredy %s^8 jau ir auto
+3a_x_lftpot %s^8 atstâja boksus
+3a_w_rd_rly ^6Brîdinâjums : Asfalta riepas uz rallijkrosa trases
+3a_w_rly_rd ^6Brîdinâjums : Rallijkrosa riepas uz asfalta
+3a_unkcdisc Nezinâms auto - spçlçtâjs atslçdzâs
+3a_modcdisc Modificçts auto - spçlçtâjs atslçdzâs
+3a_nocrukid Nevar pievienot auto info - nezinâms id
+3a_xrenamex %s^8 nomainîja vârdu uz %s
+3g_xtakovrx %s^8 pâròçma vadîbu no %s
+3g_xwantuto %s^8 vçlas,lai tu pâròem
+3g_xwantsto %s^8 vçlas pâròemt
+3g_oswapend Tu vari mainît braucçjus, kad pitstops ir pabeigts
+3a_nosharnm Nevar bût vienâds vârds ar citu braucçju
+3a_trkloadd Trase ielâdçta
+3a_x_pitted %s^8 nopitojâs
+3g_x_pitstp %s^8 iebrauca pitstopâ
+3a_x_connec %s^8 pieslçdzâs
+3g_x_blkmsg %s^8 nobloíçja ienâkoðâs ziòas
+3g_x_unblkm %s^8 atbloíçja ziòas
+3a_newgconn Pieslçdzas jauns viesis
+3a_gfailcon Jaunajam viesim neizdevâs pieslçgties
+3g_waitplyc Lûdzu uzgaidi - viesis pieslçdzas
+3h_waitbuff Izvairâs no pârplûdes
+3a_xss_male %s^8 atsûtîja savu setupu
+3a_xss_fmal %s^8 atsûtîja savu setupu
+3a_xss_unkn %s^8 atsûtîja setupu
+3a_packs_ps Paketes sekundç : %d
+3a_noqual_x Nevar kvalificçties - %s
+3a_no_x_plc Nevar %s - viesis pieslçdzas
+3a_no_x_cht Nevar %s - maina trasi
+3g_no_x_car Nevar %s - auto ir trasç
+3a_novotepg Pagaidâm nav balsojuma
+3h_vote_kic %s^8 balsoja izkikot %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 balsoja nobanot %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 zaudçja pieslçgumu
+3a_lostcn_x Zaudçts pieslçgums no %s^8
+3a_x_discon %s^8 atslçdzâs
+3g_x_kicked %s^8 tika izkikots
+3g_x_banned %s^8 tika nobanots
+3a_qulfauto Autokross
+3a_qulfprac Treniòu sesija
+3a_qulfnote Nav atïauts
+3g_skinnotf Tavs auto skins netika atrasts ^7www.lfsworld.net
+3g_helmnotf Tavs íiveres skins netika atrasts ^7www.lfsworld.net
+3g_updatset Atjaunoti iestatîjumi
+3g_fastlxxx Âtrâko apli : %s veica %s^8 (%s)
+3g_no_reset Auto resets nav atïauts
+3g_cant_res Nevar atjaunot - %s
+3g_too_dang pârâk bîstami
+3g_could_ha varçtu aizskart citu auto
+3g_could_hr varçtu aizskart nesen atjaunotu auto
+3g_would_ye varçtu izraisît dzelteno karogu
+3a_obsolvid Nederîgs ieraksts
+3a_vidlater Ieraksts ticis veidots vecâkâ versijâ
+3h_hls_hlvc HLVC
+3h_hls_inva NEDERÎGS
+3h_hls_cust SAVÂDÂKS
+3a_htlpinvl Lidojoðais aplis nederîgs (%s)
+3a_hli_grnd saskare ar zemi
+3a_hli_wall saskare ar sienu
+3a_hli_obje saskare ar objektu
+3a_hli_wron nepareizs virziens
+3h_hli_spee âtruma pârsniegðana
+3a_ptp_locl vietçjs
+3a_ptp_remt attâl.
+3a_ptp_lcai ai (L)
+3a_ptp_rmai ai (R)
+3a_rsk_noob IESÂCÇJS
+3a_rsk_lrnr MÂCEKLIS
+3a_rsk_okok LABS
+3a_rsk_quik ÂTRS
+3a_rsk_prof PRASMîGS
+3a_x_finish %s^8 finiðçja
+3a_x_finplc %s^8 finiðçja %s
+3g_x_fin1be %s^8 finiðçja pçc 1 apïa
+3g_x_finxbe %s^8 finiðçja pçc %d apïiem
+3g_x_conplc %s^8 beigu pozîcija ir %s
+3g_x_disqua %s^8 ir diskvalificçts
+3a_x_wonrac %s^8 uzvarçja sacîksti
+3a_max3locl Maximums 3 vietçjie braucçji
+3a_fnshuncl neklasificçts
+3a_fnsh_1st 1ais
+3a_fnsh_2nd 2ais
+3a_fnsh_3rd 3ais
+3a_fnsh_4th 4ais
+3a_fnsh_5th 5ais
+3a_fnsh_6th 6ais
+3a_fnsh_7th 7ais
+3a_fnsh_8th 8ais
+3a_fnsh_9th 9ais
+3a_fnsh10th 10ais
+3a_fnsh11th 11ais
+3a_fnsh12th 12ais
+3a_fnsh13th 13ais
+3a_fnsh14th 14ais
+3a_fnsh15th 15ais
+3a_fnsh16th 16ais
+3g_fnsh17th 17ais
+3g_fnsh18th 18ais
+3g_fnsh19th 19ais
+3g_fnsh20th 20ais
+3g_fnsh21st 21ais
+3g_fnsh22nd 22ais
+3g_fnsh23rd 23ais
+3g_fnsh24th 24ais
+3g_fnsh25th 25ais
+3g_fnsh26th 26ais
+3g_fnsh27th 27ais
+3g_fnsh28th 28ais
+3g_fnsh29th 29ais
+3g_fnsh30th 30ais
+3g_fnsh31st 31ais
+3g_fnsh32nd 32ais
+3a_wlcm_lfs Sveicinâts Live For Speed
+3a_agre_lfs Piekriðana
+3a_overwrex Pârrakstît eksistçjoðu failu?
+3g_deleteex Izdzçst eksistçjoðu failu?
+3g_newnamef Ievadît jaunu faila nosaukumu
+3g_filealre Ðâds nosaukums jau eksistç
+3g_cnotfind Nevar atrast failu
+3a_layoutsv Ievadiet izkârtojuma nosaukumi,lai saglabâtu
+3a_windocon Logs kamçr pieslçdzas :
+3a_cancelbt atcelt
+3a_backbutt atpakaï
+3a_capitlok OK
+3a_capitlgo Aiziet
+3a_invldstr nederîgs
+3a_cpfinish FINIÐÇJIS
+3a_cpwinner UZVARÇTÂJS
+3a_namepass Lietotâjvârds un Parole
+3a_validnam Tev jaievada derîgs lietotâjvârds
+3a_validpas Tev jaievada derîga parole
+3a_passmin8 Parolei jâbût vismaz 8 simboliem
+3a_shifttyp Âtrumu pârslçgðanas reþîms :
+3a_autogear Automâtisks âtrumu pârslçgs :
+3a_notiming - apïi netiks skaitîti
+3a_stilload Joprojâm ielâdç trasi
+3a_waitlist Gaida serveru sarakstu
+3a_wt_ginfo Gaida servera info
+3a_connmast Pieslçdzas galvenajam serverim
+3a_waitmrep Gaida atbildi no galvenâ servera
+3a_waithrep Gaida atbildi no servera
+3a_waitinfo Gaida info
+3a_masterro Kïûda gaidot atbildi
+3a_mnoreply Nav atbildes no galvenâ servera
+3a_waitginf Gaida viesa info
+3a_waitpinf Gaida braucçja info
+3a_waitmsgs Gaida pirmâs ziòas
+3a_connhost Pieslçdzas serverim
+3a_conn_udp Veido UDP pieslçgumu
+3a_openserv Atver servera ligzdu
+3a_unexmstr Negaidîta galvenâ pakete
+3a_unexsrvr Negaidîta servera pakete
+3a_unexgest Negaidîta viesa pakete
+3a_numg_oob Pârsniegts viesu skaits
+3a_errrhost Kïûda atbildot serverim
+3a_unextrak Negaidîta trases maiòa
+3a_unkntrak Nezinâma trases kïûda
+3a_unexpack Negaidîta izmçra pakete
+3a_unexrepl Negaidîta atbilde
+3a_gmnmused Servera vârds ir jau lietoðanâ
+3a_errmthrd Nevar izveidot galveno pavedienu
+3a_lostmast Pazuda pieslçgums ar galveno serveri
+3a_losthost Pazuda pieslçgums ar serveri
+3g_notisync Sâkuma sinhronizâcija neizdevâs
+3g_lostsync Pazuda sinhronizâcija ar serveri
+3a_connecto Pieslçguma laiks iztecçjis
+3a_noconnsl Nav vairâk slotu
+3a_nookpack Nesaòçma apstiprinâjumu
+3a_waitfook Gaida apstiprinâjumu
+3a_waittrak Gaida trases info
+3a_notrakpk Nesaòçma trases info
+3a_loadtrak Ielâdç trasi
+3a_chglight Maina gaismojumu
+3a_ply_join Kâds viesis pievienojas
+3a_nochrace Nevar mainît trasi sacîkstes laikâ
+3g_trnoallo %s nav atïauts ðajâ serverî
+3a_chgtrack Maina trasi
+3h_welcomex Esi sveicinâts Live For Speed %s
+3a_small_no nç
+3a_smallyes jâ
+3h_smallaut auto
+3h_smallnev nekad
+3h_smallask jautât
+3h_smallalw vienmçr
+3a_smalloff izslçgts
+3a_smalreal îsts
+3a_smalvrtl virtuâls
+3a_smalleft pa kreisi
+3a_smalrght pa labi
+3a_smalnone nekas
+3a_smaltext teksts
+3a_smallall visi
+3a_smallman vîrietis
+3a_smallwmn sieviete
+3h_smallb16 16 bit
+3h_smallb32 32 bit
+3a_smlnobrk [nç]
+3a_smlysbrk [jâ]
+3a_smlofbrk [izsl.]
+3a_smlonbrk [iesl.]
+3a_actobjct objekts
+3a_actstart starta pozîcija
+3a_actfinsh finiða lînija
+3a_actchck1 1. èekpoints
+3a_actchck2 2. èekpoints
+3a_actchck3 3. èekpoints
+3g_actcircl aplis
+3a_actnofin Nav finiða lînija
+3a_actnochk Nav èekpointu
+3a_actfnnoc Finiða lînija, bet nav èekpointu
+3a_accpxnof Èekpoints %d nav atrasts
+3a_aconechk Autokross : 1 èekpoints
+3a_acxchckp Autokross : %d èekpointi
+3a_noloadsk Nevar ielâdçt skinu :
+3a_wrngfltp Nepareizs faila tips
+3a_cnocolon Nevar atvçrt failu :
+3a_outcnopn Izvade : Nevar atvçrt failu
+3d_outnoply Izvade : Nevar atrast auto vadîtâju
+3d_outstart Izvade : Sâkts aplis
+3d_outfinis Izvade : Pabeigts
+3a_corruptf Sabojâts fails
+3a_filenohc Neizdevâs pârbaudît galveni :
+3g_filetoos Fails ir par îsu :
+3g_filecorr Fails ir bojâts :
+3g_err_read Kïûda nolasot failu :
+3g_notpcmwv Vilnis nav PCM :
+3g_srnotsup Parauga temps nav atbalstîts :
+3g_wv_mo_st Vilnis nav ne mono vai stereo
+3g_wavemb16 Vilnis nav 16-bitu :
+3g_wavetool Vilnis ir par garu :
+3a_latervfl Fails tika izveidots vçlâkâ versijâ :
+3a_nocrtfil Nevar izveidot failu:
+3a_votecanc Balsojums atcelts
+3a_nocrtmpr Nevar izveidot  MPR failu
+3a_savedmpr Saglabâts MP ieraksts -
+3a_nocrtspr Nevar izveidot SPR failu
+3a_savedspr Saglabâts SP ieraksts -
+3a_nornmspr Nevar pârdçvçt SPR -
+3a_accesden Pieeja liegta
+3a_invalchr Nederîgi simboli
+3a_notfound Nav atrasts
+3a_unknowne Nezinâma kïûda
+3g_downcanc Ielâde atcelta
+3g_filesize Nepareizs faila izmçrs
+3g_highresd Augstas izðíirtspçjas skinu ielâde :
+3g_nolfswcr Nepietiek LFS World kredîti augstas izðíirtsp. skiniem
+3g_dbnotava Augstas izðíirtspçjas skinu datubâze nav pieejama
+3a_entermsg Ievadît ziòu
+3g_seldefcp Uzlikt defaulto kodu lapu
+3a_ctabshwr CTRL +TAB - râdît rezultâtus
+3a_shf8nwdb SHIFT + F8 - tîkla atkïûdoðana - %s
+3a_newvalfx Ievadi jauno vçrtîbu priekð %s
+3a_valtoolo Jaunâ vçrtîba ir par zemu
+3a_valtoohi Jaunâ vçrtîba ir par augstu
+3a_endoqual KVALIF. BEIGUSIES
+3a_ctrcclip CTRL + C - pele slçpta
+3a_ctrcfree CTRL + C - pele brîva, kad
+3a_windotxt logâ
+3a_fullstxt pilnâ ekrânâ
+3g_not_demo nav pieejams ar DEMO
+3h_noraceln trajektorijas lînijas parâdîðana nav atïauta
+3g_time_loc vietçjais
+3g_time_utc UTC
+3a_namelong Vârds ir par garu
+3a_noconnms Nevar pieslçgties galvenejam serverim
+3a_wrninsta Brîdinâjums: cita LFS instance jau darbojas
+3g_lfsbuyon Live For Speed - nopirkt onlainâ - ^7www.lfs.net
+3g_comentry Komanda ir tikai sâkuma izvçlnei
+3g_insimnop InSim nav atvçrts
+3g_comguest Komanda ir priekð dauzspçlçtâja reþîma viesiem
+3g_comsetup Komanda ir priekð servera iestatîðanas izvçlnes
+3g_comnoded Komanda nav specializçtajam serverim
+3g_unknwnai Nezinâms AI braucçjs
+3g_drv_alrd Braucçjs jau ir sacîkstç
+3g_drv_noin Braucçjs nav sacîkstç
+3g_setup_nf Setups netika atrasts
+3g_colournf Krâsojums netika atrasts
+3g_scrtooma Par daudz skriptu
+3g_scrtoolo Skripts ir par garu
+3g_scrempty Skripts ir tukðs
+3g_un_axs_f Nezinâma ass funkcija
+3g_un_key_f Nezinâma pogas funkcija
+3g_un_btn_f Nezinâma pogas funkcija
+3g_xlnxtool %s : lînija %d ir par garu
+3g_x_ln_x_x %s : lînija %d - %s
+3g_cantopen Nevar atvçrt : %s
+3g_notallow Nav atïauts: %s
+3h_cp_latin Latîòu
+3h_cp_cente Centrâleiropas
+3h_cp_turki Turku
+3h_cp_balti Baltijas
+3h_cp_japan Japâòu
+3h_cp_cyril Kirilica
+3h_cp_greek Grieíu
+3h_cp_tr_ch Tradicionâlâ íînieðu
+3h_cp_si_ch Vienkârðotâ íînieðu
+3h_cp_korea Korejieðu
+3a_hostfull Serveris ir pilns
+3a_hostload Serveris ielâdç trasi
+3a_plyrconn Kâds viesis jau pieslçdzas
+3g_plydisco Kâds viesis atslçdzas
+3h_racstart Sacîkste sâkas
+3a_unauthcn Neautorizçts pieslçgums
+3a_useronli Lietotâjvârds jau ir onlainâ
+3h_userband Lietotâjvârds paðlaik ir nobanots
+3a_usernofd Tavs lietotâjvârds netika atrasts
+3a_pwnomtch SPÇLES parole nesakrît
+3g_pwneeded Tev ir jaizveido SPÇLES parole
+3h_unlkused Ðîs nedçïas unlocki ir iztçrçti
+3h_unpwconf Lietotâjvârds un parole apstiprinâti
+3a_unknwerr Nezinâma kïûda
+3a_carnomtc Auto nesakrît ar servera auto
+3a_nodbljon Dubulta pievienoðanâs interneta serverim nav atïauta
+3a_hlostmst Serverim ir zudis galvenais pieslçgums
+3a_wrngpass Nepareiza parole
+3a_prvreqps Privâtais hosts pieprasa paroli
+3a_usrunknw Nezinâms lietotâjsvârds
+3a_usrnotol Lietotâjs netika atrasts onlainâ
+3a_usrolhid Lietotâjs ir onlainâ slçptâ serverî
+3g_usrol_s1 Lietotâjs ir onlainâ S1 serverî
+3g_usrol_s2 Lietotâjs ir onlainâ S2 serverî
+3g_usrol_s3 Lietotâjs ir onlainâ S3 serverî
+3a_hostrefu Serveris atteica pieslçgumu
+3a_hstdiffv Serverim ir savâdâka versija
+3a_hstdiffc Serverim ir savâdâks spçles kods
+3a_hstis_s1 Serveris ir Live For Speed S1
+3g_hstis_s2 Serveris ir Live For Speed S2
+3g_hstis_s3 Serveris ir Live For Speed S3
+3a_hstisdmo Serveris ir Live For Speed DEMO
+3a_hstunknr Nesaprotama atbilde no servera
+3a_hstnomst Serveris nav atrasts uz galvenâ servera
+3a_nameused Vârds ir jau izmantots
+3a_racefull Sacîkste ir pilna
+3g_nomidjoi Ðajâ serverî ir liegta pievienoðanâs sacîkstes laikâ
+3b_usermeet Lietotâjs ir uzgaidâmajâ telpâ
+3b_unkncomm Nezinâma komanda
+3h_unknwver Nezinâma versija
+3b_reqparam Ðai komandai vajadzîgs parametrs
+3b_req2pars Ðai komandai vajadzîgi 2 parametri
+3e_notenpar Nepietiekoði daudz parametru
+3b_unknwtrk Nezinâms trases parametrs
+3e_unknwcar Nezinâms auto parametrs
+3b_unoadmin Tev nav admina tiesîbas
+3b_kbinvalu Lietotâjvârds nav derîgs
+3b_invalpar Parametrs ir nederîgs
+3g_ptoolong Parametrs ir par garu
+3g_notfound Fails nav atrasts
+3e_setuponl Komanda tikai iestatîjuma izvçlnç
+3e_axnofind Nevar atvçrt izkârtojumu
+3e_axnoneav Nav atrasti izkârtojumi ðai trasei
+3e_kbnoload Nevar ielâdçt
+3e_kbnosave Nevar saglabât
+3g_tooearly Par agru lai restartçtu
+3g_pplracin Daþi cilvçki joprojâm brauc
+3h_notrxudp Serveris nesaòçma UDP paketi
+3h_nomultij Izvairâs no vairâkiem pievienoðanâs pieprasîjumiem
+3h_modreqpw Modificçtam serverim nepiecieðama parole
+3h_invalidu Nederîgs lietotâjvârds

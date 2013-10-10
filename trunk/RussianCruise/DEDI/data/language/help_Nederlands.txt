@@ -1,0 +1,262 @@
+LFS HELP file (Nederlands)
+Translated by: illegal, traxxion
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\con_wind
+Dit is een waarschuwing voor twee mogelijke situaties die kunnen voorkomen op sommige computers wanneer je LFS in volledig scherm speelt.
+
+1) Als je een persoonlijke firewall gebruikt, kan er een waarschuwingsbericht verschijnen wanneer je een online spel start of opent.
+
+2) Op sommige computers kan een bericht verschijnen wanneer je toegang probeert te krijgen tot het internet.
+
+Deze berichten kunnen sommige computers doen vastlopen als het spel in volledig scherm wordt gespeeld, dus deze optie zorgt er voor dat het spel tijdelijk in een venster wordt weergegeven wanneer je met het internet verbindt.
+
+Als je computer geen berichten geeft als je verbinding maakt met het internet kan deze optie gerust worden uitgeschakeld.
+\host_pw
+Sommige hosts hebben een paswoord nodig, de zogenaamde 'private hosts'.
+
+Als je verbinding maakt met een private host moet je het paswoord hier invullen.
+
+Publieke hosts hebben geen paswoord nodig.
+\game_nm
+^7Publiek spel -^8 vul hier een naam in om je server een identiteit te geven op het internet.
+
+^7Privaat spel -^8 de naam laat je vrienden toe je server te vinden.
+\ip_name
+^3Opties :
+
+^7lokaal netwerk -^8 je kan op een lokaal netwerk een server binnengaan door het IP adres van de host hier in te vullen.
+
+^7internet -^8 je kan een server op het internet binnengaan door de naam ervan hier in te vullen.
+\host_ip
+Je kan een server, op een bepaalde computer gestart op het lokale netwerk, binnengaan.
+
+Het IP adres is een uniek nummer geschreven als 4 nummers, gescheiden door 3 punten.
+
+Klik op de knop en vul het IP adres in van de server waar je wil binnengaan.
+
+Twee manieren om te weten te komen wat het IP adres van een computer is :
+
+1) Start WINIPCFG vanaf het Start-menu.
+2) Start IPCONFIG in een DOS prompt.
+\host_port
+Wanneer je via een IP adres een server binnengaat, moet je weten wat het IP adres is en de poort waarop de host is aangesloten.
+
+Het kan de standaardpoort 63392 zijn of een ander nummer gekozen door degene die de host heeft opgestart.
+
+Het zal ofwel de standaardwaarde zijn of een hoog nummer kleiner dan 65536.
+\host_nm
+Je kan verbinding maken met een server op een bepaalde computer op het internet.
+
+Om een server te zoeken in plaats van een IP adres in te geven, vul dan hier de naam in.
+
+Als de server een naam heeft kan je met je vrienden online racen zelfs al ken je het IP adres niet.
+\game_pw
+^7Privaat spel -^8 vul een paswoord in.
+
+^7Publiek spel -^8 laat dit veld leeg.
+\use_master
+De hoofdserver is een speciaal programma dat draait op een computer op het internet. Het toont de lijst met servers die momenteel online zijn en laat je toe servers te starten of binnen te gaan.
+
+^3Opties :
+
+^7Lokaal^8 - je server zal geen verbinding maken met de hoofdserver. Andere spelers kunnen verbinding maken door de "ga naar specifieke host" of "lokaal netwerk" optie te kiezen en het IP adres van je computer in te vullen.
+
+^7Internet^8 - je host zal verbinding maken met de hoofdserver en zal in de lijst met servers verschijnen.
+
+^7Verborgen^8 - je host zal verbinding maken met de hoofdserver maar zal niet in de lijst met servers verschijnen.  Andere spelers kunnen verbinding maken door de "Ga naar specifieke host" of "lokaal netwerk" optie te kiezen en de naam van je server in te vullen.
+
+^3Nota :^8 Als je computer een indirecte verbinding heeft met het internet via een een gedeelde internetverbinding (bijvoorbeeld in een bedrijf met een firewall) zal je de juiste TCP- en UDP-poorten moeten openen.
+\game_ip
+Als dit nodig mocht zijn, kan je het IP-adres invullen van de host die je wil gebruiken. Dit is handig wanneer je computer over meer dan één IP-adres kan beschikken.
+
+Als je dit veld open laat zal de host eender welk beschikbaar IP-adres gebruiken.
+\admin_pass
+Je kan een speciaal adminpaswoord invullen.
+
+Als een gast verbinding maakt met dit paswoord in plaats van het optionele paswoord, kan hij of zij de host vanop afstand besturen met speciale commando's. Lees alstulieft het tekstbestand README.txt voor meer info, te vinden in de paragraaf "Host commands".
+\game_port
+Je kan kiezen welke TCP- en UDP-poorten de host zal gebruiken. Dit laat je toe meer dan één dedicated host op een computer te starten.
+
+Gebruik de standaardwaarde 63392 of kies een hoog nummer kleiner dan 65536.
+\master_help
+Het programma kon geen verbinding maken met de hoofdserver.
+
+Dit kan verschillende oorzaken hebben:
+
+1) Als je beschermd wordt door een een firewall kan deze de verbinding geblokkeerd hebben.
+2) Het kan tijdelijk onmogelijk zijn om verbinding te maken met de hoofdserver via je ISP.
+3) De hoofdserver kan tijdelijk offline zijn door een technisch probleem.
+
+Controleer alstublieft de status en IP-adres van de hoofdserver op :
+
+^7www.lfs.net^8 of ^7www.lfsforum.net^8
+\modem_type
+De mogelijkheid om op je computer een host te starten hangt af van de beschikbare uploadbandbreedte. Dit hangt dan weer af van het type modem dat je hebt en de snelheid die je internetprovider toelaat.
+
+Selecteer het type modem die je hebt of selecteer een "andere" modem en vul handmatig de uploadbandbreedte in, uitgedrukt in kilobits per seconde (Kbits is een veelgebruikte eenheid voor digitale communicatiesnelheden).
+
+^7Verschillende modemtypes :^8
+
+- telefoonlijn : 56 Kbit download / 33.6 Kbit upload
+- kabelmodem : 512 Kbit download / 128 Kbit upload
+- kabelmodem : 1 Mbit download / 256 Kbit upload
+\upload_bw
+Als je modem niet een van de voorgaande types is, kan je handmatig je uploadbandbreedte in kilobits per seconde (Kbits/s) invullen. Als je niet weet hoeveel je uploadbandbreedte is in Kbits/s maar je weet wel hoeveel in Kbytes/s, moet je het cijfer met 8 vermenigvuldigen om om te zetten naar Kbits/s.
+
+Deze instellingen helpen je de juiste hostinstellingen te kiezen zodat je deze bandbreedte niet overschrijdt.
+\max_guests
+Je kan het aantal computers die je verbinding wil laten maken met je host instellen.
+
+^7Minimumwaarde:^8 1 - er kan maar één speler verbinding maken met je host.
+
+^7Maximumwaarde:^8 15 in DEMO, 47 in S1 en S2
+
+Deze waarde is zeer belangrijk om je uploadbandbreedte niet te overschrijden.
+\max_cars
+Je kan het aantal wagens die zullen kunnen racen instellen.
+
+Dit houdt zowel echte als AI-rijders in.
+
+^7Minimumwaarde:^8 1 - er zal maar één wagen aan de race kunnen deelnemen.
+
+^7Maximum setting:^8 12 in DEMO, 32 in S1 en S2
+
+Deze waarde is belangrijk om de benodigde uploadbandbreedte te determineren.
+\guest_cars
+Je kan het aantal wagens die iedere gast kan toevoegen aan een race instellen.
+
+Dit houdt zowel echte als AI-rijders in.
+
+^7Minimumwaarde:^8 0 - gasten kunnen kijken maar niet deelnemen aan de race.
+
+^7Maximumwaarde:^8 3 - tot 3 AI-rijders of 1 echte en 2 AI-rijders per gast.
+\host_cars
+Je kan het aantal wagens instellen die de host kan toevoegen aan de race.
+
+Dit houdt zowel echte als de AI-rijders in.
+
+^7Minimumwaarde:^8 0 - de host kan kijken maar niet aan de races deelnemen.
+
+^7Maximumwaarde:^8 3 - 3 AI-rijders of 1 echte en 2 AI-rijders.
+
+Dit cijfer verlagen kan de benodigde uploadbandbreedte verminderen.
+\max_packs
+Dit is het maximum aantal pakketten dat door iedere wagen via de host wordt verzonden per seconde.
+
+^7Minimumwaarde:^8 3 pakketten per seconde.
+
+^7Maximumwaarde:^8 6 - vloeiender / vereist dubbel zoveel uploadbandbreedte / cpu-intensief.
+\ded_host
+Je kan het spel starten als een normale of een 'dedicated' host.
+
+^7normale host :^8 Je kan het spel spelen zoals in enkele speler-modus en andere spelers op het internet zullen met je server kunnen verbinden.
+
+^7dedicated host :^8 Er zullen geen graphics weergegeven worden en geen berekeningen gemaakt, je kan niet op je eigen host spelen. Dit is de beste optie als je niet wil spelen en hosten op dezelfde computer. Je kan een minder krachtige pc gebruiken om een dedicated host te starten.
+\agreement
+^3Welkom bij Live for Speed!^8
+
+Om deze software te kunnen gebruiken, moet u eerst met volgende voorwaarden akkoord gaan :
+
+- Live for Speed is constant in ontwikkeling. Spelonderdelen kunnen worden toegevoegd, maar ook weggehaald indien wij dat nodig achten om de simulator te verbeteren.
+
+- Deze software biedt geen enkele garanties.
+
+- U installeert en gebruikt deze software op eigen risico. De ontwikkelaars van Live for Speed kunnen niet verantwoordelijk gesteld worden voor persoonlijke letsels of om het even welke schade aan je computer door het gebruik van deze software.
+
+- De DEMO inhoud van deze software is gratis en voor iedereen beschikbaar. De AFGESCHERMDE inhoud van de software is enkel voor gelicentieerde gebruikers. U mag nooit proberen toegang te krijgen tot de afgeschermde inhoud of iemand helpen er toegang toe te krijgen, zonder een licentie gekocht te hebben en het unlock-scherm te gebruiken in dit spel.
+
+^7Dank u.^8
+\admin_slots
+Je kan een aantal van je plaatsen op de server reserveren voor administrators.
+
+^7Minimumwaarde:^8 0 - er zijn geen plaatsen beschikbaar voor admins.
+
+^7Maximumwaarde:^8 8 - of 1 minder dan het maximum aantal gasten.
+
+Deze instelling zorgt ervoor dat je altijd met je eigen host kan verbinden, als je inlogt met het adminpaswoord.
+\skin_info
+Om LFS automatisch skins met hoge resolutie te laten downloaden moet je enkele LFS World credits hebben.
+
+LFS World credits betekent : een positive balans in je LFS account.
+
+Om deze service te gebruiken kan je een betaling doen op ^7www.lfs.net^8 of ^7www.lfsworld.net^8 of een voucher gebruiken.
+
+Voor elke^3 £1 ^8krediet zal je^3 2000 ^8hoge-resolutie skins kunnen downloaden.  De minimumoverschrijving bedraagt £3.
+
+^7Hoe het werkt :^8
+
+Je moet minstens £1 LFS World krediet hebben.  Als je voor de eerste keer een hoge-resolutie skin downloadt zal er £1 van je kredietbalans worden afgetrokken en 2000 skin-downloads zullen worden vrijgemaakt voor je account.  Nadat je 2000 skins hebt gedownload, zal er nogmaals £1 worden afgetrokken en het aantal toegekende downloads wordt verhoogd met 2000.
+
+^7Waarschuwing :^8
+
+Skins met hoge resolutie zorgen voor langere downloadtijden, langere laadtijden als een andere speler de pits verlaat en kunnen tot vier maal meer geheugen innemen op de grafische kaart.  Deze optie is alleen aangeraden als je over een snelle computer, recente grafische kaart en snel internet beschikt.
+\skin_help
+Een ^7skin^8 is een speciaal afbeeldingsbestand dat kleur geeft aan het exterieur van een wagen of helm.
+
+LFS heeft een systeem dat automatisch skins downloadt.  Wanneer je online racet, worden de skins van andere racers automatisch gedownload naar jouw computer zodat je hun aangepaste skins voor wagens en helmen kan zien.
+
+Als je zelf skins wil maken, raden we je aan om naar ^7www.lfs.net^8 te surfen en de ^7CMX viewer^8 te downloaden bij "Additional Downloads".  De CMX Viewer (inclusief sjablonen voor skins) is een speciaal programma dat je kan helpen bij het maken van skins.
+
+Nadat je een skin hebt opgeslagen in de map ^7skins^8 (in de map ^7data^8 van LFS) kan je die selecteren in het garage- of pitscherm.
+
+Opdat andere racers je skins online kunnen zien dien je naar ^7www.lfsworld.net^8 te surfen om die skins te uploaden. Dan zal de gekozen skin automatisch gedownload worden op de computers van andere racers wanneer ze je online zien.
+\tex_filter
+Texturen worden op het scherm weergegeven op verschillende detailniveaus, afhankelijk van hoe groot ze op het scherm worden getoond.  Deze detailniveaus worden mipmaps genoemd.  Wanneer een textuur kleiner wordt getoond (dus als het object zich ver van je bevindt) wordt een kleinere mipmap gebruikt.
+
+De opties voor het filteren van de texturen beïnvloedt de manier waarop mipmaps verlopen.
+
+^7none :^8 Bilineaire filtering - geen verloop - enkel de dichtstbijzijnde mipmap wordt gebruikt
+^71x :^8 Trilineaire filtering - de resulterende weergave is een vermenging tussen de twee dichtstbijzijnde mipmaps
+^72x - 16x :^8 Anisotropische filtering - reduceert het vervagen van texturen getekend op hellende oppervlakken
+
+Anisotropische filtering (AF) ziet er het best uit, maar neemt heel wat rekenwerk in beslag om te tonen. Het is mogelijk dat je framerate afneemt.
+
+Wanneer je AF gebruikt, zal je betere resultaten krijgen met minder negatieve mip bias (schuif de schuifregelaars naar rechts).
+\mip_bias
+Deze opties beïnvloeden het punt waarop overgegaan wordt op een verschillende mipmap van een textuur (mipmaps worden verder uitgelegd in de helptekst voor textuurfilters).
+
+Schuif de schuifregelaar naar links voor een sharpere weergave en om vervagen van texturen te verminderen.
+Schuif de schuifregelaar naar rechts voor een vloeiender weergave.
+
+Wanneer een oppervlak schuin wordt weergegeven (bijvoorbeeld een wegoppervlak in de verte) kan textuurfiltering vervaging veroorzaken.  Voor de verschillende oppervlakken kan je hier de mip bias instellen, afhankelijk van hoe ze meestal worden weergegeven.
+
+^7interface / tekst :^8 standaard mip bias -1.0 (niet schuin weergegeven)
+^7objecten / muren :^8 standaard mip bias -2.0
+^7gras / grind :^8 standaard mip bias -3.0
+^7wegoppervlakken :^8 standaard mip bias -4.0 (vaak zeer schuin weergegeven)
+
+Anisotropische filtering (AF) is een meer geavanceerde methode om het vervagen tegen te gaan van oppervlakken die schuin worden weergegeven.  Als je AF selecteert (textuurfilter 2x - 16x) zal je betere resultaten krijgen met een minder negatieve mip bias (schuif de schuifregelaars naar rechts).
+\comp_full
+De wagen- en helmskins die standaard in LFS zitten,  en de skins van andere racers die automatisch worden gedownload online, worden opgeslagen in het DDS-formaat.  DDS is een gecomprimeerd formaat dat direct door grafische kaarten kan gebruikt worden.  Dit laat toe om sneller te laden en weer te geven, en zorgt voor minder geheugengebruik.  In beide gevallen worden de skins hier automatisch gecomprimeerd.
+
+De skins die je zelf maakt of opslaat in de folder voor skins, echter, zijn opgeslagen in JPG-formaat.  Hoewel JPG ook een gecomprimeerd formaat is, is deze niet geschikt voor rechtstreeks gebruik door grafische kaarten.  Deze optie laat je toe JPG-skins te gebruiken, zonder deze om te zetten in het DDS-formaat, zodat geen detail verloren gaat.  In dit geval wordt bij het laden de JPG-skin gedecomprimeerd.
+
+Ongecomprimeerde skins zorgen voor een hoger gebruik aan geheugen in de grafische kaart, en verminderen de framerate, maar kunnen handig zijn voor het nemen van screenshots.
+
+^7gecomprimeerd :^8 JPG-skins die zich in de folder voor skins bevinden worden in DDS omgezet en worden gecomprimeerd gebruikt
+^7origineel :^8 JPG-skins die zich in de folder voor skins bevinden worden gedecomprimeerd bij het laden en worden als ongecomprimeerde texturen getoond
+\user_name
+Om online te kunnen gaan (en om LFS te unlocken als je een licentie hebt gekocht) moet je een geldige LFS gebruikersnaam invoeren.
+
+Je kan een LFS account aanmaken op ^7www.lfs.net^8 - je hoeft enkel je e-mailadres op te geven en te bevestigen.
+
+LET OP : Wij zullen nooit je e-mailadres weggeven of verkopen. Je adres blijft voor iedereen onzichtbaar, tenzij we door de wet verplicht zijn het aan te geven, bijvoorbeeld in geval van fraude.
+\user_pass
+Nadat je een LFS account hebt aangemaakt op ^7www.lfs.net^8 moet je hier je GAME paswoord invullen.
+
+Dit laat je toe online te gaan en gelicentieerde inhoud beschikbaar te maken als je een licentie hebt gekocht.
+\host_mode
+^3Opties :
+
+^7demo -^8 deze optie limiteert je host tot het gebruik van de demo inhoud van LFS.
+
+^7S1 -^8 als je in S1 mode hebt unlocked, kun je een host met S1 inhoud starten.
+
+^7S2 -^8 als je in S2 mode hebt unlocked, kun je een host met de volledige S2 inhoud starten.
+\shadow_gen
+Deze opties leveren hetzelfde resultaat op een verschillende manier.  Het is best de optie te kiezen die de beste framerate geeft wanneer meerdere schaduwen zichtbaar zijn, bijvoorbeeld een volzette startlijn.
+
+Zoals altijd bij tests voor framerate is het best om LFS te pauzeren.  Zo voorkom je dat fysische berekeningen en geluid de CPU belasten.

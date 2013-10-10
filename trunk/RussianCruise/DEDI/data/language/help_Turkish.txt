@@ -1,0 +1,253 @@
+LFS HELP file (Turkish)
+Translated by: disqk, zippr, ZORER
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\con_wind
+Bu, oyun tam ekran modunda çalýþýyorsa bazý bilgisayarlarda karþýlaþýlabilecek olasý iki durum için gerekebilecek bir önlemdir.
+
+1) Eðer etkin bir güvenlik duvarý varsa online oyuna baðlanmaya çalýþýrken güvenlik duvarý bir uyarý penceresi çýkarabilir.
+
+2) Bazý bilgisayarlar internete eriþmeye çalýþtýðýnýzda bir baðlantý penceresi çýkarabilir.
+
+Bu mesajlar bazý bilgisayarlarda oyun tam ekran modunda çalýþýyorsa kilitlenmelere sebep olabilir. Bu durumu önlemek için bu mesajlar çýktýðý anda oyunun pencere modunda çalýþýyor olmasý gerekir.
+
+Eðer sizin bilgisayarýnýz bu tip mesaj pencereleri çýkarmýyorsa bu seçeneði kapalý tutabilirsiniz.
+\host_pw
+Bazý sunucular þifre gerektirecek þekilde ayarlanýrlar ve bunlar özel sunucu olarak adlandýrýlýrlar.
+
+Eðer bir özel sunucuya baðlanýyorsanýz sunucu þifresini bu kutuya yazmalýsýnýz.
+
+Genel sunuculara girmek için þifre yazmak gerekli deðildir.
+\game_nm
+^7Genel oyun -^8 internette oyununuza bir kimlik vermek için sunucunuzun ismini yazýn.
+
+^7Özel oyun -^8 sunucu ismi, arkadaþlarýnýzýn oyununuzu bulabilmesini saðlar.
+\ip_name
+^3Seçenekler:
+
+^7yerel að -^8 sunucunun IP adresini yazarak yerel að üzerinden oyun oynayabilirsiniz.
+
+^7internet -^8 oyunun ismini yazarak internet üzerindeki bir oyuna katýlabilirsiniz.
+\host_ip
+Yerel að üzerindeki bir sunucuya IP adresini yazarak baðlanabilirsiniz.
+
+IP adresi rakamlardan oluþan, noktalarla ayrýlmýþ 4 bölüm halinde yazýlan bir numara dizisidir. (Ör: 192.168.0.5)
+
+Düðmeye basýn ve baðlanmak istediðiniz bilgisayarýn IP adresini yazýn.
+
+Bilgisayarýn IP adresi aþaðýdaki yöntemlerle bulunabilir:
+
+1) Baþlat'tan (Start) Çalýþtýr'a (Run) basýn. Açýlan pencereye WINIPCFG yazýn.
+2) Baþlat'tan (Start) Çalýþtýr'a (Run) basýn. Açýlan pencereye CMD yazýn, DOS komut istemi (DOS prompt) açýlacaktýr. Buraya IPCONFIG yazýn.
+\host_port
+IP adresi ile sunucuya baðlanýrken sunucunun kullandýðý portu da bilmek gereklidir.
+
+Oyunun varsayýlan port'u olan 63392 kullanýlmýþ olabilir ya da sunucu yöneticisi tarafýndan seçilmis bir numara olabilir.
+
+Port numaralarý 65536'dan büyük olamaz.
+\host_nm
+Ýnternet üzerindeki bir sunucuya, sunucunun ismini yazarak baðlanabilirsiniz.
+
+Oyun ismine göre arama yapmak için "Sunucu ismi" penceresine oyunun ismini yazýn.
+
+Oyun isimleri, oyuna katýlacaðýnýz sunucunun IP adresini bilmediðiniz durumlarda kolaylýk saðlayacaktýr.
+\game_pw
+^7Özel oyun -^8 kutuya bir þifre yazýn.
+
+^7Genel oyun -^8 kutuyu boþ býrakýn.
+\use_master
+Ana sunucu, internetteki bir bilgisayar üzerinde çalýþan özel bir programdýr. O an oynanan oyunlarýn listesini tutar, sizin oyunlara girmenize ve oyun açmanýza izin verir.
+
+^3Seçenekler:
+
+^7yerel^8 - sunucunuz ana sunucuya baðlanmayacaktýr. Sunucuya girecek olan konuklar "Bir oyuna gir" düðmesine basýp "yerel að" kýsmýndan sunucunun IP adresini yazarak baðlanabilirler.
+
+^7internet^8 - sunucunuz ana sunucuya baðlanacak ve oyun listesinde görünecektir.
+
+^7gizli^8 - sunucunuz ana sunucuya baðlanacak ama oyun listesinde görünmeyecektir. Diðer konuklar "Bir oyuna gir" kýsmýndan "internet" seçeneðini seçip sunucunuzun ismini yazarak sunucunuza baðlanabilirler.
+
+^3Not:^8 Bilgisayarýnýz internete direk baðlý deðilse (güvenlik duvarý olan bir þirket aðý ya da baðlantý paylaþýmý gibi) "internet" ve "gizli" seçeneklerini kullanabilmek için sunucunun kullanacaðý TCP ve UDP port'larýný kullanýma açmalýsýnýz.
+\game_ip
+Gerekliyse sunucunuzun kullanacaðý IP adresini kendiniz belirleyebilirsiniz. Bilgisayar birden çok IP adresine sahipse yararlý olabilir.
+
+Bu kutuyu boþ býrakýrsanýz sunucu, mevcut IP adreslerinden birini kullanacaktýr.
+\admin_pass
+Yöneticiler için özel bir þifre belirleyebilirsiniz.
+
+Eðer bir konuk bu þifreyi kullanarak baðlanýrsa sunucu komutlarýyla sunucuyu uzaktan kontrol edebilir. Daha detaylý bilgi için README.TXT dosyasýndaki "Host commands" bölümüne bakýn.
+\game_port
+Sunucunun kullanacaðý TCP ve UDP port'unu seçebilirsiniz. Bu, bir bilgisayarda birden çok LFS sunucusu açabilmenizi saðlar.
+
+Port numarasýný varsayýlan olan 63392 yapabilirsiniz ya da 65536'dan küçük bir sayý yapabilirsiniz. Belirlediðiniz port'un baþka bir program tarafýndan kullanýlmamasý gerekir.
+\master_help
+Program ana sunucuya baðlanmayý baþaramadý.
+
+Bu durum çesitli sebeplerden kaynaklanýyor olabilir:
+
+1) Eðer sunucuyu bir güvenlik duvarý arkasýndan çalýþtýrýyorsanýz güvenlik duvarý baðlantýnýzý engellemiþ olabilir.
+2) Ýnternet servis saðlayýcýnýzýn geçici olarak ana sunucuya baðlanmasý mümkün olmuyor olabilir.
+3) Ana sunucu teknik bir problemden dolayý o an çalýþmýyor olabilir.
+
+Lütfen ana sunucunun durumunu ve IP adresini buradan kontrol edin:
+
+^7www.lfs.net^8 ya da ^7www.lfsforum.net^8
+\modem_type
+Sunucunun kaç kiþiyi destekleyebileceði, gönderme hýzýnýza göre deðiþir.
+
+Lütfen uygun baðlantý tipini seçin veya internet baðlantýsý türünü "kendin belirle" seçerek baðlantýnýzýn desteklediði gönderme hýzýný yazýn.
+
+^7Önceden tanýmlý baðlantý tipleri:^8
+
+- 56k modem: 56 Kbit indirme / 33.6 Kbit gönderme
+- kablo modem: 512 Kbit indirme / 128 Kbit gönderme
+- kablo modem: 1 Mbit indirme / 256 Kbit gönderme
+\upload_bw
+Baðlantý tipiniz seçenekler arasýnda yoksa baðlantýnýzýn gönderme hýzýný kendiniz belirleyebilirsiniz (Kbit/sn). Eðer baðlantý hýzýnýzý KByte/sn cinsinden biliyorsanýz bunu 8 ile çarparak Kbit/sn'ye çevirebilirsiniz.
+
+Bu ayarlama, size sunucunuzun kaç kiþiyi destekleyeceði konusunda yardýmcý olmak için yapýlmalýdýr.
+\max_guests
+Sunucunuza kaç bilgisayarýn baðlanabileceðini belirlemenizi saðlar.
+
+^7En az:^8 1 - sunucuya sadece bir konuk baðlanabilir.
+^7En çok:^8 DEMO'da 15, S1 ve S2'de 47 konuk
+
+Bu sayý gönderme bant geniþliði belirlemede oldukça gereklidir.
+\max_cars
+Kaç arabanýn yarýþacaðýný belirlemenizi saðlar.
+
+Bu sayý gerçek yarýþçýlarý ve AI yarýþçýlarýný kapsar.
+
+^7En az:^8 1 - yarýþta sadece bir arabaya izin verilir.
+^7En çok:^8 DEMO'da 12, S1 ve S2'de 32
+
+Gönderme bant geniþliði, bu sayýyý belirlemede oldukça gereklidir.
+\guest_cars
+Her konuðun oyuna kaç araba ekleyebileceðini (kendi arabasý ve AI arabalarý) belirlemenizi saðlar.
+
+^7En az:^8 - konuklar sadece yarýþý izleyebilir, oyuna katýlamaz.
+^7En çok:^8 3 - konuklar 3 AI yarýþçýsýna kadar ekleyebilir ya da kendisi + 2 AI yarýþçýsý ekleyebilir.
+\host_cars
+Sunucunun yarýþa kaç araba ekleyebileceðini (kendi arabasý ve AI arabalarý) belirlemenizi saglar.
+
+^7En az:^8 0 - sunucu sadece yarýþý izleyebilir, yarýþa katýlamaz.
+^7En çok:^8 3 - sunucu 3 AI yarýþçýsýna kadar ekleyebilir ya da kendisi + 2 AI yarýþçýsý ekleyebilir.
+
+Bu sayýyý azaltmak gönderme gereksinimini azaltmayý saðlayabilir.
+\max_packs
+Bu, saniyede her arabaya gönderilecek olan en fazla paket sayýsýný belirler.
+
+^7En az:^8 3 paket/saniye.
+^7En çok:^8 6 paket/saniye.
+
+Bu sayýyý arttýrmak daha akýcý bir oyun saðlar fakat gönderme bant geniþliðini ve iþlemci gereksinimlerini arttýrýr.
+\ded_host
+Sunucuyu normal olarak ya da adanmýþ (dedicated) olarak baþlatabilirsiniz.
+
+^7normal sunucu:^8 Tek kiþilik oyundaki gibi yarýþabilirsiniz ve diðer konuklar sizin sunucunuza baðlanabilir.
+
+^7adanmýþ sunucu:^8 Grafikler gösterilmez ve fizik hesaplarý yapýlmaz. Bu seçenekle sunucudan yarýþ yapamazsýnýz. Bu, sunucuya baþka bir bilgisayardan baðlanmak istiyorsanýz veya sadece halka açýk bir sunucu açmak istiyorsanýz en iyi seçenektir. Adanmýþ sunucunun sistem ihtiyaçlarý, normal sunucunun gerektirdiðinden çok daha azdýr.
+\agreement
+^3Live for Speed'e Hoþgeldiniz!^8
+
+Bu yazýlýmý kullanabilmek için aþaðýdakileri kabul etmeniz gerekmektedir.
+
+- Live for Speed geliþim sürecindedir. Çeþitli özellikler eklenebilir, deðiþtirilebilir veya çýkarýlabilir. Çeþitliliði ve içeriði arttýrmak için, üzerinde çalýþýlmakta olan bazý özellikler henüz son þeklini almamýþ haldeyken eklenebilir.
+
+- Bu yazýlým hiçbir konu hakkýnda garanti vermemektedir.
+
+- Bu yazýlýmý kurmak ve kullanmak tamamen sizin sorumluluðunuzdadýr. Live for Speed'in yapýmcýlarý bu yazýlýmýn kullanýmý sýrasýnda meydana gelen hiçbir kiþisel yaralanmadan ya da sisteminize gelebilecek hiçbir zarardan sorumluluk kabul etmez.
+
+- Bu yazýlýmýn TANITIM (demo) içeriði herkesin kullanýmý için ücretsiz daðýtýlýr. Kilitlenmiþ içerik sadece lisanslý kullanýcýlar içindir. Kilitlenmiþ içeriðe, lisans satýn almak dýþýnda herhangi bir yolla eriþim kazanmak ya da baþkalarýna kilitlenmiþ içeriðe eriþim konusunda yardým etmek giriþimlerinde bulunmamalýsýnýz.
+
+^7Teþekkürler.^8
+\admin_slots
+Sunucunuzda yöneticiler için özel yer ayýrabilirsiniz.
+
+^7En az:^8 0 - yöneticiler için özel yer ayrýlmayabilir.
+
+^7En fazla:^8 8
+
+Sunucunuz dolu olsa bile kendi sunucunuza baðlanabilmek için bu seçeneði kullanabilirsiniz. Bu özellikten yararlanabilmek için sunucu ayarlarýnýzda yönetici þifresi belirtmelisiniz.
+\skin_info
+LFS'nin yüksek çözünürlüklü kaplamalarý otomatik olarak indirmesini istiyorsanýz yeterince LFS World kredisine sahip olmanýz gerekmektedir.
+
+LFS World kredisi LFS hesabýnýzdaki bakiyeyi ifade eder.
+
+Bu servisten yararlanabilmek için ^7www.lfs.net^8 veya ^7www.lfsworld.net^8 sitelerinden ödeme yapabilirsiniz.
+
+Her ^3 £1 ^8 için ^3 2000 ^8 kaplama indirme hakkýnýz vardýr. En az £3 ödeme yapabilirsiniz.
+
+^7Nasýl çalýþýyor:^8
+
+En az £1 LFS World kredisine ihtiyacýnýz vardýr. Ýlk yüksek çözünürlüklü kaplama indiriþinizde hesabýnýzdan £1 alýnýr ve 2000 kaplama indirme hakký edinirsiniz. 2000 kaplama indirdikten sonra £1 daha alýnýr ve tekrar 2000 kaplama indirme hakký edinirsiniz.
+
+^7Dikkat:^8
+
+Yüksek çözünürlüklü kaplamalarý indirmek, normal kaplamalara göre daha uzun sürer. Bir yarýþçý pitten ayrýldýðýnda kaplamayý yüklemek daha uzun zaman alýr ve hafýzada normal bir kaplamanýn 4 katý kadar yer kaplar. Bu özellik sadece iyi ekran kartýnýz ve iyi internet baðlantýnýz varsa önerilir.
+\skin_help
+^7Kaplama^8, bir otomobilin veya kaskýn üstüne yerleþtirilen bir resimdir.
+
+LFS, kaplamalarýn otomatik olarak indirebilmesi için bir sistem içermektedir. Diðer yarýþçýlarýn kaplamalarý sizin bilgisayarýnýza otomatik olarak indirilir ve herhangi bir çaba sarfetmeniz gerekmeden diðer oyuncularýn kendilerine özgü kaplamalarýný ekranýnýzda görebilirsiniz.
+
+Siz de kendi kaplamanýzý yapmak isterseniz ^7www.lfs.net^8 adresini ziyaret edip ^7Additional Downloads^8 bölümünden ^7CMX Viewer^8 programýný indirmenizi tavsiye ederiz.
+
+Kaplamanýzý ^7data^8 klasörünün içindeki ^7skins^8 klasörüne kaydettikten sonra garaj ekranýndan seçebilirsiniz.
+
+Kendi kaplamalarýnýzý diðer yarýþçýlarýn da görmesini istiyorsanýz ^7www.lfsworld.net^8 adresini ziyaret edip kaplamalarýnýzý gönderin. Kullandýðýnýz kaplama, sizi gören diðer yarýþçýlarýn bilgisayarlarýna otomatik olarak indirilecektir.
+\tex_filter
+Kaplamalar, ekrandaki çizim boyutlarýna baðýmlý olarak farklý detay seviyelerinde çizilirler. Kaplamalarýn bu detay seviyelerine mipmap denir. Örneðin bir cisim uzaktaysa, yani üzerindeki kaplamalar ekranda küçük bir alanda çizilecekse küçük bir mipmap kullanýlýr.
+
+Kaplama süzgeci ayarý, farklý detay seviyelerinin harmanlanma biçimini belirler.
+
+^7yok :^8 Bilinear süzgeç - harmanlama yapýlmadan sadece en yakýn mipmap kullanýlýr
+^71x :^8 Trilinear süzgeç - en yakýn iki mipmap harmanlanarak kullanýlýr
+^72x - 16x :^8 Anisotropic süzgeç - eðimli yüzeylerdeki bulanýklýlýðý giderir
+
+Anisotropic süzgeç (AF) en iyi görünümü sunar ama diðerlerine göre daha aðýr hesaplamalar ister. Eðer AF kullanýyorsanýz mip eðilimini artý yöne çekerek daha kaliteli sonuçlar elde edebilirsiniz.
+\host_mode
+^3Seçenekler :
+
+^7demo -^8 bu seçenek sunucunuzu demo içeriðiyle sýnýrlar.
+
+^7S1 -^8 S1 kilidini açtýktan sonra bu seçenek S1 içerikli sunucu açmanýzý saðlar.
+
+^7S2 -^8 S2 kilidini açtýktan sonra bu seçenek S2 içerikli sunucu açmanýzý saðlar.
+\user_name
+Að üzerinden yarýþabilmek veya lisanslý LFS içeriðine eriþebilmek için geçerli bir kullanýcý adý girmelisiniz.
+
+^7www.lfs.net^8 adresinden bir kullanýcý hesabý oluþturabilirsýnýz. Bunun için sadece e-posta adresiniz yeterlidir.
+
+NOT: E-posta adresinizin hukuki gereklilikler dýþýnda kimseye verilmesi söz konusu deðildir.
+\user_pass
+^7www.lfs.net^8 adresinden kullanýcý hesabýnýzý oluþturduktan sonra OYUN þifrenizi buraya girmelisiniz.
+
+Böylece að üzerinden yarýþabilir ve lisanslý LFS içeriðine eriþebilirsiniz (lisans edinmeyi gerektirir).
+\comp_full
+LFS içindeki araç ,kask veya online olduðunuzda otomatik olarak indirilen diðer yarýþçýlarýn kaplamalarý, bilgisayarýnýza DDS formatýnda kaydedilmektedir.  DDS, grafik kartlarý tarafýndan direk kullanýlabilen, hýzlý yüklenebilen ve daha az hafýza kullanan özel bir sýkýþtýrýlmýþ resim formatýdýr. Bahsi geçen bütün kaplamalar sürekli sýkýþtýrýlmýþ olarak kullanýlmaktadýr.
+
+Fakat, kendi yaptýðýnýz veya internetten indirip "skins" klasörüne kaydettiðiniz kaplamalar JPG formatýndadýr. JPG, iyi bir sýkýþtýrma formatý olsa da hýzlý kodlanmak için tasarlanmamýþtýr ve grafik kartlarý tarafýndan direk kullanýlamaz. Bu opsiyon size JPG kaplamalarýnýzý DDS'e çevirmeden kullanma imkaný tanýr. Böylece kaplamadaki detaylar kaybolmaz. Bu opsiyonda JPG kaplama, hafýzada sýkýþtýrýlmamýþ olarak tutulur.
+
+Sýkýþtýrýlmamýþ kaplamalar daha fazla grafik kartý hafýzasý kullanýr ve kare/saniye performansýný düþürür. Yinede ekran görüntüsü almak için kullanýþlý olabilir.
+
+^7sýkýþtýrýlmýþ :^8 "skins" klasöründeki JPG kaplamalar DDS'e çevirilir ve sýkýþtýrýlmýþ olarak kullanýlýr
+^7sýkýþtýrýlmamýþ :^8 "skins" klasöründeki JPG kaplamalar, sýkýþtýrýlmamýþ olarak kullanýlýr.
+\mip_bias
+Bu seçenekler kaplamalarýn mipmap ayarlarýný deðiþtirir.(mipmap, yardým tekstinde kaplama filtreleme kýsmýnda anlatýlmýþtýr).
+
+Kayan düðmeyi sola çektikçe kaplamalar keskinleþir.
+Kayan düðmeyi saða çektikçe kaplamalar daha bulanýk olur ve kýrýlma azalýr.
+
+Bir yüzey çok düþük açýlarda çizilirken (örnek: uzaktaki yol yüzeyi) kaplamada çok fazla bulanýklaþma olur. Bu yüzden farklý yüzeyler için farklý ayarlar sunulmuþtur.
+
+^7arayüz / yazý :^8 default mip bias -1.0 (düþük açýlarda görünmez)
+^7obje / duvarlar :^8 default mip bias -2.0
+^7çimen / çakýl :^8 default mip bias -3.0
+^7pist yüzeyi :^8 default mip bias -4.0 (çoðunlukla düþük açýlarda görünür)
+
+Anizotropik Filtreleme (AF) düþük açýlardaki  bulanýklaþmayý engellemek için kullanýlan daha geliþmiþ bir filtredir.  Eðer AF seçerseniz (kaplama filtreleme 2x - 16x) saða daha yakýn kayan düðmelerle daha iyi görüntü alýrsýnýz (kayan düðmeleri saða götürerek).
+\shadow_gen
+Bu ayarlar farklý yollardan ayný sonucu üretirler. Sizin için en performanslý yöntemi seçiniz. Hangi yöntemin daha performanslý olduðunu, çok otomobilin yer aldýðý bir baþlangýç düzeninde SKS (saniyedeki kare sayýsý) göstergesi yardýmýyla görebilirsiniz.
+
+Saðlýklý bir grafik performansý denemesi yapabilmek için LFS'yi durdurarak fizik ve ses hesaplamalarýný devre dýþý býrakabilirsiniz.

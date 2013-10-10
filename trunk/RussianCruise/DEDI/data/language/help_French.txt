@@ -1,0 +1,256 @@
+LFS HELP file (French)
+Translated by: Eold, HamerFowl, Oliv76000, sicotange, Tungsten
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\con_wind
+Ceci est une précaution pour deux situations possibles qui peuvent survenir sur certains ordinateurs lorsque vous jouez en plein écran.
+
+1) Si vous utilisez un pare-feu personnel, une fenêtre d'alerte peut apparaître lorsque vous essayez de démarrer ou rejoindre une partie en ligne.
+
+2) Une boîte de dialogue de connexion peut apparaître sur certains ordinateurs lorsque vous essayez d'accéder à internet.
+
+Ces messages peuvent bloquer l'ordinateur si le jeu tourne en plein écran, cette option permet donc d'afficher temporairement le jeu en mode fenêtré lors des connexions.
+
+Si votre ordinateur n'affiche aucun message lorsque vous vous connectez alors vous pouvez désactiver cette option en toute sécurité.
+\host_pw
+Certains serveurs sont configurés pour demander un mot de passe et sont connus comme étant des serveurs privés.
+
+Si vous vous connectez à un serveur privé, vous devez entrer le mot de passe dans cette boîte.
+
+Les serveurs publics ne nécessitent pas de mot de passe.
+\game_nm
+^7Jeu public -^8 entrez un nom dans cette boîte pour donner à votre partie une identité sur internet.
+
+^7Jeu privé -^8 le nom permet à vos amis de trouver votre partie.
+\ip_name
+^3Options :
+
+^7réseau local -^8 vous pouvez rejoindre une partie locale en entrant l'adresse IP de l'hôte.
+
+^7internet -^8 vous pouvez rejoindre une partie sur internet en tapant le nom de celle-ci.
+\host_ip
+Vous pouvez rejoindre une partie hébergée sur un ordinateur du réseau local.
+
+L'adresse IP est un numéro unique attribué à chaque ordinateur et est composé de 4 nombres séparés par des points.
+
+Cliquez sur le bouton et entrez l'adresse IP du l'ordinateur que vous voulez rejoindre.
+
+Il existe deux façons de connaître l'adresse IP d'un ordinateur :
+
+1) Exécuter WINIPCFG du menu démarrer.
+2) Exécuter IPCONFIG dans une invite de commandes DOS.
+\host_port
+Lorsque vous vous connectez directement avec l'adresse IP, vous devez connaître l'adresse IP et le port sur lequel le serveur écoute.
+
+Il peut utiliser le numéro de port par défaut (63392) ou un autre numéro choisi par la personne qui héberge le serveur.
+
+Cela peut être soit la valeur par défaut ou un nombre élevé inférieur à 65536.
+\host_nm
+Vous pouvez rejoindre une partie hébergée sur un ordinateur particulier sur internet.
+
+Pour rechercher une partie par son nom au lieu de son adresse IP, entrez son nom dans la boîte.
+
+Le nom des parties vous permet d'arranger des rencontres entre amis même si vous ne connaissez pas leur adresse IP.
+\game_pw
+^7Jeu privé -^8 entrez un mot de passe dans la boîte.
+
+^7Jeu public -^8 laissez la boîte vide.
+\use_master
+Le serveur maître est un programme spécial tournant sur un serveur sur internet. Il maintient une liste des parties en cours et vous permet de démarrer ou rejoindre des parties en ligne.
+
+^3Options :
+
+^7Local^8 - votre serveur ne se connectera pas au serveur maître. Les autres joueurs pourront vous rejoindre en cliquant sur "rejoindre partie", puis en sélectionnant l'option "réseau local" et en entrant l'adresse IP de votre ordinateur.
+
+^7Internet^8 - votre serveur se connectera au serveur maître et apparaîtra dans la liste des parties.
+
+^7Caché^8 - votre serveur se connectera au serveur maître mais n'apparaîtra pas dans la liste des parties. Les autres joueurs pourront vous rejoindre en cliquant sur "rejoindre partie", puis en sélectionnant l'option "Internet" et en entrant le nom de votre partie.
+
+^3Note :^8 Si votre ordinateur est relié à Internet via réseau local, pour utiliser les options "Internet" et "caché", vous aurez peut être besoin d'ouvrir les ports TCP et UDP appropriés.
+\game_ip
+Si besoin, vous pouvez spécifier l'adresse IP à utiliser pour votre serveur. C'est utile quand un PC a plusieurs adresses IP utilisables.
+
+Si vous ne la spécifiez pas, alors votre serveur utilisera une adresse IP au hasard.
+\admin_pass
+Vous pouvez indiquer un mot de passe spécifique aux administrateurs.
+
+Si un joueur rejoint votre serveur en utilisant ce mot de passe alors il pourra l'administrer en utilisant des commandes textes spéciales. Veuillez vous référer au paragraphe "Host commands" du fichier README.txt pour plus d'information.
+\game_port
+Vous pouvez sélectionner quel port TCP et UDP vous souhaitez utiliser. Ceci peut permettre d'héberger plus d'un serveur dédié sur un même ordinateur.
+
+Choisissez la valeur par défaut (63392) ou bien un nombre élevé inférieur à 65536.
+\master_help
+Le programme n'a pas été en mesure de se connecter au serveur maître.
+
+Ceci peut venir de différentes raisons:
+
+1) Si vous êtes derrière un pare-feu, il se peut que votre connexion ait été bloquée.
+2) Il se peut qu'il vous soit temporairement impossible de vous connecter au serveur maître à partir de votre fournisseur d'accès internet.
+3) Le serveur maître peut ne pas être en train de tourner à cause de problèmes techniques.
+
+Veuillez vérifier l'état du serveur maître ici :
+
+^7www.lfs.net^8 ou ^7www.lfsforum.net^8
+\modem_type
+La capacité de votre ordinateur à héberger une partie avec plusieurs joueurs dépend de votre bande passante en envoi. Ceci dépend donc de votre type de connexion et de sa vitesse.
+
+Veuillez sélectionner le type de votre modem ou choisissez un modem "personnalisé" et entrez manuellement la bande passante en envoi en kilobits (le Kbits est l'unité de mesure généralement utilisée pour la vitesse des communications digitales).
+
+^7Types de modems prédéfinis :^8
+
+- modem RTC : 56 Kbits en réception / 33.6 Kbits en envoi
+- câble modem : 512 Kbits en réception / 128 Kbits en envoi
+- câble modem : 1 Mbits en réception / 256 Kbits en envoi
+\upload_bw
+Si votre modem n'est pas dans la liste, veuillez entrer manuellement votre bande passante en envoi en kilobits par seconde (Kbits/s). Si vous ne la connaissez pas en Kbits/s mais vous la connaissez en Ko/s, multipliez ce nombre par 8 pour le convertir en Kbits.
+
+Cette valeur vous permet de choisir votre configuration d'hébergement pour que votre bande passante ne soit pas saturée.
+\max_guests
+Vous pouvez spécifier le nombre d'ordinateurs qui pourront se connecter à votre serveur.
+
+^7Minimum :^8 1 - seulement un joueur pourra rejoindre votre serveur.
+^7Maximum :^8 15 en mode DEMO, 47 en S1 et S2.
+
+Ce nombre est très important dans la détermination des besoins de votre bande passante en envoi.
+\max_cars
+Vous pouvez spécifier le nombre de voitures qui pourront participer à une course.
+
+Ceci inclut les pilotes réels et ordinateurs.
+
+^7Minimum :^8 1 - seulement une voiture sera autorisée dans une course.
+^7Maximum :^8 12
+
+Ce nombre est très important dans la détermination des besoins de votre bande passante en envoi.
+\guest_cars
+Vous pouvez spécifier le nombre de voitures que chaque joueur peut ajouter dans une partie.
+
+Ceci inclut les pilotes réels et ordinateurs.
+
+^7Minimum :^8 0 - les joueurs peuvent regarder mais ne peuvent pas rejoindre la course.
+^7Maximum :^8 3 - jusqu'à 3 ordinateurs ou 1 pilote réel et 2 ordinateurs par joueur.
+\host_cars
+Vous pouvez spécifier le nombre de voitures que l'hôte peut ajouter à une course.
+
+Ceci inclut les pilotes réels et ordinateurs.
+
+^7Minimum :^8 0 - l'hôte peut regarder mais ne peut pas rejoindre la course.
+^7Maximum :^8 3 - jusqu'à 3 ordinateurs ou 1 pilote réel et 2 ordinateurs.
+
+Vous pouvez diminuer ce nombre pour réduire vos besoins en bande passante.
+\max_packs
+Il s'agit du nombre maximum de paquets envoyés par seconde par chaque voiture.
+
+^7Minimum :^8 3 paquets par seconde.
+^7Maximum :^8 6 - plus fluide / requiert le double de bande passante en envoi / augmente l'utilisation du processeur.
+\ded_host
+Vous pouvez démarrer une partie en tant que serveur normal ou serveur dédié.
+
+^7serveur normal :^8 Vous pouvez jouer comme dans une partie solo et les autres joueurs peuvent rejoindre votre partie.
+
+^7serveur dédié :^8 Le serveur tourne mais n'affiche rien et aucune physique n'est calculée. Il s'agit de la meilleur option si vous ne souhaitez pas jouer sur la machine mais vous connecter à partir d'un autre ordinateur. Vous pouvez utiliser un ordinateur bien moins puissant pour faire tourner un serveur dédié.
+\agreement
+^3Bienvenue sur Live for Speed!^8
+
+Afin d'utiliser ce logiciel, vous devez accepter le règlement suivant :
+
+- Live for Speed étant développement continuel, des caractéristiques peuvent être ajoutées, mises à jour ou supprimées à tout moment. Certaines de ses fonctionnalités encore incomplètes, peuvent être incluses afin d'améliorer la variété et le contenu du simulateur.
+
+- Ce logiciel n'a aucune sorte de garantie.
+
+- Vous installez et utilisez ce logiciel à vos risques et périls. Les développeurs de Live for Speed n'ont aucune responsabilité vis à vis des blessures personnelles ou des dégâts occasionnés à votre système informatique lors de l'utilisation du logiciel.
+
+- Le contenu de la DEMO de ce logiciel est gratuit d'utilisation pour tous. Le contenu verrouillé de la S1 et de la S2 est réservé aux licenciés S1 et S2 uniquement. Il vous est interdit de tenter d'accéder à ce contenu verrouillé, ou d'aider quelqu'un à le faire, autrement que par l'achat d'une licence sur ^3www.lfs.net^8 et par l'utilisation de l'écran de déblocage du jeu.
+
+^7Merci.^8
+\admin_slots
+Vous pouvez réserver certaines connexions pour les administrateurs.
+
+^7Minimum :^8 0 - aucune connexion n'est réservée pour les admins.
+^7Maximum :^8 8 - ou un de moins que le nombre maximum de joueurs.
+
+Cette option vous permet d'être sûr de toujours pouvoir rejoindre votre propre serveur si vous spécifiez un mot de passe administrateur.
+\skin_info
+Afin de permettre à LFS de télécharger des skins hautes résolutions automatiquement, vous devez posséder des crédits LFS World.
+
+Posséder des crédits LFS World signifie avoir un solde positif sur votre compte LFS.
+
+Pour utiliser ce service, vous pouvez faire un paiement sur ^7www.lfs.net^8, ^7www.lfsworld.net^8 ou utiliser un bon.
+
+Pour chaque^3 £1 ^8de crédit, vous obtiendrez^3 2000 ^8téléchargements de skins. Le paiement minimum est de £3.
+
+^7Comment ça marche :^8
+
+Vous avez besoin d'au moins £1 de crédits LFS World. Lorsque vous téléchargez un skin en haute résolution pour la première fois, £1 sera déduit de votre solde et 2000 téléchargements de skins vous seront alloués. Une fois les 2000 skins téléchargés, £1 sera déduit et 2000 téléchargements de skins vous seront à nouveau alloués.
+
+^7Attention :^8
+
+Les skins en haute résolution prennent plus de temps à télécharger, plus longtemps à charger quand un joueur quitte les stands et utilise quatre fois plus de mémoire graphique. Cette option est recommandée seulement si vous possédez un bon ordinateur, une bonne carte graphique et une connexion internet rapide.
+\skin_help
+Un ^7skin^8 est un fichier image spécial permettant de changer la couleur d'une voiture ou d'un casque.
+
+LFS possède un système de téléchargement de skin automatisé. Lorsque vous courrez en ligne, les skins des autres pilotes sont automatiquement téléchargés sur votre ordinateur afin que vous puissiez voir leurs voitures et les casques peints individuellement.
+
+Si vous souhaitez réaliser vos propres skins, nous vous recommandons de visiter le site ^7www.lfs.net^8 et de télécharger ^7CMX Viewer^8 à partir de la section "Additional Downloads".  CMX Viewer est un programme spécial qui vous aidera à créer vos skins. Des modèles sont inclus.
+
+Après avoir enregistré un skin dans votre dossier ^7skins^8 (dans le dossier ^7data^8), vous pourrez le sélectionner dans le garage.
+
+Afin que les autres pilotes puissent voir vos skins lorsque vous jouez en ligne, allez sur ^7www.lfsworld.net^8 et téléchargez vos skins. Le skin de votre voiture sera alors automatiquement téléchargé par les autres pilotes quand ils vous verront en ligne.
+\tex_filter
+Les textures sont affichées à différents niveaux de détails, dépendant directement de leur taille lors de l'affichage à l'écran. Ces niveaux de détails sont appelés "mipmaps". Si une texture est affichée plus petite, un plus petit mipmap sera utilisé (ex: quand un objet est lointain)
+
+L'option de filtrage de texture affecte la façon dont les mipmaps sont mélangés.
+
+^7aucun :^8 Filtrage Bilinéaire - aucun mélange - Seulement le mipmap le plus proche est utilisé
+^71x :^8 Filtrage Trilinéaire - Résultat du mélange de deux mipmaps "le plus proche"
+^72x - 16x :^8 Filtrage Anisotropique - Réduit le flou des surfaces dessinées à des angles obliques.
+
+Le filtrage anisotropique (AF) donne de meilleurs résultats mais est très gourmand en ressources système. Ainsi la fluidité de l'affichage (FPS) risque de s'en ressentir.
+Si vous utilisez l'AF vous obtiendrez de meilleurs résultats avec un "mip bias" plus proche de 0.00 (curseur vers la droite).
+\mip_bias
+Ces options affectent les transitions entre les différents mipmaps de textures (pour en savoir plus sur les mipmaps, reportez vous à l'aide sur le filtrage des textures)
+
+Déplacez le curseur vers la gauche pour une apparence plus nette et ainsi diminuer le flou des textures.
+Déplacez le curseur vers la droite pour une apparence plus douce et ainsi réduire les effets de moirage.
+
+Lorsqu'une surface est affichée dans une angle oblique (ex: la route à l'horizon), le filtrage des textures tend à rendre celles-ci trop floues. C'est pourquoi nous fournissons des réglages adaptés à chaque types de surfaces affectant la manière dont les textures sont affichées.
+
+^7interface / texte :^8 mip bias par défaut -1.0 (invisible dans les angles obliques)
+^7objets / murs :^8 mip bias par défaut -2.0
+^7herbe / gravier :^8 mip bias par défaut -3.0
+^7revêtements des pistes :^8 mip bias par défaut -4.0 (visible dans les angles très obliques)
+
+Le filtrage anisotropique (AF) donne de meilleurs résultats mais est très gourmand en ressources système. Ainsi la fluidité de l'affichage (FPS) risque de s'en ressentir.
+Si vous utilisez l'AF vous obtiendrez de meilleurs résultats avec un "mip bias" plus proche de 0.00 (curseur vers la droite).
+\comp_full
+Les skins des voitures et des casques fournis avec LFS, ainsi que les skins des autres pilotes automatiquement téléchargés lorsque vous êtes connectés, sont sauvegardés au format DDS. Le DDS est un format spécial de compression directement utilisable par les cartes graphiques. Ceci permet des chargements et des rendus plus rapides tout en utilisant moins de mémoire vidéo.
+
+Cependant, les skins que vous créez ou que vous téléchargez manuellement sont au format JPG. Bien que le JPG soit aussi un format compressé, celui-ci n'est pas directement utilisable par les cartes graphiques. Cette Option permet d'utiliser les skins au format JPG sans conversion au format DDS et donc sans pertes supplémentaires. Dans ce cas le skin en JPG en décompressé au chargement dans la carte vidéo.
+
+Les skins non compressés utilisent plus de mémoire et diminue la fluidité de l'affichage. Par contre ceci peut être utile si vous voulez prendre des captures d'écran.
+
+^7compressé :^8 Les skins en JPG présents dans le dossier "data\skins" sont converties au format DDS et utilisés comme tel.
+^7non-compressé :^8 Les skins en JPG présents dans le dossier "data\skins" sont décompressés au chargement et utilisés dans ce format.
+\user_name
+Pour pouvoir jouer en ligne (ou déverrouiller le contenu du jeu sous licence) vous devez entrer un nom d'utilisateur valide.
+
+Vous pouvez créer un compte utilisateur sur ^7www.lfs.net^8 - Une adresse email valide est alors nécessaire.
+
+Note : Nous ne communiquerons jamais vos données personnelles à quiconque, sauf si la loi nous y obligeait dans le cadre d'une enquête. Par exemple en cas de fraude.
+\user_pass
+Après avoir créé votre compte utilisateur sur ^7www.lfs.net^8, vous devez saisir votre mot de passe JEU ici.
+
+Ceci vous donnera l'accès au jeu en ligne (ou déverrouillera le contenu sous licence).
+\host_mode
+^3Options :
+
+^7demo -^8 cette option restreint votre serveur à la partie démo de LFS
+
+^7S1 -^8 après avoir déverrouiller le mode S1 cette option vous permet de créer un serveur gérant le contenu de la S1
+
+^7S2 -^8 après avoir déverrouiller le mode S2 cette option vous permet de créer un serveur gérant le contenu de la S2
+\shadow_gen
+Ces options produisent le même résultat de différentes manières. Il est préférable de choisir l'option qui génère la plus grande fluidité d'affichage lorsque beaucoup d'ombres sont visibles. Par exemple une grille de départ pleine.
+
+En général pour des tests de fluidité d'affichage (fps), il convient de mettre LFS en pause afin d'éviter au processeur les calculs physiques et sonores.

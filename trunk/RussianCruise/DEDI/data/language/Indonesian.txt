@@ -1,0 +1,1719 @@
+LFS Translation file (Indonesian)
+Translated by: akubosaan
+
+tx_codepage 1252
+tx_langname Bahasa Indonesia
+tx_noun_adj na
+3g_tr_selct Pelatihan
+3g_tr_title Pilih Pelajaran
+3a_spselect Single player
+3a_tit_sply Single Player
+3a_mpselect Multiplayer
+3a_tit_mply Multiplayer
+3a_hlselect Hot lap
+3a_tit_hotl Hot Lap
+3a_opselect Opsi
+3g_repl_sel Replay
+3a_tit_sprs Replay Single Player
+3a_tit_mprs Replay Multiplayer
+3g_unlk_lfs Aktifkan Live for Speed
+3g_demorace Lisensi Demo
+3h_x_licens Lisensi %s
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Download Skin Replay
+3g_one_notf Salah satu skin di replay belum ditemukan pada komputer Anda
+3g_sev_notf Beberapa skin di replay belum ditemukan pada komputer Anda
+3g_one_down Apakah Anda ingin men-download skin yang hilang?
+3g_sev_down Apakah Anda ingin men-download skin yang hilang?
+3a_exit_btn keluar
+3a_next_btn berikutnya
+3g_agre_btn setuju
+3a_exitprog Keluar LFS?
+3a_userfind Masukkan nama pengguna untuk dicari
+3h_num_tips %d Tips
+3h_tip_pesc Tekan ^7ESC^8 pada layar setup atau in-game untuk menampilkan daftar opsi
+3h_tip_prst Tekan ^7T^8 untuk mengetik pesan pada host multiplayer
+3h_tip_ffwr Penggunaan roda kemudi dengan force feedback (umpan balik gaya) sangat dianjurkan
+3h_tip_rtcg Angkat pedal gas saat mengganti gigi untuk menghindari panas berlebih pada kopling
+3h_tip_brak Gunakan rem di saat yang tepat ketika Anda mendekati tikungan...
+3g_hdr_name Nama Pelajaran
+3g_hdr_diff Tingkat
+3g_hdr_mode Mode
+3g_dif_easy Mudah
+3g_dif_medi Menengah
+3g_dif_hard Mahir
+3g_lsn_firs tes pertama
+3g_lsn_next berikutnya
+3g_lsn_trya coba lagi
+3g_lsn_fini selesai
+3g_tit_obje ^7OBJEKTIF
+3g_tit_purp ^7TUJUAN
+3g_tit_tips ^7TIPS
+3g_tit_targ ^7TARGET WAKTU
+3g_not_time Anda tidak selesai pada waktunya!
+3g_not_fini Anda tidak menyelesai latihan!
+3g_comp_but Anda menyelesai latihan, tapi ...
+3h_false_st - Anda start sebelum lampu hijau
+3g_too_long - Anda terlalu lama untuk finish
+3g_coll_car - Anda mengalami tabrakan dengan mobil lain
+3g_wrong_rt - Anda mengambil rute yang salah
+3g_hit_1_ob - Anda menyentuh objek
+3g_hit_x_ob - Anda menyentuh %d objek
+3g_not_fast - Anda berkendara kurang cepat di checkpoint
+3g_slo_stop - Anda terlalu lama untuk berhenti
+3g_exce_spd - Anda melebihi batas kecepatan jalur pit
+3g_nopitstp - Anda tidak melakukan pit-stop
+3g_not_long - Anda berhenti kurang lama
+3g_congrats Selamat! Anda lulus ujian!
+3g_stndrd_x Untuk pelajaran ini, nilai Anda adalah : %s
+3g_lsnunl_x Anda harus mengaktifkan %s untuk menjalankan pelajaran ini
+3a_nocarsel Tidak ada mobil yang dipilih
+3a_araceinp Balapan sedang berlangsung
+3a_plydisco Tamu akan terputus
+3a_leavgame tinggalkan host
+3a_playrbtn Pengemudi
+3a_garagbtn Garasi
+3a_trackbtn Sirkuit
+3a_tit_trak Sirkuit
+3a_load_brk [memuat]
+3a_gene_brk [membangkitkan]
+3a_notr_brk [sirkuit kosong]
+3a_endonlin Akhiri host online?
+3a_levonlin Tinggalkan host online?
+3a_swap_pos tukar posisi
+3a_joinrace ikut serta
+3a_addaidrv tambah AI
+3a_setready set siap
+3a_starthdr Barisan start
+3a_skillhdr Tingkat kesulitan
+3a_race_hdr Balapan
+3a_readybtn siap
+3a_localsml lokal
+3a_vhostsml via host
+3g_adminsml admin
+3a_dirctsml langsung
+3a_no_track tidak ada sirkuit
+3a_nodriver tidak ada pengemudi
+3a_carerror mobil error
+3a_raceinpr balapan sedang berlangsung
+3a_remvplyr mengeluarkan pengemudi
+3a_no_quali tanpa kualifikasi
+3a_qual1min kualifikasi 1 mnt
+3a_qualxmin kualifikasi %d mnt
+3a_practice latihan
+3a_race1lap balapan 1 lap
+3a_racexlap balapan %d lap
+3a_race1hou balapan 1 jam
+3a_racexhou balapan %d jam
+3a_zerowind tanpa angin
+3a_low_wind angin ringan
+3a_highwind angin kencang
+3a_nosamenm Pengemudi lokal tidak bisa memiliki nama yang sama
+3a_ac_onest Autocross : hanya satu posisi start
+3a_ac_fixlp Autocross : jumlah lap tetap
+3h_kickplyr Kick tamu %s^8? (%s^8)
+3h_howlongb Berapa hari %s^8 di-ban? (%s^8)
+3h_ainodriv AI tidak dapat berkendara di konfigurasi ini
+3h_ainoxral AI tidak dapat mengendarai %s di sirkuit Rallycross
+3h_ainoxcfg AI tidak dapat mengendarai %s di konfigurasi ini
+3a_cdntsvst Tidak dapat menyimpan setup
+3a_sent_set Setup terkirim
+3a_plynotfd Pengemudi tidak ditemukan
+3a_carnotfd Mobil pengemudi tidak ditemukan
+3a_namsetsv Masukkan nama SETUP untuk DISIMPAN
+3h_gridsave Masukkan nama barisan start untuk disimpan
+3h_gridload Pilih barisan start untuk dimuat
+3h_xremovex %s^8 mengeluarkan %s^8 dari barisan start
+3a_endgmbtn akhiri host
+3a_leavebtn tinggalkan host
+3g_endr_btn akhiri balapan
+3g_spec_btn ke spektator
+3h_qual_btn kualifikasi
+3h_rest_btn restart
+3h_pits_btn masuk pit
+3g_join_btn ikut serta
+3g_play_btn putar
+3a_namesort nama
+3a_datesort tanggal
+3a_car_caps Pilih Mobil
+3a_newbtset Tekan 'Setup Baru' untuk membuat setup pribadi
+3a_selplset Tidak dapat mengubah [default] - pilih setup pribadi
+3a_newbtcol Tekan 'Warna Baru' untuk membuat warna pribadi
+3a_selplcol Tidak dapat mengubah [default] - pilih warna pribadi
+3a_sets_hdr Setup / setelan
+3a_cols_hdr Warna
+3a_new_setb Setup baru
+3a_new_colb Warna baru
+3a_savedset Setup telah disimpan
+3a_savedcol Warna telah disimpan
+3a_new_butt Baru
+3a_del_butt Hapus
+3a_undo_btn Batal
+3g_rename_b Ubah nama
+3h_clear_bt Kosongkan
+3a_drvr_hdr Orang
+3a_frce_hdr Muatan
+3g_fuel_hdr Bensin
+3g_susp_hdr Suspensi
+3a_out_butt -
+3a_in_buttn Masuk
+3a_off_butt Off
+3a_on_buttn On
+3a_stop_btn Stop
+3a_drop_btn Drop
+3a_namenset Masukkan nama setup baru
+3g_newnmset Ubah nama setup
+3a_setnodel Setup tidak dapat dihapus
+3a_deletset Hapus setup?
+3a_setnonam Tidak dapat membuat setup tanpa nama
+3a_namencol Masukkan nama warna baru
+3h_newnmcol Ubah nama warna
+3a_colnodel Warna tidak dapat dihapus
+3a_deletcol Hapus warna?
+3a_colnonam Tidak dapat membuat warna tanpa nama
+3a_carninvl Nama mobil yang dipilih tidak sah
+3a_sel_skin Pilih skin
+3a_drv_none -
+3a_drv_fron Penggerak roda belakang
+3a_drv_rear Penggerak roda depan
+3a_drv_four Penggerak empat roda
+3g_dif_open OPEN DIFF
+3g_dif_lock LOCKED DIFF
+3g_dif_visc VISCOUS LSD
+3g_dif_clsd CLUTCH PACK LSD
+3a_no_creds 0 kredit
+3a_one_cred 1 kredit
+3a_xx_creds %d kredit
+3g_host_dis Host ini tidak mengizinkan Anda untuk mengendarai %s
+3h_ndxmdcax Anda harus berada dalam mode %s agar dapat mengendarai %s
+3h_ndulxcax Anda harus mengaktifkan LFS %s agar dapat mengendarai %s
+3g_all_caps SEMUA
+3g_newnmrep Ubah nama replay
+3g_repnodel Replay tidak dapat dihapus
+3g_deletrep Hapus replay?
+3g_repnonam Tidak dapat membuat replay tanpa nama
+3g_set_sh_x Pengaturan untuk %s :
+3a_rght_brk [kanan]
+3a_left_brk [kiri]
+3a_plyrname Nama pengemudi :
+3g_otherply Pengemudi lain :
+3a_numplate Plat nomor :
+3a_countryc Negara :
+3a_poschoos Posisi pengemudi :
+3a_speedcho Satuan kecepatan :
+3a_pressure Satuan tekanan :
+3g_lang_cln Bahasa :
+3g_font_cln Font :
+3g_wght_cln Tebal font :
+3g_adnewply tambah pengemudi baru
+3g_dlselply Hapus pengemudi yang dipilih?
+3g_enterply Masukkan nama pengemudi baru
+3g_plyexist Pengemudi sudah ada
+3g_newnamex Ganti nama pengemudi : %s
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Bantuan rem :
+3a_autoclch Kopling otomatis :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Efek layar lebar :
+3a_clipwndo Jepit mouse ke window CTRL + C :
+3a_clipflsc Jepit mouse ke layar CTRL + C :
+3a_leftscrn layar kiri
+3a_rghtscrn layar kanan
+3a_keyshpls SHIFT +
+3a_keytxtf4 F4
+3a_windoful Window / Full (layar penuh)
+3a_shf4togg SHIFT + F4 ganti full-screen atau window
+3a_shxalrdy SHIFT + F%d sudah ditetapkan untuk mode yang dipilih
+3a_assxmodx Tetapkan SHIFT + F%d untuk mode %s?
+3a_unkntype tidak dikenal
+3h_mode_bit bit
+3h_refre_hz Hz
+3b_set_vw_x Pengaturan untuk pandangan %s :
+3a_vw_incar dalam mobil
+3b_vw_custm custom
+3a_ishwdywy [pengemudi ON stir ON]
+3a_ishwdnwy [pengemudi OFF stir ON]
+3a_ishwdnwn [pengemudi OFF stir OFF]
+3a_oht_none [ - ]
+3a_oht_splt [waktu split]
+3a_normlfov Bidang pandangan %.0f° :
+3h_onebutlk Sudut melihat dengan tombol %.0f° :
+3a_pitchviw Anggukan pandangan %.2f° :
+3b_rotatviw Rotasi pandangan %.2f° :
+3g_mirror_x Posisi cermin (horisontal) %.3f m :
+3g_mirror_z Posisi cermin (vertikal) %.3f m :
+3a_tlt1gdeg 1g kemiringan kepala %.2f° :
+3a_shiftlat 1g pergeseran menyamping %.3f m :
+3a_shiftfwd 1g pergeseran maju %.3f m :
+3a_shiftvrt 1g pergeseran vertikal %.3f m :
+3a_moveanim Gerakkan pandangan dengan animasi :
+3a_defdrvvw Pandangan standar :
+3g_cvw_main Tampilan :
+3b_cvsnthng -
+3b_cvswheel roda
+3g_cvsdbody bodi
+3b_cvsexter sirkuit
+3g_cvshelic heli
+3g_cvsfollo belakang
+3h_cvsuserv free cam
+3b_cvwxoffs Posisi X %.3f m :
+3b_cvwyoffs Posisi Y %.3f m :
+3b_cvwzoffs Posisi Z %.3f m :
+3g_c_defaul Atur ulang
+3g_c_centre Tengah-tengah mobil
+3g_c_eyepos Pandangan mata
+3g_cvw_high Tinggi %.1f m :
+3g_cvw_angl Sudut %.1f° :
+3g_cvw_dist Jarak %.1f m :
+3g_cvw_vlag Gerak halus %.1f detik :
+3a_drawdrwh Tampilkan pengemudi / stir :
+3a_lookfunc Melihat dengan :
+3a_lookaxis sumbu
+3a_lookstee stir
+3a_lookms_x ms X
+3a_lookmsxy ms XY
+3h_mslookav Dapat melihat dengan mouse bila kursornya tersembunyi
+3a_looksens Sensitivitas melihat %.2f :
+3a_lookcred Reduksi pusat penglihatan %.2f :
+3a_btnlooko Tombol melihat :
+3g_l_smooth halus
+3g_l_instan instan
+3h_mainsfov Bidang Pandangan Layar Utama %.0f° :
+3h_monangle Sudut layar %.0f° :
+3h_viewoffs Posisi layar %.2f :
+3h_multiscl Tata letak multi-layar :
+3h_entnumls Masukkan jumlah layar KIRI
+3h_entnumrs Masukkan jumlah layar KANAN
+3h_onecentr 1 layar di tengah
+3h_scwidths Lebar layar :
+3h_optequal sama
+3h_optunequ beda
+3h_entsidep Masukkan lebar layar SAMPING (pixel)
+3h_entmainp Masukkan lebar layar UTAMA (pixel)
+3h_fullwext Lebar penuh pandangan sirkuit/heli :
+3h_bezelcom Kompensasi bezel %.1f%% :
+3h_resulfov Menghasilkan bidang pandangan : %.1f°
+3h_fovinval Pengaturan pandangan mengemudi tidak sah
+3h_drivuse1 Pandangan mengemudi akan menggunakan penggambaran tunggal
+3h_drivusex Pandangan mengemudi akan menggunakan %d penggambaran
+3h_notwidex Kurang lebar untuk pengaturan %d-layar yang nyata
+3h_extvfull Pandangan sirkuit/heli akan menggunakan lebar penuh
+3h_extvmain Pandangan sirkuit/heli akan menggunakan layar utama
+3h_extvxxar Pandangan sirkuit/heli akan menggunakan rasio aspek %d:%d
+3h_extvass3 Mengasumsikan pengaturan 3-layar untuk pandangan sirkuit/heli
+3a_sml_newt baru
+3a_sml_name nama
+3a_sml_delt hapus
+3a_sml_undo batal
+3a_sml_save simpan
+3a_sml_load muat
+3a_msctrcks Lagu
+3a_exitnosv Keluar tanpa menyimpan?
+3a_chmblost Perubahan mungkin akan hilang
+3a_savedrad "radio.rad" telah disimpan
+3a_nodelstp Tidak dapat menghapus playlist "setup"
+3a_delchnlq Hapus playlist?
+3a_chanlnum Channel %d
+3a_msctrnum Lagu %d
+3a_norenstp Tidak dapat mengubah nama playlist "setup"
+3a_newnmchn Ganti nama playlist
+3a_play_num "%s"
+3a_fail_num Gagal : "%s"
+3a_shftauto otomatis
+3a_shftsequ sekuensial
+3a_shftshft shifter
+3g_shftffjo ff stick
+3h_transmis Transmisi
+3h_box_hpat persneling manual pola H
+3h_box_bike persneling sepeda motor
+3h_box_sequ persneling sekuensial
+3h_box_seqi persneling sekuensial dengan ignition cut
+3h_box_semi persneling pedal
+3h_seq_hpat pengoperasian sekuensial pada persneling manual
+3a_dc_combi gabung
+3a_dc_separ pisah
+3a_dc_butts tombol
+3a_axb_axis sumbu
+3a_axb_butt tombol
+3g_no_con_d Tidak ada kontroler yang terdeteksi
+3g_xx_con_d %.0f kontroler terdeteksi
+3g_ct_unkno Kontroler tidak dikenal
+3g_ct_first Kontroler orang pertama
+3g_ct_steer Stir
+3g_ct_fligh Kontroler pesawat
+3g_ct_gamep Gamepad
+3g_ct_joyst Joystick
+3a_crrdcval Reduksi pusat stir %.2f :
+3g_whe_turn Sudut putar %.0f° :
+3a_msbutt_1 Tombol 1
+3a_mdbutt_2 Tombol 2
+3e_kbt_mous [stir mouse]
+3e_kbt_nohe [keyboard - tanpa bantuan]
+3e_kbt_stab [keyboard - distabilkan]
+3a_mdaxesff Sumbu / FF
+3a_mdshiftr Shifter
+3a_kasteerl Stir Kiri
+3a_kasteerr Stir Kanan
+3e_kasteerl Stir Cepat
+3e_kasteerr Stir Lambat
+3a_kaaccelk Gas
+3a_kabrakek Rem
+3a_kaleftvw Lihat Kiri
+3a_karghtvw Lihat Kanan
+3a_karearvw Lihat Belakang
+3a_kashiftu Ganti Gigi (Naik)
+3a_kashiftd Ganti Gigi (Turun)
+3a_kaclutch Kopling
+3a_kahandbr Rem Tangan
+3a_kahornkk Klakson
+3a_kaflashk Lampu Dim
+3a_karesetk Reset Mobil
+3g_kapitspd Pembatas Kecepatan
+3h_katcdisa Kendali Traksi
+3h_kaigniti Starter
+3a_kazoom_i Zoom In
+3a_kazoom_o Zoom Out
+3a_karevers Mundur
+3a_kafirstk Gigi 1
+3a_kasecond Gigi 2
+3a_kathirdk Gigi 3
+3a_kafourth Gigi 4
+3a_kafifthk Gigi 5
+3a_kasixthk Gigi 6
+3a_kasevent Gigi 7
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Stir
+3a_aacombin Gas / Rem Gabung
+3a_aathrott Gas
+3a_aabrakea Rem
+3a_aalookhe Arah Penglihatan
+3a_aalookpi Anggukan Penglihatan
+3a_aalookro Kemiringan Penglihatan
+3a_aaclutch Kopling
+3a_aahandbr Rem Tangan
+3g_aashiftx Shifter Kiri-Kanan
+3g_aashifty Shifter Depan-Belakang
+3a_prsxforx Tekan %s untuk : %s (ESC - batal / DEL - hapus)
+3a_smallkey tombol
+3a_smallbut tombol
+3a_mouse_kb mouse / keyboard
+3a_wheel_js stir / joystick
+3a_force_st Kekuatan force feedback %.0f :
+3a_thrbrkax Sumbu gas / rem :
+3a_clutchop Kopling :
+3a_handbrko Rem tangan :
+3a_thrbrkrv Reduksi pusat gas / rem %.2f :
+3a_btnratev Tingkat penekanan tombol %.2f :
+3a_kbsteero Stir keyboard :
+3a_strratev Kecepatan putar stir %.2f :
+3e_retratev Kecepatan putar balik stir %.2f :
+3e_strfastv Tingkat stir cepat %.2f :
+3e_strslowv Tingkat stir lambat %.2f :
+3a_prdtimev Prediksi waktu %.2f :
+3a_lmtmultv Tingkat batas stir %.2f :
+3a_selfunca Pilih fungsi untuk menentukan sumbu
+3a_selaxfrx Pilih sumbu untuk : %s (ESC - batal / DEL - hapus)
+3a_availaxs Sumbu yang tersedia
+3a_axis_num sumbu %d
+3a_invert_1 invert = 1
+3a_invert_0 invert = 0
+3a_frcfdbak Force feedback :
+3a_ffdevice FF device :
+3g_ffshiftd FF shift device :
+3a_removedz Hilangkan zona mati :
+3h_rec_axes rekalibrasi sumbu
+3h_cal_lock kunci
+3h_cal_unlk buka
+3a_heyb_hdr Keyboard
+3a_whbt_hdr Tombol stir
+3a_ass_zero [Nol]
+3a_ass_mlft Mouse Kiri
+3a_ass_mrgt Mouse Kanan
+3a_ass_mmid Mouse Tengah
+3a_ass_whup Roda Naik
+3a_ass_whdn Roda Turun
+3a_ass_spac Spasi
+3a_ass_upar Panah Atas
+3a_ass_dnar Panah Bawah
+3a_ass_rtar Panah Kanan
+3a_ass_ltar Panah Kiri
+3a_ass_pgup Page Up
+3a_ass_pgdn Page Down
+3a_butt_num tombol %d
+3d_aamousex Mouse X
+3d_aamousey Mouse Y
+3d_aa_xaxis Sumbu X
+3d_aa_yaxis Sumbu Y
+3d_aa_zaxis Sumbu Z
+3d_aarxaxis Sumbu RX
+3d_aaryaxis Sumbu RY
+3d_aarzaxis Sumbu RZ
+3d_aaslidr1 Slider 0
+3d_aaslidr2 Slider 1
+3a_reskeysh tombol yang telah ditetapkan
+3a_rswtch_r 1 - replay
+3a_rssave_r 2 - simpan replay
+3h_showline 4 - racing line
+3a_rsless_f , - force feedback (-)
+3a_rsmore_f . - force feedback (+)
+3a_rstab_ne TAB - mobil berikutnya
+3a_rshome_o HOME - mobil pemain
+3a_rstalk_t T - bicara
+3a_rspausep P - pause
+3a_rshistor H - riwayat pesan
+3a_rsview_v V - pandangan
+3a_rsforces F - tampilan daya gerak
+3a_rsnamesn N - tampilan nama
+3a_shftplus SHIFT +
+3a_shchhorn H - ganti klakson
+3g_shshiftt G - mode persneling
+3a_shrescon C - reinisialisasi kontroler
+3a_shressnd W - reinisialisasi suara
+3a_shsoundo N - suara on / off
+3a_shmirmod M - mode cermin
+3g_shhidetx F - HUD on / off
+3a_shuservw U - free cam / AutoX editor
+3a_shskiptn K - longkap lagu
+3h_shshowmo Z - tampilkan mouse
+3b_shdriver F1 - pandangan pengemudi
+3b_shslowrp F2 - perlambat replay
+3b_shfastrp F3 - percepat replay
+3a_shwindow F4 - mode window
+3a_carsndvl Suara mobil (%.1f) :
+3a_skidvboo Suara ban (%.1f) :
+3g_windvboo Suara angin (%.1f) :
+3g_echovboo Suara gema (%.1f) :
+3a_mscvolum Volume musik (%.1f) :
+3g_msgvolum Suara interface (%.1f) :
+3a_mscsetup Musik di layar setup :
+3a_mscracin Musik saat balapan :
+3a_mscrplay Musik saat replay :
+3a_selecbrk [Terpilih]
+3a_noplybrk [Tidak memutar]
+3a_msc_skip Longkap
+3a_msc_sele Pilih
+3a_ingmmusc Musik in-game
+3a_channels Playlist
+3g_status_a Suara (SHIFT + N) : %s
+3g_status_m Buffer musik : %s
+3g_status_c Buffer suara : %s
+3a_relaybrk [relatif]
+3a_absolbrk [absolut]
+3a_fps_disp Tampilkan kecepatan frame (FPS) :
+3b_virtuals Tampilkan lampu start virtual :
+3a_mirrmode Mode cermin :
+3a_clokmode Mode dasbor :
+3g_fixedfwd Kunci arah pandangan :
+3g_accelmov Percepatan pergeseran pandangan :
+3a_showpeds Tampilkan pedal :
+3g_steerind Tampilkan stir virtual :
+3a_smallmap Tampilkan peta sirkuit :
+3g_staticsm Rotasi pada peta sirkuit :
+3a_pos_list Tampilkan leaderboard :
+3a_dropshad Bayangan pada teks :
+3a_msgtsize Ukuran teks pesan %.3f :
+3a_timedisp Tampilan perbandingan waktu :
+3a_chptexto Teks checkpoint :
+3a_clndlcol Warna jarum penunjuk pd dasbor :
+3a_cltxtcol Warna teks dasbor :
+3a_cttxtcol Warna teks sentral :
+3h_x_dash_c dasbor %s :
+3h_roadgled Warna LED gigi mobil jalanan :
+3g_interfac Interface
+3h_in_title Judul :
+3h_in_bigbt Tombol besar :
+3h_in_opaci Transparansi %.2f :
+3h_in_bbtxt Teks :
+3h_in_smlbt Tombol kecil :
+3h_text_uns Teks tak terpilih :
+3h_text_sel Teks terpilih :
+3h_text_una Teks tak tersedia :
+3h_in_texte Teks string :
+3h_in_btn_g Tombol hijau :
+3h_in_btn_r Tombol merah :
+3h_in_btn_a Tombol alternatif :
+3h_smallm_l Peta terang :
+3h_smallm_d Peta gelap :
+3h_cr_lap_a Mobil 1 lap di depan :
+3h_cr_ahead Mobil di depan :
+3h_ai_ahead AI di depan :
+3h_your_car Mobil pemain :
+3h_ai_behin AI di belakang :
+3h_cr_behin Mobil di belakang :
+3h_cr_lap_b Mobil 1 lap di belakang :
+3h_intcentr Posisi interface :
+3h_intscale Ukuran interface :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset reset
+3h_test_sml Tombol kecil
+3h_test_big Tombol besar
+3h_in_cen_x posisi X
+3h_in_cen_y posisi Y
+3h_in_sca_x ukuran X
+3h_in_sca_y ukuran Y
+3h_betw_a_b Nilai harus di antara %.1f dan %.1f
+3a_asavnono [non-aktif - tidak disimpan]
+3a_asavmanu [aktif - penyimpanan manual]
+3a_asavauto [otomatis - tidak disarankan]
+3a_ogm_ainm Nama AI
+3g_ogm_fkey F1 - F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [urutan tetap]
+3a_rs_finis [urutan finish]
+3a_rs_revfi [kebalikan urutan finish]
+3a_rs_randm [acak]
+3a_aidrvnum AI %d :
+3a_f_keynum F%d :
+3a_sprsvopt Penyimpanan replay Single player :
+3a_mprsvopt Penyimpanan replay Multiplayer :
+3a_nonqracr Urutan posisi non-kualifikasi/restart :
+3a_changbtn Nama pengemudi AI / F1 - F12 :
+3a_optlores rendah
+3a_opthires tinggi
+3g_optcompr dikompres
+3g_optsfull full
+3g_opt_main utama
+3g_plus_mir + cermin
+3a_usrldval LOD pengguna (%.2f) :
+3a_dstldval LOD debu (%.2f) :
+3a_mirldval LOD cermin (%.2f) :
+3h_fsaa_txt Full-scene antialiasing :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) interface / teks :
+3h_mipbias1 Mip bias (%.1f) objek / dinding :
+3h_mipbias2 Mip bias (%.1f) rumput / tanah :
+3h_mipbias3 Mip bias (%.1f) jalanan :
+3a_shtypopt Bayangan :
+3g_treesopt Pohon/tumbuhan :
+3g_flagsopt Bendera :
+3g_rubbropt Ban/karet :
+3g_draw_sky Langit :
+3g_gadapter Adapter :
+3e_zbdopt_d Kedalaman Z-buffer (%d) :
+3e_hazetext Efek kabut :
+3h_mip_type Texture filtering / AF :
+3h_text_res Tekstur (kecuali skin) :
+3g_carskins Skin mobil dan helm :
+3g_texmemmb Penggunaan memori tekstur : %.1f MB
+3a_crdnoshd Kartu 3d Anda tidak dapat menggambar bayangan di LFS
+3g_crdnoftx Kartu 3d Anda tidak dapat menggunakan tekstur ukuran penuh
+3h_hvsnotav Kartu 3d Anda tidak dapat menggunakan Hardware Vertex Shading
+3g_seladres Pilih adapter yang akan digunakan saat restart game berikutnya
+3e_rslfszbd Anda harus me-restart LFS untuk mendapat perubahan Z-buffer
+3a_flsvsync Full screen vertical sync :
+3g_prev_lag Hindari jeda input :
+3a_limitfps Batasi FPS in-game :
+3a_maxfrmrt FPS maksimum :
+3g_tx_x_fps %d FPS
+3a_minsleep Minimum CPU sleep :
+3g_debounce Jeda pergantian gigi :
+3g_txt_x_ms %d ms
+3a_pixelval %d pixel
+3a_useplset AI menggunakan setup pemain :
+3a_useplcol AI menggunakan warna pemain :
+3a_sndlgval Jeda suara %.2f detik :
+3g_whe_comp Kompensasi putaran stir %.2f :
+3a_anlgsval Stir analog halus %.2f :
+3a_multispd Percepatan Multiplayer :
+3g_car_skin Download skin mobil :
+3g_hel_skin Download skin helm :
+3g_multidst Penggambaran mobil %.0f m :
+3g_dynamlod Reduksi LOD dinamis %.2f :
+3a_updtpath Update jalur ban mobil :
+3a_puusrcar pengguna
+3a_puallcar semua
+3h_replaysk Download skin untuk replay :
+3g_introopt Muatkan sirkuit saat memulai LFS :
+3g_local_12 Format waktu lokal dalam 12 jam :
+3g_time_fps Gantikan FPS dengan jam :
+3g_shfflags Tampilkan bendera saat SHIFT + F :
+3h_accelopt Akselerometer :
+3h_shadogen Shadow generation :
+3h_opt_defa standar
+3h_opt_alte alternatif
+3g_skin_d_q Skin ter-download
+3h_skin_use Skin dalam memori
+3a_novtnolo Tidak ada vote - tidak ada pengemudi lokal dalam balapan
+3a_notdnord Tidak bisa test drive - tidak ada pemain dalam replay
+3a_esc_menu Menu Esc
+3a_repmenig Menu Replay (in-game)
+3a_repmenld Menu Replay (termuat)
+3a_sel_pits Masuk pit
+3a_sel_spec Bergabung ke spektator
+3a_sel_join Ikut serta
+3a_sel_repl Replay
+3a_sel_outp Output data lap
+3a_sel_rstr Restart
+3a_vote_str Vote mulai balapan
+3a_vote_end Vote akhiri balapan
+3a_vote_qua Vote kualifikasi
+3a_test_drv Test drive
+3a_startrac Mulai balapan
+3a_hqualify Kualifikasi
+3a_resumegm Lanjutkan
+3h_escapkey ESC
+3a_undefind ???
+3a_arenatxt arena
+3a_singlstg single stage
+3a_standard standar
+3a_reversed mundur
+3a_weth_hdr Cuaca
+3a_cnfg_hdr Konfigurasi
+3h_layt_hdr Layout
+3h_none_sel -
+3a_info_cir sirkuit
+3a_info_tot total
+3a_chng_trk Ganti sirkuit
+3h_revconfc Konfigurasi mundur :
+3h_openconf Konfigurasi terbuka :
+3h_ndxmdtrx Anda harus berada dalam mode %s agar dapat berkendara di %s
+3h_ndulxtrx Anda harus mengaktifkan LFS %s agar dapat berkendara di %s
+3g_cfg_grpr Grand Prix
+3g_cfg_gplo GP Long
+3g_cfg_gptr GP Track
+3g_cfg_ralx Rallycross
+3g_cfg_carp Parkiran
+3g_cfg_auto Autocross
+3g_cfg_skid Skid Pad
+3g_cfg_drgs Drag Strip
+3g_cfg_drg8 8 Lane Drag
+3g_cfg_oval Oval
+3g_cfg_cade Cadet
+3g_cfg_club Club
+3g_cfg_nati National
+3g_cfg_inte International
+3g_cfg_clas Classic
+3g_cfg_spr1 Sprint 1
+3g_cfg_spr2 Sprint 2
+3g_cfg_cilo City Long
+3g_cfg_toco Town Course
+3g_cfg_chro Chicane Route
+3g_cfg_gree Green
+3g_cfg_gold Gold
+3g_cfg_blac Black
+3g_cfg_rlxg Rallycross Green
+3g_cfg_hist Historic
+3g_cfg_grto Grand Touring
+3g_cfg_nort North
+3g_cfg_sout South
+3g_cfg_east East
+3g_cfg_west West
+3g_cfg_reve REV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f mil %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f mil
+3g_dt_dawn_ Subuh
+3g_dt_sunri Fajar
+3g_dt_morni Pagi
+3g_dt_day__ Siang
+3g_dt_after Sore
+3g_dt_sunse Maghrib
+3g_dt_dusk_ Petang
+3g_dt_night Malam
+3g_wth_clea - Cerah
+3g_wth_clou - Berawan
+3g_wth_over - Mendung
+3a_hlvcthis Lap-
+3a_hlvcnext Berikut-
+3a_readynum Siap : %d
+3a_noviewcr tidak ada mobil dalam balapan
+3a_thexisst %s sedang dimulai
+3a_thexhase %s telah selesai
+3a_smlpract Sesi latihan
+3a_smlqulng Kualifikasi
+3a_sml_race Balapan
+3a_replnotr Replay tidak direkam
+3g_notrecor Tidak merekam
+3g_fov_temp FOV %.0f°
+3a_replrest Replay diulang
+3a_aisvdknw Pengemudi AI menyimpan ingatan
+3a_timetmsx Time × %.3f
+3a_namenldf Nama file data pada lap berikutnya
+3g_caps_wrn PERHATIAN
+3g_caps_kik KICK
+3g_caps_ban BAN
+3g_caps_spe MENUJU SPEKTATOR
+3a_namesoff nama off
+3a_connlist daftar koneksi
+3a_namesovr nama di atas mobil
+3h_showmous tampilkan mouse
+3h_hidemous sembunyikan mouse
+3a_mirrinfo cermin :
+3a_cancaujo Bergabung secara otomatis dibatalkan
+3a_reinicnt Reinisialisasi Kontroler
+3a_reinisnd Reinisialisasi Suara
+3a_namemprs Nama replay MPR untuk DISIMPAN
+3a_namesprs Nama replay SPR untuk DISIMPAN
+3a_shnsound SHIFT + N : Suara - %s
+3g_shgsmode SHIFT + G : Mode persneling - %s
+3a_shgautos SHIFT + G : Persneling auto - %s
+3a_frcvalpc force feedback %.0f%%
+3a_hrntypev Tipe klakson %d
+3a_actnends SELESAI
+3a_actnrest DIULANG
+3a_actnstrt DIMULAI
+3a_thngqual Kualifikasi
+3a_thngrace Balapan
+3a_reploose OOS replay error
+3a_pausetxt pause
+3g_safeexit keluar...
+3a_retrdcap RETIRED
+3a_dsqulcap DISKUALIFIKASI
+3g_unclcaps TAK TERKLASIFIKASI
+3a_wrngwcap SALAH JALAN !!!
+3a_capsdrvr pengemudi
+3a_capsbstl lap tercepat
+3g_pitstops PIT
+3g_spenalty PNLT
+3a_capstotl TOTAL
+3g_caps_car mobil
+3g_capsxlps %d lap
+3g_plus1lap +1 lap
+3g_plusxlps +%d lap
+3h_falsesta JUMP START
+3h_pe_speed MELAMPAUI BATAS KECEPATAN PIT
+3h_pe_short PIT STOP TERLALU PENDEK
+3h_pe_mustp TERLAMBAT PIT STOP
+3h_pe_admin DIBERI OLEH ADMINISTRATOR
+3g_yellcaps BENDERA KUNING
+3g_bluecaps BENDERA BIRU
+3a_stpgocap PENALTI STOP-GO
+3g_drthrcap PENALTI DRIVE-THROUGH
+3g_30stimep PENALTI 30 DETIK
+3g_45stimep PENALTI 40 DETIK
+3g_clearedp PENALTI SELESAI
+3g_pit_stop PIT STOP
+3g_pitstopx PIT STOP : %d
+3g_p_pnltyx PIT STOP [penalti] : %d
+3g_p_nowrkx PIT STOP [tanpa kerja]  : %d
+3g_p_finshx PIT STOP [selesai]  : %d
+3g_mancompx %s^8 telah menyelesaikan %s
+3g_wmncompx %s^8 telah menyelesaikan %s
+3g_unkcompx %s^8 : menyelesaikan %s
+3g_enterpit MASUK jalur pit
+3g_enterfor MASUK jalur pit :
+3g_leavepit MENINGGALKAN jalur pit
+3g_stpgotxt penalti stop-go
+3g_drthrtxt penalti drive-through
+3g_nopurtxt tanpa tujuan
+3g_capsstop STOP
+3g_capsrefu ISI BENSIN
+3g_capssetu GANTI SETUP
+3g_capsxdam KERUSAKAN %s
+3g_capsdamx KERUSAKAN DI %s
+3g_capsxcha GANTI BAN %s
+3g_capsminr RINGAN
+3g_capsmajr BERAT
+3g_capsfrnt DEPAN
+3g_capsrear BELAKANG
+3g_capsleft KIRI
+3g_capsrigh KANAN
+3g_capslefr KIRI DEPAN
+3g_capslere KIRI BELAKANG
+3g_capsrifr KANAN DEPAN
+3g_capsrire KANAN BELAKANG
+3g_refl_f_x Selesai isi bensin : %.1f liter
+3g_pitstp_f Pit stop selesai
+3g_nospdlim Tidak ada zona batas kecepatan di sirkuit ini
+3g_notequip Mobil ini tidak memiliki pembatas kecepatan jalur pit
+3h_thisnotc Mobil ini tidak memiliki kendali traksi
+3h_thisnost Mobil ini tidak memiliki starter mesin
+3a_smllaptm lap :
+3a_smlspltm split :
+3a_clhotlap hot lap
+3a_clonemin kualifikasi 1 menit
+3a_cl_xmins kualifikasi %d menit
+3a_clonelap 1 lap
+3a_cl_xlaps %d lap
+3a_clonehor 1 jam
+3a_cl_xhors %d jam
+3g_cltrning latihan
+3a_windsp_x kecepatan angin %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex Vote %s^8 habis
+3a_x_voteer %s^8 vote AKHIRI BALAPAN
+3a_x_voters %s^8 vote RESTART
+3a_x_votequ %s^8 vote KUALIFIKASI
+3a_x_joinsp %s^8 bergabung ke spektator
+3g_x_didnot %s^8 tidak finish
+3g_x_wrongr %s^8 mengambil rute yang salah
+3g_x_illega %s^8 melaju ke area penalti
+3h_x_retpit %s^8 kembali ke jalur pit
+3h_a_retpit Semua mobil kembali ke jalur pit
+3a_lagvalue LAG (%.2f)
+3a_hlvcstlp start lap
+3a_smalllap lap
+3a_hlvcmodi [dimodifikasi]
+3a_timequal kualifikasi
+3a_timetotl total
+3a_timebest terbaik
+3a_time_lap lap
+3a_timesplt split
+3h_timetime waktu
+3a_timepnlt penalti
+3a_noldxcar Tidak dapat memuat mobil %s^8
+3a_nosvnonm Tidak dapat menyimpan tanpa nama
+3g_nofilesl Tidak ada file untuk dimuat
+3a_alrdyout Sudah memulai output data lap
+3a_nxtlpout Output data lap berikutnya "%s.raf"
+3a_nodtaout Tidak ada data yang akan di-output
+3g_dled_x_x Skin ter-download : %s_%s
+3g_ding_x_x Men-download skin : %s_%s
+3h_saveskin Menyimpan skin : %s
+3g_nomoreci Tidak dapat menambahkan lingkaran lagi
+3a_noaddmor Tidak dapat menambahkan objek lagi
+3a_loadinfo Memuat
+3h_storedvw Pandangan tersimpan (V) :
+3h_move_spd Kecepatan bergerak %.1f m/s :
+3h_min_high Ketinggian minimum %.1f m :
+3g_roll_deg Kemiringan %.1f° :
+3h_vwsmooth Gerak halus %.1f s :
+3h_trantime Waktu transisi %.1f s :
+3a_invlok_c Balik arah melihat (mouse kanan) :
+3h_invrot_c Balik arah rotasi (kiri + kanan) :
+3a_fov_valu Bidang pandangan %.1f° :
+3a_plcobs_c Letakkan objek :
+3a_chkptw_v Lebar checkpoint %.0f m :
+3a_hdg_degr Arah objek %.1f° :
+3a_unnm_brk [tanpa nama]
+3a_objs_num objek : %d
+3a_emty_brk [kosong]
+3a_savechan Simpan perubahan
+3a_loadlayo Muat Layout
+3a_savelayo Simpan layout
+3a_clearall Kosongkan
+3a_laps_num lap : %d
+3a_errorsml error
+3a_c_clrsel C - kosongkan seleksi
+3a_m_mv_mod M - pindah / modifikasi
+3a_del_dele DEL - hapus
+3a_w_e_wdth W / E - lebar
+3a_l_r_rota , / . - rotasi
+3a_cp_1_2_3 1 / 2 / 3 - checkpoint
+3a_f_finish F - garis finish
+3a_s_startp S - posisi start
+3a_o_object O - letakkan objek
+3g_dist_x_m jarak : %.2f m
+3a_editkeys editor
+3a_c_ar_hgt CTRL + panah - tinggi
+3g_c_ar_rol CTRL + panah - kemiringan
+3a_arrow_mv panah - bergerak
+3a_spc_hdsh SPASI - sembunyi / tampilkan
+3a_esc_exit ESC - keluar
+3h_l_b_move mouse kiri - bergerak
+3h_r_b_look mouse kanan - melihat
+3h_l_r_rota kiri + kanan - rotasi
+3a_keys_txt bantuan
+3h_mous_txt mouse
+3h_edit_txt editor
+3h_more_txt lebih lanjut
+3h_in_trans transisi
+3h_cl_slt_x Pandangan di slot %d terhapus
+3h_st_slt_x Pandangan di slot %d tersimpan
+3h_no_v_x_s Tidak ada pandangan di slot %d (%s)
+3h_no_vws_s Tidak ada pandangan yang disimpan (%s)
+3h_sh_nm_st SHIFT + ANKGA untuk menyimpan pandangan
+3h_no_car_f Tidak ada mobil yang diikuti
+3h_fc_point Menunjuk ke :
+3h_fc_neare Mobil terdekat :
+3h_fc_flwng Mengikuti :
+3h_fc_lockd Terkunci di :
+3h_clicktof klik mobil untuk mengikuti
+3h_followcr ikuti mobil
+3h_nocarsvw tidak ada mobil yang terlihat
+3h_stopfoll stop
+3h_optimise optimalisasikan
+3h_opt_of_t Objek yang dioptimalisasi : %d dari %d
+3a_noxwload Tidak dapat keluar saat memuat
+3a_chgnotsv Perubahan belum disimpan
+3a_exanyway Tetap keluar?
+3a_clrall_q Hapus semua objek dari layout?
+3g_delete_l Hapus layout?
+3a_tit_ldly Muat Layout
+3a_nosavent Tidak dapat menyimpan layout dari layar entri
+3a_nolodent Tidak dapat memuat layout dari layar entri
+3a_noobselm Tidak ada objek yang dipilih untuk dipindahkan
+3a_noobtype Tidak ada tipe objek yang dipilih
+3a_noobseld Tidak ada objek yang dipilih untuk dihapus
+3h_unexpclr Perintah hapus tak terduga
+3h_unexpend Akhir file tak terduga
+3a_xalready %s sudah dibuat
+3g_idx_0tox Indeks harus di antara 0 dan %d
+3g_rt_idx_x Indeks rute : %d
+3g_restarea Area penalti
+3g_rt_check Route checker
+3g_rt_wrong Salah rute
+3g_ob_chalk kapur
+3g_ob_cones kerucut
+3g_ob_tyres ban
+3h_ob_markr marka
+3g_ob_other objek
+3g_ob_marsh marshall
+3g_marsh_no tak terlihat
+3g_marsh_st marshall
+3g_marsh_le arah kiri
+3g_marsh_ri arah kanan
+3h_cant_add Tidak dapat menambah :
+3h_cant_mov Tidak bisa dipindah :
+3h_inte_obj objek berpotongan
+3h_inva_pos posisi tidak sah
+3a_dispgame Tampilkan daftar host
+3a_tit_list Daftar Host
+3a_startnew Mulai host baru
+3a_tit_strt Mulai Host Baru
+3a_joingame Bergabung ke host tertentu
+3a_tit_spec Bergabung ke Host Tertentu
+3a_finduser Cari pengguna online
+3a_tit_user Cari Pengguna
+3a_cls1conn Menutup 1 koneksi
+3a_clsxconn Menutup %d koneksi
+3a_rfrshlst refresh
+3a_stophost Menghentikan pengecekan host
+3a_spctostp Tekan SPASI untuk menghentikan pengecekan host
+3a_liststat %s host %d dari %d - Bisa bergabung %d - [Tidak ada jawaban %d] - [Salah versi %d]
+3a_waitingw Menunggu
+3a_checking Mengecek
+3a_end_stat Bisa bergabung %d - [Tidak ada jawaban %d] - [Salah versi %d] %s
+3a_clikjoin - KLIK nama untuk bergabung
+3a_glc_name Nama
+3a_glc_ping Ping
+3a_glc_trak Sirkuit
+3a_privatew pribadi
+3a_modified dimodifikasi
+3h_arcade_w bisa reset
+3h_cruise_w cruise
+3a_wrongver Salah versi
+3h_noteul_x CATATAN : Anda masih harus mengaktifkan LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Download mirror
+3h_cnt_titl Negara
+3h_newupdat Update baru tersedia
+3h_norecaui Tidak menerima informasi update otomatis
+3h_start_dl mulai download
+3h_plsselmr Mohon pilih download mirror terdekat
+3h_connectn Menghubung...
+3h_trylfsnt Mencoba lagi dengan ^7www.lfs.net
+3h_dl_perce File progress : %d%%
+3h_dl_colon Download :
+3h_restartn Restart...
+3h_nostrtrs Tidak dapat memulai restarter
+3h_noresdat Tidak dapat membuat file data restarter
+3h_noenumwi Tidak dapat menjumlah window
+3h_anotherl Instansi LFS yang lain sedang berjalan
+3h_noopenrs Tidak dapat membuka program restarter
+3b_meetroom Ruang chat
+3b_m_host_x sedang menuju ke %s
+3b_f_host_x sedang menuju ke %s
+3b_leftroom meninggalkan ruangan
+3b_entrroom memasuki ruangan
+3b_wlcmu1st Selamat Datang! Anda adalah pembalap pertama di dalam ruangan
+3b_wlcmxinr Selamat Datang! Ada %d pembalap di dalam ruangan
+3b_mr_leave Tinggalkan host
+3b_mr_findb Cari
+3b_mr_sound Suara
+3b_mr_refre Refresh
+3b_somehost host
+3b_mastercl Server Master menutup koneksi
+3b_sr_privt Pribadi
+3b_mr_publc Umum
+3b_mr_empty Kosong
+3h_sr_cruis Cruise
+3g_autoreco Menghubung ulang...
+3a_typelocl LAN
+3a_typeinet internet
+3a_userisat Pengguna sedang berada di %s
+3a_joinxath Bergabung dengan %s^8 di host ini?
+3a_inrc_num dalam balapan : %d
+3a_cons_num koneksi : %d
+3a_resl_num hasil : %d
+3h_skin_num Skin : %d
+3h_join_que Posisi antrian : %d
+3a_selhostc Host yang dipilih :
+3a_joingamc Bergabung ke host menggunakan :
+3a_hostnamc Nama host :
+3a_hostipac Alamat IP host :
+3a_hostprtc Port host :
+3a_hostpasc Password host :
+3h_clearbtn kosongkan semua password (%d)
+3h_cconfirm Hapus semua password host yang telah disimpan?
+3a_noldtrck Tidak dapat memuat sirkuit
+3a_nosndudp Tidak dapat mengirim paket UDP
+3a_nocrtudp Tidak dapat membuat koneksi UDP
+3h_wt_sinfo Menunggu informasi skin
+3h_norcvskn Tidak menerima informasi skin
+3a_norcvgst Tidak menerima informasi tamu
+3a_norcvply Tidak menerima informasi pengemudi
+3a_norvcall Tidak menerima pesan dari semua tamu
+3a_vldadreq Anda harus memasukkan alamat IP jaringan lokal yang sah
+3a_errconrs Error saat mengirim hasil koneksi
+3a_mode_sel Mode online :
+3h_smal_dmo demo
+3h_frxmdndx Untuk mode %s Anda harus mengaktifkan LFS %s
+3h_seltrrqx Sirkuit yang dipilih memerlukan mode %s
+3a_visibilc Visibilitas :
+3a_vis_locl LAN
+3a_vis_inet internet
+3a_vid_hidn tersembunyi
+3a_inetconc Koneksi internet :
+3a_modem56k modem 56k
+3a_m512_128 kabel 512 / 128
+3a_mdm1_256 kabel 1m / 256
+3a_mdm_cust custom
+3a_maxupl_c Upload maksimum (kbit / s) :
+3g_x_upload %s kbit/s upload
+3a_gnnoemty Nama host tidak boleh kosong
+3a_onecarrq Paling sedikit satu model mobil harus diizinkan
+3a_hstgstrq Pengemudi host atau tamu harus diizinkan dalam balapan
+3a_rusurepr Apakah Anda yakin ingin melanjutkan?
+3a_maxbwmex Bandwidth maksimum mungkin berlebihan
+3b_srv_ip_c Alamat IP :
+3a_srvportc Port :
+3a_dedi_opt Host terdedikasi (tanpa grafik) :
+3a_guestvot Izinkan vote kick / ban :
+3a_guestsel Izinkan tamu untuk memilih sirkuit :
+3h_qenabled Kualifikasi diaktifkan :
+3g_midracej Izinkan ikut serta di tengah balapan :
+3g_pitstopr Wajib pit stop :
+3g_carreset Izinkan me-reset mobil :
+3h_fcockpit Paksa pandangan kokpit :
+3h_cruisemo Cruise (izinkan melawan arus) :
+3a_maxgst_c Max tamu :
+3d_admins_c Slot admin :
+3a_maxrarac Max (pemain + AI) dalam balapan :
+3a_maxragst Max (pemain + AI) per pc tamu :
+3a_maxrahst Max (pemain + AI) di pc host :
+3a_dedinohc Terdedikasi : tidak ada mobil host
+3a_smothpps Kehalusan (paket per detik) :
+3a_uplmin16 Upload minimal 16 kbit
+3g_umax8192 Upload maksimal 8192 kbit
+3a_uplavail Upload tersedia %.1f KB/s
+3a_uplprcar Upload per mobil %.0f byte/s
+3a_uplcarnm Jumlah mobil untuk di-upload %.0f
+3a_requplod Upload diperlukan %.1f KB/s
+3a_availexc Persediaan upload berlebihan
+3b_adminp_c Password admin :
+3a_sel_audi Audio
+3a_tit_audi Opsi - Audio
+3a_sel_scrn Layar
+3a_tit_scrn Opsi - Layar
+3a_sel_grfx Grafik
+3a_tit_grfx Opsi - Grafik
+3a_sel_view Pandangan
+3a_tit_view Opsi - Pandangan
+3a_sel_disp Tampilan
+3a_tit_disp Opsi - Tampilan
+3a_sel_plyr Pengemudi
+3a_tit_plyr Opsi - Pengemudi
+3a_sel_cont Kontroler
+3a_tit_cont Opsi - Kontroler
+3a_sel_game Game
+3a_tit_game Opsi - Game
+3a_sel_misc Lain-lain
+3a_tit_misc Opsi - Lain-lain
+3a_unlokerr Aktivasi error
+3a_flcrterr Error saat membuat file
+3a_reguname Nama pengguna terdaftar :
+3a_onlinepw Password GAME :
+3a_gounlock aktifkan
+3g_locktext Non-aktifkan LFS (kembali ke DEMO)
+3g_lockques Non-aktifkan Live for Speed?
+3g_lockwarn Hanya konten DEMO yang akan tersedia
+3a_autorcon Menghubungkan kembali ke master
+3a_notconnm Tidak terhubung ke master
+3a_yesconnm Terhubung ke master
+3a_connmstr menghubung
+3a_connects Koneksi
+3a_hoptions opsi
+3a_smlb_kik kick
+3a_smlb_ban ban
+3a_num_bans %d orang ter-ban
+3a_zerobans Tidak ada yang di-ban
+3a_editbans ban editor
+3a_tit_bans Ban Editor
+3a_delshort hapus
+3a_goaddban tambah
+3a_user_ban Masukkan nama pengguna untuk di-ban
+3a_time0day %d:%.2d
+3a_time1day 1 hari %d:%.2d
+3a_timexday %d hari %d:%.2d
+3a_banip12h 12 jam ban dikenakan pada alamat IP
+3a_banun12h 12 jam ban dikenakan pada nama pengguna
+3b_banusr1d Pengguna di-ban selama 1 hari
+3b_banusrxd Pengguna di-ban selama %d hari
+3h_tyre_man Pabrikan
+3g_tt_sl_r1 SLICK_R1
+3g_tt_sl_r2 SLICK_R2
+3g_tt_sl_r3 SLICK_R3
+3g_tt_sl_r4 SLICK_R4
+3g_tt_slk_s SLICK_SOFT
+3g_tt_slk_m SLICK_MEDIUM
+3g_tt_slk_h SLICK_HARD
+3a_tt_races RACE_SLICK
+3a_tt_raceg RACE_BERALUR
+3a_tt_racei RACE_INTERMEDIATE
+3a_tt_racew RACE_BASAH
+3a_tt_roads ROAD_SPORT
+3a_tt_roadn ROAD_STANDAR
+3a_tt_hybri HYBRID
+3a_tt_knobb OFF-ROAD
+3a_ttlmaskl Total massa : %.0f kg (%.0f lbs)
+3a_pwrwtmti Rasio tenaga-berat : %.0f W/kg (%.0f bhp/ton)
+3a_wdistrfr Distribusi berat (depan - belakang) : %.1f - %.1f
+3h_ddistrfr Distribusi gaya tekan (depan - belakang) : %.1f - %.1f
+3h_rdistrfr Distribusi kekakuan roll (depan - belakang) : %.1f - %.1f
+3a_trqnmlbr Torsi : %.0f Nm (%.0f lbft) @ %.0f rpm
+3a_pwrkwbhr Tenaga : %.0f kW (%.0f bhp) @ %.0f rpm
+3a_engccfmt Mesin : %.0f cc%s%s%s
+3a_engltfmt Mesin : %.1f liter%s%s%s
+3a_trbochrg turbocharge
+3a_etl_inli segaris
+3a_etl_flat boxer
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl 1 silinder
+3a_etn_2cyl 2 silinder
+3a_etn_3cyl 3 silinder
+3a_etn_4cyl 4 silinder
+3a_etn_5cyl 5 silinder
+3a_etn_6cyl 6 silinder
+3a_etn_8cyl 8 silinder
+3a_etn10cyl 10 silinder
+3a_etn12cyl 12 silinder
+3a_grrat1st Gigi 1 - %.3f
+3a_grrat2nd Gigi 2 - %.3f
+3a_grrat3rd Gigi 3 - %.3f
+3a_grrat4th Gigi 4 - %.3f
+3a_grrat5th Gigi 5 - %.3f
+3a_grrat6th Gigi 6 - %.3f
+3a_grrat7th Gigi 7 - %.3f
+3a_grginfop Info
+3a_grgcolou Warna
+3a_grgbrake Rem
+3h_grgbrktc Rem / TC
+3a_grgsuspe Suspensi
+3a_grgsteer Stir
+3a_grgfinal Transmisi
+3a_grgtyres Ban
+3a_grgdownf Aerodinamika
+3a_grgpasse Penumpang
+3a_pssfront depan
+3a_pssrleft belakang kiri
+3a_pssrmidd belakang tengah
+3a_pssrrght belakang kanan
+3a_whlscolt Roda
+3a_bodycolt Bodi
+3a_texnamet Nama File Skin
+3a_maxperwt Maksimum Per Roda %.0f Nm
+3g_b_bal_fr Keseimbangan Rem (depan) %.0f%%
+3h_engbrred Reduksi Engine Braking %.0f%%
+3h_tcmaxslp TC  Selip Bebas %.1f%%
+3h_tcminspd TC  Kecepatan Minimum %.0f m/s
+3h_abs_text ABS
+3g_ridehred Tinggi Tunggangan
+3a_brkmotrg [Jarak Gerak %.3f m]
+3g_livecamb live (kiri / kanan) %+.2f° / %+.2f°
+3g_stif_val Pegas %.1f N/mm
+3g_damp_val Peredam Kejut %.1f Ns/mm
+3g_bump_val Peredam Kejut (bump) %.1f Ns/mm
+3g_rebd_val Peredam Kejut (rebound) %.1f Ns/mm
+3g_arol_val Anti Roll %.1f N/mm
+3h_power_st Power Steering %.0f%%
+3a_maxlkval Sudut Putar Roda Maksimum %.1f°
+3g_castrval Caster %.1f°
+3a_inclnval Inklinasi %.2f°
+3g_prllsval Stir Parallel %.0f%%
+3g_toeinval Toe In %+.1f°
+3g_camb_abs Camber (kiri / kanan) %+.1f° / %+.1f°
+3g_camb_adj Setelan Camber (kiri / kanan) %+.1f° / %+.1f°
+3h_tyrewarm Suhu pemanasan ban : %.0f°
+3a_fnldvval Rasio Gigi Akhir %.3f
+3g_ftrqsplt Pembagian Torsi Depan %.0f%%
+3g_fvistorq Torsi Kental %.0f Nms/rad
+3g_lock_one Penguncian %.0f%%
+3g_lock_o_o Penguncian (daya / tepi) %.0f%% / %.0f%%
+3h_dpreload Muatan Sementara %.0f Nm
+3g_frnt_txt Depan
+3g_cent_txt Tengah
+3g_rear_txt Belakang
+3g_press_lr Tekanan (kiri / kanan) %.0f kPa / %.0f kPa
+3g_conv_psi psi (kiri / kanan) %.1f psi / %.1f psi
+3g_conv_bar bar (kiri / kanan) %.2f bar / %.2f bar
+3g_fwingang Sudut Sayap Depan %.0f°
+3g_rwingang Sudut Sayap Belakang %.0f°
+3h_tc_title Kendali Traksi (TC)
+3g_stra_txt Strategi
+3g_fuel_sta Muatan bensin saat start : %.0f%%
+3g_fuel_pit Isi bensin saat pit stop : %.0f%%
+3g_tyre_lim Ganti ban : aus > %.0f%%
+3g_tyre_all Ganti ban : setiap saat
+3g_tyre_nev Ganti ban : [ - ]
+3h_rep_damg Perbaikkan kerusakan : %s
+3h_setup_ch Perubahan setup diminta
+3h_handicap Handicap
+3h_hcapnone -
+3h_x_kilogr Massa %d kg
+3h_x_pc_res Tenaga %d%%
+3h_vol_tres Pembatasan Tenaga %.0f%%
+3h_vol_mass Penambahan Massa %.0f kg
+3h_mass_pos Posisi Massa (depan) %.0f%%
+3g_symmetri simetris
+3g_asymmetr asimetris
+3g_configur Konfigurasi
+3g_cpct_x_l Kapasitas bensin : %.1f liter
+3g_optt_x_d Suhu optimal %.0f°
+3g_tst_x_ms Kecepatan uji %.1f m/s
+3g_rearwing Sayap Belakang
+3g_frntwing Sayap Depan
+3g_undrtray Talam Bawah
+3g_bodyaero Bodi
+3g_totlaero Total
+3g_lift_x_n Ankt %.0f N
+3g_drag_x_n Tkn %.0f N
+3g_car_tn_x Putaran stir mobil %.0f° (ujung ke ujung)
+3g_con_tn_x Putaran stir kontroler %.0f°
+3g_live_cmb Camber : %+.2f
+3g_live_inc Inklinasi : %.2f
+3g_live_cst Caster : %.2f
+3g_live_scr Scrub : %.3f
+3g_live_trk Pijak : %.3f
+3g_susrigid Rigid
+3g_sustrail Trailing Arm
+3g_susffork Front Fork
+3g_susmacph MacPherson Strut
+3g_susdwish Double Wishbone
+3g_pit_inst Instruksi Pit
+3g_live_set Pengaturan Langsung
+3g_wheels_x RODA %s
+3g_l_tt_x_x BAN  %s [%s]
+3g_l_pr_psi TEKANAN  %.1f psi [%+.1f psi]
+3g_l_pr_bar TEKANAN  %.2f bar [%+.2f bar]
+3g_l_cr_adj SETELAN CAMBER  %.1f° [%+.1f°]
+3g_l_cr_abs CAMBER  %.1f° [%+.1f°]
+3g_l_wg_ang SAYAP  %.0f° [%+.0f°]
+3h_estcolon Prakira :
+3g_fl_pc_pl %.1f%% per lap
+3g_fl_pc_it %.1f%% dalam tangki
+3h_a3_lower BWH
+3h_a3_upper ATAS
+3h_a3_toein TOE
+3h_a3_ctemp KOPLING
+3a_trckunkn Sirkuit tidak dikenal
+3a_trcknofn Sirkuit tidak ditemukan
+3a_trckobso Sirkuit usang
+3a_fnshload SELESAI
+3a_prgprelo Preloading
+3a_prgldtex Memuat tekstur
+3a_prgpaths Garis/jalur
+3a_prgcolrs Warna
+3a_prgdupli Duplikator
+3a_prglgtsc Skema cahaya
+3a_prgrdobs Membaca objek
+3a_prglgtin Info pencahayaan
+3a_prgbmptx Tekstur bump
+3a_prginicl Inisialisasi warna
+3a_prgchpts Cek titik
+3a_prgextra Data extra
+3a_prgstobs Objek start
+3a_prgmapsq Petak map
+3a_prgpthin Inisialisasi garis
+3a_prgpthad Penyesuaian garis
+3a_prgrebld Membangun ulang
+3g_prggener Membangkitkan
+3a_spcpres1 (tekan 1)
+3a_autojblk Tidak bisa ikut serta : Start terblokir
+3a_xcomplvt %s^8 menyelesaikan vote
+3a_maxgcarx Max mobil tamu : %d
+3a_maxhcarx Max mobil host : %d
+3a_upc_male %s^8 mengubah kontrolernya
+3a_upc_fmal %s^8 mengubah kontrolernya
+3a_upc_unkn %s^8 mengubah kontrolernya
+3a_x_no_car %s^8 tidak memiliki mobil
+3a_x_alredy %s^8 sudah memiliki mobil
+3a_x_lftpot %s^8 meninggalkan pit
+3a_w_rd_rly ^6Peringatan : Ban jalanan di sirkuit rallycross
+3a_w_rly_rd ^6Peringatan : Ban rallycross di sirkuit jalanan
+3a_unkcdisc Mobil tidak dikenal - tamu terputus
+3a_modcdisc Mobil dimodifikasi - tamu terputus
+3a_nocrukid Tidak dapat menambah info mobil - id tidak dikenal
+3a_xrenamex Nama %s^8 diubah menjadi %s
+3g_xtakovrx %s^8 mengambil alih kemudi %s
+3g_xwantuto %s^8 ingin Anda mengambil alih kemudi
+3g_xwantsto %s^8 ingin mengambil alih kemudi Anda
+3g_oswapend Anda hanya dapat mengganti pengemudi saat pit-stop selesai
+3a_nosharnm Tidak bisa memiliki nama yang sama dengan pengemudi lain
+3a_trkloadd Sirkuit termuat
+3a_x_pitted %s^8 masuk pit
+3g_x_pitstp %s^8 melakukan pit stop
+3a_x_connec %s^8 terhubung
+3g_x_blkmsg %s^8 memblokir pesan
+3g_x_unblkm %s^8 membuka blokir pesan
+3a_newgconn Tamu baru sedang menghubung
+3a_gfailcon Tamu baru gagal menghubung
+3g_waitplyc Mohon menunggu - tamu sedang menghubung
+3h_waitbuff Menghindari buffer overflow
+3a_xss_male %s^8 mengirim setup-nya
+3a_xss_fmal %s^8 mengirim setup-nya
+3a_xss_unkn %s^8 mengirim setup
+3a_packs_ps Paket Per Detik %d
+3a_novotepg Tidak ada vote yang sedang berlangsung
+3h_vote_kic %s^8 vote untuk kick %s^8 (%s^8) [%d/%d]
+3h_vote_ban %s^8 vote untuk ban %s^8 (%s^8) [%d/%d]
+3a_x_tmdout %s^8 time out
+3a_lostcn_x Kehilangan koneksi %s^8
+3a_x_discon %s^8 terputus
+3g_x_kicked %s^8 di-kick
+3g_x_banned %s^8 di-ban
+3g_skinnotf Skin mobil Anda tidak ditemukan di ^7www.lfsworld.net
+3g_helmnotf Skin helm Anda tidak ditemukan di ^7www.lfsworld.net
+3g_updatset Pengaturan diperbarui
+3g_fastlxxx Lap tercepat : %s oleh %s^8 (%s)
+3g_no_reset Me-reset mobil tidak diizinkan pada host ini
+3g_cant_res Tidak bisa me-reset - %s
+3g_too_dang terlalu berbahaya
+3g_could_ha dapat membentur mobil lain
+3g_could_hr dapat membentur mobil yang baru di-reset
+3g_would_ye akan menimbulkan bendera kuning
+3a_noqual_x Tidak bisa kualifikasi - %s
+3a_qulfauto Autocross
+3a_qulfprac Sesi latihan
+3a_qulfnote Tidak diaktifkan
+3a_no_x_plc Tidak dapat %s - tamu sedang menghubung
+3a_no_x_cht Tidak dapat %s - mengganti sirkuit
+3g_no_x_car Tidak dapat %s - mobil sedang berada di sirkuit
+3a_cf_swpsd tukar posisi
+3a_cf_gopit pit
+3a_cf_chqul mengubah waktu kualifikasi
+3a_cf_chlap mengubah jumlah lap
+3a_cf_chwin mengubah kecepatan angin
+3b_cf_finfo mengubah info
+3a_crestart mulai balapan
+3a_cntrpits masuk pit
+3a_cspectat bergabung ke spektator
+3a_cantjoin ikut serta
+3a_cantleav tinggalkan host
+3a_obsolvid Replay usang
+3a_vidlater Replay dibuat dengan versi baru
+3h_hls_hlvc HLVC
+3h_hls_inva TIDAK SAH
+3h_hls_cust CUSTOM
+3a_htlpinvl Hot lap tidak sah (%s)
+3a_hli_grnd tanah
+3a_hli_wall dinding
+3a_hli_obje objek
+3a_hli_wron salah jalan
+3h_hli_spee ngebut
+3a_ptp_locl lokal
+3a_ptp_remt remote
+3a_ptp_lcai ai (L)
+3a_ptp_rmai ai (R)
+3a_rsk_noob PEMULA
+3a_rsk_lrnr AMATIR
+3a_rsk_okok OK
+3a_rsk_quik VETERAN
+3a_rsk_prof PRO
+3a_x_finish %s^8 finish
+3a_x_finplc %s^8 finish di %s
+3g_x_fin1be %s^8 finish 1 lap di belakang
+3g_x_finxbe %s^8 finish %d lap di belakang
+3g_x_conplc Urutan akhir %s^8 adalah %s
+3g_x_disqua %s^8 didiskualifikasi
+3a_x_wonrac %s^8 memenangkan balapan
+3a_max3locl Maksimum 3 pengemudi lokal
+3a_fnshuncl tak terklasifikasi
+3a_fnsh_1st posisi 1
+3a_fnsh_2nd posisi 2
+3a_fnsh_3rd posisi 3
+3a_fnsh_4th posisi 4
+3a_fnsh_5th posisi 5
+3a_fnsh_6th posisi 6
+3a_fnsh_7th posisi 7
+3a_fnsh_8th posisi 8
+3a_fnsh_9th posisi 9
+3a_fnsh10th posisi 10
+3a_fnsh11th posisi 11
+3a_fnsh12th posisi 12
+3a_fnsh13th posisi 13
+3a_fnsh14th posisi 14
+3a_fnsh15th posisi 15
+3a_fnsh16th posisi 16
+3g_fnsh17th posisi 17
+3g_fnsh18th posisi 18
+3g_fnsh19th posisi 19
+3g_fnsh20th posisi 20
+3g_fnsh21st posisi 21
+3g_fnsh22nd posisi 22
+3g_fnsh23rd posisi 23
+3g_fnsh24th posisi 24
+3g_fnsh25th posisi 25
+3g_fnsh26th posisi 26
+3g_fnsh27th posisi 27
+3g_fnsh28th posisi 28
+3g_fnsh29th posisi 29
+3g_fnsh30th posisi 30
+3g_fnsh31st posisi 31
+3g_fnsh32nd posisi 32
+3a_wlcm_lfs Selamat datang di Live for Speed
+3a_agre_lfs Perjanjian
+3a_overwrex Timpa file?
+3g_deleteex Hapus file?
+3g_newnamef Ubah nama file
+3g_filealre Nama file sudah ada
+3g_cnotfind Tidak dapat menemukan file
+3a_layoutsv Masukkan nama layout untuk DISIMPAN
+3a_windocon Window saat menghubung :
+3a_cancelbt batal
+3a_backbutt kembali
+3a_capitlok OK
+3a_capitlgo GO!
+3a_invldstr tidak sah
+3a_cpfinish FINISH
+3a_cpwinner JUARA
+3a_namepass Nama Pengguna dan Password
+3a_validnam Anda harus memasukkan nama pengguna yang sah
+3a_validpas Anda harus memasukkan password yang sah
+3a_passmin8 Password harus memiliki minimal 8 huruf
+3a_shifttyp Mode pernseling :
+3a_autogear Pernseling otomatis :
+3a_notiming - waktu lap tidak akan dihitung
+3a_stilload Masih memuat sirkuit
+3a_waitlist Menunggu daftar host
+3a_wt_ginfo Menunggu informasi host
+3a_connmast Menghubung ke server master
+3a_waitmrep Menunggu balasan dari server master
+3a_waithrep Menunggu balasan dari host
+3a_waitinfo Menunggu informasi
+3a_masterro Error saat menunggu balasan
+3a_mnoreply Tidak ada balasan dari server master
+3a_waitginf Menunggu informasi tamu
+3a_waitpinf Menunggu informasi pengemudi
+3a_waitmsgs Menunggu pesan pertama
+3a_connhost Menghubung ke host
+3a_conn_udp Membuat koneksi UDP
+3a_openserv Membuka socket server
+3a_unexmstr Paket master tak terduga
+3a_unexsrvr Paket server tak terduga
+3a_unexgest Paket tamu tak terduga
+3a_numg_oob Jumlah tamu melebihi batas
+3a_errrhost Error saat membalas ke host
+3a_unextrak Pergantian sirkuit tak terduga
+3a_unkntrak Error sirkuit tidak dikenal
+3a_unexpack Ukuran paket tak terduga
+3a_unexrepl Balasan tak terduga
+3a_gmnmused Nama host sudah ada yang dipakai
+3a_errmthrd Tidak dapat membuat thread master
+3a_lostmast Kehilangan koneksi ke server master
+3a_losthost Kehilangan koneksi ke host
+3g_notisync Gagal sinkronisasi awal
+3g_lostsync Kehilangan sinkronisasi dengan host
+3a_connecto Koneksi time out
+3a_noconnsl Tidak ada slot koneksi yang tersedia
+3a_nookpack Tidak menerima OK
+3a_waitfook Menunggu OK
+3a_waittrak Menunggu informasi sirkuit
+3a_notrakpk Tidak menerima informasi sirkuit
+3a_loadtrak Memuat sirkuit
+3a_chglight Mengubah pencahayaan
+3a_ply_join Tamu sedang ikut serta
+3a_nochrace Tidak dapat mengganti sirkuit saat balapan
+3g_trnoallo %s tidak diaktifkan di host ini
+3a_chgtrack Mengganti sirkuit
+3h_welcomex Selamat datang di Live for Speed %s
+3a_small_no tidak
+3a_smallyes ya
+3h_smallaut auto
+3h_smallnev tak pernah
+3h_smallask tanya
+3h_smallalw selalu
+3a_smalloff off
+3a_smalreal nyata
+3a_smalvrtl virtual
+3a_smalleft kiri
+3a_smalrght kanan
+3a_smalnone [ - ]
+3a_smaltext teks
+3a_smallall semua
+3a_smallman pria
+3a_smallwmn wanita
+3h_smallb16 16 bit
+3h_smallb32 32 bit
+3a_smlnobrk [tidak]
+3a_smlysbrk [ya]
+3a_smlofbrk [off]
+3a_smlonbrk [on]
+3a_actobjct objek
+3a_actstart posisi start
+3a_actfinsh garis finish
+3a_actchck1 checkpoint 1
+3a_actchck2 checkpoint 2
+3a_actchck3 checkpoint 3
+3g_actcircl lingkaran
+3a_actnofin Tidak ada garis finish
+3a_actnochk Tidak ada checkpoint
+3a_actfnnoc Garis finish tetapi tidak ada checkpoint
+3a_accpxnof Checkpoint %d tidak ditemukan
+3a_aconechk Autocross : 1 checkpoint
+3a_acxchckp Autocross : %d checkpoint
+3a_noloadsk Tidak dapat memuat skin :
+3a_wrngfltp Salah jenis file
+3a_cnocolon Tidak dapat membuka file :
+3a_outcnopn Output : Tidak dapat membuka file
+3d_outnoply Output : Mobil pengemudi tidak ditemukan
+3d_outstart Output : Lap dimulai
+3d_outfinis Output : Selesai
+3a_corruptf File rusak
+3a_filenohc File gagal memeriksa header :
+3g_filetoos File terlalu pendek :
+3g_filecorr File rusak :
+3g_err_read Error saat membaca file :
+3g_notpcmwv Wave tidak tampak seperti PCM :
+3g_srnotsup Sample rate tidak didukung :
+3g_wv_mo_st Wave bukan mono ataupun stereo :
+3g_wavemb16 Wave bukan 16-bit :
+3g_wavetool Wave terlalu panjang :
+3a_latervfl File dibuat dengan versi yang lebih baru :
+3a_nocrtfil Tidak dapat membuat file :
+3a_votecanc Vote dibatalkan
+3a_nocrtmpr Tidak dapat membuat file MPR
+3a_savedmpr Replay MP disimpan -
+3a_nocrtspr Tidak dapat membuat file SPR
+3a_savedspr Replay SP disimpan -
+3a_nornmspr Tidak dapat mengubah nama SPR -
+3a_accesden Akses ditolak
+3a_invalchr Huruf tidak sah
+3a_notfound Tidak ditemukan
+3a_unknowne Error tidak dikenal
+3g_downcanc Download dibatalkan
+3g_filesize Salah ukuran file
+3g_highresd Skin resolusi tinggi ter-download :
+3g_nolfswcr Kredit LFS World tidak mencukupi untuk skin resolusi tinggi
+3g_dbnotava Database skin resolusi tinggi tidak tersedia
+3a_entermsg Tulis pesan
+3g_seldefcp Pilih halaman kode standar
+3a_ctabshwr CTRL + TAB - tampilkan hasil
+3a_shf8nwdb SHIFT + F8 - network debug - %s
+3a_newvalfx Masukkan nilai baru untuk %s
+3a_valtoolo Nilai baru terlalu rendah
+3a_valtoohi Nilai baru terlalu tinggi
+3a_endoqual KUALIFIKASI SELESAI
+3a_ctrcclip CTRL + C - mouse dijepit ke
+3a_ctrcfree CTRL + C - mouse bebas saat dalam
+3a_windotxt window
+3a_fullstxt full-screen
+3g_not_demo tidak tersedia dalam DEMO
+3h_noraceln tampilan racing line tidak tersedia
+3g_time_loc lokal
+3g_time_utc GMT
+3a_namelong Nama terlalu panjang
+3a_noconnms Tidak dapat menghubung ke server master
+3a_wrninsta Peringatan : instansi lain dari LFS sedang berjalan
+3g_lfsbuyon Live for Speed - beli online - ^7www.lfs.net
+3g_insimnop Insim belum dibuka
+3g_comguest Perintah untuk tamu multiplayer
+3g_comentry Perintah hanya untuk layar entri
+3g_comsetup Perintah untuk layar setup game
+3g_comnoded Perintah bukan untuk host terdedikasi
+3g_unknwnai Pengemudi AI tidak dikenal
+3g_drv_alrd Pengemudi sudah berada dalam balapan
+3g_drv_noin Pengemudi tidak berada dalam balapan
+3g_setup_nf Setup tidak ditemukan
+3g_colournf Warna tidak ditemukan
+3g_scrtooma Script terlalu banyak
+3g_scrtoolo Script terlalu panjang
+3g_scrempty Script kosong
+3g_un_axs_f Fungsi sumbu tidak dikenal
+3g_un_key_f Fungsi tombol tidak dikenal
+3g_un_btn_f Fungsi tombol tidak dikenal
+3g_xlnxtool %s : baris %d terlalu panjang
+3g_x_ln_x_x %s : baris %d - %s
+3g_cantopen Tidak dapat membuka : %s
+3g_notallow Tidak diizinkan : %s
+3h_cp_latin Latin 1
+3h_cp_cente Eropa Tengah
+3h_cp_turki Turki
+3h_cp_balti Baltik
+3h_cp_japan Jepang
+3h_cp_cyril Sirilik
+3h_cp_greek Yunani
+3h_cp_tr_ch Cina (Tradisional)
+3h_cp_si_ch Cina (Sederhana)
+3h_cp_korea Korea
+3a_hostfull Host penuh
+3a_hostload Host sedang memuat sirkuit
+3a_plyrconn Tamu telah sedang menghubung
+3g_plydisco Tamu sedang memutuskan koneksi
+3h_racstart Balapan sedang dimulai
+3a_unauthcn Koneksi tidak diizinkan
+3a_useronli Nama pengguna sedang online
+3h_userband Nama pengguna saat ini sedang diblokir
+3a_usernofd Nama pengguna Anda tidak ditemukan
+3a_pwnomtch Password GAME tidak cocok
+3g_pwneeded Anda perlu mengatur password GAME
+3h_unlkused Semua aktivasi untuk minggu ini sudah digunakan
+3h_unpwconf Nama pengguna dan password sudah dikonfirmasikan
+3a_unknwerr Error tidak dikenal
+3a_carnomtc Mobil tidak cocok dengan mobil host
+3a_nodbljon Tidak boleh bergabung 2 kali ke host internet
+3a_hlostmst Host telah kehilangan koneksi master
+3a_wrngpass Password salah
+3a_prvreqps Host pribadi memerlukan password
+3a_usrunknw Nama pengguna tidak dikenal
+3a_usrnotol Pengguna tidak ditemukan online
+3a_usrolhid Pengguna sedang online di host tersembunyi
+3g_usrol_s1 Pengguna sedang online di host S1
+3g_usrol_s2 Pengguna sedang online di host S2
+3g_usrol_s3 Pengguna sedang online di host S3
+3a_hostrefu Host menolak koneksi
+3a_hstdiffv Host beda versi
+3a_hstdiffc Host memiliki kode game yang berbeda
+3a_hstis_s1 Host khusus Live for Speed S1
+3g_hstis_s2 Host khusus Live for Speed S2
+3g_hstis_s3 Host khusus Live for Speed S3
+3a_hstisdmo Host khusus Live for Speed DEMO
+3a_hstunknr Respon tidak dikenal dari host
+3a_hstnomst Host tidak ditemukan di server master
+3a_nameused Nama sudah ada yang dipakai
+3a_racefull Balapan sudah penuh
+3g_nomidjoi Tidak bisa ikut serta di pertengahan balapan pada host ini
+3b_usermeet Pengguna sedang berada di ruang chat
+3b_unkncomm Perintah tidak dikenal
+3h_unknwver Versi tidak dikenal
+3b_reqparam Perintah ini memerlukan 1 parameter
+3b_req2pars Perintah ini memerlukan 2 parameter
+3e_notenpar Parameter tidak mencukupi
+3b_unknwtrk Parameter sirkuit tidak dikenal
+3e_unknwcar Parameter mobil tidak dikenal
+3b_unoadmin Anda tidak memiliki hak admin
+3b_kbinvalu Nama pengguna tidak sah
+3b_invalpar Parameter tidak sah
+3g_ptoolong Parameter terlalu panjang
+3g_notfound File tidak ditemukan
+3e_setuponl Perintah hanya untuk layar setup
+3e_axnofind Tidak dapat membuka layout
+3e_axnoneav Tidak ada layout yang ditemukan untuk sirkuit ini
+3e_kbnoload Tidak dapat memuat file
+3e_kbnosave Tidak dapat menyimpan file
+3g_tooearly Terlalu awal untuk restart balapan
+3g_pplracin Beberapa orang masih balapan
+3h_notrxudp Host tidak menerima paket UDP
+3h_nomultij Menghindari permintaan ikut serta ganda
+3h_modreqpw Host yang dimodifikasi memerlukan password
+3h_invalidu Nama pengguna tidak sah
+3h_pe_unknw ...

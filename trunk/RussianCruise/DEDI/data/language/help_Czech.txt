@@ -1,0 +1,255 @@
+LFS HELP file (Czech)
+Translated by: Chaos, Flame CZE, Lesza
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Vítejte v Live for Speed!^8
+
+Pro uívání tohoto softwaru je nutné souhlasit s následujícími podmínkami:
+
+- Live For Speed je v neustálém vıvoji. Nìkteré souèásti programu mohou bıt kdykoli pøidány, vylepšeny nebo odstranìny. Mohou bıt implementovány nìkteré funkèní, ale nekompletní èásti programu pro rozšíøení moností a obsahu simulátoru.
+
+- Na tento program se nevztahují ádné záruky.
+
+- Tento program instalujete a pouíváte na vlastní riziko. Vıvojáøi Live for Speed nemohou pøijmout jakoukoli odpovìdnost za jakékoli zranìní, které by mohly nastat bìhem uívání tohoto programu, ani odpovìdnost za jakékoli poškození vašeho systému vèetnì ztracenıch dat nebo poškození hardwaru.
+
+- DEMO obsah je pøístupnı všem, zdarma. UZAMÈENİ obsah je pøístupnı pouze uivatelùm s pøíslušnou licencí. Je pøísnì zakázáno se pokoušet jakkoli proniknout k uzamèenému obsahu nebo komukoli pomáhat ve zpøístupnìní obsahu jinak ne zakoupením licence a následnım pouitím obrazovky slouící k odemèení hry pøímo ve høe.
+
+^7Dìkujeme.^8
+\con_wind
+Toto je prevence proti dvìma monım situacím, které mohou nastat na nìkterıch poèítaèích pøi bìhu hry v celoobrazovkovém reimu.
+
+1) Pokud pouíváš osobní firewall, mùe se ti pøi pokusu o pøipojení do online hry zobrazit varovná zpráva firewallu.
+
+2) Nìkteré poèítaèe mohou zobrazit dialogové okno pøipojení pøi pokusu o pøipojení na internet.
+
+Tyto zprávy mohou na nìkterıch poèítaèích zpùsobit pád hry, pokud bìí v celoobrazovkovém reimu, take pokud je tato volba zapnuta, zmenší se hra doèasnì do okna.
+
+Pokud tvùj poèítaè pøi pøipojování nezobrazí ádné zprávy, mùeš tuto volbu bez obav vypnout.
+\host_pw
+Nìkteré servery vyadují zadání hesla a jsou pojmenovány jako soukromé.
+
+Pokud se pøipojuješ na soukromı server, musíš do této kolonky zadat heslo.
+
+Veøejné servery heslo nevyadují - v tom pøípadì si kolonky Heslo na server nemusíš všímat.
+\game_nm
+^7Veøejnı server -^8 tento název se zobrazí v seznamu serverù.
+
+^7Soukromı server -^8 název dovolí tvım pøátelùm najít server buï pomocí volby "Pøipojit se na konkrétní server" nebo zobrazením skrytıch serverù v seznamu serverù.
+\ip_name
+^3Volby:
+
+^7místní sí -^8 mùeš se pøipojit na server na místní síti zadáním IP adresy hostitele.
+
+^7internet -^8 mùeš se pøipojit na server na internetu zadáním názvu serveru.
+\host_ip
+Mùeš se pøipojit na server umístìnım na zvláštním hostitelském poèítaèi v místní síti.
+
+IP adresa je unikátní èíslo, které je napsáno jako ètyøi bloky èísel oddìlené tøemi teèkami.
+
+Klikni na tlaèítko a zadejte IP adresu poèítaèe, na kterı se chceš pøipojit.
+
+IP adresu poèítaèe lze zjistit dvìma zpùsoby:
+
+1) Spus WINIPCFG z menu Start > Spustit... .
+2) Spus IPCONFIG z Pøíkazového øádku.
+\host_port
+Kdy se pøipojuješ pøímo na IP adresu, musíš znát jak IP adresu, tak port, kterı server pouívá.
+
+Server mùe pouívat základní port 63392, nebo také jiné èíslo portu zvolené osobou zakládající server.
+
+Mùe to bıt buï základní hodnota, nebo vysoké èíslo niší ne 65536.
+\host_nm
+Mùeš se pøipojit na server bìící na konkrétním poèítaèi na internetu.
+
+Pro vyhledání hry podle jména zadej do této kolonky poadované jméno.
+
+Jména serverù vám dovolí pøipravit online setkání s kamarádem bez nutnosti vyhledávání v seznamu serverù.
+\game_pw
+^7Soukromı server -^8 do kolonky zadej heslo.
+
+^7Veøejnı server -^8 kolonku ponech prázdnou.
+\use_master
+Hlavní server je speciální program bìící na poèítaèi umístìném v internetu. Obsahuje seznam serverù, které právì bìí, a dovoluje vám zaloit vlastní server nebo se pøipojit na jeden z ji existujících serverù.
+
+^3Volby:
+
+^7Místní^8 - tvùj server nebude umístìn na hlavním serveru. Ostatní hráèi se mohou pøipojit kliknutím na tlaèítko "Pøipojit se na konkrétní server", zvolením volby "místní sí" a následnım zadáním IP adresy tvého poèítaèe.
+
+^7Internet^8 - tvùj server bude umístìn na hlavním serveru a zobrazen v seznamu serverù.
+
+^7Skryté^8 - tvùj server bude umístìn na hlavním serveru, ale nebude zobrazen v seznamu serverù. Ostatní hráèi se k tobì mohou pøipojit kliknutím na tlaèítko "Pøipojit se na konkrétní server", zvolením volby "internet" a následnım zadáním jména tvého serveru.
+
+^3Poznámka:^8 Pokud je tvùj poèítaè k internetu pøipojen nepøímo (pøes sdílení linky, nebo pøes podnikovou sí s firewallem), budeš pro zprovoznìní voleb "internet" a "skryté" potøebovat otevøít vhodné TCP a UDP porty.
+\game_ip
+Pokud je potøeba, mùeš specifikovat IP adresu, kterou chceš, aby tvùj hostitelskı server pouíval. Toto se hodí, pokud má poèítaè více ne jednu dostupnou IP adresu.
+
+Pokud ponecháš tuto kolonku prázdnou, hostitelskı server bude pouívat jednu z dostupnıch IP adres.
+\admin_pass
+Mùeš nastavit speciální heslo pro administrátory.
+
+Pokud se host pøipojí pomocí tohoto speciálního hesla a ne pomocí hesla standardního, mùe server ovládat speciálními textovımi pøíkazy. Pro více informací si prosím pøeèti soubor "README.txt", odstavec "Host commands".
+\game_port
+Mùeš zvolit, kterı TCP a UDP port chceš pouít pro svùj server. Díky tomu mùeš provozovat více ne jeden LFS DEDI server na jednom poèítaèi.
+
+Pouij základní hodnotu 63392 nebo zvol vysoké èíslo niší ne 65536.
+\master_help
+Programu se nepodaøilo pøipojit na hlavní server.
+
+To mùe mít rùzné pøíèiny:
+
+1) Pokud máš PC chránìno firewallem, mùeš mít zablokovanou komunikaci.
+2) Pøipojení k hlavnímu serveru z tvého ISP mùe bıt doèasnì znemonìno.
+3) Hlavní server není moná v provozu z dùvodu technického problému.
+
+Prosím, zjisti si stav hlavního serveru na:
+
+^7www.lfs.net^8 nebo ^7www.lfsforum.net^8
+\modem_type
+Na tvém poèítaèi mùeš provozovat hostitelskı server s rùznım poètem hráèù, jejich poèet závisí na tvé rychlosti uploadu.  Ta zase závisí na typu modemu a na rychlosti, kterou ti dovoluje vyuít poskytovatel pøipojení.
+
+Prosím zvol si svùj typ modemu nebo vyber volbu "vlastní" a zadej ruènì rychlost uploadu v kilobitech za sekundu (kb je bìnì uívaná jednotka rychlosti v digitálních komunikacích).
+
+^7Pøeddefinované typy modemù:^8
+
+- telefonní modem: 56 kb
+- kabelovı modem: download 512 kb / upload 128 kb
+- kabelovı modem: download 1 Mb / upload 256 kb
+\upload_bw
+Pokud není tvùj modem jedním z pøeddefinovanıch, zadej prosím ruènì rychlost uploadu v kilobitech za sekundu (kb/s). Pokud neznáš rychlost uploadu v kb/s, ale znáš rychlost uploadu v kB/s (kilobytech za sekundu), vynásob tuto rychlost èíslem 8, èím získáš rychlost v kb/s.
+
+Tato poloka ti pomùe zvolit nastavení hostitelského serveru tak, aby nepøekroèilo rychlost uploadu.
+\max_guests
+Mùeš nastavit maximální poèet poèítaèù, které se budou moci pøipojit na tvùj hostitelskı server.
+
+^Nejniší moné nastavení:^8 1 - na tvùj server se bude moci pøipojit pouze jedinı hráè.
+^Nejvyšší moné nastavení:^8 15 v DEMU, 47 v S1 a S2
+
+Pro tento poèet je velice dùleitá rychlost uploadu, kterou tvùj modem disponuje.
+\max_cars
+Mùeš nastavit maximální poèet aut, která se budou moci zúèastnit závodu.
+
+Toto zahrnuje skuteèné i AI jezdce.
+
+^7Nejniší moné nastavení:^8 1 - závodu se bude moci zúèastnit jediné auto.
+^7Nejvyšší moné nastavení:^8  12 v DEMU, 28 v S1 a S2
+
+Pro tento poèet je velice dùleitá rychlost uploadu, kterou disponuje tvùj modem.
+\guest_cars
+Mùeš nastavit maximální poèet aut, která bude moci kadı host pøidat do závodu.
+
+Toto zahrnuje skuteèné i AI jezdce.
+
+^7Nejniší moné nastavení:^8 0 - hosté mohou závod sledovat, ale nemohou se do nìj zapojit.
+^7Nejvyšší moné nastavení:^8 3 - kadı host mùe zapojit a 3 AI jezdce nebo 1 skuteèného (sám sebe) a 2 AI.
+\host_cars
+Mùeš nastavit maximální poèet aut, která bude moci hostitel pøidat do závodu.
+
+Toto zahrnuje skuteèné i AI jezdce.
+
+^7Nejniší moné nastavení:^8 0 - hostitel mùe závod sledovat, ale nemùe se do nìj zapojit.
+^7Nejvyšší moné nastavení:^8 3 - hostitel mùe zapojit a 3 AI jezdce nebo 1 skuteèného (sám sebe) a 2 AI.
+
+Zmìna této poloky se projeví na dostupné uploadové kapacitì.
+\max_packs
+Toto je maximální poèet paketù zaslanıch za sekundu kadım autem.
+
+^7Nejniší moné nastavení:^8 3 pakety za sekundu.
+^7Nejvyšší moné nastavení:^8 6 - jemnìjší pohyb - vyaduje dvojnásobnou rychlost uploadu i rychlost CPU.
+\ded_host
+Zaloit hru lze jako standardní hostitel nebo jako tzv. "dedicated host" - dedikovanı hostitel.
+
+^7standardní hostitel:^8 Mùeš hrát hru podobnì jako v módu Offline hra a ostatní hráèi na internetu se k tobì budou moci pøipojit.
+
+^7"dedicated host":^8 Kvùli speciálnímu programu, kterı nezobrazuje grafiku a nepoèítá fyziku, si takto nemùeš zahrát.  Je to však nejlepší volba, pokud nechceš hrát na hostitelském poèítaèi a místo toho se chceš pøipojit z poèítaèe jiného. K chodu dedikovaného serveru mùeš pouít daleko ménì vıkonnı poèítaè.
+\admin_slots
+Mùeš rezervovat nìkteré z monıch pøipojení pro administrátory.
+
+^Nejniší moné nastavení:^8 0 - ádnı slot nebude rezervován pro adminy.
+^Nejvyšší moné nastavení:^8 8 - nebo o jeden ménì ne maximální poèet hostù
+
+Toto nastavení umoòuje, e se mùeš na svùj server vdy pøihlásit, pokud máš nastavené administrátorské heslo.
+\skin_info
+Aby LFS automaticky stahovalo skiny ve vysokém rozlišení, musíš mít nìjakı kredit na LFS Worldu.
+
+LFS World kreditem je mínìn pozitivní zùstatek na Vašem LFS úètu.
+
+Pro vyuití této sluby lze uèinit platbu na ^7www.lfs.net^8 nebo ^7www.lfsworld.net^8, nebo pouít voucher.
+
+Za kadou^3 £1 ^8kreditu si mùeš stáhnout^3 2000 ^8skinù. Minimální platba je £3.
+
+^7Jak to funguje:^8
+
+Musíš mít na úètu alespoò £1 LFS World kreditu. Kdy poprvé stáhneš skin ve vysokém rozlišení, bude ti z úètu strena £1 a k úètu pøiøazeno 2000 stáhnutí skinù ve vysokém rozlišení. Po staení 2000 skinù ti bude pøi staení dalšího skinu strena další £1 z úètu a pøiøazeno dalších 2000 stáhnutí.
+
+^7Varování:^8
+
+Skiny ve vysokém rozlišení se stahují déle, déle trvá jejich naètení, kdy jinı závodník opustí boxy, a vyuívají 4× tolik pamìti na grafické kartì. Tato volba se doporuèuje pouze tehdy, pokud máš velmi dobrı poèítaè, grafickou kartu a pøipojení k internetu.
+\skin_help
+^7Skin^8 je speciální obrázek, kterı udává barvy a motivy karoserie vozu nebo helmy.
+
+LFS nabízí systém, kterı automaticky stahuje skiny aut. V online høe jsou skiny ostatních závodníkù automaticky stahovány do tvého poèítaèe a ty pak mùeš jejich skiny vidìt ve høe.
+
+Pokud si chceš vytvoøit vlastní skin, doporuèujeme navštívit ^7www.lfs.net^8 a stáhnout ^7CMX Viewer^8 ze sekce "Additional Downloads". CMX Viewer je speciální program pomáhající s tvorbou skinù. Obsahuje pøedlohy pro všechna auta.
+
+Po uloení skinu do adresáøe ^7skins^8 (uvnitø adresáøe ^7data^8) si jej lze zvolit v garái.
+
+Aby i ostatní hráèi vidìli tvé skiny online, jdi na ^7www.lfsworld.net^8 a nahraj tam své skiny. Poté se ostatním závodníkùm stáhne skin auta do poèítaèe a oni tì uvidí s tvım skinem.
+\user_pass
+Poté, co si vytvoøíš svùj uivatelskı úèet na ^7www.lfs.net^8, mìl(a) bys sem zadat své herní heslo (GAMEpassword).
+
+To ti dovolí pøipojit se do online hry (nebo odemknout obsah plné verze po upgradu své licence).
+\host_mode
+^3Volby:
+
+^7demo -^8 tato volba omezuje tvùj hostitelskı server k hostování hry obsahující pouze obsah demoverze LFS.
+
+^7S1 -^8 po odemèení S1 ti tato volba dovolí hostovat hry s obsahem LFS verze S1.
+
+^7S2 -^8 po odemèení S2 ti tato volba dovolí hostovat hry s plnım obsahem LFS verze S2.
+\user_name
+V pøípadì, e se chceš pøipojit do online hry (nebo odemknout obsah plné verze po upgradu své licence), je tøeba zadat platné uivatelské jméno.
+
+Uivatelskı úèet si lze vytvoøit na adrese ^7www.lfs.net^8 - vyadována je pouze platná e-mailová adresa.
+
+POZNÁMKA: Nikdy tvou e-mailovou adresu neposkytneme tøetí stranì v souladu s platnımi právními pøedpisy.
+\tex_filter
+Textury jsou vykreslovány v rùznıch úrovních detailù závisejících na velikosti, ve které budou zobrazeny na obrazovce. Tyto úrovnì detailù se nazıvají mipmapy. V pøípadì, e je textura vykreslena v menší velikosti (napø. pokud je objekt daleko), je pouita menší mipmapa.
+
+Volba filtrování textur ovlivòuje zpùsob míchání mipmap.
+
+^7ádné:^8 Bilineární filtrování - ádné míchání - bude pouita pouze nejbliší mipmapa
+^71×:^8 Trilineární filtrování - vıslednı obrázek je smíchán ze dvou nejbliších mipmap
+^72×-16×:^8 Anisotropické filtrování - sniuje rozmazání objektù vykreslenıch v nepøímıch úhlech
+
+Anisotropické filtrování (AF) vypadá nejlépe, ale je nároèné na vıpoèet, take bude sníeno FPS.
+Pokud pouíváš AF, dosáhneš lepších vısledkù pøi ménì negativním Mip filtru (posuò posuvníky Mip filtru doprava).
+\mip_bias
+Tyto volby ovlivòují bod pøechodu mezi rùznımi mipmapami textury (úèel mipmap je popsán v nápovìdì pro volbu filtrování textur).
+
+Posuò posuvník doleva pro ostøejší zobrazení a sníení efektu rozmazání.
+Posuò posuvník doprava pro více vyhlazené zobrazení a sníení efektu problikávání.
+
+Kdy jsou objekty vykresleny v nepøímıch úhlech (napø. vzdálenı povrch cesty), má filtrování textur tendenci k pøílišnému rozmazání. Take jsou rùzná nastavení pouita pro rùzné typy povrchù závisející na tom, jak budou pravdìpodobnì sledovány.
+
+^7rozhraní / text:^8 implicitní hodnota -1.0 (není zobrazeno v nepøímıch úhlech)
+^7objekty / stìny:^8 implicitní hodnota -2.0
+^7tráva / kaèírek:^8 implicitní hodnota -3.0
+^7povrch cesty:^8 implicitní hodnota -4.0 (èasto zobrazeno ve velmi nepøímıch úhlech)
+
+Anisotropické filtrování (AF) je pokroèilejší metodou redukce zobrazení povrchù vykreslenıch v nepøímıch úhlech. Pokud zvolíš AF (filtrování textur 2×-16×), dosáhneš lepších vısledkù pøi ménì negativním Mip filtru (posuò posuvníky doprava).
+\comp_full
+Skiny aut a helem obsaené v LFS a také ostatní skiny závodníkù automaticky stahované pøi online høe jsou ukládány ve formátu DDS. DDS je speciální komprimovanı formát, kterı mùe bıt pouit pøímo grafickımi kartami. To dovoluje rychlé naèítání, renderování a menší vyuití operaèní pamìti. Skiny jsou pouity v komprimovaném stavu ve všech pøípadech.
+
+Skiny, které vytvoøíš nebo ruènì stáhneš do sloky se skiny, jsou uloeny ve formátu JPG. Pøestoe je JPG komprimovanı formát, není navren s ohledem na rychlost a nemùe bıt pøímo pouit grafickımi kartami. Tato volba ti umoní pouívat JPG skiny bez konverze do DDS, take neztratíš další detaily. V tomto pøípadì bude JPG skin pøi naètení dekomprimován.
+
+Nekomprimované skiny vyadují více grafické pamìti a sniují FPS, ale jsou vhodné pro poøizování screenshotù ze hry.
+
+^7komprimované:^8 JPG skiny nacházející se ve sloce se skiny budou pøevedeny do formátu DDS a pouity v komprimovaném stavu
+^7plné:^8 JPG skiny nacházející se ve sloce se skiny budou pøi naètení dekomprimovány a zobrazeny jako nekomprimované textury
+\shadow_gen
+Obì volby vytváøejí stejnı vısledek, ale kadá jinım zpùsobem. Doporuèujeme zvolit takovou metodu, pøi které je poèet snímkù za sekundu (FPS) pøi více zobrazovanıch stínech vyšší (napø. v závodì s plnım startovním roštem).
+
+Bìhem testování tvého FPS bys mìl(a) nejdøíve pozastavit hru (P), aby se pøedešlo sníení FPS kvùli vyuití CPU.

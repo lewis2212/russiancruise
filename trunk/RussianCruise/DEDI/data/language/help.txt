@@ -1,0 +1,261 @@
+Live for Speed Help Text
+========================
+
+NOTE : This file is designed to be read from inside Live for Speed
+------
+
+\agreement
+^3Welcome to Live for Speed!^8
+
+In order to use this software, you must agree to the following :
+
+- Live for Speed is in continual development.  Features may be added, updated or removed at any time.  Some functional but incomplete features may be included in order to enhance the variety and content of the simulator.
+
+- This software comes with no warranties of any kind.
+
+- You install and use this software at your own risk.  The developers of Live for Speed can not accept any responsibility for personal injury or damage to your computer system that may arise during the use of the software.
+
+- The DEMO content is given to all people to use, free of charge.  The LOCKED content is for appropriately licensed users only.  You must not make any attempt to gain access to the locked content, or help anyone else to do so, other than by purchasing a license and using the in-game unlocking screen.
+
+^7Thank you.^8
+\user_name
+In order to go online (or unlock the licensed content after a license upgrade) you must enter a valid user name.
+
+You can create a user account at ^7www.lfs.net^8 - only your email address is required.
+
+NOTE : We will never give your email address to anyone else unless we are required by law to give information to an authority.
+\user_pass
+After creating your user account at ^7www.lfs.net^8 you should enter your GAME password here.
+
+This will allow you to go online (or unlock the licensed content after a license upgrade).
+\host_mode
+^3Options :
+
+^7demo -^8 this option restricts your host to the demo content of LFS.
+
+^7S1 -^8 after unlocking S1 this option allows you to start a host with S1 content.
+
+^7S2 -^8 after unlocking S2 this option allows you start a host with full S2 content.
+\con_wind
+This is a precaution for two possible situations that can arise on some computers when running in full-screen mode.
+
+1) If you are running a personal firewall, it may bring up a message when you try to start or connect to an online host.
+
+2) Some computers may bring up a connection dialog box when you try to access the internet.
+
+These messages can cause some computers to appear to lock up if LFS is running full-screen.
+This option prevents this by making LFS go into a window temporarily while connecting to the internet.
+If your computer does not bring up any messages when connecting then you can safely turn off this option.
+\host_pw
+Some hosts are set up to require a password, and are known as private hosts.
+
+If you are connecting to a private host, you must enter the password in this box.
+
+Public hosts do not require a password - don't worry about the password option!
+\game_nm
+^7Public host -^8 enter a name in the box to give your host an identity on the internet.
+
+^7Private host -^8 the name allows your friends to find your host.
+\ip_name
+^3Options :
+
+^7local network -^8 you can join to a local host by typing in the host's IP address.
+
+^7internet -^8 you can join to a host on the internet by typing in the host name.
+\host_ip
+You can connect to a host on a particular computer on the local network.
+
+The IP address is a unique number and is written as 4 numbers separated by 3 full stops.
+
+Click on the button and type in the IP address of the computer you want to join.
+
+Two ways to find out the IP address of a PC :
+
+1) Run WINIPCFG from the start menu.
+2) Run IPCONFIG from a DOS prompt.
+\host_port
+When connecting directly by IP address, you need to know the IP address and the port that the host is using.
+
+It may use the default port 63392 or some other port number chosen by the person running the host.
+
+It will be either the default value or a high number less than 65536.
+\host_nm
+You can connect to a host on a particular computer on the internet.
+
+To search for a host by name, enter its name in the box.
+
+Host names allow you to arrange to meet online without using the List of Hosts.
+\game_pw
+^7Private host -^8 enter a password in the box.
+
+^7Public host -^8 leave the box blank.
+\use_master
+The master server is a special program running on a computer on the internet.  It holds a list of hosts that are currently running and allows you to connect to one of them or start your own.
+
+^3Options :
+
+^7Local^8 - your host will not connect to the master server.  Guests can connect by clicking on "Join specific host", selecting the "local network" option and typing in the IP address of your computer.
+
+^7Internet^8 - your host will connect to the master server and appear on the List of Hosts.
+
+^7Hidden^8 - your host will connect to the master server but will not appear on the List of Hosts.  Guests may connect to your host by clicking on "Join specific host", selecting the "internet" option and typing in your host's name.
+
+^3Note :^8 If your computer is connected indirectly to the internet through internet connection sharing or a business network with a firewall, to use the internet or hidden options, you will need to open the appropriate TCP and UDP ports.
+\game_ip
+If you need to, you can specify the IP address you want your host to use.  This is useful when a computer has more than one available IP address.
+
+If you leave this box blank, the host will use any available IP address.
+\admin_pass
+You can set a special password for administrators.
+
+If a guest joins using this special password instead of the optional host password, he or she can then operate the host remotely using the special text-based host commands.  Please see the README.txt file for more information, in the "Host commands" paragraph.
+\game_port
+You can select which TCP and UDP port you want your host to use.  This can allow more than one LFS dedicated host to run on a single computer.
+
+Use the default value 63392 or choose a high number less than 65536.
+\master_help
+The program was unable to connect to the master server.
+
+This could be for various reasons:
+
+1) If you are protected by a firewall it may have blocked the connection.
+2) It may be temporarily impossible to connect to the master from your ISP.
+3) The master server may not be running due to a technical problem.
+
+Please check the status of the master server at :
+
+^7www.lfs.net^8  or  ^7www.lfsforum.net^8
+\modem_type
+Your computer's ability to run a host with several guests depends on your upload bandwidth.  This in turn depends on your type of modem and the speed of service provided by your internet service provider.
+
+Please select your type of modem or select a "custom" modem and manually enter the upload bandwith in kilobits per second (Kbits is a commonly used measurement of digital communication speeds).
+
+^7Predefined modem types :^8
+
+- phone line modem : 56 Kbit download / 33.6 Kbit upload
+- cable modem : 512 Kbit download / 128 Kbit upload
+- cable modem : 1 Mbit download / 256 Kbit upload
+\upload_bw
+If your modem is not one of the predefined types please manually enter your upload bandwidth in kilobits per second (Kbits/s).  If you don't know your upload speed in Kbits/s but you do know it in Kbytes/s, just multiply by 8 to convert to Kbits/s.
+
+This setting helps you to choose your host settings in such a way that you will not exceed this bandwidth.
+\max_guests
+You can set the number of guests that will be able to connect to your host.
+
+^7Minimum setting :^8 1 - only one guest will be able to join your host.
+
+^7Maximum setting :^8 15 in DEMO, 47 in S1 and S2
+
+This number is important for determining your upload bandwidth requirement.
+\admin_slots
+You can reserve some of your connection slots for administrators.
+
+^7Minimum setting :^8 0 - no slots are kept available for admins.
+
+^7Maximum setting :^8 8 - or one less than the maximum number of guests.
+
+This setting helps to make sure you can always join your own host, if you assign an admin password.
+\max_cars
+You can set the number of drivers that will be able to race.
+
+This includes real and AI drivers.
+
+^7Minimum setting :^8 1 - only one car will be allowed in a race.
+
+^7Maximum setting :^8 12 in DEMO, 32 in S1 and S2
+
+This number is important for determining your upload bandwidth requirement.
+\guest_cars
+You can set the number of drivers that each guest can add to a race.
+
+This includes real and AI drivers.
+
+^7Minimum setting :^8 0 - guests can watch but not join the race.
+
+^7Maximum setting :^8 3 - up to 3 AI drivers or 1 real and 2 AI per guest.
+\host_cars
+You can set the number of drivers that the host can add to a race.
+
+This includes real and AI drivers.
+
+^7Minimum setting :^8 0 - host can watch but not join the race.
+
+^7Maximum setting :^8 3 - up to 3 AI drivers or 1 real and 2 AI drivers.
+
+Reducing this number can reduce your upload bandwidth requirement.
+\max_packs
+This is the maximum number of packets sent per second by each car.
+
+^7Minimum setting :^8 3 packets per second.
+
+^7Maximum setting :^8 6 - smoother / requires double the upload bandwidth / costs cpu.
+\ded_host
+You can start a host in normal or dedicated mode.
+
+^7normal host :^8 You can race on your computer as in single player mode and guests on the internet will be able to join your host.
+
+^7dedicated host :^8 With no graphics displayed and no physics calculated, you cannot race on the host.  This is the best option if you do not wish to race on the host and instead you wish to connect from another computer.  You can use a much less powerful pc to run a dedicated host.
+\tex_filter
+Textures are drawn at various levels of detail depending on the size they are being drawn on the screen.  These levels of detail are called mipmaps.  If a texture is drawn smaller (e.g. when an object is further away) a smaller mipmap is used.
+
+The texture filtering option affects the way mipmaps are blended.
+
+^7none :^8 Bilinear filtering - no blending - only the nearest mipmap is used
+^71x :^8 Trilinear filtering - the resulting image is a blend of the two nearest mipmaps
+^72x - 16x :^8 Anisotropic filtering - reduces blurring of surfaces drawn at oblique angles
+
+Anisotropic filtering (AF) looks best but is expensive to compute so your frame rate will be reduced.
+If you use AF you will get better results with less negative mip bias (move mip bias sliders to the right).
+\mip_bias
+These options affect the transition point between the different mipmaps of a texture (mipmaps are described in the help text for the texture filtering option).
+
+Move the slider left for a sharper appearance and to reduce blurring.
+Move the slider right for a smoother appearance and to reduce shimmering.
+
+When a surface is drawn at an oblique angle (e.g. a distant road surface) the texture filtering tends to cause too much blurring.  So different settings are provided for various types of surface depending on how they are likely to be viewed.
+
+^7interface / text :^8 default mip bias -1.0 (not viewed at oblique angles)
+^7objects / walls :^8 default mip bias -2.0
+^7grass / gravel :^8 default mip bias -3.0
+^7road surfaces :^8 default mip bias -4.0 (often viewed at very oblique angles)
+
+Anisotropic filtering (AF) is a more advanced method of reducing the blurring of surfaces drawn at oblique angles.  If you select AF (texture filtering 2x - 16x) you will get better results with less negative mip bias (move sliders to the right).
+\comp_full
+The car and helmet skins included with LFS, and other racers' skins automatically downloaded when you are online, are saved in the DDS format.  DDS is a special compressed format that can be used directly by graphics cards.  This allows quick loading, fast rendering and less use of memory.  The supplied skins are used in a compressed state in all cases.
+
+However, skins you create or download manually into your skins folder are saved in the JPG format.  Although JPG is a compressed format, it is not designed for speed and cannot be used directly by graphics cards.  This option allows you to use JPG skins without conversion to DDS, so no more detail is lost.  In this case the JPG skin is decompressed on load.
+
+Uncompressed skins use more graphics card memory and reduce frame rate, but can be useful for screen shots.
+
+^7compressed :^8 JPG skins that exist in your skins folder are converted to DDS and used in a compressed state
+^7full :^8 JPG skins that exist in your skins folder are decompressed on load and drawn as uncompressed textures
+\skin_help
+A ^7skin^8 is a special image file giving colour to the exterior of a car or helmet.
+
+LFS has an automatic skin downloading system.  When you race online, the skins of other racers are automatically downloaded onto your computer so you can see their cars and helmets painted individually.
+
+If you would like to make your own skins, we recommend you visit ^7www.lfs.net^8 and download the ^7CMX Viewer^8 from the Additional Downloads section.  The CMX Viewer is a special program to help you make skins.  Templates are included.
+
+After saving a skin in your ^7skins^8 folder (inside the ^7data^8 folder) you can select it in the garage / pits screen.
+
+For other racers to see your skins online, visit ^7www.lfsworld.net^8 and upload your skins.  Then your car's selected skin will be automatically downloaded onto the computers of other racers when they see you online.
+\skin_info
+For LFS to automatically download high resolution skins, you must have some LFS World credit.
+
+LFS World credit means : a positive balance in your LFS account.
+
+To use this service, you can make a payment at ^7www.lfs.net^8 or ^7www.lfsworld.net^8 or use a voucher.
+
+For each^3 £1 ^8of credit you will be assigned^3 2000 ^8skin downloads.  The minimum payment is £3.
+
+^7How it works :^8
+
+You need at least £1 of LFS World credit.  When you first download a high-resolution skin, £1 will be deducted from your account balance and 2000 skin downloads will be allocated to your account.  After downloading 2000 skins, another £1 is deducted and the number of allocated downloads is increased again to 2000.
+
+^7Warning :^8
+
+High resolution skins take longer to download, longer to load up when another racer leaves the pits and use four times the graphics card memory.  This option is only recommended if you have a good computer, graphics card and internet connection.
+\shadow_gen
+These options produce the same result in a different way.  It is best to choose the option that results in the highest frame rate when many shadows are visible, for example a full starting grid.
+
+As usual for graphical frame rate tests, you should pause LFS to avoid physics and sound CPU usage.

@@ -1,0 +1,260 @@
+LFS HELP file (Croatian)
+Translated by: jonnie
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\agreement
+^3Dobrodošli u Live for Speed!^8
+
+Kako biste koristili ovaj program, morate se složiti sa sljedeæim :
+
+- Live for Speed se stalno razvija.  Funkcionalnosti mogu bilo kada biti dodane, izmijenjene, ili uklonjene.  Takoðer mogu biti ukljuèene i neke nepotpune funkcionalnosti, kako bi se poboljšala raznolikost i sadržajnost simulatora.
+
+- Ovaj program dolazi bez bilo kakvih garancija.
+
+- Program instalirate i koristite na vlastitu odgovornost.  Developeri LFS-a ne prihvaæaju nikakvu odgovornost u sluèaju ozljeðivanja ili smrtnog sluèaja koji mogu nastupiti tijekom korištenja ovog programa, niti u sluèaju bilo kakve štete na vašem raèunalu, ukljuèujuæi i ošteæivanje datoteka, gubitak podataka ili štetu na hardveru.
+
+- DEMO sadržaj ovog programa na raspolaganju je za korištenje svima, bez naknade.  Zakljuèani sadržaj programa namijenjen je samo licenciranim korisnicima.  Ne smijete pokušati, niti pomoæi bilo kome drugome da dobije pristup zakljuèanom sadržaju, osim nabavkom licence i korištenjem opcije za otkljuèavanje unutar samog programa.
+
+^7Hvala.^8
+\con_wind
+Ovo je mjera predostrožnosti za dvije moguæe situacije koje se mogu pojaviti na nekim raèunalima tijekom pokretanja igre preko èitavog ekrana.
+
+1) Ako imate pokrenut vlastiti vatrozid, pri pokušaju spajanja na mrežu mogao bi otvoriti prozor s upozorenjem.
+
+2) Pri pokušaju spajanja na internet, na nekim bi se raèunalima mogao otvoriti dijaloški prozor.
+
+U navedenim sluèajevima moglo bi doæi do blokiranja raèunala ako je igra pokrenuta preko èitavog ekrana, tako da ova opcija privremeno prebacuje program u prozor tijekom spajanja.
+
+Ako vaše raèunalo ne javlja nikakva upozorenja tijekom spajanja, ovu opciju slobodno možete iskljuèiti.
+\host_pw
+Neki serveri postavljeni su da zahtijevaju zaporku i nazivaju se privatni serveri.
+
+Ako se spajate na privatni server, morate u ovo polje unijeti zaporku.
+
+Javni serveri ne zahtijevaju zaporku, pa se tada oko ove opcije ne trebate brinuti.
+\game_nm
+^7Javna igra -^8 unesite u polje naziv vaše igre, kako bi se raspoznavala meðu drugima na internetu.
+
+^7Privatna igra -^8 naziv igre omoguæava vašim prijateljima da pronaðu vašu igru.
+\ip_name
+^3Opcije:
+
+^7lokalna mreža -^8 lokalnoj igri možete se pridružiti direktnim upisivanje IP adrese servera.
+
+^7internet -^8 igri na internetu možete se pridružiti upisivanjem naziva igre.
+\host_ip
+Možete se pridružiti igri na odreðenom raèunalu na lokalnoj mreži.
+
+IP adresa sastoji se od 4 broja odijeljenih toèkama.
+
+Kliknite na gumb i unesite IP adresu raèunala kojemu se želite pridružiti.
+
+Ima dva naèina za doznavanje IP adrese raèunala :
+
+1) Pokrenite iz Start menija naredbu WINIPCFG (samo za NT i Win2000)
+2) Pokrenite iz DOS prompta naredbu IPCONFIG.
+\host_port
+Kod spajanja korištenjem IP adrese, trebate znati IP adresu i port na koje koristi server.
+
+Može se koristiti pretpostavljeni port 63392, ali i neki drugi kojega odabere administrator servera.
+
+Stoga æe taj broj biti ili pretpostavljeni 63392, ili neki drugi veliki broj manji od 65536.
+\host_nm
+Možete se spojiti na igru pokrenutu na nekom odreðenom raèunalu na internetu.
+
+Za pronalaženje igre po nazivu, umjesto po IP adresi, unesite traženo ime u ovo polje.
+
+Nazivi igara omoguæavaju dogovaranje s prijateljima za online pronalaženje èak i ako ne znate IP adresu.
+\game_pw
+^7Privatna igra -^8 unesite zaporku u polje.
+
+^7Javna igra -^8 ostavite polje za zaporku prazno.
+\use_master
+Glavni server je poseban program pokrenut na nekom raèunalu na internetu.  Sadrži listu trenutno pokrenutih igara i omoguæava vam da pokrenete novu ili se spojite na neku od postojeæih.
+
+^3Opcije :
+
+^7Lokalno^8 - vaš server neæe se spajati na glavni server.  Ostali igraèi mogu se spajati klikom na "Prikljuèivanje odreðenoj igri", odabirom opcije "lokalna mreža" i unosom IP adrese raèunala.
+
+^7Internet^8 - vaš server spojit æe se na glavni server i bit æe prikazan meðu ostalim igrama na listi.
+
+^7Sakriveno^8 - vaš server spojit æe se na glavni server, ali neæe biti prikazan na listi igara.  Ostali igraèi mogu se spojiti klikom na "Prikljuèivanje odreðenoj igri", odabirom opcije "internet" i upisivanjem imena vaše igre.
+
+^3Napomena :^8 Ako je vaše raèunalo na internet spojeno indirektno, preko dijeljene konekcije ili LAN mreže s vatrozidom, za korištenje opcija "Internet" ili "Sakriveno" trebate otvoriti odgovarajuæe TCP i UDP portove.
+\game_ip
+Ako je potrebno, možete odrediti IP adresu koju želite da vaš server koristi.  Ovo je korisno kada raèunalo ima na raspolaganju više od jedne IP adrese.
+
+Ako ovo polje ostavite prazno, server æe koristiti bilo koju raspoloživu IP adresu.
+\admin_pass
+Možete postaviti posebnu zaporku za administratore.
+
+Ako se gost pridruži korištenjem te zaporke, umjesto opcionalne zaporke za pristup igri, dobiva moguænost upravljanjem serverom korištenjem posebnih tekstualnih naredbi.  Za dodatne informacije pogledajte README.txt datoteku, poglavlje "Naredbe servera".
+\game_port
+Možete odrediti koji TCP i UDP port želite da vaš server koristi.  Tako možete pokrenuti više LFS namjenskih servera na istom raèunalu.
+
+Koristite pretpostavljenu vrijednost 63392 ili neki drugi veliki broj manji od 65536.
+\master_help
+Program se nije uspio spojiti na glavni server.
+
+To može biti iz nekoliko razloga:
+
+1) Ako ste zaštiæeni vatrozidom, on je mogao blokirati povezivanje.
+2) Moguæe je da se privremeno ne možete spojiti na server preko vašeg ISP-a.
+3) Glavni server trenutno možda ne radi zbog tehnièkih problema.
+
+Molimo, provjerite status glavnog servera na :
+
+^7www.lfs.net^8  ili  ^7www.lfsforum.net^8
+\modem_type
+Moguænost vašeg raèunala da pokrene server za više igraèa ovisi o brzini uploada vaše veze.  To opet ovisi o tipu vašeg modema i brzini usluge koju pruža vaš ISP.
+
+Molimo odaberite tip vašeg modema ili odaberite "proizvoljni" modem i ruèno unesite brzinu uploada u kbps.
+
+^7Predefinirani tipovi modema :^8
+
+- telefonski modem : 56 Kbit download / 33.6 Kbit upload
+- kablovski modem (ADSL) : 512 Kbit download / 128 Kbit upload
+- kablovski modem (ADSL) : 1 Mbit download / 256 Kbit upload
+\upload_bw
+Ako vaš modem nije meðu predefiniranim tipovima možete ruèno unijeti brzinu uploada u kbps.  Ako ne znate brzinu u kbps (kilobitovima u sekundi), ali znate brzinu u Kbytes/s (kilobajtovima u sekundi), samo pomnožite taj broj s 8 kako biste dobili brzinu u kbps.
+
+Ove postavke pomažu vam da server podesite na naèin da se ne premaši raspoloživi kapacitet veze.
+\max_guests
+Možete postaviti najveæi dozvoljeni broj raèunala koja se mogu spajati na vaš server.
+
+^7Najmanja postavka :^8 1 - samo jedan igraè moæi æe se spojiti na vaš server.
+
+^7Najveæa postavka :^8 11 za DEMO, 15 za S1, 23 za S2
+
+Ovaj broj važan je za ustanovljavanje potrebne brzine veze.
+\max_cars
+Možete postaviti najveæi broj vozila koja æe se moæi utrkivati.
+
+Ovo ukljuèuje prave i AI igraèe.
+
+^7Najmanja postavka :^8 1 - samo jedno vozilo moæi æe biti na stazi.
+
+^7Najveæa postavka :^8 12 za DEMO, 16 za S1, 20 za S2
+
+Ovaj broj važan je za ustanovljavanje potrebne brzine veze.
+\guest_cars
+Možete postaviti broj vozila koje svaki gost može dodati u utrku.
+
+Ovo ukljuèuje prave i AI igraèe.
+
+^7Najmanja postavka :^8 0 - gost može gledati, ali ne i sudjelovati u utrci.
+
+^7Najveæa postavka :^8 3 - do 3 AI igraèa ili 1 pravi i 2 AI igraèa po gostu.
+\host_cars
+Možete postaviti broj vozila koje server može dodati u utrku.
+
+Ovo ukljuèuje prave i AI igraèe.
+
+^7Najmanja postavka :^8 0 - server može gledati, ali ne i sudjelovati u utrci.
+
+^7Najveæa postavka :^8 3 - do 3 AI igraèa ili 1 pravi i 2 AI igraèa.
+
+Smanjivanje ovog broja može smanjiti granicu za brzinu vaše veze.
+\max_packs
+Ovo je najveæi broj paketa po sekundi koji se šalje za svaki auto.
+
+^7Najmanja postavka :^8 3 paketa po sekundi.
+
+^7Najveæa postavka :^8 6 - glatkija animacija / zahtijeva dvostruko veæu brzinu veze / veæu snagu procesora.
+\ded_host
+Igru možete pokrenuti kao normalni ili kao namjenski server.
+
+^7normalni server :^8 Možete normalno igrati igru, a drugi igraèi na mreži moæi æe vam se pridruživati.
+
+^7namjenski server :^8 Bez grafike i raèunanja fizikalnih modela - na ovakvom serveru ne možete se igrati.  Ovo je najbolja opcija ako ne želite igrati na samom serveru, nego se spajati s drugog raèunala.  Stoga za namjenski server možete koristiti znatno slabije raèunalo.
+\host_mode
+^3Opcije :
+
+^7demo -^8 ova opcija ogranièava vas samo na demo sadržaj LFS-a.
+
+^7S1 -^8 nakon otkljuèavanja S1 licence, ova opcija omoguæava pristup sadržaju nivoa S1.
+
+^7S2 -^8 nakon otkljuèavanja S2 licence, ova opcija omoguæava pristup kompletnom sadržaju.
+\user_pass
+Nakon kreiranja vašeg korisnièkog raèuna na ^7www.lfs.net^8 ovdje biste trebali unijeti vašu zaporku.
+
+To æe vam omoguæiti spajanje online (ili otkljuèavanje licenciranog sadržaja nakon ažuriranja licence).
+\user_name
+Kako biste se spojili online (ili otkljuèali licencirani sadržaj nakon ažuriranja licence) morate unijeti valjano korisnièko ime.
+
+Korisnièki raèun možete kreirati na ^7www.lfs.net^8 - potrebna je samo vaša email adresa.
+
+NAPOMENA : Vašu email adresu neæemo nikome prosljeðivati, osim kada bismo na to bili zakonski obvezani.
+\mip_bias
+Ove opcije utjeèu na toèku prijelaza izmeðu razlièitih mipmapa teksture (mipmape su opisane u objašnjenju opcija filtriranja).
+
+Pomaknite klizaè lijevo za oštriji prikaz i manje zamuæenje.
+Pomaknite klizaè desno za mekši prikaz i manje treperenja.
+
+Kad se površina iscrtava pod oštrim kutom (npr. udaljena površina ceste), tekstura može biti prikazana previše zamuæena.  Radi toga postoje razlièite postavke za razlièite tipove površina, ovisno o kutu gledanja uobièajenom za taj tip površine.
+
+^7suèelje / tekst :^8 default mip bias -1.0 (ne gleda se pod kutom)
+^7objekti / zidovi :^8 default mip bias -2.0
+^7trava / šljunak :^8 default mip bias -3.0
+^7cesta :^8 default mip bias -4.0 (u pravilu se gleda pod oštrim kutovima)
+
+Anizotropno filtriranje (AF) je najnaprednija metoda smanjivanja zamuæenosti prikaza iskošenih površina.  Ako odaberete AF (filtriranje tekstura 2x - 16x) dobit æete bolje rezultate s manje negativnim mip bias postavkama (klizaèi prema desno).
+\tex_filter
+Teksture se iscrtavaju s razlièitim nivoima detaljnosti, ovisno o njihovoj velièini na ekranu. Ti nivoi detaljnosti zovu se mipmape. Ako je tekstura iscrtana u manjoj velièini (npr. ako je objekt udaljen), koristi se manji mipmap.
+
+Opcije filtriranja tekstura utjeèu na naèin spajanja mipmapa.
+
+^7ništa :^8 Bilinearno filtriranje - bez spajanja - koristi se samo najbliži mipmap
+^71x :^8 Trilinearno filtriranje - rezultirajuæa slika spoj je dviju najbližih mipmapa
+^72x - 16x :^8 Anizotropno filtriranje - smanjuje zamuæenje ploha pod oštirm kutom
+
+Anizotropno filtriranje (AF) daje najbolju sliku, ali zahtijeva najviše procesorskog vremena, što može umanjiti ukupni frame-rate. Ako koristite AF, najbolje rezultate æete dobiti s manje negativnim mip bias-om (položaj klizaèa u krajnji desni položaj).
+\skin_help
+^7Tekstura (skin)^8 je posebna slika koja daje boju i uzorak vaše kacige i automobila.
+
+LFS automatski preuzima potrebne teksture kod online igranja.  Kada imate S1 ili S2 licencu, teksture drugih igraèa automatski se preuzimaju na vaše raèunalo, tako da svakog igraèa vidite onako kako se on ili ona želi prikazati.
+
+Ako želite raditi vlastite teksture, preporuèamo posjetu stranici ^7www.lfs.net^8 i preuzimanje aplikacije ^7CMX Viewer^8 sa sekcije ^7Additional Downloads^8.  To æe vam omoguæiti izradu vlastitih tekstura, uz ukljuèene predloške.
+
+Nakon spremanja teksture u vaš ^7skins^8 direktorij (unutar ^7data^8 direktorija), možete ju izabrati na ekranu Garaža / Automobil.
+
+Kako biste drugim online  igraèima omoguæili da vide vašu teksturu, otiðite na stranicu ^7www.lfsworld.net^8 i uploadajte vašu teksturu.  Vaša tekstura sada æe automatski biti preuzeta na raèunala drugih igraèa, kada vas budu vidjeli online.
+\skin_info
+Kako bi LFS automatski preuzimao teksture visoke rezolucije, morate biti licencirani korisnik i imati LFS World kredita.
+
+LFS World krediti znaèi pozitivni saldo na vašem LFS raèunu.
+
+Za korištenje ovog servisa, možete izvršiti plaæanje na stranici ^7www.lfs.net^8 ili ^7www.lfsworld.net^8, ili koristiti voucher.
+
+Za svaku^3 £1 ^8kredita, bit æe vam omoguæeno^3 2000 ^8preuzimanja tekstura.  Najmanji moguæi iznos uplate je £3.
+
+^7Kako to radi :^8
+
+Trebate imati barem £1 LFS World kredita.  Kada prvi puta preuzmete teksturu visoke rezolucije, vaš raèun bit æe umanjen za £1, nakon èega æe vam biti omoguæeno 2000 preuzimanja tekstura.  Nakon 2000 preuzimanja, raèun æe vam ponovno biti umanjen za £1, a broj moguæih preuzimanja bit æe uveæan na 2000.
+
+^7Upozorenje :^8
+
+Za preuzimanje tekstura visoke rezolucije potrebno je više vremena, a zauzimaju i èetverostruko više memorije na grafièkoj kartici.  Ova opcija preporuèa se jedino ako imate dovoljno jako raèunalo, grafièku karticu s dosta memorije i brzu internet vezu.
+\admin_slots
+Odreðeni broj spojnih slotova možete rezervirati za administratore.
+
+^7Najmanja postavka :^8 0 - bez rezervacije admin slotova.
+
+^7Najveæa postavka :^8 8 - ili jedan manje od najveæeg broja gostiju.
+
+Ova opcija osigurava da se uvijek možete spojiti na vlastito raèunalo, ako ste dodijelili admin zaporku.
+\comp_full
+Teksture kacige i vozila ukljuèene u LFS i teksture ostalih igraèa, automatski preuzete kada ste spojeni online, snimaju se u DDS formatu.  DDS je poseban komprimirani format svojstven grafièkim karticama. To omoguæava brzo uèitavanje, brže iscrtavanje i manji utrošak memorije.  Ukljuèene teksture uvijek su u DDS formatu.
+
+Meðutim, teksture koje kreirate sami i koje spremate u direktorij s teksturama, spremaju se u JPG formatu.  Iako je JPG komprimiran, nije optimiran za brzi rad, pa ga grafièka kartica ne može direktno koristiti.  Ova opcija omoguæava korištenje JPG tekstura bez konverzije u DDS, kako se kod rekompresije kvaliteta detalja ne bi umanjila.  U ovom sluèaju JPG tekstura æe nakon uèitavanja biti dekomprimirana.
+
+Nekomprimirane teksture zauzimaju više memorije na grafièkoj kartici i kod prikaza mogu umanjiti broj slièica u sekundi, ali su korisne kod izrade slika ekrana.
+
+^7komprimirano :^8 JPG teksture pretvaraju se u DDS i koriste u komprimiranom obliku
+^7nekomprimirano :^8 JPG teksture dekomprimiraju se nakon uèitavanja i koriste u nekomprimiranom obliku
+\shadow_gen
+Ove opcije postižu isti vizualni rezultat, ali na razlièite naèine. Najbolje je odabrati opciju koja rezultira najvišim brojem slièica u kadrovima s najviše sjena, npr. kod prikaza startne pozicije s mnogo vozila.
+
+Kao i obièno kod testiranja broja slièica, trebate pritisnuti pauzu, kako se procesorska snaga ne bi trošila na raèunanje fizike i zvuka.

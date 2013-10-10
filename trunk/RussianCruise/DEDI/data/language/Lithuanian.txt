@@ -1,0 +1,1720 @@
+LFS Translation file (Lithuanian)
+Translated by: MarioX, mejlus, mxpxun
+
+tx_codepage 1257
+tx_langname Lietuviø
+tx_noun_adj an
+3g_tr_selct Pamokos
+3g_tr_title Pasirink pamokà
+3a_spselect Vienas þaidëjas
+3a_tit_sply Vienas Þaidëjas
+3a_mpselect Þaidimas tinkle
+3a_tit_mply Þaidimas Tinkle
+3a_hlselect Vaþiavimas laikui
+3a_tit_hotl Vaþiavimas Laikui
+3a_opselect Nustatymai
+3g_repl_sel Pakartojimai
+3a_tit_sprs Vieno þaidëjo pakartojimai
+3a_tit_mprs Tinklo pakartojimai
+3g_unlk_lfs Atrakinti Live For Speed
+3g_demorace Demo lenktynininkas
+3h_x_licens %s licenzija
+3a_mode_dmo Demo
+3h_s_coln_s %s : %s
+3g_re_sk_dl Pakartojimo Skin'ø atsisiuntimas
+3g_one_notf Vienas pakartojime naudojamas skin'as, nebuvo rastas tavo kompiuteryje
+3g_sev_notf Keli pakartojime naudojami skin'ai, nebuvo rasti tavo kompiuteryje
+3g_one_down Ar nori atsisiøsti trûkstamà skin'à?
+3g_sev_down Ar nori atsisiøsti trûkstamus skin'us?
+3a_exit_btn iðeiti
+3a_next_btn toliau
+3g_agre_btn sutinku
+3a_exitprog Iðeiti ið þaidimo?
+3a_userfind Ávesk ieðkomo vartotojo vardà
+3h_num_tips %d Patarimai
+3h_tip_pesc Norëdamas pamatyti nustatymø sàraðà, þaisdamas arba nustatymo meniø lange spausk ^7ESC^8
+3h_tip_prst Norëdamas paraðyti tinklo þaidime þinutæ, spausk ^7T^8
+3h_tip_ffwr Norint naudoti atoveiksmio jëgà/vibracijà, rekomenduojamas vairas
+3h_tip_rtcg Norëdamas iðvengti sankabos perkaitimo, prieð perjungdamas pavaras atleisk akceleratoriø
+3h_tip_brak Artëjant prie posûkio, stabdþius naudok tinkamu metu...
+3g_hdr_name Pavadinimas
+3g_hdr_diff Sudëtingumas
+3g_hdr_mode Rëþimas
+3g_dif_easy Lengva
+3g_dif_medi Vidutinë
+3g_dif_hard Sunki
+3g_lsn_firs pirma pamoka
+3g_lsn_next sekanti pamoka
+3g_lsn_trya dar kartà
+3g_lsn_fini baigta
+3g_tit_obje ^7UÞDUOTIS
+3g_tit_purp ^7TIKSLAS
+3g_tit_tips ^7PATARIMAI
+3g_tit_targ ^7LAIKAI
+3g_not_time Nebaigei laiku!
+3g_not_fini Nebaigei trasos!
+3g_comp_but Trasà baigei, bet...
+3h_false_st - Tu startavai prieð þalià ðviesà
+3g_too_long - Uþtrukai per ilgai
+3g_coll_car - Susidûrei su kitu automobiliu
+3g_wrong_rt - Pasirinkai klaidingà marðrutà
+3g_hit_1_ob - Nuvertei 1 objektà
+3g_hit_x_ob - Nuvertei %d objektus/ø
+3g_not_fast - Tarpiniame finiðe buvai per lëtas
+3g_slo_stop - Per ilgai stabdei
+3g_exce_spd - Virðijai greièio apribojimà techninio aprtarnavimo juostoje
+3g_nopitstp - Nesustojai prie garaþo
+3g_not_long - Stovëjai per trumpai
+3g_congrats Sveikinu!  Uþduotis atlikta!
+3g_stndrd_x Ðiai pamokai tavo ávertinimas yra : %s
+3g_lsnunl_x Ðiai pamokai turi atrakinti %s
+3a_nocarsel Nepasirinktas automobilis
+3a_araceinp Vyksta lenktynës
+3a_plydisco Þaidëjas bus atjungtas
+3a_leavgame iðeiti
+3a_playrbtn Þaidëjas
+3a_garagbtn Garaþas
+3a_trackbtn Trasa
+3a_tit_trak Trasa
+3a_load_brk [kraunama]
+3a_gene_brk [generuojama]
+3a_notr_brk [nëra trasos]
+3a_endonlin Baigti tinklo þaidimà?
+3a_levonlin Iðeiti ið tinklo þaidimo?
+3a_swap_pos sukeisti pozicijas
+3a_joinrace prisijungti
+3a_addaidrv pridëti DI vairuotojà
+3a_setready pasiruoðæs
+3a_starthdr Startinë rikiuotë
+3a_skillhdr Sudëtingumas
+3a_race_hdr Lenktynës
+3a_readybtn pasiruoðæs
+3a_localsml vietinis
+3a_vhostsml per serverá
+3g_adminsml adminas
+3a_dirctsml tiesiogiai
+3a_no_track nëra trasos
+3a_nodriver nëra vairuotojø
+3a_carerror automobilio klaida
+3a_raceinpr vyksta lenktynës
+3a_remvplyr paðalinti þaidëjà
+3a_no_quali be kvalifikacijos
+3a_qual1min kval. 1 min.
+3a_qualxmin kval. %d min.
+3a_practice treniruotë
+3a_race1lap lenkt. 1 ratas
+3a_racexlap lenkt. %d rat.
+3a_race1hou lenkt. 1 val.
+3a_racexhou lenkt. %d val.
+3a_zerowind vëjo nëra
+3a_low_wind silpnas vëjas
+3a_highwind stiprus vëjas
+3a_nosamenm Vietiniai þaidëjai negali turëti tokiø paèiø vardø
+3a_ac_onest Autokrosas : tik viena starto vieta
+3a_ac_fixlp Autokrosas : fiksuotas ratø skaièius
+3h_kickplyr Iðspirti þaidëjà %s^8? (%s^8)
+3h_howlongb Kelioms dienoms tremti %s^8? (%s^8)
+3h_ainodriv DI negali vaþiuoti ðioje konfiguracijoje
+3h_ainoxral DI negali pasirinkti %s rali-kroso trasose
+3h_ainoxcfg DI negali pasirinkti %s ðioje konfiguracijoje
+3a_cdntsvst Neámanoma iðsaugoti nustatymø
+3a_sent_set Nustatymai iðsiusti
+3a_plynotfd Nerastas þaidëjas
+3a_carnotfd Nerastas þaidëjo automobilis
+3a_namsetsv Nustatymø pavadinimas, iðsaugojimui
+3h_gridsave Ávesk startinës rikiuotës pavadinimà, iðsaugojimui
+3h_gridload Pasirink startinæ rikiuotæ, uþkrovimui
+3h_xremovex %s^8 paðalino %s^8 ið startinës rikiuotës
+3a_endgmbtn baigti þaidimà
+3a_leavebtn palikti
+3g_endr_btn baigti lenktynes
+3g_spec_btn stebëti
+3h_qual_btn kvalifikuoti
+3h_rest_btn iðnaujo
+3h_pits_btn techninio aprtarnavimo juosta
+3g_join_btn prisijungti
+3g_play_btn þiûrëti
+3a_namesort pavadin.
+3a_datesort data
+3a_car_caps Automobilis
+3a_newbtset Norint sukurti naujus nustatymus, spausk "Naujas"
+3a_selplset Negaliu keisti [standartinio] - pasirink savo nustatymus
+3a_newbtcol Norint sukurti naujus nustatymus, spausk "Naujas"
+3a_selplcol Negaliu keisti [standartiniø] - pasirink savo spalvas
+3a_sets_hdr Nustatymai
+3a_cols_hdr Spalvos
+3a_new_setb Naujas
+3a_new_colb Naujas
+3a_savedset Nustatymai iðsaugoti
+3a_savedcol Spalvos iðsaugotos
+3a_new_butt Naujas
+3a_del_butt Trinti
+3a_undo_btn Atðaukti
+3g_rename_b Pervadinti
+3h_clear_bt Valyti
+3a_drvr_hdr Vairuotojas
+3a_frce_hdr Jëgos
+3g_fuel_hdr Kuras
+3g_susp_hdr Pakaba
+3a_out_butt Nëra
+3a_in_buttn Yra
+3a_off_butt Iðj.
+3a_on_buttn Áj.
+3a_stop_btn Stabdyti
+3a_drop_btn Mesti
+3a_namenset Ávesk naujø nustatymø pavadinimà
+3g_newnmset Ávesk naujà nustatymø pavadinimà
+3a_setnodel Neámanoma iðtrinti nustatymø
+3a_deletset Trinti nustatymus?
+3a_setnonam Neámanoma sukurti nustatymø be pavadinimo
+3a_namencol Ávesk naujø spalvø pavadinimà
+3h_newnmcol Ávesk naujà spalvø pavadinimà
+3a_colnodel Neámanoma iðtrinti spalvø
+3a_deletcol Trinti spalvas?
+3a_colnonam Neámanoma sukurti spalvø be pavadinimo
+3a_carninvl Dabartinis automobilio pavadinimas neteisingas
+3a_sel_skin Rinktis skin'à
+3a_drv_none Nëra varomøjø ratø
+3a_drv_fron Galiniai varomieji ratai
+3a_drv_rear Priekiniai varomieji ratai
+3a_drv_four Keturi varomieji ratai
+3g_dif_open ATVIRAS DIF.
+3g_dif_lock BLOKUOTAS DIF.
+3g_dif_visc VISKOZINIS LSD
+3g_dif_clsd SANKABØ PAKETO LSD
+3a_no_creds Nëra kreditø
+3a_one_cred 1 kreditas
+3a_xx_creds %d kredit.
+3g_host_dis Ðis serveris neleidþia vairuoti %s
+3h_ndxmdcax Turi bûti %s reþime, kad vairuotum %s
+3h_ndulxcax Turi atrakinti LFS %s, kad galëtum vairuoti %s
+3g_all_caps VISI
+3g_newnmrep Ávesk naujà pakartojimo vardà
+3g_repnodel Neymanoma iðtrinti pakartojimo
+3g_deletrep Trinti pakartojimà?
+3g_repnonam Neámanoma sukurti pakartojimo be pavadinimo
+3g_set_sh_x Nustatymai %s :
+3a_rght_brk [deðinë]
+3a_left_brk [kairë]
+3a_plyrname Þaidëjo vardas :
+3g_otherply Kiti þaidëjai :
+3a_numplate Valstybinis numeris :
+3a_countryc Valstybë :
+3a_poschoos Vairo pusë :
+3a_speedcho Greièio vienetai :
+3a_pressure Slëgio vienetai :
+3g_lang_cln Kalba :
+3g_font_cln Ðriftas :
+3g_wght_cln Ðrifto storis :
+3g_adnewply pridëti naujà þaidëjà
+3g_dlselply Trinti pasirinktà þaidëjà?
+3g_enterply Ávesk naujo þaidëjo vardà
+3g_plyexist Toks þaidëjas jau yra
+3g_newnamex Ávesk naujà %s^8 þaidëjo vardà
+3a_brak_mph [mph]
+3a_brak_kmh [km/h]
+3a_brak_psi [psi]
+3a_brak_bar [bar]
+3a_hlpbrake Stabdþiø pagalba :
+3a_autoclch Automatinë sankaba :
+3a_resky_f9 F9
+3a_reskyf10 F10
+3a_reskyf11 F11
+3a_reskyf12 F12
+3a_widescrn Plataus ekrano efektas :
+3a_clipwndo Susieti pelæ su langu CTRL+C :
+3a_clipflsc Susieti pelæ su ekranu CTRL+C :
+3a_leftscrn kairysis ekranas
+3a_rghtscrn deðinysis ekranas
+3a_keyshpls Klaviðai (SHIFT +)
+3a_keytxtf4 F4
+3a_windoful langas / visas ekranas
+3a_shf4togg SHIFT + F4 perjungia ið viso ekrano á langà ir atvirkðèiai
+3a_shxalrdy SHIFT + F%d jau priskirtas pasirinktam rëþimui
+3a_assxmodx Priskirti SHIFT + F%d rëþimui %s?
+3a_unkntype neþinoma
+3h_mode_bit bitø
+3h_refre_hz Hz
+3b_set_vw_x Nustatymai vaizdui %s:
+3a_vw_incar viduje
+3b_vw_custm savo
+3a_ishwdywy [vairuotojas TAIP vairas TAIP]
+3a_ishwdnwy [vairuotojas NE vairas TAIP]
+3a_ishwdnwn [vairuotojas NE vairas NE]
+3a_oht_none [nieko]
+3a_oht_splt [tarpiniai laikai]
+3a_normlfov Matymo laukas %.0f° :
+3h_onebutlk Vieno mygtuko þiûrëjimas %.0f° :
+3a_pitchviw Vaizdo nuolydis %.2f° :
+3b_rotatviw Vaizdo pasukimas %.2f° :
+3g_mirror_x Veidrodþio pastûmimas horizontaliai %.3f m :
+3g_mirror_z Veidrodþio pastûmimas vertikaliai %.3f m :
+3a_tlt1gdeg 1g galvos judesys %.2f° :
+3a_shiftlat 1g ðoninis judesys %.3f m :
+3a_shiftfwd 1g judesys pirmyn %.3f m :
+3a_shiftvrt 1g vertikalus judesys %.3f m :
+3a_moveanim Þiûrëjimas su animacija :
+3a_defdrvvw Standartinis vaizdas :
+3g_cvw_main Pieðti :
+3b_cvsnthng nieko
+3b_cvswheel ratai
+3g_cvsdbody këbulas
+3b_cvsexter iðorinis
+3g_cvshelic ið virðaus
+3g_cvsfollo sekti
+3h_cvsuserv vartotojo
+3b_cvwxoffs X pastûmimas %.3f m :
+3b_cvwyoffs Y pastûmimas %.3f m :
+3b_cvwzoffs Z pastûmimas %.3f m :
+3g_c_defaul Standartinë pozicija
+3g_c_centre Vaizdas centre
+3g_c_eyepos Akiø pozicija
+3g_cvw_high Aukðtis %.1f m :
+3g_cvw_angl Kampas %.1f° :
+3g_cvw_dist Atstumas %.1f m :
+3g_cvw_vlag Ðvelninimas  %.1f m :
+3a_drawdrwh Rodyti vairuotojà / vairà :
+3a_lookfunc Þiûrëjimo funkcija :
+3a_lookaxis aðis
+3a_lookstee vairavimas
+3a_lookms_x pelë X
+3a_lookmsxy pelë XY
+3h_mslookav Þiurëjimas su pele yra galimas, tik, kai pelës rodyklë yra paslëpta
+3a_looksens Þiûrëjimo jautrumas %.2f :
+3a_lookcred Þiûrëjimo maþinimas centre %.2f :
+3a_btnlooko Þiûrëjimas mygtuku :
+3g_l_smooth [ðvelnus]
+3g_l_instan [ið karto]
+3h_mainsfov Pagrindinio ekrano matymo laukas %.0f° :
+3h_monangle Ekrano kampas %.0f° :
+3h_viewoffs Vaizdo pastumimas %.2f :
+3h_multiscl Keliø ekranø iðdëstymas :
+3h_entnumls Ekranø kiekis KAIRËJE
+3h_entnumrs Ekranø kiekis DEÐINËJE
+3h_onecentr Vienas ekranas centre
+3h_scwidths Ekranø ploèiai :
+3h_optequal lygu
+3h_optunequ nelygu
+3h_entsidep ÐONINIO ekrano plotis (pikseliais)
+3h_entmainp PAGRINDINIO ekrano plotis (pikseliais)
+3h_fullwext Pilno ploèio iðorinis vaizdas :
+3h_bezelcom Kraðto kompensacija %.1f%% :
+3h_resulfov Rezultatyvus matymo laukas : %.1f°
+3h_fovinval Blogi vairavimo vaizdo nustatymai
+3h_drivuse1 Vairavimo vaizdas naudos vienà renderá
+3h_drivusex Vairavimo vaizdas naudos %d renderiø
+3h_notwidex Per siaura tikriems %d-ekranø
+3h_extvfull Iðoriniai vaizdai naudos visà ekrano plotá
+3h_extvmain Iðoriniai vaizdai naudos pagrindiná ekranà
+3h_extvxxar Iðoriniai vaizdai naudos %d:%d vaizdo proporcijà
+3h_extvass3 Iðoriniams vaizdams naudos 3 ekranus
+3a_sml_newt naujas
+3a_sml_name pavadinimas
+3a_sml_delt trinti
+3a_sml_undo atðaukti
+3a_sml_save iðsaugoti
+3a_sml_load uþkrauti
+3a_msctrcks Dainos
+3a_exitnosv Iðeiti neiðsaugojus?
+3a_chmblost Gali dingti pakeitimai
+3a_savedrad Iðsaugota radio.rad
+3a_nodelstp Neámanoma iðtrinti garaþo dainos
+3a_delchnlq Trinti kanalà?
+3a_chanlnum Kanalas %d
+3a_msctrnum Daina %d
+3a_norenstp Neámanoma pervadinti garaþo kanalo
+3a_newnmchn Naujas kanalo pavadinimas
+3a_play_num Groja : %s
+3a_fail_num Nepavyko : %s
+3a_shftauto automatinë
+3a_shftsequ sekvencinë
+3a_shftshft H-tipo
+3g_shftffjo vibr. valdiklis
+3h_transmis Transmisija
+3h_box_hpat H-tipo pavarø dëþë
+3h_box_bike motociklo pavarø dëþei
+3h_box_sequ nuosekliai veikianèiai pvarø dëþei
+3h_box_seqi nuosekliai veikianèiai pavarø dëþei su degimo nutraukimu
+3h_box_semi svirtelëmis uþ vairo valdomai pavarø dëþei
+3h_seq_hpat nuosekliai veikianèiai H-tipo pavarø dëþei
+3a_dc_combi kartu
+3a_dc_separ atskirai
+3a_dc_butts mygtukai
+3a_axb_axis aðis
+3a_axb_butt mygtukas
+3g_no_con_d Valdikliø nerasta
+3g_xx_con_d %.0f valdiklis rastas/valdikliai rasti
+3g_ct_unkno Neþinomas valdiklis
+3g_ct_first Pirmo asmens valdiklis
+3g_ct_steer Vairas
+3g_ct_fligh Vairalazdë
+3g_ct_gamep Þaidimu manipuliatorius
+3g_ct_joyst Valdiklis
+3a_crrdcval Vairavimo centro maþinimas %.2f :
+3g_whe_turn Vairo pasukimas %.0f° :
+3a_msbutt_1 Klaviðai 1
+3a_mdbutt_2 Klaviðai 2
+3e_kbt_mous [vairavimas pele]
+3e_kbt_nohe [klaviatûra - be pagalbos]
+3e_kbt_stab [klaviatûra - stabilizuota]
+3a_mdaxesff Aðys / VIBR.
+3a_mdshiftr H-tipo
+3a_kasteerl Sukti Kairën
+3a_kasteerr Sukti Deðinën
+3e_kasteerl Sukti Greièiau
+3e_kasteerr Sukti Lëèiau
+3a_kaaccelk Akceleratorius
+3a_kabrakek Stabdþiai
+3a_kaleftvw Þiûrëti kairën
+3a_karghtvw Þiûrëti deðinën
+3a_karearvw Þiûrëti atgal
+3a_kashiftu Pavara aukðtyn
+3a_kashiftd Pavara þemyn
+3a_kaclutch Sankaba
+3a_kahandbr Rankinis stabdis
+3a_kahornkk Garsinis signalas
+3a_kaflashk Mirktelëti lempomis
+3a_karesetk Atstatyti automobilá
+3g_kapitspd Greièio ribotuvas
+3h_katcdisa Sukibimo kontrolë
+3h_kaigniti Uþvedimas
+3a_kazoom_i Priartinti
+3a_kazoom_o Atitolinti
+3a_karevers Atbulinë
+3a_kafirstk Pirma
+3a_kasecond Antra
+3a_kathirdk Treèia
+3a_kafourth Ketvirta
+3a_kafifthk Penkta
+3a_kasixthk Ðeðta
+3a_kasevent Septinta
+3a_kactrlfx CTRL + F%d
+3a_kaaltefx ALT + F%d
+3a_aasteera Vairavimas
+3a_aacombin Gazas/Stabdþiai kartu
+3a_aathrott Akceleratorius
+3a_aabrakea Stabdþiai
+3a_aalookhe Vaizdo kryptis
+3a_aalookpi Vaizdo nuolydis
+3a_aalookro Vaizdo pakreipimas
+3a_aaclutch Sankaba
+3a_aahandbr Rankinis stabdis
+3g_aashiftx H-tipo Kairën-Deðinen
+3g_aashifty H-tipo Pirmyn-Atgal
+3a_prsxforx Spausk %s : %s (ESC - atðaukti / DEL - jokio)
+3a_smallkey klaviðà
+3a_smallbut mygtukà
+3a_mouse_kb pelë / klaviatûra
+3a_wheel_js vairas / valdiklis
+3a_force_st Atoveiksmio jëgos/Vibracijos stiprumas %.0f :
+3a_thrbrkax Akceler./stabdþiø aðys :
+3a_clutchop Sankaba :
+3a_handbrko Rankinis stabdis :
+3a_thrbrkrv Akceler./stabdþiø centro maþinimas %.2f :
+3a_btnratev Mygtukø valdymo jautrumas %.2f :
+3a_kbsteero Vairavimas su klaviatûra :
+3a_strratev Sukimo greitis %.2f :
+3e_retratev Atsisukimo greitis %.2f :
+3e_strfastv Greito sukimo daugiklis %.2f :
+3e_strslowv Lëto sukimo daugiklis %.2f :
+3a_prdtimev Nuspëjimo laikas %.2f :
+3a_lmtmultv Riboti daugiklá %.2f :
+3a_selfunca Pasirink aðies funkcijà
+3a_selaxfrx Pasirink aðá : %s (ESC - atðaukti / DEL - jokios)
+3a_availaxs Esamos aðys
+3a_axis_num aðis %d
+3a_invert_1 apkeisti 1
+3a_invert_0 apkeisti 0
+3a_frcfdbak Atoveiksmio jëga/Vibracija
+3a_ffdevice VIBR. árenginys
+3g_ffshiftd VIBR. H-tipo
+3a_removedz Paðalinti laisvumà :
+3h_rec_axes perkalibruoti aðis
+3h_cal_lock fiksuoti
+3h_cal_unlk nefiksuoti
+3a_heyb_hdr Klaviatûra
+3a_whbt_hdr Vairo mygtukai
+3a_ass_zero [Nulis]
+3a_ass_mlft Pelës Kairysis
+3a_ass_mrgt Pelës Deðinysis
+3a_ass_mmid Pelës Vidurinysis
+3a_ass_whup Ratukas Aukðtyn
+3a_ass_whdn Ratukas Þemyn
+3a_ass_spac Tarpas
+3a_ass_upar Rodyklë Aukðtyn
+3a_ass_dnar Rodyklë Þemyn
+3a_ass_rtar Rodyklë Deðinën
+3a_ass_ltar Rodyklë Kairën
+3a_ass_pgup Puslapis Aukðtyn
+3a_ass_pgdn Puslapis Þemyn
+3a_butt_num %d mygtukas
+3d_aamousex Pelë X
+3d_aamousey Pelë Y
+3d_aa_xaxis X aðis
+3d_aa_yaxis Y aðis
+3d_aa_zaxis Z aðis
+3d_aarxaxis RX aðis
+3d_aaryaxis RY aðis
+3d_aarzaxis RZ aðis
+3d_aaslidr1 Ðliauþiklis 0
+3d_aaslidr2 Ðliauþiklis 1
+3a_reskeysh rezervuoti klaviðai
+3a_rswtch_r 1 - þiûrëti pakartojimà
+3a_rssave_r 2 - iðsaugoti pakartoj.
+3h_showline 4 - lenktyniø linijà
+3a_rsless_f < - maþiau stiprumo
+3a_rsmore_f > - daugiau stiprumo
+3a_rstab_ne TAB - kitas automobilis
+3a_rshome_o HOME - savo automobilis
+3a_rstalk_t T - kalbëti
+3a_rspausep P - pauzë
+3a_rshistor H - istorija
+3a_rsview_v V - vaizdas
+3a_rsforces F - jëgos
+3a_rsnamesn N - vardai
+3a_shftplus SHIFT +
+3a_shchhorn H - keisti garsiná signalà
+3g_shshiftt G - pavaros pakeitimo reþimas
+3a_shrescon C - atstatyti valdymà
+3a_shressnd W - atstatyti garsà
+3a_shsoundo N - garsas ij./ið.
+3a_shmirmod M - veidrodþiø reþimas
+3g_shhidetx F - slëpti tekstà
+3a_shuservw U - vartotojo vaizdas
+3a_shskiptn K - praleisti dainà
+3h_shshowmo Z - rodyti pelæ
+3b_shdriver F1 - vairuotojo vaizdas
+3b_shslowrp F2 - sulëtinti pakartojimà
+3b_shfastrp F3 - pagreitinti pakartojimà
+3a_shwindow F4 - langas
+3a_carsndvl Variklio garsumas (%.1f) :
+3a_skidvboo Slydimo garsumas (%.1f) :
+3g_windvboo Vëjo garsumas (%.1f) :
+3g_echovboo Aido garsumas (%.1f) :
+3a_mscvolum Muzikos garsumas (%.1f) :
+3g_msgvolum Meniø garsumas (%.1f) :
+3a_mscsetup Muzika garaþe :
+3a_mscracin Muzika lenktyniaujant :
+3a_mscrplay Muzika pakartojimuose :
+3a_selecbrk [Pasirinktas]
+3a_noplybrk [Niekas negroja]
+3a_msc_skip Praleisti
+3a_msc_sele Rinktis
+3a_ingmmusc Muzika þaidime
+3a_channels Kanalai
+3g_status_a Garsas (SHIFT + N) : %s
+3g_status_m Muzikos buferis : %s
+3g_status_c Garso buferis : %s
+3a_relaybrk [reliatyvus]
+3a_absolbrk [absoliutus]
+3a_fps_disp Kadrai per sekundæ (fps) :
+3b_virtuals Rodyti virtualias starto ðviesas :
+3a_mirrmode Veidrodþiai :
+3a_clokmode Ciferblatai :
+3g_fixedfwd Fiksuotas su priekine aðymi :
+3g_accelmov Greitëjimo átaka vaizdui :
+3a_showpeds Rodyti virtualius pedalus :
+3g_steerind Virtualus vairavimo indikatorius :
+3a_smallmap Rodyti mini þemëlapá :
+3g_staticsm Besisukantis mini þemëlapis :
+3a_pos_list Rodyti pozicijas :
+3a_dropshad Ðeðëliai :
+3a_msgtsize Þinuèiø teksto dydis %.3f :
+3a_timedisp Bendras laikø ekranëlis :
+3a_chptexto Tarpinio finiðo tekstas :
+3a_clndlcol Ciferblatø rodykliø spalva :
+3a_cltxtcol Ciferblatø teksto spalva :
+3a_cttxtcol Pagrindinë teksto spalva :
+3h_x_dash_c %s prietaisu skydelis
+3h_roadgled Pavarø indikatoriaus spalva :
+3g_interfac Aplinka
+3h_in_title Pavadinimas :
+3h_in_bigbt Didelis mygtukas :
+3h_in_opaci Nepermatomumas %.2f :
+3h_in_bbtxt Tekstas :
+3h_in_smlbt Maþas mygtukas :
+3h_text_uns Nepaþymëtas tekstas :
+3h_text_sel Paþymëtas tekstas :
+3h_text_una Nesamas tekstas :
+3h_in_texte Teksto eilutë :
+3h_in_btn_g Þalias mygtukas :
+3h_in_btn_r Raudonas mygtukas :
+3h_in_btn_a Kintamas mygtukas :
+3h_smallm_l Ðviesus mini þemëlapis :
+3h_smallm_d Tamsus mini þemëlapis :
+3h_cr_lap_a Automob. pirmaujantis 1 ratu :
+3h_cr_ahead Pirmaujantis automobilis :
+3h_ai_ahead Pirmaujantis DI :
+3h_your_car Jûsø automobilis :
+3h_ai_behin Atsiliekantis DI :
+3h_cr_behin Atsiliekantis automobilis :
+3h_cr_lap_b Automob. atsiliekantis 1 ratu :
+3h_intcentr Sàsajos centras :
+3h_intscale Sàsajos mastelis :
+3h_in_x_val x %.2f
+3h_in_y_val y %.2f
+3h_in_reset atkurti
+3h_test_sml Maþas mygtukas
+3h_test_big Didelis Mygtukas
+3h_in_cen_x centro X
+3h_in_cen_y centro Y
+3h_in_sca_x X mastelio
+3h_in_sca_y Y mastelio
+3h_betw_a_b Koordinatës privalo bûti tarp %.1f ir %.1f
+3a_asavnono [ne - neiðsaugoma]
+3a_asavmanu [taip - rankinis iðsaugojimas]
+3a_asavauto [autoiðsaugojimas - nerekomenduoj.]
+3a_ogm_ainm DI vardai
+3g_ogm_fkey F1 - F8
+3g_ogm_ctrl CTRL +
+3g_ogm_alte ALT +
+3a_rs_fixed [fiksuota tvarka]
+3a_rs_finis [finiðavimo tvarka]
+3a_rs_revfi [apkeisti finiðavimo tvarka]
+3a_rs_randm [atsitiktinai]
+3a_aidrvnum DI vairuotojas %d :
+3a_f_keynum F%d :
+3a_sprsvopt Vieno þaidëjo pakartojimø iðsaugojimas :
+3a_mprsvopt Tinklo pakartojimø iðsaugojimas :
+3a_nonqracr Lenktyniø be kvalifikacijos restartas :
+3a_changbtn Keisti DI vardus / F mygtukus :
+3a_optlores maþos rez.
+3a_opthires aukðtos rez.
+3g_optcompr suspausti
+3g_optsfull pilni
+3g_opt_main pagrindinis
+3g_plus_mir + veidrodis
+3a_usrldval Vartotojo LOD (%.2f) :
+3a_dstldval Dulkiø LOD (%.2f) :
+3a_mirldval Veidrodþiø LOD (%.2f) :
+3h_fsaa_txt Viso ekrano vaizdo glotninimas  :
+3h_mip_bias Mip bias :
+3h_mipbias0 Mip bias (%.1f) aplinka / tekstas :
+3h_mipbias1 Mip bias (%.1f) objektai / sienos :
+3h_mipbias2 Mip bias (%.1f) þolë / þvyras :
+3h_mipbias3 Mip bias (%.1f) kelio pavirðius :
+3a_shtypopt Ðeðëliø tipas :
+3g_treesopt Pieðti medþius :
+3g_flagsopt Pieðti vëliavas :
+3g_rubbropt Pieðti padangø þymes :
+3g_draw_sky Pieðti dangø
+3g_gadapter Vaizdo plokð. :
+3e_zbdopt_d Z buferio gylis (%d) :
+3e_hazetext Miglos efektas :
+3h_mip_type Tekstûrø filtravimas / AF :
+3h_text_res Tekstûros (iðskyrus skin'us) :
+3g_carskins Automobiliø ir ðalmø skin'ai :
+3g_texmemmb Tekstûrø naudojama atmintis : %.1f MB
+3a_crdnoshd Jûsø 3d plokðtë negali pieðti ðeðëliø
+3g_crdnoftx Jûsø 3d plokðtë negali naudoti viso dydþiø tekstûrø
+3h_hvsnotav Jûsø 3d plokðtë nepalaiko Hardware Vertex Shading
+3g_seladres Pasirink plokðtæ, kuri bus naudojama vël paleidus þaidimà
+3e_rslfszbd Turite ið naujo paleisti LFS kad pasikeistø Z buferis
+3a_flsvsync Viso ekrano vertikali sinchronizacija :
+3g_prev_lag Neleisti ávedimo vëlavimo :
+3a_limitfps Riboti kadrus per sekundæ þaidime (fps) :
+3a_maxfrmrt Max kadrø per sekundæ (fps) :
+3g_tx_x_fps %d fps
+3a_minsleep Maþiausias miegas :
+3g_debounce Tarpas tarp pavarø perjungimo :
+3g_txt_x_ms %d ms
+3a_pixelval %d pikseliø
+3a_useplset DI naudoja þaidëjo nustatymus :
+3a_useplcol DI naudoja þaidëjo spalvas :
+3a_sndlgval Garso vëlavimas %.2f sek :
+3g_whe_comp Vairo pasukimo kompensacija %.2f :
+3a_anlgsval Analoginio vairavimo ðvelninimas %.2f :
+3a_multispd Tinklo þaidimo pagreitinimo nustatymai :
+3g_car_skin Automobiliø skin'ø atsisiuntimas :
+3g_hel_skin Ðalmø skin'ø atsisiuntimas
+3g_multidst Tinklo automobiliø pieðimas %.0f m :
+3g_dynamlod Dinamiðko LOD maþinimas %.2f :
+3a_updtpath Atnaujinti kelià :
+3a_puusrcar savo auto.
+3a_puallcar visiems auto.
+3h_replaysk Atsisiusti skin'us pakartojimams
+3g_introopt Uþkrauti trasà, ájungus LFS :
+3g_local_12 Vietinis laikas 12 h formatu :
+3g_time_fps Rodyti laika vietoj FPS :
+3g_shfflags Rodyti indikatorius paspaudus Shift + F
+3h_accelopt Pagreitis :
+3h_shadogen Ðeðëliø generavimas :
+3h_opt_defa standartinis
+3h_opt_alte alternatyvus
+3g_skin_d_q Skin'ø atsisiuntimas
+3h_skin_use Skin'ai atmintyje
+3a_crestart pradëti lenktynes
+3a_cntrpits á garaþà
+3a_cspectat stebëti
+3a_cantjoin prisijungti
+3a_cantleav iðeiti
+3a_novtnolo Negali balsuoti, nes nëra vietiniø þaidëjø
+3a_notdnord Negali iðbandyti, nes nëra tikro þaidëjo
+3a_esc_menu Escape Meniu
+3a_repmenig Pakartojimo Meniu (þaidime)
+3a_repmenld Pakartojimo Meniu (uþkrauto)
+3a_sel_pits Garaþas
+3a_sel_spec Stebëti
+3a_sel_join Prisijungti
+3a_sel_repl Pakartojimas
+3a_sel_outp Iðsaugoti rato duomenis
+3a_sel_rstr Restartas
+3a_vote_str Balsuoti uþ lenktyniø pradþià
+3a_vote_end Balsuoti uþ lenktyniø pabaigà
+3a_vote_qua Balsuoti uþ kvalifikacijà
+3a_test_drv Iðbandyti
+3a_startrac Pradëti lenktynes
+3a_hqualify Kvalifikacija
+3a_resumegm Tæsti
+3h_escapkey ESC
+3a_undefind neapibrëþtas
+3a_arenatxt arena
+3a_singlstg vienas etapas
+3a_standard paprastai
+3a_reversed atvirkðèiai
+3a_weth_hdr Oras
+3a_cnfg_hdr Konfigûracija
+3h_layt_hdr Iðdëstymas
+3h_none_sel nepasirinkta
+3a_info_cir trasa
+3a_info_tot viso
+3a_chng_trk Keisti trasà
+3h_revconfc Atvirkðtinë konfiguracija,
+3h_openconf Atvira konfiguracija :
+3h_ndxmdtrx Turi bûti %s rëþime, kad galëtum vaþiuoti %s trasoje
+3h_ndulxtrx Turi atrakinti LFS %s, kad  galëtum vaþiuoti %s trasoje
+3g_cfg_grpr Didysis Prizas
+3g_cfg_gplo DP Ilga
+3g_cfg_gptr DP Trasa
+3g_cfg_ralx Rali-krosas
+3g_cfg_carp Aikðtelë
+3g_cfg_auto Autokrosas
+3g_cfg_skid Slydimo Aikðt.
+3g_cfg_drgs Drago Trasa
+3g_cfg_drg8 8 Eiliø Dragas
+3g_cfg_oval Ovalas
+3g_cfg_cade Kadetas
+3g_cfg_club Klubas
+3g_cfg_nati Nacionalinë
+3g_cfg_inte Tarptautinë
+3g_cfg_clas Klasikinë
+3g_cfg_spr1 Sprintas 1
+3g_cfg_spr2 Sprintas 2
+3g_cfg_cilo Miesto Ilga
+3g_cfg_toco Miesto Marðrut.
+3g_cfg_chro Posukiø Ruoþas
+3g_cfg_gree Þalia
+3g_cfg_gold Auksinë
+3g_cfg_blac Juoda
+3g_cfg_rlxg Rali-krosas Þalia
+3g_cfg_hist Istorinë
+3g_cfg_grto Didysis Turizm.
+3g_cfg_nort Ðiaurë
+3g_cfg_sout Pietûs
+3g_cfg_east Rytai
+3g_cfg_west Vakarai
+3g_cfg_reve ATV
+3h_cfg_oc_X X
+3h_cfg_oc_Y Y
+3g_x_km_xxx %.1f km %s
+3g_x_mile_x %.1f myl. %s
+3g_x_x_km__ %s : %.1f km
+3g_x_x_mile %s : %.1f myl.
+3g_dt_dawn_ Auðra
+3g_dt_sunri Saulëtekis
+3g_dt_morni Rytas
+3g_dt_day__ Diena
+3g_dt_after Popietë
+3g_dt_sunse Saulëlydis
+3g_dt_dusk_ Sutemos
+3g_dt_night Naktis
+3g_wth_clea Giedra
+3g_wth_clou Debesuota
+3g_wth_over Rûðkana
+3a_hlvcthis Ratas-
+3a_hlvcnext Kitas-
+3a_readynum Pasiruoðæs : %d
+3a_noviewcr lenktynëse nëra automobiliø
+3a_thexisst %s startuoja
+3a_thexhase %s baigë
+3a_smlpract treniruoèiø sesija
+3a_smlqulng kvalifikacija
+3a_sml_race lenktynës
+3a_replnotr Pakartojimas neáraðomas
+3g_notrecor Neáraðinëjama
+3g_fov_temp FOV %.0f°
+3a_replrest Pakartojimas pradëtas ið naujo
+3a_aisvdknw DI vairuotojas iðsaugojo þinias
+3a_timetmsx Laikas x %.3f
+3a_namenldf Kito rato duomenø failo pavadinimas
+3g_caps_wrn ÁSPËJIMAS
+3g_caps_kik IÐSPIRTAS
+3g_caps_ban IÐTREMTAS
+3g_caps_spe STEBËJIMAS
+3a_namesoff vardai iðjungti
+3a_connlist prisijungusiø sàraðas
+3a_namesovr vardai virð automobiliø
+3h_showmous rodyti pelæ
+3h_hidemous slëpti pelæ
+3a_mirrinfo veidrodþiai :
+3a_cancaujo Atðauktas automatinis prisijungimas
+3a_reinicnt Valdymas atstatytas
+3a_reinisnd Garsas atstatytas
+3a_namemprs Tinklo Þaidimo pakartojimo pavadinimas, iðsaugojimui
+3a_namesprs Vieno Þaidëjo pakartojimo pavadinimas, iðsaugojimui
+3a_shnsound SHIFT + N : garsas - %s
+3g_shgsmode SHIFT + G : Pavarø perjung.meto. %s
+3a_shgautos SHIFT + G : automatinë - %s
+3a_frcvalpc stiprumas%.0f%%
+3a_hrntypev Signalo tipas %d
+3a_actnends BAIGIASI
+3a_actnrest IÐ NAUJO
+3a_actnstrt PRASIDEDA
+3a_thngqual Kvalifikacija
+3a_thngrace Lenktynës
+3a_reploose pakartojimo OOS klaida
+3a_pausetxt pauzë
+3g_safeexit iðëjimas...
+3a_retrdcap PASITRAUKË
+3a_dsqulcap DISKVALIFIKUOTAS
+3g_unclcaps NEKLASIFIKUOTAS
+3a_wrngwcap NE Á TÀ PUSÆ
+3a_capsdrvr VAIRUOTOJAS
+3a_capsbstl GERIAUS. RATAS
+3g_pitstops BKS
+3g_spenalty BD.
+3a_capstotl VISO
+3g_caps_car AUTOMOBILIS
+3g_capsxlps %d RAT.
+3g_plus1lap +1 ratas
+3g_plusxlps +%d rat.
+3h_falsesta BLOGAS STARTAS
+3h_pe_speed VIRÐYJAI GREITÁ BOKSUOSE
+3h_pe_short SUSTOJIMAS BOKSUOSE PER TRUMPAS
+3h_pe_mustp PER VËLAI SUSTOTA BOKSUOSE
+3h_pe_admin ADMINISTRATORIAUS SUTEIKTA
+3h_pe_unknw NEÞINOMAS
+3g_yellcaps GELTONA VËLIAVA
+3g_bluecaps MËLYNA VËLIAVA
+3a_stpgocap SUSTOJIMO BOKSUOSE BAUDA
+3g_drthrcap BOKSØ PRAVAÞIAVIMO BAUDA
+3g_30stimep 30 SEKUNDÞIØ LAIKO BAUDA
+3g_45stimep 45 SEKUNDÞIØ LAIKO BAUDA
+3g_clearedp BAUDA ATLIKTA
+3g_pit_stop SUSTOJIMAS
+3g_pitstopx SUSTOJIMAS : %d
+3g_p_pnltyx SUSTOJIMAS [bauda] : %d
+3g_p_nowrkx SUSTOJIMAS [nedirbama] : %d
+3g_p_finshx SUSTOJIMAS [baigta] : %d
+3g_mancompx %s^8 baigë savo %s
+3g_wmncompx %s^8 baigë savo %s
+3g_unkcompx %s^8 : baigë %s
+3g_enterpit ÁVAÞIAVO á garaþø sritá
+3g_enterfor ÁVAÞIAVO á garaþø sritá
+3g_leavepit IÐVAÞIAVO ið garaþø
+3g_stpgotxt sustojimo baudai
+3g_drthrtxt pravaþiavimo baudai
+3g_nopurtxt be tikslo
+3g_capsstop STOP
+3g_capsrefu PILAMAS KURAS
+3g_capssetu NUSTATYMØ PAKEITIMAI
+3g_capsxdam %s ÞALA
+3g_capsdamx ÞALA IKI %s
+3g_capsxcha %s PADANGOS KEITIMAS
+3g_capsminr NEÞYMI
+3g_capsmajr SVARBI
+3g_capsfrnt PRIEKIO
+3g_capsrear GALO
+3g_capsleft KAIRËS
+3g_capsrigh DEÐINËS
+3g_capslefr PRIEKIO KAIRËS
+3g_capslere GALO KAIRËS
+3g_capsrifr PRIEKIO DEÐINËS
+3g_capsrire GALO DEÐINËS
+3g_refl_f_x Baigtas kuro papildymas : %.1f litrø
+3g_pitstp_f Sustojimas baigtas
+3g_nospdlim Ðioje trasoje nëra apriboto greièio zonos
+3g_notequip Ðis automobilis neturi greièio ribotuvo
+3h_thisnotc Ðis automobilis neturi sukibimo kontrolës
+3h_thisnost Ðis automobilis neturi starterio
+3a_smllaptm rato laikas
+3a_smlspltm tarpinis laikas
+3a_clhotlap vaþiavimas laikui
+3a_clonemin 1 min kvalifikacija
+3a_cl_xmins %d min kvalifikacija
+3a_clonelap 1 ratas
+3a_cl_xlaps %d rat.
+3a_clonehor 1 val
+3a_cl_xhors %d val
+3g_cltrning treniruotë
+3a_windsp_x vëjo greitis %.0f %s
+3a_smallmph mph
+3a_smallkmh km/h
+3h_smallpsi psi
+3h_smallbar bar
+3a_x_voteex %s^8 balsas nebegalioja
+3a_x_voteer %s^8 balsavo uþ LENKTYNIØ PABAIGÀ
+3a_x_voters %s^8 balsavo uþ RESTARTÀ
+3a_x_votequ %s^8 balsavo uþ KVALIFIKACIJÀ
+3a_x_joinsp %s^8 prisijungë prie þiûrovø
+3g_x_didnot %s^8 nefiniðavo
+3g_x_wrongr %s^8 pasirinko klaidingà marðrutà
+3g_x_illega %s^8 ávaþiavo á uþdraustà zonà
+3h_x_retpit %s^8 gryþo á techninio aprtarnavimo juostà
+3h_a_retpit Visi automobiliai gryþo á techninio aprtarnavimo juostà
+3a_lagvalue LAGAS (%.2f)
+3a_hlvcstlp pradëk ratà
+3a_smalllap ratas
+3a_hlvcmodi [pakeista]
+3a_timequal kvalifikacija
+3a_timetotl viso
+3a_timebest geriausias
+3a_time_lap ratas
+3a_timesplt tarpinis
+3h_timetime laikas
+3a_timepnlt bauda
+3a_noldxcar Neámanoma uþkrauti %s^8 automobilio
+3a_nosvnonm Neámanoma iðsaugoti be pavadinimo
+3g_nofilesl Uþkrovimui nëra failø
+3a_alrdyout Jau eksportuoju rato duomenis
+3a_nxtlpout Kito rato duomenys á %s.raf
+3a_nodtaout Á failà nebus perduoti jokie duomenys
+3g_dled_x_x Skin'as Atsiustas : %s_%s
+3g_ding_x_x Siunèiamas Skin'as : %s_%s
+3h_saveskin Skin'as iðsaugomas : %s
+3g_nomoreci Neámanoma pridëti daugiau apskritimø
+3a_noaddmor Neámanoma pridëti daugiau objektø
+3a_loadinfo Kraunama
+3h_storedvw Iðsaugoti vaizdai (V) :
+3h_move_spd Judejimo greitis %.1f m/s :
+3h_min_high Minimalus aukðtis %.1f m :
+3g_roll_deg Verstis %.1f° :
+3h_vwsmooth Vaizdo glotninimas %.1f s :
+3h_trantime Pereinamasis laikas %.1f s :
+3a_invlok_c Apkeisti deðinio pelës þiûrëjimà :
+3h_invrot_c Sukeisti kairës + deðinës sukimasá :
+3a_fov_valu Vaizdo laukas %.1f° :
+3a_plcobs_c Dëlioti objektus :
+3a_chkptw_v Tarpinio finiðo plotis %.0f m :
+3a_hdg_degr Kryptis %.1f° :
+3a_unnm_brk [be pavadinimo]
+3a_objs_num objektø : %d
+3a_emty_brk [tuðèia]
+3a_savechan Iðsaugoti pakeitimus
+3a_loadlayo Krauti iðdëstymà
+3a_savelayo Iðsaugoti iðdëstymà
+3a_clearall Viskà iðvalyti
+3a_laps_num ratø : %d
+3a_errorsml klaida
+3a_c_clrsel C - atðaukti pasirinkimà
+3a_m_mv_mod M - perkelti/keisti
+3a_del_dele DEL - trinti
+3a_w_e_wdth V / R - plotis
+3a_l_r_rota < / > - pasukti
+3a_cp_1_2_3 1 / 2 / 3 - tarpiniai
+3a_f_finish F - finiðo linija
+3a_s_startp S - starto padëtis
+3a_o_object O - objektas
+3g_dist_x_m atstumas:%.2f m
+3a_editkeys keisti klaviðus
+3a_c_ar_hgt CTRL + rodyklës - aukðtis
+3g_c_ar_rol CTRL + rodyklës - verstis
+3a_arrow_mv rodyklës - perkelti
+3a_spc_hdsh TARPAS - slëpti / rodyti
+3a_esc_exit ESC - iðeiti
+3h_l_b_move kairys mygtukas - judëti
+3h_r_b_look deðinys mygtukas - þvalgytis
+3h_l_r_rota kairys + deðinys - suktis
+3a_keys_txt klaviðai
+3h_mous_txt pelë
+3h_edit_txt redaguoti
+3h_more_txt daugiau
+3h_in_trans perëjimas
+3h_cl_slt_x Iðvalytas vaizdas %d vietoje
+3h_st_slt_x Iðsaugotas vaizdas %d vietoje
+3h_no_v_x_s Nëra vaizdo %d vietoje (%s)
+3h_no_vws_s Nera iðsaugotø vaizdø (%s)
+3h_sh_nm_st vaizdo iðsaugojimui SHIFT + NUMERIS
+3h_no_car_f Sekimui nëra automobilio
+3h_fc_point Þiûrima á :
+3h_fc_neare Artimiausias automobilis :
+3h_fc_flwng Sekama :
+3h_fc_lockd Nusytaikyta :
+3h_clicktof spausk ant auto., kad já sekti
+3h_followcr sekti automobilá
+3h_nocarsvw vaizde nëra automobiliø
+3h_stopfoll stabdyti
+3h_optimise optimizuoti
+3h_opt_of_t Optimizuoti objektai : %d of %d
+3a_noxwload Negaliu iðeiti, kol kraunasi
+3a_chgnotsv Pakeitimai neiðsaugoti
+3a_exanyway Vis tiek iðeiti?
+3a_clrall_q Iðvalyti visus objektus?
+3g_delete_l Trinti iðdëstymà?
+3a_tit_ldly Krauti iðdëstymà
+3a_nosavent Neámanoma iðsaugoti iðdëstymo ðiame lange
+3a_nolodent Neámanoma uþkrauti iðdëstymo ðiame lange
+3a_noobselm Nepasirinktas objektas perkëlimui
+3a_noobtype Nepasirinktas objekto tipas
+3a_noobseld Nepasirinktas objektas trynimui
+3h_unexpclr Netikëta valymo komanda
+3h_unexpend Netikëta failo pabaiga
+3a_xalready %s jau sukurtas
+3g_idx_0tox Indeksas turi bûti tarp 0 ir %d
+3g_rt_idx_x marðuto indeksas : %d
+3g_restarea Uþdrausta zona
+3g_rt_check Marðruto tikrintojas
+3g_rt_wrong Klaidingas marðrutas
+3g_ob_chalk kreida
+3g_ob_cones kûgiai
+3g_ob_tyres padangos
+3h_ob_markr þymekliai
+3g_ob_other objektai
+3g_ob_marsh marðalas
+3g_marsh_no nematomas
+3g_marsh_st marðalas
+3g_marsh_le á kairæ
+3g_marsh_ri á deðinæ
+3h_cant_add Neámanoma pridëti :
+3h_cant_mov Neámanoma perkelti :
+3h_inte_obj kertasi su objektu
+3h_inva_pos klaidinga padëtis
+3a_dispgame Rodyti serveriø sàraðà
+3a_tit_list Serveriø sàraðas
+3a_startnew Kurti naujà serverá
+3a_tit_strt Kurti naujà serverá
+3a_joingame Jungtis prie konkretaus
+3a_tit_spec Jungtis prie konkretaus
+3a_finduser Rasti vartotojà internete
+3a_tit_user Vartotojo paieðka
+3a_cls1conn Uþdaromas 1 prisijungimas
+3a_clsxconn Uþdaromi %d prisijungimai
+3a_rfrshlst atnaujinti
+3a_stophost Nutraukti serveriø tikrinimà
+3a_spctostp Serveriø tikrinimui nutraukti, spausk TARPÀ
+3a_liststat %s serveriai %d ið %d - galima jungtis %d - [Neatsako %d] - [Ne ta versija %d]
+3a_waitingw Laukiama
+3a_checking Tikrinama
+3a_end_stat Galima jungtis %d - [Neatsako %d] - [Ne ta versija %d] %s
+3a_clikjoin - SPAUSK ant vardo prisijungti
+3a_glc_name Pavadinimas
+3a_glc_ping Pingas
+3a_glc_trak Trasa
+3a_privatew privatus
+3a_modified pakeistas
+3h_arcade_w gali atsta.
+3h_cruise_w vaþinëjimas
+3a_wrongver Ne ta versija
+3h_noteul_x PASTABA : Jûs vis tiek turite atrakinti LFS %s
+3h_mb_0_val %.0f MB
+3h_mb_1_val %.1f MB
+3h_kb_0_val %.0f KB
+3h_dlm_titl Atsisiuntimo serveris
+3h_cnt_titl Ðalis
+3h_newupdat Yra naujas atnaujinimas
+3h_norecaui Negavau automatinio atnaujinimo informacijos
+3h_start_dl pradëti atsisiunti.
+3h_plsselmr Pasirinkite atsisiuntimo adresà esantá arèiausiai jûsø
+3h_connectn Jungiamasi...
+3h_trylfsnt Bandoma dar kartà ið ^7www.lfs.net
+3h_dl_perce Failo progresas : %d%%
+3h_dl_colon Atsisiûsta :
+3h_restartn Pakartotinai paleidþiama...
+3h_nostrtrs Neámanoma iáungti restarter'io
+3h_noresdat Neámanoma sukurti restarter'io duomenø failo
+3h_noenumwi Neámanoma iðvardinti langø
+3h_anotherl Dar viena LFS kopija ijungta
+3h_noopenrs Neámanoma atidaryti restarter'io programos
+3b_meetroom Laukiamasis
+3b_m_host_x vaþiuoja á %s
+3b_f_host_x vaþiuoja á %s
+3b_leftroom paliko laukiamàjá
+3b_entrroom atëjo á laukiamàjá
+3b_wlcmu1st Sveiki!  Jûs pirmasis laukiamajame
+3b_wlcmxinr Sveiki!  Þmoniø laukiamajame: %d
+3b_mr_leave Iðeiti
+3b_mr_findb Rasti
+3b_mr_sound Garsas
+3b_mr_refre Atnaujinti
+3b_somehost serveris
+3b_mastercl Pagrindinis serveris nutraukë ryðá
+3b_sr_privt Privatûs
+3b_mr_publc Vieði
+3b_mr_empty Tuðti
+3h_sr_cruis Pasivaþinëjimas
+3g_autoreco Jungiamasi ið naujo...
+3a_typelocl vietinis tinklas
+3a_typeinet internetas
+3a_userisat Vartotojas yra %s
+3a_joinxath Jungtis prie %s^8 serveryje?
+3a_inrc_num lenktyniauja : %d
+3a_cons_num prisijungimai : %d
+3a_resl_num rezultatai : %d
+3h_skin_num Skin'as : %d
+3h_join_que Eilës pozicija : %d
+3a_selhostc Pasirinktas serveris :
+3a_joingamc Jungtis prie serverio :
+3a_hostnamc Serverio pavadinimas :
+3a_hostipac Serverio IP adresas :
+3a_hostprtc Serverio portas :
+3a_hostpasc Slaptaþodis :
+3h_clearbtn iðtrinti visus slaptaþodþius (%d)
+3h_cconfirm Iðvalyti visus iðsaugotus serverio slaptaþodþius?
+3a_noldtrck Neámanoma uþkrauti trasos
+3a_nosndudp Neámanoma iðsiøsti UDP paketo
+3a_nocrtudp Neámanoma sukurti UDP ryðio
+3h_wt_sinfo Laukiama skin'o info
+3h_norcvskn Negauta skin'o info
+3a_norcvgst Negauta sveèio info
+3a_norcvply Negauta þaidëjo info
+3a_norvcall Negautos þinutës ið visø þaidëjø
+3a_vldadreq Turi ávesti galiojanti vietinio tinklo IP adresà
+3a_errconrs Klaida siunèiant prisijungimo rezultatus
+3a_mode_sel Tinklo reþimas :
+3h_smal_dmo demo
+3h_frxmdndx %s rëþimui, tu turi atrakinti LFS %s
+3h_seltrrqx Ði trasa gali bûti pasirinkta tik %s reþime
+3a_visibilc Matomumas :
+3a_vis_locl vietinis
+3a_vis_inet interneto
+3a_vid_hidn slaptas
+3a_inetconc Interneto ryðys :
+3a_modem56k 56k modemas
+3a_m512_128 512 / 128 kabelinis
+3a_mdm1_256 1m / 256 kabelinis
+3a_mdm_cust kitoks
+3a_maxupl_c Maksimalus siuntimas (kbits / sek) :
+3g_x_upload %s kbits/sek siuntimas
+3a_gnnoemty Pavadinimas negali bûti tuðèias
+3a_onecarrq Reikia leisti bent vienà modelá
+3a_hstgstrq Reikia leisti ðeimininko arba sveèio þaidëjus
+3a_rusurepr Ar tikrai nori tæsti?
+3a_maxbwmex Gali bûti virðytas maksimalus siuntimas
+3b_srv_ip_c IP Adresas :
+3a_srvportc Portas :
+3a_dedi_opt Dedikuotas serveris (be grafikos) :
+3a_guestvot Leisti balsuoti dël iðspyrimo / iðtrëmimo :
+3a_guestsel Sveèiai renkasi trasà :
+3h_qenabled Ágalinta kvalifikacija :
+3g_midracej Leisti prisijungti lenktyniø metu:
+3g_pitstopr Bûtinas sustojimas boksuose :
+3g_carreset Leisti automobiliø atstatymà :
+3h_fcockpit Vaizdas tik ið vidaus :
+3h_cruisemo Vaþinëjimas (leidþiama vaþiuoti á kità pusæ) :
+3a_maxgst_c Max sveèiø :
+3d_admins_c Admin. vietos :
+3a_maxrarac Max (tikrø + DI) lenktynëse :
+3a_maxragst Max (tikrø + DI) ið sveèio PC :
+3a_maxrahst Max (tikrø + DI) serverio PC :
+3a_dedinohc Dedikuotas : nëra serverio automobiliø
+3a_smothpps Ðvelnumas (paketai per sek) :
+3a_uplmin16 Siuntimas bent 16 kbits
+3g_umax8192 Siuntimas daugiausia 8192 kbits
+3a_uplavail Galimas siuntimas %.1f KB/sek
+3a_uplprcar Siuntimas 1-am auto. %.0f b/sek
+3a_uplcarnm Iðviso siuntimø %.0f
+3a_requplod Reikalingas siuntimas %.1f KB/sek
+3a_availexc Turimas siuntimas virðytas
+3b_adminp_c Admino slaptaþodis :
+3a_sel_audi Garsai
+3a_tit_audi Garsai
+3a_sel_scrn Rezoliucija
+3a_tit_scrn Rezoliucija
+3a_sel_grfx Grafika
+3a_tit_grfx Grafika
+3a_sel_view Vaizdas
+3a_tit_view Vaizdas
+3a_sel_disp Ekranas
+3a_tit_disp Ekranas
+3a_sel_plyr Þaidëjas
+3a_tit_plyr Þaidëjas
+3a_sel_cont Valdymas
+3a_tit_cont Valdymas
+3a_sel_game Þaidimas
+3a_tit_game Þaidimo nustatymai
+3a_sel_misc Kita
+3a_tit_misc Kita
+3a_unlokerr Atrakinimo klaida
+3a_flcrterr Klaida kuriant failà
+3a_reguname Registruotas vartotojas :
+3a_onlinepw Þaidimo slaptaþodis :
+3a_gounlock atrakinti
+3g_locktext Uþrakinti LFS (gráþti prie DEMO)
+3g_lockques Uþrakinti Live for Speed?
+3g_lockwarn Liks tik DEMO turinys
+3a_autorcon Autoprisijungimas prie pagrindinio
+3a_notconnm Neprisijungæs prie pagrindinio
+3a_yesconnm Prisijungæs prie pagrindinio
+3a_connmstr prisijungti
+3a_connects Prisijungimai
+3a_hoptions nustatymai
+3a_smlb_kik iðspirti
+3a_smlb_ban iðtremti
+3a_num_bans %d iðtremtas
+3a_zerobans Nëra tremtiniø
+3a_editbans keisti trëmimus
+3a_tit_bans Trëmimø redaktorius
+3a_delshort trinti
+3a_goaddban pridëti
+3a_user_ban Ávesk vartotojo vardà iðtrëmimui
+3a_time0day %d:%.2d
+3a_time1day 1 diena %d:%.2d
+3a_timexday %d dienø %d:%.2d
+3a_banip12h IP adresui skirta 12 valandø tremtis
+3a_banun12h Vartotojui skirta 12 valandø tremtis
+3b_banusr1d Vartotojas iðtremtas vienai dienai
+3b_banusrxd Vartotojas iðtremtas %d dienoms
+3h_tyre_man Gamintojas
+3g_tt_sl_r1 SLIKAI R1
+3g_tt_sl_r2 SLIKAI R2
+3g_tt_sl_r3 SLIKAI R3
+3g_tt_sl_r4 SLIKAI R4
+3g_tt_slk_s SLIKAI MINKÐTI
+3g_tt_slk_m SLIKAI VID
+3g_tt_slk_h SLIKAI KIETI
+3a_tt_races LENKT_SLIKAI
+3a_tt_raceg LENKT_GRIOVELIAI
+3a_tt_racei LENKT_TARPINIAI
+3a_tt_racew LENKT_LIETAUS
+3a_tt_roads GATVIØ_SUPER
+3a_tt_roadn GATVIØ_NORMALIOS
+3a_tt_hybri HIBRIDINËS
+3a_tt_knobb GRUBLËTOS
+3a_ttlmaskl Bendra masë : %.0f kg (%.0f svr)
+3a_pwrwtmti Galia/svoris : %.0f W/kg (%.0f bhp tonai)
+3a_wdistrfr Svorio balansas : %.1f Priekyje  %.1f Gale
+3h_ddistrfr Prispaudimo balansas : %.1f P  %.1f G
+3h_rdistrfr Sukimosi oficialus balansas : %.1f F  %.1f R
+3a_trqnmlbr Sukimo momentas: %.0f Nm (%.0f svpd) @ %.0f aps./min
+3a_pwrkwbhr Galingumas : %.0f kW (%.0f AG) @ %.0f aps./min
+3a_engccfmt Variklis : %.0f cc%s%s%s
+3a_engltfmt Variklis : %.1f l%s%s%s
+3a_trbochrg turbo
+3a_etl_inli eilëje
+3a_etl_flat opozicinis
+3a_etl_veng V
+3a_etn_qcyl ?
+3a_etn_1cyl vieno cil.
+3a_etn_2cyl dviejø cil.
+3a_etn_3cyl trijø cil.
+3a_etn_4cyl 4
+3a_etn_5cyl 5
+3a_etn_6cyl 6
+3a_etn_8cyl 8
+3a_etn10cyl 10
+3a_etn12cyl 12
+3a_grrat1st Pirma %.3f
+3a_grrat2nd Antra %.3f
+3a_grrat3rd Treèia %.3f
+3a_grrat4th Ketvirta %.3f
+3a_grrat5th Penkta %.3f
+3a_grrat6th Ðeðta %.3f
+3a_grrat7th Septinta %.3f
+3a_grginfop Info
+3a_grgcolou Spalvos
+3a_grgbrake Stabdþiai
+3h_grgbrktc Stabdþiai/SK
+3a_grgsuspe Pakaba
+3a_grgsteer Vairas
+3a_grgfinal Transmisija
+3a_grgtyres Ratai
+3a_grgdownf Prispaudimas
+3a_grgpasse Keleiviai
+3a_pssfront priekyje
+3a_pssrleft gale kairëje
+3a_pssrmidd gale viduryje
+3a_pssrrght gale deðinëje
+3a_whlscolt Ratai
+3a_bodycolt Këbulas
+3a_texnamet Skin'o Pavadinimas
+3a_maxperwt Max ratui %.0f Nm
+3g_b_bal_fr Stabdþiø balansas (priekyje) %.0f%%
+3h_engbrred Variklio stabdymo maþinimas %.0f%%
+3h_tcmaxslp SK leidþiamas slydimas %.1f%%
+3h_tcminspd SK minimalus greitis %.0f m/s
+3h_abs_text ABS
+3g_ridehred Aukðtis
+3a_brkmotrg [Eiga %.3f m]
+3g_livecamb gyvai (K/D) %+.2f° / %+.2f°
+3g_stif_val Kietumas %.1f kN/m
+3g_damp_val Slopinimas %.1f kN/m
+3g_bump_val Smûgio Slopinimas %.1f kN/m
+3g_rebd_val Atðokimo Slopinimas %.1f kN/m
+3g_arol_val Stabilizatorius %.1f kN/m
+3h_power_st Vairo Stiprintuvas %.0f%%
+3a_maxlkval Max pasukimas %.1f°
+3g_castrval Ratø pasvirimas %.1f°
+3a_inclnval Nuoþulnumas  %.2f°
+3g_prllsval Lygiagr. vair. %.0f%%
+3g_toeinval Suvedimas %+.1f°
+3g_camb_abs Iðvirtimas (kairë/deðinë) %+.1f° / %+.1f°
+3g_camb_adj Iðvirtimas (K/D) %+.1f° / %+.1f°
+3h_tyrewarm Padangø ðildytuvo temperatura : %.0f°
+3a_fnldvval Galutinë pavara %.3f
+3g_ftrqsplt Traukos dalis priekiui %.0f%%
+3g_fvistorq Blokavimo jëga %.0f Nm/rad
+3g_lock_one Blokavimas %.0f%%
+3g_lock_o_o Blokavimas (galia/atleidimas) %.0f%% / %.0f%%
+3h_dpreload Iðankstinë apkrova %.0f Nm
+3g_frnt_txt Priekis
+3g_cent_txt Centras
+3g_rear_txt Galas
+3g_press_lr Slëgis (K/D) %.0f kPa / %.0f kPa
+3g_conv_psi Slëgis (K/D) %.1f psi / %.1f psi
+3g_conv_bar Slëgis (K/D) %.2f bar / %.2f bar
+3g_fwingang Priekinio sparno kampas %.0f°
+3g_rwingang Galinio sparno kampas %.0f°
+3h_tc_title Sukibimo kontrolë
+3g_stra_txt Strategija
+3g_fuel_sta Kuras starto metu : %.0f%%
+3g_fuel_pit Kuro papildymas boksuose : %.0f%%
+3g_tyre_lim Padangø keitimas : nusidëvëjus > %.0f%%
+3g_tyre_all Padangø keitimas : visada
+3g_tyre_nev Padangø keitimas : niekada
+3h_rep_damg Taisyti apgadinimus : %s
+3h_setup_ch Reikalaujami setup'o pakeitimai
+3h_handicap Apribojimai
+3h_hcapnone NËRA
+3h_x_kilogr %d kg
+3h_x_pc_res %d%% apribojimas
+3h_vol_tres Oro ásiurbimo Apribojimas %.0f%%
+3h_vol_mass Balastas %.0f kg
+3h_mass_pos Pridëto Balasto Pozicija (priekyje) %.0f%%
+3g_symmetri simetriðki
+3g_asymmetr asimetriðki
+3g_configur Konfigûracija
+3g_cpct_x_l Kuro bakas : %.1f l
+3g_optt_x_d Optimali temperatûra %.0f°
+3g_tst_x_ms Testavimo greitis %.1f m/s
+3g_rearwing Galinis Spar.
+3g_frntwing Priekinis Spar.
+3g_undrtray Dugnas
+3g_bodyaero Këbulas
+3g_totlaero Viso
+3g_lift_x_n K : %.0f N
+3g_drag_x_n P : %.0f N
+3g_car_tn_x Automobilio vairas sukasi %.0f° (nuo kraðto iki kraðto)
+3g_con_tn_x Valdiklio vairas pasisuka %.0f°
+3g_live_cmb Iðvirtimas : %+.2f
+3g_live_inc Suvedimas : %.2f
+3g_live_cst Caster'is : %.2f
+3g_live_scr "Scrub" : %.3f
+3g_live_trk Tarpvëþë : %.3f
+3g_susrigid Standus Tiltas
+3g_sustrail Ðvytuojanti Svirtis
+3g_susffork Priekinë Ðakë
+3g_susmacph MacPherson Svirtis
+3g_susdwish Dvigubas Trikampis
+3g_pit_inst Nurodymai Garaþui
+3g_live_set Gyvi Nustatymai
+3g_wheels_x RATAI yra %s
+3g_l_tt_x_x PADANGOS %s [%s]
+3g_l_pr_psi SLËGIS %.1f psi [%+.1f psi]
+3g_l_pr_bar SLËGIS %.2f bar [%+.2f bar]
+3g_l_cr_adj IÐVIRT.KOREKCIJA %.1f° [%+.1f°]
+3g_l_cr_abs IÐVIRTIMAS %.1f° [%+.1f°]
+3g_l_wg_ang SPARNAS %.0f° [%+.0f°]
+3h_estcolon Ávertinimas:
+3g_fl_pc_pl %.1f%% ratui
+3g_fl_pc_it %.1f%% bake
+3h_a3_lower ÞEM
+3h_a3_upper VIR
+3h_a3_toein SUV
+3h_a3_ctemp ST
+3a_trckunkn Neþinoma trasa
+3a_trcknofn Trasa nerasta
+3a_trckobso Pasenusi trasa
+3a_fnshload BAIGTA
+3a_prgprelo Kraunama
+3a_prgldtex Kraunamos tekstûros
+3a_prgpaths Keliai
+3a_prgcolrs Spalvos
+3a_prgdupli Pasikartojantys
+3a_prglgtsc Apðvietimo schemos
+3a_prgrdobs Nuskaitomi objektai
+3a_prglgtin Apðvietimo info
+3a_prgbmptx Bump tekstûros
+3a_prginicl Paruoðiamos spalvos
+3a_prgchpts Tarpiniai finiðai
+3a_prgextra Papildomi duomenys
+3a_prgstobs Pradedami objektai
+3a_prgmapsq Þemëlapiø kvadratai
+3a_prgpthin Paruoðiami keliai
+3a_prgpthad Keliø pataisymas
+3a_prgrebld Perkuriama
+3g_prggener Generuojama
+3a_spcpres1 (spausk 1)
+3a_autojblk Neámanoma prisijungti : Startas blokuojamas
+3a_xcomplvt %s^8 uþbaigë balsavimà
+3a_maxgcarx Max sveèiø automobiliø : %d
+3a_maxhcarx Max serverio automobiliø : %d
+3a_cf_swpsd sukeistikeistis puses
+3a_cf_gopit techninio aprtarnavimo juosta
+3a_cf_chqul keisti kvalifikacijos laikà
+3a_cf_chlap keisti ratus
+3a_cf_chwin keisti vëjà
+3b_cf_finfo keisti info
+3a_upc_male %s^8 atnaujino savo valdymà
+3a_upc_fmal %s^8 atnaujino savo valdymà
+3a_upc_unkn %s^8 atnaujino valdymà
+3a_x_no_car %s^8 neturi automobilio
+3a_x_alredy %s^8 jau turi automobilá
+3a_x_lftpot %s^8 iðvaþiavo ið garaþo
+3a_w_rd_rly ^6Dëmesio : asfalto padangos rali-kroso trasoje
+3a_w_rly_rd ^6Dëmesio : rali-kroso padangos asfalto trasoje
+3a_unkcdisc Neþinomas automobilis - þaidëjas atjungtas
+3a_modcdisc Modifikuotas automobilis - þaidëjas atjungtas
+3a_nocrukid Neámanoma pridëti automobilio info - neþinomas id
+3a_xrenamex %s^8 persivadino á %s
+3g_xtakovrx %s^8 perëmë ið %s
+3g_xwantuto %s^8 nori, kad perimtum
+3g_xwantsto %s^8 nori perimti
+3g_oswapend Vairuotojus galima keisti tik pasibaigus sustojimui
+3a_nosharnm Negalima turëti tokio pat vardo, kaip kitas þaidëjas
+3a_trkloadd Trasa uþkrauta
+3a_x_pitted %s^8 sustojo
+3g_x_pitstp %s^8 atliko sustojimà techninio aprtarnavimo juostoje
+3a_x_conn_x %s^8 prisijungë (%s^8)
+3a_x_connec %s^8 prisijungë
+3g_x_blkmsg %s^8 uþblokavo praneðimus
+3g_x_unblkm %s^8 atblokavo praneðimus
+3a_newgconn Jungiasi naujas sveèias
+3a_gfailcon Naujam sveèiui nepavyko prisijungti
+3g_waitplyc Palaukite - jungiasi þaidëjas
+3h_waitbuff Iðvengiama buferio persipildymo
+3a_xss_male %s^8 iðsiuntë savo nustatymus
+3a_xss_fmal %s^8 iðsiuntë savo nustatymus
+3a_xss_unkn %s^8 iðsiuntë savo nustatymus
+3a_packs_ps Paketus per sekundæ %d
+3a_noqual_x Negali kvalifikuotis - %s
+3a_no_x_plc Negali %s - jungiasi þaidëjas
+3a_no_x_cht Negali %s - keièiama trasa
+3g_no_x_car Negali %s - automobilis trasoje
+3a_novotepg Balsavimas nevyksta
+3h_vote_kic %s^8 balsavo uþ %s^8 (%s^8) [%d/%d] iðspyrimà
+3h_vote_ban %s^8 balsavo uþ %s^8 (%s^8) [%d/%d] iðtrëmimà
+3a_x_tmdout %s^8 baigësi laikas
+3a_lostcn_x Dingo ryðys su %s^8
+3a_x_discon %s^8 atsijungë
+3g_x_kicked %s^8 buvo iðspirtas
+3g_x_banned %s^8 buvo iðtremtas
+3a_qulfauto Autokrosas
+3a_qulfprac Treniruotë
+3a_qulfnote Neájungta
+3g_skinnotf Tavo automobilio skin'as nebuvo rastas ^7www.lfsworld.net
+3g_helmnotf Tavo ðalmo skin'as nebuvo rastas ^7www.lfsworld.net
+3g_updatset Atnaujinau nustatymus
+3g_fastlxxx Greièiausias ratas : %s, %s^8 (%s)
+3g_no_reset Ðiame serveryje automobilio atstatymas nëra leidþiamas
+3g_cant_res Negalima atstatyti - %s
+3g_too_dang perdaug pavojinga
+3g_could_ha gali atsitrenkti á kità automobilá
+3g_could_hr gali atsitrenkti á neseniai atstatytà automobilá
+3g_would_ye tai sukeltu geltonà vëliavà
+3a_obsolvid Pasenæs video
+3a_vidlater Video buvo sukurtas su vëlesne versija
+3h_hls_hlvc HLVC
+3h_hls_inva NEGALIOJANT
+3h_hls_cust SAVO
+3a_htlpinvl Blogas vaþiavimo laikui ratas (%s)
+3a_hli_grnd þolë
+3a_hli_wall siena
+3a_hli_obje objekt.
+3a_hli_wron ne á tà pusæ
+3h_hli_spee greièio virðijimas
+3a_ptp_locl vietin.
+3a_ptp_remt nutolæs
+3a_ptp_lcai di (K)
+3a_ptp_rmai di (D)
+3a_rsk_noob NAUJOKAS
+3a_rsk_lrnr MOKINYS
+3a_rsk_okok VIDUTINIS
+3a_rsk_quik GREITAS
+3a_rsk_prof PRO
+3a_x_finish %s^8 baigë
+3a_x_finplc %s^8 baigë %s
+3g_x_fin1be %s^8 baigë atsilikæs ratu
+3g_x_finxbe %s^8 baigë atsilikæs %d ratais
+3g_x_conplc %s^8 galutinë pozicija yra %s
+3g_x_disqua %s^8 diskvalifikuotas
+3a_x_wonrac %s^8 laimëjo
+3a_max3locl Max 3 vietiniø þaidëjø
+3a_fnshuncl neklasifikuotas
+3a_fnsh_1st 1as
+3a_fnsh_2nd 2as
+3a_fnsh_3rd 3as
+3a_fnsh_4th 4as
+3a_fnsh_5th 5as
+3a_fnsh_6th 6as
+3a_fnsh_7th 7as
+3a_fnsh_8th 8as
+3a_fnsh_9th 9as
+3a_fnsh10th 10as
+3a_fnsh11th 11as
+3a_fnsh12th 12as
+3a_fnsh13th 13as
+3a_fnsh14th 14as
+3a_fnsh15th 15as
+3a_fnsh16th 16as
+3g_fnsh17th 17as
+3g_fnsh18th 18as
+3g_fnsh19th 19as
+3g_fnsh20th 20as
+3g_fnsh21st 21as
+3g_fnsh22nd 22as
+3g_fnsh23rd 23as
+3g_fnsh24th 24as
+3g_fnsh25th 25as
+3g_fnsh26th 26as
+3g_fnsh27th 27as
+3g_fnsh28th 28as
+3g_fnsh29th 29as
+3g_fnsh30th 30as
+3g_fnsh31st 31as
+3g_fnsh32nd 32as
+3a_wlcm_lfs Sveiki, èia Live for Speed
+3a_agre_lfs Susitarimas
+3a_overwrex Raðyti ant esanèio failo?
+3g_deleteex Iðtrinti esamà failà?
+3g_newnamef Áveskite naujà failo pavadinimà
+3g_filealre Failas su tokiu pavadinimu jau yra
+3g_cnotfind Neámanoma rasti failo
+3a_layoutsv Ávesk naujo iðdëstymo pavadinimà, iðsaugojimui
+3a_windocon Langas jungiantis :
+3a_cancelbt atðaukti
+3a_backbutt atgal
+3a_capitlok GERAI
+3a_capitlgo PIRMYN
+3a_invldstr blogas
+3a_cpfinish FINIÐAVO
+3a_cpwinner NUGALËTOJAS
+3a_namepass Vartotojas ir slaptaþodis
+3a_validnam Turi ávesti galiojantá vartotojo vardà
+3a_validpas Turi ávesti galiojantá slaptaþodá
+3a_passmin8 Slaptaþodis turi turëti bent 8 simbolius
+3a_shifttyp Pavarø dëþë :
+3a_autogear Automatinë pavarø dëþë :
+3a_notiming - ratai nebus skaièiuojami
+3a_stilload Vis dar kraunama trasa
+3a_waitlist Laukiama serveriø sàraðo
+3a_wt_ginfo Laukiama serverio info
+3a_connmast Jungiamasi prie pagrindinio serverio
+3a_waitmrep Laukiama pagrindinio serverio atsakymo
+3a_waithrep Laukiama serverio atsakymo
+3a_waitinfo Laukiama info
+3a_masterro Klaida laukiant atsakymo
+3a_mnoreply Pagrindinis serveris neatsako
+3a_waitginf Laukiama sveèio info
+3a_waitpinf Laukiama þaidëjo info
+3a_waitmsgs Laukiama pirmø þinuèiø
+3a_connhost Jungiamasi prie serverio
+3a_conn_udp Kuriamas UDP ryðás
+3a_openserv Atidaromas serverio lizdas
+3a_unexmstr Netikëtas pagrindinis paketas
+3a_unexsrvr Netikëtas serverio paketas
+3a_unexgest Netikëtas sveèio paketas
+3a_numg_oob Sveèiø skaièius virðyjo apribojimus
+3a_errrhost Klaida atsakant serveriui
+3a_unextrak Netikëtas trasos pakeitimas
+3a_unkntrak Neþinoma trasos klaida
+3a_unexpack Netikëto dydþio paketas
+3a_unexrepl Netikëtas atsakymas
+3a_gmnmused Toks serverio pavadinimas jau naudojamas
+3a_errmthrd Neámanoma sukurti pagrindinës atðakos
+3a_lostmast Dingo ryðys su pagrindiniu serveriu
+3a_losthost Dingo ryðys su serveriu
+3g_notisync Nepavyko pradinë sinchronizacija
+3g_lostsync Prarasta sinchronizacijà su serveriu
+3a_connecto Jungimosi laikas baigësi
+3a_noconnsl Nëra laisvø prisijungimø vietø
+3a_nookpack Negautas OK
+3a_waitfook Laukiama OK
+3a_waittrak Laukiama trasos info
+3a_notrakpk Negauta trasos info
+3a_loadtrak Kraunama trasa
+3a_chglight Keièiamas apðvietimas
+3a_ply_join Jungiasi þaidëjas
+3a_nochrace Neámanoma lenktyniø metu pakeisti trasos
+3g_trnoallo %s ðiame serveryje neleidþiamas
+3a_chgtrack Keièiama trasa
+3h_welcomex Sveiki atvykæ á Live for Speed %s
+3a_small_no ne
+3a_smallyes taip
+3h_smallaut auto
+3h_smallnev niekada
+3h_smallask klausti
+3h_smallalw visada
+3a_smalloff iðj.
+3a_smalreal tikri
+3a_smalvrtl virtualûs
+3a_smalleft kairë
+3a_smalrght deðinë
+3a_smalnone nieko
+3a_smaltext tekstas
+3a_smallall visi
+3a_smallman vyras
+3a_smallwmn moteris
+3h_smallb16 16 bitø
+3h_smallb32 32 bitø
+3a_smlnobrk [ne]
+3a_smlysbrk [taip]
+3a_smlofbrk [iðj.]
+3a_smlonbrk [áj.]
+3a_actobjct objektas
+3a_actstart starto vieta
+3a_actfinsh finiðo linija
+3a_actchck1 1as tarpinis
+3a_actchck2 2as tarpinis
+3a_actchck3 3ias tarpinis
+3g_actcircl apskritimas
+3a_actnofin Nëra finiðo linijos
+3a_actnochk Nëra tarpinio finiðo
+3a_actfnnoc Finiðo linija yra, bet nëra tarpinio
+3a_accpxnof %d tarpinis finiðas nerastas
+3a_aconechk Autokrosas : 1 tarpinis
+3a_acxchckp Autokrosas : %d tarpiniai
+3a_noloadsk Neámanoma uþkrauti skin'o :
+3a_wrngfltp Blogas failo tipas
+3a_cnocolon Neámanoma atidaryti failo :
+3a_outcnopn Output : Neámanoma atidaryti failo
+3d_outnoply Output : Nerastas automobilio vairuotojo
+3d_outstart Output : Pradëjo ratà
+3d_outfinis Output : Baigta
+3a_corruptf Sugadintas failas
+3a_filenohc Nepavyko patikrinti failo :
+3g_filetoos Per trumpas failas
+3g_filecorr Sugadintas failas
+3g_err_read Klaida nuskaitant failà
+3g_notpcmwv Wave nëra PCM
+3g_srnotsup Nepalaikomas iðrankos daþnis
+3g_wv_mo_st Wave ne mono arba stereo
+3g_wavemb16 Wave nëra 16 bitø
+3g_wavetool Per ilgas thread
+3a_latervfl Failas buvo sukurtas vëlesne versija :
+3a_nocrtfil Neámanoma sukurti failo :
+3a_votecanc Balsavimas atðauktas
+3a_nocrtmpr Neámanoma sukurti MPR failo
+3a_savedmpr Tinklo þaidimo pakartojimas iðsaugotas -
+3a_nocrtspr Neámanoma sukurti SPR failo
+3a_savedspr Vieno þaidëjo pakartojimas iðsaugotas -
+3a_nornmspr Neámanoma pervadinti SPR -
+3a_accesden Neleidþiama prieiti
+3a_invalchr Blogi simboliai
+3a_notfound Nerasta
+3a_unknowne Neþinoma klaida
+3g_downcanc Atsisiuntimas atðauktas
+3g_filesize Blogas failo dydis
+3g_highresd Aukðtos rezoliucijos skin'u atsisiuntimai
+3g_nolfswcr Neuþtenka LFS Pasaulio kreditø aukðtos rezoliucijos skin'ui
+3g_dbnotava Aukðtos rezoliucijos skin'u duomenø bazës nëra
+3a_entermsg Ávesk þinutæ
+3g_seldefcp Pasirink standartiná kodø puslapá
+3a_ctabshwr CTRL+TAB - rodyti rezultatus
+3a_shf8nwdb SHIFT+F8 - tinklo info - %s
+3a_newvalfx Ávesk naujà %s reikðmæ
+3a_valtoolo Nauja reikðmë per maþa
+3a_valtoohi Nauja reikðmë per didelë
+3a_endoqual KVALIFIKAC. BAIGTA
+3a_ctrcclip CTRL+C - pelë susieta kai
+3a_ctrcfree CTRL+C - pelë laisva kai
+3a_windotxt lange
+3a_fullstxt visame ekrane
+3g_not_demo negalima demo vartotojams
+3h_noraceln negalima rodyti lenktyniø linijos
+3g_time_loc vietinis
+3g_time_utc PL
+3a_namelong Vardas per ilgas
+3a_noconnms Neámanoma prisijungti prie pagrindinio serverio
+3a_wrninsta Dëmesio : paleista dar viena LFS kopija
+3g_lfsbuyon Live for Speed - nusipirk internete - ^7www.lfs.net
+3g_comentry Komanda skirta tik pradiniam ekranui
+3g_insimnop InSim nepaleistas
+3g_comguest Komanda tik tinklo sveèiams
+3g_comsetup Komanda tik garaþui
+3g_comnoded Komanda neskirta dedikuotam serveriui
+3g_unknwnai Neþinomas DI vairuotojas
+3g_drv_alrd Vairuotojas jau vaþiuoja
+3g_drv_noin Vairuotojas nevaþiuoja
+3g_setup_nf Nustatymai nerasti
+3g_colournf Spalvos nerastos
+3g_scrtooma Perdaug skriptø
+3g_scrtoolo Perilgas skriptas
+3g_scrempty Tuðèias skriptas
+3g_un_axs_f Neþinoma aðies funkcija
+3g_un_key_f Neþinoma mygtuko funkcija
+3g_un_btn_f Neþinoma mygtuko funkcija
+3g_xlnxtool %s : eilutë %d per ilga
+3g_x_ln_x_x %s : eilutë %d - %s
+3g_cantopen Neámanoma atidaryti : %s
+3g_notallow Neleistina : %s
+3h_cp_latin Lotynø 1
+3h_cp_cente Centrinës Europos
+3h_cp_turki Turkø
+3h_cp_balti Baltø
+3h_cp_japan Japonø
+3h_cp_cyril Kyrilica
+3h_cp_greek Graikø
+3h_cp_tr_ch Tradicinë kinø
+3h_cp_si_ch Paprasta kinø
+3h_cp_korea Korëjieèiø
+3a_hostfull Serveris pilnas
+3a_hostload Serveris krauna trasà
+3a_plyrconn Þaidëjas jau jungiasi
+3g_plydisco Þaidëjas atsijunginëja
+3h_racstart Lenktynës prasideda
+3a_unauthcn Neleistinas prisijungimas
+3a_useronli Vartotojas jau tinkle
+3h_userband Vartotojas ðiuo metu iðtremtas
+3a_usernofd Tavo vartotojo vardas nerastas
+3a_pwnomtch ÞAIDIMO slaptaþodis ne toks
+3g_pwneeded Turi nustatyti ÞAIDIMO slaptaþodá
+3h_unlkused Visi ðios savaitës atrakinimai panaudoti
+3h_unpwconf Vartotojo vardas ir slaptaþodis patvirtinti
+3a_unknwerr Neþinoma klaida
+3a_carnomtc Automobiliai nesutampa su serverio automobiliais
+3a_nodbljon Negalima du kartus jungtis prie interneto serverio
+3a_hlostmst Serveris prarado pagrindiná susijungimà
+3a_wrngpass Blogas slaptaþodis
+3a_prvreqps Privatus serveris reikalauja slaptaþodþio
+3a_usrunknw Neþinomas vartotojas
+3a_usrnotol Vartotojas tinkle nerastas
+3a_usrolhid Vartotojas tinkle, slaptame serveryje
+3g_usrol_s1 Vartotojas tinkle, S1 serveryje
+3g_usrol_s2 Vartotojas tinkle, S2 serveryje
+3g_usrol_s3 Vartotojas tinkle, S3 serveryje
+3a_hostrefu Serveris atsisakë leisti prisijungti
+3a_hstdiffv Serverio versija kitokia
+3a_hstdiffc Serverio þaidimo kodas kitoks
+3a_hstis_s1 Serveris yra Live for Speed S1
+3g_hstis_s2 Serveris yra Live for Speed S2
+3g_hstis_s3 Serveris yra Live for Speed S3
+3a_hstisdmo Serveris yra Live for Speed DEMO
+3a_hstunknr Nesuprantamas serverio atsakymas
+3a_hstnomst Pagrindiniame serveryje nerastas ðis serveris
+3a_nameused Vardas jau naudojamas
+3a_racefull Lenktynëse nëra laisvø vietø
+3g_nomidjoi Ðis serveris neleidþia jungtis lenktyniø metu
+3b_usermeet Vartotojas laukiamajame
+3b_unkncomm Neþinoma komanda
+3h_unknwver Neþinoma versija
+3b_reqparam Ðiai komanda reikia parametro
+3b_req2pars Ðiai komandai reikia 2 parametrø
+3e_notenpar Nepakanka parametrø
+3b_unknwtrk Neþinomas trasos parametras
+3e_unknwcar Neþinomas automobilio parametras
+3b_unoadmin Neturi admino teisiø
+3b_kbinvalu Vartotojo vardas negalioja
+3b_invalpar Parametras neteisingas
+3g_ptoolong Perilgas parametras
+3g_notfound Failas nerastas
+3e_setuponl Komanda tik garaþui
+3e_axnofind Neámanoma atidaryti iðdëstymo
+3e_axnoneav Ðiai trasai nerasta nei vieno iðdëstymo
+3e_kbnoload Neámanoma uþkrauti failo
+3e_kbnosave Neámanoma iðsaugoti failo
+3g_tooearly Dar per anksti restartuoti lenktynes
+3g_pplracin Kai kurie dar lenktyniauja
+3h_notrxudp Serveris negavo UDP paketo
+3h_nomultij Iðvengiama daugybës prisijungimo praðymø
+3h_modreqpw Modifikuotam serveriui reikia slaptaþodþio
+3h_invalidu Neteisingas vartotojo vardas

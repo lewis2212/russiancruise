@@ -1,0 +1,256 @@
+LFS HELP file (Suomi)
+Translated by: admkirk, Huru-aito, JR Oja, Krane, vari
+
+NOTE : This file is designed to be read from "?" buttons inside Live for Speed
+------
+
+\con_wind
+Tämä vaihtoehto on tilanteita varten, jotka saattavat ilmetä, kun LFS on kokoruudulla.
+
+1) Jos sinulla on palomuuriohjelma, saattaa se tuoda näytölle varoituksen yhdistäessäsi tai luodessasi verkkopeliä.
+
+2) Puhelinverkkoyhteysikkuna saattaa ilmestyä näytölle yrittäessäsi yhdistää Internetiin.
+
+Jotkin tietokoneet voivat jumiutua, jos LFS on kokoruudulla, joten tämä vaihtoehto laittaa LFS:n yhdistämisen ajaksi ikkunaan.
+
+Jos tietokoneesi ei näytä yhdistäessäsi mitään ilmoituksia, voit ottaa tämän vaihtoehdon pois päältä.
+\host_pw
+Jotkin palvelimet ovat yksityisiä, jolloin ne vaativat salasanan.
+
+Jos yhdistät yksityiseen palvelimeen, sinun täytyy kirjoittaa tähän salasana.
+
+Julkiset palvelimet eivät vaadi salasanaa.
+\game_nm
+^7Julkinen peli -^8 kirjoita pelin nimi. Nimi näkyy Internetissä.
+
+^7Yksityinen peli -^8 nimi auttaa ystäviäsi löytämään pelin.
+\ip_name
+^3Vaihtoehdot:
+
+^7Paikallisverkko -^8 voit liittyä paikalliseen peliin kirjoittamalla palvelimen IP-osoitteen.
+
+^7Internet -^8 voit liittyä Internet-peliin kirjoittamalla pelin nimen.
+\host_ip
+^7Voit yhdistää tiettyyn paikallisverkon koneeseen.^8
+
+IP-osoite on uniikki numero, joka muodostuu neljästä luvusta. Lukujen välissä on piste (xxx.xxx.xxx.xxx).
+
+Klikkaa nappia ja kirjoita sen tietokoneen IP-osoite, johon haluat yhdistää.
+
+^7IP-osoitteen selvittäminen (Windows 9x, Me):^8
+1) Käynnistä -> Suorita - WINIPCFG ^7tai^8
+2) DOS-kehote - IPCONFIG
+
+^7IP-osoitteen selvittäminen (Windows 2000, XP):^8
+1) Käynnistä -> Suorita - cmd - IPCONFIG
+\host_port
+Yhdistäessäsi suoraan IP-osoitteen perusteella, sinun pitää tietää IP-osoitteen lisäksi palvelimen käyttämä portti.
+
+Portin oletusarvo on 63392, mutta palvelimen ylläpitäjä on saattanut muuttaa sitä.
+
+Portti on luku väliltä 63392 - 65535.
+\host_nm
+Voit yhdistää tiettyyn koneeseen Internetissä.
+
+Voit yhdistää peliin sen nimen avulla, syötä nimi tekstikenttään.
+
+Pelien nimet mahdollistavat tietyn pelin löytämisen, vaikket tietäisikään IP-osoitetta.
+\game_pw
+^7Yksityinen peli -^8 syötä salasana.
+
+^7Julkinen peli -^8 jätä tekstikenttä tyhjäksi.
+\use_master
+Pääpalvelin ylläpitää jatkuvasti listaa käynnissä olevista peleistä. Tämä mahdollistaa liittymisen jo käynnissä olevaan peliin tai uuden pelin luomisen.
+
+^3Vaihtoehdot:
+
+^7Paikallinen^8 - palvelin ei yhdistä pääpalvelimeen, mutta pelaajat voivat liittyä valitsemalla "paikallisverkko"-vaihtoehdon ja kirjoittamalla palvelinkoneen IP-osoitteen.
+
+^7Internet^8 - peli näkyy pääpalvelimen listalla.
+
+^7Piilotettu^8 - palvelin yhdistää pääpalvelimeen, mutta peli ei näy listalla. Pelaajat voivat liittyä valitsemalla "Liity tiettyyn peliin" ja kirjoittamalla pelin nimen.
+
+^3Huomautus:^8 Jos tietokoneesi liittyy epäsuorasti Internetiin, esimerkiksi palomuurin läpi, pitää Internet-ominaisuuksia käyttääksesi sinun avata LFS:n käyttämät TCP- ja UDP-portit.
+\game_port
+Voit valita, mitä TCP- ja UDP-portteja haluat palvelimen käyttävän. Tämä sallii useamman dedikoidun palvelimen ajamisen samalla koneella.
+
+Käytä oletusarvoa 63392 tai valitse jokin muu iso luku, kuitenkin enintään 65535.
+\master_help
+Yhteyttä pääpalvelimeen ei voitu muodostaa.
+
+Tämä voi tapahtua monesta syystä:
+
+1) Mahdollinen palomuuri on saattanut estää yhteyden.
+2) Palveluntarjoajasi ei tilapäisesti pysty yhdistämään pääpalvelimeen.
+3) Pääpalvelin ei ole käynnissä teknisten ongelmien takia.
+
+Tarkista pääpalvelimen tila ja IP-osoite verkkosivulta:
+
+^7www.lfs.net^8 tai ^7www.lfsforum.net^8
+\modem_type
+Tietokoneesi kyky toimia usean pelaajan palvelimena riippuu yhteytesi lähetysnopeudesta, johon vaikuttaa käyttämäsi päätelaite sekä palveluntarjoajasi tarjoama nopeusluokka.
+
+Valitse yhteytesi nopeusluokka tai valitse "oma" ja syötä lähetysnopeus kilobitteinä sekunnissa (1 kilotavu = 8 kilobittiä).
+
+^7Ennaltamääritetyt modeemityypit:^8
+
+- modeemi: 56 kbit
+- kaapelimodeemi: 512 kbit vastaanotto / 128 kbit lähetys
+- kaapelimodeemi: 1 Mbit vastaanotto / 256 kbit lähetys
+\upload_bw
+Jos liittymätyyppisi ei ole ennaltamääriteltyjen joukossa, syötä lähetysnopeutesi kilobitteinä sekunnissa (1 kilotavu = 8 kilobittiä).
+
+Tämä auttaa sinua valitsemaan palvelinasetukset siten, ettet ylitä yhteytesi lähetyskykyä.
+\max_guests
+Voit valita, kuinka moni pelaaja voi yhdistää palvelimeesi.
+
+^7Minimi:^8 1 - vain yksi pelaaja voi liittyä.
+^7Maksimi:^8 demossa 15 yhteyttä, S1:ssä ja S2:ssa 47.
+
+Tällä luvulla on suuri vaikutus siihen, kuinka suuren lähetysnopeuden palvelinkone vaatii.
+\max_cars
+Voit valita kilpailijoiden lukumäärän.
+
+Määrä sisältää sekä ihmiset että tietokonekuljettajat.
+
+^7Minimi:^8 1 - vain yksi auto voi osallistua kisaan.
+^7Maksimi:^8 demossa 12 autoa, S1:ssä ja S2:ssa 28.
+
+Tällä luvulla on suuri vaikutus siihen, kuinka suuren lähetysnopeuden palvelinkone vaatii.
+\guest_cars
+Voit valita, kuinka monta autoa kukin vieras voi kilpailuun lisätä.
+
+Määrä sisältää sekä ihmiset että tietokonekuljettajat.
+
+^7Minimi:^8 0 - vieraat voivat katsoa mutta eivät voi liittyä kilpailuun.
+^7Maksimi:^8 3 - joko 3 AI-kuljettajaa tai 1 ihminen ja 2 AI-kuljettajaa per vieras.
+\host_cars
+Voit valita, kuinka monta autoa palvelinkoneelta voi lisätä kilpailuun.
+
+Määrä sisältää sekä ihmiset että tietokonekuljettajat.
+
+^7Minimi:^8 0 - palvelinkoneella voi katsoa muttei liittyä kilpailuun.
+^7Maksimi:^8 3 - joko 3 AI-kuljettajaa tai 1 ihminen ja 2 AI-kuljettajaa per vieras.
+
+Luvun pienentäminen vähentää lähetysnopeuden tarvetta.
+\max_packs
+Autojen lähettämien pakettien maksimimäärä sekunnissa.
+
+^7Minimi:^8 3 pakettia sekunnissa.
+^7Maksimi:^8 6 - sulavampi, mutta vaatii kaksinkertaisen lähetysnopeuden ja kuormittaa suoritinta enemmän.
+\ded_host
+Voit käynnistää palvelimen joko normaalina tai dedikoituna.
+
+^7Normaali palvelin:^8 voit pelata aivan kuin yksinpelissä, ja muut pelaajat voivat liittyä samaan kilpailuun.
+
+^7Dedikoitu palvelin:^8 et voi pelata palvelinkoneella. Tämä on hyvä vaihtoehto, jos et aio itse kilpailla tai aiot kilpailla toisella koneella. Dedikoitu palvelin ei vaadi läheskään yhtä paljon konetehoa kuin normaali palvelin.
+\game_ip
+Jos koneellasi on useampi IP-osoite, voit kirjoittaa tähän sen, jota haluat palvelimesi käyttävän.
+\admin_pass
+Voit määrittää pelin valvojalle oman salasanan.
+
+Jos pelaaja liittyy käyttäen valvojan salasanaa, hän voi säätää palvelinta tekstikomentojen avulla. Katso lisätietoja README.txt-tiedostosta kohdasta "Host commands".
+\agreement
+^3Tervetuloa Live for Speediin!^8
+
+Käyttääksesi tätä ohjelmaa sinun täytyy suostua seuraavaan:
+
+- Live for Speed kehittyy jatkuvasti. Ominaisuuksia voidaan lisätä, päivittää tai poistaa. Joitakin keskeneräisiä toimintoja voidaan lisätä simulaattorin viihdyttävyyden parantamiseksi.
+
+- Tälle ohjelmalle ei anneta minkäänlaista takuuta.
+
+- Asennat ja käytät tätä ohjelmaa omalla vastuullasi. Live for Speedin tekijät eivät voi ottaa vastuuta ohjelman käytöstä mahdollisesti johtuvista vammoista eivätkä myöskään laitteistollesi mahdollisesti aiheutuvista vaurioista.
+
+- Ohjelman DEMOsisältö on kaikkien käytettävissä ilmaiseksi. LUKITTU sisältö on vain lisensoiduille käyttäjille. Et saa yrittää ottaa käyttöösi lukittua sisältöä etkä auttaa ketään muutakaan yrityksessä muuten kuin lunastamalla lisenssin osoitteessa ^3www.lfs.net^8 ja käyttämällä pelistä löytyvää lukituksen avausta.
+
+^7Kiitos.^8
+\admin_slots
+Voit varata osan palvelimen paikoista palvelimen valvojille.
+
+^7Minimi :^8 0 - yhtään paikkaa ei varata.
+
+^7Maksimi :^8 8 - tai yksi vähemmän kuin vieraita enintään.
+
+Tämä asetus varmistaa, että voit aina liittyä omalle palvelimellesi, jos olet asettanut valvojan salasanan.
+\skin_info
+Jotta LFS lataisi automaattisesti korkean resoluution tekstuurit, sinulla täytyy olla LFS World -krediittejä tai maksullinen LFS-lisenssi.
+
+LFS World -krediitit tarkoittavat, että sinulla on rahaa LFS-tililläsi.
+
+Käyttääksesi tätä palvelua voit maksaa osoitteessa ^7www.lfs.net^8 tai ^7www.lfsworld.net^8 tai käyttää ns. voucheria.
+
+^3Yhdellä punnalla ^8voit ladata^3 2000 ^8tekstuuria. Pienin maksu on 3 £.
+
+^7Näin se toimii:^8
+
+LFS World -tililläsi täytyy olla vähintään 1 £. Kun lataat ensimmäisen kerran suuriresoluutioisen tekstuurin, tililtäsi vähennetään 1 £ ja voit täten ladata 2000 tekstuuria. 2000 latauksen jälkeen 1 £ vähennetään jälleen ja saat taas ladata uudet 2000 tekstuuria.
+
+^7Varoitus:^8
+
+Korkean resoluution tekstuurien lataus sekä palvelimelta että kiintolevyltä pelaajien liittyessä peliin kestää kauemmin ja ne käyttävät neljä kertaa enemmän näyttömuistia. Tämä asetus on suositeltava vain, jos sinulla on tehokas tietokone ja näytönohjain sekä nopea Internet-yhteys.
+\skin_help
+^7Tekstuuri^8 on kuvatiedosto joka näytetään joko auton tai kypärän päällä, ja täten mahdollistaa omat väriteemat.
+
+LFS:ssä on käytössä automaattinen tekstuurien latausjärjestelmä. Kun olet ajamassa moninpelissä, järjestelmä lataa toisten pelaajien tekstuurit automaattisesti koneellesi.
+
+Jos haluat tehdä omia tekstuurejasi, kannattaa vierailla osoitteessa ^7www.lfs.net^8 ja ladata ^7CMX viewer^8 Additional Downloads -osastolta. CMX Viewer on tekstuurien esikatseluohjelma joka helpottaa uusien väritysten luontia. Paketin mukana seuraa värittömät aputiedostot joka autolle, joiden avulla voit lähteä värityksiä suunnittelemaan.
+
+Tallennettuasi tekemäsi tekstuuri ^7skins^8 -kansioon joka löytyy ^7data^8 kansion sisältä, voit ottaa käyttöön luomasi tekstuurin Varikko -tilassa.
+
+Jotta toiset kilpailijat näkisivät luomasi tekstuurin moninpeleissä, kirjaudu ^7www.lfsworld.net^8 -sivustolle ja lisää luomasi tekstuuri "My Skins" -osioon. Siten autosi tekstuuri ladataan automaattisesti muiden käyttäjien koneille kun he kisaavat kanssasi.
+\comp_full
+Kypärien ja autojen tekstuurit, olivat ne sitten LFS:ssä valmiina tai ladattu automaattisesti pelin aikana, tallennetaan DDS-muodossa. DDS on pakattu tiedostomuoto, jota näytönohjaimet voivat käyttää suoraan. Tämä mahdollistaa nopeamman latauksen ja renderöinnin sekä säästää muistia.
+
+Tosin, tekstuurit jotka teet itse tai lataat valmiina muualta, ovat JPG-muodossa. JPG on myöskin pakattu tiedostomuoto, mutta näytönohjaimet eivät voi sitä käyttää suoraan. Tämä vaihtoehto mahdollistaa JPG-muotoisten tiedostojen käytön ilman niiden muuntamista DDS:ksi, eikä näinollen kuvanlaatu heikkene. Tässä tapauksessa JPG-tiedosto puretaan näytönohjaimen käyttöön tarvittaessa.
+
+Muuntamattomat tekstuurit käyttävät enemmän näytönohjaimen muistia sekä heikentävät ruudunpäivitysnopeutta, mutta voivat olla hyödyksi esimerkiksi kuvaruutukaappauksissa.
+
+^7pakattu:^8 JPG-tiedostot skins-hakemistossa muutetaan DDS-muotoon ja käytetään siten pakatussa muodossa
+^7täysi:^8 JPG-tiedostot skins-hakemistossa puretaan tarvittaessa ja piirretään pakkaamattomina
+\mip_bias
+Nämä asetukset vaikuttavat tekstuurin mipmapien saumakohtiin.
+
+Siirtämällä valitsinta vasemmalle, kuva terävöityy.
+Siirtämällä valitsinta oikealle, kuva pehmenee.
+
+Kun piirretään pienessä kulmassa olevaa pintaa (esimerkiksi kaukana näkyvä tienpinta), tekstuurien suodatus pehmentää kuvaa liikaa. Tämän takia erilaisille pinnoille on omat säätönsä..
+
+^7käyttöliittymä / teksti:^8 perus mip-painotus -1.0 (ei piirretä pienessä kulmassa)
+^7objektit / seinät:^8 perus mip-painotus -2.0
+^7nurmikko / sora:^8 perus mip-painotus -3.0
+^7tien pinta:^8 perus mip-painotus -4.0 (piirretään usein pienessä kulmassa)
+
+Anisotropic filtering (AF) on menetelmä sumeuden poistamiseen pieneen kulmaan piirretyiltä pinnoilta. Jos valitset AF:n (tekstuurisuodatus 2x - 16x), pääset parempaan tulokseen käyttämällä vähemmän negatiivistä mip-painotusta (siirrä valitsimia oikealle).
+\tex_filter
+Tekstuurit piirretään monilla eri tarkkuuksilla riippuen tekstuurin koosta ruudulla. Näitä eri tarkkuuksia kutsutaan mipmapeiksi. Jos tekstuuri piirretään pienenä (eli kohde on kauempana), käytetään pienempää mipmapia.
+
+Tekstuurisuodatus vaikuttaa eri mipmapien sekoitukseen.
+
+^7none :^8 Bilinear filtering - ei häivytystä - vain yhtä mipmapia käytetään
+^71x :^8 Trilinear filtering - kaksi sopivinta mipmapia sulautetaan toisiinsa
+^72x - 16x :^8 Anisotropic filtering - vähentää erikoisissa kulmissa olevien pintojen sumeutta
+
+Anisotropic filtering (AF) näyttää parhaalta mutta vaatii myös laskentatehoa, tämä voi heikentää ruudunpäivitysnopeutta.
+Jos käytät AF:ää, saat paremman kuvanlaadun käyttämällä vähemmän negatiivistä mip-painotusta (valitsimen oikeanpuoleisimmat arvot).
+\user_name
+Pelataksesi internetissä (tai avataksesi lukittua sisältöä lisenssioston jälkeen) sinun täytyy syöttää toimiva käyttäjätunnus.
+
+Voit luoda käyttäjätunnuksen osoitteessa ^7www.lfs.net^8 - sähköpostiosoite vaaditaan.
+
+HUOM: Emme luovuta sähköpostiosoitettasi kenellekään, ellei meiltä sitä lainvoimaisesti viranomaisten taholta vaadita.
+\user_pass
+Kun olet luonut käyttäjätunnuksen osoitteessa ^7www.lfs.net^8 sinun tulee syöttää pelisalasanasi (GAME password) tähän.
+
+Tämä mahdollistaa pääsyn internet-peleihin (sekä lisenssi-sisällön avaamisen).
+\host_mode
+^3Vaihtoehdot:
+
+^7demo -^8 palvelimella käytössä vain LFS:n demoautot ja -radat.
+
+^7S1 -^8 Jos sinulla on S1-lisenssi, tällä saat palvelimellesi käyttöön S1 sisällön.
+
+^7S2 -^8 Jos sinulla on S2-lisenssi, on kaikki sisältö käytössä palvelimella.
+\shadow_gen
+Nämä ovat vaihtoehtoisia asetuksia. Valitse asetukset jotka tuovat kokoonpanossasi parhaan ruudunpäivitysnopeuden, kun monia varjoja on näytössä, esimerkiksi täydessä lähtöruudukossa.
+
+Vertaillessasi ruudunpäivitysnopeuksia eri asetuksilla sinun kannattaa asettaa LFS pause-tilaan, jotta fysiikan- ja äänenmallinnus ei vaikuta tuloksiin.
