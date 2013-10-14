@@ -32,17 +32,18 @@ struct place
 
 struct mysqlConf
 {
-	char 	host[64];
-	int		port;
-	char 	user[64];
-	char 	password[64];
-	char 	database[64];
+    char 	host[64];
+    int		port;
+    char 	user[64];
+    char 	password[64];
+    char 	database[64];
 };
 
-namespace tools {
+namespace tools
+{
 
-	void log(const char *text);
-	void read_mysql(const char *path ,mysqlConf *conf);
+void log(const char *text);
+void read_mysql(const char *path ,mysqlConf *conf);
 };
 
 #endif

@@ -55,7 +55,7 @@ struct TaxiPlayer
     bool HandUp;
     int spd;
 
-	int		AcceptTime;
+    int		AcceptTime;
     char    WorkDest[96];           // destination text
     byte    WorkAccept;			    // 0 = не занят работой , 1 = занят работой
     int     WorkStreetDestinaion;

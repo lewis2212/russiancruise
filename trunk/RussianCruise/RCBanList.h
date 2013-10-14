@@ -7,23 +7,23 @@ using namespace std;
 
 struct BanPlayer
 {
-	char    UName[24];             // Username
+    char    UName[24];             // Username
     char    PName[24];             // Player name
     byte    UCID;                  // Connection ID
 };
 
 class RCBanList:public RCBaseClass
 {
-	public:
-		RCBanList();
-		~RCBanList();
-		int init( const char* RootDir, void *CInSim );
+public:
+    RCBanList();
+    ~RCBanList();
+    int init( const char* RootDir, void *CInSim );
 
-		void removeUser( const char* username );
-		void addUser( const char* username, time_t timestamp );
+    void removeUser( const char* username );
+    void addUser( const char* username, time_t timestamp );
 
-	private:
-		void InsimNCN( struct IS_NCN* packet );
+private:
+    void InsimNCN( struct IS_NCN* packet );
 };
 
 #endif // RCBANLIST_H

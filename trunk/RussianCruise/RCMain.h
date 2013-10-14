@@ -40,8 +40,8 @@ using namespace std;
 #ifdef __linux__
 //	#include <mysql.h>
 #else
-	#include <windows.h>
-	#include "mysql/include/mysql.h"
+#include <windows.h>
+#include "mysql/include/mysql.h"
 #endif
 
 
@@ -200,7 +200,7 @@ void read_car();
 
 void SendMTC (byte UCID,const char* Msg)
 {
-	IS_MTC *pack = new IS_MTC;
+    IS_MTC *pack = new IS_MTC;
     memset( pack, 0, sizeof( IS_MTC ) );
     pack->Size = sizeof( IS_MTC );
     pack->Type = ISP_MTC;
@@ -212,7 +212,7 @@ void SendMTC (byte UCID,const char* Msg)
 
 void ClearBTN(byte UCID)
 {
-	IS_BFN *pack = new IS_BFN;
+    IS_BFN *pack = new IS_BFN;
     memset( pack, 0, sizeof( IS_BFN ) );
     pack->Size = sizeof( IS_BFN );
     pack->Type = ISP_BFN;
@@ -226,7 +226,7 @@ void ClearBTN(byte UCID)
 
 void SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
 {
-	IS_BTN *pack = new IS_BTN;
+    IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
     pack->Size = sizeof( IS_BTN );
     pack->Type = ISP_BTN;
@@ -247,13 +247,13 @@ void SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte
 
 void SendMST (const char* Text)
 {
-	IS_MST *pack = new IS_MST;
-	memset( pack, 0, sizeof( IS_MST));
-	pack->Size = sizeof( IS_MST);
-	pack->Type = ISP_MST;
-	sprintf( pack->Msg, "%.63s\0", Text );
-	insim->send_packet( pack );
-	delete pack;
+    IS_MST *pack = new IS_MST;
+    memset( pack, 0, sizeof( IS_MST));
+    pack->Size = sizeof( IS_MST);
+    pack->Type = ISP_MST;
+    sprintf( pack->Msg, "%.63s\0", Text );
+    insim->send_packet( pack );
+    delete pack;
 };
 
 

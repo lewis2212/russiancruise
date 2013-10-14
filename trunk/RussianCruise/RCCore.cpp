@@ -13,31 +13,31 @@ RCCore::~RCCore()
 
 }
 
-int RCCore::init(char *dir,void *CInSim)
+int RCCore::init(char *dir, void *CInSim)
 {
-	strcpy(RootDir,dir);
+	strcpy(RootDir, dir);
 
 	insim = (CInsim *)CInSim;
-	if(!insim)
+	if (!insim)
 	{
 		printf ("Can't struct CInsim class");
 		return -1;
 	}
 
    /* msg = (RCMessage *)Message;
-	if(!msg)
+	if (!msg)
 	{
 		printf ("Can't struct RCMessage class");
 		return -1;
 	}
 	bank = (RCBank *)Bank;
-	if(!msg)
+	if (!msg)
 	{
 		printf ("Can't struct RCBank class");
 		return -1;
 	}
 	nrg = (RCEnergy *)Energy;
-	if(!msg)
+	if (!msg)
 	{
 		printf ("Can't struct RCEnergy class");
 		return -1;
@@ -49,21 +49,21 @@ int RCCore::init(char *dir,void *CInSim)
 }
 
 
-void RCCore::help_cmds (struct player *splayer,int h_type)
+void RCCore::help_cmds (struct player *splayer, int h_type)
 {
 	if (h_type == 1)
 	{
 
 
 		for ( int i = 3200 ; i <= 3214 ; i ++ )
-			send_mtc(splayer->UCID,msg->message[splayer->lang_id][i]);
+			send_mtc(splayer->UCID, msg->message[splayer->lang_id][i]);
 
 
 	}
    /** if (h_type == 2)
 	{
 
-		send_mtc(splayer->UCID,msg->message[splayer->lang_id][3100]);
+		send_mtc(splayer->UCID, msg->message[splayer->lang_id][3100]);
 		for ( int i=0; i<MAX_CARS; i++)
 		{
 			if (strlen(splayer->cars[i].car)>0)
@@ -76,53 +76,53 @@ void RCCore::help_cmds (struct player *splayer,int h_type)
 
 				strcpy(car , splayer->cars[i].car);
 				tune = splayer->cars[i].tuning;
-				itoa(splayer->cars[i].dist,dist,10);
+				itoa(splayer->cars[i].dist, dist, 10);
 
 
 				strcpy( Text, "^1| ^C^2");
-				strcat( Text,car);
-				strcat( Text," ^3");
+				strcat( Text, car);
+				strcat( Text, " ^3");
 				int dist_i = atoi(dist)/1000;
 				char dist_c[12];
-				itoa(dist_i,dist_c,10);
-				strcat(Text,dist_c);
-				strcat( Text,"^7 km (");
+				itoa(dist_i, dist_c, 10);
+				strcat(Text, dist_c);
+				strcat( Text, "^7 km (");
 
 				int tune2 = 45;
 				if (tune&1)
 				{
-					strcat( Text,"^2E");
+					strcat( Text, "^2E");
 					tune2 -= 15;
 				}
 				else
 				{
-					strcat( Text,"^1E");
+					strcat( Text, "^1E");
 				}
 
 				if (tune&2)
 				{
-					strcat( Text," ^2T");
+					strcat( Text, " ^2T");
 					tune2 -= 20;
 				}
 				else
 				{
-					strcat( Text," ^1T");
+					strcat( Text, " ^1T");
 				}
 
 				if (tune&8)
-					strcat( Text," ^2A");
+					strcat( Text, " ^2A");
 				else
 				{
-					strcat( Text," ^1A");
+					strcat( Text, " ^1A");
 				}
 
-				strcat( Text,"^7)(^3");
+				strcat( Text, "^7)(^3");
 
 				char intake[16];
-				itoa(tune2,intake,10);
-				strcat( Text,intake);
-				strcat( Text,"%^7)");
-				send_mtc(splayer->UCID,Text);
+				itoa(tune2, intake, 10);
+				strcat( Text, intake);
+				strcat( Text, "%^7)");
+				send_mtc(splayer->UCID, Text);
 			}
 		}
 
@@ -146,19 +146,19 @@ void RCCore::help_cmds (struct player *splayer,int h_type)
 				int fine_id = splayer->fines[i].fine_id;
 				// int fine_date = atoi(row[2]);
 				char num[3];
-				itoa(fine_id,num,10);
+				itoa(fine_id, num, 10);
 
 				char pay[5];
-				itoa(ginfo.fines[fine_id].cash,pay,10);
+				itoa(ginfo.fines[fine_id].cash, pay, 10);
 
-				strcpy(Text,"^2| ^7ID = ");
-				strcat( Text,num);
-				strcat( Text,". ");
-				strncat( Text,ginfo.fines[fine_id].name,64-34);
-				strcat( Text," ^3(^2");
-				strcat( Text,pay);
-				strcat( Text," RUR.^3)");
-				send_mtc(splayer->UCID,Text);
+				strcpy(Text, "^2| ^7ID = ");
+				strcat( Text, num);
+				strcat( Text, ". ");
+				strncat( Text, ginfo.fines[fine_id].name, 64-34);
+				strcat( Text, " ^3(^2");
+				strcat( Text, pay);
+				strcat( Text, " RUR.^3)");
+				send_mtc(splayer->UCID, Text);
 
 				j++;
 			}
@@ -166,7 +166,7 @@ void RCCore::help_cmds (struct player *splayer,int h_type)
 
 		if (j == 0)
 		{
-			send_mtc(splayer->UCID,msg->message[splayer->lang_id][3102]);
+			send_mtc(splayer->UCID, msg->message[splayer->lang_id][3102]);
 		}
 
 	}
@@ -193,7 +193,7 @@ void RCCore::btn_main (struct player *splayer)
 	pack.T = 25;
 	pack.W = 126;
 	pack.H = 150;
-	strcpy(pack.Text,"");
+	strcpy(pack.Text, "");
 	insim->send_packet(&pack);
 	Sleep(100);
 	/* background */
@@ -205,7 +205,7 @@ void RCCore::btn_main (struct player *splayer)
 	pack.T = 26;
 	pack.W = 126;
 	pack.H = 20;
-	strcpy(pack.Text,"^7RUSSIAN CRUISE");
+	strcpy(pack.Text, "^7RUSSIAN CRUISE");
 	insim->send_packet(&pack);
 	Sleep(100);
 	/* Title */
@@ -217,7 +217,7 @@ void RCCore::btn_main (struct player *splayer)
 	pack.T = 55;
 	pack.W = 124;
 	pack.H = 118;
-	strcpy(pack.Text,"");
+	strcpy(pack.Text, "");
 	insim->send_packet(&pack);
 	Sleep(100);
 
@@ -230,26 +230,26 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 	btn_main(splayer);
 
 	char info_text[5][100];
-	strncpy(info_text[0], "^7RUSSIAN CRUISE",99);
-	strncpy(info_text[1], "^C^7 Добро пожаловать, ",99);
-	strncpy(info_text[2], "^C^7 Деньги: ^2",99);
-	strncpy(info_text[3], "^C^7   тут жизненный статус",99);
-	strncpy(info_text[4], "^C^7Доступные автомобили:",99);
+	strncpy(info_text[0], "^7RUSSIAN CRUISE", 99);
+	strncpy(info_text[1], "^C^7 Добро пожаловать, ", 99);
+	strncpy(info_text[2], "^C^7 Деньги: ^2", 99);
+	strncpy(info_text[3], "^C^7   тут жизненный статус", 99);
+	strncpy(info_text[4], "^C^7Доступные автомобили:", 99);
 
 
 
 
 	char abcout_text[10][100];
-	strncpy(abcout_text[0], "^7RUSSIAN CRUISE v 1.1.9",99);
-	strncpy(abcout_text[1], "^C^7Developer: Kostin Denis",99);
-	strncpy(abcout_text[2], "^C^7ICQ: 5518182",99);
-	strncpy(abcout_text[3], "^C^7Skype: denisko_leva",99);
-	strncpy(abcout_text[4], "^7",99);
-	strncpy(abcout_text[5], "^C^7More information",99);
-	strncpy(abcout_text[6], "^C^7http://russiancruise.ucoz.ru/",99);
-	strncpy(abcout_text[7], "^7",99);
-	strncpy(abcout_text[8], "^C^7        Thanks:",99);
-	strncpy(abcout_text[9], "^C^3        repeat, NOSE, etc",99);
+	strncpy(abcout_text[0], "^7RUSSIAN CRUISE v 1.1.9", 99);
+	strncpy(abcout_text[1], "^C^7Developer: Kostin Denis", 99);
+	strncpy(abcout_text[2], "^C^7ICQ: 5518182", 99);
+	strncpy(abcout_text[3], "^C^7Skype: denisko_leva", 99);
+	strncpy(abcout_text[4], "^7", 99);
+	strncpy(abcout_text[5], "^C^7More information", 99);
+	strncpy(abcout_text[6], "^C^7http://russiancruise.ucoz.ru/", 99);
+	strncpy(abcout_text[7], "^7", 99);
+	strncpy(abcout_text[8], "^C^7        Thanks:", 99);
+	strncpy(abcout_text[9], "^C^3        repeat, NOSE, etc", 99);
 
 	struct IS_BTN pack;
 	memset(&pack, 0, sizeof(struct IS_BTN));
@@ -267,14 +267,14 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 	pack.T = 46;
 	pack.W = 16;
 	pack.H = 8;
-	strcpy(pack.Text,msg->message[splayer->lang_id][200]);
+	strcpy(pack.Text, msg->message[splayer->lang_id][200]);
 	insim->send_packet(&pack);
 	Sleep(100);
 
 	pack.BStyle = 32+8;
 	pack.ClickID = 106;
 	pack.L += 17;
-	strcpy(pack.Text,msg->message[splayer->lang_id][201]);
+	strcpy(pack.Text, msg->message[splayer->lang_id][201]);
 	insim->send_packet(&pack);
 	Sleep(100);
 
@@ -283,7 +283,7 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 	pack.ClickID = 105;
 	pack.L += 17;
 	pack.W = 20;
-	strcpy(pack.Text,msg->message[splayer->lang_id][202]);
+	strcpy(pack.Text, msg->message[splayer->lang_id][202]);
 	insim->send_packet(&pack);
 	Sleep(100);
 
@@ -302,15 +302,15 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 			pack.ClickID = 110 + i;
 			char cash[6];
 			char sell[6];
-			itoa(ginfo.car[i].cash,cash,10);
-			itoa(ginfo.car[i].sell,sell,10);
-			strcpy(pack.Text,"^2");
-			strcat(pack.Text,ginfo.car[i].car);
-			strcat(pack.Text," ^7(^2");
-			strcat(pack.Text,cash);
-			strcat(pack.Text,"^7/^3");
-			strcat(pack.Text,sell);
-			strcat(pack.Text,"^7)");
+			itoa(ginfo.car[i].cash, cash, 10);
+			itoa(ginfo.car[i].sell, sell, 10);
+			strcpy(pack.Text, "^2");
+			strcat(pack.Text, ginfo.car[i].car);
+			strcat(pack.Text, " ^7(^2");
+			strcat(pack.Text, cash);
+			strcat(pack.Text, "^7/^3");
+			strcat(pack.Text, sell);
+			strcat(pack.Text, "^7)");
 			insim->send_packet(&pack);
 		}
 
@@ -324,16 +324,16 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 			pack.ClickID = 110 + i;
 			char cash[6];
 			char sell[6];
-			itoa(ginfo.car[i].cash,cash,10);
-			itoa(ginfo.car[i].sell,sell,10);
+			itoa(ginfo.car[i].cash, cash, 10);
+			itoa(ginfo.car[i].sell, sell, 10);
 
-			strcpy(pack.Text,"^2");
-			strcat(pack.Text,ginfo.car[i].car);
-			strcat(pack.Text," ^7(^2");
-			strcat(pack.Text,cash);
-			strcat(pack.Text,"^7/^3");
-			strcat(pack.Text,sell);
-			strcat(pack.Text,"^7)");
+			strcpy(pack.Text, "^2");
+			strcat(pack.Text, ginfo.car[i].car);
+			strcat(pack.Text, " ^7(^2");
+			strcat(pack.Text, cash);
+			strcat(pack.Text, "^7/^3");
+			strcat(pack.Text, sell);
+			strcat(pack.Text, "^7)");
 			insim->send_packet(&pack);
 		}
 
@@ -354,7 +354,7 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 		{
 			pack.ClickID = 110 + g;
 			pack.T += 9;
-			strcpy(pack.Text,abcout_text[g]);
+			strcpy(pack.Text, abcout_text[g]);
 			insim->send_packet(&pack);
 			Sleep(100);
 		}
@@ -376,18 +376,18 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 			// row[2] = fine_date
 			// int fine_date = atoi(row[2]);
 			char num[3];
-			itoa(ginfo.fines[i].id,num,10);
+			itoa(ginfo.fines[i].id, num, 10);
 
 			char pay[5];
-			itoa(ginfo.fines[i].cash,pay,10);
+			itoa(ginfo.fines[i].cash, pay, 10);
 
-			strcpy(pack.Text,"^2| ^7ID = ");
-			strcat( pack.Text,num);
-			strcat( pack.Text,". ");
-			strncat( pack.Text,ginfo.fines[i].name,96-34);
-			strcat( pack.Text," ^3(^2");
-			strcat( pack.Text,pay);
-			strcat( pack.Text," RUR.^3)");
+			strcpy(pack.Text, "^2| ^7ID = ");
+			strcat( pack.Text, num);
+			strcat( pack.Text, ". ");
+			strncat( pack.Text, ginfo.fines[i].name, 96-34);
+			strcat( pack.Text, " ^3(^2");
+			strcat( pack.Text, pay);
+			strcat( pack.Text, " RUR.^3)");
 			insim->send_packet(&pack);
 		}
 
@@ -399,7 +399,7 @@ void RCCore::btn_info (struct player *splayer, int b_type)
 	pack.T = 26;
 	pack.W = 8;
 	pack.H = 8;
-	strcpy(pack.Text,"^1[X]");
+	strcpy(pack.Text, "^1[X]");
 	insim->send_packet(&pack);
 }
 
@@ -423,12 +423,12 @@ void RCCore::btn_panel (struct player *splayer)
 	pack.T = 1;
 	pack.W = 33;
 	pack.H = 4;
-	strcpy(pack.Text,splayer->street[splayer->StreetNum].Street);
-	strcat(pack.Text," ^7(^1");
+	strcpy(pack.Text, splayer->street[splayer->StreetNum].Street);
+	strcat(pack.Text, " ^7(^1");
 	char speed[3];
-	itoa(splayer->street[splayer->StreetNum].SpeedLimit,speed,10);
-	strcat(pack.Text,speed);
-	strcat(pack.Text," ^C^3km/h^7)");
+	itoa(splayer->street[splayer->StreetNum].SpeedLimit, speed, 10);
+	strcat(pack.Text, speed);
+	strcat(pack.Text, " ^C^3km/h^7)");
 	insim->send_packet(&pack);
 
 	pack.ClickID = 161;
@@ -438,13 +438,13 @@ void RCCore::btn_panel (struct player *splayer)
 	pack.H = 4;
 
 	if (splayer->Zone== 1)
-		strcpy(pack.Text,msg->message[splayer->lang_id][400]);
+		strcpy(pack.Text, msg->message[splayer->lang_id][400]);
 	else if (splayer->Zone== 2)
-		strcpy(pack.Text,msg->message[splayer->lang_id][401]);
+		strcpy(pack.Text, msg->message[splayer->lang_id][401]);
 	else if (splayer->Zone== 3)
-		strcpy(pack.Text,msg->message[splayer->lang_id][402]);
+		strcpy(pack.Text, msg->message[splayer->lang_id][402]);
 	else
-		strcpy(pack.Text,msg->message[splayer->lang_id][403]);
+		strcpy(pack.Text, msg->message[splayer->lang_id][403]);
 	insim->send_packet(&pack);
 
 }
@@ -467,7 +467,7 @@ void RCCore::case_bfn ()
 			if (players[i].bfn == 0)
 			{
 				players[i].bfn = 1;
-			   // btn_info(&players[i],1);
+			   // btn_info(&players[i], 1);
 			}
 			else
 			{
@@ -490,24 +490,24 @@ void RCCore::case_btt ()
 	char year[3];
 	SYSTEMTIME sm;
 	GetLocalTime(&sm);
-	itoa(sm.wDay,day,10);
-	itoa(sm.wMonth,month,10);
-	itoa(sm.wYear,year,10);
+	itoa(sm.wDay, day, 10);
+	itoa(sm.wMonth, month, 10);
+	itoa(sm.wYear, year, 10);
 
 	char send_c[255];
-	strcpy(send_c,RootDir);
-	strcat(send_c,"logs\\sends\\send.txt");
+	strcpy(send_c, RootDir);
+	strcat(send_c, "logs\\sends\\send.txt");
 
 	char fine_c[255];
-	strcpy(fine_c,RootDir);
-	strcat(fine_c,"logs\\fines\\fine");
-	strcat(fine_c,"(");
-	strcat(fine_c,day);
-	strcat(fine_c,".");
-	strcat(fine_c,month);
-	strcat(fine_c,".");
-	strcat(fine_c,year);
-	strcat(fine_c,").txt");
+	strcpy(fine_c, RootDir);
+	strcat(fine_c, "logs\\fines\\fine");
+	strcat(fine_c, "(");
+	strcat(fine_c, day);
+	strcat(fine_c, ".");
+	strcat(fine_c, month);
+	strcat(fine_c, ".");
+	strcat(fine_c, year);
+	strcat(fine_c, ").txt");
 
 
 	int i;
@@ -531,23 +531,23 @@ void RCCore::case_btt ()
 								bank->players[g].Cash += atoi(pack_btt->Text);
 
 								char money[96];
-								itoa(atoi(pack_btt->Text),money,10);
+								itoa(atoi(pack_btt->Text), money, 10);
 								char Msg[64];
-								strcpy(Msg,"^1| ");
-								strcat(Msg,players[i].PName);
-								strcat(Msg,msg->message[players[i].lang_id][1100]);
-								strcat(Msg,money);
-								strcat(Msg," RUR.");
-								send_mtc(players[g].UCID,Msg);
+								strcpy(Msg, "^1| ");
+								strcat(Msg, players[i].PName);
+								strcat(Msg, msg->message[players[i].lang_id][1100]);
+								strcat(Msg, money);
+								strcat(Msg, " RUR.");
+								send_mtc(players[g].UCID, Msg);
 
-								ofstream readf (send_c,ios::app);
+								ofstream readf (send_c, ios::app);
 								readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[i].UName << " send " << pack_btt->Text << " RUR. to "  << players[g].UName << endl;
 								readf.close();
 							}
 							else
 							{
-								send_mtc(players[i].UCID,msg->message[players[i].lang_id][1101]);
-								send_mtc(players[i].UCID,msg->message[players[i].lang_id][1102]);
+								send_mtc(players[i].UCID, msg->message[players[i].lang_id][1101]);
+								send_mtc(players[i].UCID, msg->message[players[i].lang_id][1102]);
 							}
 						} // if atoi(pack_btt->Text) > 0
 						break;
@@ -567,11 +567,11 @@ void RCCore::case_btt ()
 						{
 							cout << players[i].UName << " send " << pack_btt->Text << " to "  << players[g].UName << endl;
 							char Msg[64];
-							strcpy(Msg,msg->message[players[g].lang_id][1103]);
-							strcat(Msg,players[i].PName);
-							strcat(Msg,": ");
-							strcat(Msg,pack_btt->Text);
-							send_mtc(players[g].UCID,Msg);
+							strcpy(Msg, msg->message[players[g].lang_id][1103]);
+							strcat(Msg, players[i].PName);
+							strcat(Msg, ": ");
+							strcat(Msg, pack_btt->Text);
+							send_mtc(players[g].UCID, Msg);
 						} // if atoi(pack_btt->Text) > 0
 						break;
 					}
@@ -591,19 +591,19 @@ void RCCore::case_btt ()
 							cout << players[i].UName << " send fine id = " << pack_btt->Text << " to "  << players[g].UName << endl;
 
 							char Msg[64];
-							strcpy(Msg,msg->message[players[g].lang_id][1104]);
-							send_mtc(players[g].UCID,Msg);
-							strcpy(Msg,"^2| ^7");
-							strcat(Msg,ginfo.fines[atoi(pack_btt->Text)].name);
-							send_mtc(players[g].UCID,Msg);
+							strcpy(Msg, msg->message[players[g].lang_id][1104]);
+							send_mtc(players[g].UCID, Msg);
+							strcpy(Msg, "^2| ^7");
+							strcat(Msg, ginfo.fines[atoi(pack_btt->Text)].name);
+							send_mtc(players[g].UCID, Msg);
 
-							strcpy(Msg,msg->message[players[i].lang_id][1105]);
-							send_mtc(players[i].UCID,Msg);
-							send_mtc(players[i].UCID,ginfo.fines[atoi(pack_btt->Text)].name);
+							strcpy(Msg, msg->message[players[i].lang_id][1105]);
+							send_mtc(players[i].UCID, Msg);
+							send_mtc(players[i].UCID, ginfo.fines[atoi(pack_btt->Text)].name);
 
-							strcpy(Msg,msg->message[players[i].lang_id][1106]);
-							strcat(Msg,players[g].PName);
-							send_mtc(players[i].UCID,Msg);
+							strcpy(Msg, msg->message[players[i].lang_id][1106]);
+							strcat(Msg, players[g].PName);
+							send_mtc(players[i].UCID, Msg);
 
 
 							for (int j=0; j<MAX_FINES; j++)
@@ -618,7 +618,7 @@ void RCCore::case_btt ()
 
 
 
-							ofstream readf (fine_c,ios::app);
+							ofstream readf (fine_c, ios::app);
 							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " get fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;
 							readf.close();
 
@@ -642,19 +642,19 @@ void RCCore::case_btt ()
 							cout << players[i].UName << " cancle fine id = " << pack_btt->Text << " to "  << players[g].UName << endl;
 
 							char Msg[64];
-							strcpy(Msg,msg->message[players[g].lang_id][1107]);
-							send_mtc(players[g].UCID,Msg);
-							strcpy(Msg,"^2| ");
-							strcat(Msg,ginfo.fines[atoi(pack_btt->Text)].name);
-							send_mtc(players[g].UCID,Msg);
+							strcpy(Msg, msg->message[players[g].lang_id][1107]);
+							send_mtc(players[g].UCID, Msg);
+							strcpy(Msg, "^2| ");
+							strcat(Msg, ginfo.fines[atoi(pack_btt->Text)].name);
+							send_mtc(players[g].UCID, Msg);
 
-							strcpy(Msg,msg->message[players[i].lang_id][1108]);
-							send_mtc(players[i].UCID,Msg);
-							send_mtc(players[i].UCID,ginfo.fines[atoi(pack_btt->Text)].name);
+							strcpy(Msg, msg->message[players[i].lang_id][1108]);
+							send_mtc(players[i].UCID, Msg);
+							send_mtc(players[i].UCID, ginfo.fines[atoi(pack_btt->Text)].name);
 
-							strcpy(Msg,msg->message[players[g].lang_id][1106]);
-							strcat(Msg,players[g].PName);
-							send_mtc(players[i].UCID,Msg);
+							strcpy(Msg, msg->message[players[g].lang_id][1106]);
+							strcat(Msg, players[g].PName);
+							send_mtc(players[i].UCID, Msg);
 
 
 							for (int j=0; j<MAX_FINES; j++)
@@ -669,7 +669,7 @@ void RCCore::case_btt ()
 
 
 
-							ofstream readf (fine_c,ios::app);
+							ofstream readf (fine_c, ios::app);
 							readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[i].UName << " cancle fine ID = " << pack_btt->Text << " to "  << players[g].UName << endl;
 							readf.close();
 
@@ -711,7 +711,7 @@ void RCCore::case_cnl ()
 			//save_user_fines(&players[i]);
 
 			cout << players[i].UName << " left server" << endl;
-			memset(&players[i],0,sizeof(struct player));
+			memset(&players[i], 0, sizeof(struct player));
 			break;
 		}
 	}
@@ -731,7 +731,7 @@ void RCCore::case_toc ()
 				char Text[64];
 				strcpy(Text, "/spec ");
 				strcat (Text, players[i].UName);
-				send_mtc(pack_toc->NewUCID,"^1Acces Denine");
+				send_mtc(pack_toc->NewUCID, "^1Acces Denine");
 				send_mst(Text);
 				break;
 		}
@@ -790,12 +790,12 @@ void RCCore::case_lap ()
 			int bonus = 100+(50*(pack_lap->LapsDone-1));
 			bank->players[i].Cash += bonus;
 			char bonus_c[64];
-			strcpy(bonus_c,msg->message[players[i].lang_id][1500]);
+			strcpy(bonus_c, msg->message[players[i].lang_id][1500]);
 			char bonus_ic[5];
-			itoa(bonus,bonus_ic,10);
-			strcat(bonus_c,bonus_ic);
-			strcat(bonus_c," ^7RUR.");
-			send_mtc(players[i].UCID,bonus_c);
+			itoa(bonus, bonus_ic, 10);
+			strcat(bonus_c, bonus_ic);
+			strcat(bonus_c, " ^7RUR.");
+			send_mtc(players[i].UCID, bonus_c);
 
 			break;
 		}
@@ -840,7 +840,7 @@ void RCCore::case_mci ()
 					players[j].Info.Z2 = pack_mci->Info[i].Z;
 				}
 
-				float Dist = sqrt(pow((X-X1),2)+pow((Y-Y1),2)+pow((Z-Z1),2));
+				float Dist = sqrt(pow((X-X1), 2)+pow((Y-Y1), 2)+pow((Z-Z1), 2));
 				if (players[j].cop != 1)
 				{
 					if ((abs((int)Dist) > 10) and (S>30))
@@ -889,7 +889,7 @@ void RCCore::case_mci ()
 
 				{
 					int sum = players[j].Bonus_s1 + players[j].Bonus_s2 + players[j].Bonus_s3;
-					if(sum == Splits_Count)
+					if (sum == Splits_Count)
 					{
 
 						int bonus = 100+(50*(players[j].Bonus_laps));
@@ -903,12 +903,12 @@ void RCCore::case_mci ()
 						//bank->BankFond -= bonus;
 
 						char bonus_c[64];
-						strcpy(bonus_c,msg->message[players[j].lang_id][1500]);
+						strcpy(bonus_c, msg->message[players[j].lang_id][1500]);
 						char bonus_ic[5];
-						itoa(bonus,bonus_ic,10);
-						strcat(bonus_c,bonus_ic);
-						strcat(bonus_c," ^7RUR.");
-						send_mtc(players[j].UCID,bonus_c);
+						itoa(bonus, bonus_ic, 10);
+						strcat(bonus_c, bonus_ic);
+						strcat(bonus_c, " ^7RUR.");
+						send_mtc(players[j].UCID, bonus_c);
 					}
 					//
 				}
@@ -923,8 +923,8 @@ void RCCore::case_mci ()
 					if (Node >= players[j].street[g].NodeBeg and Node <= players[j].street[g].NodeEnd )
 					{
 						players[j].StreetNum = g;
-						//strcpy(players[j].Street,"^C^7");
-						//strcat(players[j].Street,players[j].street[g].Street);
+						//strcpy(players[j].Street, "^C^7");
+						//strcat(players[j].Street, players[j].street[g].Street);
 					}
 				}
 
@@ -934,11 +934,11 @@ void RCCore::case_mci ()
 				/** Zones (PitSave, shop, etc) **/
 
 
-				if (Check_Pos(players[j].TrackInf.PitCount,players[j].TrackInf.XPit,players[j].TrackInf.YPit,X,Y))
+				if (Check_Pos(players[j].TrackInf.PitCount, players[j].TrackInf.XPit, players[j].TrackInf.YPit, X, Y))
 				{
 					players[j].Zone = 1;
 				}
-				else if (Check_Pos(players[j].TrackInf.ShopCount,players[j].TrackInf.XShop,players[j].TrackInf.YShop,X,Y))
+				else if (Check_Pos(players[j].TrackInf.ShopCount, players[j].TrackInf.XShop, players[j].TrackInf.YShop, X, Y))
 				{
 					players[j].Zone = 2;
 				}
@@ -987,19 +987,19 @@ void RCCore::case_mci_svetofor ()
 
 				int SvetKey = 0;
 
-				if (strcmp(Track,"AS5") == 0)
+				if (strcmp(Track, "AS5") == 0)
 				{
 					//cout << ginfo.Track << endl;
 					// ZONE 1 PIT 1
 					// from 1 pit 2 svetofot
-					int Pit1X[5] = {-605,-624,-624,-605};
-					int Pit1Y[5] = {1,1,10,10};
-					int Pit2X[5] = {-605,-624,-624,-605};
-					int Pit2Y[5] = {-510,-510,-500,-500};
-					int CafeX[5] = {974,984,984,974};
-					int CafeY[5] = {-1027,-1027,-1039,-1039};
-					int Cafe2X[6] = {974,967,947,942,962};
-					int Cafe2Y[6] = {-1039,-1066,-1086,1075,-1040};
+					int Pit1X[5] = {-605, -624, -624, -605};
+					int Pit1Y[5] = {1, 1, 10, 10};
+					int Pit2X[5] = {-605, -624, -624, -605};
+					int Pit2Y[5] = {-510, -510, -500, -500};
+					int CafeX[5] = {974, 984, 984, 974};
+					int CafeY[5] = {-1027, -1027, -1039, -1039};
+					int Cafe2X[6] = {974, 967, 947, 942, 962};
+					int Cafe2Y[6] = {-1039, -1066, -1086, 1075, -1040};
 
 					if ((Node > 12) and (Node < 32) and (X > -610) and (H > 140) and (H<185))
 					{
@@ -1011,7 +1011,7 @@ void RCCore::case_mci_svetofor ()
 						SvetKey = 1;
 						players[j].Svetofor = 1;
 					}
-					if ((Check_Pos(4,Pit1X,Pit1Y,X,Y)) and (H > 260) and (H < 360))
+					if ((Check_Pos(4, Pit1X, Pit1Y, X, Y)) and (H > 260) and (H < 360))
 					{
 						SvetKey = 2;
 						players[j].Svetofor = 2;
@@ -1028,14 +1028,14 @@ void RCCore::case_mci_svetofor ()
 						SvetKey = 1;
 						players[j].Svetofor = 1;
 					}
-					if ((Check_Pos(4,Pit2X,Pit2Y,X,Y)) and (H > 200) and (H < 360))
+					if ((Check_Pos(4, Pit2X, Pit2Y, X, Y)) and (H > 200) and (H < 360))
 					{
 						SvetKey = 2;
 						players[j].Svetofor = 2;
 					}
 					// !-- ZONE 2 PIT 2
 					// ZONE 3 RCPizza CAFE
-					if ((Node > 377) and (Node < 390) and (Check_Pos(5,Cafe2X,Cafe2Y,X,Y)) and ((H > 300) or (H<10)))
+					if ((Node > 377) and (Node < 390) and (Check_Pos(5, Cafe2X, Cafe2Y, X, Y)) and ((H > 300) or (H<10)))
 					{
 						SvetKey = 1;
 						players[j].Svetofor = 1;
@@ -1045,7 +1045,7 @@ void RCCore::case_mci_svetofor ()
 						SvetKey = 1;
 						players[j].Svetofor = 1;
 					}
-					if ((Check_Pos(4,CafeX,CafeY,X,Y)) and (H > 0) and (H < 100))
+					if ((Check_Pos(4, CafeX, CafeY, X, Y)) and (H > 0) and (H < 100))
 					{
 						SvetKey = 2;
 						players[j].Svetofor = 2;
@@ -1079,22 +1079,22 @@ void RCCore::case_mci_svetofor ()
 
 				}// AS5
 
-				else if (strcmp(Track,"FE4") == 0)
+				else if (strcmp(Track, "FE4") == 0)
 				{
 					//cout << ginfo.Track << endl;
 					// ZONE 1 PIT 1
 					// from 1 pit 2 svetofot
-					int Pit1X[5] = {179,189,189,179};
-					int Pit1Y[5] = {-15,-15,-23,-23};
+					int Pit1X[5] = {179, 189, 189, 179};
+					int Pit1Y[5] = {-15, -15, -23, -23};
 
-					int Pit2X[5] = {173,190,190,173};
-					int Pit2Y[5] = {210,210,205,205};
+					int Pit2X[5] = {173, 190, 190, 173};
+					int Pit2Y[5] = {210, 210, 205, 205};
 
-					//int CafeX[5] = {974,984,984,974};
-					//int CafeY[5] = {-1027,-1027,-1039,-1039};
+					//int CafeX[5] = {974, 984, 984, 974};
+					//int CafeY[5] = {-1027, -1027, -1039, -1039};
 
-					//int Cafe2X[6] = {974,967,947,942,962};
-					//int Cafe2Y[6] = {-1039,-1066,-1086,1075,-1040};
+					//int Cafe2X[6] = {974, 967, 947, 942, 962};
+					//int Cafe2Y[6] = {-1039, -1066, -1086, 1075, -1040};
 
 					if ((Node > 220) and (Node < 231) and (X < 180) and (H > 130) and (H<230))
 					{
@@ -1106,7 +1106,7 @@ void RCCore::case_mci_svetofor ()
 						SvetKey = 1;
 						players[j].Svetofor = 1;
 					}
-					if ((Check_Pos(4,Pit1X,Pit1Y,X,Y)) and (H > 75-50) and (H < 75+50))
+					if ((Check_Pos(4, Pit1X, Pit1Y, X, Y)) and (H > 75-50) and (H < 75+50))
 					{
 						SvetKey = 2;
 						players[j].Svetofor = 2;
@@ -1123,7 +1123,7 @@ void RCCore::case_mci_svetofor ()
 						SvetKey = 1;
 						players[j].Svetofor = 1;
 					}
-					if ((Check_Pos(4,Pit2X,Pit2Y,X,Y)) and (H > 90-50) and (H < 90+50))
+					if ((Check_Pos(4, Pit2X, Pit2Y, X, Y)) and (H > 90-50) and (H < 90+50))
 					{
 						SvetKey = 2;
 						players[j].Svetofor = 2;
@@ -1153,7 +1153,7 @@ void RCCore::case_mci_svetofor ()
 
 				}// FE4
 
-				else if (strcmp(Track,"SO4") == 0)
+				else if (strcmp(Track, "SO4") == 0)
 				{
 					/**********светофоры*********/
 
@@ -1348,7 +1348,7 @@ void RCCore::case_mci_svetofor ()
 					if (players[j].Svetofor != 0)
 					{
 						for (int f=190; f < 203; f++)
-							send_bfn(players[j].UCID,f);
+							send_bfn(players[j].UCID, f);
 
 						players[j].Svetofor = 0;
 						//cout << "clear svetofor" << endl;
@@ -1387,7 +1387,7 @@ void RCCore::case_mso ()
 	}
 
 	char Msg[96];
-	strcpy(Msg,pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
+	strcpy(Msg, pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
 	printf("Msg: %s\n", Msg);
 
 	//!help
@@ -1396,21 +1396,21 @@ void RCCore::case_mso ()
 		cout << players[i].UName << " send !info" << endl;
 		for (int j=159; j>0; j--)
 		{
-			send_bfn(players[i].UCID,j);
+			send_bfn(players[i].UCID, j);
 			Sleep(10);
 		}
-	   // btn_info(&players[i],1);
+	   // btn_info(&players[i], 1);
 	}
 
 	if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
 	{
 		cout << players[i].UName << " send !help" << endl;
-		help_cmds(&players[i],1);
+		help_cmds(&players[i], 1);
 	}
 	if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
 	{
 		cout << players[i].UName << " send !cars" << endl;
-		help_cmds(&players[i],2);
+		help_cmds(&players[i], 2);
 	}
 
 	//!save
@@ -1426,7 +1426,7 @@ void RCCore::case_mso ()
 		nrg.energy_save(i);
 
 		Sleep(500);
-		send_mtc(players[i].UCID,msg->message[players[i].lang_id][3000]);
+		send_mtc(players[i].UCID, msg->message[players[i].lang_id][3000]);
 
 	}**/
 
@@ -1436,15 +1436,15 @@ void RCCore::case_mso ()
 
 
 		char message[96];
-		strcpy(message,Msg);
+		strcpy(message, Msg);
 
 		char file[255];
-		strcpy(file,RootDir);
-		strcat(file,"logs\\sends\\send.txt");
+		strcpy(file, RootDir);
+		strcat(file, "logs\\sends\\send.txt");
 
 		HANDLE fff;
 		WIN32_FIND_DATA fd;
-		fff = FindFirstFile(file,&fd);
+		fff = FindFirstFile(file, &fd);
 		if (fff == INVALID_HANDLE_VALUE)
 		{
 			cout << "Can't find " << file << endl;
@@ -1452,12 +1452,12 @@ void RCCore::case_mso ()
 		}
 		FindClose(fff);
 
-		ifstream readf (file,ios::in);
+		ifstream readf (file, ios::in);
 
 		char * comand;
 		char * user;
-		comand = strtok (message," ");
-		user = strtok (NULL," ");
+		comand = strtok (message, " ");
+		user = strtok (NULL, " ");
 
 
 		if ((user) and (strlen(user) > 0))
@@ -1468,15 +1468,15 @@ void RCCore::case_mso ()
 			while (readf.good())
 			{
 				char str[128];
-				readf.getline(str,128);
+				readf.getline(str, 128);
 				if (strlen(str) > 0)
 				{
-					if ((strstr(str,players[i].UName)) and (strstr(str,user)))
+					if ((strstr(str, players[i].UName)) and (strstr(str, user)))
 					{
 						char Text[64];
-						strcpy(Text,"^1| ^C^7");
-						strncat(Text,str,55);
-						send_mtc(players[i].UCID,Text);
+						strcpy(Text, "^1| ^C^7");
+						strncat(Text, str, 55);
+						send_mtc(players[i].UCID, Text);
 					}
 				}
 			}
@@ -1488,15 +1488,15 @@ void RCCore::case_mso ()
 			while (readf.good())
 			{
 				char str[128];
-				readf.getline(str,128);
+				readf.getline(str, 128);
 				if (strlen(str) > 0)
 				{
-					if (strstr(str,players[i].UName))
+					if (strstr(str, players[i].UName))
 					{
 						char Text[64];
-						strcpy(Text,"^1| ^C^7");
-						strncat(Text,str,55);
-						send_mtc(players[i].UCID,Text);
+						strcpy(Text, "^1| ^C^7");
+						strncat(Text, str, 55);
+						send_mtc(players[i].UCID, Text);
 					}
 				}
 			}
@@ -1514,14 +1514,14 @@ void RCCore::case_mso ()
 		if (players[i].Zone == 2)
 		{
 			for (int j=0; j<200; j++)
-				send_bfn(players[i].UCID,j);
+				send_bfn(players[i].UCID, j);
 
 			players[i].Shop=1;
 		   // btn_shop(&players[i]);
 		}
 		else
 		{
-			send_mtc(players[i].UCID,msg->message[players[i].lang_id][2000]);
+			send_mtc(players[i].UCID, msg->message[players[i].lang_id][2000]);
 		}
 	}
 
@@ -1564,19 +1564,19 @@ void RCCore::case_mso ()
 
 		char Msg[64];
 		strcpy(Msg, "/pitlane ");
-		strcat(Msg,players[i].UName);
+		strcat(Msg, players[i].UName);
 		send_mst(Msg);
 		bank->players[i].Cash -=250;
 		bank->BankFond += 250;
 	}
 	//!users
-	if ((strncmp(Msg, "!users",6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
+	if ((strncmp(Msg, "!users", 6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
 	{
 		players[i].Action = 1;
 
-		for(int h=0; h<240; h++)
+		for (int h=0; h<240; h++)
 		{
-			send_bfn(players[i].UCID,h);
+			send_bfn(players[i].UCID, h);
 		}
 
 		struct IS_BTN pack_btn;
@@ -1603,7 +1603,7 @@ void RCCore::case_mso ()
 
 		}
 		pack_btn.ClickID = 34;
-		strcpy(pack_btn.Text,msg->message[players[i].lang_id][2003]);
+		strcpy(pack_btn.Text, msg->message[players[i].lang_id][2003]);
 		insim->send_packet(&pack_btn);
 
 	}
@@ -1613,34 +1613,34 @@ void RCCore::case_mso ()
 		cout << players[i].UName << " send !lang" << endl;
 
 		char message2[96];
-		strcpy(message2,Msg);
+		strcpy(message2, Msg);
 
 		if (strlen(message2) < 8)
 		{
-			send_mtc(players[i].UCID,msg->message[players[i].lang_id][2104]);
+			send_mtc(players[i].UCID, msg->message[players[i].lang_id][2104]);
 			return;
 		}
 
 		char * comand;
 		char * id;
 
-		comand = strtok (message2," ");
-		id = strtok (NULL," ");
+		comand = strtok (message2, " ");
+		id = strtok (NULL, " ");
 
 		if ((!id) or (strlen(id) != 3))
 		{
-			send_mtc(players[i].UCID,msg->message[players[i].lang_id][2105]);
+			send_mtc(players[i].UCID, msg->message[players[i].lang_id][2105]);
 			return;
 		}
 
-		if (strstr("* eng rus",id) == 0)
+		if (strstr("* eng rus", id) == 0)
 		{
 			return;
 		}
 
-		strcpy(players[i].Lang,id);
+		strcpy(players[i].Lang, id);
 		//read_lang(&players[i]);
-		if (strcmp(players[i].Lang,"eng") == 0)
+		if (strcmp(players[i].Lang, "eng") == 0)
 		{
 			players[i].lang_id = 1;
 		}
@@ -1678,7 +1678,7 @@ void RCCore::case_mso ()
 
 		if (players[i].FloodCount > 4)   //max lines to tolerate
 		{
-			send_mtc(players[i].UCID,msg->message[players[i].lang_id][2004]);
+			send_mtc(players[i].UCID, msg->message[players[i].lang_id][2004]);
 			players[i].FloodCount = 0;
 			bank->players[i].Cash -= 500;
 			bank->BankFond += 500;
@@ -1691,19 +1691,19 @@ void RCCore::case_mso ()
 
 /**
 		char Msg2[96];
-		strcpy(Msg2,strupr(Msg));
+		strcpy(Msg2, strupr(Msg));
 
 		for (int j=0; j< ginfo.WordsCount; j++)
 		{
-			if (strstr(Msg2,strupr(ginfo.Words[j])))
+			if (strstr(Msg2, strupr(ginfo.Words[j])))
 			{
-				send_mtc(players[i].UCID,msg->message[players[i].lang_id][2005]);
+				send_mtc(players[i].UCID, msg->message[players[i].lang_id][2005]);
 				bank->players[i].Cash -= 1000;
 				bank->BankFond += 1000;
 			}
 
 		}
-		strcpy(players[i].Msg,Msg);**/
+		strcpy(players[i].Msg, Msg);**/
 	} // if UserType != MSO_PREFIX
 	/** Flood and bad words **/
 }
@@ -1756,8 +1756,8 @@ void RCCore::case_ncn ()
    // read_track(&players[i]);
 	cout <<  "******************************" << endl;
 
-   // help_cmds(&players[i],1);
-   // help_cmds(&players[i],2);
+   // help_cmds(&players[i], 1);
+   // help_cmds(&players[i], 2);
 }
 
 void RCCore::case_npl ()
@@ -1823,21 +1823,21 @@ void RCCore::case_npl ()
 			if (pack_npl->PType != 6)
 			{
 			  /**  char PlayerName[32];
-				strcpy(PlayerName,players[i].PName);
+				strcpy(PlayerName, players[i].PName);
 				char * pch;
-				while (pch = strstr(PlayerName,"^"))
+				while (pch = strstr(PlayerName, "^"))
 				{
 					int point = strlen(pch);
 					//cout << pch << endl;
-					strcpy(PlayerName+strlen(PlayerName)-point,pch+2);
+					strcpy(PlayerName+strlen(PlayerName)-point, pch+2);
 				}
 				//cout << PlayerName << endl;
 
 				if (
-					((strncmp("[ДПС]",PlayerName,5)==0)
-					 || (strncmp("[дпс]",PlayerName,5)==0)
-					 || (strncmp("[ГАИ]",PlayerName,5)==0)
-					 || (strncmp("[гаи]",PlayerName,5)==0))
+					((strncmp("[ДПС]", PlayerName, 5)==0)
+					 || (strncmp("[дпс]", PlayerName, 5)==0)
+					 || (strncmp("[ГАИ]", PlayerName, 5)==0)
+					 || (strncmp("[гаи]", PlayerName, 5)==0))
 					&& (players[i].cop !=1)
 				)
 				{
@@ -1846,14 +1846,14 @@ void RCCore::case_npl ()
 						strcpy(Text, "/spec ");
 						strcat (Text, players[i].UName);
 						//players[i].PLID =0;
-						send_mtc(players[i].UCID,msg->message[players[i].lang_id][1300]);
+						send_mtc(players[i].UCID, msg->message[players[i].lang_id][1300]);
 						send_mst(Text);
 						return;
 					}
 					else
 					{
 						players[i].cop =1;
-						send_mtc(players[i].UCID,msg->message[players[i].lang_id][1301]);
+						send_mtc(players[i].UCID, msg->message[players[i].lang_id][1301]);
 					}
 				}**/
 /**
@@ -1869,12 +1869,12 @@ void RCCore::case_npl ()
 					players[i].SetF =  pack_npl->SetF;
 
 
-					// cout << "pack_npl->PType = " << (int)pack_npl->PType << endl;;
+					// cout << "pack_npl->PType = " << (int)pack_npl->PType << endl;
 
 					int j=0;
 					for (j=0; j<MAX_CARS; j++)
 					{
-						if (strcmp(players[i].cars[j].car,pack_npl->CName)==0)
+						if (strcmp(players[i].cars[j].car, pack_npl->CName)==0)
 							break;
 					}
 
@@ -1883,7 +1883,7 @@ void RCCore::case_npl ()
 
 
 
-						strcpy(players[i].CName ,pack_npl->CName);
+						strcpy(players[i].CName , pack_npl->CName);
 						players[i].CTune = players[i].cars[j].tuning;
 						players[i].Distance = players[i].cars[j].dist;
 						//strcpy(players[i].SName , row[2]);
@@ -1893,8 +1893,8 @@ void RCCore::case_npl ()
 
 
 
-						//itoa(players[i].CTune,SQL,10);
-						//send_mtc(players[i].UCID,SQL);
+						//itoa(players[i].CTune, SQL, 10);
+						//send_mtc(players[i].UCID, SQL);
 
 
 						int tune = 45;
@@ -1908,18 +1908,18 @@ void RCCore::case_npl ()
 							players[i].Zone = 1;
 							send_mst(Text);
 							char QSL [8];
-							itoa(tune,QSL,10);
+							itoa(tune, QSL, 10);
 							char Texxt[32];
-							strcpy(Texxt,msg->message[players[i].lang_id][2400] );
-							strcat(Texxt,QSL);
-							strcat(Texxt," %");
-							send_mtc(players[i].UCID,Texxt);
+							strcpy(Texxt, msg->message[players[i].lang_id][2400] );
+							strcat(Texxt, QSL);
+							strcat(Texxt, " %");
+							send_mtc(players[i].UCID, Texxt);
 						}
 						else if ((pack_npl->SetF&4) and !(players[i].CTune&8))
 						{
 							char Texxt[32];
-							strcpy(Texxt,msg->message[players[i].lang_id][2401] );
-							send_mtc(players[i].UCID,Texxt);
+							strcpy(Texxt, msg->message[players[i].lang_id][2401] );
+							send_mtc(players[i].UCID, Texxt);
 							players[i].Zone = 1;
 							players[i].PLID = 0;
 							char Text[64];
@@ -1934,9 +1934,9 @@ void RCCore::case_npl ()
 					}
 					else
 					{
-						send_mtc(players[i].UCID,msg->message[players[i].lang_id][2404]);
+						send_mtc(players[i].UCID, msg->message[players[i].lang_id][2404]);
 
-						help_cmds(&players[i],2);
+						help_cmds(&players[i], 2);
 						players[i].Zone = 1;
 						players[i].PLID = 0;
 						send_mst(Text);
@@ -1992,8 +1992,8 @@ void RCCore::case_pll ()
 
 			if (players[i].Pogonya == 1)
 			{
-				send_mtc(players[i].UCID,msg->message[players[i].lang_id][2600]);
-				send_mtc(players[i].UCID,msg->message[players[i].lang_id][2601]);
+				send_mtc(players[i].UCID, msg->message[players[i].lang_id][2600]);
+				send_mtc(players[i].UCID, msg->message[players[i].lang_id][2601]);
 				bank->players[i].Cash -= 5000;
 				bank->BankFond += 5000;
 			}
@@ -2001,14 +2001,14 @@ void RCCore::case_pll ()
 			{
 				if (players[i].Zone != 1)
 				{
-					send_mtc(players[i].UCID,msg->message[players[i].lang_id][2602]);
-					send_mtc(players[i].UCID,msg->message[players[i].lang_id][2603]);
+					send_mtc(players[i].UCID, msg->message[players[i].lang_id][2602]);
+					send_mtc(players[i].UCID, msg->message[players[i].lang_id][2603]);
 					bank->players[i].Cash -= 500;
 					bank->BankFond +=500;
 				}
 			}
 			for (int g=0; g<200; g++)
-				send_bfn(players[i].UCID,g);
+				send_bfn(players[i].UCID, g);
 
 			break;
 		}
@@ -2037,8 +2037,8 @@ void RCCore::case_plp ()
 
 			if (players[i].Pogonya == 1)
 			{
-				send_mtc(players[i].UCID,msg->message[players[i].lang_id][2700]);
-				send_mtc(players[i].UCID,msg->message[players[i].lang_id][2701]);
+				send_mtc(players[i].UCID, msg->message[players[i].lang_id][2700]);
+				send_mtc(players[i].UCID, msg->message[players[i].lang_id][2701]);
 				bank->players[i].Cash -= 5000;
 				bank->BankFond += 5000;
 			}
@@ -2046,15 +2046,15 @@ void RCCore::case_plp ()
 			{
 				if (players[i].Zone != 1)
 				{
-					send_mtc(players[i].UCID,msg->message[players[i].lang_id][2702]);
-					send_mtc(players[i].UCID,msg->message[players[i].lang_id][2703]);
+					send_mtc(players[i].UCID, msg->message[players[i].lang_id][2702]);
+					send_mtc(players[i].UCID, msg->message[players[i].lang_id][2703]);
 					bank->players[i].Cash -= 500;
 					bank->BankFond += 500;
 				}
 			}
 
 			for (int g=0; g<200; g++)
-				send_bfn(players[i].UCID,g);
+				send_bfn(players[i].UCID, g);
 
 			break;
 		}
@@ -2130,7 +2130,7 @@ void RCCore::case_vtn ()
 
 }
 
-void RCCore::send_mtc (byte UCID,char* Msg)
+void RCCore::send_mtc (byte UCID, char* Msg)
 {
 	struct IS_MTC pack_mtc;
 	memset(&pack_mtc, 0, sizeof(struct IS_MTC));
@@ -2147,7 +2147,7 @@ void RCCore::send_mst (char* Text)
 	memset(&pack_mst, 0, sizeof(struct IS_MST));
 	pack_mst.Size = sizeof(struct IS_MST);
 	pack_mst.Type = ISP_MST;
-	strcpy(pack_mst.Msg,Text);
+	strcpy(pack_mst.Msg, Text);
 	insim->send_packet(&pack_mst);
 };
 
@@ -2215,18 +2215,18 @@ void RCCore::btn_svetofor1 (struct player *splayer)
 	pack.T = 10;
 	pack.W = 30;
 	pack.H = 30;
-	strcpy(pack.Text,signal1);
+	strcpy(pack.Text, signal1);
 	insim->send_packet(&pack);
 
 
 	pack.ClickID = 193;
 	pack.T = 10+10;
-	strcpy(pack.Text,signal2);
+	strcpy(pack.Text, signal2);
 	insim->send_packet(&pack);
 
 	pack.ClickID = 194;
 	pack.T = 10+20;
-	strcpy(pack.Text,signal3);
+	strcpy(pack.Text, signal3);
 	insim->send_packet(&pack);
 }
 
@@ -2266,18 +2266,18 @@ void RCCore::btn_svetofor2 (struct player *splayer)
 	pack.T = 10;
 	pack.W = 30;
 	pack.H = 30;
-	strcpy(pack.Text,signal11);
+	strcpy(pack.Text, signal11);
 	insim->send_packet(&pack);
 
 
 	pack.ClickID = 193;
 	pack.T = 10+10;
-	strcpy(pack.Text,signal12);
+	strcpy(pack.Text, signal12);
 	insim->send_packet(&pack);
 
 	pack.ClickID = 194;
 	pack.T = 10+20;
-	strcpy(pack.Text,signal13);
+	strcpy(pack.Text, signal13);
 	insim->send_packet(&pack);
 }
 
@@ -2300,7 +2300,7 @@ void RCCore::btn_svetofor3 (struct player *splayer)
 	pack_btn.T = 110;
 	pack_btn.W = 8;
 	pack_btn.H = 20;
-	strcpy(pack_btn.Text,"");
+	strcpy(pack_btn.Text, "");
 	insim->send_packet(&pack_btn);
 	/**********/
 
@@ -2311,18 +2311,18 @@ void RCCore::btn_svetofor3 (struct player *splayer)
 	pack_btn.T = 107;
 	pack_btn.W = 16;
 	pack_btn.H = 16;
-	strcpy(pack_btn.Text,signal1);
+	strcpy(pack_btn.Text, signal1);
 	insim->send_packet(&pack_btn);
 
 
 	pack_btn.ClickID = 197;
 	pack_btn.T = 112;
-	strcpy(pack_btn.Text,signal2);
+	strcpy(pack_btn.Text, signal2);
 	insim->send_packet(&pack_btn);
 
 	pack_btn.ClickID = 198;
 	pack_btn.T = 117;
-	strcpy(pack_btn.Text,signal3);
+	strcpy(pack_btn.Text, signal3);
 	insim->send_packet(&pack_btn);
 	/********************************/
 	pack_btn.BStyle = 32;
@@ -2332,7 +2332,7 @@ void RCCore::btn_svetofor3 (struct player *splayer)
 	pack_btn.T = 110;
 	pack_btn.W = 8;
 	pack_btn.H = 20;
-	strcpy(pack_btn.Text,"");
+	strcpy(pack_btn.Text, "");
 	insim->send_packet(&pack_btn);
 	/*************************/
 	pack_btn.BStyle = 1;
@@ -2342,22 +2342,22 @@ void RCCore::btn_svetofor3 (struct player *splayer)
 	pack_btn.T = 107;
 	pack_btn.W = 16;
 	pack_btn.H = 16;
-	strcpy(pack_btn.Text,signal11);
+	strcpy(pack_btn.Text, signal11);
 	insim->send_packet(&pack_btn);
 
 
 	pack_btn.ClickID = 201;
 	pack_btn.T = 112;
-	strcpy(pack_btn.Text,signal12);
+	strcpy(pack_btn.Text, signal12);
 	insim->send_packet(&pack_btn);
 
 	pack_btn.ClickID = 202;
 	pack_btn.T = 117;
-	strcpy(pack_btn.Text,signal13);
+	strcpy(pack_btn.Text, signal13);
 	insim->send_packet(&pack_btn);
 };
 
-void RCCore::clear_svetofor(struct player *splayer)
+void RCCore::clear_svetofor (struct player *splayer)
 {
 	struct IS_BFN pack;
 	memset(&pack, 0, sizeof(struct IS_BFN));
@@ -2381,18 +2381,18 @@ void RCCore::clear_svetofor(struct player *splayer)
 void read_user (struct player *splayer)
 {
 	char file[255];
-	strcpy(file,RootDir);
-	strcat(file,"data\\users\\");
-	strcat(file,splayer->UName);
-	strcat(file,".txt");
+	strcpy(file, RootDir);
+	strcat(file, "data\\users\\");
+	strcat(file, splayer->UName);
+	strcat(file, ".txt");
 
-	ifstream readf (file,ios::in);
+	ifstream readf (file, ios::in);
 	char key[2];
-	readf.getline(key,2);
+	readf.getline(key, 2);
 	if (atoi(key) > 0)
 	{
 		char data[128];
-		readf.getline(data,128);
+		readf.getline(data, 128);
 		int L2 = strlen(data);
 		char *cash;
 		char cashf[24];
@@ -2400,38 +2400,38 @@ void read_user (struct player *splayer)
 		char *car;
 		char *lang;
 
-		cash = strtok(data,";");
-		energy = strtok(NULL,";");
-		car = strtok(NULL,";");
+		cash = strtok(data, ";");
+		energy = strtok(NULL, ";");
+		car = strtok(NULL, ";");
 
 		int L = strlen(cash) + strlen(energy) + strlen(car) + 3;
 		//out << "L = " << L << "L2 = " << L2 << endl;
 		if (L == L2)
 			lang="rus";
 		else
-			lang = strtok(NULL,";");
+			lang = strtok(NULL, ";");
 
 
-		//memcpy(&cashf,&cash,strlen(cash));
-		strcpy(cashf,cash);
+		//memcpy(&cashf, &cash, strlen(cash));
+		strcpy(cashf, cash);
 		splayer->cash = atof(cashf);
 		//splayer->Energy = atoi(energy);
-		strcpy(splayer->Cars,car);
-		strcpy(splayer->Lang,lang);
+		strcpy(splayer->Cars, car);
+		strcpy(splayer->Lang, lang);
 	}
 	else
 	{
 		splayer->cash = 1000;
 		//splayer->Energy = 10000;
-		strcpy(splayer->Cars,"XFG ");
-		strcpy(splayer->Lang,"rus");
+		strcpy(splayer->Cars, "XFG ");
+		strcpy(splayer->Lang, "rus");
 
 
 	   // save_user(splayer);
 	   // save_user_cars(splayer);
 	   // save_user_fines(splayer);
 	}
-	if (strcmp(splayer->Lang,"eng") == 0)
+	if (strcmp(splayer->Lang, "eng") == 0)
 	{
 		splayer->lang_id = 1;
 	}
@@ -2444,12 +2444,12 @@ void save_user (struct player *splayer)
 	out <<splayer->UName << " save user_info" << endl;
 
 	char file[255];
-	strcpy(file,RootDir);
-	strcat(file,"data\\users\\");
-	strcat(file,splayer->UName);
-	strcat(file,".txt");
+	strcpy(file, RootDir);
+	strcat(file, "data\\users\\");
+	strcat(file, splayer->UName);
+	strcat(file, ".txt");
 
-	ofstream writef (file,ios::out);
+	ofstream writef (file, ios::out);
 	writef << 1 << endl;
 	writef << splayer->cash << ";"
 	// << splayer->Energy << ";"

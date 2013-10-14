@@ -46,7 +46,7 @@ private:
     double BankFond;
 
     char RootDir[MAX_PATH];
-	RCMessage   *msg;
+    RCMessage   *msg;
     RCDL        *dl;
 
     void InsimNCN( struct IS_NCN* packet );

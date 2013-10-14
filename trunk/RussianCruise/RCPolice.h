@@ -30,24 +30,24 @@ struct user_fine
 /** арестованные игроки **/
 struct APlayer
 {
-	char    UName[24];
+    char    UName[24];
     time_t  ArestTime;
 };
 
 struct PolicePlayer
 {
-	/** GENERAL **/
+    /** GENERAL **/
     char    UName[24];             // Username
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
 
-	/** COP **/
+    /** COP **/
     bool    cop = false;
     bool    Sirena;
     bool    Radar;
 
-	/** other players **/
-	int		SirenaDist;
+    /** other players **/
+    int		SirenaDist;
     int    	Pogonya;
     int     StopTime = 0;
 
@@ -75,12 +75,12 @@ private:
     RCEnergy	*nrg;
     RCLight		*lgh;
 
-	string siren = "^0";
-	map <byte, PolicePlayer> players;
+    string siren = "^0";
+    map <byte, PolicePlayer> players;
 
-	map <byte, APlayer> ArestPlayers;
+    map <byte, APlayer> ArestPlayers;
 
-	void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
     void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
     void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
@@ -95,28 +95,28 @@ private:
     void ReadUserFines( byte UCID );
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
-	void ShowFinesPanel( byte UCID, byte UCID2 );
+    void ShowFinesPanel( byte UCID, byte UCID2 );
 public:
-	RCPolice();
-	~RCPolice();
+    RCPolice();
+    ~RCPolice();
 
-	struct fine fines[MAX_FINES];
+    struct fine fines[MAX_FINES];
 
-	int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
+    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
-	void SaveUserFines( byte UCID );
-	void SetUserBID( byte UCID, byte BID);
-	void ReadFines();
-	bool ReadCop(byte UCID);
-	void SetSirenLight( string sirenWord );
-	bool IsCop(byte UCID);
-	int InPursuite(byte UCID);
-	int GetFineCount();
+    void SaveUserFines( byte UCID );
+    void SetUserBID( byte UCID, byte BID);
+    void ReadFines();
+    bool ReadCop(byte UCID);
+    void SetSirenLight( string sirenWord );
+    bool IsCop(byte UCID);
+    int InPursuite(byte UCID);
+    int GetFineCount();
     char* GetFineName(byte UCID, int FineID);
 
-	void Event();
+    void Event();
 
-	void InsimMCI( struct IS_MCI* packet );
+    void InsimMCI( struct IS_MCI* packet );
 };
 
 #endif

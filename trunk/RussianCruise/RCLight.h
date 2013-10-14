@@ -47,9 +47,9 @@ private:
     bool	LightWorks=true;
 
     int red1, red2, yell1, yell2, green1, green2;
-	bool gff=false;
+    bool gff=false;
 
-	time_t sstime;
+    time_t sstime;
 
     void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов

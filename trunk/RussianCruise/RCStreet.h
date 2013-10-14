@@ -21,7 +21,7 @@ struct StrPlayer
 
 struct streets
 {
-	int 	StreetID;
+    int 	StreetID;
     char    StreetRu[50];
     char    StreetEn[50];
     word    PointCount;

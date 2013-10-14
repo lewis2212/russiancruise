@@ -67,7 +67,7 @@ private:
 
     char RootDir[MAX_PATH];
 
-	RCMessage   *msg;
+    RCMessage   *msg;
     RCBank      *bank;
     RCEnergy    *nrg;
     RCStreet    *street;
@@ -75,9 +75,9 @@ private:
     RCDL        *dl;
 #endif
 
-	u_int   Capital = 0;
+    u_int   Capital = 0;
     int     NumCars = 0;
-	bool    ShopAccepted = false;
+    bool    ShopAccepted = false;
     int     CarsInWork = 0;
     //int     Next;
 
@@ -85,17 +85,17 @@ private:
     int ginfo_time;
     struct Store PStore;
     struct pizza_info TrackInf;
-	struct place zone;
+    struct place zone;
 
     map<byte,PizzaPlayer>players;
 
-	void Deal( byte UCID );
+    void Deal( byte UCID );
     void Undeal( byte UCID ,const char *Reason);
     void Take ( byte UCID );
     void Done ( byte UCID );
     void btn_work ( byte UCID );
 
-	void InsimNCN( struct IS_NCN* packet );
+    void InsimNCN( struct IS_NCN* packet );
     void InsimNPL( struct IS_NPL* packet );
     void InsimPLP( struct IS_PLP* packet );
     void InsimPLL( struct IS_PLL* packet );
@@ -103,7 +103,7 @@ private:
     void InsimCPR( struct IS_CPR* packet );
     void InsimMSO( struct IS_MSO* packet );
 
-     // Функции-утилиты
+    // Функции-утилиты
     int check_pos ( byte UCID );
 
 public:
@@ -115,7 +115,7 @@ public:
     void readconfig(const char *Track);
 
 
-	void InsimMCI( struct IS_MCI* packet );
+    void InsimMCI( struct IS_MCI* packet );
 
     bool IfWork(byte UCID);
     void Event();

@@ -78,6 +78,8 @@
 		<Unit filename="RCPizza.h" />
 		<Unit filename="RCPolice.cpp" />
 		<Unit filename="RCPolice.h" />
+		<Unit filename="RCQuest.cpp" />
+		<Unit filename="RCQuest.h" />
 		<Unit filename="RCRoadSign.cpp" />
 		<Unit filename="RCRoadSign.h" />
 		<Unit filename="RCStreet.cpp" />
