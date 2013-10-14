@@ -216,6 +216,18 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
     return (int)sqrt((pow(X-X1, 2))+(pow(Y-Y1, 2)));
 }
 
+void RCBaseClass::SendStr (byte UCID, string Msg)
+{
+    IS_MTC *pack = new IS_MTC;
+    memset( pack, 0, sizeof( IS_MTC ) );
+    pack->Size = sizeof( IS_MTC );
+    pack->Type = ISP_MTC;
+    pack->UCID = UCID;
+    strcpy( pack->Text, Msg.c_str());
+    insim->send_packet( pack );
+    delete pack;
+}
+
 void RCBaseClass::SendMTC (byte UCID, const char* Msg)
 {
     IS_MTC *pack = new IS_MTC;

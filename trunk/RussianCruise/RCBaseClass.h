@@ -41,6 +41,7 @@ public:
     virtual void ButtonInfo (byte UCID, const char* Message);
     virtual void ClearButtonInfo (byte UCID);
     //virtual void SendBFNAll ( byte UCID, char* Text, param );
+    virtual void SendStr (byte UCID, string Msg);
 
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     int Distance (int X, int Y, int X1, int Y1);
