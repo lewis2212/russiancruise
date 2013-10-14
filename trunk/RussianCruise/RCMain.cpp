@@ -204,6 +204,11 @@ void readconfigs()
 #ifdef _RC_QUEST_H
     quest->readconfig(ginfo->Track);
 #endif // _RC_QUEST_H
+
+
+#ifdef _RC_POLICE_H
+	police->readconfig();
+#endif // _RC_POLICE_H
 }
 
 int GetCarID(char *CarName)
@@ -2573,17 +2578,21 @@ void *ThreadSave (void *params)
 #else
         Sleep(500);
 #endif
+
 #ifdef _RC_POLICE_H
-        police->SetSirenLight( "^4||||||||||^1||||||||||" );
+        police->SetSirenLight("^4||||||||||^7|^1||||||||||");
 #endif
+
 #ifdef __linux__
         sleep(500);
 #else
         Sleep(500);
 #endif
+
 #ifdef _RC_POLICE_H
-        police->SetSirenLight( "^1||||||||||^4||||||||||" );
+        police->SetSirenLight( "^1||||||||||^7|^4||||||||||" );
 #endif
+
     }
     return 0;
 };
