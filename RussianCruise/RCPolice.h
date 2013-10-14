@@ -34,6 +34,12 @@ struct APlayer
     time_t  ArestTime;
 };
 
+struct Cops
+{
+	char    UName[24];
+    int  	Rank;
+};
+
 struct PolicePlayer
 {
     /** GENERAL **/
@@ -45,6 +51,11 @@ struct PolicePlayer
     bool    cop = false;
     bool    Sirena;
     bool    Radar;
+
+    /** ДТП **/
+    int		DTP;
+    int		DTPstatus;
+    int		DTPfines;
 
     /** other players **/
     int		SirenaDist;
@@ -68,25 +79,27 @@ class RCPolice: public RCBaseClass
 {
 private:
 
-    RCMessage   *msg;   // Переменная-указатель на класс RCMessage
-    RCBank      *bank;  // Переменная-указатель на класс RCBank
+    RCMessage   *msg;
+    RCBank      *bank;
     RCDL        *dl;
     RCStreet    *street;
     RCEnergy	*nrg;
     RCLight		*lgh;
 
-    string siren = "^0";
-    map <byte, PolicePlayer> players;
+    string siren = "";
 
-    map <byte, APlayer> ArestPlayers;
+    map <byte, PolicePlayer> players; 			// все игроки
+    map <byte, APlayer> ArestPlayers;			// арестованные игроки
 
-    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
-    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
-    void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
-    void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
-    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
+    int DTPvyzov[3][32];	// 1 - UCID player, 2 - time, 3 - UCID cop
+
+    void InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   	// Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   	// Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   	// Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   	// Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   	// Игрок отправил сообщение
     void InsimBTC( struct IS_BTC* packet );
     void InsimBTT( struct IS_BTT* packet );
     void InsimPEN( struct IS_PEN* packet );
@@ -99,12 +112,14 @@ private:
 public:
     RCPolice();
     ~RCPolice();
+	void readconfig();
 
     struct fine fines[MAX_FINES];
 
     int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
     void SaveUserFines( byte UCID );
+    void SendMTCToCop(const char* Msg);
     void SetUserBID( byte UCID, byte BID);
     void ReadFines();
     bool ReadCop(byte UCID);
