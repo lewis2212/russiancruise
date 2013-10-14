@@ -127,6 +127,7 @@ public:
     bool IsCop(byte UCID);
     int InPursuite(byte UCID);
     int GetFineCount();
+    int GetCopCount();
     char* GetFineName(byte UCID, int FineID);
 
     void Event();
