@@ -12,7 +12,7 @@ RCBaseClass::~RCBaseClass()
 
 void RCBaseClass::next_packet()
 {
-    if(!insim)
+    if (!insim)
         return;     //dont work if insim is NULL
 
     switch (insim->peek_packet())
@@ -54,7 +54,7 @@ void RCBaseClass::next_packet()
         break;
 
     case ISP_NCN:
-		InsimNCN(  (struct IS_NCN*)insim->get_packet()  );
+        InsimNCN(  (struct IS_NCN*)insim->get_packet()  );
         break;
 
     case ISP_CNL:
@@ -141,100 +141,102 @@ void RCBaseClass::next_packet()
         InsimACR( (struct IS_ACR*)insim->get_packet() );
         break;
 
-	case ISP_HLV:
+    case ISP_HLV:
         InsimHLV( (struct IS_HLV*)insim->get_packet() );
         break;
     }
 }
 
-void RCBaseClass::InsimACR( struct IS_ACR* packet ){}
-void RCBaseClass::InsimAXM( struct IS_AXM* packet ){}
-void RCBaseClass::InsimBFN( struct IS_BFN* packet ){}
-void RCBaseClass::InsimBTC( struct IS_BTC* packet ){}
-void RCBaseClass::InsimBTT( struct IS_BTT* packet ){}
-void RCBaseClass::InsimCNL( struct IS_CNL* packet ){}
-void RCBaseClass::InsimCON( struct IS_CON* packet ){}
-void RCBaseClass::InsimCPR( struct IS_CPR* packet ){}
-void RCBaseClass::InsimCRS( struct IS_CRS* packet ){}
-void RCBaseClass::InsimFLG( struct IS_FLG* packet ){}
-void RCBaseClass::InsimHLV( struct IS_HLV* packet ){}
-void RCBaseClass::InsimIII( struct IS_III* packet ){}
-void RCBaseClass::InsimISM( struct IS_ISM* packet ){}
-void RCBaseClass::InsimLAP( struct IS_LAP* packet ){}
-void RCBaseClass::InsimMSO( struct IS_MSO* packet ){}
-void RCBaseClass::InsimNCN( struct IS_NCN* packet ){}
-void RCBaseClass::InsimNPL( struct IS_NPL* packet ){}
-void RCBaseClass::InsimOBH( struct IS_OBH* packet ){}
-void RCBaseClass::InsimPEN( struct IS_PEN* packet ){}
-void RCBaseClass::InsimPIT( struct IS_PIT* packet ){}
-void RCBaseClass::InsimPLA( struct IS_PLA* packet ){}
-void RCBaseClass::InsimPLL( struct IS_PLL* packet ){}
-void RCBaseClass::InsimPLP( struct IS_PLP* packet ){}
-void RCBaseClass::InsimPSF( struct IS_PSF* packet ){}
-void RCBaseClass::InsimREO( struct IS_REO* packet ){}
-void RCBaseClass::InsimRST( struct IS_RST* packet ){}
-void RCBaseClass::InsimSMALL( struct IS_SMALL* packet ){}
-void RCBaseClass::InsimSPX( struct IS_SPX* packet ){}
-void RCBaseClass::InsimSTA( struct IS_STA* packet ){}
-void RCBaseClass::InsimTINY( struct IS_TINY* packet ){}
-void RCBaseClass::InsimTOC( struct IS_TOC* packet ){}
-void RCBaseClass::InsimVER( struct IS_VER* packet ){}
-void RCBaseClass::InsimVTN( struct IS_VTN* packet ){}
+void RCBaseClass::InsimACR( struct IS_ACR* packet ) {}
+void RCBaseClass::InsimAXM( struct IS_AXM* packet ) {}
+void RCBaseClass::InsimBFN( struct IS_BFN* packet ) {}
+void RCBaseClass::InsimBTC( struct IS_BTC* packet ) {}
+void RCBaseClass::InsimBTT( struct IS_BTT* packet ) {}
+void RCBaseClass::InsimCNL( struct IS_CNL* packet ) {}
+void RCBaseClass::InsimCON( struct IS_CON* packet ) {}
+void RCBaseClass::InsimCPR( struct IS_CPR* packet ) {}
+void RCBaseClass::InsimCRS( struct IS_CRS* packet ) {}
+void RCBaseClass::InsimFLG( struct IS_FLG* packet ) {}
+void RCBaseClass::InsimHLV( struct IS_HLV* packet ) {}
+void RCBaseClass::InsimIII( struct IS_III* packet ) {}
+void RCBaseClass::InsimISM( struct IS_ISM* packet ) {}
+void RCBaseClass::InsimLAP( struct IS_LAP* packet ) {}
+void RCBaseClass::InsimMSO( struct IS_MSO* packet ) {}
+void RCBaseClass::InsimNCN( struct IS_NCN* packet ) {}
+void RCBaseClass::InsimNPL( struct IS_NPL* packet ) {}
+void RCBaseClass::InsimOBH( struct IS_OBH* packet ) {}
+void RCBaseClass::InsimPEN( struct IS_PEN* packet ) {}
+void RCBaseClass::InsimPIT( struct IS_PIT* packet ) {}
+void RCBaseClass::InsimPLA( struct IS_PLA* packet ) {}
+void RCBaseClass::InsimPLL( struct IS_PLL* packet ) {}
+void RCBaseClass::InsimPLP( struct IS_PLP* packet ) {}
+void RCBaseClass::InsimPSF( struct IS_PSF* packet ) {}
+void RCBaseClass::InsimREO( struct IS_REO* packet ) {}
+void RCBaseClass::InsimRST( struct IS_RST* packet ) {}
+void RCBaseClass::InsimSMALL( struct IS_SMALL* packet ) {}
+void RCBaseClass::InsimSPX( struct IS_SPX* packet ) {}
+void RCBaseClass::InsimSTA( struct IS_STA* packet ) {}
+void RCBaseClass::InsimTINY( struct IS_TINY* packet ) {}
+void RCBaseClass::InsimTOC( struct IS_TOC* packet ) {}
+void RCBaseClass::InsimVER( struct IS_VER* packet ) {}
+void RCBaseClass::InsimVTN( struct IS_VTN* packet ) {}
 
 void    RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {
-    if(!insim)return;/**dont work if insim is NULL**/
+    if (!insim)return;/**dont work if insim is NULL**/
 }
 
-bool RCBaseClass::Check_Pos(int polySides,int polyX[],int polyY[],float x,float y)
+bool RCBaseClass::Check_Pos(int polySides, int polyX[], int polyY[], float x, float y)
 {
     int		i, j=polySides-1 ;
     bool	oddNodes=false;
-	try{
-		for (i=0; i<polySides; i++)
-		{
-			if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
-			{
-				if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
-				{
-					oddNodes=!oddNodes;
-				}
-			}
-			j=i;
-		}
-	}
-	catch(...){
-	//tools::log("Check_Pos Exeption\n");
-	}
+    try
+    {
+        for (i=0; i<polySides; i++)
+        {
+            if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
+            {
+                if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
+                {
+                    oddNodes=!oddNodes;
+                }
+            }
+            j=i;
+        }
+    }
+    catch(...)
+    {
+        //tools::log("Check_Pos Exeption\n");
+    }
     return oddNodes;
 }
 
 int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
 {
-    return (int)sqrt((pow(X-X1,2))+(pow(Y-Y1,2)));
+    return (int)sqrt((pow(X-X1, 2))+(pow(Y-Y1, 2)));
 }
 
-void RCBaseClass::SendMTC (byte UCID,const char* Msg)
+void RCBaseClass::SendMTC (byte UCID, const char* Msg)
 {
-	IS_MTC *pack = new IS_MTC;
-	memset( pack, 0, sizeof( IS_MTC ) );
-	pack->Size = sizeof( IS_MTC );
-	pack->Type = ISP_MTC;
-	pack->UCID = UCID;
-	sprintf( pack->Text, "%.127s\0", Msg );
-	insim->send_packet( pack );
-	delete pack;
+    IS_MTC *pack = new IS_MTC;
+    memset( pack, 0, sizeof( IS_MTC ) );
+    pack->Size = sizeof( IS_MTC );
+    pack->Type = ISP_MTC;
+    pack->UCID = UCID;
+    sprintf( pack->Text, "%.127s\0", Msg );
+    insim->send_packet( pack );
+    delete pack;
 }
 
 void RCBaseClass::SendMST (const char* Text)
 {
-	IS_MST *pack = new IS_MST;
-	memset( pack, 0, sizeof( IS_MST));
-	pack->Size = sizeof( IS_MST);
-	pack->Type = ISP_MST;
-	sprintf( pack->Msg, "%.63s\0", Text );
-	insim->send_packet( pack );
-	delete pack;
+    IS_MST *pack = new IS_MST;
+    memset( pack, 0, sizeof( IS_MST));
+    pack->Size = sizeof( IS_MST);
+    pack->Type = ISP_MST;
+    sprintf( pack->Msg, "%.63s\0", Text );
+    insim->send_packet( pack );
+    delete pack;
 }
 
 void RCBaseClass::SendBFN (byte UCID, byte ClickID)
@@ -282,12 +284,12 @@ void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 
 void RCBaseClass::ClearButtonInfo(byte UCID)
 {
-	SendBFN( UCID, 211);
+    SendBFN( UCID, 211);
 }
 
 void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
 {
-	IS_BTN *pack = new IS_BTN;
+    IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
     pack->Size = sizeof( IS_BTN );
     pack->Type = ISP_BTN;
@@ -301,14 +303,14 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     pack->T = T;
     pack->W = W;
     pack->H = H;
-    strcpy( pack->Text ,Text );
+    strcpy( pack->Text , Text );
     insim->send_packet( pack );
     delete pack;
 }
 
 void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn)
 {
-	IS_BTN *pack = new IS_BTN;
+    IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
     pack->Size = sizeof( IS_BTN );
     pack->Type = ISP_BTN;
@@ -322,7 +324,7 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     pack->T = T;
     pack->W = W;
     pack->H = H;
-	sprintf(pack->Text, Text);
+    sprintf(pack->Text, Text);
     insim->send_packet( pack );
     delete pack;
 }
@@ -330,18 +332,23 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
 
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
-vector<string>& SplitString::split( const char delim, int rep) {
+vector<string>& SplitString::split( const char delim, int rep)
+{
     if (!flds.empty()) flds.clear();  // empty vector if necessary
     string work = data();
     string buf = "";
     int i = 0;
-    while (i < work.length()) {
+    while (i < work.length())
+    {
         if (work[i] != delim)
             buf += work[i];
-        else if (rep == 1) {
+        else if (rep == 1)
+        {
             flds.push_back(buf);
             buf = "";
-        } else if (buf.length() > 0) {
+        }
+        else if (buf.length() > 0)
+        {
             flds.push_back(buf);
             buf = "";
         }

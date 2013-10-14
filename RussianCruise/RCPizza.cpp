@@ -13,47 +13,47 @@ RCPizza::RCPizza()
     memset(&zone, 0, sizeof(place));
 }
 
-RCPizza::~RCPizza(){}
+RCPizza::~RCPizza() {}
 
 int RCPizza::init(const char *dir, void *CInSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
 {
-    strcpy(RootDir,dir);
+    strcpy(RootDir, dir);
 
     insim = (CInsim *)CInSim;
-    if(!insim)
+    if (!insim)
     {
         printf ("RCPizza: Can't struct CInsim class");
         return -1;
     }
 
     msg = (RCMessage *)RCMessageClass;
-    if(!msg)
+    if (!msg)
     {
         printf ("RCPizza: Can't struct RCMessage class");
         return -1;
     }
     bank = (RCBank *)Bank;
-    if(!bank)
+    if (!bank)
     {
         printf ("RCPizza: Can't struct RCBank class");
         return -1;
     }
     nrg = (RCEnergy *)Energy;
-    if(!nrg)
+    if (!nrg)
     {
         printf ("RCPizza: Can't struct RCEnergy class");
         return -1;
     }
 
     dl = (RCDL *)DrLic;
-    if(!dl)
+    if (!dl)
     {
         printf ("RCPizza: Can't struct RCDL class");
         return -1;
     }
 
     street = (RCStreet *)STreet;
-    if(!street)
+    if (!street)
     {
         printf ("Can't struct RCStreet class");
         return -1;
@@ -73,7 +73,7 @@ void RCPizza::Deal(byte UCID)
         {
             players[UCID].WorkType = WK_PIZZA;
             players[UCID].WorkAccept = 0;
-            SendMTC(UCID,msg->_(UCID, "4000"));
+            SendMTC(UCID, msg->_(UCID, "4000"));
             CarsInWork ++;
         }
         else
@@ -92,11 +92,11 @@ void RCPizza::Take(byte UCID)
 {
     if (players[UCID].WorkType != WK_PIZZA)
     {
-        SendMTC(UCID,msg->_(UCID, "4002"));
+        SendMTC(UCID, msg->_(UCID, "4002"));
         return;
     }
 
-    if (strcmp(players[UCID].CName,"UF1")!=0)
+    if (strcmp(players[UCID].CName, "UF1")!=0)
     {
         SendMTC(UCID, msg->_(UCID, "4102"));
         return;
@@ -128,23 +128,23 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkTime = worktime + PIZZA_WORK_TIME;
             players[UCID].WorkDestinaion = place;
             players[UCID].WorkAccept = 2;
-            SendMTC(UCID,msg->_(UCID, "4200"));
+            SendMTC(UCID, msg->_(UCID, "4200"));
 
             char Text[96], str[64];
 
             int StreetID = -1;
             for (int g = 0; g < street->StreetNums; g++)
-                if(Check_Pos(street->Street[g].PointCount,street->Street[g].StreetX,street->Street[g].StreetY,zone.point[place].X,zone.point[place].Y))
+                if (Check_Pos(street->Street[g].PointCount, street->Street[g].StreetX, street->Street[g].StreetY, zone.point[place].X, zone.point[place].Y))
                 {
                     StreetID = g;
                     break;
                 }
 
-            sprintf(str, "^C^7%s, %s",zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
+            sprintf(str, "^C^7%s, %s", zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
             sprintf(Text, "^3| %s", str);
             SendMTC(UCID, Text);
 
-            strcpy(players[UCID].WorkDest,str);
+            strcpy(players[UCID].WorkDest, str);
         }
         else if (players[UCID].WorkPlayerAccept != 0) // заказал игрок
         {
@@ -153,16 +153,16 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkDestinaion = players[UCID].WorkPlayerAccept;
             players[UCID].WorkAccept = 2;
             char text[128];
-            sprintf(text,msg->_(UCID, "4201"),players[players[UCID].WorkPlayerAccept].PName);
+            sprintf(text, msg->_(UCID, "4201"), players[players[UCID].WorkPlayerAccept].PName);
             strcpy(players[UCID].WorkDest, players[players[UCID].WorkPlayerAccept].PName);
-            SendMTC(UCID,text);
+            SendMTC(UCID, text);
         }
     }
 
     else if (players[UCID].WorkAccept == 2)
-        SendMTC(UCID,msg->_(UCID, "4202")); // Отвези сначала этот заказ
+        SendMTC(UCID, msg->_(UCID, "4202")); // Отвези сначала этот заказ
     else
-        SendMTC(UCID,msg->_(UCID, "4203")); // Wait until i call you
+        SendMTC(UCID, msg->_(UCID, "4203")); // Wait until i call you
 
 }
 
@@ -170,11 +170,11 @@ void RCPizza::Done(byte UCID)
 {
     if ((players[UCID].WorkType == WK_PIZZA) and (players[UCID].WorkAccept == 2))
     {
-        SendMTC(UCID,msg->_(UCID, "4300"));
+        SendMTC(UCID, msg->_(UCID, "4300"));
 
         players[UCID].WorkPlayerAccept = 0;
         players[UCID].WorkDestinaion =0;
-        players[UCID].WorkCountDone ++;;
+        players[UCID].WorkCountDone ++;
         players[UCID].WorkAccept = 0;
         players[UCID].WorkZone = 0;
         ClearButtonInfo(UCID);
@@ -191,68 +191,68 @@ void RCPizza::Done(byte UCID)
 void RCPizza::readconfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCPizza\\%s.txt",RootDir,Track);
+    sprintf(file, "%sdata\\RCPizza\\%s.txt", RootDir, Track);
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file,&fd);
+    fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza: Can't find\n%s",file);
+        printf ("RCPizza: Can't find\n%s", file);
         return;
     }
     FindClose(fff);
-    ifstream readf (file,ios::in);
+    ifstream readf (file, ios::in);
 
     int point = 0;
     while (readf.good())
     {
         char str[128];
-        readf.getline(str,128);
+        readf.getline(str, 128);
 
         if (strlen(str) > 0)
         {
-            if (strncmp(str,"/dealer",7)==0)
+            if (strncmp(str, "/dealer", 7)==0)
                 for (int i=0; i<4; i++)
                 {
-                    readf.getline(str,128);
+                    readf.getline(str, 128);
                     char * X;
                     char * Y;
-                    X = strtok (str,",");
-                    Y = strtok (NULL,",");
+                    X = strtok (str, ", ");
+                    Y = strtok (NULL, ", ");
                     zone.dealX[i] = atoi(X);
                     zone.dealY[i] = atoi(Y);
                 }
 
-            if (strncmp(str,"/shop",5)==0)
+            if (strncmp(str, "/shop", 5)==0)
             {
-                readf.getline(str,128);
+                readf.getline(str, 128);
                 int count = atoi(str);
                 TrackInf.ShopCount = count;
 
                 for (int i=0 ; i<count; i++)
                 {
-                    readf.getline(str,128);
+                    readf.getline(str, 128);
                     char * X;
                     char * Y;
-                    X = strtok (str,";");
-                    Y = strtok (NULL,";");
+                    X = strtok (str, ";");
+                    Y = strtok (NULL, ";");
                     TrackInf.XShop[i] = atoi(X);
                     TrackInf.YShop[i] = atoi(Y);
                 }
             }
 
-            if (strncmp(str,"point",5)==0)
+            if (strncmp(str, "point", 5)==0)
             {
-                readf.getline(str,64);
-                strncpy(zone.point[point].PlaceName,str,strlen(str));
+                readf.getline(str, 64);
+                strncpy(zone.point[point].PlaceName, str, strlen(str));
 
-                readf.getline(str,128);
+                readf.getline(str, 128);
 
                 char * X;
                 char * Y;
-                X = strtok (str,",");
-                Y = strtok (NULL,",");
+                X = strtok (str, ", ");
+                Y = strtok (NULL, ", ");
 
                 zone.point[point].X = atoi(X);
                 zone.point[point].Y = atoi(Y);
@@ -265,8 +265,8 @@ void RCPizza::readconfig(const char *Track)
     readf.close();
 
     /*** READ STORE DATA ***/
-    sprintf(file,"%sdata\\RCPizza\\_Store.txt",RootDir);
-    fff = FindFirstFile(file,&fd);
+    sprintf(file, "%sdata\\RCPizza\\_Store.txt", RootDir);
+    fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf ("RCPizza: Can't find _Store.txt");
@@ -274,50 +274,50 @@ void RCPizza::readconfig(const char *Track)
     }
     FindClose(fff);
 
-    ifstream ReadStore (file,ios::in);
+    ifstream ReadStore (file, ios::in);
     while (ReadStore.good())
     {
         char str[128];
-        ReadStore.getline(str,128);
+        ReadStore.getline(str, 128);
 
         if (strlen(str) > 0)
         {
-            if (strncmp(str,"Muka=",strlen("Muka="))==0)
+            if (strncmp(str, "Muka=", strlen("Muka="))==0)
                 PStore.Muka = atof(str+strlen("Muka="));
 
-            if (strncmp(str,"Voda=",strlen("Voda="))==0)
+            if (strncmp(str, "Voda=", strlen("Voda="))==0)
                 PStore.Voda = atof(str+strlen("Voda="));
 
-            if (strncmp(str,"Ovoshi=",strlen("Ovoshi="))==0)
+            if (strncmp(str, "Ovoshi=", strlen("Ovoshi="))==0)
                 PStore.Ovoshi = atof(str+strlen("Ovoshi="));
 
-            if (strncmp(str,"Cheese=",strlen("Cheese="))==0)
+            if (strncmp(str, "Cheese=", strlen("Cheese="))==0)
                 PStore.Cheese = atof(str+strlen("Cheese="));
         }
     }
     ReadStore.close();
 
-    sprintf(file,"%sdata\\RCPizza\\_Pizza.txt",RootDir);
-    fff = FindFirstFile(file,&fd);
+    sprintf(file, "%sdata\\RCPizza\\_Pizza.txt", RootDir);
+    fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
         printf ("RCPizza: Can't find _Pizza.txt");
         return;
     }
     FindClose(fff);
-    ifstream ReadInfo (file,ios::in);
+    ifstream ReadInfo (file, ios::in);
 
     while (ReadInfo.good())
     {
         char str[128];
-        ReadInfo.getline(str,128);
+        ReadInfo.getline(str, 128);
 
         if (strlen(str) > 0)
         {
-            if (strncmp(str,"Capital=",strlen("Capital="))==0)
+            if (strncmp(str, "Capital=", strlen("Capital="))==0)
                 Capital = atoi(str+strlen("Capital="));
 
-            if (strncmp(str,"NumCars=",strlen("NumCars="))==0)
+            if (strncmp(str, "NumCars=", strlen("NumCars="))==0)
                 NumCars = atoi(str+strlen("NumCars="));
         }
     }
@@ -345,15 +345,15 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
 
     /** Save Pizza Info **/
     char file[MAX_PATH];
-    sprintf(file,"%sdata\\RCPizza\\_Store.txt",RootDir);
-    ofstream writef (file,ios::out);
+    sprintf(file, "%sdata\\RCPizza\\_Store.txt", RootDir);
+    ofstream writef (file, ios::out);
     writef << "Muka=" << PStore.Muka << endl;
     writef << "Voda=" << PStore.Voda << endl;
     writef << "Ovoshi=" << PStore.Ovoshi << endl;
     writef << "Cheese=" << PStore.Cheese << endl;
     writef.close();
-    sprintf(file,"%sdata\\RCPizza\\_Pizza.txt",RootDir);
-    ofstream WriteInfo (file,ios::out);
+    sprintf(file, "%sdata\\RCPizza\\_Pizza.txt", RootDir);
+    ofstream WriteInfo (file, ios::out);
     WriteInfo << "Capital=" << Capital << endl;
     WriteInfo << "NumCars=" << NumCars << endl;
     WriteInfo.close();
@@ -395,13 +395,13 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             if (players[UCID].Zone != 4)
             {
                 players[UCID].Zone = 4;
-                SendMTC(UCID,msg->_(UCID, "1600")); // pizza u Jony
+                SendMTC(UCID, msg->_(UCID, "1600")); // pizza u Jony
                 if (players[UCID].WorkType != WK_PIZZA)
-                    SendMTC(UCID,msg->_(UCID, "1601")); // deal
+                    SendMTC(UCID, msg->_(UCID, "1601")); // deal
                 else
-                    SendMTC(UCID,msg->_(UCID, "1602")); // undeal
-				if (players[UCID].WorkAccept != 0)
-					Take(UCID);
+                    SendMTC(UCID, msg->_(UCID, "1602")); // undeal
+                if (players[UCID].WorkAccept != 0)
+                    Take(UCID);
             }
         }
         else
@@ -409,7 +409,7 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
 
 
         /** Zones (PitSave, shop, etc) **/
-        if (Distance(X,Y,zone.point[players[UCID].WorkDestinaion].X,zone.point[players[UCID].WorkDestinaion].Y) < 10 and S < 5)
+        if (Distance(X, Y, zone.point[players[UCID].WorkDestinaion].X, zone.point[players[UCID].WorkDestinaion].Y) < 10 and S < 5)
             Done(UCID);
 
         byte PL_UCID = players[UCID].WorkPlayerAccept;
@@ -422,14 +422,14 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             if (Distance(X, Y, PL_X, PL_Y) < 10) // если растояние до игрока меньше 10 метров
             {
                 Done(UCID);
-                bank->RemCash(PL_UCID,800);
+                bank->RemCash(PL_UCID, 800);
                 nrg->AddEnergy(PL_UCID, 8000);
-                SendMTC(PL_UCID,msg->_(PL_UCID, "1604"));
+                SendMTC(PL_UCID, msg->_(PL_UCID, "1604"));
                 players[PL_UCID].Pizza = 0;
             }
         }
 
-        if ((players[UCID].WorkAccept == 3) && (Check_Pos(TrackInf.ShopCount,TrackInf.XShop,TrackInf.YShop,X,Y))) // если игроку сказали заказать продукты и он приехал в магазин
+        if ((players[UCID].WorkAccept == 3) && (Check_Pos(TrackInf.ShopCount, TrackInf.XShop, TrackInf.YShop, X, Y))) // если игроку сказали заказать продукты и он приехал в магазин
         {
             players[UCID].WorkDestinaion =0;
             players[UCID].WorkAccept = 0;
@@ -478,21 +478,21 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
     {
         char Text[64];
-        sprintf(Text,"^C^3| ^7Капитал магазина: ^7%d ^3RUR", Capital);
+        sprintf(Text, "^C^3| ^7Капитал магазина: ^7%d ^3RUR", Capital);
         SendMTC(packet->UCID, Text);
-        sprintf(Text,"^C^3| ^7Склад: воды ^3%0.0f ^7л, муки ^3%0.0f ^7кг, овощей ^3%0.0f ^7кг, сыра ^3%0.0f ^7кг", PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
+        sprintf(Text, "^C^3| ^7Склад: воды ^3%0.0f ^7л, муки ^3%0.0f ^7кг, овощей ^3%0.0f ^7кг, сыра ^3%0.0f ^7кг", PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
         SendMTC(packet->UCID, Text);
         if (CarsInWork==0)
             SendMTC(packet->UCID, "^C^3| ^7Работников нет");
         else
         {
-            sprintf(Text,"^C^3| ^7Работники: ^3%d/%d", CarsInWork, NumCars);
+            sprintf(Text, "^C^3| ^7Работники: ^3%d/%d", CarsInWork, NumCars);
             SendMTC(packet->UCID, Text);
             for (auto& p: players)
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
-                    sprintf(Text,"^3| %s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d",players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
-                    SendMTC(packet->UCID,Text);
+                    sprintf(Text, "^3| %s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d", players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
+                    SendMTC(packet->UCID, Text);
                 }
         }
     }
@@ -505,7 +505,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
                 SendMTC(packet->UCID, msg->_(packet->UCID, "4103"));
                 return;
             }
-            if (strcmp(players[packet->UCID].CName,"UF1") == 0)
+            if (strcmp(players[packet->UCID].CName, "UF1") == 0)
                 Deal(packet->UCID);
             else
                 SendMTC(packet->UCID, msg->_(packet->UCID, "4102"));
@@ -533,20 +533,20 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     {
         if (nrg->GetEnergy(packet->UCID) > 80)
         {
-            SendMTC(packet->UCID,msg->_(packet->UCID, "NotLesEn"));
+            SendMTC(packet->UCID, msg->_(packet->UCID, "NotLesEn"));
             return;
         }
 
         if (players[packet->UCID].WorkType == WK_PIZZA)
         {
-            SendMTC(packet->UCID,msg->_(packet->UCID, "NoTofuWhWork"));
+            SendMTC(packet->UCID, msg->_(packet->UCID, "NoTofuWhWork"));
             return;
         }
 
         if (players[packet->UCID].Pizza == 0)
         {
             players[packet->UCID].Pizza = 1;
-            SendMTC(packet->UCID,msg->_(packet->UCID, "DelTofuOk")); // заказ принят
+            SendMTC(packet->UCID, msg->_(packet->UCID, "DelTofuOk")); // заказ принят
         }
     }
 }
@@ -563,7 +563,7 @@ int RCPizza::check_pos(byte UCID)
 {
     int X = players[UCID].Info.X/65536;
     int Y = players[UCID].Info.Y/65536;
-    if (Check_Pos(4,zone.dealX,zone.dealY,X,Y))
+    if (Check_Pos(4, zone.dealX, zone.dealY, X, Y))
         return 1;
     return 0;
 }
@@ -593,7 +593,7 @@ void RCPizza::Event()
 
                 if (players[plit.first].WorkAccept != 0)
                 {
-                    SendMTC(plit.first,msg->_(plit.first, "4101"));
+                    SendMTC(plit.first, msg->_(plit.first, "4101"));
                     players[plit.first].WorkType = WK_NULL;
                     players[plit.first].WorkAccept = 0;
                     if (players[plit.first].WorkPlayerAccept != 0)
@@ -614,7 +614,7 @@ void RCPizza::Event()
         if (players[plit.first].WorkAccept != 0)
         {
             btn_work(plit.first);
-            ButtonInfo(plit.first,players[plit.first].WorkDest);
+            ButtonInfo(plit.first, players[plit.first].WorkDest);
         }
     }
 
@@ -654,10 +654,10 @@ void RCPizza::Event()
             for (auto& plit: players)
                 if ((plit.first  !=0) and (players[plit.first].WorkType == WK_PIZZA) and (players[plit.first].WorkAccept == 0))
                 {
-                    SendMTC(plit.first,msg->_(plit.first, "2201"));
-                    SendMTC(plit.first,msg->_(plit.first, "2202"));
+                    SendMTC(plit.first, msg->_(plit.first, "2201"));
+                    SendMTC(plit.first, msg->_(plit.first, "2202"));
 
-                    strcpy(players[plit.first].WorkDest,msg->_(plit.first, "2201")+4); // +4 == remove slash
+                    strcpy(players[plit.first].WorkDest, msg->_(plit.first, "2201")+4); // +4 == remove slash
 
                     players[plit.first].WorkAccept =1;
                     players[plit.first].WorkPlayerAccept =0;
@@ -678,7 +678,7 @@ void RCPizza::Event()
 
                 char str[96];
                 strcpy(players[plit.first].WorkDest, msg->_(plit.first, "4204"));
-                sprintf(str,"^3| %s", msg->_(plit.first, "4204"));
+                sprintf(str, "^3| %s", msg->_(plit.first, "4204"));
                 SendMTC(plit.first, str);
 
                 players[plit.first].WorkAccept =3;

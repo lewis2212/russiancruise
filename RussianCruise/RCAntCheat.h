@@ -72,7 +72,7 @@ public:
 
     RCAntCheat();   // Конструктор класса (обязательно)
     ~RCAntCheat();  // Деструктор класса (обязательно)
-	struct  track_inf TrackInf;             // Where PitBox and Shop
+    struct  track_inf TrackInf;             // Where PitBox and Shop
     // Основные функции класса
     int init(char *dir,void *CInSim, void *Message);    // classname - указатель на класс RCAntCheat.
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.

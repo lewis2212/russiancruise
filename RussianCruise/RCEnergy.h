@@ -18,7 +18,7 @@ struct EnergyPlayer
     /** Energy **/
     int     Energy; // 0-10000
     time_t  EnergyTime;
-	bool	EnergyAlarm = false;
+    bool	EnergyAlarm = false;
     bool	Lock;
 
     time_t  LastT;
@@ -41,7 +41,7 @@ private:
     time_t nrgtime;
     struct  energy_info TrackInf;       // Where PitBox and Shop
 
-	map<byte, EnergyPlayer>players;     // Array of players
+    map<byte, EnergyPlayer>players;     // Array of players
 
     char RootDir[MAX_PATH];
 
