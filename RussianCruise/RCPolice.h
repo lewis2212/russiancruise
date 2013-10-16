@@ -113,7 +113,7 @@ private:
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
     void ShowFinesPanel( byte UCID, byte UCID2 );
-    void CopRaschet(byte UCID, bool FullWork);
+    void CopPayRoll(byte UCID, bool FullWork);
 public:
     RCPolice();
     ~RCPolice();
