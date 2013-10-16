@@ -45,14 +45,14 @@ void RCMessage::readconfig(const char *Track)
 {
     char file[255];
     sprintf(file, "%sdata\\RCMessages\\rus.txt", RootDir);
-
+    // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
         return;
     FindClose(fff);
-
+    // !-- TODO
     ifstream readf (file, ios::in);
     while (readf.good())
     {
@@ -76,13 +76,13 @@ void RCMessage::readconfig(const char *Track)
     readf.close();
 
     sprintf(file, "%sdata\\RCMessages\\eng.txt", RootDir);
-
+    // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
         return;
 
     FindClose(fff);
-
+    // !-- TODO
 
     ifstream readf2 (file, ios::in);
     while (readf2.good())
@@ -120,7 +120,7 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     sprintf(file, "%sdata\\RCMessages\\users\\%s.txt", RootDir, players[ packet->UCID ].UName);
 
 
-    // Try Find New File
+    // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
     fff = FindFirstFile(file, &fd);

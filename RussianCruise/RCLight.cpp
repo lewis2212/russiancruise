@@ -15,7 +15,7 @@ bool RCLight::SetLight3( byte UCID, bool Key)
 {
     if (players[ UCID ].Light3 and !Key)
     {
-        for (int f=190; f < 203; f++)
+        for (int f = 190; f < 203; f++)
         {
             SendBFN( UCID, f);
         }
@@ -74,7 +74,7 @@ void RCLight::readconfig(const char *Track)
         readf.getline(str, 128);
         if (strlen(str) > 0)
         {
-            if (strcmp(str, "#Light")==0)
+            if (strcmp(str, "#Light") == 0)
             {
                 readf.getline(str, 128);
                 Light[i].ID = atoi(str);
@@ -90,7 +90,7 @@ void RCLight::readconfig(const char *Track)
                 Light[i].X = new int[Light[i].PointCount];
                 Light[i].Y = new int[Light[i].PointCount];
 
-                for (int k=0; k<Light[i].PointCount; k++)
+                for (int k = 0; k<Light[i].PointCount; k++)
                 {
                     readf.getline(str, 128);
 
@@ -125,21 +125,21 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
     {
         byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
         /** streets  **/
-        int X = pack_mci->Info[i].X/65536;
-        int Y = pack_mci->Info[i].Y/65536;
-        int H = pack_mci->Info[i].Heading/182;
-        int D = pack_mci->Info[i].Direction/182;
-        int S = pack_mci->Info[i].Speed*360/32768;
+        int X = pack_mci->Info[i].X / 65536;
+        int Y = pack_mci->Info[i].Y / 65536;
+        int H = pack_mci->Info[i].Heading / 182;
+        int D = pack_mci->Info[i].Direction / 182;
+        int S = pack_mci->Info[i].Speed*360 / 32768;
 
         int SvetKey = 0;
 
-        for (int g=0; g<LightsCount; g++)
+        for (int g = 0; g<LightsCount; g++)
         {
             if (Check_Pos(Light[g].PointCount, Light[g].X, Light[g].Y, X, Y))
             {
                 players[UCID].LightNum = g;
-                int HR = Light[g].Heading-80;
-                int HL = Light[g].Heading+80;
+                int HR = Light[g].Heading - 80;
+                int HL = Light[g].Heading + 80;
 
                 if (HR < 0)
                 {
@@ -186,14 +186,14 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
             {
                 if (players[UCID].RedLight and players[UCID].DiffDir < 45 and (pack_mci->Info[i].AngVel * 360 / 16384) < 70)
                 {
-                    players[UCID].OnRed=true;
+                    players[UCID].OnRed = true;
                 }
                 else
                 {
-                    players[UCID].OnRed=false;
+                    players[UCID].OnRed = false;
                 }
 
-                for (int f=170; f < 203; f++)
+                for (int f = 170; f < 203; f++)
                 {
                     SendBFN( UCID, f);
                 }
@@ -202,8 +202,9 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
         }
 
         if (players[ UCID ].Light3)
+        {
             Svetofor3( UCID );
-        /**  steets **/
+        }
 
         /** pit wrong route **/
         if (strstr(TrackName, "SO4X"))
@@ -230,15 +231,21 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 else
                 {
                     if (players[ UCID ].WrongWay == 0)
+                    {
                         players[ UCID ].WrongWay =1;
+                    }
+
                     WrongWay( UCID );
+
                     if (S > 10)
+                    {
                         dl->RemSkill( UCID );
+                    }
                 }
             }
             else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
             {
-                if ( (D < 190+90) and (D > 190-90) )
+                if ( (D < 190 + 90) and (D > 190 - 90) )
                 {
                     if (players[ UCID ].WrongWay == 1)
                     {
@@ -250,10 +257,16 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 else
                 {
                     if (players[ UCID ].WrongWay == 0)
+                    {
                         players[ UCID ].WrongWay =1;
+                    }
+
                     WrongWay( UCID );
+
                     if (S > 10)
+                    {
                         dl->RemSkill( UCID );
+                    }
                 }
             }
             else
@@ -276,7 +289,7 @@ bool RCLight::CheckOnRed(byte UCID)
 
 void RCLight::OnRedFalse(byte UCID)
 {
-    players[UCID].OnRed=false;
+    players[UCID].OnRed = false;
 }
 
 void RCLight::InsimMSO( struct IS_MSO* packet )
@@ -285,6 +298,7 @@ void RCLight::InsimMSO( struct IS_MSO* packet )
     strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
 
     if (strncmp(Message, "!light", strlen("!light")) == 0 and (strcmp(players[packet->UCID].UName, "denis-takumi") == 0 or strcmp(players[packet->UCID].UName, "Lexanom") == 0))
+    {
         if (LightWorks == true)
         {
             LightWorks = false;
@@ -295,11 +309,15 @@ void RCLight::InsimMSO( struct IS_MSO* packet )
             LightWorks = true;
             SendMTC(packet->UCID, "^1| ^7^CÑâåòîôîðû ^2âêëþ÷åíû");
         }
+    }
 }
 
 void RCLight::InsimNCN( struct IS_NCN* packet )
 {
-    if (packet->UCID == 0) return;
+    if (packet->UCID == 0)
+    {
+        return;
+    }
     strcpy( players[ packet->UCID ].UName, packet->UName);
     strcpy( players[ packet->UCID ].PName, packet->PName);
 }
@@ -321,8 +339,11 @@ void RCLight::InsimPLL( struct IS_PLL* packet )
 
 bool RCLight::GetOnLight(byte UCID)
 {
-    if (players[UCID].Light!=0)
+    if (players[UCID].Light != 0)
+    {
         return true;
+    }
+
     return false;
 }
 
@@ -331,24 +352,27 @@ void RCLight::Svetofor1 ( byte UCID )
     byte ClickId = 170, l = 145, t = 12, w = 18;
 
     char cR [10], cY [10], cG [10];
-    int R=8, Y=8, G=8;
+    int R = 8, Y = 8, G = 8;
+
     if (red1 == 1)
     {
-        R=1;
-        players[UCID].RedLight=true;
+        R = 1;
+        players[UCID].RedLight = true;
     }
     else
     {
-        players[UCID].RedLight=false;
+        players[UCID].RedLight = false;
     }
+
     if (yell1 == 1)
     {
-        Y=3;
-        players[UCID].RedLight=false;
+        Y = 3;
+        players[UCID].RedLight = false;
     }
+
     if (green1 == 1)
     {
-        G=2;
+        G = 2;
     }
 
     sprintf(cR, "^%d^S¡ñ", R);
@@ -356,34 +380,34 @@ void RCLight::Svetofor1 ( byte UCID )
     sprintf(cG, "^%d^S¡ñ", G);
 
     //ïîäâåñ
-    SendButton(255, UCID, ClickId++, l-3, t-3, 6, 6, 0, "^0^C^H¡_");
-    SendButton(255, UCID, ClickId++, l-1, 0, 2, 13, 32, "");
-    SendButton(255, UCID, ClickId++, l-1, 0, 2, 13, 32, "");
+    SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
+    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
 
     //ïîäëîæêà
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+2 + 16/1.3, w-10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+3 + 2*16/1.3, w-10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
 
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
 
     //óãîëêè ïî áîêàì
-    SendButton(255, UCID, ClickId++, l-8, t, 16, 16-1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l-8, t + 16-3, 16, 16-1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l-8, t + 2*16-6, 16, 16-1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t + 2*16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
 
     //red
-    SendButton(255, UCID, ClickId++, (l - w / 2), t-1, w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t+2, w-8, 16-3, 7, cR);
+    SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
 
     //yell
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w-8, 16-3, 7, cY);
+    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
 
     //green
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w-8, 16-3, 7, cG);
+    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
 }
 
 void RCLight::Svetofor2 ( byte UCID )
@@ -391,24 +415,27 @@ void RCLight::Svetofor2 ( byte UCID )
     byte ClickId = 170, l = 145, t = 12, w = 18;
 
     char cR [10], cY [10], cG [10];
-    int R=8, Y=8, G=8;
+    int R = 8, Y = 8, G = 8;
+
     if (red2 == 1)
     {
-        R=1;
-        players[UCID].RedLight=true;
+        R = 1;
+        players[UCID].RedLight = true;
     }
     else
     {
-        players[UCID].RedLight=false;
+        players[UCID].RedLight = false;
     }
+
     if (yell2 == 1)
     {
-        Y=3;
-        players[UCID].RedLight=false;
+        Y = 3;
+        players[UCID].RedLight = false;
     }
+
     if (green2 == 1)
     {
-        G=2;
+        G = 2;
     }
 
     sprintf(cR, "^%d^S¡ñ", R);
@@ -416,34 +443,34 @@ void RCLight::Svetofor2 ( byte UCID )
     sprintf(cG, "^%d^S¡ñ", G);
 
     //ïîäâåñ
-    SendButton(255, UCID, ClickId++, l-3, t-3, 6, 6, 0, "^0^C^H¡_");
-    SendButton(255, UCID, ClickId++, l-1, 0, 2, 13, 32, "");
-    SendButton(255, UCID, ClickId++, l-1, 0, 2, 13, 32, "");
+    SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
+    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
 
     //ïîäëîæêà
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+2 + 16/1.3, w-10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+3 + 2*16/1.3, w-10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
 
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t+1, w-10, 3*16-9, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
 
     //óãîëêè ïî áîêàì
-    SendButton(255, UCID, ClickId++, l-8, t, 16, 16-1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l-8, t + 16-3, 16, 16-1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l-8, t + 2*16-6, 16, 16-1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    SendButton(255, UCID, ClickId++, l - 8, t + 2 * 16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
 
     //red
-    SendButton(255, UCID, ClickId++, (l - w / 2), t-1, w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t+2, w-8, 16-3, 7, cR);
+    SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
 
     //yell
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w-8, 16-3, 7, cY);
+    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
 
     //green
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16+1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w-8, 16-3, 7, cG);
+    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
 }
 
 void RCLight::Svetofor3 ( byte UCID )
@@ -459,22 +486,27 @@ void RCLight::Svetofor3 ( byte UCID )
     {
         signal1 ="^1•";
     }
+
     if (yell1 == 1)
     {
         signal2 ="^3•";
     }
+
     if (green1 == 1)
     {
         signal3 ="^2•";
     }
+
     if (red2 == 1)
     {
         signal11 ="^1•";
     }
+
     if (yell2 == 1)
     {
         signal12 ="^3•";
     }
+
     if (green2 == 1)
     {
         signal13 ="^2•";
@@ -482,7 +514,7 @@ void RCLight::Svetofor3 ( byte UCID )
 
     byte ClickID = 195;
 
-
+    // TODO: refactoring
     struct IS_BTN pack_btn;
     memset(&pack_btn, 0, sizeof(struct IS_BTN));
     pack_btn.Size = sizeof(struct IS_BTN);
@@ -557,6 +589,7 @@ void RCLight::Svetofor3 ( byte UCID )
 
 void RCLight::WrongWay(byte UCID)
 {
+    // TODO: refactoring
     struct IS_BTN pack_btn;
     memset(&pack_btn, 0, sizeof(struct IS_BTN));
     pack_btn.Size = sizeof(struct IS_BTN);
@@ -591,22 +624,22 @@ void RCLight::Event()
     {
         if (gff)
         {
-            red1=0;
-            red2=0;
-            yell1=1;
-            yell2=1;
-            green1=0;
-            green2=0;
+            red1 = 0;
+            red2 = 0;
+            yell1 = 1;
+            yell2 = 1;
+            green1 = 0;
+            green2 = 0;
             gff = false;
         }
         else
         {
-            red1=0;
-            red2=0;
-            yell1=0;
-            yell2=0;
-            green1=0;
-            green2=0;
+            red1 = 0;
+            red2 = 0;
+            yell1 = 0;
+            yell2 = 0;
+            green1 = 0;
+            green2 = 0;
             gff = true;
         }
         return;
@@ -616,75 +649,75 @@ void RCLight::Event()
 
     if (svtime >= 0 and svtime<14)
     {
-        red1=0;
-        red2=1;
-        yell1=0;
-        yell2=0;
-        green1=1;
-        green2=0;
+        red1 = 0;
+        red2 = 1;
+        yell1 = 0;
+        yell2 = 0;
+        green1 = 1;
+        green2 = 0;
     }
     else if (svtime >= 14 and svtime<17)
     {
         if (gff)
         {
-            red1=0;
-            yell1=0;
-            green1=1;
+            red1 = 0;
+            yell1 = 0;
+            green1 = 1;
             gff = false;
         }
         else
         {
-            red1=0;
-            yell1=0;
-            green1=0;
+            red1 = 0;
+            yell1 = 0;
+            green1 = 0;
             gff = true;
         }
     }
     else if (svtime == 17)
     {
         gff = false;
-        red1=0;
-        red2=1;
-        yell1=1;
-        yell2=1;
-        green1=0;
-        green2=0;
+        red1 = 0;
+        red2 = 1;
+        yell1 = 1;
+        yell2 = 1;
+        green1 = 0;
+        green2 = 0;
     }
     else if (svtime >= 20 and svtime<34)
     {
-        red1=1;
-        red2=0;
-        yell1=0;
-        yell2=0;
-        green1=0;
-        green2=1;
+        red1 = 1;
+        red2 = 0;
+        yell1 = 0;
+        yell2 = 0;
+        green1 = 0;
+        green2 = 1;
     }
     else if (svtime >= 34 and svtime<37)
     {
         if (gff)
         {
-            red2=0;
-            yell2=0;
-            green2=1;
+            red2 = 0;
+            yell2 = 0;
+            green2 = 1;
             gff = false;
         }
         else
         {
-            red2=0;
-            yell2=0;
-            green2=0;
+            red2 = 0;
+            yell2 = 0;
+            green2 = 0;
             gff = true;
         }
     }
     else if (svtime == 37)
     {
         gff = false;
-        red1=1;
-        red2=0;
-        yell1=1;
-        yell2=1;
-        green1=0;
-        green2=0;
+        red1 = 1;
+        red2 = 0;
+        yell1 = 1;
+        yell2 = 1;
+        green1 = 0;
+        green2 = 0;
     }
 }
 

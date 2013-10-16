@@ -56,7 +56,7 @@ private:
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
     void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
 
-    void btn_street( byte UCID );
+    void BtnStreet( byte UCID );
 
 public:
     // Переменные и функции, доступные для всех

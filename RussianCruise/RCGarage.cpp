@@ -79,7 +79,7 @@ void read_user_cars(struct player *splayer)
 void save_car (struct player *splayer)
 {
 
-	out <<splayer->UName << " save " << splayer->CName << " info" << endl;
+	out << splayer->UName << " save " << splayer->CName << " info" << endl;
 
 	for (int i=0; i<MAX_CARS; i++)
 	{
