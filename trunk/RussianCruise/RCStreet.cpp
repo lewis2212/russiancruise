@@ -38,10 +38,16 @@ int RCStreet::init(const char *dir, void *CInSim, void *Message)
 char* RCStreet::GetStreetName(byte UCID, int StreetID)
 {
     if (StreetID>0)
-        if (msg->GetLangID(UCID)==LANG_ID_RUS)
+    {
+        if (msg->GetLangID(UCID) == LANG_ID_RUS)
+        {
             return Street[StreetID].StreetRu;
+        }
         else
+        {
             return Street[StreetID].StreetEn;
+        }
+    }
     else return "NULL";
 }
 
@@ -49,7 +55,7 @@ void RCStreet::readconfig(const char *Track)
 {
     char file[255];
     sprintf(file, "%sdata\\RCStreet\\tracks\\%s.txt", RootDir, Track);
-
+    // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
     fff = FindFirstFile(file, &fd);
@@ -72,7 +78,7 @@ void RCStreet::readconfig(const char *Track)
 
         if (strlen(str) > 0)
         {
-            if (strcmp(str, "#Street")==0)
+            if (strcmp(str, "#Street") == 0)
             {
                 /**
                 название (рус)
@@ -152,7 +158,7 @@ void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
                 if (players[ UCID ].StreetNum != g)
                 {
                     players[ UCID ].StreetNum = g;
-                    btn_street( UCID );
+                    BtnStreet( UCID );
                     break;
                 }
             }
@@ -163,7 +169,9 @@ void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
 void RCStreet::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
+    {
         return;
+    }
 }
 
 
@@ -172,7 +180,9 @@ void RCStreet::InsimNCN( struct IS_NCN* packet )
     int i;
 
     if (packet->UCID == 0)
+    {
         return;
+    }
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
@@ -194,7 +204,7 @@ void RCStreet::InsimPLL( struct IS_PLL* packet )
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCStreet::btn_street (byte UCID)
+void RCStreet::BtnStreet (byte UCID)
 {
     char str[96];
     sprintf(str, "%s ^2(^1%d ^C^7км/ч^2)", GetStreetName(UCID, players[UCID].StreetNum), Street[ players[ UCID ].StreetNum ].SpeedLimit);
@@ -209,16 +219,23 @@ int RCStreet::CurentStreetNum(byte UCID)
 int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 {
     if ( players[ UCID ].StreetNum == DEFAULT_STREET_NUM )
+    {
         return -1;
+    }
 
     if (memcpy(StreetInfo, &Street[ players[ UCID ].StreetNum ], sizeof(streets)))
+    {
         return 1;
+    }
 }
 
 int RCStreet::CurentStreetInfoByNum(void *StreetInfo, int StrNum)
 {
     if (memcpy(StreetInfo, &Street[StrNum], sizeof(streets)))
+    {
         return 1;
+    }
+
     return -1;
 }
 

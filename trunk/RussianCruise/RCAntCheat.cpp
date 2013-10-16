@@ -55,7 +55,9 @@ void RCAntCheat::InsimMCI ( struct IS_MCI* pack_mci )
 void RCAntCheat::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
+    {
         return;
+    }
 }
 
 
@@ -63,7 +65,9 @@ void RCAntCheat::InsimNCN( struct IS_NCN* packet )
 {
 
     if (packet->UCID == 0)
+    {
         return;
+    }
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
@@ -90,7 +94,9 @@ void RCAntCheat::InsimNPL( struct IS_NPL* packet )
 
 
     if (ts < 10)  // 10 sec
+    {
         players[ packet->UCID ].NPLHack++;
+    }
     else
     {
         players[ packet->UCID ].NPLHack = 1;

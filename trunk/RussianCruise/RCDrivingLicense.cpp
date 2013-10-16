@@ -26,7 +26,7 @@ bool RCDL::AddSkill(byte UCID)
 {
     if ( !Islocked( UCID ) )
     {
-        players[ UCID ].Skill += 250*players[ UCID ].LVL;
+        players[ UCID ].Skill += 250 * players[ UCID ].LVL;
 
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
@@ -41,7 +41,9 @@ bool RCDL::AddSkill(byte UCID)
 bool RCDL::AddSkill(byte UCID, float coef)
 {
     if (coef < 0)
+    {
         return false;
+    }
 
     if ( !Islocked( UCID ) )
     {
@@ -70,11 +72,15 @@ bool RCDL::RemSkill(byte UCID)
                 players[ UCID ].LVL --;
             }
             else
+            {
                 players[ UCID ].Skill = 0;
+            }
 
         }
         else
+        {
             players[ UCID ].Skill -= 500 * players[ UCID ].LVL;
+        }
 
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
@@ -102,10 +108,14 @@ bool RCDL::RemSkill(byte UCID, float coef)
                 players[ UCID ].LVL --;
             }
             else
+            {
                 players[ UCID ].Skill = 0;
+            }
         }
         else
+        {
             players[ UCID ].Skill -= 500 * players[ UCID ].LVL * coef;
+        }
 
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
@@ -134,9 +144,13 @@ bool RCDL::Unlock(byte UCID)
 bool RCDL::Islocked(byte UCID)
 {
     if (players[ UCID ].Lock == 1)
+    {
         return true;
+    }
     else
+    {
         return false;
+    }
 }
 
 int RCDL::init(const char *dir, void *CInSim, void *RCMessageClass)
@@ -189,7 +203,9 @@ int RCDL::init(const char *dir, void *CInSim, void *RCMessageClass)
 void RCDL::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
+    {
         return;
+    }
 
     // Copy all the player data we need into the players[] array
     strcpy(players[ packet->UCID ].UName, packet->UName);
@@ -212,7 +228,9 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
 
     rcDLRes = mysql_store_result( &rcDLDB );
     if (rcDLRes == NULL)
+    {
         printf("Error: can't get the result description\n");
+    }
 
     if (mysql_num_rows( rcDLRes ) > 0)
     {
@@ -280,7 +298,9 @@ void RCDL::InsimMSO( struct IS_MSO* packet )
 {
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
+    {
         save( packet->UCID );
+    }
 
 }
 
@@ -290,10 +310,14 @@ void RCDL::save (byte UCID)
     sprintf(query, "UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[ UCID ].LVL , players[ UCID ].Skill, players[ UCID ].UName);
 
     if ( mysql_ping( &rcDLDB ) != 0 )
+    {
         printf("Bank Error: connection with MySQL server was lost\n");
+    }
 
     if ( mysql_query( &rcDLDB , query) != 0 )
+    {
         printf("Bank Error: MySQL Query Save\n");
+    }
 
     printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
 
@@ -334,13 +358,13 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
     {
         byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
 
-        int X = pack_mci->Info[i].X/65536;
-        int Y = pack_mci->Info[i].Y/65536;
-        int S = ((int)pack_mci->Info[i].Speed*360)/(32768);
-        int X1 = players[ UCID ].Info.X/65536;
-        int Y1 = players[ UCID ].Info.Y/65536;
+        int X = pack_mci->Info[i].X / 65536;
+        int Y = pack_mci->Info[i].Y / 65536;
+        int S = ((int)pack_mci->Info[i].Speed * 360) / (32768);
+        int X1 = players[ UCID ].Info.X / 65536;
+        int Y1 = players[ UCID ].Info.Y / 65536;
 
-        if (X1==0 and Y1==0)
+        if (X1 == 0 and Y1 == 0)
         {
             X1=X;
             Y1=Y;
@@ -349,15 +373,15 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 
         float Skill = Distance(X, Y, X1, Y1);
 
-        if ((abs((int)Skill) > 10) and (S>30))
+        if ((abs((int)Skill) > 10) and (S > 30))
         {
-            players[ UCID ].Skill += abs((int)(Skill*1.5f));
+            players[ UCID ].Skill += abs((int)(Skill * 1.5f));
             memcpy(&players[ UCID ].Info, &pack_mci->Info[i], sizeof(CompCar));
         }
 
         /** next lvl **/
 
-        float nextlvl = (pow(players[ UCID ].LVL, 2)*0.5+100)*1000;
+        float nextlvl = (pow(players[ UCID ].LVL, 2) * 0.5+100) * 1000;
 
         if (players[ UCID ].Skill > nextlvl)
         {
@@ -365,8 +389,11 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
             players[ UCID ].Skill = 0;
             char Msg[64];
             sprintf(Msg, "/msg ^5| ^8^C%s ^1get ^3%d ^1lvl", players[ UCID ].PName, players[ UCID ].LVL);
+
             if ( UCID !=0 )
+            {
                 SendMST(Msg);
+            }
         }
 
         /** buttons **/
@@ -376,6 +403,7 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 
 void RCDL::btn_dl( byte UCID )
 {
+    //TODO: refactoring
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));
     pack.Size = sizeof(struct IS_BTN);

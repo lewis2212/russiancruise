@@ -18,49 +18,58 @@ int RCPolice::init(const char *dir, void *CInSim, void *Message, void *Bank, voi
         printf ("Can't struct CInsim class");
         return -1;
     }
+
     msg = (RCMessage *)Message;
     if (!msg)
     {
         printf ("Can't struct RCMessage class");
         return -1;
     }
+
     bank = (RCBank *)Bank;
     if (!bank)
     {
         printf ("Can't struct RCBank class");
         return -1;
     }
+
     dl = (RCDL *)RCdl;
     if (!dl)
     {
         printf ("Can't struct RCDL class");
         return -1;
     }
+
     street = (RCStreet *)STreet;
     if (!street)
     {
         printf ("Can't struct RCStreet class");
         return -1;
     }
+
     nrg = (RCEnergy *)Energy;
     if (!nrg)
     {
         printf ("Can't struct RCEnergy class");
         return -1;
     }
+
     lgh = (RCLight *)Light;
     if (!lgh)
     {
         printf ("Can't struct RCLight class");
         return -1;
     }
+
     return 0;
 }
 
 void RCPolice::InsimNCN( struct IS_NCN* packet )
 {
     if ( packet->UCID == 0 )
+    {
         return;
+    }
 
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
@@ -79,6 +88,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
         if (strcmp(ArestPlayers[p.first].UName, players[packet->UCID].UName) == 0)
         {
             time_t now = time(NULL);
+
             if (now <= ArestPlayers[p.first].ArestTime)
             {
                 char str[96];
@@ -88,6 +98,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
                 sprintf(str, "^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[p.first].ArestTime - now) / 60 + 1));
                 SendMTC(packet->UCID, str);
             }
+
             break;
         }
     }
