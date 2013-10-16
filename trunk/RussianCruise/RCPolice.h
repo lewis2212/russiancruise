@@ -43,9 +43,10 @@ struct Cops
 struct PolicePlayer
 {
     /** GENERAL **/
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    char    CName[4];              // Car Name
+    char    UName[24];             	// Username
+    char    PName[24];             	// Player name
+    char    CName[4];              	// Car Name
+    byte	Rank = 0;				// Звание: 0 - игрок, 1 - мл. лейт., 2 - лейт., 3 - стар. лейт., 4 - капитан
 
     /** COP **/
     bool    cop = false;
@@ -53,9 +54,11 @@ struct PolicePlayer
     bool    Radar;
 
     /** ДТП **/
+    time_t	StartWork; 	//время заступления на вахту
     int		DTP;
     int		DTPstatus;
     int		DTPfines;
+    int		DoneCount = 0;
 
     /** other players **/
     int		SirenaDist;
@@ -92,6 +95,7 @@ private:
     map <byte, APlayer> ArestPlayers;			// арестованные игроки
 
     int DTPvyzov[3][32];	// 1 - UCID player, 2 - time, 3 - UCID cop
+    int FineAllow[5][MAX_FINES];
 
     void InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
     void InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
@@ -109,6 +113,7 @@ private:
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
     void ShowFinesPanel( byte UCID, byte UCID2 );
+    void CopRaschet(byte UCID, bool FullWork);
 public:
     RCPolice();
     ~RCPolice();
@@ -119,12 +124,13 @@ public:
     int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
     void SaveUserFines( byte UCID );
-    void SendMTCToCop(const char* Msg);
+    void SendMTCToCop(const char* Msg, int Rank, ...);
     void SetUserBID( byte UCID, byte BID);
     void ReadFines();
-    bool ReadCop(byte UCID);
     void SetSirenLight( string sirenWord );
     bool IsCop(byte UCID);
+    int GetCopRank(byte UCID);
+    int GetCopDTPstatus(byte UCID);
     int InPursuite(byte UCID);
     int GetFineCount();
     int GetCopCount();

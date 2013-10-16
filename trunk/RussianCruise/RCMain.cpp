@@ -207,7 +207,7 @@ void readconfigs()
 
 
 #ifdef _RC_POLICE_H
-	police->readconfig();
+    police->readconfig();
 #endif // _RC_POLICE_H
 }
 
@@ -623,9 +623,10 @@ void case_btc ()
             /** Пользователь кликнул по другому пользователю **/
             if (pack_btc->ClickID<=32)
             {
+            	ShowUsersList(pack_btc->UCID);
                 ginfo->players[i].BID2 =  pack_btc->ClickID;
 
-                if (ginfo->players[i].Action == 1)
+                //if (ginfo->players[i].Action == 1)
                 {
                     struct IS_BTN pack_btn;
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
@@ -685,17 +686,30 @@ void case_btc ()
                     if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != ginfo->players[i].UCID)
                     {
                         pack_btn.TypeIn = 0;
-                        pack_btn.BStyle = 32 + ISB_CLICK;
+                        pack_btn.BStyle = 32 + 8 + 3;
+
+                        if (police->GetCopRank(pack_btc->UCID) == 1 and police->GetCopDTPstatus(pack_btc->UCID) != 2)
+							pack_btn.BStyle = 32 + 7;
+
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "FinesButton" ));
                         insim->send_packet(&pack_btn);
+
+						if (police->GetCopRank(pack_btc->UCID) == 1)
+							pack_btn.BStyle = 32 + 7;
+
+						if (police->GetCopRank(pack_btc->UCID) == 2)
+							pack_btn.BStyle = 32 + 7;
 
                         pack_btn.ReqI = pack_btc->ReqI;
                         pack_btn.T += 4;
                         pack_btn.ClickID = 40;
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1004" ));
                         insim->send_packet(&pack_btn);
+
+						if (police->GetCopRank(pack_btc->UCID) == 2)
+							pack_btn.BStyle = 32 + 8 + 3;
 
                         pack_btn.T += 4;
                         pack_btn.ClickID = 41;
@@ -1715,49 +1729,8 @@ void case_mso ()
     }
     //!users
     if ((strncmp(Msg, "!users", 6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
-    {
-        ginfo->players[i].Action = 1;
-        for (int h=0; h<50; h++) SendBFN(ginfo->players[i].UCID, h);
+        ShowUsersList(ginfo->players[i].UCID);
 
-        struct IS_BTN pack_btn;
-        memset(&pack_btn, 0, sizeof(struct IS_BTN));
-        pack_btn.Size = sizeof(struct IS_BTN);
-        pack_btn.Type = ISP_BTN;
-        pack_btn.UCID = ginfo->players[i].UCID;              // UCID of the player that will receive the button
-        pack_btn.L = 1;
-        pack_btn.T = 191;
-        pack_btn.W = 24;
-        pack_btn.H = 4;
-        pack_btn.BStyle = 16 + ISB_CLICK;
-
-        int col = 0;
-        for (int j=0; j<MAX_PLAYERS; j++)
-        {
-            if (ginfo->players[j].UCID != 0)
-            {
-                if (col == 16)
-                {
-                    pack_btn.L += 24;
-                    pack_btn.T = 191;
-                }
-                pack_btn.ReqI = ginfo->players[j].UCID;
-                pack_btn.ClickID = ginfo->players[j].BID;
-                sprintf(pack_btn.Text, "%s", ginfo->players[j].PName);
-                insim->send_packet(&pack_btn);
-                pack_btn.T -= 4;
-                col++;
-            }
-        }
-        pack_btn.ClickID = 34;
-        pack_btn.BStyle = 16 + ISB_CLICK;
-        pack_btn.T = 195;
-        pack_btn.L = 1;
-        pack_btn.W = 24;
-        if (col > 16) pack_btn.W += 24;
-
-        strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "604" ));
-        insim->send_packet(&pack_btn);
-    }
 }
 
 void case_mso_flood ()
@@ -2216,6 +2189,50 @@ void case_vtn ()
             break;
         }
     }
+}
+
+void ShowUsersList(byte UCID)
+{
+        for (int h=0; h<50; h++) SendBFN(UCID, h);
+
+        struct IS_BTN pack_btn;
+        memset(&pack_btn, 0, sizeof(struct IS_BTN));
+        pack_btn.Size = sizeof(struct IS_BTN);
+        pack_btn.Type = ISP_BTN;
+        pack_btn.UCID = UCID;
+        pack_btn.L = 1;
+        pack_btn.T = 191;
+        pack_btn.W = 24;
+        pack_btn.H = 4;
+        pack_btn.BStyle = 16 + ISB_CLICK;
+
+        int col = 0;
+        for (int j=0; j<MAX_PLAYERS; j++)
+        {
+            if (ginfo->players[j].UCID != 0)
+            {
+                if (col == 16)
+                {
+                    pack_btn.L += 24;
+                    pack_btn.T = 191;
+                }
+                pack_btn.ReqI = ginfo->players[j].UCID;
+                pack_btn.ClickID = ginfo->players[j].BID;
+                sprintf(pack_btn.Text, "%s", ginfo->players[j].PName);
+                insim->send_packet(&pack_btn);
+                pack_btn.T -= 4;
+                col++;
+            }
+        }
+        pack_btn.ClickID = 34;
+        pack_btn.BStyle = 16 + ISB_CLICK;
+        pack_btn.T = 195;
+        pack_btn.L = 1;
+        pack_btn.W = 24;
+        if (col > 16) pack_btn.W += 24;
+
+        strcpy(pack_btn.Text, msg->_( UCID, "604" ));
+        insim->send_packet(&pack_btn);
 }
 
 int core_connect(void *pack_ver)
