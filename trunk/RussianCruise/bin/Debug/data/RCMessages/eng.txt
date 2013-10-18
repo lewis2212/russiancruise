@@ -152,7 +152,7 @@ PayDone 		"^2| ^7Fine paid"
 NoFine 			"^2| ^7You don't have this Fine"
 NoFines 		"^2| ^7You don't have any Fines"
 NoOnBank		"^1| ^C^7You are not in the bank"
-NoManyPay		"^1| ^C^7You don't have money for pay fine"
+NoManyPay		"^1| ^C^7You don't have money"
 
 3200 "^1| ^7RUSSIAN CRUISE"
 3201 "^1| ^1Commands"

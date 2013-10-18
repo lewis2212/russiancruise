@@ -191,7 +191,7 @@ void RCPizza::Done(byte UCID)
         players[UCID].WorkAccept = 0;
         players[UCID].WorkZone = 0;
         ClearButtonInfo(UCID);
-        SendBFN(UCID, 210);
+        SendBFN(UCID, 211);
 
         int cash = 50 * abs(1 - (players[UCID].WorkTime - time(&ptime)) / PIZZA_WORK_TIME);
         bank->AddCash(UCID, 248 + cash, true);
@@ -464,7 +464,6 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             players[UCID].WorkDestinaion =0;
             players[UCID].WorkAccept = 0;
             players[UCID].WorkPlayerAccept = 0;
-            SendBFN(UCID, 210);
             SendBFN(UCID, 211);
             SendMTC(UCID, msg->_(UCID, "4205"));
 
@@ -530,7 +529,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             {
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
-                    sprintf(Text, "^3| %s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d", players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
+                    sprintf(Text, "^3| ^8%s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d", players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
                     SendMTC(packet->UCID, Text);
                 }
             }
@@ -565,7 +564,6 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
                 ShopAccepted = false;
             }
 
-            SendBFN(packet->UCID, 210);
             SendBFN(packet->UCID, 211);
             SendMTC(packet->UCID, msg->_(packet->UCID, "4100"));
             players[packet->UCID].WorkType = WK_NULL;
@@ -603,7 +601,7 @@ void RCPizza::btn_work (byte UCID)
     char str[10];
     int time2 = players[UCID].WorkTime - time(&ptime);
     sprintf(str, "^2%02d:%02d", time2 / 60, time2%60);
-    SendButton(255, UCID, 210, 130, 1, 10, 8, 32, str);
+    SendButton(255, UCID, 211, 130, 1, 10, 8, 32, str);
 }
 
 int RCPizza::check_pos(byte UCID)
@@ -638,7 +636,6 @@ void RCPizza::Event()
             int nowtime = time(&ptime);
             if (players[plit.first].WorkTime <= nowtime)
             {
-                SendBFN(plit.first, 210);
                 SendBFN(plit.first, 211);
 
                 if (players[plit.first].WorkAccept == 3) // не успел заказать продукты
