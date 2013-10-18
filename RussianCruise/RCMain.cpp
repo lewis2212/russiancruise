@@ -688,9 +688,6 @@ void case_btc ()
                         pack_btn.TypeIn = 0;
                         pack_btn.BStyle = 32 + 8 + 3;
 
-                        if (police->GetCopRank(pack_btc->UCID) == 1 and police->GetCopDTPstatus(pack_btc->UCID) != 2)
-							pack_btn.BStyle = 32 + 7;
-
                         pack_btn.T += 4;
                         pack_btn.ClickID = 38;
                         strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "FinesButton" ));
@@ -1699,6 +1696,12 @@ void case_mso ()
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
     {
+    	if (bank->GetCash(ginfo->players[i].UCID)<=250)
+		{
+			SendMTC(ginfo->players[i].UCID, msg->_( ginfo->players[i].UCID, "NoManyPay" ));
+			return;
+		}
+
 #ifdef _RC_POLICE_H
         if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
         {

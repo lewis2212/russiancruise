@@ -13,15 +13,11 @@ RCLight::~RCLight()
 
 bool RCLight::SetLight3( byte UCID, bool Key)
 {
-    if (players[ UCID ].Light3 and !Key)
-    {
+    if (players[UCID].Light3 and !Key)
         for (int f = 190; f < 203; f++)
-        {
             SendBFN( UCID, f);
-        }
-    }
 
-    players[ UCID ].Light3 = Key;
+    players[UCID].Light3 = Key;
 }
 
 int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
@@ -146,7 +142,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     HR = 360 + HR;
                     if ((H > HR) or (H < HL))
                     {
-                        players[ UCID ].Light = Light[g].ID;
+                        players[UCID].Light = Light[g].ID;
                         SvetKey = Light[g].ID;
                     }
                 }
@@ -155,7 +151,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     HL -= 359;
                     if ((H > HR) or (H < HL))
                     {
-                        players[ UCID ].Light = Light[g].ID;
+                        players[UCID].Light = Light[g].ID;
                         SvetKey = Light[g].ID;
                     }
                 }
@@ -163,7 +159,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 {
                     if ((H > HR) and (H < HL))
                     {
-                        players[ UCID ].Light = Light[g].ID;
+                        players[UCID].Light = Light[g].ID;
                         SvetKey = Light[g].ID;
                     }
                 }
@@ -197,11 +193,11 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 {
                     SendBFN( UCID, f);
                 }
-                players[ UCID ].Light = 0;
+                players[UCID].Light = 0;
             }
         }
 
-        if (players[ UCID ].Light3)
+        if (players[UCID].Light3)
         {
             Svetofor3( UCID );
         }
@@ -221,18 +217,18 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 //SendMST("in zone");
                 if ( (D < 190 + 90) and (D > 190 - 90) )
                 {
-                    if (players[ UCID ].WrongWay == 1)
+                    if (players[UCID].WrongWay == 1)
                     {
-                        players[ UCID ].WrongWay = 0;
+                        players[UCID].WrongWay = 0;
                         SendBFN( UCID, 203);
                         SendBFN( UCID, 204);
                     }
                 }
                 else
                 {
-                    if (players[ UCID ].WrongWay == 0)
+                    if (players[UCID].WrongWay == 0)
                     {
-                        players[ UCID ].WrongWay =1;
+                        players[UCID].WrongWay =1;
                     }
 
                     WrongWay( UCID );
@@ -247,33 +243,29 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
             {
                 if ( (D < 190 + 90) and (D > 190 - 90) )
                 {
-                    if (players[ UCID ].WrongWay == 1)
+                    if (players[UCID].WrongWay == 1)
                     {
-                        players[ UCID ].WrongWay =0;
+                        players[UCID].WrongWay =0;
                         SendBFN( UCID, 203);
                         SendBFN( UCID, 204);
                     }
                 }
                 else
                 {
-                    if (players[ UCID ].WrongWay == 0)
-                    {
-                        players[ UCID ].WrongWay =1;
-                    }
+                    if (players[UCID].WrongWay == 0)
+                        players[UCID].WrongWay =1;
 
                     WrongWay( UCID );
 
                     if (S > 10)
-                    {
                         dl->RemSkill( UCID );
-                    }
                 }
             }
             else
             {
-                if (players[ UCID ].WrongWay == 1)
+                if (players[UCID].WrongWay == 1)
                 {
-                    players[ UCID ].WrongWay =0;
+                    players[UCID].WrongWay =0;
                     SendBFN( UCID, 203);
                     SendBFN( UCID, 204);
                 }
@@ -340,9 +332,7 @@ void RCLight::InsimPLL( struct IS_PLL* packet )
 bool RCLight::GetOnLight(byte UCID)
 {
     if (players[UCID].Light != 0)
-    {
         return true;
-    }
 
     return false;
 }
@@ -475,6 +465,8 @@ void RCLight::Svetofor2 ( byte UCID )
 
 void RCLight::Svetofor3 ( byte UCID )
 {
+	//if (police->GetCopRank(UCID) <= 2) return;
+
     const char* signal1 ="^0•";
     const char* signal2 ="^0•";
     const char* signal3 ="^0•";
@@ -483,34 +475,22 @@ void RCLight::Svetofor3 ( byte UCID )
     const char* signal13 ="^0•";
 
     if (red1 == 1)
-    {
         signal1 ="^1•";
-    }
 
     if (yell1 == 1)
-    {
         signal2 ="^3•";
-    }
 
     if (green1 == 1)
-    {
         signal3 ="^2•";
-    }
 
     if (red2 == 1)
-    {
         signal11 ="^1•";
-    }
 
     if (yell2 == 1)
-    {
         signal12 ="^3•";
-    }
 
     if (green2 == 1)
-    {
         signal13 ="^2•";
-    }
 
     byte ClickID = 195;
 

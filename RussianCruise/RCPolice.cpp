@@ -138,7 +138,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
                 SendMTC(packet->UCID, "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС");
             }
 
-            players[packet->UCID].StartWork = time(NULL) - 1;
+            players[packet->UCID].StartWork = time(NULL) - 1 - 1795;
         }
         else
         {
@@ -163,14 +163,12 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     byte UCID = PLIDtoUCID[packet->PLID];
 
     if (players[UCID].Sirena)
-    {
         players[UCID].Sirena = false;
-    }
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
-    PLIDtoUCID.erase(packet->PLID);
+    //PLIDtoUCID.erase(packet->PLID);
 }
 
 void RCPolice::InsimPLL( struct IS_PLL* packet )
@@ -238,6 +236,35 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
         players[packet->UCID].cop = false;
         players[packet->UCID].StartWork = 0;
         players[packet->UCID].Rank = 0;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (DTPvyzov[0][i] > 0)
+            {
+                if (DTPvyzov[2][i] == packet->UCID)
+                {
+                    DTPvyzov[1][i] = time(NULL) + 2 * 60;
+                    DTPvyzov[2][i] = 0;
+                    break;
+                }
+
+                if (DTPvyzov[0][i] == packet->UCID)
+                {
+                    players[DTPvyzov[0][i]].DTP = 0;
+
+                    if (DTPvyzov[2][i] != 0)
+                    {
+                        players[DTPvyzov[2][i]].DTPstatus = 0;
+                    }
+
+                    DTPvyzov[0][i] = 0;
+                    DTPvyzov[1][i] = 0;
+                    DTPvyzov[2][i] = 0;
+                    SendBFN(255, 135 + i);
+                    break;
+                }
+            }
+        }
 
         for (int i=214; i <= 222; i++)
         {
@@ -592,36 +619,37 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
 {
     if (!players[UCID].cop)
-    {
-		return;
-    }
+        return;
 
     int TM = (time(NULL) - players[UCID].StartWork)%1800;
 
-    if (players[UCID].DoneCount == 0)
-    {
-		return;
-    }
-
     if (FullWork and TM != 0)
-    {
-		return;
-    }
+        return;
 
     if (TM < 30 and !FullWork)
+        return;
+
+    if (TM == 0 and players[UCID].DoneCount == 0)
     {
-		return;
+        players[UCID].DoneCount = -1;
+        SendMTC(UCID, "^2| ^7^CВы ничего не заработали за прошедшую смену");
+        return;
     }
 
     if (players[UCID].DoneCount > 10)
         players[UCID].DoneCount = 10;
 
-    int Cash = players[UCID].DoneCount * 500;
+    if (players[UCID].DoneCount < 0)
+        players[UCID].DoneCount = 0;
 
+    if (players[UCID].DoneCount == 0)
+        return;
+
+    int Cash = players[UCID].DoneCount * 500;
     char str[96];
 
     if (FullWork)
-	{
+    {
         sprintf(str, "^2| ^7^CВаш заработок за прошедшую смену: %d ^3RUR", Cash);
     }
     else
@@ -636,7 +664,6 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
     bank->RemFrBank(Cash);
     bank->AddCash(UCID, Cash, false);
 
-    //прибавка скилла
     if (dl->Islocked(UCID))
     {
         dl->Unlock(UCID);
@@ -644,9 +671,9 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
         dl->Lock(UCID);
     }
     else
-	{
-		dl->AddSkill(UCID, players[UCID].DoneCount);
-	}
+    {
+        dl->AddSkill(UCID, players[UCID].DoneCount);
+    }
 
     players[UCID].DoneCount = 0;
 }
@@ -681,19 +708,17 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
     {
         byte fid = fines[i + 1].id;
         if (fid == 0)
-        {
-			fid = 255;
-        }
+            fid = 255;
 
-    	int st = 7;
+        int st = 7;
         for (int i=0; i < MAX_FINES; i++)
-		{
-			if (FineAllow[players[UCID].Rank][i] == fid)
-			{
-				st = 8 + 3;
-				break;
-			}
-		}
+        {
+            if (FineAllow[players[UCID].Rank][i] == fid)
+            {
+                st = 8 + 3;
+                break;
+            }
+        }
 
         sprintf(Text, "^2%02d. ^8%s", fid, GetFineName(UCID, i + 1));
 
@@ -793,6 +818,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
+                if (players[play.first].Pogonya == 2 and players[packet->UCID].DTPstatus != 2)
+                    players[packet->UCID].DTPfines++;
+
                 char Msg[128];
                 sprintf(Msg, msg->_(play.first, "GiveFine"), players[packet->UCID].PName, GetFineName(play.first, packet->ReqI));
                 SendMTC( play.first, Msg);
@@ -855,6 +883,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 {
                     if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
                     {
+                        if (players[play.first].Pogonya == 2 and players[packet->UCID].DTPstatus != 2)
+                            players[packet->UCID].DTPfines--;
+
                         char Msg[128];
                         sprintf(Msg, msg->_( play.first, "DeletedFine"), players[packet->UCID].PName, GetFineName(play.first, packet->ReqI));
 
@@ -912,6 +943,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if (players[packet->ReqI].Pogonya == 0)
             {
+                players[packet->UCID].DTPfines = 0;
                 players[packet->UCID].DTPstatus = -1;
                 players[packet->ReqI].Pogonya = 1;
                 int worktime = time(NULL);
@@ -940,6 +972,31 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
         if (players[packet->ReqI].Pogonya != 0)
         {
+
+            //запралата копам, которые были рядом во время ареста
+            if (players[packet->ReqI].DTPfines > 0)
+            {
+                players[packet->ReqI].DTPfines = 0;
+                for (auto& p: players)
+                {
+                    if (players[p.first].cop)
+                    {
+                        int X1 = players[packet->ReqI].Info.X / 65536,
+                            Y1 = players[packet->ReqI].Info.Y / 65536,
+                            X2 = players[p.first].Info.X / 65536,
+                            Y2 = players[p.first].Info.Y / 65536,
+                            Dist2 = Distance(X1, Y1, X2, Y2);
+
+                        if (Dist2 < 30)
+                        {
+                            SendMTC(255, players[p.first].PName);
+                            players[p.first].DoneCount++;
+                        }
+                    }
+                }
+            }
+
+
             players[packet->UCID].DTPstatus = 0;
             for (int i = 0; i < 32; i++)
             {
@@ -1256,9 +1313,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         byte UCID = PLIDtoUCID[packet->Info[i].PLID];
 
         if (UCID == 0)
-        {
             return;
-        }
 
         int SirenaCount = 0;
         int SDtemp=0;
@@ -1323,22 +1378,6 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                         sprintf(Text, "^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
                         SendMTC(255, Text);
                         SendMTC(play.first, msg->_(play.first, "1703"));
-
-                        //запралата копам, которые были рядом во время ареста
-                        for (auto& p: players)
-                        {
-                            if (players[p.first].cop)
-                            {
-                                int XX2 = players[p.first].Info.X / 65536,
-                                    YY2 = players[p.first].Info.Y / 65536,
-                                    Dist2 = Distance(X1, Y1, XX2, YY2);
-
-                                if (Dist2 < 30)
-                                {
-                                    players[p.first].DoneCount++;
-                                }
-                            }
-                        }
                     }
                 }
                 if (S > 5)
@@ -1450,8 +1489,8 @@ void RCPolice::readconfig()
         char line[128];
         readf.getline(line, 128);
 
-		char str[128];
-		sprintf(str, strtok (line, ";"));
+        char str[128];
+        sprintf(str, strtok (line, ";"));
 
         if (strlen(str) > 0)
         {
@@ -1459,20 +1498,20 @@ void RCPolice::readconfig()
 
             if (rnk == 0 or rnk > 4)
             {
-				continue;
+                continue;
             }
 
             for (int i=0; i < MAX_FINES; i++)
-			{
-				int c = atoi(strtok(NULL, ","));
+            {
+                int c = atoi(strtok(NULL, ","));
 
                 if (c == 0)
                 {
-					break;
+                    break;
                 }
 
                 FineAllow[rnk][i] = c;
-			}
+            }
         }
     }
     readf.close();
@@ -1787,7 +1826,6 @@ void RCPolice::Event()
         {
             streets StreetInfo;
 
-            //зарплата ДПС по сменам каждые 30 минут с момента заступления на смену
             CopPayRoll(UCID);
 
             char smn[20];
@@ -1843,9 +1881,6 @@ void RCPolice::Event()
                                     }
                                 }
                             }
-
-                            //нужен штраф за ложный вызов
-                            //не снимать скилл и не показывать список заявок если ты в погоне
                         }
                     }
                     else if (DTPvyzov[2][i] == UCID)
