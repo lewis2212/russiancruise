@@ -85,13 +85,12 @@ void RCBanList::InsimNCN( struct IS_NCN* packet )
 
 void RCBanList::removeUser( const char* username )
 {
-
     if (strlen(username)>0)
     {
         char file[MAX_PATH];
         sprintf(file, "%smisc\\banlist.txt", RootDir);
         char line[48];
-        cout << file << endl;
+        //cout << file << endl;
         char Bans[200][32];
         memset(&Bans, 0, 200*32);
 
@@ -131,7 +130,7 @@ void RCBanList::addUser( const char* username, time_t timestamp )
         sprintf(file, "%smisc\\banlist.txt", RootDir);
         char line[48];
         char buffer[80];
-        cout << file << endl;
+        //cout << file << endl;
         if (strlen(username)>0)
         {
             ofstream wBans( file , ios::app );

@@ -48,6 +48,8 @@ public:
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
 
+    static string GetReason( byte Reason );
+
 protected:
 
     CInsim      *insim;         // Переменная-указатель на класс CInsim

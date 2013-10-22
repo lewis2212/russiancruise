@@ -353,7 +353,7 @@ void RCBank::bank_save (byte UCID)
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
     /* Credit */
     sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'" , players[ UCID ].Credit, players[ UCID ].Date_create, players[ UCID ].UName);
@@ -368,7 +368,7 @@ void RCBank::bank_save (byte UCID)
         printf("Credit Error: MySQL Query Save\n");
     }
 
-    printf("Credit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+    //printf("Credit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
     /* Deposit */
     sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'" , players[ UCID ].Deposit, players[ UCID ].Dep_Date_create, players[ UCID ].UName);
@@ -383,7 +383,7 @@ void RCBank::bank_save (byte UCID)
         printf("Deposit Error: MySQL Query Save\n");
     }
 
-    printf("Deposit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+    //printf("Deposit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
     /* Capital */
     sprintf(query, "UPDATE bank SET cash = %f WHERE username='_RC_Bank_Capital_'" , BankFond);
@@ -398,7 +398,7 @@ void RCBank::bank_save (byte UCID)
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    printf("Capital Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
+    //printf("Capital Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 }
 
 void RCBank::InsimCPR( struct IS_CPR* packet )

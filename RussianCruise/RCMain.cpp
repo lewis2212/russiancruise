@@ -856,7 +856,6 @@ void case_btt ()
 void case_cnl ()
 {
     int i;
-
     struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
 
     // Find player and set the whole player struct he was using to 0
@@ -864,6 +863,8 @@ void case_cnl ()
     {
         if (ginfo->players[i].UCID == pack_cnl->UCID)
         {
+            printf("<<   disconnected %s (%s)\n", ginfo->players[i].UName, RCBaseClass::GetReason(pack_cnl->Reason).c_str());
+
             save_user_cars(&ginfo->players[i]);
 
 #ifdef _RC_POLICE_H
@@ -1874,10 +1875,12 @@ void case_ncn ()
     if (pack_ncn->UCID == 0)
         return;
 
+    if (pack_ncn->ReqI == 0)
+        printf("  >> connected %s\n", pack_ncn->UName);
+
     for (i=0; i<MAX_PLAYERS; i++)
         if (ginfo->players[i].UCID == 0)
             break;
-
 
     if (i == MAX_PLAYERS)
         return;
@@ -2571,6 +2574,8 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
+            printf("\nDATA SAVED\n\n");
+
             for (int j=0; j<MAX_PLAYERS; j++)
             {
                 if (ginfo->players[j].UCID !=0 )

@@ -645,7 +645,7 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
     if (players[UCID].DoneCount == 0)
         return;
 
-    int Cash = players[UCID].DoneCount * 500;
+    int Cash = players[UCID].DoneCount * 1000;
     char str[96];
 
     if (FullWork)
@@ -656,6 +656,7 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
     {
         Cash = Cash / 2;
         players[UCID].DoneCount = players[UCID].DoneCount / 2;
+
         sprintf(str, "^2| ^7^CВы не дождались конца смены, заработок: %d ^3RUR", Cash);
     }
 
@@ -675,7 +676,7 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
         dl->AddSkill(UCID, players[UCID].DoneCount);
     }
 
-    players[UCID].DoneCount = 0;
+    players[UCID].DoneCount = -1;
 }
 
 void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
@@ -694,9 +695,9 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 
     sprintf(Text, "^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName);
 
-    SendButton(255, UCID, 81, l - w / 2, t - h / 2, w, h + 8, 32, ""); 				//фон
-    SendButton(255, UCID, 82, l - w / 2, t - h / 2, w, h + 8, 32, "");				//фон
-    SendButton(255, UCID, 83, l - w / 2, t - h / 2, w, 10, 64, Text); 				//заголовок
+    SendButton(255, UCID, 81, l - w / 2, t - h / 2, w, h + 8, 32, ""); 				    //фон
+    SendButton(255, UCID, 82, l - w / 2, t - h / 2, w, h + 8, 32, "");				    //фон
+    SendButton(255, UCID, 83, l - w / 2, t - h / 2, w, 10, 64, Text); 				    //заголовок
     SendButton(254, UCID, 80, l - 7, t - h / 2 + h + 1, 14, 6, 16 + ISB_CLICK, "^2OK"); //закрывашка
 
     if (strcmp(players[UCID].UName, "Lexanom") == 0 or (players[UCID].Rank > 2 and players[UCID2].Pogonya == 2))
@@ -711,13 +712,22 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
             fid = 255;
 
         int st = 7;
-        for (int i=0; i < MAX_FINES; i++)
+
+        if (players[UCID2].Pogonya == 2 or players[UCID].DTPstatus == 2)
         {
-            if (FineAllow[players[UCID].Rank][i] == fid)
-            {
+            for (int i=0; i < MAX_FINES; i++)
+                if (FineAllow[players[UCID].Rank][i] == fid)
+                {
+                    st = 8 + 3;
+                    break;
+                }
+        }
+        else
+        {
+            if (fid == 14 or fid == 17 or fid == 20 or fid == 21)
                 st = 8 + 3;
-                break;
-            }
+            if (players[UCID].Rank>2 and (fid == 16 or fid == 1 or fid == 2))
+                st = 8 + 3;
         }
 
         sprintf(Text, "^2%02d. ^8%s", fid, GetFineName(UCID, i + 1));
@@ -966,20 +976,19 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     if (packet->ClickID == 41)
     {
         if (strlen(players[packet->ReqI].UName) == 0)
-        {
             return;
-        }
 
         if (players[packet->ReqI].Pogonya != 0)
         {
 
             //запралата копам, которые были рядом во время ареста
-            if (players[packet->ReqI].DTPfines > 0)
+            if (players[packet->UCID].DTPfines > 0)
             {
-                players[packet->ReqI].DTPfines = 0;
+                players[packet->UCID].DoneCount++;
+                players[packet->UCID].DTPfines = 0;
                 for (auto& p: players)
                 {
-                    if (players[p.first].cop)
+                    if (players[p.first].cop and p.first != packet->UCID)
                     {
                         int X1 = players[packet->ReqI].Info.X / 65536,
                             Y1 = players[packet->ReqI].Info.Y / 65536,
@@ -1478,7 +1487,7 @@ void RCPolice::readconfig()
     hwnd = FindFirstFile(file, &fd);
     if (hwnd == INVALID_HANDLE_VALUE)
     {
-        printf ("RCTaxi: Can't find \n%s", file);
+        printf ("RCPolice: Can't find \n%s", file);
         return;
     }
     FindClose(hwnd);
@@ -1589,7 +1598,7 @@ void RCPolice::SetUserBID ( byte UCID, byte BID )
 
 void RCPolice::SaveUserFines ( byte UCID )
 {
-    cout <<players[ UCID ].UName << " save fines_info" << endl;
+    //cout <<players[ UCID ].UName << " save fines_info" << endl;
 
     char file[255];
     sprintf(file, "%sdata\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
@@ -1828,9 +1837,9 @@ void RCPolice::Event()
 
             CopPayRoll(UCID);
 
-            char smn[20];
+            char smn[32];
             int TM = 1800 - (time(NULL) - players[UCID].StartWork)%1800;
-            sprintf(smn, "^CСмена: %02d:%02d ", (TM / 60)%60, TM%60);
+            sprintf(smn, "^CСмена: %02d:%02d", (TM / 60)%60, TM%60, players[UCID].DoneCount);
             SendButton(255, UCID, 70, 115, 1, 15, 4, 3 + 128, smn);
 
             //заявки на дтп

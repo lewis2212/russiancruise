@@ -735,7 +735,7 @@ void RCPizza::Event()
         {
             if (plit.first !=0 and players[plit.first].WorkType != 0 and players[plit.first].WorkAccept == 0)
             {
-                cout << players[plit.first].UName << " accepted for shop\n";
+                //cout << players[plit.first].UName << " accepted for shop\n";
 
                 char str[96];
                 strcpy(players[plit.first].WorkDest, msg->_(plit.first, "4204"));
