@@ -205,7 +205,7 @@ void RCEnergy::energy_save (byte UCID)
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcNrgDB ) );
+    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcNrgDB ) );
 }
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )

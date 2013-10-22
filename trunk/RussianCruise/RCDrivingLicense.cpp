@@ -319,7 +319,7 @@ void RCDL::save (byte UCID)
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
+    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
 
 }
 
