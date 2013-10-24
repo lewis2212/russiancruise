@@ -138,7 +138,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
                 SendMTC(packet->UCID, "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС");
             }
 
-            players[packet->UCID].StartWork = time(NULL) - 1 - 1795;
+            players[packet->UCID].StartWork = time(NULL) - 5;
         }
         else
         {

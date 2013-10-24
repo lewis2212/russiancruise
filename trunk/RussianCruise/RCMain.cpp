@@ -382,26 +382,22 @@ void saveAll()
 
 void help_cmds (struct player *splayer, int h_type)
 {
+    byte UCID = splayer->UCID;
     if (h_type == 1)
     {
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3201" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3218" ) );
-        //SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3202" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3203" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3204" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3205" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3206" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3207" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3208" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3209" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3210" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3211" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3212" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3213" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3214" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3215" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3216" ) );
-        SendMTC( splayer->UCID, msg->_(  splayer->UCID, "3217" ) );
+        SendMTC(UCID, msg->_(UCID, "Help1"));
+        SendMTC(UCID, msg->_(UCID, "Help2"));
+        SendMTC(UCID, msg->_(UCID, "Help3"));
+        SendMTC(UCID, msg->_(UCID, "Help4"));
+        SendMTC(UCID, msg->_(UCID, "Help5"));
+        SendMTC(UCID, msg->_(UCID, "Help6"));
+        SendMTC(UCID, msg->_(UCID, "Help7"));
+        SendMTC(UCID, msg->_(UCID, "Help8"));
+        SendMTC(UCID, msg->_(UCID, "Help9"));
+        SendMTC(UCID, msg->_(UCID, "Help10"));
+        SendMTC(UCID, msg->_(UCID, "Help11"));
+        SendMTC(UCID, msg->_(UCID, "Help12"));
+        SendMTC(UCID, msg->_(UCID, "Help13"));
     }
     if (h_type == 2)
     {
@@ -1014,9 +1010,18 @@ void case_mci ()
                     ginfo->players[j].Zone = 4;
                 else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.PitCount, ginfo->TrackInf.XPit, ginfo->TrackInf.YPit, X, Y))
                     ginfo->players[j].Zone = 1;
-                else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.ShopCount, ginfo->TrackInf.XShop, ginfo->TrackInf.YShop, X, Y) )
-                    ginfo->players[j].Zone = 2;
-
+                else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.ShopCount, ginfo->TrackInf.XShop, ginfo->TrackInf.YShop, X, Y))
+                {
+                    if (ginfo->players[j].Zone!=2)
+                    {
+                        ginfo->players[j].Zone = 2;
+                        SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "ShopDialog1" ));
+                        SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "ShopDialog2" ));
+                        SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "ShopDialog3" ));
+                        SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "ShopDialog4" ));
+                        SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "ShopDialog5" ));
+                    }
+                }
                 else
                     ginfo->players[j].Zone = 0;
 
@@ -1899,8 +1904,8 @@ void case_ncn ()
     read_user_cars(&ginfo->players[i]);
 
     //help_cmds(&ginfo->players[i], 1);
-    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "3200" ));
-    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "3202" ));
+    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help1" ));
+    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help14" ));
 
     btn_panel(&ginfo->players[i]);
 }
@@ -2574,7 +2579,7 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
-            printf("\nDATA SAVED\n\n");
+            printf("DATA SAVED\n");
 
             for (int j=0; j<MAX_PLAYERS; j++)
             {

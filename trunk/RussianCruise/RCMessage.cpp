@@ -199,7 +199,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
         else if (strcmp(id, "rus") == 0)
             players[ packet->UCID ].LangID = LANG_ID_RUS;
 
-        sprintf(str, "^2| ^7Language: %s", id);
+        sprintf(str, "^1| ^7Language: %s", id);
         SendMTC(packet->UCID, str);
     }
 

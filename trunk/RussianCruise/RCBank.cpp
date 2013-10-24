@@ -15,7 +15,7 @@ RCBank::~RCBank()
 
 int RCBank::GetCash(byte UCID)
 {
-    return (int)players[ UCID ].Cash;
+    return (int)players[UCID].Cash;
 }
 
 bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
@@ -28,7 +28,7 @@ bool RCBank::AddCash(byte UCID, int Cash, bool Show = false)
         SendMTC(UCID, Text);
     }
 
-    players[ UCID ].Cash += Cash;
+    players[UCID].Cash += Cash;
     return true;
 }
 
@@ -37,7 +37,7 @@ bool RCBank::RemCash(byte UCID, int Cash)
     char Text[128];
     sprintf(Text, msg->_(UCID, "RemMoneyA"), Cash);
     SendMTC(UCID, Text);
-    players[ UCID ].Cash -= Cash;
+    players[UCID].Cash -= Cash;
     return true;
 }
 
@@ -55,7 +55,7 @@ bool RCBank::RemFrBank(int Cash)
 
 bool RCBank::InBank(byte UCID)
 {
-    return players[ UCID ].InZone;
+    return players[UCID].InZone;
 }
 
 int RCBank::init(const char *dir, void *CInSim, void *RCMessageClass, void *DL)
@@ -292,11 +292,11 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
 void RCBank::credit_penalty (byte UCID)
 {
     char Text[128];
-    double razn=((double)(players[ UCID ].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
+    double razn=((double)(players[UCID].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
     int c = (int)abs((ceil(razn)));
     sprintf(Text, "^1| ^1^CВЫ ПРОСРОЧИЛИ КРЕДИТ!");
     SendMTC(UCID, Text);
-    sprintf(Text, "^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день", players[ UCID ].Credit*13/10);
+    sprintf(Text, "^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день", players[UCID].Credit*13/10);
     SendMTC( UCID, Text);
 
     /*int ost = players[UCID].Cash - ((players[UCID].Credit) * 13 / 10 + 1000 * c);
@@ -306,9 +306,9 @@ void RCBank::credit_penalty (byte UCID)
     }*/
 
     RemCash( UCID, ((players[UCID].Credit) * 13 / 10 + 1000 * c)); //отбираем бабки у игрока
-    AddToBank( ( players[ UCID ].Credit ) * 13 / 10 + 1000 * c ); //сдаем в банк
-    players[ UCID ].Credit = 0;
-    players[ UCID ].Date_create = 0;
+    AddToBank( ( players[UCID].Credit ) * 13 / 10 + 1000 * c ); //сдаем в банк
+    players[UCID].Credit = 0;
+    players[UCID].Date_create = 0;
     bank_save( UCID ); //сохраняемся
 }
 
@@ -341,7 +341,7 @@ void RCBank::InsimCNL( struct IS_CNL* packet )
 void RCBank::bank_save (byte UCID)
 {
     char query[128];
-    sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'" , players[ UCID ].Cash, players[ UCID ].UName);
+    sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'" , players[UCID].Cash, players[UCID].UName);
 
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
@@ -356,7 +356,7 @@ void RCBank::bank_save (byte UCID)
     //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
     /* Credit */
-    sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'" , players[ UCID ].Credit, players[ UCID ].Date_create, players[ UCID ].UName);
+    sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'" , players[UCID].Credit, players[UCID].Date_create, players[UCID].UName);
 
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
@@ -371,7 +371,7 @@ void RCBank::bank_save (byte UCID)
     //printf("Credit Log: Affected rows = %d\n", mysql_affected_rows( &rcbankDB ) );
 
     /* Deposit */
-    sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'" , players[ UCID ].Deposit, players[ UCID ].Dep_Date_create, players[ UCID ].UName);
+    sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'" , players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName);
 
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
@@ -731,6 +731,7 @@ void RCBank::InsimMCI( struct IS_MCI* pack_mci )
     for (int i = 0; i < pack_mci->NumC; i++)
     {
         byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
+
         //баланс игрока
         BtnCash( UCID );
 
@@ -739,23 +740,22 @@ void RCBank::InsimMCI( struct IS_MCI* pack_mci )
         int Y = pack_mci->Info[i].Y/65536;
         if (Check_Pos(TrackInf.BankCount, TrackInf.XBank, TrackInf.YBank, X, Y))
         {
-            if (!players[ UCID ].InZone)
+            if (!players[UCID].InZone)
             {
-                players[ UCID ].InZone=true;
+                players[UCID].InZone=true;
 
-                SendMTC( UCID , "^5| Bank");
-                SendMTC( UCID , "^5| ^7!credit info N - ^2^CИнформация по кредиту на сумму N");
-                SendMTC( UCID , "^5| ^7!credit N (!credit 50000) - ^2^CПолучить кредит на сумму N");
-                SendMTC( UCID , "^5| ^7!repay - ^2^CПогасить кредит");
-                SendMTC( UCID , "^5| ^7!deposit info N - ^2^CИнформация по вкладу на сумму N");
-                SendMTC( UCID , "^5| ^7!deposit N (!deposit 200000)- ^2^CОткрыть вклад на сумму N");
-                SendMTC( UCID , "^5| ^7!withdraw - ^2^CЗакрыть вклад");
+                SendMTC(UCID, msg->_(UCID, "BankDialog1"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog2"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog3"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog4"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog5"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog6"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog7"));
+                SendMTC(UCID, msg->_(UCID, "BankDialog8"));
             }
         }
-        else if (players[ UCID ].InZone)
-        {
-            players[ UCID ].InZone = false;
-        }
+        else if (players[UCID].InZone)
+            players[UCID].InZone = false;
     }
 }
 
@@ -778,22 +778,18 @@ void RCBank::BtnCash ( byte UCID )
     pack.H = 4;
 
     char cash[10];
-    sprintf(cash, "%d", (int)players[ UCID ].Cash);
+    sprintf(cash, "%d", (int)players[UCID].Cash);
 
-    if (players[ UCID ].Cash > 0)
-    {
+    if (players[UCID].Cash > 0)
         strcpy(pack.Text, "^2");
-    }
     else
-    {
         strcpy(pack.Text, "^1");
-    }
 
     strcat(pack.Text, cash);
     strcat(pack.Text, "^7 RUR");
     insim->send_packet(&pack);
 
-    if ( strcmp(players[ UCID ].UName, "denis-takumi") == 0 )
+    if ( strcmp(players[UCID].UName, "denis-takumi") == 0 )
     {
         pack.ClickID = 167;
         pack.L = 50;
@@ -805,13 +801,9 @@ void RCBank::BtnCash ( byte UCID )
         sprintf(cash, "%.0f", BankFond);
 
         if (BankFond > 0)
-        {
             strcpy(pack.Text, "^2");
-        }
         else
-        {
             strcpy(pack.Text, "^1");
-        }
 
         strcat(pack.Text, cash);
         strcat(pack.Text, "^7 RUR");
