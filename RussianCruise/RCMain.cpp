@@ -299,24 +299,36 @@ void save_user_cars (struct player *splayer)
 
 void read_user_cars(struct player *splayer)
 {
+    char kickCmd[64], msg[96];
+    sprintf(kickCmd, "/kick %s",splayer->UName);
+    sprintf(msg, "^1RC:Core ERROR - BAD USER");
     char query[128];
     sprintf(query, "SELECT car, tuning, dist FROM garage WHERE username='%s';", splayer->UName);
 
     if ( mysql_ping( &rcMaindb ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if ( mysql_query( &rcMaindb , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     rcMainRes = mysql_store_result(&rcMaindb);
     if (rcMainRes == NULL)
+    {
         printf("Error: can't get the result description\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
+    }
 
     if ( mysql_num_rows( rcMainRes ) > 0 )
     {
@@ -2286,12 +2298,8 @@ int core_reconnect(void *pack_ver)
     insim->isclose();
 
     out << "wait 1 minute and reconnect \n";
-#ifdef __linux__
-    sleep(60000);
-#else
-    Sleep(60000);
-#endif
 
+    Sleep(60000);
 
     memset(pack_ver, 0, sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
@@ -2411,8 +2419,6 @@ void read_track()
 
     //memcpy(&antcht->TrackInf, &ginfo->TrackInf, sizeof(struct track_info));
 }
-
-
 
 void read_car()
 {
@@ -2603,21 +2609,15 @@ void *ThreadSave (void *params)
             }
 
         }
-#ifdef __linux__
-        sleep(500);
-#else
+
         Sleep(500);
-#endif
 
 #ifdef _RC_POLICE_H
         police->SetSirenLight("^4||||||||||^7|^1||||||||||");
 #endif
 
-#ifdef __linux__
-        sleep(500);
-#else
         Sleep(500);
-#endif
+
 
 #ifdef _RC_POLICE_H
         police->SetSirenLight( "^1||||||||||^7|^4||||||||||" );
@@ -2643,11 +2643,9 @@ void *ThreadWork (void *params)
         taxi->Event();
 #endif // _RC_TAXI_H
         lgh->Event();
-#ifdef __linux__
-        sleep(500);
-#else
+
         Sleep(500);
-#endif
+
     }
     return 0;
 };
@@ -2655,7 +2653,6 @@ void *ThreadWork (void *params)
 
 void *ThreadMain(void *CmdLine)
 {
-
     if (!mysql_init(&rcMaindb))
     {
         printf("RCMain Error: can't create MySQL-descriptor\n");
@@ -2672,11 +2669,7 @@ void *ThreadMain(void *CmdLine)
     while ( mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
     {
         printf("RCMain Error: can't connect to MySQL server\n");
-#ifdef __linux__
-        sleep(60000);
-#else
         Sleep(60000);
-#endif
     }
     printf("RCMain Success: Connected to MySQL server\n");
     // TODO (#1#): Uncoment in Release
@@ -2688,15 +2681,9 @@ void *ThreadMain(void *CmdLine)
     if (strlen(ServiceName) == 0)
     {
         out << "Не задан файл конфигурации\n";
-#ifndef __linux__
-        service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
-        SetServiceStatus(hServiceStatus, &service_status);
-#endif
         return 0;
 
     }
-    // read_mysql();
 
     int error_ch;
 
@@ -2718,7 +2705,7 @@ void *ThreadMain(void *CmdLine)
     {
         cout << "INSIM VER != 5" << endl;
         out << "INSIM VER != 5" << endl;
-        //return 0;
+        return;
     }
 
     CreateClasses();
@@ -2731,36 +2718,30 @@ void *ThreadMain(void *CmdLine)
 
     out << "Cruise started" << endl;
     out << "Start threads :" << endl;
+
     if (pthread_create(&work_tid, NULL, ThreadWork, NULL) < 0)
     {
         printf("Can't start `thread_work` Thread\n");
         return 0;
     }
-#ifdef __linux__
-    sleep(1000);
-#else
+
     Sleep(1000);
-#endif
+
     if (pthread_create(&save_tid, NULL, ThreadSave, NULL) < 0)
     {
         printf("Can't start `thread_save` Thread\n");
         return 0;
     }
-#ifdef __linux__
-    sleep(1000);
-#else
+
     Sleep(1000);
-#endif
+
     if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
     {
         printf("Can't start `thread_mci` Thread\n");
         return 0;
     }
-#ifdef __linux__
-    sleep(1000);
-#else
+
     Sleep(1000);
-#endif
 
     out << "All threads started" << endl;
 
@@ -2901,150 +2882,17 @@ void *ThreadMain(void *CmdLine)
 
     delete insim;
     delete ginfo;
-#ifndef __linux__
-    service_status.dwCurrentState = SERVICE_STOPPED;
-    SetServiceStatus(hServiceStatus, &service_status);
-#endif
+
     pthread_mutex_destroy(&RCmutex);
     return 0;
 }
 
 int  nCount;     // счетчик
-#ifndef __linux__
-int core_install_service(char* param[])
-{
-    hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CREATE_SERVICE  // возможно создание сервиса
-                             );
-    if (hServiceControlManager == NULL)
-    {
-        printf("Open service control manager failed.\n");
-        return 0;
-    }
 
-    printf("Service control manager is opened.\n");
-    char dir[255];
-    sprintf(dir, "%s %s", param[0] , param[1]);
-
-    // устанавливаем новый сервис
-    hService = CreateService(
-                   hServiceControlManager,      // дескриптор менеджера сервисов
-                   ServiceName,                 // внутреннее имя сервиса, используемое SCM
-                   ServiceName,                 // внешнее имя сервиса в панели управления
-                   SERVICE_ALL_ACCESS,          // полный контроль над сервисом
-                   SERVICE_WIN32_OWN_PROCESS,   // сервис является процессом
-                   SERVICE_AUTO_START,        	// запускается сервис по требованию
-                   SERVICE_ERROR_NORMAL,        // обработка ошибок нормальная
-                   dir,                         // путь к сервису
-                   NULL,                        // сервис не принадлежит к группе
-                   NULL,                        // тэг группы не изменяется
-                   NULL,                        // сервис не зависит от других сервисов
-                   NULL,                        // имя совпадает с текущим именем учетной записи
-                   NULL                         // пароля нет
-               );
-    if (hService == NULL)
-    {
-        printf("Create service failed.");
-        // закрываем дескриптор менеджера сервисов
-        CloseServiceHandle(hServiceControlManager);
-        return 0;
-    }
-
-    printf("Service is installed.");
-    // закрываем дескрипторы
-    CloseServiceHandle(hService);
-    CloseServiceHandle(hServiceControlManager);
-    return 2;
-}
-
-int core_uninstall_service()
-{
-    hServiceControlManager = OpenSCManager(
-                                 NULL,      // локальная машина
-                                 NULL,      // активная база данных сервисов
-                                 SC_MANAGER_CONNECT   // соединение с менеджером сервисов
-                             );
-    if (hServiceControlManager == NULL)
-    {
-        printf("Open service control manager failed.");
-        return 0;
-    }
-
-    printf("Service control manager is opened.");
-
-    // открываем сервис
-    hService = OpenService(
-                   hServiceControlManager,  // дескриптор менеджера сервисов
-                   ServiceName,            // имя сервиса
-                   SERVICE_ALL_ACCESS | DELETE  // любой доступ к сервису
-                   // и удаление из базы данных
-               );
-    if (hService == NULL)
-    {
-        printf("Open service failed.");
-        // закрываем дескриптор менеджера сервисов
-        CloseServiceHandle(hServiceControlManager);
-
-        return 0;
-    }
-
-    printf("Service is opened.");
-
-    // получаем состояние сервиса
-    if (!QueryServiceStatus(hService, &service_status))
-    {
-        printf("Query service status failed.");
-        // закрываем дескрипторы
-        CloseServiceHandle(hServiceControlManager);
-        CloseServiceHandle(hService);
-
-        return 0;
-    }
-
-    // если сервис работает, то останавливаем его
-    if (service_status.dwCurrentState != SERVICE_STOPPED)
-    {
-        printf("Service is working. It will be stoped");
-        if (!ControlService(hService, SERVICE_CONTROL_STOP, &service_status))
-        {
-            printf("Control service failed.");
-            // закрываем дескрипторы
-            CloseServiceHandle(hServiceControlManager);
-            CloseServiceHandle(hService);
-
-            return 0;
-        }
-        // ждем, пока сервис остановится
-        Sleep(5000);
-    }
-
-    // удаляем сервис
-    if (!DeleteService(hService))
-    {
-        printf("Delete service failed.");
-        // закрываем дескрипторы
-        CloseServiceHandle(hServiceControlManager);
-        CloseServiceHandle(hService);
-
-        return 0;
-    }
-
-    printf("The service is deleted.");
-
-    // закрываем дескрипторы
-    CloseServiceHandle(hServiceControlManager);
-    CloseServiceHandle(hService);
-
-    return 2;
-}
-#endif
 // главная функция приложения
 int main(int argc, char* argv[])
 {
     isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
-
 
     int need = 92;
     int d;
@@ -3057,68 +2905,7 @@ int main(int argc, char* argv[])
 
     strncpy(RootDir, argv[0], d+1);
     strcpy(ServiceName, argv[1]);
-    if (strcmp(argv[argc-1], "install") == 0 )
-    {
-#ifndef __linux__
-        core_install_service(argv);
-#endif
-        return 0;
-    }
-    else if (strcmp(argv[argc-1], "uninstall") == 0 )
-    {
-#ifndef __linux__
-        core_uninstall_service();
-#endif
-        return 0;
-    }
-    else if (strcmp(argv[argc-1], "console") == 0 )
-    {
 
-        SYSTEMTIME sm;
-        GetLocalTime(&sm);
-
-        char log[MAX_PATH];
-        sprintf(log, "%slogs\\%s(%d.%d.%d).log", RootDir, ServiceName, sm.wDay, sm.wMonth, sm.wYear);
-
-        out.open(log);
-
-        pthread_create(&main_tid, NULL, ThreadMain, NULL);
-
-        // рабочий цикл сервиса
-        while (ok)
-        {
-#ifdef __linux__
-            sleep(1000);
-#else
-            Sleep(1000);
-#endif
-        }
-        out.close();
-
-#ifdef __linux__
-        sleep(10000);
-#else
-        Sleep(10000);
-#endif
-        return 0;
-    }
-#ifndef __linux__
-    //  инициализируем структуру сервисов
-    SERVICE_TABLE_ENTRY  service_table[] =
-    {
-        {ServiceName, ServiceMain},   // имя сервиса и функция сервиса
-        { NULL, NULL }                 // больше сервисов нет
-    };
-
-    // запускаем диспетчер сервиса
-    if (!StartServiceCtrlDispatcher(service_table))
-        return 0;
-#endif
-    return 0;
-}
-#ifndef __linux__
-VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
-{
     SYSTEMTIME sm;
     GetLocalTime(&sm);
 
@@ -3127,126 +2914,16 @@ VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
     out.open(log);
 
-    // регистрируем обработчик управляющих команд для сервиса
-    hServiceStatus = RegisterServiceCtrlHandler(
-                         ServiceName,        // имя сервиса
-                         ServiceCtrlHandler   // обработчик управляющих команд
-                     );
-    if (!hServiceStatus)
-    {
-        out << "Register service control handler failed.";
-        return;
-    }
-
-    // инициализируем структуру состояния сервиса
-    service_status.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
-    service_status.dwCurrentState = SERVICE_START_PENDING;
-    service_status.dwControlsAccepted = SERVICE_ACCEPT_STOP |
-                                        SERVICE_ACCEPT_SHUTDOWN;
-    service_status.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
-    service_status.dwServiceSpecificExitCode = 0;
-    service_status.dwCheckPoint = 0;
-    service_status.dwWaitHint = 5000;
-
-    // устанавливаем состояние сервиса
-    if (!SetServiceStatus(hServiceStatus, &service_status))
-    {
-        out << "Set service status 'SERVICE_START_PENDING' failed.";
-        return;
-    }
-
-    // определяем сервис как работающий
-    service_status.dwCurrentState = SERVICE_RUNNING;
-    // нет ошибок
-    service_status.dwWin32ExitCode = NO_ERROR;
-    // устанавливаем новое состояние сервиса
-    if (!SetServiceStatus(hServiceStatus, &service_status))
-    {
-        out << "Set service status 'START_PENDING' failed.";
-        return;
-    }
-
-    // открываем файл протокола работы сервиса
-
-    out << "The service is started." << endl << flush;
-    out << "Main Thead started. Wait 2 minuts while all services are started.\n"   ;
     pthread_create(&main_tid, NULL, ThreadMain, NULL);
 
     // рабочий цикл сервиса
-    while (service_status.dwCurrentState == SERVICE_RUNNING)
+    while (ok)
     {
-        ++nCount;
-        Sleep(3000);
+        Sleep(1000);
     }
-
-    out << "" << endl;
-    out << "\t-----------------------------" << endl;
-    out << "" << endl;
     out.close();
+
+    Sleep(10000);
+
+    return 0;
 }
-
-VOID WINAPI ServiceCtrlHandler(DWORD dwControl)
-{
-    switch (dwControl)
-    {
-    case SERVICE_CONTROL_STOP:     // остановить сервис
-        SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-        SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
-        // save all users
-        for (int j=0; j<MAX_PLAYERS; j++)
-        {
-            if (ginfo->players[j].UCID !=0 )
-            {
-                save_car(&ginfo->players[j]);
-                save_user_cars(&ginfo->players[j]);
-#ifdef _RC_POLICE_H
-                police->SaveUserFines( ginfo->players[j].UCID );
-#endif // _RC_POLICE_H
-
-#ifdef _RC_ENERGY_H
-                nrg->energy_save(ginfo->players[j].UCID);
-#endif
-
-#ifdef _RC_BANK_H
-                bank->bank_save(ginfo->players[j].UCID);
-#endif // _RC_BANK_H
-
-#ifdef _RC_LEVEL_H
-                dl->save(ginfo->players[j].UCID);
-#endif
-#ifdef __linux__
-                sleep(500);
-#else
-                Sleep(500);
-#endif
-            }
-        }
-        ok=0;
-        // записываем конечное значение счетчика
-        //out << "Count = " << nCount << endl;
-        tools::log( "The service is finished." );
-        // закрываем файл
-
-        // устанавливаем состояние остановки
-        service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
-        SetServiceStatus(hServiceStatus, &service_status);
-        break;
-
-    case SERVICE_CONTROL_SHUTDOWN:     // завершить сервис
-        service_status.dwCurrentState = SERVICE_STOPPED;
-        // изменить состояние сервиса
-        SetServiceStatus(hServiceStatus, &service_status);
-        break;
-
-    default:
-        // увеличиваем значение контрольной точки
-        ++service_status.dwCheckPoint;
-        // оставляем состояние сервиса без изменения
-        SetServiceStatus(hServiceStatus, &service_status);
-        break;
-    }
-    return;
-}
-
-#endif

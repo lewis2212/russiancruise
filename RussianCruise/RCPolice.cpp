@@ -236,6 +236,9 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
         players[packet->UCID].cop = false;
         players[packet->UCID].StartWork = 0;
         players[packet->UCID].Rank = 0;
+        lgh->SetLight3(packet->UCID, false);
+		dl->Unlock(packet->UCID);
+		nrg->Unlock(packet->UCID);
 
         for (int i = 0; i < 32; i++)
         {
@@ -267,9 +270,7 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
         }
 
         for (int i=214; i <= 222; i++)
-        {
             SendBFN(packet->UCID, i);
-        }
     }
 }
 
@@ -517,9 +518,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if (strncmp(Msg, "!kick", 4) == 0 )
     {
         if (players[packet->UCID].Rank < 3)
-        {
             return;
-        }
 
         char user[16];
         strcpy(user, Msg + 5);
@@ -528,16 +527,19 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (players[ packet->UCID ].cop )
             {
-                char Kick[64];
-                sprintf(Kick, "/kick %s", user);
-                SendMST(Kick);
+                char str[96];
+                sprintf(str, "/kick %s", user);
+                SendMST(str);
+
 
                 SYSTEMTIME sm;
                 GetLocalTime(&sm);
+                sprintf(str, "%02d:%02d:%02d %s kicked %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName, user);
+
                 char log[MAX_PATH];
                 sprintf(log, "%slogs\\cop\\kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
                 ofstream readf (log, ios::app);
-                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[ packet->UCID ].UName << " kick " << user << endl;
+                readf << str << endl;
                 readf.close();
             }
         }
@@ -762,9 +764,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             SendBFN(255, packet->ClickID);
 
             if (players[packet->UCID].cop and players[packet->UCID].DTPfines > 0)
-            {
                 players[packet->UCID].DoneCount++;
-            }
         }
         else if (DTPvyzov[2][i] <= 0)
         {
@@ -814,11 +814,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID >= 84 and packet->ClickID < 110 and packet->ReqI != 254 and packet->ReqI != 255) //выписка штрафа
     {
-        if (players[packet->UCID].DTPstatus == 2)
-        {
-            players[packet->UCID].DTPfines++;
-        }
-
         SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
@@ -828,9 +823,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
-                if (players[play.first].Pogonya == 2 and players[packet->UCID].DTPstatus != 2)
-                    players[packet->UCID].DTPfines++;
-
                 char Msg[128];
                 sprintf(Msg, msg->_(play.first, "GiveFine"), players[packet->UCID].PName, GetFineName(play.first, packet->ReqI));
                 SendMTC( play.first, Msg);
@@ -850,14 +842,20 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                         break;
                     }
                 }
+
+                int FID = packet->ReqI;
+                if (players[play.first].Pogonya == 2 or players[packet->UCID].DTPstatus == 2)
+					if (FID != 1 and FID != 2 and FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
+						players[packet->UCID].DTPfines++;
+
+                sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName, packet->ReqI, players[ play.first ].UName);
+
                 ofstream readf (fine_c, ios::app);
-                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " get fine ID = " << packet->ReqI << " to "  << players[ play.first ].UName << endl;
+                readf << Msg << endl;
                 readf.close();
 
                 if (players[play.first].ThisFineCount == 0)
-                {
                     SendBFNAll(play.first);
-                }
 
                 for (int j=0; j < 20; j++)
                 {
@@ -875,11 +873,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID >= 110 and packet->ClickID < 130 and packet->ReqI != 255 and packet->ReqI != 254) //выписка штрафа
     {
-        if (players[packet->UCID].DTPstatus == 2)
-        {
-            players[packet->UCID].DTPfines--;
-        }
-
         SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
@@ -893,7 +886,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 {
                     if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
                     {
-                        if (players[play.first].Pogonya == 2 and players[packet->UCID].DTPstatus != 2)
+                        if (players[play.first].Pogonya == 2 or players[packet->UCID].DTPstatus == 2)
                             players[packet->UCID].DTPfines--;
 
                         char Msg[128];
@@ -906,8 +899,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
                         players[ play.first ].fines[j].fine_id = 0;
                         players[ play.first ].fines[j].fine_date = 0;
+
+                        sprintf(Msg, "%02d:%02d:%02d %s cancel fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName, packet->ReqI, players[ play.first ].UName);
+
                         ofstream readf (fine_c, ios::app);
-                        readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[ packet->UCID ].UName << " cancle fine ID = " << packet->ReqI << " to "  << players[ play.first ].UName << endl;
+                        readf << Msg << endl;
                         readf.close();
 
                         if (players[play.first].ThisFineCount > 0)

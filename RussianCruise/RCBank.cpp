@@ -119,6 +119,10 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         return;
     }
 
+    char kickCmd[64], msg[96];
+    sprintf(kickCmd, "/kick %s",packet->UName);
+    sprintf(msg, "^1RC:Bank ERROR - BAD USER");
+
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
 
@@ -128,17 +132,26 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if ( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error: MySQL Query\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     rcbankRes = mysql_store_result( &rcbankDB );
     if (rcbankRes == NULL)
     {
         printf("Error: can't get the result description\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if (mysql_num_rows( rcbankRes ) > 0)
@@ -154,6 +167,9 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         if ( mysql_ping( &rcbankDB ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
+            SendMST(msg);
+            SendMST(kickCmd);
+            return;
         }
 
         if ( mysql_query( &rcbankDB , query) != 0 )
@@ -172,17 +188,26 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error credits: connection with MySQL server was lost\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if ( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error credits: MySQL Query\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     rcbankRes = mysql_store_result( &rcbankDB );
     if (rcbankRes == NULL)
     {
         printf("Error credits: can't get the result description\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if (mysql_num_rows( rcbankRes ) > 0)
@@ -198,6 +223,9 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         if ( mysql_ping( &rcbankDB ) != 0 )
         {
             printf("Error credits: connection with MySQL server was lost\n");
+            SendMST(msg);
+            SendMST(kickCmd);
+            return;
         }
 
         if ( mysql_query( &rcbankDB , query) != 0 )
@@ -218,17 +246,24 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
     if ( mysql_ping( &rcbankDB ) != 0 )
     {
         printf("Error deposits: connection with MySQL server was lost\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if ( mysql_query( &rcbankDB , query) != 0 )
     {
         printf("Error deposits: MySQL Query\n");
+        return;
     }
 
     rcbankRes = mysql_store_result( &rcbankDB );
     if (rcbankRes == NULL)
     {
         printf("Error deposits: can't get the result description\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
     }
 
     if (mysql_num_rows( rcbankRes ) > 0)
@@ -243,6 +278,9 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
         if ( mysql_ping( &rcbankDB ) != 0 )
         {
             printf("Error deposits: connection with MySQL server was lost\n");
+            SendMST(msg);
+            SendMST(kickCmd);
+            return;
         }
 
         if ( mysql_query( &rcbankDB , query) != 0 )
