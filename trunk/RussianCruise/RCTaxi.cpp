@@ -11,13 +11,24 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(const char *dir, void *CInSim, void *Message, void *Bank, void *RCdl, void * STreet, void * Police, void * Light)
+int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void * Police, void * Light)
 {
-    strcpy(RootDir, dir); // Копируем путь до программы
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCTaxi: Can't detect RootDir\n");
+        return -1;
+    }
+
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCTaxi: Can't sctruct MySQL Connector\n");
+        return -1;
+    } // Копируем путь до программы
+    insim = InSim; // Присваиваем указателю область памяти
     if (!insim)
     {
-        printf ("Can't struct CInsim class");    // Проверяем на существование
+        printf ("RCTaxi: Can't struct CInsim class");    // Проверяем на существование
         return -1;
     }
 
@@ -71,7 +82,7 @@ void RCTaxi::readconfig(const char *Track)
 {
     cout << "RCTaxi::readconfig\n" ;
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCTaxi\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCTaxi\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -155,7 +166,7 @@ void RCTaxi::readconfig(const char *Track)
 
     readf.close();
 
-    sprintf(file, "%sdata\\RCTaxi\\dialog.txt", RootDir);
+    sprintf(file, "%s\\data\\RCTaxi\\dialog.txt", RootDir);
     TaxiDialogs.empty();
     // TODO: refactoring
     HANDLE ff;
@@ -190,7 +201,7 @@ void RCTaxi::readconfig(const char *Track)
     read.close();
 
     /**клиенты-маршалы**/
-    sprintf(file, "%sdata\\RCTaxi\\tracks\\%sclient.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCTaxi\\tracks\\%sclient.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE tt;
     tt = FindFirstFile(file, &fd);
@@ -904,7 +915,7 @@ void RCTaxi::InsimPLL( struct IS_PLL* packet )
 void RCTaxi::read_user( byte UCID )
 {
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
+    sprintf(file, "%s\\data\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -968,7 +979,7 @@ void RCTaxi::delete_marshal(byte UCID)
 void RCTaxi::save_user( byte UCID )
 {
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
+    sprintf(file, "%s\\data\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
     ofstream writef (file, ios::out);
     writef << "Work=" << players[UCID].Work << endl;
     writef << "FiredPenalty=" << players[UCID].FiredPenalty << endl;

@@ -4,51 +4,46 @@ using namespace std;
 RCEnergy::RCEnergy() {}
 RCEnergy::~RCEnergy() {}
 
-int RCEnergy::init(const char *dir, void *CInSim, void *Message, void *Bank)
+int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
 {
-    strcpy(RootDir, dir);
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCEnergy: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCEnergy: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+
+    insim = InSim;
     if (!insim)
     {
-        printf ("Can't struct CInsim class");
+        printf ("RCEnergy Can't struct CInsim class");
         return -1;
     }
 
     msg = (RCMessage *)Message;
     if (!msg)
     {
-        printf ("Can't struct RCMessage class");
+        printf ("RCEnergy Can't struct RCMessage class");
         return -1;
     }
 
     bank = (RCBank *)Bank;
     if (!msg)
     {
-        printf ("Can't struct RCBank class");
+        printf ("RCEnergy Can't struct RCBank class");
         return -1;
     }
 
-    if (!mysql_init( &rcNrgDB))
+    if( mysql_ping(dbconn) != 0)
     {
-        printf("RCEnergy Error: can't create MySQL descriptor\n");
+        printf("RCEnergy Error: connection with MySQL server was lost\n");
         return -1;
-    }
-
-    mysql_options( &rcNrgDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
-    mysqlConf conf;
-    char path[MAX_PATH];
-    sprintf(path, "%smisc\\mysql.cfg", RootDir);
-    tools::read_mysql(path, &conf);
-
-    while ( mysql_real_connect( &rcNrgDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
-    {
-        printf("RCEnergy Error: can't connect to MySQL server\n");
-#ifdef __linux__
-        sleep(60000);
-#else
-        Sleep(60000);
-#endif
     }
     printf("RCEnergy Success: Connected to MySQL server\n");
     return 0;
@@ -58,7 +53,7 @@ int RCEnergy::init(const char *dir, void *CInSim, void *Message, void *Bank)
 void RCEnergy::readconfig(const char *Track)
 {
     char file[255];
-    sprintf(file, "%sdata\\RCEnergy\\maps\\%s.txt", RootDir, Track );
+    sprintf(file, "%s\\data\\RCEnergy\\maps\\%s.txt", RootDir, Track );
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -109,27 +104,27 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT energy FROM energy WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if ( mysql_ping( &rcNrgDB ) != 0 )
+    if ( mysql_ping( dbconn ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
     }
 
-    if ( mysql_query( &rcNrgDB , query) != 0 )
+    if ( mysql_query( dbconn , query) != 0 )
     {
         printf("Error: MySQL Query\n");
     }
 
-    rcNrgRes = mysql_store_result( &rcNrgDB );
+    dbres = mysql_store_result( dbconn );
 
-    if (rcNrgRes == NULL)
+    if (dbres == NULL)
     {
         printf("Error: can't get the result description\n");
     }
 
-    if (mysql_num_rows( rcNrgRes ) > 0)
+    if (mysql_num_rows( dbres ) > 0)
     {
-        rcNrgRow = mysql_fetch_row( rcNrgRes );
-        players[ packet->UCID ].Energy = atof( rcNrgRow[0] );
+        dbrow = mysql_fetch_row( dbres );
+        players[ packet->UCID ].Energy = atof( dbrow[0] );
     }
     else
     {
@@ -137,12 +132,12 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
 
         sprintf(query, "INSERT INTO energy (username) VALUES ('%s');", packet->UName);
 
-        if ( mysql_ping( &rcNrgDB ) != 0 )
+        if ( mysql_ping( dbconn ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
         }
 
-        if ( mysql_query( &rcNrgDB , query) != 0 )
+        if ( mysql_query( dbconn , query) != 0 )
         {
             printf("Error: MySQL Query\n");
         }
@@ -150,7 +145,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
         players[ packet->UCID ].Energy = 10000;
         energy_save( packet->UCID );
     }
-    mysql_free_result( rcNrgRes );
+    mysql_free_result( dbres );
     btn_energy( packet->UCID );
 }
 
@@ -195,17 +190,17 @@ void RCEnergy::energy_save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName);
 
-    if ( mysql_ping( &rcNrgDB ) != 0 )
+    if ( mysql_ping( dbconn ) != 0 )
     {
         printf("Bank Error: connection with MySQL server was lost\n");
     }
 
-    if ( mysql_query( &rcNrgDB , query) != 0 )
+    if ( mysql_query( dbconn , query) != 0 )
     {
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcNrgDB ) );
+    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( dbconn ) );
 }
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )

@@ -111,54 +111,54 @@ void CreateClasses()
 
 void InitClasses()
 {
-    msg->init(RootDir, insim);
+    msg->init(rcMaindbConn, insim);
 
 #ifdef _RC_BANK_H
-    bank->init(RootDir, insim, msg, dl);
+    bank->init(rcMaindbConn, insim, msg, dl);
 #endif // _RC_BANK_H
 
 #ifdef _RC_ENERGY_H
-    nrg->init(RootDir, insim, msg, bank);
+    nrg->init(rcMaindbConn, insim, msg, bank);
 #endif
 
 #ifdef _RC_LEVEL_H
-    dl->init(RootDir, insim, msg);
+    dl->init(rcMaindbConn, insim, msg);
 #endif
 
 #ifdef _RC_CHEAT_H
-    antcht->init(RootDir, insim, msg);
+    antcht->init(rcMaindbConn, insim, msg);
 #endif
 
 #ifdef _RC_STREET_H
-    street->init(RootDir, insim, msg);
+    street->init(rcMaindbConn, insim, msg);
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh->init(RootDir, insim, msg, dl);
+    lgh->init(rcMaindbConn, insim, msg, dl);
 #endif
 
 #ifdef _RC_POLICE_H
-    police->init(RootDir, insim, msg, bank, dl, street, nrg, lgh);
+    police->init(rcMaindbConn, insim, msg, bank, dl, street, nrg, lgh);
 #endif // _RC_POLICE_H
 
 #ifdef _RC_PIZZA_H
-    pizza->init(RootDir, insim, msg, bank, nrg, dl, street);
+    pizza->init(rcMaindbConn, insim, msg, bank, nrg, dl, street);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi->init(RootDir, insim, msg, bank, dl, street, police, lgh);
+    taxi->init(rcMaindbConn, insim, msg, bank, dl, street, police, lgh);
 #endif
 
 #ifdef _RC_BANLIST_H
-    banlist.init(RootDir, insim);
+    banlist.init(rcMaindbConn, insim);
 #endif
 
 #ifdef _RC_ROADSIGN
-    RoadSign->Init(RootDir, insim, msg, lgh);
+    RoadSign->Init(rcMaindbConn, insim, msg, lgh);
 #endif // _RC_ROADSIGN
 
 #ifdef _RC_QUEST_H
-    quest->init(RootDir, insim);
+    quest->init(rcMaindbConn, insim);
 #endif // _RC_QUEST_H
 
 }
@@ -281,7 +281,7 @@ void save_user_cars (struct player *splayer)
 {
     char sql[128];
 
-    if ( mysql_ping( &rcMaindb ) != 0 )
+    if ( mysql_ping( rcMaindbConn ) != 0 )
         printf("Bank Error: connection with MySQL server was lost\n");
 
     for (int i = 0; i < MAX_CARS; i++)
@@ -289,7 +289,7 @@ void save_user_cars (struct player *splayer)
         if ( strlen( splayer->cars[i].car ) > 0 )
         {
             sprintf(sql, "UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", splayer->cars[i].tuning , splayer->cars[i].dist , splayer->cars[i].car , splayer->UName );
-            if ( mysql_query( &rcMaindb , sql) != 0 )
+            if ( mysql_query( rcMaindbConn , sql) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
         }
     }
@@ -305,7 +305,7 @@ void read_user_cars(struct player *splayer)
     char query[128];
     sprintf(query, "SELECT car, tuning, dist FROM garage WHERE username='%s';", splayer->UName);
 
-    if ( mysql_ping( &rcMaindb ) != 0 )
+    if ( mysql_ping( rcMaindbConn ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
         SendMST(msg);
@@ -313,7 +313,7 @@ void read_user_cars(struct player *splayer)
         return;
     }
 
-    if ( mysql_query( &rcMaindb , query) != 0 )
+    if ( mysql_query( rcMaindbConn , query) != 0 )
     {
         printf("Error: MySQL Query\n");
         SendMST(msg);
@@ -321,7 +321,7 @@ void read_user_cars(struct player *splayer)
         return;
     }
 
-    rcMainRes = mysql_store_result(&rcMaindb);
+    rcMainRes = mysql_store_result(rcMaindbConn);
     if (rcMainRes == NULL)
     {
         printf("Error: can't get the result description\n");
@@ -350,10 +350,10 @@ void read_user_cars(struct player *splayer)
 
         sprintf(query, "INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');", splayer->UName);
 
-        if ( mysql_ping( &rcMaindb ) != 0 )
+        if ( mysql_ping( rcMaindbConn ) != 0 )
             printf("Error: connection with MySQL server was lost\n");
 
-        if ( mysql_query( &rcMaindb , query) != 0 )
+        if ( mysql_query( rcMaindbConn , query) != 0 )
             printf("Error: MySQL Query\n");
 
         strcpy(splayer->cars[0].car, "UF1");
@@ -1573,7 +1573,7 @@ void case_mso ()
 
                 char sql[128];
                 sprintf(sql, "INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", ginfo->players[i].UName , ginfo->car[CarID].car );
-                mysql_query( &rcMaindb , sql );
+                mysql_query( rcMaindbConn , sql );
 
                 break;
             }
@@ -1648,7 +1648,7 @@ void case_mso ()
 
                 char sql[128];
                 sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", ginfo->players[i].UName , ginfo->car[j].car );
-                mysql_query( &rcMaindb , sql );
+                mysql_query( rcMaindbConn , sql );
                 break;
             }
 
@@ -2336,7 +2336,7 @@ int core_reconnect(void *pack_ver)
 void read_track()
 {
     char file[255];
-    sprintf(file, "%sdata\\RCCore\\tracks\\%s.txt" , RootDir , ginfo->Track);
+    sprintf(file, "%s\\data\\RCCore\\tracks\\%s.txt" , RootDir , ginfo->Track);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -2666,7 +2666,7 @@ void *ThreadMain(void *CmdLine)
     sprintf(path, "%smisc\\mysql.cfg", RootDir);
     tools::read_mysql(path, &conf);
 
-    while ( mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
+    while ( (rcMaindbConn = mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
     {
         printf("RCMain Error: can't connect to MySQL server\n");
         Sleep(60000);
@@ -2705,7 +2705,7 @@ void *ThreadMain(void *CmdLine)
     {
         cout << "INSIM VER != 5" << endl;
         out << "INSIM VER != 5" << endl;
-        return;
+        return nullptr;
     }
 
     CreateClasses();

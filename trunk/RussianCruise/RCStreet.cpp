@@ -12,15 +12,26 @@ RCStreet::~RCStreet()
 
 }
 
-int RCStreet::init(const char *dir, void *CInSim, void *Message)
+int RCStreet::init(MYSQL *conn, CInsim *InSim, void *Message)
 {
     IfInited = false;
-    strcpy(RootDir, dir); // Копируем путь до программы
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCStreet: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCStreet: Can't sctruct MySQL Connector\n");
+        return -1;
+    } // Копируем путь до программы
+
+    insim = InSim; // Присваиваем указателю область памяти
     if (!insim) // Проверяем на существование
     {
-        printf ("Can't struct CInsim class");
+        printf ("RCStreet: Can't struct CInsim class");
         return -1;
     }
 
@@ -35,7 +46,7 @@ int RCStreet::init(const char *dir, void *CInSim, void *Message)
     return 0;
 }
 
-char* RCStreet::GetStreetName(byte UCID, int StreetID)
+const char* RCStreet::GetStreetName(byte UCID, int StreetID)
 {
     if (StreetID>=0)
     {
@@ -54,7 +65,7 @@ char* RCStreet::GetStreetName(byte UCID, int StreetID)
 void RCStreet::readconfig(const char *Track)
 {
     char file[255];
-    sprintf(file, "%sdata\\RCStreet\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCStreet\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;

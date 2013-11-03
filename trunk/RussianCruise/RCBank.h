@@ -33,13 +33,6 @@ class RCBank:public RCBaseClass
 {
 private:
 
-    // Дескриптор соединения
-    MYSQL	rcbankDB;
-    // Дескриптор результирующей таблицы
-    MYSQL_RES *rcbankRes;
-    // Массив полей текущей строки
-    MYSQL_ROW rcbankRow;
-
     struct  Bank_info TrackInf;
     map<byte, BankPlayer>players;
     struct  place zone;
@@ -71,7 +64,7 @@ public:
     int  GetCash(byte UCID);
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *RCMessageClass, void *DL);
+    int init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL);
     void readconfig(const char *Track);
     void bank_save(byte UCID);
 

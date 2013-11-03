@@ -15,12 +15,23 @@ RCAntCheat::~RCAntCheat()
     //delete[] players;
 }
 
-int RCAntCheat::init(char *dir, void *CInSim, void *Message)
+int RCAntCheat::init(MYSQL *conn, CInsim *InSim, void *Message)
 {
-    strcpy(RootDir, dir); // Копируем путь до программы
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCAntCheat: Can't detect RootDir\n");
+        return -1;
+    }
+
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCAntCheat: Can't sctruct MySQL Connector\n");
+        return -1;
+    } // Копируем путь до программы
 
 
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    insim = InSim; // Присваиваем указателю область памяти
     if (!insim) // Проверяем на существование
     {
         printf ("Can't struct CInsim class");

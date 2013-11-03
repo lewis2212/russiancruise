@@ -4,23 +4,33 @@ RCQuest::RCQuest() {}
 
 RCQuest::~RCQuest() {}
 
-void RCQuest::init(const char* RootDir, void *insim)
+void RCQuest::init(MYSQL *conn, CInsim *InSim)
 {
-    strcpy(RCQuest::RootDir, RootDir);
-
-    RCQuest::insim = (CInsim *)insim;
-
-    if (!RCQuest::insim)
+    if (!_getcwd(RootDir, MAX_PATH))
     {
-        printf("RCQuest Error: Can't struct CInsim class\n");
-        return;
+        printf("RCDL: Can't detect RootDir\n");
+        return ;
+    }
+
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCDL: Can't sctruct MySQL Connector\n");
+        return ;
+    }
+
+    insim = InSim;
+    if (!insim)
+    {
+        printf ("Can't struct CInsim class");
+        return ;
     }
 }
 
 void RCQuest::readconfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCQuest\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCQuest\\%s.txt", RootDir, Track);
 }
 
 

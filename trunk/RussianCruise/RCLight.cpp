@@ -20,11 +20,22 @@ bool RCLight::SetLight3( byte UCID, bool Key)
     players[UCID].Light3 = Key;
 }
 
-int RCLight::init(const char *dir, void *CInSim, void *Message, void *RCDLic)
+int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
 {
-    strcpy(RootDir, dir); // Копируем путь до программы
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCLight: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCLight: Can't sctruct MySQL Connector\n");
+        return -1;
+    } // Копируем путь до программы
+
+    insim = InSim; // Присваиваем указателю область памяти
     if (!insim) // Проверяем на существование
     {
         printf ("Can't struct CInsim class");
@@ -52,7 +63,7 @@ void RCLight::readconfig(const char *Track)
 {
     strcpy(TrackName, Track);
     char file[255];
-    sprintf(file, "%sdata\\RCLight\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCLight\\tracks\\%s.txt", RootDir, Track);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)

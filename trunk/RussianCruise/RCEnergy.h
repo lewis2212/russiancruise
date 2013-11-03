@@ -34,9 +34,6 @@ struct energy_info
 class RCEnergy:public RCBaseClass
 {
 private:
-    MYSQL	rcNrgDB;		// Дескриптор соединения
-    MYSQL_RES *rcNrgRes;	// Дескриптор результирующей таблицы
-    MYSQL_ROW rcNrgRow;		// Массив полей текущей строки
 
     time_t nrgtime;
     struct  energy_info TrackInf;       // Where PitBox and Shop
@@ -67,7 +64,7 @@ public:
     struct  place zone;
 
     // Основные функции класса
-    int     init(const char *dir,void *CInSim, void *RCMessageClass,void *Bank);
+    int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
     void    readconfig(const char *Track);
     // функции-повторители основных фунцкий ядра
 

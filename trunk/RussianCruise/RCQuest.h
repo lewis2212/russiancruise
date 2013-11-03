@@ -30,7 +30,7 @@ class RCQuest:public RCBaseClass
 public:
     RCQuest();
     ~RCQuest();
-    void init(const char* RootDir, void *insim);
+    void init(MYSQL *conn, CInsim *InSim);
     void insim_mci();
     void readconfig(const char *Track);
 

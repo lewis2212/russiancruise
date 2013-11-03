@@ -142,7 +142,7 @@ public:
 
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
+    int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
     byte inited;
 
     void dead_pass(byte UCID);

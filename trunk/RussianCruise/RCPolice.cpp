@@ -9,10 +9,21 @@ RCPolice::~RCPolice()
 
 }
 
-int RCPolice::init(const char *dir, void *CInSim, void *Message, void *Bank, void *RCdl, void * STreet, void *Energy, void *Light)
+int RCPolice::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void *Energy, void *Light)
 {
-    strcpy(RootDir, dir);
-    insim = (CInsim *)CInSim;
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCPolice: Can't detect RootDir\n");
+        return -1;
+    }
+
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCPolice: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+    insim = InSim;
     if (!insim)
     {
         printf ("Can't struct CInsim class");
@@ -106,7 +117,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
     if ((strncmp("^4[^C^7ÄÏÑ^4]", players[packet->UCID].PName, 13) == 0 || strncmp("^4[^C^7ÃÀÈ^4]", players[packet->UCID].PName, 13) == 0) and !players[packet->UCID].cop)
     {
         char file[255];
-        sprintf(file, "%sdata\\RCPolice\\CopList.txt", RootDir);
+        sprintf(file, "%s\\data\\RCPolice\\CopList.txt", RootDir);
         char line[32];
         ifstream rCops( file , ios::in );
 
@@ -548,7 +559,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if ( strcmp( players[ packet->UCID ].UName , "denis-takumi") == 0 or strcmp( players[ packet->UCID ].UName , "Lexanom") == 0 )
     {
         char file[255];
-        sprintf(file, "%sdata\\RCPolice\\cops.txt", RootDir);
+        sprintf(file, "%s\\data\\RCPolice\\cops.txt", RootDir);
 
         char line[32];
         if (strncmp(Msg, "!cop_add", 8) == 0 )
@@ -1476,7 +1487,7 @@ void RCPolice::readconfig()
 {
     cout << "RCTaxi::readconfig\n" ;
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCPolice\\FineAllow.txt", RootDir);
+    sprintf(file, "%s\\data\\RCPolice\\FineAllow.txt", RootDir);
 
     HANDLE hwnd;
     WIN32_FIND_DATA fd;
@@ -1597,7 +1608,7 @@ void RCPolice::SaveUserFines ( byte UCID )
     //cout <<players[ UCID ].UName << " save fines_info" << endl;
 
     char file[255];
-    sprintf(file, "%sdata\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
+    sprintf(file, "%s\\data\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
 
     ofstream writef (file, ios::out);
     for (int i = 0; i < MAX_FINES; i++)
@@ -1615,7 +1626,7 @@ void RCPolice::ReadUserFines( byte UCID )
 {
 
     char file[255];
-    sprintf(file, "%sdata\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
+    sprintf(file, "%s\\data\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName);
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -1672,7 +1683,7 @@ void RCPolice::ReadFines()
 {
     char file[255];
     strcpy(file, RootDir);
-    sprintf(file, "%sdata\\RCPolice\\fines.txt" , RootDir);
+    sprintf(file, "%s\\data\\RCPolice\\fines.txt" , RootDir);
 
     HANDLE fff;
     WIN32_FIND_DATA fd;
