@@ -1,4 +1,0 @@
-Muka=13.547
-Voda=33.99
-Ovoshi=28.974
-Cheese=86.1335
