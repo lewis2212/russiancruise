@@ -75,7 +75,7 @@ char IS_PRODUCT_NAME[16];
 
 
 // Дескриптор соединения
-MYSQL rcMaindb;
+MYSQL rcMaindb, *rcMaindbConn;
 // Дескриптор результирующей таблицы
 MYSQL_RES *rcMainRes;
 // Массив полей текущей строки

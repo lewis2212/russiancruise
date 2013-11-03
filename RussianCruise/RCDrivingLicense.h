@@ -19,17 +19,9 @@ struct DLPlayer
     bool 	Lock;
 };
 
-
-
-
 class RCDL:public RCBaseClass
 {
 private:
-    MYSQL	rcDLDB;
-    MYSQL_RES *rcDLRes;
-    MYSQL_ROW rcDLRow;
-
-    char RootDir[MAX_PATH];
 
     RCMessage *msg;
 
@@ -69,7 +61,7 @@ public:
     void    InsimMCI( struct IS_MCI* packet );
 
     // Основные функции класса
-    int init(const char *dir,void *CInSim, void *RCMessageClass);
+    int init(MYSQL *conn,CInsim *InSim, void *RCMessageClass);
 };
 
 #endif

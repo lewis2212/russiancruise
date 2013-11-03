@@ -148,7 +148,7 @@ class RCCore
 	RCMessage   *msg;
 	RCBank      *bank;
 
-	int init(char *dir,void *CInSim);
+	int init(char *dir,CInsim *InSim);
 
 	void help_cmds (struct player *splayer,int h_type);
 	void btn_main (struct player *splayer);

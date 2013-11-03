@@ -12,11 +12,14 @@ using namespace std;
 #include <fstream>
 #include <ctime>
 #include <time.h>       // для работы с временем и рандомом
+
 #include <list>
 #include <exception>
 #include <map>
 #include <vector>
 #include <algorithm>
+
+#include <direct.h>
 
 #include "mysql/include/mysql.h"
 
@@ -89,6 +92,11 @@ protected:
     virtual void InsimTOC( struct IS_TOC* packet );
     virtual void InsimVER( struct IS_VER* packet );
     virtual void InsimVTN( struct IS_VTN* packet );
+
+    //MYSQL
+    MYSQL       *dbconn;
+    MYSQL_RES   *dbres;
+    MYSQL_ROW   dbrow;
 
 private:
 };

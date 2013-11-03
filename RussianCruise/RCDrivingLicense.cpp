@@ -153,11 +153,22 @@ bool RCDL::Islocked(byte UCID)
     }
 }
 
-int RCDL::init(const char *dir, void *CInSim, void *RCMessageClass)
+int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
 {
-    strcpy(RootDir, dir);
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCDL: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCDL: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+
+    insim = InSim;
     if (!insim)
     {
         printf ("Can't struct CInsim class");
@@ -173,28 +184,12 @@ int RCDL::init(const char *dir, void *CInSim, void *RCMessageClass)
 
     inited = 1;
 
-    if (!mysql_init( &rcDLDB))
+    if ( mysql_ping( dbconn ) != 0 )
     {
-        printf("RCDL Error: can't create MySQL-descriptor\n");
+        printf("RCDL Error: connection with MySQL server was lost\n");
         return -1;
     }
 
-    mysql_options( &rcDLDB , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
-
-    mysqlConf conf;
-    char path[MAX_PATH];
-    sprintf(path, "%smisc\\mysql.cfg", RootDir);
-    tools::read_mysql(path, &conf);
-
-    while ( mysql_real_connect( &rcDLDB , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) == false )
-    {
-        printf("RCDL Error: can't connect to MySQL server\n");
-#ifdef __linux__
-        sleep(60000);
-#else
-        Sleep(60000);
-#endif
-    }
     printf("RCDL Success: Connected to MySQL server\n");
 
     return 0;
@@ -214,29 +209,29 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT lvl, skill FROM dl WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if ( mysql_ping( &rcDLDB ) != 0 )
+    if ( mysql_ping( dbconn ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
         // произвести кик пользователя чтоль
     }
 
-    if ( mysql_query( &rcDLDB , query) != 0 )
+    if ( mysql_query( dbconn , query) != 0 )
     {
         printf("Error: MySQL Query\n");
         // произвести кик пользователя чтоль
     }
 
-    rcDLRes = mysql_store_result( &rcDLDB );
-    if (rcDLRes == NULL)
+    dbres = mysql_store_result( dbconn );
+    if (dbres == NULL)
     {
         printf("Error: can't get the result description\n");
     }
 
-    if (mysql_num_rows( rcDLRes ) > 0)
+    if (mysql_num_rows( dbres ) > 0)
     {
-        rcDLRow = mysql_fetch_row( rcDLRes );
-        players[ packet->UCID ].LVL = atof( rcDLRow[0] );
-        players[ packet->UCID ].Skill = atof( rcDLRow[1] );
+        dbrow = mysql_fetch_row( dbres );
+        players[ packet->UCID ].LVL = atof( dbrow[0] );
+        players[ packet->UCID ].Skill = atof( dbrow[1] );
     }
     else
     {
@@ -244,13 +239,13 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
 
         sprintf(query, "INSERT INTO dl (username) VALUES ('%s');", packet->UName);
 
-        if ( mysql_ping( &rcDLDB ) != 0 )
+        if ( mysql_ping( dbconn ) != 0 )
         {
             printf("Error: connection with MySQL server was lost\n");
             // произвести кик пользователя чтоль
         }
 
-        if ( mysql_query( &rcDLDB , query) != 0 )
+        if ( mysql_query( dbconn , query) != 0 )
         {
             printf("Error: MySQL Query\n");
             // произвести кик пользователя чтоль
@@ -261,7 +256,7 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
 
     }
 
-    mysql_free_result( rcDLRes );
+    mysql_free_result( dbres );
 
     btn_dl( packet->UCID );
 }
@@ -309,17 +304,17 @@ void RCDL::save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[ UCID ].LVL , players[ UCID ].Skill, players[ UCID ].UName);
 
-    if ( mysql_ping( &rcDLDB ) != 0 )
+    if ( mysql_ping( dbconn ) != 0 )
     {
         printf("Bank Error: connection with MySQL server was lost\n");
     }
 
-    if ( mysql_query( &rcDLDB , query) != 0 )
+    if ( mysql_query( dbconn , query) != 0 )
     {
         printf("Bank Error: MySQL Query Save\n");
     }
 
-    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( &rcDLDB ) );
+    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( dbconn ) );
 
 }
 

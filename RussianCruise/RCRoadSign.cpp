@@ -9,14 +9,25 @@ RCRoadSign::~RCRoadSign()
 
 }
 
-int RCRoadSign::Init(const char *dir, void *CInSim, void *Message, void * Light)
+int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
 {
-    strcpy(RootDir, dir);
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCRoadSign: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCRoadSign: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+
+    insim = InSim;
     if (!insim)
     {
-        printf ("Can'Top struct CInsim class");
+        printf ("RCRoadSign: Can't struct CInsim class");
         return -1;
     }
 
@@ -35,7 +46,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     cout << "RCRoadSign::readconfig\n" ;
     strcpy(TrackName, Track);
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -71,7 +82,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     }
     readf.close();
 
-    sprintf(file, "%sdata\\RCRoadSign\\sign.txt", RootDir);
+    sprintf(file, "%s\\data\\RCRoadSign\\sign.txt", RootDir);
     // TODO: refactoring
     HANDLE ff;
     // WIN32_FIND_DATA fd;
@@ -164,7 +175,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
     {
         char file[MAX_PATH], text[96];
 
-        sprintf(file, "%sdata\\RCRoadSign\\tracks\\%s.txt", RootDir, TrackName);
+        sprintf(file, "%s\\data\\RCRoadSign\\tracks\\%s.txt", RootDir, TrackName);
 
         int X = players[UCID].Info.X / 65536;
         int Y = players[UCID].Info.Y / 65536;

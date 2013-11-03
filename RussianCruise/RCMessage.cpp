@@ -28,14 +28,25 @@ int RCMessage::GetLangID(byte UCID)
     return players[UCID].LangID;
 }
 
-int RCMessage::init(const char *dir, void *CInSim)
+int RCMessage::init(MYSQL *conn, CInsim *InSim)
 {
-    strcpy(RootDir, dir);
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCMessage: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCMessage: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+
+    insim = InSim;
     if (!insim)
     {
-        printf ("Can't struct CInsim class");
+        printf ("RCMessage: Can't struct CInsim class");
         return -1;
     }
     return 0;
@@ -44,7 +55,7 @@ int RCMessage::init(const char *dir, void *CInSim)
 void RCMessage::readconfig(const char *Track)
 {
     char file[255];
-    sprintf(file, "%sdata\\RCMessages\\rus.txt", RootDir);
+    sprintf(file, "%s\\data\\RCMessages\\rus.txt", RootDir);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -75,7 +86,7 @@ void RCMessage::readconfig(const char *Track)
     }
     readf.close();
 
-    sprintf(file, "%sdata\\RCMessages\\eng.txt", RootDir);
+    sprintf(file, "%s\\data\\RCMessages\\eng.txt", RootDir);
     // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
@@ -117,7 +128,7 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
 
 
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCMessages\\users\\%s.txt", RootDir, players[ packet->UCID ].UName);
+    sprintf(file, "%s\\data\\RCMessages\\users\\%s.txt", RootDir, players[ packet->UCID ].UName);
 
 
     // TODO: refactoring
@@ -208,7 +219,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 void RCMessage::save (byte UCID)
 {
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCMessages\\users\\%s.txt", RootDir, players[ UCID ].UName);
+    sprintf(file, "%s\\data\\RCMessages\\users\\%s.txt", RootDir, players[ UCID ].UName);
 
     ofstream writef (file, ios::out);
     writef << "LangID=" << players[ UCID ].LangID << endl;

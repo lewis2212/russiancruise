@@ -17,7 +17,7 @@ class RCBanList:public RCBaseClass
 public:
     RCBanList();
     ~RCBanList();
-    int init( const char* RootDir, void *CInSim );
+    int init( const char* RootDir, CInsim *InSim );
 
     void removeUser( const char* username );
     void addUser( const char* username, time_t timestamp );

@@ -16,11 +16,22 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init(const char *dir, void *CInSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
+int RCPizza::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
 {
-    strcpy(RootDir, dir);
+    if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RCPizza: Can't detect RootDir\n");
+        return -1;
+    }
 
-    insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RCPizza: Can't sctruct MySQL Connector\n");
+        return -1;
+    }
+
+    insim = InSim;
     if (!insim)
     {
         printf ("RCPizza: Can't struct CInsim class");
@@ -204,7 +215,7 @@ void RCPizza::Done(byte UCID)
 void RCPizza::readconfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCPizza\\%s.txt", RootDir, Track);
+    sprintf(file, "%s\\data\\RCPizza\\%s.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
@@ -280,7 +291,7 @@ void RCPizza::readconfig(const char *Track)
     readf.close();
 
     /*** READ STORE DATA ***/
-    sprintf(file, "%sdata\\RCPizza\\_Store.txt", RootDir);
+    sprintf(file, "%s\\data\\RCPizza\\_Store.txt", RootDir);
     // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
@@ -313,7 +324,7 @@ void RCPizza::readconfig(const char *Track)
     }
     ReadStore.close();
 
-    sprintf(file, "%sdata\\RCPizza\\_Pizza.txt", RootDir);
+    sprintf(file, "%s\\data\\RCPizza\\_Pizza.txt", RootDir);
     // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
@@ -366,14 +377,14 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
 
     /** Save Pizza Info **/
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCPizza\\_Store.txt", RootDir);
+    sprintf(file, "%s\\data\\RCPizza\\_Store.txt", RootDir);
     ofstream writef (file, ios::out);
     writef << "Muka=" << PStore.Muka << endl;
     writef << "Voda=" << PStore.Voda << endl;
     writef << "Ovoshi=" << PStore.Ovoshi << endl;
     writef << "Cheese=" << PStore.Cheese << endl;
     writef.close();
-    sprintf(file, "%sdata\\RCPizza\\_Pizza.txt", RootDir);
+    sprintf(file, "%s\\data\\RCPizza\\_Pizza.txt", RootDir);
     ofstream WriteInfo (file, ios::out);
     WriteInfo << "Capital=" << Capital << endl;
     WriteInfo << "NumCars=" << NumCars << endl;

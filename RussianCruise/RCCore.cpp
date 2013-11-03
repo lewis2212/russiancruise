@@ -13,11 +13,22 @@ RCCore::~RCCore()
 
 }
 
-int RCCore::init(char *dir, void *CInSim)
+int RCCore::init(char *dir, CInsim *InSim)
 {
-	strcpy(RootDir, dir);
+	if (!_getcwd(RootDir, MAX_PATH))
+    {
+        printf("RC: Can't detect RootDir\n");
+        return;
+    }
 
-	insim = (CInsim *)CInSim;
+    dbconn = conn;
+    if (!dbconn)
+    {
+        printf("RC: Can't sctruct MySQL Connector\n");
+        return;
+    }
+
+	insim = InSim
 	if (!insim)
 	{
 		printf ("Can't struct CInsim class");

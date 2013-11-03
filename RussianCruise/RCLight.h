@@ -77,7 +77,7 @@ public:
     void OnRedFalse(byte UCID);
     bool CheckOnRed(byte UCID);
 
-    int init(const char *dir,void *CInSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
+    int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };

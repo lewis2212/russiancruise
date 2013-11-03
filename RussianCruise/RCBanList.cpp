@@ -10,11 +10,11 @@ RCBanList::~RCBanList()
 
 }
 
-int RCBanList::init( const char* dir, void *CInSim )
+int RCBanList::init( const char* dir, CInsim *InSim )
 {
     strcpy( RootDir, dir );
 
-    insim = (CInsim *)CInSim; // Присваиваем указателю область памяти
+    insim = InSim; // Присваиваем указателю область памяти
     if (!insim) // Проверяем на существование
     {
         printf ("Can't struct CInsim class");
