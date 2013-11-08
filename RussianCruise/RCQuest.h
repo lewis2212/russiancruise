@@ -28,7 +28,7 @@ struct QuestPlayer
 class RCQuest:public RCBaseClass
 {
 public:
-    RCQuest();
+    RCQuest(const char* Dir);
     ~RCQuest();
     void init(MYSQL *conn, CInsim *InSim);
     void insim_mci();

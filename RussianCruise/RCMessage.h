@@ -31,7 +31,7 @@ private:
     void InsimMSO( struct IS_MSO* packet );
 
 public:
-    RCMessage();
+    RCMessage(const char* Dir);
     ~RCMessage();
 
     int init(MYSQL *conn, CInsim *InSim);

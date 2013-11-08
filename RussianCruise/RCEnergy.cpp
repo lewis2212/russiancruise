@@ -1,17 +1,18 @@
 using namespace std;
 #include "RCEnergy.h"
 
-RCEnergy::RCEnergy() {}
-RCEnergy::~RCEnergy() {}
+RCEnergy::RCEnergy(const char* Dir)
+{
+    strcpy(RootDir,Dir);
+}
+
+RCEnergy::~RCEnergy()
+{
+
+}
 
 int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCEnergy: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

@@ -2,9 +2,9 @@ using namespace std;
 
 #include "RCMessage.h"
 
-RCMessage::RCMessage()
+RCMessage::RCMessage(const char* Dir)
 {
-
+    strcpy(RootDir,Dir);
 }
 
 RCMessage::~RCMessage()
@@ -30,12 +30,6 @@ int RCMessage::GetLangID(byte UCID)
 
 int RCMessage::init(MYSQL *conn, CInsim *InSim)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCMessage: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

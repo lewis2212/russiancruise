@@ -3,9 +3,9 @@ using namespace std;
 #include "RCBank.h"
 
 
-RCBank::RCBank()
+RCBank::RCBank(const char* Dir)
 {
-
+    strcpy(RootDir,Dir);
 }
 
 RCBank::~RCBank()
@@ -60,13 +60,6 @@ bool RCBank::InBank(byte UCID)
 
 int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL)
 {
-
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCBank: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {
@@ -314,6 +307,9 @@ void RCBank::InsimNCN( struct IS_NCN* packet )
             credit_penalty( packet->UCID );
         }
     }
+
+    players[ packet->UCID ].ReadTrue = true;
+
     /** credit **/
 
     BtnCash( packet->UCID );
@@ -366,7 +362,8 @@ void RCBank::InsimPLL( struct IS_PLL* packet )
 
 void RCBank::InsimCNL( struct IS_CNL* packet )
 {
-    bank_save( packet->UCID );
+    if (players[ packet->UCID ].ReadTrue)
+        bank_save( packet->UCID );
     players.erase( packet->UCID );
 }
 

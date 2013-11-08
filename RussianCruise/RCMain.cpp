@@ -60,35 +60,35 @@ RCQuest	*quest;
 
 void CreateClasses()
 {
-    msg = new RCMessage();
-    bank = new RCBank();
+    msg = new RCMessage(RootDir);
+    bank = new RCBank(RootDir);
 
 #ifdef _RC_ENERGY_H
-    nrg = new RCEnergy();
+    nrg = new RCEnergy(RootDir);
 #endif
 
 #ifdef _RC_LEVEL_H
-    dl = new RCDL();
+    dl = new RCDL(RootDir);
 #endif
 
 #ifdef _RC_CHEAT_H
-    antcht = new RCAntCheat();
+    antcht = new RCAntCheat(RootDir);
 #endif
 
 #ifdef _RC_STREET_H
-    street = new RCStreet();
+    street = new RCStreet(RootDir);
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh = new RCLight();
+    lgh = new RCLight(RootDir);
 #endif
 
 #ifdef _RC_PIZZA_H
-    pizza = new RCPizza();
+    pizza = new RCPizza(RootDir);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi = new RCTaxi();
+    taxi = new RCTaxi(RootDir);
 #endif
 
 #ifdef _RC_BANLIST_H
@@ -96,15 +96,15 @@ void CreateClasses()
 #endif
 
 #ifdef _RC_POLICE_H
-    police = new RCPolice();
+    police = new RCPolice(RootDir);
 #endif // _RC_POLICE_H
 
 #ifdef _RC_ROADSIGN
-    RoadSign = new RCRoadSign();
+    RoadSign = new RCRoadSign(RootDir);
 #endif // _RC_ROADSIGN
 
 #ifdef _RC_QUEST_H
-    quest = new RCQuest();
+    quest = new RCQuest(RootDir);
 #endif // _RC_QUEST_H
 
 }

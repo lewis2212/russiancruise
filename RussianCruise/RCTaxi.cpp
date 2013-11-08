@@ -1,8 +1,9 @@
 using namespace std;
 #include "RCTaxi.h"
 
-RCTaxi::RCTaxi()
+RCTaxi::RCTaxi(const char* Dir)
 {
+    strcpy(RootDir,Dir);
     memset(ClientPoints, 0, sizeof( Taxi_clients ) * MAX_POINTS );
 }
 
@@ -13,12 +14,6 @@ RCTaxi::~RCTaxi()
 
 int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void * Police, void * Light)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCTaxi: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {
@@ -831,6 +826,51 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             players[packet->UCID].StressOverCount = 0;
             players[packet->UCID].PassStress = 0;
         }
+    }
+
+    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))
+    {
+        strtok(Message, " ");
+        char * uname = strtok(NULL, " ");
+
+        if (!uname)
+        {
+            SendMTC(packet->UCID, "^6| ^C^7Не задано имя игрока");
+            return;
+        }
+
+        for ( auto& p: players )
+			if ( strcmp(uname, players[p.first].UName) == 0 )
+			{
+				char str[96];
+
+				sprintf(str,"^6| ^C^7Статистика работы в такси ^8%s ^7(^9%s^7)", players[p.first].PName, players[p.first].UName);
+				SendMTC(packet->UCID, str);
+
+				if (players[p.first].Work == 0)
+				{
+					sprintf(str,"^6| ^C^7Не работает");
+					SendMTC(packet->UCID, str);
+				}
+				else
+                {
+                    if (players[p.first].WorkNow == 0)
+                    {
+                        sprintf(str,"^6| ^C^7Не на вахте");
+                        SendMTC(packet->UCID, str);
+                    }
+                    else
+                    {
+                        sprintf(str,"^6| ^C^7Текущая занятость: %d", players[p.first].WorkAccept);
+                        SendMTC(packet->UCID, str);
+                    }
+                }
+
+				sprintf(str,"^6| ^C^7Всего отвез пассажиров: %d", players[p.first].PassCount);
+				SendMTC(packet->UCID, str);
+				return;
+			}
+		SendMTC(packet->UCID, "^6| ^C^7Игрок не найден");
     }
 
     if (strncmp(Message, "!points", strlen("!points")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))

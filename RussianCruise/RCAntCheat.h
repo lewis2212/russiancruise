@@ -70,7 +70,7 @@ private:
 public:
     // Переменные и функции, доступные для всех
 
-    RCAntCheat();   // Конструктор класса (обязательно)
+    RCAntCheat(const char* Dir);   // Конструктор класса (обязательно)
     ~RCAntCheat();  // Деструктор класса (обязательно)
     struct  track_inf TrackInf;             // Where PitBox and Shop
     // Основные функции класса

@@ -1,17 +1,17 @@
 #include "RCQuest.h"
 
-RCQuest::RCQuest() {}
+RCQuest::RCQuest(const char* Dir)
+{
+    strcpy(RootDir,Dir);
+}
 
-RCQuest::~RCQuest() {}
+RCQuest::~RCQuest()
+{
+
+}
 
 void RCQuest::init(MYSQL *conn, CInsim *InSim)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCDL: Can't detect RootDir\n");
-        return ;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

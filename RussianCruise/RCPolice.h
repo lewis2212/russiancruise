@@ -40,6 +40,22 @@ struct Cops
     int  	Rank;
 };
 
+struct PoliceStat
+{
+    int DateActive;
+    int CurrentDay;
+    // Day Stat
+    int ArrestByDay;
+    int SolvedIncedentsByDay;
+    int FinedByDay;
+    int CanceledFinesByDay;
+    // All Stat
+    int Arrest;
+    int SolvedIncedents;
+    int Fined;
+    int CanceledFines;
+};
+
 struct PolicePlayer
 {
     /** GENERAL **/
@@ -50,11 +66,11 @@ struct PolicePlayer
 
     /** COP **/
     bool    cop = false;
+    time_t	StartWork; 	//время заступления на вахту
     bool    Sirena;
     bool    Radar;
 
     /** ДТП **/
-    time_t	StartWork; 	//время заступления на вахту
     int		DTP;
     int		DTPstatus;
     int		DTPfines;
@@ -114,8 +130,12 @@ private:
     void ButtonClock( byte UCID );
     void ShowFinesPanel( byte UCID, byte UCID2 );
     void CopPayRoll(byte UCID, bool FullWork);
+
+    //Stat
+    bool LoadCopStat( string UName );
+    bool SaveCopStat( string UName );
 public:
-    RCPolice();
+    RCPolice(const char* Dir);
     ~RCPolice();
 	void readconfig();
 
