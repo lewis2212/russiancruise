@@ -40,7 +40,7 @@ private:
     void btn_dl( byte UCID );
 
 public:
-    RCDL();
+    RCDL(const char* Dir);
     ~RCDL();
 
     //

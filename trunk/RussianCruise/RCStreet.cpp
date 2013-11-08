@@ -2,8 +2,9 @@ using namespace std;
 
 #include "RCStreet.h"
 
-RCStreet::RCStreet()
+RCStreet::RCStreet(const char* Dir)
 {
+    strcpy(RootDir,Dir);
     memset(&Street, 0, sizeof( struct streets ) * MAX_STREETS );
 }
 
@@ -15,11 +16,6 @@ RCStreet::~RCStreet()
 int RCStreet::init(MYSQL *conn, CInsim *InSim, void *Message)
 {
     IfInited = false;
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCStreet: Can't detect RootDir\n");
-        return -1;
-    }
 
     dbconn = conn;
     if (!dbconn)

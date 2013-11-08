@@ -1,9 +1,9 @@
 using namespace std;
 #include "RCLight.h"
 
-RCLight::RCLight()
+RCLight::RCLight(const char* Dir)
 {
-
+    strcpy(RootDir,Dir);
 }
 
 RCLight::~RCLight()
@@ -22,12 +22,6 @@ bool RCLight::SetLight3( byte UCID, bool Key)
 
 int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCLight: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

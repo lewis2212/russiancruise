@@ -1,6 +1,7 @@
 #include "RCPolice.h"
-RCPolice::RCPolice()
+RCPolice::RCPolice(const char* Dir)
 {
+    strcpy(RootDir,Dir);
     memset( &fines, 0, sizeof( fine ) * MAX_FINES );
 }
 
@@ -11,12 +12,6 @@ RCPolice::~RCPolice()
 
 int RCPolice::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void *Energy, void *Light)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCPolice: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {
@@ -166,6 +161,8 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
         dl->Lock(packet->UCID);
         nrg->Lock(packet->UCID);
         lgh->SetLight3(packet->UCID, true);
+
+        LoadCopStat( players[packet->UCID].UName );
     }
 }
 
@@ -179,6 +176,9 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
+
+    SaveCopStat( players[UCID].UName );
+
     //PLIDtoUCID.erase(packet->PLID);
 }
 
@@ -187,13 +187,13 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
     byte UCID = PLIDtoUCID[packet->PLID];
 
     if (players[UCID].Sirena)
-    {
         players[UCID].Sirena = false;
-    }
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
+
+    SaveCopStat( players[UCID].UName );
 
     PLIDtoUCID.erase(packet->PLID);
 }
@@ -1766,6 +1766,22 @@ void RCPolice::SendMTCToCop(const char* Msg, int Rank, ...)
         }
     }
 
+}
+
+bool
+RCPolice::LoadCopStat( string UName )
+{
+    string query = "SELECT * FROM police_stat WHERE username = '";
+    query += UName;
+    query += "';";
+
+    return true;
+}
+
+bool
+RCPolice::SaveCopStat( string UName )
+{
+    return true;
 }
 
 void RCPolice::Event()

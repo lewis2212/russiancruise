@@ -107,7 +107,7 @@ private:
     int check_pos ( byte UCID );
 
 public:
-    RCPizza();
+    RCPizza(const char* Dir);
     ~RCPizza();
 
     // Основные функции класса

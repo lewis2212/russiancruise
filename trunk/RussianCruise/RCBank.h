@@ -6,20 +6,20 @@
 #include "RCMessage.h"
 #include "RCDrivingLicense.h"
 
-typedef struct BankPlayer
+
+
+struct BankPlayer: public GlobalPlayer
 {
-    struct  	CompCar Info;
-    char    	UName[24];              // Username
-    char    	PName[24];              // Player name
     double   	Cash;
-    //char    	CName[4];             // Car Name
+
     bool    	InZone;                 //зона банка
     u_int   	Credit;
     time_t  	Date_create;
 
     u_int   	Deposit;
     time_t   	Dep_Date_create;
-} _BankPlayer;
+    bool        ReadTrue = false;
+};
 
 struct Bank_info
 {
@@ -51,7 +51,7 @@ private:
     void InsimMSO( struct IS_MSO* packet );
 
 public:
-    RCBank();
+    RCBank(const char* Dir);
     ~RCBank();
 
     bool AddToBank(int Cash);

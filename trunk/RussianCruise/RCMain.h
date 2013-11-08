@@ -37,12 +37,9 @@ buttons ClickId's:
 */
 using namespace std;
 
-#ifdef __linux__
-//	#include <mysql.h>
-#else
 #include <windows.h>
 #include "mysql/include/mysql.h"
-#endif
+
 
 
 #include <math.h>

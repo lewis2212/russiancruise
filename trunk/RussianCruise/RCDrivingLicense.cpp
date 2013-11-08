@@ -2,9 +2,9 @@ using namespace std;
 
 #include "RCDrivingLicense.h"
 
-RCDL::RCDL()
+RCDL::RCDL(const char* Dir)
 {
-
+    strcpy(RootDir,Dir);
 }
 
 RCDL::~RCDL()
@@ -155,12 +155,6 @@ bool RCDL::Islocked(byte UCID)
 
 int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCDL: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

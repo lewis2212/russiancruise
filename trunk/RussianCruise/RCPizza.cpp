@@ -4,8 +4,9 @@ time_t  ptime;
 pthread_t tid; // Thread ID
 
 
-RCPizza::RCPizza()
+RCPizza::RCPizza(const char* Dir)
 {
+    strcpy(RootDir,Dir);
     memset(&PStore, 0, sizeof(Store));
     memset(&TrackInf, 0, sizeof(pizza_info));
     memset(&zone, 0, sizeof(place));
@@ -18,12 +19,6 @@ RCPizza::~RCPizza()
 
 int RCPizza::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCPizza: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {
@@ -202,13 +197,13 @@ void RCPizza::Done(byte UCID)
         players[UCID].WorkAccept = 0;
         players[UCID].WorkZone = 0;
         ClearButtonInfo(UCID);
-        SendBFN(UCID, 212);
 
         int cash = 50 * abs(1 - (players[UCID].WorkTime - time(&ptime)) / PIZZA_WORK_TIME);
         bank->AddCash(UCID, 248 + cash, true);
         Capital += 420 - cash;
 
         dl->AddSkill(UCID);
+        SendBFN(UCID, 212);
     }
 }
 
@@ -363,14 +358,18 @@ void RCPizza::InsimNCN(struct IS_NCN* packet)
 void RCPizza::InsimCNL(struct IS_CNL* packet)
 {
     if (players[packet->UCID].WorkAccept == 3)
-    {
         ShopAccepted = false;
-    }
 
     if (players[packet->UCID].WorkType == WK_PIZZA)
-    {
         CarsInWork--;
-    }
+
+    if (players[packet->UCID].Pizza == 1)
+        for (auto& p: players)
+            if (players[p.first].WorkPlayerAccept == packet->UCID)
+            {
+                players[p.first].WorkPlayerAccept = 0;
+                break;
+            }
 
     players.erase(packet->UCID);
     NumP = packet->Total;
@@ -602,8 +601,10 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         if (players[packet->UCID].Pizza == 0)
         {
             players[packet->UCID].Pizza = 1;
-            SendMTC(packet->UCID, msg->_(packet->UCID, "DelTofuOk")); // заказ принят
+            SendMTC(packet->UCID, msg->_(packet->UCID, "DelTofu")); // заказ принят
         }
+        else
+            SendMTC(packet->UCID, msg->_(packet->UCID, "UAreDel"));
     }
 }
 
@@ -650,9 +651,7 @@ void RCPizza::Event()
                 SendBFN(plit.first, 212);
 
                 if (players[plit.first].WorkAccept == 3) // не успел заказать продукты
-                {
                     ShopAccepted = false;
-                }
 
                 if (players[plit.first].WorkAccept != 0)
                 {
@@ -660,17 +659,12 @@ void RCPizza::Event()
                     players[plit.first].WorkType = WK_NULL;
                     players[plit.first].WorkAccept = 0;
                     if (players[plit.first].WorkPlayerAccept != 0)
-                    {
                         for (auto& plit2: players)
-                        {
                             if (plit2.first == players[plit.first].WorkPlayerAccept)
                             {
                                 players[plit2.first].Pizza = 0;
+                                break;
                             }
-
-                            break;
-                        }
-                    }
                     players[plit.first].WorkPlayerAccept = 0;
                     CarsInWork --;
                 }
@@ -699,7 +693,7 @@ void RCPizza::Event()
                     /** прогон пользователей на предмет заказа **/
                     for (auto& plit2: players)
                     {
-                        if ((plit2.first  !=  plit.first) and (players[plit2.first].Pizza == 1))
+                        if (plit2.first != plit.first and players[plit2.first].Pizza == 1)
                         {
                             SendMTC(plit.first, msg->_(plit.first, "2201"));
                             SendMTC(plit.first, msg->_(plit.first, "2202"));
@@ -710,7 +704,6 @@ void RCPizza::Event()
                             players[plit.first].WorkTime = worktime+60 * 6;
 
                             players[plit2.first].Pizza = 2;
-
                             break; // чтобы оповещал только одного игрока
                         }
                     }

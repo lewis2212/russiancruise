@@ -61,7 +61,7 @@ private:
 public:
     // Переменные и функции, доступные для всех
 
-    RCStreet();   // Конструктор класса (обязательно)
+    RCStreet(const char* Dir);   // Конструктор класса (обязательно)
     ~RCStreet();  // Деструктор класса (обязательно)
 
     byte    StreetNums;                          // Count of streets

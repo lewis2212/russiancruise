@@ -4,10 +4,9 @@ using namespace std;
 
 
 
-RCAntCheat::RCAntCheat()
+RCAntCheat::RCAntCheat(const char* Dir)
 {
-    //players = new Player[MAX_PLAYERS];
-    //memset(players, 0, sizeof( Player ) * MAX_PLAYERS );
+    strcpy(RootDir,Dir);
 }
 
 RCAntCheat::~RCAntCheat()
@@ -17,12 +16,6 @@ RCAntCheat::~RCAntCheat()
 
 int RCAntCheat::init(MYSQL *conn, CInsim *InSim, void *Message)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCAntCheat: Can't detect RootDir\n");
-        return -1;
-    }
-
     dbconn = conn;
     if (!dbconn)
     {

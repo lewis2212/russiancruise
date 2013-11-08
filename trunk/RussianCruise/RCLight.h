@@ -67,7 +67,7 @@ private:
 
 
 public:
-    RCLight();   // Конструктор класса (обязательно)
+    RCLight(const char* Dir);   // Конструктор класса (обязательно)
     ~RCLight();  // Деструктор класса (обязательно)
 
     bool SetLight3(byte UCID,bool Key);

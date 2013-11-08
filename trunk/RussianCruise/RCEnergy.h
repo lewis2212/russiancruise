@@ -55,7 +55,7 @@ private:
 
     int check_pos ( byte UCID );
 public:
-    RCEnergy();
+    RCEnergy(const char* Dir);
     ~RCEnergy();
 
     RCMessage   *msg;
