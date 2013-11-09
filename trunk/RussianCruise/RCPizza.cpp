@@ -604,7 +604,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             SendMTC(packet->UCID, msg->_(packet->UCID, "DelTofu")); // заказ принят
         }
         else
-            SendMTC(packet->UCID, msg->_(packet->UCID, "UAreDel"));
+            SendMTC(packet->UCID, msg->_(packet->UCID, "UAreDel")); //ты уже заказал
     }
 }
 

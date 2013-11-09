@@ -1724,12 +1724,20 @@ void case_mso ()
         if ( police->InPursuite( ginfo->players[i].UCID ) == 1 )
         {
             char Msg[64];
-            sprintf(Msg, "/pitlane %s", ginfo->players[i].UName);
+            sprintf(Msg, "/pitlane %s", ginfo->players[i].UName, 10000);
             SendMST(Msg);
-            SendMTC(ginfo->players[i].UCID, msg->_( ginfo->players[i].UCID, "2700" ));
-            SendMTC(ginfo->players[i].UCID, msg->_( ginfo->players[i].UCID, "2701" ));
-            bank->RemCash(ginfo->players[i].UCID, 10000);
-            bank->AddToBank(10000);
+
+            int pay = 10000;
+
+            char str[96];
+            sprintf(str, msg->_(ginfo->players[i].UCID, "2700"), pay);
+
+            SendMTC(ginfo->players[i].UCID, str);
+            bank->RemCash(ginfo->players[i].UCID, pay);
+            bank->AddToBank(pay);
+
+            if (dl->GetSkill( ginfo->players[i].UCID ) > 10 )
+                dl->RemSkill(ginfo->players[i].UCID, 10);
         }
         else
         {
@@ -2067,7 +2075,6 @@ void case_pla ()
 
 void case_pll ()
 {
-    // out << "player leaves race" << endl;
     int i;
 
     struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
@@ -2077,7 +2084,6 @@ void case_pll ()
     {
         if (ginfo->players[i].PLID == pack_pll->PLID)
         {
-            //msg->SendBFNAll( ginfo->players[i].UCID );
             ginfo->players[i].PLID = 0;
             memset(&ginfo->players[i].Info, 0, sizeof(CompCar));
 
@@ -2091,11 +2097,12 @@ void case_pll ()
                 sprintf(str, msg->_(ginfo->players[i].UCID, "2600"), pay);
                 SendMTC(ginfo->players[i].UCID, str);
 
-                if ( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
-                    dl->RemSkill(ginfo->players[i].UCID, 10);
 
                 bank->RemCash(ginfo->players[i].UCID, pay);
                 bank->AddToBank(pay);
+
+                if ( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
+                    dl->RemSkill(ginfo->players[i].UCID, 10);
             }
             else
             {
@@ -2114,8 +2121,6 @@ void case_pll ()
 #ifdef _RC_POLICE_H
             }
 #endif
-            //for (int g=0; g<200; g++)
-            //    SendBFN(ginfo->players[i].UCID, g);
 
             ginfo->players[i].Zone = 1;
             break;
@@ -2149,11 +2154,11 @@ void case_plp ()
                 sprintf(str, msg->_(ginfo->players[i].UCID, "2700"), pay);
                 SendMTC(ginfo->players[i].UCID, str);
 
-                if ( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
-                    dl->RemSkill(ginfo->players[i].UCID, 10);
-
                 bank->RemCash(ginfo->players[i].UCID, pay);
                 bank->AddToBank(pay);
+
+                if ( dl->GetSkill( ginfo->players[i].UCID ) > 10 )
+                    dl->RemSkill(ginfo->players[i].UCID, 10);
             }
             else
             {
