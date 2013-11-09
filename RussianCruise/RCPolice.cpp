@@ -170,6 +170,9 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
 
+    if (players[UCID].Pogonya != 0)
+        players[UCID].Pogonya = 2;
+
     if (players[UCID].Sirena)
         players[UCID].Sirena = false;
 
@@ -185,6 +188,9 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
 void RCPolice::InsimPLL( struct IS_PLL* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
+
+    if (players[UCID].Pogonya != 0)
+        players[UCID].Pogonya = 2;
 
     if (players[UCID].Sirena)
         players[UCID].Sirena = false;
@@ -658,7 +664,7 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
     if (players[UCID].DoneCount == 0)
         return;
 
-    int Cash = players[UCID].DoneCount * 1000;
+    int Cash = players[UCID].DoneCount * (500 + 250 * players[UCID].Rank);
     char str[96];
 
     if (FullWork)
@@ -1485,7 +1491,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 void RCPolice::readconfig()
 {
-    cout << "RCTaxi::readconfig\n" ;
+    cout << "RCPolice::readconfig\n" ;
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCPolice\\FineAllow.txt", RootDir);
 
@@ -1848,9 +1854,7 @@ void RCPolice::Event()
 
                 //очистка кнопок
                 for (byte i = 60; i < 92; i++)
-                {
                     SendBFN(255, i);
-                }
             }
         }
 
