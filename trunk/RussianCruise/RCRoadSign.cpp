@@ -1,8 +1,9 @@
 #include "RCRoadSign.h"
 
-RCRoadSign::RCRoadSign()
+RCRoadSign::RCRoadSign(const char* Dir)
 {
-
+    strcpy(RootDir, Dir);
+    memset(&Sign, 0, sizeof(Sign));
 }
 RCRoadSign::~RCRoadSign()
 {
@@ -45,6 +46,7 @@ void RCRoadSign::ReadConfig(const char *Track)
 {
     cout << "RCRoadSign::readconfig\n" ;
     strcpy(TrackName, Track);
+    Sign.clear();
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
@@ -216,7 +218,6 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Top+=44;
         Height=52;
     }
-
     //подвес
     SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
     SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
@@ -336,7 +337,6 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
                 ShowSign(UCID, sign.ID, SignCount);
                 players[UCID].OnSign = true;
                 SignCount++;
-                break;
             }
         }
 
