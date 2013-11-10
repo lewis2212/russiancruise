@@ -173,7 +173,9 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
     char Msg[128];
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if ( strncmp(Msg, "!s_add", 6) == 0 )
+
+
+    if ( strncmp(Msg, "!s_add", 6) == 0 and (strcmp(players[UCID].UName, "Lexanom") == 0 or strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Max1548") == 0))
     {
         char file[MAX_PATH], text[96];
 
