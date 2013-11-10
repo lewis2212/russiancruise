@@ -50,7 +50,7 @@ private:
     void ShowSign(byte UCID, byte ID, byte Count);
 
 public:
-    RCRoadSign();
+    RCRoadSign(const char* Dir);
     ~RCRoadSign();
     int Init(MYSQL *conn,CInsim *InSim, void *Message, void * Light);
     void ReadConfig(const char *Track);
