@@ -632,10 +632,8 @@ void case_btc ()
             if (pack_btc->ClickID<=32)
             {
             	ShowUsersList(pack_btc->UCID);
-                ginfo->players[i].BID2 =  pack_btc->ClickID;
+                ginfo->players[i].BID2 = pack_btc->ClickID;
 
-                //if (ginfo->players[i].Action == 1)
-                {
                     struct IS_BTN pack_btn;
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
                     pack_btn.Size = sizeof(struct IS_BTN);
@@ -643,10 +641,14 @@ void case_btc ()
                     pack_btn.ReqI = pack_btc->ReqI;
                     pack_btn.UCID = ginfo->players[i].UCID;
                     pack_btn.L = 25;
+
                     int count;
-                    for (int j=0; j<MAX_PLAYERS; j++) if (ginfo->players[j].UCID != 0) count++;
+                    for (int j=0; j<MAX_PLAYERS; j++)
+						if (ginfo->players[j].UCID != 0)
+							count++;
                     if (count>16)
                         pack_btn.L += 24;
+
                     pack_btn.T = 187;
 #ifdef _RC_POLICE_H
                     if (police->IsCop(ginfo->players[i].UCID) and !police->IsCop(pack_btc->ReqI))
@@ -661,9 +663,10 @@ void case_btc ()
                     {
                         sprintf(pack_btn.Text, msg->_( pack_btc->UCID, "ItsYou" ));
                         insim->send_packet(&pack_btn);
-                        pack_btn.BStyle = 7 + 8 + 16;
+                        pack_btn.BStyle = 7 + 16;
                     }
-                    else for (int i=0; i < MAX_PLAYERS; i++)
+                    else
+						for (int i=0; i < MAX_PLAYERS; i++)
                         {
                             if (ginfo->players[i].UCID == pack_btc->ReqI)
                             {
@@ -689,6 +692,7 @@ void case_btc ()
                     pack_btn.ClickID = 37;
                     strcpy(pack_btn.Text, msg->_( ginfo->players[i].UCID, "1001" ));
                     insim->send_packet(&pack_btn);
+
 #ifdef _RC_POLICE_H
                     // cop buttons
                     if ( police->IsCop(ginfo->players[i].UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != ginfo->players[i].UCID)
@@ -729,28 +733,24 @@ void case_btc ()
                         SendBFN(ginfo->players[i].UCID, 41);
                     }
 #endif
-                }
             }
 
-            /**
-            Скрыть кнопки с пользователями
-            */
+            /** Скрыть кнопки с пользователями **/
             if (pack_btc->ClickID==34)
             {
                 for (int j=0; j<50; j++)
                     SendBFN(ginfo->players[i].UCID, j);
             }
 
-
             /**
             Информационные кнопки
             **/
-            if (pack_btc->ClickID == 149)
+            /*if (pack_btc->ClickID == 149)
             {
                 ginfo->players[i].bfn=0;
                 for (int j=159; j>0; j--)
                     SendBFN(pack_btc->UCID, j);
-            }
+            }*/
 
             if (pack_btc->ReqI==254)
             {
@@ -871,7 +871,7 @@ void case_cnl ()
     {
         if (ginfo->players[i].UCID == pack_cnl->UCID)
         {
-            printf("<<   disconnected %s (%s)\n", ginfo->players[i].UName, RCBaseClass::GetReason(pack_cnl->Reason).c_str());
+            printf("<<   disconnected %s (%s)\n", ginfo->players[i].UName, RCBaseClass::GetReason(pack_cnl->Reason));
 
             save_user_cars(&ginfo->players[i]);
 
@@ -1754,8 +1754,8 @@ void case_mso ()
     }
     if ((strncmp(Msg, "!test", 5) == 0))
     {
-
     }
+
     //!users
     if ((strncmp(Msg, "!users", 6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
         ShowUsersList(ginfo->players[i].UCID);
@@ -1893,8 +1893,6 @@ void case_mso_cop ()
 
 void case_ncn ()
 {
-    int i;
-
     struct IS_NCN *pack_ncn = (struct IS_NCN*)insim->get_packet();
 
     if (pack_ncn->UCID == 0)
@@ -1903,10 +1901,10 @@ void case_ncn ()
     if (pack_ncn->ReqI == 0)
         printf("  >> connected %s\n", pack_ncn->UName);
 
+    int i;
     for (i=0; i<MAX_PLAYERS; i++)
         if (ginfo->players[i].UCID == 0)
             break;
-
     if (i == MAX_PLAYERS)
         return;
 
@@ -2121,7 +2119,6 @@ void case_pll ()
 #ifdef _RC_POLICE_H
             }
 #endif
-
             ginfo->players[i].Zone = 1;
             break;
         }
@@ -2177,8 +2174,6 @@ void case_plp ()
 #ifdef _RC_POLICE_H
             }
 #endif
-            //for (int g=0; g<200; g++)
-            //    SendBFN(ginfo->players[i].UCID, g);
             ginfo->players[i].Zone = 1;
             break;
         }
@@ -2207,60 +2202,54 @@ void case_rst ()
 void case_vtn ()
 {
     struct IS_VTN *pack_vtn = (struct IS_VTN *)insim->get_packet();
+
     if (pack_vtn->UCID == 0) return;
-    for (int i=0; i<MAX_PLAYERS; i++)
-    {
-        if (ginfo->players[i].UCID == pack_vtn->UCID)
-        {
-            //SendMST(msg->_( ginfo->players[i].UCID, "2900" ));
-            SendMST("/cv");
-            break;
-        }
-    }
+
+	SendMST("/cv");
 }
 
 void ShowUsersList(byte UCID)
 {
-        for (int h=0; h<50; h++) SendBFN(UCID, h);
+    for (int h=0; h<50; h++) SendBFN(UCID, h);
 
-        struct IS_BTN pack_btn;
-        memset(&pack_btn, 0, sizeof(struct IS_BTN));
-        pack_btn.Size = sizeof(struct IS_BTN);
-        pack_btn.Type = ISP_BTN;
-        pack_btn.UCID = UCID;
-        pack_btn.L = 1;
-        pack_btn.T = 191;
-        pack_btn.W = 24;
-        pack_btn.H = 4;
-        pack_btn.BStyle = 16 + ISB_CLICK;
+    struct IS_BTN pack_btn;
+    memset(&pack_btn, 0, sizeof(struct IS_BTN));
+    pack_btn.Size = sizeof(struct IS_BTN);
+    pack_btn.Type = ISP_BTN;
+    pack_btn.UCID = UCID;
+    pack_btn.L = 1;
+    pack_btn.T = 191;
+    pack_btn.W = 24;
+    pack_btn.H = 4;
+    pack_btn.BStyle = 16 + ISB_CLICK;
 
-        int col = 0;
-        for (int j=0; j<MAX_PLAYERS; j++)
+    int col = 0;
+    for (int j=0; j<MAX_PLAYERS; j++)
+    {
+        if (ginfo->players[j].UCID != 0)
         {
-            if (ginfo->players[j].UCID != 0)
+            if (col == 16)
             {
-                if (col == 16)
-                {
-                    pack_btn.L += 24;
-                    pack_btn.T = 191;
-                }
-                pack_btn.ReqI = ginfo->players[j].UCID;
-                pack_btn.ClickID = ginfo->players[j].BID;
-                sprintf(pack_btn.Text, "%s", ginfo->players[j].PName);
-                insim->send_packet(&pack_btn);
-                pack_btn.T -= 4;
-                col++;
+                pack_btn.L += 24;
+                pack_btn.T = 191;
             }
+            pack_btn.ReqI = ginfo->players[j].UCID;
+            pack_btn.ClickID = ginfo->players[j].BID;
+            sprintf(pack_btn.Text, "%s", ginfo->players[j].PName);
+            insim->send_packet(&pack_btn);
+            pack_btn.T -= 4;
+            col++;
         }
-        pack_btn.ClickID = 34;
-        pack_btn.BStyle = 16 + ISB_CLICK;
-        pack_btn.T = 195;
-        pack_btn.L = 1;
-        pack_btn.W = 24;
-        if (col > 16) pack_btn.W += 24;
+    }
+    pack_btn.ClickID = 34;
+    pack_btn.BStyle = 16 + ISB_CLICK;
+    pack_btn.T = 195;
+    pack_btn.L = 1;
+    pack_btn.W = 24;
+    if (col > 16) pack_btn.W += 24;
 
-        strcpy(pack_btn.Text, msg->_( UCID, "604" ));
-        insim->send_packet(&pack_btn);
+    strcpy(pack_btn.Text, msg->_( UCID, "604" ));
+    insim->send_packet(&pack_btn);
 }
 
 int core_connect(void *pack_ver)
@@ -2677,6 +2666,7 @@ void *ThreadMain(void *CmdLine)
         Sleep(60000);
     }
     printf("RCMain Success: Connected to MySQL server\n");
+
     // TODO (#1#): Uncoment in Release
     //Sleep(2*60*1000);
     sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);

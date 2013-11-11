@@ -658,13 +658,14 @@ void RCPizza::Event()
                     SendMTC(plit.first, msg->_(plit.first, "4101"));
                     players[plit.first].WorkType = WK_NULL;
                     players[plit.first].WorkAccept = 0;
+
                     if (players[plit.first].WorkPlayerAccept != 0)
                         for (auto& plit2: players)
                             if (plit2.first == players[plit.first].WorkPlayerAccept)
-                            {
+							{
                                 players[plit2.first].Pizza = 0;
-                                break;
-                            }
+								break;
+							}
                     players[plit.first].WorkPlayerAccept = 0;
                     CarsInWork --;
                 }

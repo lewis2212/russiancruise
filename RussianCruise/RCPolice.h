@@ -45,23 +45,22 @@ struct PoliceStat
     int DateActive;
     int CurrentDay;
     // Day Stat
-    int ArrestByDay;
+    int ArrestWithFineByDay;
+    int ArrestWithOutFineByDay;
     int SolvedIncedentsByDay;
     int FinedByDay;
     int CanceledFinesByDay;
     // All Stat
-    int Arrest;
+    int ArrestWithFine;
+    int ArrestWithOutFine;
     int SolvedIncedents;
     int Fined;
     int CanceledFines;
 };
 
-struct PolicePlayer
+struct PolicePlayer: public GlobalPlayer
 {
     /** GENERAL **/
-    char    UName[24];             	// Username
-    char    PName[24];             	// Player name
-    char    CName[4];              	// Car Name
     byte	Rank = 0;				// Звание: 0 - игрок, 1 - мл. лейт., 2 - лейт., 3 - стар. лейт., 4 - капитан
 
     /** COP **/
@@ -69,6 +68,7 @@ struct PolicePlayer
     time_t	StartWork; 	//время заступления на вахту
     bool    Sirena;
     bool    Radar;
+    struct  PoliceStat  PStat;
 
     /** ДТП **/
     int		DTP;
@@ -81,7 +81,6 @@ struct PolicePlayer
     int    	Pogonya;
     int     StopTime = 0;
 
-    struct  CompCar Info;
     struct 	user_fine fines[MAX_FINES];
 
     byte    BID;
@@ -106,6 +105,7 @@ private:
     RCLight		*lgh;
 
     string siren = "";
+    string CopUname = "";
 
     map <byte, PolicePlayer> players; 			// все игроки
     map <byte, APlayer> ArestPlayers;			// арестованные игроки
@@ -132,8 +132,9 @@ private:
     void CopPayRoll(byte UCID, bool FullWork);
 
     //Stat
-    bool LoadCopStat( string UName );
-    bool SaveCopStat( string UName );
+    void LoadCopStat(byte UCID);
+    void SaveCopStat(byte UCID);
+    void ShowCopStat(byte UCID);
 public:
     RCPolice(const char* Dir);
     ~RCPolice();

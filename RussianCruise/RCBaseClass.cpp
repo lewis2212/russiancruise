@@ -13,9 +13,7 @@ RCBaseClass::~RCBaseClass()
 void RCBaseClass::next_packet()
 {
     if (!insim)
-    {
         return;     //dont work if insim is NULL
-    }
 
     switch (insim->peek_packet())
     {
@@ -234,42 +232,42 @@ void RCBaseClass::SendBFN (byte UCID, byte ClickID)
     delete pack;
 }
 
-string RCBaseClass::GetReason( byte Reason )
+const char* RCBaseClass::GetReason(byte Reason)
 {
-    switch( Reason )
+    switch(Reason)
     {
     case 0:
-        return "LEAVR_DISCO";
+        return "DISCONNECT";
         break;
     case 1:
-        return "LEAVR_TIMEOUT";
+        return "TIME_OUT";
         break;
     case 2:
-        return "LEAVR_LOSTCONN";
+        return "LOST_CONNECTION";
         break;
     case 3:
-        return "LEAVR_KICKED";
+        return "KICKED";
         break;
     case 4:
-        return "LEAVR_BANNED";
+        return "BANNED";
         break;
     case 5:
-        return "LEAVR_SECURITY";
+        return "SECURITY";
         break;
     case 6:
-        return "LEAVR_CPW";
+        return "CPW";
         break;
     case 7:
-        return "LEAVR_OOS";
+        return "OOS";
         break;
     case 8:
-        return "LEAVR_JOOS";
+        return "JOOS";
         break;
     case 9:
-        return "LEAVR_HACK";
+        return "HACK";
         break;
     default:
-        return "";
+        return "N/A";
         break;
     }
 }
@@ -310,7 +308,14 @@ void RCBaseClass::ClearButtonInfo(byte UCID)
     SendBFN( UCID, 211);
 }
 
-void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text )
+string RCBaseClass::NumToString (int n)
+{
+	char s[24];
+	sprintf(s,"%d",n);
+	return (string)s;
+}
+
+void RCBaseClass::SendStringButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, string Text, byte TypeIn )
 {
     IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
@@ -320,14 +325,14 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
     pack->UCID = UCID;
     pack->Inst = 0;
     pack->BStyle = BStyle;
-    pack->TypeIn = 0;
+    pack->TypeIn = TypeIn;
     pack->ClickID = ClickID;
     pack->L = L;
     pack->T = T;
     pack->W = W;
     pack->H = H;
-    strcpy( pack->Text , Text );
-    insim->send_packet( pack );
+    strcpy(pack->Text, Text.c_str());
+    insim->send_packet(pack);
     delete pack;
 }
 
