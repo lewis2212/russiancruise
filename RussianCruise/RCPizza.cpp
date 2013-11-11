@@ -523,23 +523,23 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
     {
         char Text[64];
-        sprintf(Text, "^C^3| ^7Капитал магазина: ^7%d ^3RUR", Capital);
+        sprintf(Text, msg->_(packet->UCID, "4206"), Capital);
         SendMTC(packet->UCID, Text);
-        sprintf(Text, "^C^3| ^7Склад: воды ^3%0.0f ^7л, муки ^3%0.0f ^7кг, овощей ^3%0.0f ^7кг, сыра ^3%0.0f ^7кг", PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
+        sprintf(Text, msg->_(packet->UCID, "4207"), PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
         SendMTC(packet->UCID, Text);
         if (CarsInWork==0)
         {
-            SendMTC(packet->UCID, "^C^3| ^7Работников нет");
+            SendMTC(packet->UCID, msg->_(packet->UCID, "4208"));
         }
         else
         {
-            sprintf(Text, "^C^3| ^7Работники: ^3%d/%d", CarsInWork, NumCars);
+            sprintf(Text, msg->_(packet->UCID, "4209"), CarsInWork, NumCars);
             SendMTC(packet->UCID, Text);
 
             for (auto& p: players)
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
-                    sprintf(Text, "^3| ^8%s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d", players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
+                    sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
                     SendMTC(packet->UCID, Text);
                 }
             return;

@@ -835,7 +835,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
 
         if (!uname)
         {
-            SendMTC(packet->UCID, "^6| ^C^7Не задано имя игрока");
+            SendMTC(packet->UCID, msg->_(packet->UCID, "TaxiDialog17"));
             return;
         }
 

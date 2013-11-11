@@ -281,13 +281,13 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
 
         if ((int)razn<=4 and (int)razn>0)
         {
-            sprintf(Text, "^1| ^1^CОсталось ^7%0.0f ^1дня до снятия кредита!", razn);
+            sprintf(Text, this->msg->_(packet->UCID, "BankDialog9"), razn);
             SendMTC(packet->UCID, Text);
         }
 
         if ((int)razn==0)
         {
-            sprintf(Text, "^1| ^1^CСЕГОДНЯ ПОСЛЕДНИЙ ДЕНЬ ДЛЯ ПОГАШЕНИЯ КРЕДИТА!");
+            sprintf(Text, this->msg->_(packet->UCID, "BankDialog10"));
             SendMTC(packet->UCID, Text);
             SendMTC(packet->UCID, Text);
             SendMTC(packet->UCID, Text);
@@ -313,9 +313,9 @@ void RCBank::credit_penalty (byte UCID)
     char Text[128];
     double razn=((double)(players[UCID].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
     int c = (int)abs((ceil(razn)));
-    sprintf(Text, "^1| ^1^CВЫ ПРОСРОЧИЛИ КРЕДИТ!");
+    sprintf(Text, msg->_(UCID, "BankDialog11"));
     SendMTC(UCID, Text);
-    sprintf(Text, "^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день", players[UCID].Credit*13/10);
+    sprintf(Text, msg->_(UCID, "BankDialog12"), players[UCID].Credit*13/10);
     SendMTC(UCID, Text);
 
     /*int ost = players[UCID].Cash - ((players[UCID].Credit) * 13 / 10 + 1000 * c);
@@ -452,7 +452,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
         {
             if (dl->GetLVL(packet->UCID) < 5)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Нужен уровень: ^15");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog13"));
                 return;
             }
             strtok (Message, " ");
@@ -464,12 +464,12 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
             else if (summ < cr / 5 or summ > cr)
             {
-                sprintf(Text, "^5| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7.", cr/5, cr);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog14"), cr/5, cr);
                 SendMTC(packet->UCID, Text);
                 return;
             }
-            SendMTC(packet->UCID, "^5| ^CИнформация по кредиту");
-            if (players[packet->UCID].Date_create!=0)
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog15"));
+            if (players[ packet->UCID ].Date_create!=0)
             {
                 struct tm * timeinfo;
                 char DateCreate [80];
@@ -478,70 +478,70 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
 
                 double razn=((double)(players[packet->UCID].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
 
-                sprintf(Text, "^5| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %s", players[packet->UCID].Credit, DateCreate);
-                SendMTC(packet->UCID, Text);
-                sprintf(Text, "^5| ^7^CСумма возврата: %d ^3RUR^7.", players[packet->UCID].Credit * 13 / 10);
-                SendMTC(packet->UCID, Text);
-                sprintf(Text, "^5| ^7^CВремя до снятия: ^2%0.0f ^7дней.", razn);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog16"), players[ packet->UCID ].Credit, DateCreate);
+                SendMTC( packet->UCID , Text);
+                sprintf( Text, msg->_(packet->UCID, "BankDialog17"), players[ packet->UCID ].Credit * 13 / 10 );
+                SendMTC( packet->UCID , Text);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog18"), razn);
                 SendMTC(packet->UCID, Text);
                 return;
             }
-            sprintf(Text, "^5| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7.", cr/5, cr);
-            SendMTC(packet->UCID, Text);
-            SendMTC(packet->UCID, "^5| ^C^7Кредит выдается под ^230 %^7, на срок не более ^230^7 дней.");
-            SendMTC(packet->UCID, "^5| ^C^7При досрочном погашении будет снята полная сумма кредита + процент.");
-            sprintf(Text, "^5| ^7^CЖелаемая сумма: %d ^3RUR^7.", summ);
-            SendMTC(packet->UCID, Text);
-            sprintf(Text, "^5| ^7^CСумма возврата: %d ^3RUR^7.", summ * 13 / 10);
-            SendMTC(packet->UCID, Text);
+            sprintf(Text, msg->_(packet->UCID, "BankDialog19"), cr/5, cr);
+            SendMTC( packet->UCID , Text);
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog20"));
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog21"));
+            sprintf( Text, msg->_(packet->UCID, "BankDialog22"), summ );
+            SendMTC( packet->UCID , Text);
+            sprintf( Text, msg->_(packet->UCID, "BankDialog23"), summ * 13 / 10 );
+            SendMTC( packet->UCID , Text);
             return;
         }
         if (strncmp(Message, "!credit", strlen("!credit")) == 0)
         {
             if (players[packet->UCID].Dep_Date_create!=0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Вы не можете взять кредит, не закрыв вклад.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog24"));
                 return;
             }
 
             if (dl->GetLVL(packet->UCID) < 5)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Нужен уровень: ^15");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog25"));
                 return;
             }
 
             if (players[packet->UCID].Date_create != 0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7У вас уже оформлен кредит (^3!credit info^7)");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog26"));
                 return;
             }
             strtok (Message, " ");
             int summ = atoi(strtok (NULL, " "));
             if (summ < cr / 5 or summ > cr)
             {
-                sprintf(Text, "^5| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7.", cr/5, cr);
-                SendMTC(packet->UCID, Text);
+                sprintf( Text , msg->_(packet->UCID, "BankDialog27"), cr/5, cr);
+                SendMTC( packet->UCID , Text);
                 return;
             }
 
             if (players[packet->UCID].Cash>(summ*3/2))
             {
-                SendMTC(packet->UCID, "^5| ^C^7В выдаче кредита ^1отказано^7.");
-                SendMTC(packet->UCID, "^5| ^C^7Сумма на вашем счете превышает размер кредита более чем в половину.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog28"));
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog29"));
                 return;
             }
 
             if (players[packet->UCID].Cash <= -50000)
             {
-                SendMTC(packet->UCID, "^5| ^C^7В выдаче кредита ^1отказано^7.");
-                SendMTC(packet->UCID, "^5| ^C^7Сумма на вашем счете ниже -50000 3RUR^7.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog30"));
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog31"));
                 return;
             }
             //выдаем кредит
-            sprintf(Text, "^5| ^7^CВам выдан кредит на сумму %d ^3RUR^7.", summ);
-            SendMTC(packet->UCID, Text);
-            players[packet->UCID].Credit = summ;
-            players[packet->UCID].Date_create = time(NULL);
+            sprintf(Text, msg->_(packet->UCID, "BankDialog32"), summ );
+            SendMTC( packet->UCID , Text );
+            players[ packet->UCID ].Credit = summ;
+            players[ packet->UCID ].Date_create = time(NULL);
             RemFrBank(summ); //берем бабки из банка
             AddCash(packet->UCID, summ, false); //выдаем бабки игроку
             bank_save(packet->UCID); //сохраняемся
@@ -550,22 +550,22 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
         {
             if (players[packet->UCID].Date_create == 0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7У вас нет кредитов.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog33"));
                 return;
             }
 
             if (players[packet->UCID].Cash<players[packet->UCID].Credit*13/10)
             {
-                SendMTC(packet->UCID, "^5| ^C^7На вашем счете недостаточно средств для погашения кредита.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog34"));
                 return;
             }
 
-            SendMTC(packet->UCID, "^5| ^7^CВы погасили кредит.");
-            RemCash(packet->UCID, players[packet->UCID].Credit * 13 / 10); //отбираем бабки у игрока
-            AddToBank(players[packet->UCID].Credit * 13 / 10); //сдаем в банк
-            players[packet->UCID].Credit = 0;
-            players[packet->UCID].Date_create = 0;
-            bank_save(packet->UCID); //сохраняемся
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog35"));
+            RemCash( packet->UCID, players[ packet->UCID ].Credit * 13 / 10 ); //отбираем бабки у игрока
+            AddToBank( players[ packet->UCID ].Credit * 13 / 10 ); //сдаем в банк
+            players[ packet->UCID ].Credit = 0;
+            players[ packet->UCID ].Date_create = 0;
+            bank_save( packet->UCID ); //сохраняемся
         }
 
         /** Вклады **/
@@ -580,7 +580,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
         {
             if (dl->GetLVL(packet->UCID) < 20)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Нужен уровень: ^120");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog36"));
                 return;
             }
 
@@ -594,12 +594,12 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
             else if (summ > dr)
             {
-                sprintf(Text, "^5| ^7^CОшибка. ^7Укажите сумму до %d ^3RUR.", dr);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog37"), dr);
                 SendMTC(packet->UCID, Text);
                 return;
             }
 
-            SendMTC(packet->UCID, "^5| ^CИнформация по вкладу");
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog38"));
 
             if (players[packet->UCID].Dep_Date_create!=0)
             {
@@ -608,54 +608,54 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
                 timeinfo = localtime (&players[packet->UCID].Dep_Date_create);
                 strftime (DateCreate, 80, "%d.%m.%Y", timeinfo);
 
-                double razn=((double)(players[packet->UCID].Dep_Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
-                sprintf(Text, "^5| ^7^CВы имеете вклад на сумму %d ^3RUR^7. Дата открытия: %s", players[packet->UCID].Deposit, DateCreate);
-                SendMTC(packet->UCID, Text);
+                double razn=((double)(players[ packet->UCID ].Dep_Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog39"), players[ packet->UCID ].Deposit, DateCreate);
+                SendMTC( packet->UCID , Text);
 
                 if (razn<=0)
                 {
-                    sprintf(Text, "^5| ^7^CСумма на данный момент: %d ^3RUR^7 (%d ^3RUR^7 в сутки)", players[packet->UCID].Deposit + players[packet->UCID].Deposit * 5/1000 * 30, 0);
-                    SendMTC(packet->UCID, Text);
-                    sprintf(Text, "^5| ^7^CСрок вклада истек, проценты не начисляются.");
+                    sprintf( Text, msg->_(packet->UCID, "BankDialog40"), players[ packet->UCID ].Deposit + players[ packet->UCID ].Deposit * 5/1000 * 30, 0 );
+                    SendMTC( packet->UCID , Text);
+                    sprintf(Text, msg->_(packet->UCID, "BankDialog41"));
                     SendMTC(packet->UCID, Text);
                     return;
                 }
 
-                sprintf(Text, "^5| ^7^CСумма на данный момент: %d ^3RUR^7 (%d ^3RUR^7 в сутки)", players[packet->UCID].Deposit + players[packet->UCID].Deposit * 5/1000 * (int)(30-razn), players[packet->UCID].Deposit * 5/1000);
-                SendMTC(packet->UCID, Text);
-                sprintf(Text, "^5| ^7^CДо закрытия вклада осталось: ^2%0.0f ^7дней.", razn);
+                sprintf( Text, msg->_(packet->UCID, "BankDialog42"), players[ packet->UCID ].Deposit + players[ packet->UCID ].Deposit * 5/1000 * (int)(30-razn), players[ packet->UCID ].Deposit * 5/1000 );
+                SendMTC( packet->UCID , Text);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog43"), razn);
                 SendMTC(packet->UCID, Text);
                 return;
             }
 
-            sprintf(Text, "^5| ^7^CВам доступен вклад на сумму до %d ^3RUR.", dr);
-            SendMTC(packet->UCID, Text);
-            SendMTC(packet->UCID, "^5| ^C^7Вклад открывается под ^215 %^7 в месяц, на срок не более ^230^7 дней.");
-            sprintf(Text, "^5| ^7^CЖелаемая сумма вклада: %d ^3RUR^7.", summ);
-            SendMTC(packet->UCID, Text);
-            sprintf(Text, "^5| ^7^CСумма с учетом процентов через ^230 ^7дней: %d ^3RUR^7 (%d ^3RUR^7 в сутки).", summ * 115 / 100, summ * 15 / 3000);
-            SendMTC(packet->UCID, Text);
-            sprintf(Text, "^5| ^7^CВы можете закрыть вклад не ранее чем через ^214 ^7дней с момента вклада.", summ);
-            SendMTC(packet->UCID, Text);
+            sprintf(Text, msg->_(packet->UCID, "BankDialog44"), dr);
+            SendMTC( packet->UCID , Text);
+            SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog45"));
+            sprintf( Text, msg->_(packet->UCID, "BankDialog46"), summ );
+            SendMTC( packet->UCID , Text);
+            sprintf( Text, msg->_(packet->UCID, "BankDialog47"), summ * 115 / 100, summ * 15 / 3000 );
+            SendMTC( packet->UCID , Text);
+            sprintf( Text, msg->_(packet->UCID, "BankDialog48"), summ );
+            SendMTC( packet->UCID , Text);
             return;
         }
         if (strncmp(Message, "!deposit", strlen("!deposit")) == 0)
         {
             if (players[packet->UCID].Date_create!=0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Вы не можете открыть вклад, не погасив кредит.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog49"));
                 return;
             }
 
             if (dl->GetLVL(packet->UCID) < 5)
             {
-                SendMTC(packet->UCID, "^5| ^C^7Нужен уровень: ^120");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog50"));
                 return;
             }
 
             if (players[packet->UCID].Dep_Date_create != 0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7У вас уже открыт вклад (^3!deposit info^7).");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog51"));
                 return;
             }
 
@@ -664,23 +664,23 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
 
             if (summ > dr or summ==0)
             {
-                sprintf(Text, "^5| ^7^CОшибка. ^7Укажите сумму до %d ^3RUR.", dr);
+                sprintf(Text, msg->_(packet->UCID, "BankDialog52"), dr);
                 SendMTC(packet->UCID, Text);
                 return;
             }
 
             if (players[packet->UCID].Cash<=(summ))
             {
-                SendMTC(packet->UCID, "^5| ^C^7На вашем счете недостаточно средств для открытия вклада.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog53"));
                 return;
             }
 
             //создаем вклад
-            sprintf(Text, "^5| ^7^CВы открыли вклад на сумму %d ^3RUR^7.", summ);
-            SendMTC(packet->UCID, Text);
-            players[packet->UCID].Deposit = summ;
-            players[packet->UCID].Dep_Date_create = time(NULL);
-            RemCash(packet->UCID, summ); //снимаем у игрока
+            sprintf(Text, msg->_(packet->UCID, "BankDialog54"), summ );
+            SendMTC( packet->UCID , Text );
+            players[ packet->UCID ].Deposit = summ;
+            players[ packet->UCID ].Dep_Date_create = time(NULL);
+            RemCash( packet->UCID , summ); //снимаем у игрока
             AddToBank(summ); //кладем в банк
             bank_save(packet->UCID); //сохраняемся
         }
@@ -688,7 +688,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
         {
             if (players[packet->UCID].Dep_Date_create==0)
             {
-                SendMTC(packet->UCID, "^5| ^C^7У вас нет вкладов.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog55"));
                 return;
             }
 
@@ -702,10 +702,10 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 if (strncmp(s, "yes", strlen("yes")) == 0)
                 {
-                    sprintf(Text, "^5| ^7^CВы закрыли вклад.");
+                    sprintf(Text, msg->_(packet->UCID, "BankDialog56"));
                     SendMTC(packet->UCID, Text);
                     dtt = players[packet->UCID].Deposit + players[packet->UCID].Deposit * 5/1000 * (int)(30-razn);
-                    sprintf(Text, "^5| ^7^CБанк получает неустойку в размере %d ^3RUR^7.", dtt*5/100);
+                    sprintf(Text, msg->_(packet->UCID, "BankDialog57"), dtt*5/100);
                     SendMTC(packet->UCID, Text);
                     dtt = dtt - dtt*5/100;
                     RemFrBank(dtt); //берем из банка
@@ -719,12 +719,12 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
 
             if (razn > 14)
             {
-                SendMTC(packet->UCID, "^5| ^C^1Внимание! ^7Еще не прошло 14 дней с момента вклада.");
-                SendMTC(packet->UCID, "^5| ^7^CВведите ^3!withdraw yes ^7чтобы закрыть вклад. Банк получит неустойку в размере ^25 %^7.");
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog58"));
+                SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog59"));
                 return;
             }
 
-            sprintf(Text, "^5| ^7^CВы закрыли вклад.");
+            sprintf(Text, msg->_(packet->UCID, "BankDialog60"));
             SendMTC(packet->UCID, Text);
 
             if (razn<=0)
