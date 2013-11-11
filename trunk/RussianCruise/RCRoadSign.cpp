@@ -3,7 +3,7 @@
 RCRoadSign::RCRoadSign(const char* Dir)
 {
     strcpy(RootDir, Dir);
-    memset(&Sign, 0, sizeof(Sign));
+    Sign.clear();
 }
 RCRoadSign::~RCRoadSign()
 {
