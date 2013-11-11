@@ -57,14 +57,17 @@ void RCMessage::readconfig(const char *Track)
     if (fff == INVALID_HANDLE_VALUE)
         return;
     FindClose(fff);
-    // !-- TODO
+
     ifstream readf (file, ios::in);
     while (readf.good())
     {
         char str[128];
         readf.getline(str, 128);
-        if (strlen(str) > 6)
+        if (strlen(str) > 0)
         {
+			if (!strncmp(str, "#", 1) or !strncmp(str, "//", 2) or !strncmp(str, "::", 2))
+				continue;
+
             string id;
             string mesage;
 

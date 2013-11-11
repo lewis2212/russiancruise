@@ -44,8 +44,8 @@ public:
     RCBaseClass();
     ~RCBaseClass();
 
-    void        next_packet();   // Функция переборки типа пакета
-    void        InsimMCI( struct IS_MCI* packet );     // Пакет с данными о координатах и т.д.
+    void        next_packet();   						// Функция переборки типа пакета
+    void        InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
 
     virtual void SendBFN(byte UCID, byte ClickID);
     virtual void SendBFNAll ( byte UCID );
@@ -54,8 +54,8 @@ public:
     virtual void SendMTC (byte UCID, const char* Msg);
     virtual void SendMTC (byte UCID, string Msg);
 
-    virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text );
-    virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn);
+    virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn = 0 );
+    virtual void SendStringButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, string Text, byte TypeIn = 0 );
 
     virtual void ButtonInfo (byte UCID, const char* Message);
     virtual void ClearButtonInfo (byte UCID);
@@ -63,12 +63,13 @@ public:
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
 
-    static string GetReason( byte Reason );
+    static const char* GetReason(byte Reason);
+
+	string NumToString (int n);
 
 protected:
-
-    CInsim      *insim;         // Переменная-указатель на класс CInsim
-    char        RootDir[MAX_PATH]; // Полный путь до папки с программой
+    CInsim      *insim;         	// Переменная-указатель на класс CInsim
+    char        RootDir[MAX_PATH]; 	// Полный путь до папки с программой
     std::map< byte, byte >PLIDtoUCID;
 
     virtual void InsimACR( struct IS_ACR* packet ){}

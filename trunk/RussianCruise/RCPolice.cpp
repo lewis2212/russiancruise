@@ -86,6 +86,7 @@ void RCPolice::InsimNCN( struct IS_NCN* packet )
 
 void RCPolice::InsimNPL( struct IS_NPL* packet )
 {
+	byte UCID = packet->UCID;
     PLIDtoUCID[packet->PLID] = packet->UCID;
     strcpy(players[packet->UCID].CName , packet->CName);
 
@@ -122,9 +123,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
             rCops.getline(line, 32);
 
             if (strcmp(strtok (line, ", "), players[packet->UCID].UName))
-            {
                 continue;
-            }
 
             players[packet->UCID].Rank = atoi(strtok (NULL, ", "));
             break;
@@ -140,11 +139,26 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
                     || (strncmp("dps", packet->SName, 3) == 0)
                     || (strncmp("POLICE", packet->SName, 6) == 0)
                     || (strncmp("police", packet->SName, 6) == 0)))
-            {
                 SendMTC(packet->UCID, "^2| ^C^7В названии скина не найдено указателей на принадлежность к ДПС");
-            }
+
 
             players[packet->UCID].StartWork = time(NULL) - 5;
+
+			LoadCopStat(packet->UCID);
+			players[UCID].PStat.DateActive = time(NULL);
+
+			SYSTEMTIME sm;
+			GetLocalTime(&sm);
+
+            if (players[UCID].PStat.CurrentDay != sm.wDay)
+            {
+                players[UCID].PStat.CurrentDay = sm.wDay;
+                players[UCID].PStat.ArrestWithFineByDay = 0;
+                players[UCID].PStat.ArrestWithOutFineByDay = 0;
+                players[UCID].PStat.SolvedIncedentsByDay = 0;
+                players[UCID].PStat.FinedByDay = 0;
+                players[UCID].PStat.CanceledFinesByDay = 0;
+            }
         }
         else
         {
@@ -161,8 +175,6 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
         dl->Lock(packet->UCID);
         nrg->Lock(packet->UCID);
         lgh->SetLight3(packet->UCID, true);
-
-        LoadCopStat( players[packet->UCID].UName );
     }
 }
 
@@ -180,7 +192,8 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
 
-    SaveCopStat( players[UCID].UName );
+    if (players[UCID].cop)
+        SaveCopStat(UCID);
 
     //PLIDtoUCID.erase(packet->PLID);
 }
@@ -199,7 +212,8 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
 
-    SaveCopStat( players[UCID].UName );
+    if (players[UCID].cop)
+        SaveCopStat(UCID);
 
     PLIDtoUCID.erase(packet->PLID);
 }
@@ -294,14 +308,10 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
 void RCPolice::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-    {
         return;
-    }
 
     if ( packet->UserType != MSO_PREFIX )
-    {
         return;
-    }
 
     byte UCID = packet->UCID;
 
@@ -311,9 +321,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if (!strcmp(Msg, "!911") or !strcmp(Msg, "!dtp") or !strcmp(Msg, "!^Cдтп"))
     {
         if (players[UCID].cop)
-        {
             return;
-        }
 
         if (GetCopCount() <= 0)
         {
@@ -345,7 +353,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (DTPvyzov[0][i] <= 0)
             {
-                DTPvyzov[0][i] = (int)UCID; 		//кто вызвал
+                DTPvyzov[0][i] = (int)UCID; 		    //кто вызвал
                 DTPvyzov[1][i] = time(NULL) + 5 * 60;	//когда вызвал
 
                 SendMTC(UCID, "^2| ^C^7Ваша заявка будет рассмотрена в течение 5 минут");
@@ -360,6 +368,9 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
         SendMTC(UCID, "^2| ^C^7Очередь заявок переполнена");
     }
+
+    if (!strcmp(Msg, "!cstat") and (!strcmp(players[UCID].UName, "denis-takumi") or !strcmp(players[UCID].UName, "Lexanom")))
+        ShowCopStat(UCID);
 
     if (!strcmp(Msg, "!fines") or !strcmp(Msg, "!^Cштрафы"))
     {
@@ -565,7 +576,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if ( strcmp( players[ packet->UCID ].UName , "denis-takumi") == 0 or strcmp( players[ packet->UCID ].UName , "Lexanom") == 0 )
     {
         char file[255];
-        sprintf(file, "%s\\data\\RCPolice\\cops.txt", RootDir);
+        sprintf(file, "%s\\data\\RCPolice\\CopList.txt", RootDir);
 
         char line[32];
         if (strncmp(Msg, "!cop_add", 8) == 0 )
@@ -720,9 +731,10 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
     SendButton(254, UCID, 80, l - 7, t - h / 2 + h + 1, 14, 6, 16 + ISB_CLICK, "^2OK"); //закрывашка
 
     if (strcmp(players[UCID].UName, "Lexanom") == 0 or (players[UCID].Rank > 2 and players[UCID2].Pogonya == 2))
-    {
-        SendButton(UCID2, UCID, 79, l + w / 2 - 15, t - h / 2 + h + 1, 14, 6, 16 + 8 + 5, "^CАрестовать", 2 );
-    }
+        SendButton(UCID2, UCID, 79, l + w / 2 - 15, t - h / 2 + h + 1, 14, 6, 16 + 8 + 5, "^CАрестовать", 2);
+
+	if (players[UCID].Rank > 1 and players[UCID2].Pogonya == 1 and players[UCID2].Info.Speed * 360 / 32768 == 0)
+		SendButton(UCID2, UCID, 78, l - w / 2 + 1, t - h / 2 + h + 1, 20, 6, 16 + 8 + 5, "^CСошел с трассы?", 1);
 
     for (int i = 0; i < c; i++)
     {
@@ -758,6 +770,28 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 
 void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
+    if (packet->ReqI == 213)
+    {
+        char file[255];
+        sprintf(file, "%s\\data\\RCPolice\\CopList.txt", RootDir);
+        char line[32];
+        ifstream rCops( file , ios::in );
+        int count = 0;
+        while ( rCops.good() )
+        {
+            rCops.getline(line, 32);
+            if (!strlen(line)) continue;
+
+            if (count++ == packet->ClickID-132)
+            {
+                CopUname = strtok (line, ", ");
+                break;
+            }
+        }
+        rCops.close();
+        ShowCopStat(packet->UCID);
+    }
+
     if (packet->ReqI == 200)
     {
         int i = packet->ClickID - 135;
@@ -780,8 +814,12 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             DTPvyzov[2][i] = 0;
             SendBFN(255, packet->ClickID);
 
-            if (players[packet->UCID].cop and players[packet->UCID].DTPfines > 0)
+            if (players[packet->UCID].DTPfines > 0)
+			{
                 players[packet->UCID].DoneCount++;
+                players[packet->UCID].PStat.SolvedIncedentsByDay++;
+                players[packet->UCID].PStat.SolvedIncedents++;
+			}
         }
         else if (DTPvyzov[2][i] <= 0)
         {
@@ -811,23 +849,17 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         players[packet->UCID].ThisFineCount = 0;
 
         for (int i=128; i < 165; i++)
-        {
             SendBFN(packet->UCID, i);
-        }
 
         for (int j=0; j < 20; j++)
-        {
             strcpy(players[packet->UCID].ThisFine[j], "");
-        }
+
+		CopUname = "";
     }
 
     if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
-    {
-        for(int i=79; i < 165; i++)
-        {
+        for(int i=78; i < 165; i++)
             SendBFN(packet->UCID, i);
-        }
-    }
 
     if ( packet->ClickID >= 84 and packet->ClickID < 110 and packet->ReqI != 254 and packet->ReqI != 255) //выписка штрафа
     {
@@ -840,6 +872,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
+            	players[packet->UCID].PStat.FinedByDay++;
+            	players[packet->UCID].PStat.Fined++;
+
                 char Msg[128];
                 sprintf(Msg, msg->_(play.first, "GiveFine"), players[packet->UCID].PName, GetFineName(play.first, packet->ReqI));
                 SendMTC( play.first, Msg);
@@ -888,7 +923,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         }
     }
 
-    if ( packet->ClickID >= 110 and packet->ClickID < 130 and packet->ReqI != 255 and packet->ReqI != 254) //выписка штрафа
+    if ( packet->ClickID >= 110 and packet->ClickID < 130 and packet->ReqI != 255 and packet->ReqI != 254) //отмена штрафа
     {
         SYSTEMTIME sm;
         GetLocalTime(&sm);
@@ -903,6 +938,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 {
                     if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
                     {
+                    	players[packet->UCID].PStat.CanceledFinesByDay++;
+                    	players[packet->UCID].PStat.CanceledFines++;
+
                         if (players[play.first].Pogonya == 2 or players[packet->UCID].DTPstatus == 2)
                             players[packet->UCID].DTPfines--;
 
@@ -993,10 +1031,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
         if (players[packet->ReqI].Pogonya != 0)
         {
-
             //запралата копам, которые были рядом во время ареста
             if (players[packet->UCID].DTPfines > 0)
             {
+            	players[packet->UCID].PStat.ArrestWithFineByDay++;
+            	players[packet->UCID].PStat.ArrestWithFine++;
                 players[packet->UCID].DoneCount++;
                 players[packet->UCID].DTPfines = 0;
                 for (auto& p: players)
@@ -1016,6 +1055,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                         }
                     }
                 }
+            }
+            else
+            {
+				players[packet->UCID].PStat.ArrestWithOutFineByDay++;
+            	players[packet->UCID].PStat.ArrestWithOutFine++;
             }
 
 
@@ -1037,15 +1081,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
             //закрывашка штрафов
             for (byte c = 80; c < 165; c++)
-            {
                 SendBFN(packet->UCID, c);
-            }
 
             //очистка кнопок
             for (byte i = 60; i < 92; i++)
-            {
                 SendBFN(255, i);
-            }
         }
         return;
     }
@@ -1059,52 +1099,53 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
     char fine_c[255];
     sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
+    /** Игрок в погоне сошел с трассы **/
+    if ( packet->ClickID == 78)
+    {
+        players[packet->ReqI].Pogonya = 2;
+        ShowFinesPanel(packet->UCID, packet->ReqI);
+        SendBFN(packet->UCID, 78);
+
+        char Text[128];
+        sprintf(Text, "^2| ^C^7Сход с трассы во время погони", players[packet->ReqI].PName, msg->_(packet->ReqI, "1702"));
+        SendMTC(packet->ReqI, Text);
+        sprintf(Text, "^2| %s%s", players[packet->ReqI].PName, msg->_(packet->ReqI, "1702"));
+        SendMTC(255, Text);
+        SendMTC(packet->UCID, msg->_(packet->UCID, "1703"));
+    }
+
     /** Арест на Х минут **/
     if ( packet->ClickID == 79)
     {
         if (strlen(packet->Text) == 0)
-        {
             return;
-        }
 
         players[packet->ReqI].Pogonya = 0;
         nrg->Unlock(packet->ReqI);
 
         //закрывашка штрафов
         for (byte c = 80; c < 165; c++)
-        {
             SendBFN(packet->UCID, c);
-        }
 
         //очистка кнопок
         for (byte i = 60; i < 92; i++)
-        {
             SendBFN(255, i);
-        }
 
         time_t now = time(NULL);
         char str[96];
 
         int MAXmin = 0;
         if (players[packet->UCID].Rank == 3)
-        {
             MAXmin = 30;
-        }
 
         if (players[packet->UCID].Rank == 4)
-        {
             MAXmin = 60;
-        }
 
         int Min = atoi(packet->Text);
         if (Min > MAXmin)
-        {
             Min = MAXmin;
-        }
         else if (Min < 5 and Min > 0)
-        {
             Min = 5;
-        }
 
         int i=0, finded = -1;
 
@@ -1120,13 +1161,6 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 
         if (Min > 0)
         {
-            /*for (i=0; i < 32; i++)
-                if (ginfo->players[i].UCID == packet->ReqI)
-                {
-                    ginfo->players[i].Zone = 1;
-                    break;
-                }*/
-
             sprintf(str, "/spec %s", players[packet->ReqI].UName);
             SendMST(str);
 
@@ -1395,7 +1429,6 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                     {
                         players[UCID].StopTime = 0;
                         players[UCID].Pogonya = 2;
-                        //nrg->Unlock(UCID);
                         char Text[128];
                         sprintf(Text, "^2| %s%s", players[UCID].PName, msg->_(UCID, "1702"));
                         SendMTC(255, Text);
@@ -1403,9 +1436,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                     }
                 }
                 if (S > 5)
-                {
                     players[UCID].StopTime = 0;
-                }
             }
 
             /** сирена у игрока **/
@@ -1464,10 +1495,8 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
         /** сирена у игрока **/
         if (SirenaCount > 0)
-        {
             SendButton(255, UCID, 141, 0, 36, 200, (180 - players[UCID].SirenaDist + 4) / 4, 0, siren.c_str());
-        }
-        else if (players[UCID].SirenaDist > 0 or SirenaCount == 0)
+        else if (players[UCID].SirenaDist > 0 and SirenaCount == 0)
         {
             players[UCID].SirenaDist = 0;
             SendBFN(UCID, 141);
@@ -1762,32 +1791,213 @@ void RCPolice::SendMTCToCop(const char* Msg, int Rank, ...)
 {
     int *p=&Rank;
     while (*p)
-    {
         for ( auto& play: players )
-        {
             if (players[play.first].cop and players[play.first].Rank == *p++)
-            {
                 SendMTC(play.first, Msg);
-            }
-        }
-    }
-
 }
 
-bool
-RCPolice::LoadCopStat( string UName )
+void RCPolice::LoadCopStat(byte UCID)
 {
-    string query = "SELECT * FROM police_stat WHERE username = '";
-    query += UName;
+    char kickCmd[64], msg[96];
+    sprintf(kickCmd, "/spec %s", players[UCID].UName);
+    sprintf(msg, "^1RCPolice::Load Cop Stat error - BAD USER");
+
+    string query = "SELECT date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled FROM police_stat WHERE username = '";
+    query += players[UCID].UName;
     query += "';";
 
-    return true;
+    if (mysql_ping(dbconn) != 0)
+    {
+        printf("RCPolice::Load Cop Stat Error: connection with MySQL server was lost\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
+    }
+
+    if (mysql_query(dbconn, query.c_str()) != 0)
+    {
+        printf("RCPolice::Load Cop Stat Error: MySQL Query\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
+    }
+
+    dbres = mysql_store_result(dbconn);
+    if (dbres == NULL)
+    {
+        printf("RCPolice::Load Cop Stat Error: can't get the result description\n");
+        SendMST(msg);
+        SendMST(kickCmd);
+        return;
+    }
+
+    if (mysql_num_rows(dbres) > 0)
+    {
+        dbrow = mysql_fetch_row(dbres);
+
+        players[UCID].PStat.DateActive = atoi( dbrow[0] );
+        players[UCID].PStat.CurrentDay = atoi( dbrow[1] );
+        players[UCID].PStat.ArrestWithFineByDay = atoi( dbrow[2] );
+        players[UCID].PStat.ArrestWithOutFineByDay = atoi( dbrow[3] );
+        players[UCID].PStat.SolvedIncedentsByDay = atoi( dbrow[4] );
+        players[UCID].PStat.FinedByDay = atoi( dbrow[5] );
+        players[UCID].PStat.CanceledFinesByDay = atoi( dbrow[6] );
+        players[UCID].PStat.ArrestWithFine = atoi( dbrow[7] );
+        players[UCID].PStat.ArrestWithOutFine = atoi( dbrow[8] );
+        players[UCID].PStat.SolvedIncedents = atoi( dbrow[9] );
+        players[UCID].PStat.Fined = atoi( dbrow[10] );
+        players[UCID].PStat.CanceledFines = atoi( dbrow[11] );
+    }
 }
 
-bool
-RCPolice::SaveCopStat( string UName )
+void RCPolice::SaveCopStat(byte UCID)
 {
-    return true;
+    char msg[96];
+    sprintf(msg, "^1RCPolice::Save Cop Stat error - BAD USER");
+
+    char query[512];
+    sprintf(query,
+            "REPLACE INTO police_stat (username, date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled) VALUES ('%s',%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)",
+            players[UCID].UName,
+            players[UCID].PStat.DateActive,
+			players[UCID].PStat.CurrentDay,
+			players[UCID].PStat.ArrestWithFineByDay,
+			players[UCID].PStat.ArrestWithOutFineByDay,
+			players[UCID].PStat.SolvedIncedentsByDay,
+			players[UCID].PStat.FinedByDay,
+			players[UCID].PStat.CanceledFinesByDay,
+			players[UCID].PStat.ArrestWithFine,
+			players[UCID].PStat.ArrestWithOutFine,
+			players[UCID].PStat.SolvedIncedents,
+			players[UCID].PStat.Fined,
+			players[UCID].PStat.CanceledFines
+            );
+
+    if (mysql_ping(dbconn) != 0)
+    {
+        printf("RCPolice::Save Cop Stat: connection with MySQL server was lost\n");
+        SendMTC(255, msg);
+        return;
+    }
+
+    if (mysql_query(dbconn, query) != 0)
+    {
+        printf("RCPolice::Save Cop Stat Error: MySQL Query\n");
+        SendMTC(255, msg);
+        return;
+    }
+}
+
+void RCPolice::ShowCopStat(byte UCID)
+{
+	char file[255];
+	sprintf(file, "%s\\data\\RCPolice\\CopList.txt", RootDir);
+	char line[32];
+	ifstream rCops( file , ios::in );
+
+	byte ClickID = CLICKID::CLICK_ID_128,
+		count = 0,
+		w=80,
+		h=4*16,
+		l=100,
+		t=90;
+	int Rank = 0;
+
+	SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, h + 8, 32, "");
+    SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, h + 8, 32, "");									//фон
+    SendButton(254, UCID, ClickID++, l - 7, t - h / 2 + h + 1, 14, 6, ISB_LIGHT + ISB_CLICK, "^2OK"); 			//закрывашка
+    SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, 8, 3 + 64, "Cop Stat"); 							//заголовок
+
+	while ( rCops.good() )
+	{
+		rCops.getline(line, 32);
+		if (!strlen(line)) continue;
+
+		char Uname[32];
+		strcpy(Uname, strtok (line, ", "));
+
+		if (!strcmp(Uname, CopUname.c_str()))
+			Rank = atoi(strtok (NULL, ", "));
+
+		SendButton(213, UCID, ClickID++, l + w / 2 - 15*(count/16+1)-1, t - h / 2 + 8 + 4 * (count - 16*(count/16)), 15, 4, 16 + 8, Uname);
+		count++;
+	}
+    SendButton(255, UCID, ClickID++, l + w / 2 - 20, t - h / 2, 20, 8, 128, "Cop List");
+	rCops.close();
+
+	if (!strlen(CopUname.c_str()))
+		return;
+
+	count = 0;
+    string query = "SELECT date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled FROM police_stat WHERE username = '";
+    query += CopUname;
+    query += "';";
+
+    if (mysql_ping(dbconn) != 0)
+    {
+        printf("RCPolice::Load Cop Stat Error: connection with MySQL server was lost\n");
+        return;
+    }
+
+    if (mysql_query(dbconn, query.c_str()) != 0)
+    {
+        printf("RCPolice::Load Cop Stat Error: MySQL Query\n");
+        return;
+    }
+
+    dbres = mysql_store_result(dbconn);
+    if (dbres == NULL)
+    {
+        printf("RCPolice::Load Cop Stat Error: can't get the result description\n");
+        return;
+    }
+
+    if (mysql_num_rows(dbres) > 0)
+    {
+        dbrow = mysql_fetch_row(dbres);
+
+        int DateActive = atoi( dbrow[0] ),
+			CurrentDay = atoi( dbrow[1] ),
+
+			ArrestWithFineByDay = atoi( dbrow[2] ),
+			ArrestWithOutFineByDay = atoi( dbrow[3] ),
+			SolvedIncedentsByDay = atoi( dbrow[3] ),
+			FinedByDay = atoi( dbrow[4] ),
+			CanceledFinesByDay = atoi( dbrow[5] ),
+
+			ArrestWithFine = atoi( dbrow[7] ),
+			ArrestWithOutFine = atoi( dbrow[8] ),
+			SolvedIncedents = atoi( dbrow[9] ),
+			Fined = atoi( dbrow[10] ),
+			CanceledFines = atoi( dbrow[11] );
+
+		int L = l - w / 2 + 1,
+			T = t - h / 2 + 8,
+			W = w - 2;
+
+		string RankArr = "^3^JЃљ";
+		for (int i = 1; i<Rank; i++)
+			RankArr += "Ѓљ";
+
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^2" + CopUname + " " + RankArr);
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + NumToString(DateActive));
+		count++;
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CЗа последние сутки");
+		count++;
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + NumToString(ArrestWithFineByDay));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + NumToString(ArrestWithOutFineByDay));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + NumToString(SolvedIncedentsByDay));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + NumToString(FinedByDay));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + NumToString(CanceledFinesByDay));
+		count++;
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CВсего");
+		count++;
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + NumToString(ArrestWithFine));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + NumToString(ArrestWithOutFine));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + NumToString(SolvedIncedents));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + NumToString(Fined));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + NumToString(CanceledFines));
+    }
 }
 
 void RCPolice::Event()
@@ -2014,13 +2224,9 @@ void RCPolice::Event()
                     street->CurentStreetInfo(&StreetInfo, UCID2);
 
                     if (playr2.Pogonya == 1)
-                    {
                         sprintf(pack.Text, "%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.StreetRu, D, min, sec );
-                    }
                     else if (playr2.Pogonya == 2)
-                    {
                         sprintf(pack.Text, "%s ^7 - %s, ^1^Cарестован", playr2.PName, StreetInfo.StreetRu);
-                    }
 
                     insim->send_packet(&pack);
                     pack.T -=4;

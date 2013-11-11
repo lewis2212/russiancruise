@@ -192,16 +192,10 @@ void RCEnergy::energy_save (byte UCID)
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName);
 
     if ( mysql_ping( dbconn ) != 0 )
-    {
         printf("Bank Error: connection with MySQL server was lost\n");
-    }
 
     if ( mysql_query( dbconn , query) != 0 )
-    {
         printf("Bank Error: MySQL Query Save\n");
-    }
-
-    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( dbconn ) );
 }
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )
@@ -392,16 +386,12 @@ void RCEnergy::btn_energy ( byte UCID )
         }
     }
     else if (nrg <= 50)
-    {
         color = 3;
-    }
 
     sprintf(str, "^%d %s: %d^K£¥", color, msg->_(UCID , "Energy"), nrg);
 
     if (players[UCID].Zone == 3)
-    {
         sprintf(str, "%s ^K¡è", str);
-    }
 
     SendButton(255, UCID, 208, 100, 1, 30, 4, 32+64, str);
 }
