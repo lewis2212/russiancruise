@@ -37,6 +37,7 @@ struct PizzaPlayer
     byte    WorkDestinaion;		// номер точки доставки
     int     WorkTime;			// время за которое он должен доставить товар
     int     WorkCountDone;
+    bool freat;
 };
 
 enum
