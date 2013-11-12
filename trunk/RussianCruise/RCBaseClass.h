@@ -26,7 +26,7 @@ using namespace std;
 //#include "tools.h"
 #define MAX_PATH	260
 
-typedef std::map< string, MYSQL_FIELD > DB_ROW;
+typedef std::map< string, char* > DB_ROW;
 
 struct GlobalPlayer
 {
@@ -111,7 +111,7 @@ protected:
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
-    list<DB_ROW> Select( string query, list<DB_ROW>& out );
+    list<DB_ROW> Select( string query );
     bool Exec( string query );
     unsigned int Insert( string query );
     bool Replace( string query );
