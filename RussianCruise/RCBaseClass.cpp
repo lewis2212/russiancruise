@@ -358,44 +358,98 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
 }
 
 list<DB_ROW>
-RCBaseClass::Select( string query, list<DB_ROW>& out )
+RCBaseClass::Select( string query )
 {
+	list<DB_ROW> out;
     out.clear();
 
     size_t pos = string::npos;
     string tableName;
 
-    pos = query.find("FROM");
+	pos = query.find("*");
 
-    if(pos == string::npos)
-        pos = query.find("from");
+	if( pos != string::npos )
+	{
 
-    if(pos == string::npos)
-    {
-       printf( "RCBaseclass::Slect - Can't find 'FROM' in query");
+		pos = query.find("FROM");
+
+		if(pos == string::npos)
+			pos = query.find("from");
+
+		if(pos == string::npos)
+		{
+		   printf( "RCBaseclass::Slect - Can't find 'FROM' in query");
+		   return out;
+		}
+
+		pos += 1 + strlen("from"); // shift the whitespace (продвигаемся дальше пробела)
+		size_t afterTable = query.find(" ", pos );
+
+		tableName = query.substr( pos, afterTable - pos );
+
+		char colQuery[MAX_PATH];
+		sprintf(colQuery, "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = '%s'", tableName.c_str());
+
+		if( mysql_query(dbconn, colQuery) != 0 )
+		{
+			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			return out;
+		}
+
+		dbres = mysql_store_result(dbconn);
+
+		// если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
+		if( dbres == NULL  || mysql_num_rows(dbres) == 0)
+		{
+			printf("TABLE %s NOT FOUND\n", tableName.c_str());
+			return out;
+		}
+
+		string *columns = new string[ mysql_num_rows(dbres) ];
+
+		int colNum = 0;
+		while( (dbrow = mysql_fetch_row(dbres)) != NULL )
+		{
+			columns[ colNum ] = string( dbrow[0] );
+			colNum++;
+		}
+
+		mysql_free_result(dbres);
+
+		if( mysql_query(dbconn, query.c_str() ) != 0 )
+		{
+			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			return out;
+		}
+
+		dbres = mysql_store_result(dbconn);
+
+		// если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
+		if( dbres == NULL)
+		{
+			printf("DB ERROR: Can't store result\n", tableName.c_str());
+			return out;
+		}
+
+		while( (dbrow = mysql_fetch_row(dbres)) != NULL )
+		{
+			DB_ROW row;
+			for( int i = 0; i < mysql_num_fields(dbres); i++ )
+			{
+				row[ columns[ i ] ] = dbrow[ i ];
+			}
+			out.push_back( row );
+		}
+		delete [] columns;
+
     }
     else
     {
-        pos ++; // shift the whitespace (продвигаемся дальше пробела)
-        size_t afterTable = query.find(" ", pos);
-
-
-        tableName = query.substr( pos, afterTable - pos );
-        printf("%s\n", tableName.c_str());
-
-        // выбираем названия столбцов для таблицы
-
-        // если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
-
-        // выполняем запрос на данные
-
-        // если пришли то начинаем составлять массив
-
-        // в цикле обявляем DB_ROW row
-
-        //по каждому полученному значению
+    	// парсим выбираемые клонки
+    	// составляем массив столбцов
+    	// делаем запрос
+    	// собираем результат
     }
-
 
     return out;
 }

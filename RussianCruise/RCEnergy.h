@@ -8,11 +8,8 @@
 
 #include "tools.h"
 
-struct EnergyPlayer
+struct EnergyPlayer: public GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];
-    char    PName[24];
     byte    Zone;
 
     /** Energy **/
@@ -39,8 +36,6 @@ private:
     struct  energy_info TrackInf;       // Where PitBox and Shop
 
     map<byte, EnergyPlayer>players;     // Array of players
-
-    char RootDir[MAX_PATH];
 
     void InsimNCN( struct IS_NCN* packet );
     void InsimNPL( struct IS_NPL* packet );
