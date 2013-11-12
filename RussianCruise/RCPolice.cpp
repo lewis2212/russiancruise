@@ -320,12 +320,9 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if (!strcmp(Msg, "!911") or !strcmp(Msg, "!dtp") or !strcmp(Msg, "!^Cдтп"))
     {
-        if (players[UCID].cop)
-            return;
-
         if (GetCopCount() <= 0)
         {
-            SendMTC(UCID, "^2| ^7^CНет свободных ДПС");
+            SendMTC(UCID, "^2| ^7^CНет свободных сотрудников ДПС");
             return;
         }
 
@@ -346,6 +343,13 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             SendMTC(UCID, "^2| ^1^CВы не можете вызвать ДПС во время движения");
             return;
         }
+
+        if (time(NULL)-players[UCID].LastDtpTime < 60*5)
+        {
+            SendMTC(UCID, "^2| ^7^CНельзя чаще, чем раз в 5 минут");
+            return;
+        }
+        players[UCID].LastDtpTime = time(NULL);
 
         players[UCID].DTP = 255;
 
@@ -820,6 +824,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 players[packet->UCID].PStat.SolvedIncedentsByDay++;
                 players[packet->UCID].PStat.SolvedIncedents++;
 			}
+			players[packet->UCID].DTPfines = 0;
         }
         else if (DTPvyzov[2][i] <= 0)
         {
@@ -897,7 +902,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
                 int FID = packet->ReqI;
                 if (players[play.first].Pogonya == 2 or players[packet->UCID].DTPstatus == 2)
-					if (FID != 1 and FID != 2 and FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
+					if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
 						players[packet->UCID].DTPfines++;
 
                 sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName, packet->ReqI, players[ play.first ].UName);
@@ -1496,7 +1501,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         /** сирена у игрока **/
         if (SirenaCount > 0)
             SendButton(255, UCID, 141, 0, 36, 200, (180 - players[UCID].SirenaDist + 4) / 4, 0, siren.c_str());
-        else if (players[UCID].SirenaDist > 0 and SirenaCount == 0)
+        else if (players[UCID].SirenaDist > 0 or SirenaCount == 0)
         {
             players[UCID].SirenaDist = 0;
             SendBFN(UCID, 141);
@@ -1597,12 +1602,8 @@ int RCPolice::GetCopCount()
 {
     int c = 0;
     for ( auto& play: players )
-    {
-        if (players[play.first].cop)
-        {
+        if (players[play.first].cop and players[play.first].Rank !=3)
             c++;
-        }
-    }
     return c;
 }
 
@@ -1640,6 +1641,9 @@ void RCPolice::SetUserBID ( byte UCID, byte BID )
 
 void RCPolice::SaveUserFines ( byte UCID )
 {
+    if (players[UCID].cop)
+        SaveCopStat(UCID);
+
     //cout <<players[ UCID ].UName << " save fines_info" << endl;
 
     char file[255];
@@ -1647,12 +1651,8 @@ void RCPolice::SaveUserFines ( byte UCID )
 
     ofstream writef (file, ios::out);
     for (int i = 0; i < MAX_FINES; i++)
-    {
         if (players[ UCID ].fines[i].fine_id > 0)
-        {
             writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date << ";" << players[ UCID ].fines[i].CopName << ";" << players[ UCID ].fines[i].CopPName <<  endl;
-        }
-    }
 
     writef.close();
 }
@@ -1898,7 +1898,7 @@ void RCPolice::ShowCopStat(byte UCID)
 	byte ClickID = CLICKID::CLICK_ID_128,
 		count = 0,
 		w=80,
-		h=4*16,
+		h=4*16+1,
 		l=100,
 		t=90;
 	int Rank = 0;
@@ -1961,9 +1961,9 @@ void RCPolice::ShowCopStat(byte UCID)
 
 			ArrestWithFineByDay = atoi( dbrow[2] ),
 			ArrestWithOutFineByDay = atoi( dbrow[3] ),
-			SolvedIncedentsByDay = atoi( dbrow[3] ),
-			FinedByDay = atoi( dbrow[4] ),
-			CanceledFinesByDay = atoi( dbrow[5] ),
+			SolvedIncedentsByDay = atoi( dbrow[4] ),
+			FinedByDay = atoi( dbrow[5] ),
+			CanceledFinesByDay = atoi( dbrow[6] ),
 
 			ArrestWithFine = atoi( dbrow[7] ),
 			ArrestWithOutFine = atoi( dbrow[8] ),
@@ -1979,8 +1979,16 @@ void RCPolice::ShowCopStat(byte UCID)
 		for (int i = 1; i<Rank; i++)
 			RankArr += "Ѓљ";
 
+        char tt[24];
+
+        time_t ss = DateActive;
+        tm *t = localtime(&ss);
+
+        sprintf(tt,"%02d.%02d.%02d, %02d:%02d",t->tm_mday,t->tm_mon+1,t->tm_year+1900,t->tm_hour,t->tm_min);
+
+
 		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^2" + CopUname + " " + RankArr);
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + NumToString(DateActive));
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + (string)tt);
 		count++;
 		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CЗа последние сутки");
 		count++;

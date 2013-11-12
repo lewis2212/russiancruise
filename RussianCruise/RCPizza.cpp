@@ -688,6 +688,8 @@ void RCPizza::Event()
 							}
                     players[plit.first].WorkPlayerAccept = 0;
                     CarsInWork --;
+
+                    ClearButtonInfo(plit.first);
                 }
             }
         }
