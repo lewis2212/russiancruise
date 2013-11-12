@@ -82,7 +82,7 @@ void RCPizza::Deal(byte UCID)
         {
             players[UCID].WorkType = WK_PIZZA;
             players[UCID].WorkAccept = 0;
-            players[UCID].freat = false;
+            players[UCID].FreeEat = false;
             SendMTC(UCID, msg->_(UCID, "4000"));
             CarsInWork ++;
         }
@@ -198,7 +198,11 @@ void RCPizza::Done(byte UCID)
         players[UCID].WorkAccept = 0;
         players[UCID].WorkZone = 0;
         ClearButtonInfo(UCID);
-        if((players[UCID].WorkCountDone % 10) == 0) players[UCID].freat = true;
+        if((players[UCID].WorkCountDone % 10) == 0)
+        {
+            players[UCID].FreeEat = true;
+            SendMTC(UCID, msg->_(UCID, "4213"));
+        }
         int cash = 50 * abs(1 - (players[UCID].WorkTime - time(&ptime)) / PIZZA_WORK_TIME);
         bank->AddCash(UCID, 248 + cash, true);
         Capital += 420 - cash;
@@ -546,12 +550,13 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             return;
         }
     }
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!freat", 6) == 0 && players[packet->UCID].WorkType == WK_PIZZA)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!freat", 6) == 0
+        && players[packet->UCID].WorkType == WK_PIZZA)
     {
-        if(players[packet->UCID].freat)
+        if(players[packet->UCID].FreeEat)
         {
             nrg->AddEnergy(packet->UCID, 80);
-            players[packet->UCID].freat = false;
+            players[packet->UCID].FreeEat = false;
             SendMTC(packet->UCID, msg->_(packet->UCID, "4211"));
         }
         else
@@ -593,7 +598,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             players[packet->UCID].WorkType = WK_NULL;
             players[packet->UCID].WorkDestinaion =0;
             players[packet->UCID].WorkAccept = 0;
-            players[packet->UCID].freat = false;
+            players[packet->UCID].FreeEat = false;
             CarsInWork --;
         }
     }
