@@ -791,7 +791,7 @@ void RCBank::BtnCash (byte UCID)
     pack.TypeIn = 0;
     pack.BStyle = 32;
     //
-    pack.ClickID = 166;
+    pack.ClickID = 66;
     pack.L = 70;
     pack.T = 1;
     pack.W = 15;

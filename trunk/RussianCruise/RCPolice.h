@@ -75,6 +75,7 @@ struct PolicePlayer: public GlobalPlayer
     int		DTPstatus;
     int		DTPfines;
     int		DoneCount = 0;
+    int     LastDtpTime = 0;
 
     /** other players **/
     int		SirenaDist;

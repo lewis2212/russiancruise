@@ -3,7 +3,6 @@
 RCRoadSign::RCRoadSign(const char* Dir)
 {
     strcpy(RootDir, Dir);
-    Sign.clear();
 }
 RCRoadSign::~RCRoadSign()
 {
@@ -12,11 +11,7 @@ RCRoadSign::~RCRoadSign()
 
 int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
 {
-    if (!_getcwd(RootDir, MAX_PATH))
-    {
-        printf("RCRoadSign: Can't detect RootDir\n");
-        return -1;
-    }
+
 
     dbconn = conn;
     if (!dbconn)
@@ -183,7 +178,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
         int X = players[UCID].Info.X / 65536;
         int Y = players[UCID].Info.Y / 65536;
-        int Dir = players[UCID].Info.Direction / 182;
+        int Dir = players[UCID].Info.Heading / 182;
 
         int ID=0;
 
@@ -333,31 +328,26 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         int SignCount = 0;
         for ( auto& sign: Sign)
-        {
-            if ( Distance(X, Y, sign.X, sign.Y ) < 50 and abs( H - sign.Heading ) < 40 )
+		{
+            if ( Distance(X, Y, sign.X, sign.Y ) < 20 and abs( H - sign.Heading ) < 40 )
             {
                 ShowSign(UCID, sign.ID, SignCount);
                 players[UCID].OnSign = true;
                 SignCount++;
             }
-        }
+		}
 
-        if ( SignCount != players[UCID].SignCount and players[UCID].OnSign)
+        if (S > 1)
+            memcpy(&players[UCID].Info, &packet->Info[i], sizeof(struct CompCar) );
+
+        if (SignCount != players[UCID].SignCount and players[UCID].OnSign)
         {
             players[UCID].OnSign = false;
 
             for (int f = 90 + 10 * SignCount; f < 160; f++)
-            {
                 SendBFN(UCID, f);
-            }
 
             players[UCID].SignCount = SignCount;
-
-        }
-
-        if (S > 1)
-        {
-            memcpy(&players[UCID].Info, &packet->Info[i], sizeof(struct CompCar) );
         }
     }
 }
