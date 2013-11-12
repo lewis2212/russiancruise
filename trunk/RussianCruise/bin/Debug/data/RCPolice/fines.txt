@@ -19,3 +19,5 @@
 17;^CСоздание помехи при преследовании;Interrupting chases;50000
 18;^CНаезд на пешехода;Hitting a pedestrian;50000
 19;^CНесоблюдение требований разметки проезжей части;Failure to comply with road marking;10000
+20;^CДача взятки сотруднику ДПС;Bribing an Police Officer;50000
+21;^CЛожный вызов сотрудника ДПС;False call Police Officer;10000

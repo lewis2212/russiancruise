@@ -25,7 +25,7 @@ point
 
 point
 ^C^7Банкирам, за питами
-^7Bankers, for the pits
+^7Bankers, behind the pits
 233,20
 
 point
