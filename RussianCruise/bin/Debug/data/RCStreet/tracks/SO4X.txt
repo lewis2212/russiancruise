@@ -84,12 +84,24 @@ Fedorova str.
 Ул.Превосходная
 Prevoschodnaya str.
 80
-5
--461;499
--473;371
--492;371
--484;456
--483;499
+0
+
+#Street
+Ул.Превосходная
+Prevoschodnaya str.
+80
+4
+-502;534
+-479;450
+-459;451
+-462;535
+
+
+#Street
+Ул.Превосходная
+Prevoschodnaya str.
+80
+0
 
 #Street
 Вернадского пр.
@@ -141,17 +153,16 @@ Tankistov lane
 ул. Титова
 Titova str.
 80
-6
--327;601
--325;503
--621;499
--621;519
--356;520
--351;602
+4
+-455;520
+-461;491
+-368;499
+-378;524
+
 
 #Street
 Эстакада-Север
-Trestle-North
+Bridge-North
 100
 6
 400;-571
@@ -164,7 +175,7 @@ Trestle-North
 
 #Street
 Эстакада-Юг
-Trestle-South
+Bridge-South
 100
 5
 -251;35
