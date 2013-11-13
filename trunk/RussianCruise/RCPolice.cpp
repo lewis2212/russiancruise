@@ -322,7 +322,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     {
         if (GetCopCount() <= 0)
         {
-            SendMTC(UCID, "^2| ^7^CНет свободных сотрудников ДПС");
+            SendMTC(UCID, "^2| ^7^CНет свободных ДПС");
             return;
         }
 
@@ -1898,7 +1898,7 @@ void RCPolice::ShowCopStat(byte UCID)
 	byte ClickID = CLICKID::CLICK_ID_128,
 		count = 0,
 		w=80,
-		h=4*16+1,
+		h=4*16,
 		l=100,
 		t=90;
 	int Rank = 0;
@@ -1979,16 +1979,8 @@ void RCPolice::ShowCopStat(byte UCID)
 		for (int i = 1; i<Rank; i++)
 			RankArr += "Ѓљ";
 
-        char tt[24];
-
-        time_t ss = DateActive;
-        tm *t = localtime(&ss);
-
-        sprintf(tt,"%02d.%02d.%02d, %02d:%02d",t->tm_mday,t->tm_mon+1,t->tm_year+1900,t->tm_hour,t->tm_min);
-
-
 		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^2" + CopUname + " " + RankArr);
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + (string)tt);
+		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + NumToString(DateActive));
 		count++;
 		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CЗа последние сутки");
 		count++;
