@@ -51,7 +51,6 @@ public:
     virtual void SendBFNAll ( byte UCID );
     virtual void SendMST (const char* Text);
 
-    virtual void SendMTC (byte UCID, const char* Msg);
     virtual void SendMTC (byte UCID, string Msg);
 
     virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn = 0 );

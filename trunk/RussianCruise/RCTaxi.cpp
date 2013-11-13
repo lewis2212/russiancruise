@@ -1158,7 +1158,7 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
     time_t now = time(NULL);
 
     int coef = 10;
-    if (players[UCID].client_type == 5)
+    if (players[UCIDA].client_type == 5 or players[UCIDB].client_type == 5)
         coef = 30;
 
     if ((players[ UCIDA ].WorkAccept == 2 or players[UCIDA].cf) and (now - players[UCIDA].LastT) > 1)
