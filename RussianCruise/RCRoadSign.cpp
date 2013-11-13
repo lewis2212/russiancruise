@@ -328,26 +328,30 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         int SignCount = 0;
         for ( auto& sign: Sign)
-		{
             if ( Distance(X, Y, sign.X, sign.Y ) < 20 and abs( H - sign.Heading ) < 40 )
             {
                 ShowSign(UCID, sign.ID, SignCount);
                 players[UCID].OnSign = true;
                 SignCount++;
             }
-		}
 
-        if (S > 1)
-            memcpy(&players[UCID].Info, &packet->Info[i], sizeof(struct CompCar) );
+        if (SignCount == 0 and players[UCID].OnSign)
+        {
+            for (int f = 90; f < 110; f++)
+                SendBFN(UCID, f);
+
+            players[UCID].SignCount = 0;
+            players[UCID].OnSign = false;
+        }
 
         if (SignCount != players[UCID].SignCount and players[UCID].OnSign)
         {
-            players[UCID].OnSign = false;
-
-            for (int f = 90 + 10 * SignCount; f < 160; f++)
+            for (int f = 90 + 10 * SignCount; f < 110; f++)
                 SendBFN(UCID, f);
-
             players[UCID].SignCount = SignCount;
         }
+
+        if (S > 1)
+            memcpy(&players[UCID].Info, &packet->Info[i], sizeof(struct CompCar) );
     }
 }
