@@ -1738,19 +1738,17 @@ void case_mso ()
 
             if (dl->GetSkill( ginfo->players[i].UCID ) > 10 )
                 dl->RemSkill(ginfo->players[i].UCID, 10);
-        }
-        else
-        {
-#endif
-            char Msg[64];
-            sprintf(Msg, "/pitlane %s", ginfo->players[i].UName);
-            SendMST(Msg);
-            ginfo->players[i].Zone = 1;
-            bank->RemCash(ginfo->players[i].UCID, 500);
-            bank->AddToBank(500);
-#ifdef _RC_POLICE_H
+
+            return;
         }
 #endif
+        char Msg[64];
+        sprintf(Msg, "/pitlane %s", ginfo->players[i].UName);
+        SendMST(Msg);
+        ginfo->players[i].Zone = 1;
+        bank->RemCash(ginfo->players[i].UCID, 500);
+        bank->AddToBank(500);
+        taxi->taxi_loss(ginfo->players[i].UCID);
     }
     if ((strncmp(Msg, "!test", 5) == 0))
     {

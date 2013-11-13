@@ -51,9 +51,11 @@ struct TaxiPlayer
     byte    Zone;
 
     /** Work **/
-    bool CanWork;
-    bool HandUp;
-    int spd;
+    bool 	CanWork;
+    bool 	HandUp;
+    int 	spd;
+    int 	client_type;
+    int		cf = 0;
 
     int		AcceptTime;
     char    WorkDest[96];           // destination text
@@ -76,8 +78,6 @@ struct TaxiPlayer
 
     time_t  LastT;
 };
-
-
 
 // Описание класса Такси
 class RCTaxi: public RCBaseClass
@@ -151,6 +151,7 @@ public:
 
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
+    void taxi_loss(byte UCID);
     void Event();
 
 
