@@ -322,7 +322,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     {
         if (GetCopCount() <= 0)
         {
-            SendMTC(UCID, msg->_(UCID, "2102")));
+            SendMTC(UCID, msg->_(UCID, "2102"));
             return;
         }
 
@@ -1817,7 +1817,6 @@ void RCPolice::LoadCopStat(byte UCID)
     if (mysql_query(dbconn, query.c_str()) != 0)
     {
         printf("RCPolice::Load Cop Stat Error: MySQL Query\n");
-        printf("%s\n",mysql_error(dbconn));
         SendMST(msg);
         SendMST(kickCmd);
         return;
