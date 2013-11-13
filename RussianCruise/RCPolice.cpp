@@ -322,31 +322,31 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     {
         if (GetCopCount() <= 0)
         {
-            SendMTC(UCID, "^2| ^7^CНет свободных ДПС");
+            SendMTC(UCID, msg->_(UCID, "2102")));
             return;
         }
 
         if (players[UCID].Pogonya > 0)
         {
-            SendMTC(UCID, "^2| ^1^CВы не можете вызвать ДПС во время погони");
+            SendMTC(UCID, msg->_(UCID, "2103"));
             return;
         }
 
         if (players[UCID].DTP != 0)
         {
-            SendMTC(UCID, "^2| ^1^CВы уже вызвали ДПС, ожидайте");
+            SendMTC(UCID, msg->_(UCID, "2104"));
             return;
         }
 
         if (players[UCID].Info.Speed * 360 / 32768 > 0)
         {
-            SendMTC(UCID, "^2| ^1^CВы не можете вызвать ДПС во время движения");
+            SendMTC(UCID, msg->_(UCID, "2105"));
             return;
         }
 
         if (time(NULL)-players[UCID].LastDtpTime < 60*5)
         {
-            SendMTC(UCID, "^2| ^7^CНельзя чаще, чем раз в 5 минут");
+            SendMTC(UCID, msg->_(UCID, "2106"));
             return;
         }
         players[UCID].LastDtpTime = time(NULL);
@@ -360,17 +360,17 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 DTPvyzov[0][i] = (int)UCID; 		    //кто вызвал
                 DTPvyzov[1][i] = time(NULL) + 5 * 60;	//когда вызвал
 
-                SendMTC(UCID, "^2| ^C^7Ваша заявка будет рассмотрена в течение 5 минут");
-                SendMTC(UCID, "^2| ^C^7Не покидайте место ДТП до прибытия инспектора ДПС");
+                SendMTC(UCID, msg->_(UCID, "2107"));
+                SendMTC(UCID, msg->_(UCID, "2108"));
 
                 char str[96];
-                sprintf(str, "^2| ^1^CПоступил вызов на ДТП от %s", players[UCID].PName);
+                sprintf(str, msg->_(UCID, "2109"), players[UCID].PName);
                 SendMTCToCop(str, 1, 2, 4);
                 return;
             }
         }
 
-        SendMTC(UCID, "^2| ^C^7Очередь заявок переполнена");
+        SendMTC(UCID, msg->_(UCID, "2110"));
     }
 
     if (!strcmp(Msg, "!cstat") and (!strcmp(players[UCID].UName, "denis-takumi") or !strcmp(players[UCID].UName, "Lexanom")))
@@ -525,7 +525,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (players[packet->UCID].Rank == 1 || players[packet->UCID].Rank == 3)
             {
-                SendMTC(UCID, "^2| ^C^7Вы не можете использовать радар");
+                SendMTC(UCID, msg->_(UCID, "2111"));
                 return;
             }
 
@@ -543,7 +543,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 }
 
             }
-            else SendMTC(UCID, "^2| ^C^7Вы не можете использовать радар во время разбора ДТП");
+            else SendMTC(UCID, msg->_(UCID, "2112"));
         }
     }
 
@@ -666,7 +666,7 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
     if (TM == 0 and players[UCID].DoneCount == 0)
     {
         players[UCID].DoneCount = -1;
-        SendMTC(UCID, "^2| ^7^CВы ничего не заработали за прошедшую смену");
+        SendMTC(UCID, "2113");
         return;
     }
 
@@ -803,10 +803,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
         if (players[packet->UCID].DTPstatus == 2 and DTPvyzov[2][i] == packet->UCID)
         {
-            sprintf(str, "^2| %s ^7^Cзакрыл вашу заявку на рассмотрение ДТП", players[packet->UCID].PName);
+            sprintf(str, "2114", players[packet->UCID].PName);
             SendMTC(DTPvyzov[0][i], str);
 
-            sprintf(str, "^2| ^7^CЗаявка ^8%s ^7^Cна рассмотрение ДТП закрыта", players[DTPvyzov[0][i]].PName);
+            sprintf(str, "2115", players[DTPvyzov[0][i]].PName);
             SendMTC(packet->UCID, str);
 
             players[DTPvyzov[0][i]].DTP = 0;
@@ -830,17 +830,17 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if (players[packet->UCID].DTPstatus > 0)
             {
-                SendMTC(packet->UCID, "^2| ^C^7Нельзя принимать несколько заявок одновременно");
+                SendMTC(packet->UCID, "2116");
                 return;
             }
 
             DTPvyzov[2][i] = packet->UCID;
             DTPvyzov[1][i] = 0;
 
-            sprintf(str, "^2| %s ^7^Cпринял вашу заявку на рассмотрение ДТП", players[packet->UCID].PName);
+            sprintf(str, "2117", players[packet->UCID].PName);
             SendMTC(DTPvyzov[0][i], str);
 
-            sprintf(str, "^2| %s ^7^Cпринял заявку ^8%s ^7^Cна рассмотрение ДТП", players[packet->UCID].PName, players[DTPvyzov[0][i]].PName);
+            sprintf(str, "2118", players[packet->UCID].PName, players[DTPvyzov[0][i]].PName);
             SendMTCToCop(str, 1, 2, 4);
 
             players[DTPvyzov[2][i]].DTPstatus = 1;
@@ -1022,7 +1022,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         }
         else
         {
-            SendMTC(packet->UCID, "^2| ^C^7Вы не можете начинать погоню во время разбора ДТП");
+            SendMTC(packet->UCID, "2119");
         }
 
         return;
@@ -2123,7 +2123,7 @@ void RCPolice::Event()
                             {
                                 if (players[play.first].cop and players[play.first].DTPstatus == 0)
                                 {
-                                    SendMTC(play.first, "^2| ^1^CВы пропустили вызов на ДТП");
+                                    SendMTC(play.first, "2120");
                                     if (dl->Islocked(play.first))
                                     {
                                         dl->Unlock( play.first );
@@ -2143,20 +2143,20 @@ void RCPolice::Event()
                         if (players[UCID].DTPstatus == 1)
                         {
                             char str[96];
-                            sprintf(str, "^CЗаявка принята - %s, %s", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
+                            sprintf(str, "2121", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
                             SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 3, str);
                         }
                         else
                         {
                             char str[96];
-                            sprintf(str, "^C^2Заявка ^8%s ^2^Cна рассмотрении - ^1закрыть", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
+                            sprintf(str, "2122", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
                             SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 8, str);
                         }
                     }
                     else if (DTPvyzov[0][i] > 0 and DTPvyzov[2][i] > 0)
                     {
                         char str[96];
-                        sprintf(str, "^CВызов на ДТП принят - %s^8, %s", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
+                        sprintf(str, "2123", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
                         SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 7, str);
                     }
                 }
@@ -2235,7 +2235,7 @@ void RCPolice::Event()
                     if (playr2.Pogonya == 1)
                         sprintf(pack.Text, "%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName, StreetInfo.StreetRu, D, min, sec );
                     else if (playr2.Pogonya == 2)
-                        sprintf(pack.Text, "%s ^7 - %s, ^1^Cарестован", playr2.PName, StreetInfo.StreetRu);
+                        sprintf(pack.Text, "2124", playr2.PName, StreetInfo.StreetRu);
 
                     insim->send_packet(&pack);
                     pack.T -=4;
