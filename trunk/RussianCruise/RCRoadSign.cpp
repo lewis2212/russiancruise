@@ -328,7 +328,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         int SignCount = 0;
         for ( auto& sign: Sign)
-            if ( Distance(X, Y, sign.X, sign.Y ) < 20 and abs( H - sign.Heading ) < 40 )
+            if ( Distance(X, Y, sign.X, sign.Y ) < 20 and abs( H - sign.Heading ) <= 45 )
             {
                 ShowSign(UCID, sign.ID, SignCount);
                 players[UCID].OnSign = true;
