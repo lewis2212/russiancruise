@@ -26,7 +26,11 @@ using namespace std;
 //#include "tools.h"
 #define MAX_PATH	260
 
+/**< переменна€ - асоциативный массив вида "название пол€" -> "значение пол€" */
 typedef std::map< string, char* > DB_ROW;
+
+/**< переменна€ - массив состо€щий из элементов DB_ROW */
+typedef list<DB_ROW> DB_ROWS;
 
 struct GlobalPlayer
 {
@@ -65,6 +69,8 @@ public:
     static const char* GetReason(byte Reason);
 
 	string NumToString (int n);
+
+	inline std::string trim(const std::string &s);
 
 protected:
     CInsim      *insim;         	// ѕеременна€-указатель на класс CInsim
@@ -110,10 +116,29 @@ protected:
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
-    list<DB_ROW> Select( string query );
-    bool Exec( string query );
-    unsigned int Insert( string query );
-    bool Replace( string query );
+    /** ¬ыборка данных из базы данных
+	 *
+	 * @param string query - стандартна€ SQL команда
+	 * @return DB_ROWS - массив элементов DB_ROW
+	 *
+	 */
+	DB_ROWS dbSelect( string query );
+
+	/** ¬ыполнение SQL запроса, который не возвращает данные (обновление строк, служебные запросы)
+	 *
+	 * @param string query - стандартна€ SQL команда
+	 * @return bool - результат функции mysql_query()
+	 *
+	 */
+	bool dbExec( string query );
+
+	/** ƒобавление данных в базу
+	 *
+	 * @param string query - стандартна€ SQL команда
+	 * @return unsigned int - ID последней добавленой строки, если есть PRIMARY KEY (результат запроса SELECT LAST_INSERT_ID();)
+	 *
+	 */
+	unsigned int dbInsert( string query );
 
 
 private:

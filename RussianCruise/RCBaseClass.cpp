@@ -346,7 +346,7 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T,
 }
 
 list<DB_ROW>
-RCBaseClass::Select( string query )
+RCBaseClass::dbSelect( string query )
 {
 	list<DB_ROW> out;
     out.clear();
@@ -428,20 +428,71 @@ RCBaseClass::Select( string query )
 			}
 			out.push_back( row );
 		}
+
 		delete [] columns;
 
     }
     else
     {
-    	// парсим выбираемые клонки
-    	// составляем массив столбцов
-    	// делаем запрос
-    	// собираем результат
+    	pos = query.find("FROM");
+
+		if(pos == string::npos)
+			pos = query.find("from");
+
+		if(pos == string::npos)
+		{
+		   printf( "RCBaseclass::Slect - Can't find 'FROM' in query");
+		   return out;
+		}
+
+    	SplitString fields = query.substr( strlen("select ") , pos  - strlen("select ") );
+
+    	vector<string> arFields = fields.split(',', 1);
+
+		list<string> columns;
+    	for( auto& f : arFields)
+		{
+			columns.push_back( trim( f ) );
+		}
+
+		if( mysql_query(dbconn, query.c_str() ) != 0 )
+		{
+			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			return out;
+		}
+
+		dbres = mysql_store_result(dbconn);
+
+		// если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
+		if( dbres == NULL)
+		{
+			printf("DB ERROR: Can't store result\n", tableName.c_str());
+			return out;
+		}
+
+		while( (dbrow = mysql_fetch_row(dbres)) != NULL )
+		{
+			DB_ROW row;
+			int i = 0;
+			for( auto& col: columns)
+			{
+				row[ col ] = dbrow[ i ];
+				i++;
+			}
+			out.push_back( row );
+		}
     }
 
     return out;
 }
 
+inline std::string
+RCBaseClass::trim(const std::string &s)
+{
+   auto wsfront=std::find_if_not(s.begin(),s.end(),[](int c){return std::isspace(c);});
+   auto wsback=std::find_if_not(s.rbegin(),s.rend(),[](int c){return std::isspace(c);}).base();
+   return (wsback<=wsfront ? std::string() : std::string(wsfront,wsback));
+}
 
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
