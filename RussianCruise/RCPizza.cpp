@@ -142,23 +142,19 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkTime = worktime + PIZZA_WORK_TIME;
             players[UCID].WorkDestinaion = place;
             players[UCID].WorkAccept = 2;
-            SendMTC(UCID, msg->_(UCID, "4200"));
 
             char Text[96], str[64];
 
             int StreetID = -1;
             for (int g = 0; g < street->StreetNums; g++)
-            {
                 if (Check_Pos(street->Street[g].PointCount, street->Street[g].StreetX, street->Street[g].StreetY, zone.point[place].X, zone.point[place].Y))
                 {
                     StreetID = g;
                     break;
                 }
-            }
 
-            sprintf(str, "^C^7%s, %s", zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
-            sprintf(Text, "^3| %s", str);
-            SendMTC(UCID, Text);
+            sprintf(str, msg->_(UCID, "4200"), zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
+            SendMTC(UCID, "^3| " +  (string)str);
 
             strcpy(players[UCID].WorkDest, str);
         }
@@ -432,19 +428,15 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             {
                 players[UCID].Zone = 4;
                 SendMTC(UCID, msg->_(UCID, "1600")); // pizza u Jony
+                if (players[UCID].FreeEat)
+					SendMTC(UCID, msg->_(UCID, "FreeEat")); // omnomnom
                 if (players[UCID].WorkType != WK_PIZZA)
-                {
                     SendMTC(UCID, msg->_(UCID, "1601")); // deal
-                }
                 else
-                {
                     SendMTC(UCID, msg->_(UCID, "1602")); // undeal
-                }
 
                 if (players[UCID].WorkAccept != 0)
-                {
                     Take(UCID);
-                }
             }
         }
         else
@@ -521,9 +513,7 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
 void RCPizza::InsimMSO(struct IS_MSO* packet)
 {
     if (packet->UCID == 0)
-    {
         return;
-    }
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
     {
@@ -550,20 +540,17 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             return;
         }
     }
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!freat", 6) == 0
-        && players[packet->UCID].WorkType == WK_PIZZA)
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!eat", 4) == 0
+    and check_pos(packet->UCID) == 1 and players[packet->UCID].WorkType == WK_PIZZA)
     {
-        if(players[packet->UCID].FreeEat)
+        if (players[packet->UCID].FreeEat)
         {
-            nrg->AddEnergy(packet->UCID, 80);
-            players[packet->UCID].FreeEat = false;
+            nrg->AddEnergy(packet->UCID, 80000);
             SendMTC(packet->UCID, msg->_(packet->UCID, "4211"));
+            players[packet->UCID].FreeEat = false;
         }
         else
-        {
             SendMTC(packet->UCID, msg->_(packet->UCID, "4212"));
-        }
-        return;
     }
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!deal", 5) == 0)
         if ((check_pos(packet->UCID) == 1) and (players[packet->UCID].WorkType == 0))
@@ -688,7 +675,6 @@ void RCPizza::Event()
 							}
                     players[plit.first].WorkPlayerAccept = 0;
                     CarsInWork --;
-
                     ClearButtonInfo(plit.first);
                 }
             }
@@ -719,7 +705,6 @@ void RCPizza::Event()
                         if (plit2.first != plit.first and players[plit2.first].Pizza == 1)
                         {
                             SendMTC(plit.first, msg->_(plit.first, "2201"));
-                            SendMTC(plit.first, msg->_(plit.first, "2202"));
                             players[plit.first].WorkAccept = 1;
                             players[plit.first].WorkPlayerAccept = plit2.first;
                             players[plit.first].WorkZone =0;
@@ -740,9 +725,7 @@ void RCPizza::Event()
                 if ((plit.first  !=0) and (players[plit.first].WorkType == WK_PIZZA) and (players[plit.first].WorkAccept == 0))
                 {
                     SendMTC(plit.first, msg->_(plit.first, "2201"));
-                    SendMTC(plit.first, msg->_(plit.first, "2202"));
-
-                    strcpy(players[plit.first].WorkDest, msg->_(plit.first, "2201")+4); // +4 == remove slash
+                    strcpy(players[plit.first].WorkDest, msg->_(plit.first, "2202"));
 
                     players[plit.first].WorkAccept =1;
                     players[plit.first].WorkPlayerAccept =0;
