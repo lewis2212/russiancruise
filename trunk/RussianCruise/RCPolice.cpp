@@ -1817,6 +1817,7 @@ void RCPolice::LoadCopStat(byte UCID)
     if (mysql_query(dbconn, query.c_str()) != 0)
     {
         printf("RCPolice::Load Cop Stat Error: MySQL Query\n");
+        printf("%s\n",mysql_error(dbconn));
         SendMST(msg);
         SendMST(kickCmd);
         return;
