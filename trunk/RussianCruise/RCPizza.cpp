@@ -3,7 +3,6 @@
 time_t  ptime;
 pthread_t tid; // Thread ID
 
-
 RCPizza::RCPizza(const char* Dir)
 {
     strcpy(RootDir,Dir);
@@ -147,11 +146,13 @@ void RCPizza::Take(byte UCID)
 
             int StreetID = -1;
             for (int g = 0; g < street->StreetNums; g++)
+			{
                 if (Check_Pos(street->Street[g].PointCount, street->Street[g].StreetX, street->Street[g].StreetY, zone.point[place].X, zone.point[place].Y))
                 {
                     StreetID = g;
                     break;
                 }
+			}
 
             sprintf(str, msg->_(UCID, "4200"), zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
             SendMTC(UCID, "^3| " +  (string)str);
@@ -194,11 +195,13 @@ void RCPizza::Done(byte UCID)
         players[UCID].WorkAccept = 0;
         players[UCID].WorkZone = 0;
         ClearButtonInfo(UCID);
+
         if((players[UCID].WorkCountDone % 10) == 0)
         {
             players[UCID].FreeEat = true;
             SendMTC(UCID, msg->_(UCID, "4213"));
         }
+
         int cash = 50 * abs(1 - (players[UCID].WorkTime - time(&ptime)) / PIZZA_WORK_TIME);
         bank->AddCash(UCID, 248 + cash, true);
         Capital += 420 - cash;
@@ -365,12 +368,16 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
         CarsInWork--;
 
     if (players[packet->UCID].Pizza == 1)
+	{
         for (auto& p: players)
+		{
             if (players[p.first].WorkPlayerAccept == packet->UCID)
             {
                 players[p.first].WorkPlayerAccept = 0;
                 break;
             }
+		}
+	}
 
     players.erase(packet->UCID);
     NumP = packet->Total;
@@ -428,8 +435,10 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             {
                 players[UCID].Zone = 4;
                 SendMTC(UCID, msg->_(UCID, "1600")); // pizza u Jony
+
                 if (players[UCID].FreeEat)
 					SendMTC(UCID, msg->_(UCID, "FreeEat")); // omnomnom
+
                 if (players[UCID].WorkType != WK_PIZZA)
                     SendMTC(UCID, msg->_(UCID, "1601")); // deal
                 else
@@ -522,6 +531,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         SendMTC(packet->UCID, Text);
         sprintf(Text, msg->_(packet->UCID, "4207"), PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
         SendMTC(packet->UCID, Text);
+
         if (CarsInWork==0)
         {
             SendMTC(packet->UCID, msg->_(packet->UCID, "4208"));
@@ -532,14 +542,17 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             SendMTC(packet->UCID, Text);
 
             for (auto& p: players)
+			{
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
                     sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
                     SendMTC(packet->UCID, Text);
                 }
+			}
             return;
         }
     }
+
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!eat", 4) == 0
     and check_pos(packet->UCID) == 1 and players[packet->UCID].WorkType == WK_PIZZA)
     {
@@ -552,7 +565,9 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         else
             SendMTC(packet->UCID, msg->_(packet->UCID, "4212"));
     }
+
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!deal", 5) == 0)
+	{
         if ((check_pos(packet->UCID) == 1) and (players[packet->UCID].WorkType == 0))
         {
             if (dl->GetLVL(packet->UCID) > 19)
@@ -570,6 +585,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
                 SendMTC(packet->UCID, msg->_(packet->UCID, "4102"));
             }
         }
+	}
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!undeal", 7) == 0)
     {
@@ -667,12 +683,17 @@ void RCPizza::Event()
                     players[plit.first].WorkAccept = 0;
 
                     if (players[plit.first].WorkPlayerAccept != 0)
+					{
                         for (auto& plit2: players)
+						{
                             if (plit2.first == players[plit.first].WorkPlayerAccept)
 							{
                                 players[plit2.first].Pizza = 0;
 								break;
 							}
+						}
+					}
+
                     players[plit.first].WorkPlayerAccept = 0;
                     CarsInWork --;
                     ClearButtonInfo(plit.first);
