@@ -92,7 +92,6 @@ RCMessage::ReadLangFile(const char *file)
 	vector<string> arFiles = File.split('\\', 1);
 
 	string lang = arFiles.back().substr( 0 , arFiles.back().find(".txt") );
-	cout << lang << endl;
 
 	ifstream readf (file, ios::in);
     while (readf.good())
@@ -184,23 +183,25 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 
         if (!id)
         {
-        	for( auto& l: MsgArray )
-			{
-				if( l.first == id )
-				{
-					 players[ packet->UCID ].Lang = string(id);
-
-					sprintf(str, _(packet->UCID, "^1| ^7Language: %s"), id);
-					SendMTC(packet->UCID, str);
-				}
-			}
-
             SendMTC(packet->UCID, _( packet->UCID , "2105"));
-
+            return;
         }
 
+		for( auto& l: MsgArray )
+		{
+			if( l.first == id )
+			{
+				 players[ packet->UCID ].Lang = string(id);
 
+				sprintf(str, _(packet->UCID, "^1| ^7Language: %s"), id);
+				SendMTC(packet->UCID, str);
+				return;
+			}
+		}
 
+		sprintf(str, _(packet->UCID, "^1| ^7Language %s not found"), id);
+		SendMTC(packet->UCID, str);
+		return;
     }
 
 }
