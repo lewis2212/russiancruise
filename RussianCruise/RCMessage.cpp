@@ -14,18 +14,18 @@ RCMessage::~RCMessage()
 
 const char* RCMessage::_( byte UCID, string CODE )
 {
-    if (players[ UCID ].LangID == 0)
-        return (char*)("^1LangID = 0");
+    if ( players[ UCID ].Lang.size() == 0)
+        return (char*)("^1Lang = 0");
 
-    if ( MsgArray[ players[ UCID ].LangID ].find( CODE ) == MsgArray[ players[ UCID ].LangID ].end() )
+    if ( MsgArray[ players[ UCID ].Lang ].find( CODE ) == MsgArray[ players[ UCID ].Lang ].end() )
         return CODE.c_str();
 
-    return MsgArray[ players[ UCID ].LangID ][ CODE ].c_str();
+    return MsgArray[ players[ UCID ].Lang ][ CODE ].c_str();
 }
 
-int RCMessage::GetLangID(byte UCID)
+string RCMessage::GetLang(byte UCID)
 {
-    return players[UCID].LangID;
+    return players[UCID].Lang;
 }
 
 int RCMessage::init(MYSQL *conn, CInsim *InSim)
@@ -48,17 +48,53 @@ int RCMessage::init(MYSQL *conn, CInsim *InSim)
 
 void RCMessage::readconfig(const char *Track)
 {
-    char file[255];
-    sprintf(file, "%s\\data\\RCMessages\\rus.txt", RootDir);
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-        return;
-    FindClose(fff);
+	printf("RCMessage::readconfig\n");
 
-    ifstream readf (file, ios::in);
+    char dir[ MAX_PATH ];
+    sprintf(dir, "%s\\data\\RCMessages", RootDir);
+
+	ReadLangDirecroty( dir );
+}
+
+void
+RCMessage::ReadLangDirecroty(const char *path)
+{
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	char findPath[MAX_PATH];
+
+	sprintf(findPath,"%s\\*.txt",path);
+
+	if((hFind = FindFirstFile(findPath, &FindFileData)) != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if( strlen( FindFileData.cFileName ) == 7 )
+			{
+
+				char fileName[MAX_PATH];
+				sprintf(fileName,"%s\\%s", path, FindFileData.cFileName );
+
+				ReadLangFile( fileName );
+			}
+		}
+		while(FindNextFile(hFind, &FindFileData));
+
+		FindClose(hFind);
+	}
+	return;
+}
+
+void
+RCMessage::ReadLangFile(const char *file)
+{
+	SplitString File = file;
+	vector<string> arFiles = File.split('\\', 1);
+
+	string lang = arFiles.back().substr( 0 , arFiles.back().find(".txt") );
+	cout << lang << endl;
+
+	ifstream readf (file, ios::in);
     while (readf.good())
     {
         char str[128];
@@ -77,42 +113,11 @@ void RCMessage::readconfig(const char *Track)
             mesage = strtok (NULL, "\"");
             mesage.erase( mesage.find_last_not_of(" \t\r\n\0")+1);
 
-            MsgArray[ LANG_ID_RUS ].erase( id );
-            MsgArray[ LANG_ID_RUS ][ id ] = mesage;
+            MsgArray[ lang ].erase( id );
+            MsgArray[ lang ][ id ] = mesage;
         }
     }
     readf.close();
-
-    sprintf(file, "%s\\data\\RCMessages\\eng.txt", RootDir);
-    // TODO: refactoring
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-        return;
-
-    FindClose(fff);
-    // !-- TODO
-
-    ifstream readf2 (file, ios::in);
-    while (readf2.good())
-    {
-        char str[128];
-        readf2.getline(str, 128);
-        if (strlen(str) > 6)
-        {
-            string id;
-            string mesage;
-
-            id = strtok (str, "\"");
-            id.erase(id.find_last_not_of(" \t\r\n\0")+1);
-
-            mesage = strtok (NULL, "\"");
-            mesage.erase( mesage.find_last_not_of(" \t\r\n\0")+1);
-
-            MsgArray[ LANG_ID_ENG ].erase( id );
-            MsgArray[ LANG_ID_ENG ][ id ] = mesage;
-        }
-    }
-    readf2.close();
 }
 
 void RCMessage::InsimNCN( struct IS_NCN* packet )
@@ -120,43 +125,24 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     if (packet->UCID == 0)
         return;
 
-
     strcpy(players[ packet->UCID ].UName, packet->UName);
 
+    string query = "SELECT lang FROM message WHERE username = '";
+	query += packet->UName;
+    query += "';";
+    DB_ROWS result = dbSelect( query );
 
-    char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCMessages\\users\\%s.txt", RootDir, players[ packet->UCID ].UName);
-
-
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        printf("Can't find %s\n Create File for user", file);
-        players[ packet->UCID ].LangID = LANG_ID_RUS;
+    if( result.size() > 0 )
+	{
+		DB_ROW row = result.front();
+		players[ packet->UCID ].Lang = row["lang"];
+	}
+	else
+	{
+		printf("Can't find %s\n Create user\n", packet->UName);
+        players[ packet->UCID ].Lang = "rus";
         save( packet->UCID );
-    }
-    else
-    {
-        ifstream readf (file, ios::in);
-
-        while (readf.good())
-        {
-            char str[128];
-            readf.getline(str, 128);
-            if (strlen(str) > 0)
-            {
-                if (strncmp("LangID=", str, 7)==0)
-                {
-                    players[ packet->UCID ].LangID = atoi(str+7);
-                }
-            }
-        }
-        readf.close();
-    }
-    FindClose(fff);
+	}
 }
 
 void RCMessage::InsimCNL( struct IS_CNL* packet )
@@ -196,29 +182,33 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
         comand = strtok (message2, " ");
         id = strtok (NULL, " ");
 
-        if (!id or strstr("* eng rus", id) == 0)
+        if (!id)
         {
+        	for( auto& l: MsgArray )
+			{
+				if( l.first == id )
+				{
+					 players[ packet->UCID ].Lang = string(id);
+
+					sprintf(str, _(packet->UCID, "^1| ^7Language: %s"), id);
+					SendMTC(packet->UCID, str);
+				}
+			}
+
             SendMTC(packet->UCID, _( packet->UCID , "2105"));
-            return;
+
         }
 
-        if (strcmp(id, "eng") == 0)
-            players[ packet->UCID ].LangID = LANG_ID_ENG;
-        else if (strcmp(id, "rus") == 0)
-            players[ packet->UCID ].LangID = LANG_ID_RUS;
 
-        sprintf(str, "^1| ^7Language: %s", id);
-        SendMTC(packet->UCID, str);
+
     }
 
 }
 
 void RCMessage::save (byte UCID)
 {
-    char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCMessages\\users\\%s.txt", RootDir, players[ UCID ].UName);
+    char query[MAX_PATH];
+    sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName, players[ UCID ].Lang.c_str());
 
-    ofstream writef (file, ios::out);
-    writef << "LangID=" << players[ UCID ].LangID << endl;
-    writef.close();
+    dbExec( query );
 }

@@ -1777,7 +1777,7 @@ void RCPolice::ButtonClock( byte UCID )
 
 char* RCPolice::GetFineName(byte UCID, int FineID)
 {
-    if (msg->GetLangID(UCID) == LANG_ID_RUS)
+    if (msg->GetLang(UCID) == "rus")
     {
         return fines[FineID].NameRu;
     }
