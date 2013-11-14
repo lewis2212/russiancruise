@@ -27,7 +27,7 @@ using namespace std;
 #define MAX_PATH	260
 
 /**< переменная - асоциативный массив вида "название поля" -> "значение поля" */
-typedef std::map< string, char* > DB_ROW;
+typedef std::map< string, string > DB_ROW;
 
 /**< переменная - массив состоящий из элементов DB_ROW */
 typedef list<DB_ROW> DB_ROWS;
@@ -66,7 +66,18 @@ public:
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
 
+    /** Получение причины отключения пользователя с сервера
+     *
+     * @param  byte Reason - Числовой индетификатор кода
+     * @return static const char* - Буквенное значение кода
+     *
+     */
     static const char* GetReason(byte Reason);
+
+    virtual void AddMarshal();
+    virtual void DeleteMarshal();
+
+
 
 	string NumToString (int n);
 
@@ -131,6 +142,7 @@ protected:
 	 *
 	 */
 	bool dbExec( string query );
+	bool dbExec( const char *query );
 
 	/** Добавление данных в базу
 	 *
@@ -139,6 +151,7 @@ protected:
 	 *
 	 */
 	unsigned int dbInsert( string query );
+	unsigned int dbInsert( const char *query );
 
 
 private:
@@ -150,6 +163,7 @@ class SplitString : public string
     std::vector<string> flds;
 public:
     SplitString(char *s) : string(s) { };
+    SplitString(const char *s) : string(s) { };
     SplitString(string s) : string(s) { };
     SplitString() : string() { };
     std::vector<string>& split( const char delim, int rep=0);

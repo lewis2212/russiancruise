@@ -424,7 +424,7 @@ RCBaseClass::dbSelect( string query )
 			DB_ROW row;
 			for( int i = 0; i < mysql_num_fields(dbres); i++ )
 			{
-				row[ columns[ i ] ] = dbrow[ i ];
+				row[ columns[ i ] ] = string( dbrow[ i ] );
 			}
 			out.push_back( row );
 		}
@@ -486,12 +486,46 @@ RCBaseClass::dbSelect( string query )
     return out;
 }
 
+bool
+RCBaseClass::dbExec( string query )
+{
+	if( mysql_query(dbconn, query.c_str() ) != 0 )
+	{
+		printf("DB ERROR: %s\n", mysql_error(dbconn));
+		return false;
+	}
+	return true;
+}
+
+bool
+RCBaseClass::dbExec( const char *query )
+{
+	if( mysql_query(dbconn, query ) != 0 )
+	{
+		printf("DB ERROR: %s\n", mysql_error(dbconn));
+		return false;
+	}
+	return true;
+}
+
 inline std::string
 RCBaseClass::trim(const std::string &s)
 {
    auto wsfront=std::find_if_not(s.begin(),s.end(),[](int c){return std::isspace(c);});
    auto wsback=std::find_if_not(s.rbegin(),s.rend(),[](int c){return std::isspace(c);}).base();
    return (wsback<=wsfront ? std::string() : std::string(wsfront,wsback));
+}
+
+void
+RCBaseClass::AddMarshal()
+{
+
+}
+
+void
+RCBaseClass::DeleteMarshal()
+{
+
 }
 
 // split: receives a char delimiter; returns a vector of strings

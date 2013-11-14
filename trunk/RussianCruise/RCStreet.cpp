@@ -46,7 +46,7 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
 {
     if (StreetID>=0)
     {
-        if (msg->GetLangID(UCID) == LANG_ID_RUS)
+        if (msg->GetLang(UCID) == "rus")
             return Street[StreetID].StreetRu;
         else
             return Street[StreetID].StreetEn;
