@@ -167,7 +167,7 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkAccept = 2;
             char text[128];
             sprintf(text, msg->_(UCID, "4201"), players[players[UCID].WorkPlayerAccept].PName);
-            strcpy(players[UCID].WorkDest, players[players[UCID].WorkPlayerAccept].PName);
+            strcpy(players[UCID].WorkDest, msg->_(UCID, "4201")+4);
             SendMTC(UCID, text);
         }
     }
@@ -469,7 +469,7 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             {
                 Done(UCID);
                 bank->RemCash(PL_UCID, 800);
-                nrg->AddEnergy(PL_UCID, 8000);
+                nrg->AddEnergy(PL_UCID, 5000);
                 SendMTC(PL_UCID, msg->_(PL_UCID, "1604"));
                 players[PL_UCID].Pizza = 0;
             }
@@ -558,7 +558,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     {
         if (players[packet->UCID].FreeEat)
         {
-            nrg->AddEnergy(packet->UCID, 80000);
+            nrg->AddEnergy(packet->UCID, 50000);
             SendMTC(packet->UCID, msg->_(packet->UCID, "4211"));
             players[packet->UCID].FreeEat = false;
         }
@@ -726,6 +726,7 @@ void RCPizza::Event()
                         if (plit2.first != plit.first and players[plit2.first].Pizza == 1)
                         {
                             SendMTC(plit.first, msg->_(plit.first, "2201"));
+                            strcpy(players[plit.first].WorkDest, msg->_(plit.first, "2202"));
                             players[plit.first].WorkAccept = 1;
                             players[plit.first].WorkPlayerAccept = plit2.first;
                             players[plit.first].WorkZone =0;

@@ -262,7 +262,7 @@ void RCTaxi::Event()
 				if (time2==0 and players[UCID].cf != 3)
 				{
 					SendMTC(UCID, TaxiDialogs["endtimer"][rand()%TaxiDialogs["endtimer"].size()].c_str());
-					players[UCID].PassStress += 200;
+					players[UCID].PassStress += 100;
 					players[UCID].cf = 3;
 				}
 
@@ -412,7 +412,7 @@ void RCTaxi::accept_user2(byte UCID)
     if (players[UCID].client_type == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
-		players[UCID].WorkTime = time(NULL) + 60+(int)rand()%30;
+		players[UCID].WorkTime = time(NULL) + 70+(int)rand()%40;
 	}
 
     if (players[UCID].client_type == 3)

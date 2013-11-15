@@ -234,6 +234,8 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Width-=2;
         Top+=1;
         SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^3^JБЯ");
+        SendBFN(UCID, ClickID++);
+        SendBFN(UCID, ClickID++);
     }
     /** уступи дорогу 2.4 **/
     if (ID == 2)
@@ -245,6 +247,9 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Width-=12;
         Top+=6;
         SendButton(255, UCID, ClickID++, Left-Width / 2, Top-1, Width, Width, 0, "^7^JБ•");
+        SendBFN(UCID, ClickID++);
+        SendBFN(UCID, ClickID++);
+        SendBFN(UCID, ClickID++);
     }
     /** иск. неровность 1.17 **/
     if (ID == 3)
@@ -262,6 +267,7 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Width+=6;
         Top-=13;
         SendButton(255, UCID, ClickID++, Left-Width / 2+1, Top, Width-1, Width, 0, "^0^JБQ");
+        SendBFN(UCID, ClickID++);
     }
     /** пешеходный переход 1.22 **/
     if (ID == 4)
@@ -300,6 +306,8 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Width-=10;
         Top+=5;
         SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^K£–");
+        SendBFN(UCID, ClickID++);
+        SendBFN(UCID, ClickID++);
     }
     /** тупик 6.8 **/
     if (ID == 10)
@@ -328,10 +336,11 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         int SignCount = 0;
         for ( auto& sign: Sign)
-            if ( Distance(X, Y, sign.X, sign.Y ) < 20 and abs( H - sign.Heading ) <= 45 )
+            if (Distance(X, Y, sign.X, sign.Y ) < 25 and abs( H - sign.Heading ) <= 45 )
             {
-                ShowSign(UCID, sign.ID, SignCount);
-                players[UCID].OnSign = true;
+                if (sign.ID != players[UCID].OnSign)
+                    ShowSign(UCID, sign.ID, SignCount);
+                players[UCID].OnSign = sign.ID;
                 SignCount++;
             }
 
@@ -341,7 +350,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
                 SendBFN(UCID, f);
 
             players[UCID].SignCount = 0;
-            players[UCID].OnSign = false;
+            players[UCID].OnSign = 0;
         }
 
         if (SignCount != players[UCID].SignCount and players[UCID].OnSign)

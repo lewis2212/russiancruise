@@ -277,8 +277,6 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         char Text[128];
         double razn=((double)(players[packet->UCID].Date_create)+30*24*3600 - (double)time(NULL))/(24*3600);
 
-        printf("%d", razn);
-
         if ((int)razn<=4 and (int)razn>0)
         {
             sprintf(Text, this->msg->_(packet->UCID, "BankDialog9"), razn);
