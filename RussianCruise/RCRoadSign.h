@@ -9,7 +9,7 @@ struct RoadPlayer
     struct  CompCar Info;
     char    UName[24];             // Username
     char    PName[24];             // Player name
-    bool 	OnSign;
+    int 	OnSign;
     byte 	SignCount;
 };
 

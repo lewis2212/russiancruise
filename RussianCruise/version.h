@@ -7,7 +7,7 @@ namespace AutoVersion{
 	static const char RC_DATE[] = "14";
 	static const char RC_MONTH[] = "10";
 	static const char RC_YEAR[] = "2013";
-	static const char RC_UBUNTU_VERSION_STYLE[] = "13.10";
+	static const char RC_UBUNTU_VERSION_STYLE[] = "13.11";
 
 	//Software Status
 	static const char RC_STATUS[] = "Beta";

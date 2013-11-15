@@ -489,6 +489,13 @@ RCBaseClass::dbSelect( string query )
 bool
 RCBaseClass::dbExec( string query )
 {
+    if (mysql_ping(dbconn) != 0)
+    {
+        printf("DB ERROR: connection with MySQL server was lost\n");
+
+        return false;
+    }
+
 	if( mysql_query(dbconn, query.c_str() ) != 0 )
 	{
 		printf("DB ERROR: %s\n", mysql_error(dbconn));
@@ -500,6 +507,13 @@ RCBaseClass::dbExec( string query )
 bool
 RCBaseClass::dbExec( const char *query )
 {
+    if (mysql_ping(dbconn) != 0)
+    {
+        printf("DB ERROR: connection with MySQL server was lost\n");
+
+        return false;
+    }
+
 	if( mysql_query(dbconn, query ) != 0 )
 	{
 		printf("DB ERROR: %s\n", mysql_error(dbconn));
