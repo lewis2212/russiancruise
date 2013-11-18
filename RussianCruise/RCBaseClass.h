@@ -66,6 +66,8 @@ public:
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
 
+    static void CCText(string Text);
+
     /** Получение причины отключения пользователя с сервера
      *
      * @param  byte Reason - Числовой индетификатор кода
@@ -79,7 +81,7 @@ public:
 
 
 
-	string NumToString (int n);
+	static string NumToString (int n);
 
 	inline std::string trim(const std::string &s);
 

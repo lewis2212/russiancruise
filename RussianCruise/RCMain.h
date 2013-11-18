@@ -1,3 +1,5 @@
+ #include<clocale>
+
 #ifndef _CRUISE_H_
 #define _CRUISE_H_
 /**
@@ -115,8 +117,6 @@ struct user_car
     float     dist;
 };
 
-
-
 struct track_info
 {
     int     PitCount;
@@ -166,7 +166,6 @@ struct player
 
     unsigned PLC;
 };
-
 
 class GlobalInfo
 {

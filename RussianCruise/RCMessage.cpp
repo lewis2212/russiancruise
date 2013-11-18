@@ -48,12 +48,12 @@ int RCMessage::init(MYSQL *conn, CInsim *InSim)
 
 void RCMessage::readconfig(const char *Track)
 {
-	printf("RCMessage::readconfig\n");
-
     char dir[ MAX_PATH ];
     sprintf(dir, "%s\\data\\RCMessages", RootDir);
 
-	ReadLangDirecroty( dir );
+	ReadLangDirecroty(dir);
+
+    CCText("  ^7RCMessage  ^2OK\n");
 }
 
 void
@@ -71,7 +71,6 @@ RCMessage::ReadLangDirecroty(const char *path)
 		{
 			if( strlen( FindFileData.cFileName ) == 7 )
 			{
-
 				char fileName[MAX_PATH];
 				sprintf(fileName,"%s\\%s", path, FindFileData.cFileName );
 

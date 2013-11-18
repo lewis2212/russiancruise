@@ -165,13 +165,13 @@ void InitClasses()
 
 void readconfigs()
 {
+	RCBaseClass::CCText("^3Read configs:\n");
+
 #ifdef _RC_PIZZA_H
     pizza->readconfig(ginfo->Track);
 #endif
 
-
     msg->readconfig(ginfo->Track);
-
 
 #ifdef _RC_ENERGY_H
     nrg->readconfig(ginfo->Track);
@@ -179,10 +179,6 @@ void readconfigs()
 
 #ifdef _RC_BANK_H
     bank->readconfig(ginfo->Track);
-#endif
-
-#ifdef _RC_CHEAT_H
-    // antcht->readconfig(ginfo->Track);
 #endif
 
 #ifdef _RC_STREET_H
@@ -201,14 +197,14 @@ void readconfigs()
     RoadSign->ReadConfig(ginfo->Track);
 #endif // _RC_ROADSIGN
 
+#ifdef _RC_POLICE_H
+    police->readconfig();
+#endif // _RC_POLICE_H
+
 #ifdef _RC_QUEST_H
     quest->readconfig(ginfo->Track);
 #endif // _RC_QUEST_H
 
-
-#ifdef _RC_POLICE_H
-    police->readconfig();
-#endif // _RC_POLICE_H
 }
 
 int GetCarID(char *CarName)
@@ -871,7 +867,7 @@ void case_cnl ()
     {
         if (ginfo->players[i].UCID == pack_cnl->UCID)
         {
-            printf("<<   disconnected %s (%s)\n", ginfo->players[i].UName, RCBaseClass::GetReason(pack_cnl->Reason));
+            RCBaseClass::CCText("<< ^9disconnected " + (string)ginfo->players[i].UName + " (" + (string)RCBaseClass::GetReason(pack_cnl->Reason) + ")\n");
 
             save_user_cars(&ginfo->players[i]);
 
@@ -1693,10 +1689,9 @@ void case_mso ()
         memset(&pack_requests, 0, sizeof(struct IS_TINY));
         pack_requests.Size = sizeof(struct IS_TINY);
         pack_requests.Type = ISP_TINY;
-        pack_requests.ReqI = 1;
+        pack_requests.ReqI = 255;
         pack_requests.SubT = TINY_RST;
         insim->send_packet(&pack_requests);
-
     }
 
     if (strncmp(Msg, "!debug", 7) == 0)
@@ -1897,7 +1892,7 @@ void case_ncn ()
         return;
 
     if (pack_ncn->ReqI == 0)
-        printf("  >> connected %s\n", pack_ncn->UName);
+        RCBaseClass::CCText(">> connected " + (string)pack_ncn->UName + "\n");
 
     int i;
     for (i=0; i<MAX_PLAYERS; i++)
@@ -2188,10 +2183,6 @@ void case_rst ()
 
     read_car();
 
-#ifdef _RC_POLICE_H
-    police->ReadFines();
-#endif // _RC_POLICE_H
-
     read_track();
 
     read_words();
@@ -2267,19 +2258,15 @@ int core_connect(void *pack_ver)
     memset(&pack_requests, 0, sizeof(struct IS_TINY));
     pack_requests.Size = sizeof(struct IS_TINY);
     pack_requests.Type = ISP_TINY;
-    pack_requests.ReqI = 1;
+    pack_requests.ReqI = 255;
 
-    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
+    pack_requests.SubT = TINY_RST;
     insim->send_packet(&pack_requests);
 
     pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
     insim->send_packet(&pack_requests);
 
     pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-    insim->send_packet(&pack_requests);
-
-
-    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
     insim->send_packet(&pack_requests);
 
     return 1;
@@ -2317,9 +2304,6 @@ int core_reconnect(void *pack_ver)
     insim->send_packet(&pack_requests);
 
     pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-    insim->send_packet(&pack_requests);
-
-    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
     insim->send_packet(&pack_requests);
 
     return 1;
@@ -2577,7 +2561,7 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
-            printf("DATA SAVED\n");
+        	RCBaseClass::CCText("^2DATA SAVED\n");
 
             for (int j=0; j<MAX_PLAYERS; j++)
             {
@@ -2665,8 +2649,6 @@ void *ThreadMain(void *CmdLine)
     }
     printf("RCMain Success: Connected to MySQL server\n");
 
-    // TODO (#1#): Uncoment in Release
-    //Sleep(2*60*1000);
     sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
     pthread_mutex_init(&RCmutex, NULL);
@@ -2675,7 +2657,6 @@ void *ThreadMain(void *CmdLine)
     {
         out << "Не задан файл конфигурации\n";
         return 0;
-
     }
 
     int error_ch;
@@ -2686,13 +2667,9 @@ void *ThreadMain(void *CmdLine)
     read_cfg();
 
     if ( core_connect(&pack_ver) < 0 )
-    {
         for (;;)
-        {
             if ( core_reconnect(&pack_ver) > 0 )
                 break;
-        }
-    }
 
     if (pack_ver.InSimVer != 5)
     {
@@ -2885,6 +2862,7 @@ int  nCount;     // счетчик
 // главная функция приложения
 int main(int argc, char* argv[])
 {
+	setlocale(LC_CTYPE, "");
     isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
     int need = 92;

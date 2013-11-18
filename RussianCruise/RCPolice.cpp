@@ -1534,7 +1534,8 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 void RCPolice::readconfig()
 {
-    cout << "RCPolice::readconfig\n" ;
+	ReadFines();
+
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCPolice\\FineAllow.txt", RootDir);
 
@@ -1543,7 +1544,7 @@ void RCPolice::readconfig()
     hwnd = FindFirstFile(file, &fd);
     if (hwnd == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPolice: Can't find \n%s", file);
+    	CCText("  ^7RCPolice   ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(hwnd);
@@ -1562,24 +1563,22 @@ void RCPolice::readconfig()
             int rnk = atoi(strtok(str, "="));
 
             if (rnk == 0 or rnk > 4)
-            {
                 continue;
-            }
 
             for (int i=0; i < MAX_FINES; i++)
             {
                 int c = atoi(strtok(NULL, ","));
 
                 if (c == 0)
-                {
                     break;
-                }
 
                 FineAllow[rnk][i] = c;
             }
         }
     }
     readf.close();
+
+    CCText("  ^7RCPolice   ^2OK\n");
 }
 
 void RCPolice::SetSirenLight( string sirenWord )
