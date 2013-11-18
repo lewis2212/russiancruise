@@ -53,7 +53,7 @@ void RCMessage::readconfig(const char *Track)
 
 	ReadLangDirecroty(dir);
 
-    CCText("  ^7RCMessage  ^2OK\n");
+    CCText("  ^7RCMessage  ^2OK");
 }
 
 void

@@ -1544,7 +1544,7 @@ void RCPolice::readconfig()
     hwnd = FindFirstFile(file, &fd);
     if (hwnd == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCPolice   ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCPolice   ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(hwnd);
@@ -1578,7 +1578,7 @@ void RCPolice::readconfig()
     }
     readf.close();
 
-    CCText("  ^7RCPolice   ^2OK\n");
+    CCText("  ^7RCPolice   ^2OK");
 }
 
 void RCPolice::SetSirenLight( string sirenWord )

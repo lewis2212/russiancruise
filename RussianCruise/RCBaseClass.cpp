@@ -607,5 +607,6 @@ void RCBaseClass::CCText(string Text)
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | COLOR));
         printf("%s", text);
     }
+    printf("\n");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | 7));
 }

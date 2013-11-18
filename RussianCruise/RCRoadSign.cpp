@@ -49,7 +49,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
         return ;
     }
     FindClose(fff);
@@ -82,7 +82,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     ff = FindFirstFile(file, &fd);
     if (ff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(ff);
@@ -105,7 +105,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     }
     read.close();
 
-    CCText("  ^7RCRoadSign ^2OK\n");
+    CCText("  ^7RCRoadSign ^2OK");
 }
 
 void RCRoadSign::InsimNCN( struct IS_NCN* packet )

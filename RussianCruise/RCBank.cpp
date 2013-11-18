@@ -836,7 +836,7 @@ void RCBank::readconfig(const char *Track)
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-    	CCText("  ^7RCBank     ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCBank     ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
 
@@ -885,5 +885,5 @@ void RCBank::readconfig(const char *Track)
 
     mysql_free_result(dbres);
 
-    CCText("  ^7RCBank     ^2OK\n");
+    CCText("  ^7RCBank     ^2OK");
 }

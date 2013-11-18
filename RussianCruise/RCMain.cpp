@@ -165,7 +165,7 @@ void InitClasses()
 
 void readconfigs()
 {
-	RCBaseClass::CCText("^3Read configs:\n");
+	RCBaseClass::CCText("^3Read configs:");
 
 #ifdef _RC_PIZZA_H
     pizza->readconfig(ginfo->Track);
@@ -867,7 +867,7 @@ void case_cnl ()
     {
         if (ginfo->players[i].UCID == pack_cnl->UCID)
         {
-            RCBaseClass::CCText("<< ^9disconnected " + (string)ginfo->players[i].UName + " (" + (string)RCBaseClass::GetReason(pack_cnl->Reason) + ")\n");
+            RCBaseClass::CCText("<< ^9disconnected " + (string)ginfo->players[i].UName + " (" + (string)RCBaseClass::GetReason(pack_cnl->Reason) + ")");
 
             save_user_cars(&ginfo->players[i]);
 
@@ -1892,7 +1892,7 @@ void case_ncn ()
         return;
 
     if (pack_ncn->ReqI == 0)
-        RCBaseClass::CCText(">> connected " + (string)pack_ncn->UName + "\n");
+        RCBaseClass::CCText(">> connected " + (string)pack_ncn->UName);
 
     int i;
     for (i=0; i<MAX_PLAYERS; i++)
@@ -2561,7 +2561,7 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
-        	RCBaseClass::CCText("^2DATA SAVED\n");
+        	RCBaseClass::CCText("^2DATA SAVED");
 
             for (int j=0; j<MAX_PLAYERS; j++)
             {

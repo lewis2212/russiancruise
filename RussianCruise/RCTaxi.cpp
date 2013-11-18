@@ -83,7 +83,7 @@ void RCTaxi::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(fff);
@@ -167,7 +167,7 @@ void RCTaxi::readconfig(const char *Track)
     ff = FindFirstFile(file, &fd);
     if (ff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(ff);
@@ -200,7 +200,7 @@ void RCTaxi::readconfig(const char *Track)
     tt = FindFirstFile(file, &fd);
     if (tt == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(tt);
@@ -243,7 +243,7 @@ void RCTaxi::readconfig(const char *Track)
         insim->send_packet(&pacAXM);
     }
 
-    CCText("  ^7RCTaxi     ^2OK\n");
+    CCText("  ^7RCTaxi     ^2OK");
 }
 
 void RCTaxi::Event()
