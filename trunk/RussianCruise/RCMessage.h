@@ -1,12 +1,8 @@
-#ifndef _RC___H
-#define _RC___H
+#ifndef _RC_MESSAGE_H
+#define _RC_MESSAGE_H
 
 #include "RCBaseClass.h"
-
 #include "tools.h"
-
-#define LANG_ID_RUS 1
-#define LANG_ID_ENG 2
 
 struct MPlayer: public GlobalPlayer
 {

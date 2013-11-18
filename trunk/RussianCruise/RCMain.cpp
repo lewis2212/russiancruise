@@ -2631,7 +2631,7 @@ void *ThreadMain(void *CmdLine)
 {
     if (!mysql_init(&rcMaindb))
     {
-        printf("RCMain Error: can't create MySQL-descriptor\n");
+        RCBaseClass::CCText("^3RCMain: ^1Can't create MySQL-descriptor");
         return 0;
     }
 
@@ -2644,10 +2644,10 @@ void *ThreadMain(void *CmdLine)
 
     while ( (rcMaindbConn = mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
     {
-        printf("RCMain Error: can't connect to MySQL server\n");
+        RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
         Sleep(60000);
     }
-    printf("RCMain Success: Connected to MySQL server\n");
+    RCBaseClass::CCText("^3RCMain:\t^2Connected to MySQL server");
 
     sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
@@ -2655,8 +2655,8 @@ void *ThreadMain(void *CmdLine)
 
     if (strlen(ServiceName) == 0)
     {
-        out << "Не задан файл конфигурации\n";
-        return 0;
+		RCBaseClass::CCText("^3RCMain:\t^C^1Не задан файл конфигурации");
+		return 0;
     }
 
     int error_ch;
@@ -2673,8 +2673,7 @@ void *ThreadMain(void *CmdLine)
 
     if (pack_ver.InSimVer != 5)
     {
-        cout << "INSIM VER != 5" << endl;
-        out << "INSIM VER != 5" << endl;
+        RCBaseClass::CCText("^3RCMain:\t^1INSIM VER != 5");
         return nullptr;
     }
 
@@ -2686,12 +2685,11 @@ void *ThreadMain(void *CmdLine)
     pthread_t work_tid; // Thread ID
     pthread_t save_tid; // Thread ID
 
-    out << "Cruise started" << endl;
-    out << "Start threads :" << endl;
+    RCBaseClass::CCText("^3RCMain:\t^2Cruise started");
 
     if (pthread_create(&work_tid, NULL, ThreadWork, NULL) < 0)
     {
-        printf("Can't start `thread_work` Thread\n");
+        printf("^3RCMain:\tCan't start `thread_work` Thread\n");
         return 0;
     }
 
@@ -2699,7 +2697,7 @@ void *ThreadMain(void *CmdLine)
 
     if (pthread_create(&save_tid, NULL, ThreadSave, NULL) < 0)
     {
-        printf("Can't start `thread_save` Thread\n");
+        RCBaseClass::CCText("^3RCMain:\t^1Can't start `thread_save` Thread\n");
         return 0;
     }
 
@@ -2707,13 +2705,13 @@ void *ThreadMain(void *CmdLine)
 
     if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
     {
-        printf("Can't start `thread_mci` Thread\n");
+        RCBaseClass::CCText("^3RCMain:\t^1Can't start `thread_mci` Thread\n");
         return 0;
     }
 
     Sleep(1000);
 
-    out << "All threads started" << endl;
+    RCBaseClass::CCText("^3RCMain:\t^2All threads started");
 
     while (ok > 0)
     {
@@ -2887,11 +2885,10 @@ int main(int argc, char* argv[])
 
     pthread_create(&main_tid, NULL, ThreadMain, NULL);
 
-    // рабочий цикл сервиса
-    while (ok)
-    {
-        Sleep(1000);
-    }
+	void *ret;
+    pthread_join(main_tid, &ret);
+
+
     out.close();
 
     Sleep(10000);
