@@ -40,7 +40,7 @@ public:
 
     const char* _( byte UCID, string CODE );
 
-    void ReadLangDirecroty( const char *path );
+    void ReadLangDir( const char *path );
     void ReadLangFile(const char *file);
 
 }; // this method is not good but better when old method.

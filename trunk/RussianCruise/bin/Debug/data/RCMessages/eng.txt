@@ -1,23 +1,88 @@
+// ************************
+//       интерфейс
+// ************************
+
 Energy 			"Energy"
 LvlAndSkill 	" ^7Drive Level: ^2%d^7, skill: ^2%4.2f"
+PitSaveGood 	"^2GARAGE"
+PitSaveNotGood 	"^1GARAGE"
+401 			"^3Shop"
+402 			"^3Cafe"
+404 			"^3Bank"
+Dist			"^2%4.3f Km"
+
+// ************************
+//       хелпер
+// ************************
 
 200 			"^2Cars"
 201 			"^2Fines"
 202 			"^2About"
 
-1600 			"^3|^2 Tofu Fujiwara ^7shop"
-1601 			"^3|^2 !deal ^7- take a job"
-1602 			"^3|^2 !undeal ^7- leave the job"
-1603 			"^3|^2 !take ^7- take tofu"
-1604 			"^3|^7 Your tofu, Sr."
-NotLesEn		"^3| ^7Your power must be less than 80%"
-NoTofuWhWork	"^3| ^7You can't order a tofu because you work here"
+Help1			"^1| ^7RUSSIAN CRUISE"
+Help2 			"^1| ^7!lang rus,eng - ^3choose your language"
+Help3 			"^1| ^7!info (shift+i) - ^3info screen"
+Help4 			"^1| ^7!fines - ^3list of fines"
+Help5 			"^1| ^7!cars - ^3list of alloved cars"
+Help6 			"^1| ^7!save - ^3save your stats"
+Help7 			"^1| ^7!show - ^3show your stats"
+Help8 			"^1| ^7!pit - ^3tow your self to pits (^7500 ^3RUR)"
+Help9 			"^1| ^7!coffee - ^3coffee (^750 ^3RUR)"
+Help10 			"^1| ^7!redbull - ^3Redbull (^7100 ^3RUR)"
+Help11			"^1| ^7!tofu - ^3order a tofu (^7800 ^3RUR)"
+Help12 			"^1| ^7!users - ^3operations with players"
+Help13 			"^1| ^C^7!911 - ^3call Police Officer at the accident"
+Help14			"^1| ^C^7!help - ^3command list"
+
+2400 			"^1| ^7Set voluntary intake restriction not less than^2"
+2401 			"^1| ^7Turn Off an ^2ABS"
+2402 			"^1| ^7You have low power"
+2403 			"^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
+2404 			"^1| ^1Take alloved car ^7(^2!cars^7)"
+
+3100 			"^1| ^7Available Cars:"
+3101 			"^2| ^7List your fines:"
+
+// ************************
+//    список игроков
+// ************************
+
+1000 "Send Money"
+1001 "Send a message"
+
+MsgPlFor	"^7For %s ^7:"
+ItsYou		"^7It's you"
+
+SendMoney	"^5| ^7You sent ^8%s ^7%d ^3RUR."
+GetMoney 	"^5| ^8%s ^7sent you ^7%d ^3RUR."
+1101 		"^1| ^7you entered an amount greater than what you have in your account."
+1102 		"^1| ^7Try select a smaller amount."
+MsgFrom  	"^1| ^C^7From %s ^7: ^1%s"
+
+// ************************
+//       магазин
+// ************************
 
 ShopDialog1 	"^2| ^CShop"
 ShopDialog2 	"^2| ^C^7!buy XFG/XRG/etc - ^2buy the car"
 ShopDialog3 	"^2| ^C^7!sell XFG/XRG/etc - ^2sell the car"
 ShopDialog4 	"^2| ^C^7!tun ECU/TRB/WHT - ^2buy the tuning"
 ShopDialog5 	"^2| ^C^7!untun ECU/TRB/WHT - ^2sell the tuning"
+1009 			"^1| ^7You can not sell the car when you're sitting in it"
+2000 			"^1| ^7You are not in the shop!"
+
+// ************************
+//         банк
+// ************************
+
+GetMoneyA		"^5| ^7You have recived %d ^3RUR^7"
+RemMoneyA		"^5| ^7You have been charged %d ^3RUR^7"
+
+PayDone 		"^2| ^7Fine paid"
+NoFine 			"^2| ^7You don't have this Fine"
+NoFines 		"^2| ^7You don't have any Fines"
+NoOnBank		"^1| ^C^7You are not in the bank"
+NoManyPay		"^1| ^C^7You don't have money"
 
 BankDialog1		"^5| Bank"
 BankDialog2		"^5| ^7!credit info N - ^2information on the loan in the amount of N"
@@ -27,6 +92,109 @@ BankDialog5		"^5| ^7!deposit info N - ^2information on deposit in the amount of 
 BankDialog6		"^5| ^7!deposit N (!deposit 200000) - ^2open a deposit in the amount of N"
 BankDialog7		"^5| ^7!withdraw - ^2close a deposit"
 BankDialog8		"^5| ^7!pay N (!pay 13) - ^2pay fine ID = N"
+BankDialog9		"^1| ^1^CОсталось ^7%0.0f ^1дня до снятия кредита!"
+BankDialog10	"^1| ^1^CСЕГОДНЯ ПОСЛЕДНИЙ ДЕНЬ ДЛЯ ПОГАШЕНИЯ КРЕДИТА!"
+BankDialog11	"^1| ^1^CВЫ ПРОСРОЧИЛИ КРЕДИТ!"
+BankDialog12	"^1| ^7^CС вашего счета списан кредит (%d) + штраф за каждый пропущенный день"
+BankDialog13	"^5| ^C^7Нужен уровень: ^15"
+BankDialog14	"^5| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7."
+BankDialog15	"^5| ^CИнформация по кредиту"
+BankDialog16	"^5| ^7^CВы имеете кредит на сумму %d ^3RUR^7. Дата выдачи: %s"
+BankDialog17	"^5| ^7^CСумма возврата: %d ^3RUR^7."
+BankDialog18	"^5| ^7^CВремя до снятия: ^2%0.0f ^7дней."
+BankDialog19	"^5| ^7^CВам доступен кредит на сумму от %d ^3RUR ^7до %d ^3RUR^7."
+BankDialog20	"^5| ^C^7Кредит выдается под ^230 %^7, на срок не более ^230^7 дней."
+BankDialog21	"^5| ^C^7При досрочном погашении будет снята полная сумма кредита + процент."
+BankDialog22	"^5| ^7^CЖелаемая сумма: %d ^3RUR^7."
+BankDialog23	"^5| ^7^CСумма возврата: %d ^3RUR^7."
+BankDialog24	"^5| ^C^7Вы не можете взять кредит, не закрыв вклад."
+BankDialog25	"^5| ^C^7Нужен уровень: ^15"
+BankDialog26	"^5| ^C^7У вас уже оформлен кредит (^3!credit info^7)"
+BankDialog27	"^5| ^7^CОшибка. ^7Укажите сумму от %d ^3RUR ^7до %d ^3RUR^7."
+BankDialog28	"^5| ^C^7В выдаче кредита ^1отказано^7."
+BankDialog29	"^5| ^C^7Сумма на вашем счете превышает размер кредита более чем в половину."
+BankDialog30	"^5| ^C^7В выдаче кредита ^1отказано^7."
+BankDialog31	"^5| ^C^7Сумма на вашем счете ниже -50000 3RUR^7."
+BankDialog32	"^5| ^7^CВам выдан кредит на сумму %d ^3RUR^7."
+BankDialog33	"^5| ^C^7У вас нет кредитов."
+BankDialog34	"^5| ^C^7На вашем счете недостаточно средств для погашения кредита."
+BankDialog35	"^5| ^7^CВы погасили кредит."
+BankDialog36	"^5| ^C^7Нужен уровень: ^120"
+BankDialog37	"^5| ^7^CОшибка. ^7Укажите сумму до %d ^3RUR."
+BankDialog38	"^5| ^CИнформация по вкладу"
+BankDialog39	"^5| ^7^CВы имеете вклад на сумму %d ^3RUR^7. Дата открытия: %s"
+BankDialog40	"^5| ^7^CСумма на данный момент: %d ^3RUR^7 (%d ^3RUR^7 в сутки)"
+BankDialog41	"^5| ^7^CСрок вклада истек, проценты не начисляются."
+BankDialog42	"^5| ^7^CСумма на данный момент: %d ^3RUR^7 (%d ^3RUR^7 в сутки)"
+BankDialog43	"^5| ^7^CДо закрытия вклада осталось: ^2%0.0f ^7дней."
+BankDialog44	"^5| ^7^CВам доступен вклад на сумму до %d ^3RUR."
+BankDialog45	"^5| ^C^7Вклад открывается под ^215 %^7 в месяц, на срок не более ^230^7 дней."
+BankDialog46	"^5| ^7^CЖелаемая сумма вклада: %d ^3RUR^7."
+BankDialog47	"^5| ^7^CСумма с учетом процентов через ^230 ^7дней: %d ^3RUR^7 (%d ^3RUR^7 в сутки)."
+BankDialog48	"^5| ^7^CВы можете закрыть вклад не ранее чем через ^214 ^7дней с момента вклада."
+BankDialog49	"^5| ^C^7Вы не можете открыть вклад, не погасив кредит."
+BankDialog50	"^5| ^C^7Нужен уровень: ^120"
+BankDialog51	"^5| ^C^7У вас уже открыт вклад (^3!deposit info^7)."
+BankDialog52	"^5| ^7^CОшибка. ^7Укажите сумму до %d ^3RUR."
+BankDialog53	"^5| ^C^7На вашем счете недостаточно средств для открытия вклада."
+BankDialog54	"^5| ^7^CВы открыли вклад на сумму %d ^3RUR^7."
+BankDialog55	"^5| ^C^7У вас нет вкладов."
+BankDialog56	"^5| ^7^CВы закрыли вклад."
+BankDialog57	"^5| ^7^CБанк получает неустойку в размере %d ^3RUR^7."
+BankDialog58	"^5| ^C^1Внимание! ^7Еще не прошло 14 дней с момента вклада." 
+BankDialog59	"^5| ^7^CВведите ^3!withdraw yes ^7чтобы закрыть вклад. Банк получит неустойку в размере ^25 %^7."
+BankDialog60	"^5| ^7^CВы закрыли вклад."
+
+// ************************
+//          тофу
+// ************************
+
+1600 			"^3|^2 Tofu Fujiwara ^7shop"
+1601 			"^3|^2 !deal ^7- take a job"
+1602 			"^3|^2 !undeal ^7- leave the job"
+FreeEat			"^3| ^C^2!eat ^7- поесть тофу за счет магазина"
+
+2201 			"^3| ^7Entered an order for tofu, come to the tofu-shop"
+2202 			"^7Take Order"
+
+2203 			"^3| ^7There are currently no free workers"
+DelTofu 		"^3| ^7Reservation accepted, wait until the tofu is delievred"
+UAreDel 		"^3| ^7You have already made ??an order, wait until the tofu is delievred"
+1604 			"^3|^7 Your tofu, Sr."
+NotLesEn		"^3| ^7Your power must be less than 80%"
+NoTofuWhWork	"^3| ^7You can't order a tofu because you work here"
+
+4100 			"^3| ^7You are fired"
+4101 			"^3| ^7You have lost the order - you are fired^1!!!"
+4102 			"^3| ^7Need car: ^1UF1"
+4103 			"^3| ^7Need level ^1below 20"
+4104 			"^3| ^7No positions available"
+
+4200 			"^3|^7 Deliver order %s, %s"
+4201 			"^3|^7 Deliver custom player %s"
+4202 			"^3|^7 Take first this order"
+4203 			"^3|^7 Wait until I call you"
+4204 			"^7Order products in the store"
+4205 			"^3| ^7Thank you for ordering products"
+4210			"^3| ^8%s^7, ^Cтекущий заказ: ^3%d^7, всего: ^3%d"
+4300 			"^3|^7 Delivered"
+
+4206			"^3| ^7^CКапитал магазина: ^7%d ^3RUR"
+4207			"^3| ^7^CСклад: воды ^3%0.0f ^7л, муки ^3%0.0f ^7кг, овощей ^3%0.0f ^7кг, сыра ^3%0.0f ^7кг"
+4208			"^3| ^7^CРаботников нет"
+4209			"^3| ^7^CРаботники: ^3%d/%d"
+
+4211			"^3| ^7^CТофу за счет заведения"
+4212 			"^3| ^7^CВы недостаточно долго работали для получения бесплатного питания"
+4213 			"^3| ^7^CВы можете бесплатно поесть в тофу"
+
+// ************************
+//         такси
+// ************************
+
+4000 			"^3|^7 I'll take you to work"
+4001 			"^3|^7 you're not working here"
+4002 			"^3|^7 You work not with me, go away"
 
 TaxiDialog1		"^6| ^3Taxi Radriges"
 TaxiDialog2		"^6| ^2!deal ^7- take a job"
@@ -45,6 +213,7 @@ TaxiDialog13	"^6| ^C^7Ты не можешь работать на этой машине."
 TaxiDialog14	"^6| ^C^7Все, иди работать"
 TaxiDialog15	"^6| ^C^7Я тебя уже отпустил домой"
 TaxiDialog16	"^6| ^C^7Ты закончил вахту"
+TaxiDialog17	"^6| ^C^7Не задано имя игрока"
 
 TaxiOnStreet	"^6| ^7Stop after %0.0f meters"
 TaxiAccept1		"^7Take away the client on %s"
@@ -52,154 +221,108 @@ TaxiAccept2		"^7Take the client on %s"
 TaxiAccept11	"^6| ^7Take away the client on %s"
 TaxiAccept22	"^6| ^7Take the client on %s"
 TaxiDead		"^6| ^7You killed your client - ^1FIRED!"
+TaxiPll 		"^6| ^7^CТы потерял клиента"
 
-PitSaveGood "^2GARAGE"
-PitSaveNotGood "^1GARAGE"
-401 "^3Shop"
-402 "^3Cafe"
-404 "^3Bank"
+// ************************
+//        полиция
+// ************************
 
-GetMoneyA		"^5| ^7You have recived %d ^3RUR^7"
-RemMoneyA		"^5| ^7You have been charged %d ^3RUR^7"
+1002 			"^7Fine"
+1003 			"^7Cancel fine"
+1004 			"Being the pursuit"
+1005 			"Cancel the pursuit"
 
-EnergyFull		"^1| ^7Energy full"
-
-600 "^7Auto show"
-601 "^7Service"
-602 "^7Buy"
-603 "^7Sell" 
-604 "^1Close" 
+RideButton 		"^4PURSUIT BEHIND YOU"
+RightAndStop 	"^1Keep to the sidelines of the road and stop"
+ArestButton		"^1YOU ARE BUSTED"
+1702			"^1 are busted"
+1706 			"^7 away from the pursuit"
 
 ArestedMin		"^2| ^8%s ^1under arrest for ^7%d ^1min"
 Reliaved		"^2| ^8%s ^2relieved from arrest"
 YouHaveAr		"^2| ^7You're under arrest. Until the end of the arrest remains ^1%d ^7min"
 YouUndArest		"^1You're under arrest"
 
-1000 "Send Money"
-1001 "Send a message"
-1002 "^7Fine"
-1003 "^7Cancel fine"
-1004 "Being the pursuit"
-1005 "Cancel the pursuit"
-RideButton 		"^4PURSUIT BEHIND YOU"
-RightAndStop 	"^1Keep to the sidelines of the road and stop"
-1009 "^1| ^7You can not sell the car when you're sitting in it"
-
-SendMoney	"^5| ^7You sent ^8%s ^7%d ^3RUR."
-GetMoney 	"^5| ^8%s ^7sent you ^7%d ^3RUR."
-1101 "^1| ^7you entered an amount greater than what you have in your account."
-1102 "^1| ^7Try select a smaller amount."
-
-MsgFrom  "^1| ^C^7From %s ^7: ^1%s"
-
-Dist		"^2%4.3f Km"
-MsgPlFor	"^7For %s ^7:"
-ItsYou		"^7It's you"
-
-PogonyaOn 	"^2| ^7Pursuit of %s ^7(%s^7)"
-PogonyaOff 	"^2| ^7Cancel pursuit of %s ^7(%s^7)"
-GiveFine 	"^2| ^8%s ^7wrote you a fine: %s"
-GiveFine2	"^1| ^C^7You have fine: %s"
-GiveFine3	"You have fine"
-AddFine 	"^2| ^7You fined %s^7 : %s"
+PogonyaOn 		"^2| ^7Pursuit of %s ^7(%s^7)"
+PogonyaOff 		"^2| ^7Cancel pursuit of %s ^7(%s^7)"
+GiveFine 		"^2| ^8%s ^7wrote you a fine: %s"
+GiveFine2		"^1| ^C^7You have fine: %s"
+GiveFine3		"You have fine"
+AddFine 		"^2| ^7You fined %s^7 : %s"
 DeletedFine 	"^2| ^8%s ^7canceled you a fine: %s"
-DelFine		"^2| ^7You canceled a fine %s ^7: %s"
-Speeding 	"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3km/h^7, %s"
-FinesButton	"Fines"
+DelFine			"^2| ^7You canceled a fine %s ^7: %s"
+Speeding 		"^2| ^8%s ^C^7exceeded the speed limit by ^1%d ^3km/h^7, %s"
+FinesButton		"Fines"
 
+1703 			"^2| ^7Please set Pursuit in Off mode"
 CopFalse 		"^2| ^C^7You are not a Policeman"
 CopTrue 		"^2| ^C^7You  Policeman"
-1302 "^2| ^C^7You are not a Policeman"
-1303 "^2| ^C^7Policeman can not work in a taxi"
+1302 			"^2| ^C^7You are not a Policeman"
+1303 			"^2| ^C^7Policeman can not work in a taxi"
 
-1500 "^1| ^7Bonus: %d ^3RUR"
+3400 			"^1| ^C^7У вас более 10 штрафов. Оплатите их"
 
-ArestButton		"^1YOU ARE BUSTED"
-1702 "^1 are busted"
-1703 "^2| ^7Please set Pursuit in Off mod"
-1704 "^C^7 speeding m.th. ^1"
-1705 " ^3km/h"
-1706 "^7 away from the pursuit"
-
-1800 "^1| ^7You spent all the power!"
-1801 "^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
-1802 "^1| ^7Also recommend to relax in a cafe"
-
-2000 "^1| ^7You are not in the shop!"
-2001 "^1| ^7You do not have enough money"
-2002 "^1| ^7You are not in the cafe"
-2003 "^1Close"
-flood 		"^1| ^7Flood! Fine: %d ^3RUR."
-swear 		"^1| ^7Swearwords! Fine: %d ^3RUR."
-
-2100 			"^2| ^7Srirena Off"
+2100 			"^2| ^7Sirena Off"
 2101 			"^2| ^7Sirena On"
+2102			"^2| ^7^CНет свободных сотрудников ДПС"
+2103			"^2| ^1^CВы не можете вызвать ДПС во время погони"
+2104			"^2| ^1^CВы уже вызвали ДПС, ожидайте"
+2105			"^2| ^1^CВы не можете вызвать ДПС во время движения"
+2106			"^2| ^7^CНельзя чаще, чем раз в 5 минут"
+2107			"^2| ^C^7Ваша заявка будет рассмотрена в течение 5 минут"
+2108			"^2| ^C^7Не покидайте место ДТП до прибытия инспектора ДПС"
+2109			"^2| ^1^CПоступил вызов на ДТП от %s"
+2110			"^2| ^C^7Очередь заявок переполнена"
+2111			"^2| ^C^7Вы не можете использовать радар"
+2112			"^2| ^C^7Вы не можете использовать радар во время разбора ДТП"
+2113			"^2| ^7^CВы ничего не заработали за прошедшую смену"
+2114			"^2| %s ^7^Cзакрыл вашу заявку на рассмотрение ДТП"
+2115			"^2| ^7^CЗаявка ^8%s ^7^Cна рассмотрение ДТП закрыта"
+2116			"^2| ^C^7Нельзя принимать несколько заявок одновременно"
+2117			"^2| %s ^7^Cпринял вашу заявку на рассмотрение ДТП"
+2118			"^2| %s ^7^Cпринял заявку ^8%s ^7^Cна рассмотрение ДТП"
+2119			"^2| ^C^7Вы не можете начинать погоню во время разбора ДТП"
+2120			"^2| ^1^CВы пропустили вызов на ДТП"
+2121			"^CЗаявка принята - %s, %s"
+2122			"^C^2Заявка ^8%s ^2^Cна рассмотрении - ^1закрыть"
+2123			"^CВызов на ДТП принят - %s^8, %s"
+2124			"%s ^7 - %s, ^1^Cарестован"
 RadarOn 		"^2| ^7Radar On"
 RadarOff 		"^2| ^7Radar Off"
+
+2600 			"^2| ^7Care in spectators during chase. Fine - %d ^3RUR"
+2700 			"^2| ^7Care in spectators during chase. Fine - %d ^3RUR"
+
+// ************************
+//        прочее
+// ************************
+
+1500 			"^1| ^7Bonus: %d ^3RUR"
+
+1801 			"^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
+
+2602 			"^1| ^7Care in spectators in the wrong place. Fine - %d ^3RUR"
+2702 			"^1| ^7Care in the boxes in the wrong place. Fine - %d ^3RUR"
+
+EnergyFull		"^1| ^7Energy full"
+2001 			"^1| ^7You do not have enough money"
+2002 			"^1| ^7You are not in the cafe"
+flood 			"^1| ^7Flood! Fine: %d ^3RUR."
+swear 			"^1| ^7Swearwords! Fine: %d ^3RUR."
+
 2104 			"^2| ^7Need a parameter"
 2105 			"^2| ^7Wrong parameter"
 
-2200 "^3| ^7By voluntarily"
-2201 "^3| ^7Entered an order for tofu"
-2202 "^3| ^7Come to the tofu-shop and Take Order"
-2203 "^3| ^7There are currently no free workers"
-DelTofu 		"^3| ^7Reservation accepted, wait until the tofu is delievred"
-UAreDel 		"^3| ^7You have already made ??an order, wait until the tofu is delievred"
+3000 			"^1| ^7Your soul is saved"
 
-2400 "^1| ^7Set voluntary intake restriction not less than^2"
-2401 "^1| ^7Turn Off an ^2ABS"
-2402 "^1| ^7You have low power"
-2403 "^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
-2404 "^1| ^1Take alloved car ^7(^2!cars^7)"
+// ************************
+//     хз откуда это
+// ************************
 
-2600 "^2| ^7Care in spectators during chase. Fine - %d ^3RUR"
-2602 "^1| ^7Care in spectators in the wrong place. Fine - %d ^3RUR"
-2700 "^2| ^7Care in spectators during chase. Fine - %d ^3RUR"
-2702 "^1| ^7Care in the boxes in the wrong place. Fine - %d ^3RUR"
-
-2900 "/msg ^7Voting on the server is forbidden."
-
-3000 "^1| ^7Your soul is saved"
-
-3100 "^1| ^7Available Cars:"
-3101 "^2| ^7List your fines:"
-
-PayDone 		"^2| ^7Fine paid"
-NoFine 			"^2| ^7You don't have this Fine"
-NoFines 		"^2| ^7You don't have any Fines"
-NoOnBank		"^1| ^C^7You are not in the bank"
-NoManyPay		"^1| ^C^7You don't have money"
-
-Help1			"^1| ^7RUSSIAN CRUISE"
-Help2 			"^1| ^7!lang rus,eng - ^3choose your language"
-Help3 			"^1| ^7!info (shift+i) - ^3info screen"
-Help4 			"^1| ^7!fines - ^3list of fines"
-Help5 			"^1| ^7!cars - ^3list of alloved cars"
-Help6 			"^1| ^7!save - ^3save your stats"
-Help7 			"^1| ^7!show - ^3show your stats"
-Help8 			"^1| ^7!pit - ^3tow your self to pits (^7500 ^3RUR)"
-Help9 			"^1| ^7!coffee - ^3coffee (^750 ^3RUR)"
-Help10 			"^1| ^7!redbull - ^3Redbull (^7100 ^3RUR)"
-Help11			"^1| ^7!tofu - ^3order a tofu (^7800 ^3RUR)"
-Help12 			"^1| ^7!users - ^3operations with players"
-Help13 			"^1| ^C^7!911 - ^3call Police Officer at the accident"
-Help14			"^1| ^C^7!help - ^3command list"
-
-4000 "^3|^7 I'll take you to work"
-4001 "^3|^7 you're not working here"
-4002 "^3|^7 You work not with me, go away"
-
-4100 "^3| ^7You are fired"
-4101 "^3| ^7You have lost the order - you are fired^1!!!"
-4102 "^3| ^7Need car: ^1UF1"
-4103 "^3| ^7Need level ^1below 20"
-4104 "^3| ^7No positions available"
-
-4200 "^3|^7 Deliver order!"
-4201 "^3|^7 Deliver custom player %s"
-4202 "^3|^7 Take first this order"
-4203 "^3|^7 Wait until I call you"
-4204 "^7Order products in the store"
-4205 "^3| ^7Thank you for ordering products"
-
-4300 "^3|^7 Delivered"
+600 	"^7Auto show"
+601 	"^7Service"
+602 	"^7Buy"
+603 	"^7Sell" 
+604 	"^1Close" 
+1802 	"^1| ^7Also recommend to relax in a cafe"
+1800 	"^1| ^7You spent all the power!"

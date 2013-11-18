@@ -154,7 +154,7 @@ void RCPizza::Take(byte UCID)
                 }
 			}
 
-            sprintf(str, msg->_(UCID, "4200"), zone.point[place].PlaceName, street->GetStreetName(UCID, StreetID));
+            sprintf(str, msg->_(UCID, "4200"), msg->_(UCID, zone.point[place].PlaceName), street->GetStreetName(UCID, StreetID));
             SendMTC(UCID, "^3| " +  (string)str);
 
             strcpy(players[UCID].WorkDest, str);
@@ -173,14 +173,9 @@ void RCPizza::Take(byte UCID)
     }
 
     else if (players[UCID].WorkAccept == 2)
-    {
         SendMTC(UCID, msg->_(UCID, "4202")); // Отвези сначала этот заказ
-    }
     else
-    {
         SendMTC(UCID, msg->_(UCID, "4203")); // Wait until i call you
-    }
-
 }
 
 void RCPizza::Done(byte UCID)
@@ -214,8 +209,12 @@ void RCPizza::Done(byte UCID)
 void RCPizza::readconfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCPizza\\%s.txt", RootDir, Track);
-    // TODO: refactoring
+    sprintf(file, "%s\\data\\RCPizza\\%s", RootDir, Track);
+
+	msg->ReadLangDir(file);
+
+    sprintf(file, "%s\\data\\RCPizza\\%s\\points.txt", RootDir, Track);
+
     HANDLE fff;
     WIN32_FIND_DATA fd;
     fff = FindFirstFile(file, &fd);

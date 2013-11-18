@@ -51,13 +51,13 @@ void RCMessage::readconfig(const char *Track)
     char dir[ MAX_PATH ];
     sprintf(dir, "%s\\data\\RCMessages", RootDir);
 
-	ReadLangDirecroty(dir);
+	ReadLangDir(dir);
 
     CCText("  ^7RCMessage  ^2OK");
 }
 
 void
-RCMessage::ReadLangDirecroty(const char *path)
+RCMessage::ReadLangDir(const char *path)
 {
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
