@@ -39,18 +39,17 @@ int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
 
 void RCRoadSign::ReadConfig(const char *Track)
 {
-    cout << "RCRoadSign::readconfig\n" ;
     strcpy(TrackName, Track);
     Sign.clear();
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%sdata\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
     HANDLE fff;
     WIN32_FIND_DATA fd;
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        cout << "RCRoadSign: Can'Top find " << file << endl;
+    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found\n");
         return ;
     }
     FindClose(fff);
@@ -72,7 +71,6 @@ void RCRoadSign::ReadConfig(const char *Track)
                 sgn.Y = atoi(strtok(NULL, " "));
                 sgn.Heading = atoi(strtok(NULL, " "));
                 Sign.push_back( sgn );
-                //printf("%d %d %d %d\n", Sign[i].X, Sign[i].Y, Sign[i].Heading, Sign[i].ID);
                 i++;
             }
         }
@@ -80,13 +78,11 @@ void RCRoadSign::ReadConfig(const char *Track)
     readf.close();
 
     sprintf(file, "%s\\data\\RCRoadSign\\sign.txt", RootDir);
-    // TODO: refactoring
     HANDLE ff;
-    // WIN32_FIND_DATA fd;
     ff = FindFirstFile(file, &fd);
     if (ff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCRoadSign: Can'Top find \n%s", file);
+    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(ff);
@@ -103,16 +99,13 @@ void RCRoadSign::ReadConfig(const char *Track)
             if (pr!=0)
             {
                 SignName[i].ID = pr;
-                sprintf(SignName[i].Name, "^C%s", strtok(NULL, ";"));
-
-                //printf("%d %s\n", SignName[i].ID, SignName[i].Name);
-                i++;
+                sprintf(SignName[i++].Name, "^C%s", strtok(NULL, ";"));
             }
         }
     }
     read.close();
 
-    return;
+    CCText("  ^7RCRoadSign ^2OK\n");
 }
 
 void RCRoadSign::InsimNCN( struct IS_NCN* packet )

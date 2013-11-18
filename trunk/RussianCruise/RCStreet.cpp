@@ -64,7 +64,7 @@ void RCStreet::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        cout << "Can't find " << file << endl;
+    	CCText("  ^7RCStreet   ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(fff);
@@ -74,10 +74,8 @@ void RCStreet::readconfig(const char *Track)
     int i = 0;
     while (readf.good())
     {
-
         char str[128];
         readf.getline(str, 128);
-        //cout << str << endl;
 
         if (strlen(str) > 0)
         {
@@ -126,13 +124,13 @@ void RCStreet::readconfig(const char *Track)
 
                 i++;
             }
-
-        } // if strlen > 0
-
-    } //while readf.good()
+        }
+    }
     StreetNums = i;
 
     readf.close();
+
+    CCText("  ^7RCStreet   ^2OK\n");
 }
 
 void RCStreet::InsimCNL( struct IS_CNL* packet )

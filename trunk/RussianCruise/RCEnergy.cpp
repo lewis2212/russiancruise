@@ -68,9 +68,7 @@ void RCEnergy::readconfig(const char *Track)
         readf.getline(str, 128);
 
         if (strstr(str, "//"))
-        {
             continue;
-        }
 
         if (strlen(str) > 0)
         {
@@ -91,9 +89,11 @@ void RCEnergy::readconfig(const char *Track)
                     TrackInf.YCafe[i] = atoi(Y);
                 }
             }
-        } // if strlen > 0
-    } //while readf.good()
+        }
+    }
     readf.close();
+
+    CCText("  ^7RCEnergy   ^2OK\n");
 }
 
 void RCEnergy::InsimNCN( struct IS_NCN* packet )

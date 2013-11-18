@@ -62,7 +62,7 @@ void RCLight::readconfig(const char *Track)
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        cout << "RCLight: Can't find " << file << endl;
+    	CCText("  ^7RCLight    ^1ERROR: ^8file " + (string)file + " not found\n");
         return ;
     }
     fclose(fff);
@@ -107,7 +107,8 @@ void RCLight::readconfig(const char *Track)
     }
     LightsCount = i;
     readf.close();
-    return;
+
+    CCText("  ^7RCLight    ^2OK\n");
 }
 
 void RCLight::InsimCNL( struct IS_CNL* packet )

@@ -221,7 +221,7 @@ void RCPizza::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza: Can't find\n%s", file);
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(fff);
@@ -291,11 +291,10 @@ void RCPizza::readconfig(const char *Track)
 
     /*** READ STORE DATA ***/
     sprintf(file, "%s\\data\\RCPizza\\_Store.txt", RootDir);
-    // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza: Can't find _Store.txt");
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(fff);
@@ -324,16 +323,15 @@ void RCPizza::readconfig(const char *Track)
     ReadStore.close();
 
     sprintf(file, "%s\\data\\RCPizza\\_Pizza.txt", RootDir);
-    // TODO: refactoring
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCPizza: Can't find _Pizza.txt");
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
+
     FindClose(fff);
     ifstream ReadInfo (file, ios::in);
-
     while (ReadInfo.good())
     {
         char str[128];
@@ -349,6 +347,8 @@ void RCPizza::readconfig(const char *Track)
         }
     }
     ReadInfo.close();
+
+    CCText("  ^7RCPizza    ^2OK\n");
 }
 
 
@@ -443,6 +443,9 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
                     SendMTC(UCID, msg->_(UCID, "1601")); // deal
                 else
                     SendMTC(UCID, msg->_(UCID, "1602")); // undeal
+
+                if (players[UCID].FreeEat)
+					SendMTC(UCID, msg->_(UCID, "FreeEat")); // undeal
 
                 if (players[UCID].WorkAccept != 0)
                     Take(UCID);

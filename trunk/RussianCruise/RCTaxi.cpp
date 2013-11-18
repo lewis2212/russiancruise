@@ -75,7 +75,6 @@ int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RC
 
 void RCTaxi::readconfig(const char *Track)
 {
-    cout << "RCTaxi::readconfig\n" ;
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCTaxi\\tracks\\%s.txt", RootDir, Track);
     // TODO: refactoring
@@ -84,7 +83,7 @@ void RCTaxi::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCTaxi: Can't find \n%s", file);
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(fff);
@@ -114,7 +113,7 @@ void RCTaxi::readconfig(const char *Track)
                     zone.dealX[i] = atoi(X);
                     zone.dealY[i] = atoi(Y);
                 }
-            } // if /street
+            }
 
             if (strncmp(str, "/shop", 5)==0)
             {
@@ -156,9 +155,8 @@ void RCTaxi::readconfig(const char *Track)
                     Points[i].StreetId = atoi(StrId);
                 }
             }
-        } // if strlen > 0
-    } //while readf.good()
-
+        }
+    }
     readf.close();
 
     sprintf(file, "%s\\data\\RCTaxi\\dialog.txt", RootDir);
@@ -169,7 +167,7 @@ void RCTaxi::readconfig(const char *Track)
     ff = FindFirstFile(file, &fd);
     if (ff == INVALID_HANDLE_VALUE)
     {
-        printf ("RCTaxi: Can't find \n%s", file);
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(ff);
@@ -202,7 +200,7 @@ void RCTaxi::readconfig(const char *Track)
     tt = FindFirstFile(file, &fd);
     if (tt == INVALID_HANDLE_VALUE)
     {
-        printf ("RCTaxi: Can't find \n%s", file);
+    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
     FindClose(tt);
@@ -244,6 +242,8 @@ void RCTaxi::readconfig(const char *Track)
         pacAXM.PMOAction = PMO_DEL_OBJECTS;
         insim->send_packet(&pacAXM);
     }
+
+    CCText("  ^7RCTaxi     ^2OK\n");
 }
 
 void RCTaxi::Event()
@@ -383,6 +383,7 @@ void RCTaxi::accept_user2(byte UCID)
 
     struct streets StreetInfo;
     memset(&StreetInfo, 0, sizeof(streets));
+
 
     //удал€ю маршала
     delete_marshal( UCID );
@@ -1027,6 +1028,7 @@ void RCTaxi::InsimPLP( struct IS_PLP* packet)
 
 void RCTaxi::InsimPLL( struct IS_PLL* packet )
 {
+
     byte UCID = PLIDtoUCID[packet->PLID];
     taxi_loss(UCID);
 

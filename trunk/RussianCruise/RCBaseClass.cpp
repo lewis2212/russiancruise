@@ -570,3 +570,42 @@ vector<string>& SplitString::split( const char delim, int rep)
         flds.push_back(buf);
     return flds;
 }
+
+void RCBaseClass::CCText(string Text)
+{
+	char str[256];
+	sprintf(str,"f^8%s",Text.c_str());
+	strtok(str, "^");
+
+    while(true)
+    {
+    	char* NonFormatText = strtok (NULL, "^");
+		char text[256];
+
+        if (!NonFormatText)
+            break;
+
+        char ColorPref [2];
+        strncpy(ColorPref, NonFormatText, 1);
+        int COLOR = atoi(ColorPref);
+
+        switch(COLOR)
+        {
+        	case 1: COLOR = 12; break;
+        	case 2: COLOR = 10; break;
+        	case 3: COLOR = 14; break;
+        	case 4: COLOR = 9;  break;
+        	case 5: COLOR = 13; break;
+        	case 6: COLOR = 11; break;
+        	case 7: COLOR = 15; break;
+        	case 8: COLOR = 7;  break;
+        	case 9: COLOR = 8;  break;
+        }
+
+        strncpy(text, NonFormatText+1, strlen((NonFormatText)));
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | COLOR));
+        printf("%s", text);
+    }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | 7));
+}

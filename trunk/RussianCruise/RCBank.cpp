@@ -831,13 +831,12 @@ void RCBank::BtnCash (byte UCID)
 
 void RCBank::readconfig(const char *Track)
 {
-    cout << "RCBank::readconfig\n" ;
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCBank\\tracks\\%s.txt", RootDir, Track);
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        printf ("RCBank: Can't find\n%s", file);
+    	CCText("  ^7RCBank     ^1ERROR: ^8file " + (string)file + " not found\n");
         return;
     }
 
@@ -860,27 +859,21 @@ void RCBank::readconfig(const char *Track)
             TrackInf.XBank[i] = atoi(X);
             TrackInf.YBank[i] = atoi(Y);
         }
-    } //while readf.good()
+    }
     readf.close();
 
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
 
     if (mysql_ping(dbconn) != 0)
-    {
         printf("Error: connection with MySQL server was lost\n");
-    }
 
     if (mysql_query(dbconn, query) != 0)
-    {
         printf("Error: MySQL Query\n");
-    }
 
     dbres = mysql_store_result(dbconn);
     if (dbres == NULL)
-    {
         printf("Error: can't get the result description\n");
-    }
 
     if (mysql_num_rows(dbres) > 0)
     {
@@ -888,9 +881,9 @@ void RCBank::readconfig(const char *Track)
         BankFond = atof(dbrow[0]);
     }
     else
-    {
         BankFond = 0;
-    }
 
     mysql_free_result(dbres);
+
+    CCText("  ^7RCBank     ^2OK\n");
 }

@@ -75,7 +75,7 @@ struct PolicePlayer: public GlobalPlayer
     int		DTPstatus;
     int		DTPfines;
     int		DoneCount = 0;
-    int     LastDtpTime = 0;
+    int 	LastDtpTime = 0;
 
     /** other players **/
     int		SirenaDist;
@@ -131,6 +131,7 @@ private:
     void ButtonClock( byte UCID );
     void ShowFinesPanel( byte UCID, byte UCID2 );
     void CopPayRoll(byte UCID, bool FullWork);
+    void ReadFines();
 
     //Stat
     void LoadCopStat(byte UCID);
@@ -148,7 +149,6 @@ public:
     void SaveUserFines( byte UCID );
     void SendMTCToCop(const char* Msg, int Rank, ...);
     void SetUserBID( byte UCID, byte BID);
-    void ReadFines();
     void SetSirenLight( string sirenWord );
     bool IsCop(byte UCID);
     int GetCopRank(byte UCID);
