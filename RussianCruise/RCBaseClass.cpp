@@ -522,7 +522,7 @@ RCBaseClass::dbExec( const char *query )
 	return true;
 }
 
-inline std::string
+inline string
 RCBaseClass::trim(const std::string &s)
 {
    auto wsfront=std::find_if_not(s.begin(),s.end(),[](int c){return std::isspace(c);});
@@ -531,15 +531,78 @@ RCBaseClass::trim(const std::string &s)
 }
 
 void
-RCBaseClass::AddMarshal()
+RCBaseClass::AddObjects()
 {
+	if( addObjects.size() == 0 )
+		return;
 
+	char debug[MAX_PATH];
+	sprintf(debug,"^6DEBUG^7: ^2addObjects queue = %d", addObjects.size());
+	CCText(debug);
+
+	IS_AXM	*packAXM = new IS_AXM;
+    memset(packAXM, 0, sizeof(struct IS_AXM));
+    packAXM->Type = ISP_AXM;
+    packAXM->ReqI = 1;
+    packAXM->PMOAction = PMO_ADD_OBJECTS;
+
+    int i = 0;
+
+    while( !addObjects.empty() )
+	{
+
+		memcpy( &packAXM->Info[i], &addObjects.front(), sizeof( ObjectInfo ) );
+		addObjects.pop();
+
+		packAXM->NumO = ++i;
+
+		if( i%30 == 0 )
+			break;
+	}
+
+	sprintf(debug,"^6DEBUG^7: ^2Add %d objects",packAXM->NumO );
+	CCText(debug);
+
+    packAXM->Size = 8 + packAXM->NumO * 8;
+    insim->send_packet(packAXM);
+    delete packAXM;
 }
 
 void
-RCBaseClass::DeleteMarshal()
+RCBaseClass::DelObjects()
 {
+	if( delObjects.size() == 0 )
+		return;
 
+	char debug[MAX_PATH];
+	sprintf(debug,"^6DEBUG^7: ^1delObjects queue = %d", delObjects.size());
+	CCText(debug);
+
+	IS_AXM	*packAXM = new IS_AXM;
+    memset(packAXM, 0, sizeof(struct IS_AXM));
+    packAXM->Type = ISP_AXM;
+    packAXM->ReqI = 1;
+    packAXM->PMOAction = PMO_DEL_OBJECTS;
+
+	int i = 0;
+    while( !delObjects.empty() )
+	{
+
+		memcpy( &packAXM->Info[i], &delObjects.front(), sizeof( ObjectInfo ) );
+		delObjects.pop();
+
+		packAXM->NumO = ++i;
+
+		if( i%30 == 0 )
+			break;
+	}
+
+	sprintf(debug,"^6DEBUG^7: ^1Del %d objects",packAXM->NumO );
+	CCText(debug);
+
+    packAXM->Size = 8 + packAXM->NumO * 8;
+    insim->send_packet(packAXM);
+    delete packAXM;
 }
 
 // split: receives a char delimiter; returns a vector of strings

@@ -17,6 +17,7 @@ using namespace std;
 #include <exception>
 #include <map>
 #include <vector>
+#include <queue>
 #include <algorithm>
 
 #include <direct.h>
@@ -26,8 +27,11 @@ using namespace std;
 //#include "tools.h"
 #define MAX_PATH	260
 
+/**< переменная - очередь игровых объектов */
+typedef queue< ObjectInfo > ObjectsInfo;
+
 /**< переменная - асоциативный массив вида "название поля" -> "значение поля" */
-typedef std::map< string, string > DB_ROW;
+typedef map< string, string > DB_ROW;
 
 /**< переменная - массив состоящий из элементов DB_ROW */
 typedef list<DB_ROW> DB_ROWS;
@@ -76,21 +80,37 @@ public:
      */
     static const char* GetReason(byte Reason);
 
-    // 	virtual void AddObject();
-    // virtual void DelObject();
-    virtual void AddMarshal();
-    virtual void DeleteMarshal();
+    /** @brief Добавление объектов на карту.
+     *			Перед вызовом метода, добавляемые объекты необходимо добавить в очередь addObjects,
+     *			используя метод addObjects.push( ObjectInfo object )
+     *
+     * @return void - ничего
+     *
+     */
+    virtual void AddObjects();
 
-
+    /** @brief Удаление объектов на карте.
+     *			Перед вызовом метода, удаляемые объекты необходимо добавить в очередь delObjects,
+     *			используя метод delObjects.push( ObjectInfo object )
+     *
+     * @return void - ничего
+     *
+     */
+	virtual void DelObjects();
 
 	static string NumToString (int n);
 
-	inline std::string trim(const std::string &s);
+	inline string trim(const std::string &s);
 
 protected:
     CInsim      *insim;         	// Переменная-указатель на класс CInsim
     char        RootDir[MAX_PATH]; 	// Полный путь до папки с программой
-    std::map< byte, byte >PLIDtoUCID;
+    map< byte, byte >PLIDtoUCID;
+
+	/**< очередь объектов для их добавления на карту */
+    ObjectsInfo addObjects;
+    /**< очередь объектов для их удаления с карты */
+    ObjectsInfo delObjects;
 
     virtual void InsimACR( struct IS_ACR* packet ){}
     virtual void InsimAXM( struct IS_AXM* packet ){}
