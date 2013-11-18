@@ -76,6 +76,8 @@ struct PolicePlayer: public GlobalPlayer
     int		DTPfines;
     int		DoneCount = 0;
     int 	LastDtpTime = 0;
+    bool 	blame = false;		//вина в дтп
+    int		FineC = 0;
 
     /** other players **/
     int		SirenaDist;

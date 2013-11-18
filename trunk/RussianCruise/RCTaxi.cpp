@@ -297,24 +297,18 @@ void RCTaxi::accept_user( byte UCID )
         int DestPoint = 0;
         srand(time(NULL));
 
-        if (players[UCID].client_type == 0)
-        {
-            bool ok = true;
+        bool ok = true;
             while (ok)
             {
                 DestPoint = rand()%ClientCount;
                 if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
                     ok = false;
 
-				#ifdef __linux__
-                sleep(100);
-				#else
                 Sleep(100);
-				#endif
             }
 
+        if (players[UCID].client_type == 0)
             players[UCID].client_type = count - (int)sqrt(rand()%(count * count));
-        }
         else
             players[UCID].client_type = 1;
 
@@ -372,11 +366,7 @@ void RCTaxi::accept_user2(byte UCID)
         if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID ) and Distance(X1, Y1, X2, Y2)>MINDIST)
             ok = false;
 
-		#ifdef __linux__
-        sleep(100);
-		#else
         Sleep(100);
-		#endif
     }
 
     int DestStreet = ClientPoints[DestPoint].StreetId; //улица назначения
@@ -413,7 +403,7 @@ void RCTaxi::accept_user2(byte UCID)
     if (players[UCID].client_type == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
-		players[UCID].WorkTime = time(NULL) + 70+(int)rand()%40;
+		players[UCID].WorkTime = time(NULL) + 70 + (int)rand()%40;
 	}
 
     if (players[UCID].client_type == 3)
@@ -437,8 +427,11 @@ void RCTaxi::accept_user2(byte UCID)
         players[UCID].PassStress = 500;
 	}
 
-	if (players[UCID].cf == 1 and players[UCID].client_type != 1)
-		sprintf(Msg, TaxiDialogs["client_31"][rand()%TaxiDialogs["client_31"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
+	if (players[UCID].cf == 5 and players[UCID].client_type != 1)
+    {
+        sprintf(Msg, TaxiDialogs["client_31"][rand()%TaxiDialogs["client_31"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
+        players[UCID].cf = 1;
+    }
 
     SendMTC(UCID, Msg);
     ButtonInfo(UCID, Btn);
@@ -588,7 +581,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                         {
                             SendMTC(UCID, TaxiDialogs["client_4"][rand()%TaxiDialogs["client_4"].size()].c_str());
                             players[UCID].client_type = 1;
-                            players[UCID].cf = 1;
+                            players[UCID].cf = 5;
                             accept_user2(UCID);
                             return;
                         }
