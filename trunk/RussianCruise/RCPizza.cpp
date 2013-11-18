@@ -221,7 +221,7 @@ void RCPizza::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(fff);
@@ -294,7 +294,7 @@ void RCPizza::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
     FindClose(fff);
@@ -326,7 +326,7 @@ void RCPizza::readconfig(const char *Track)
     fff = FindFirstFile(file, &fd);
     if (fff == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found\n");
+    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
 
@@ -348,7 +348,7 @@ void RCPizza::readconfig(const char *Track)
     }
     ReadInfo.close();
 
-    CCText("  ^7RCPizza    ^2OK\n");
+    CCText("  ^7RCPizza    ^2OK");
 }
 
 
