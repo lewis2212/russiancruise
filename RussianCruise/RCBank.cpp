@@ -59,37 +59,37 @@ int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL
     dbconn = conn;
     if (!dbconn)
     {
-        printf("RCBank: Can't sctruct MySQL Connector\n");
+        CCText("^3RCBank:\t^1Can't sctruct MySQL Connector");
         return -1;
     }
 
     insim = InSim;
     if (!insim)
     {
-        cout << "RCBank Error: Can't struct CInsim class" << endl;
+        CCText("^3RCBank:\t^1Can't struct CInsim class");
         return -1;
     }
 
     msg = RCMessageClass;
     if (!msg)
     {
-        cout << "RCBank Error: Can't struct RCMessage class" << endl;
+        CCText("^3RCBank:\t^1Can't struct RCMessage class");
         return -1;
     }
 
     dl = DL;
     if (!dl)
     {
-        printf ("RCBank Error: Can't struct RCDL class");
+        CCText("RCBank:\t^1Can't struct RCDL class");
         return -1;
     }
 
     if (mysql_ping(dbconn) != 0)
     {
-        printf("RCBank Error: connection with MySQL server was lost\n");
+        CCText("^3RCBank:\t^1Connection with MySQL server was lost");
     }
 
-    printf("RCBank Success: Connected to MySQL server\n");
+    CCText("^3RCBank:\t^2Connected to MySQL server");
     return 0;
 }
 
@@ -109,105 +109,40 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username = '%s' LIMIT 1;", packet->UName);
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        printf("Error: connection with MySQL server was lost\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
+    DB_ROWS result = dbSelect(query);
+    DB_ROW row;
 
-    if (mysql_query(dbconn, query) != 0)
+    if( result.size() != 0 )
     {
-        printf("Error: MySQL Query\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
+    	row = result.front();
 
-    dbres = mysql_store_result(dbconn);
-    if (dbres == NULL)
-    {
-        printf("Error: can't get the result description\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
-
-    if (mysql_num_rows(dbres) > 0)
-    {
-        dbrow = mysql_fetch_row(dbres);
-        players[packet->UCID].Cash = atof(dbrow[0]);
+        players[packet->UCID].Cash = atof(row["cash"].c_str());
     }
     else
     {
         printf("Can't find %s\n Create user\n", packet->UName);
         sprintf(query, "INSERT INTO bank (username) VALUES ('%s');", packet->UName);
 
-        if (mysql_ping(dbconn) != 0)
-        {
-            printf("Error: connection with MySQL server was lost\n");
-            SendMST(msg);
-            SendMST(kickCmd);
-            return;
-        }
-
-        if (mysql_query(dbconn, query) != 0)
-        {
-            printf("Error: MySQL Query\n");
-        }
-
         players[packet->UCID].Cash = 1000;
         bank_save(packet->UCID);
     }
-    mysql_free_result(dbres);
 
     /** кредиты **/
     sprintf(query, "SELECT cash, date_create FROM bank_credits WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        printf("Error credits: connection with MySQL server was lost\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
+	result = dbSelect(query);
 
-    if (mysql_query(dbconn, query) != 0)
+    if ( result.size() > 0)
     {
-        printf("Error credits: MySQL Query\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
-
-    dbres = mysql_store_result(dbconn);
-    if (dbres == NULL)
-    {
-        printf("Error credits: can't get the result description\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
-
-    if (mysql_num_rows(dbres) > 0)
-    {
-        dbrow = mysql_fetch_row(dbres);
-        players[packet->UCID].Credit = atof(dbrow[0]);
-        players[packet->UCID].Date_create = atof(dbrow[1]);
+        row = result.front();
+        players[packet->UCID].Credit = atof(row["cash"].c_str());
+        players[packet->UCID].Date_create = atof(row["date_create"].c_str());
     }
     else
     {
         sprintf(query, "INSERT INTO bank_credits (username, cash, date_create) VALUES ('%s', 0, 0);", packet->UName);
-        if (mysql_ping(dbconn) != 0)
-        {
-            printf("Error credits: connection with MySQL server was lost\n");
-            SendMST(msg);
-            SendMST(kickCmd);
-            return;
-        }
 
-        if (mysql_query(dbconn, query) != 0)
+        if (!dbExec(query))
         {
             printf("Error credits: MySQL Query\n");
         }
@@ -216,52 +151,24 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         players[packet->UCID].Date_create = 0;
     }
 
-    mysql_free_result(dbres);
-
     /** вклады **/
     sprintf(query, "SELECT cash, date_create FROM bank_deposits WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        printf("Error deposits: connection with MySQL server was lost\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
+    result = dbSelect(query);
 
-    if (mysql_query(dbconn, query) != 0)
+    if ( result.size() > 0)
     {
-        printf("Error deposits: MySQL Query\n");
-        return;
-    }
+        row = result.front();
 
-    dbres = mysql_store_result(dbconn);
-    if (dbres == NULL)
-    {
-        printf("Error deposits: can't get the result description\n");
-        SendMST(msg);
-        SendMST(kickCmd);
-        return;
-    }
-
-    if (mysql_num_rows(dbres) > 0)
-    {
-        dbrow = mysql_fetch_row(dbres);
-        players[packet->UCID].Deposit = atof(dbrow[0]);
-        players[packet->UCID].Dep_Date_create = atof(dbrow[1]);
+        players[packet->UCID].Deposit = atof( row["cash"].c_str() );
+        players[packet->UCID].Dep_Date_create = atof( row["date_create"].c_str() );
     }
     else
     {
         sprintf(query, "INSERT INTO bank_deposits (username, cash, date_create) VALUES ('%s', 0, 0);", packet->UName);
-        if (mysql_ping(dbconn) != 0)
-        {
-            printf("Error deposits: connection with MySQL server was lost\n");
-            SendMST(msg);
-            SendMST(kickCmd);
-            return;
-        }
 
-        if (mysql_query(dbconn, query) != 0)
+
+        if ( !dbExec(query) )
         {
             printf("Error deposits: MySQL Query\n");
         }
@@ -269,7 +176,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         players[packet->UCID].Deposit = 0;
         players[packet->UCID].Dep_Date_create = 0;
     }
-    mysql_free_result(dbres);
+
 
     /** credit **/
     if (players[packet->UCID].Date_create!=0)
@@ -361,62 +268,34 @@ void RCBank::bank_save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'", players[UCID].Cash, players[UCID].UName);
 
-    if (mysql_ping(dbconn) != 0)
+    if (!dbExec(query))
     {
-        printf("Bank Error: connection with MySQL server was lost\n");
+        printf("Bank Error: Can't save cash for %s\n",  players[UCID].UName);
     }
-
-    if (mysql_query(dbconn, query) != 0)
-    {
-        printf("Bank Error: MySQL Query Save\n");
-    }
-
-    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows(dbconn));
 
     /* Credit */
     sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName);
 
-    if (mysql_ping(dbconn) != 0)
+    if (!dbExec(query))
     {
-        printf("Credit Error: connection with MySQL server was lost\n");
+        printf("Bank Error: Can't save credit for %s\n",  players[UCID].UName);
     }
-
-    if (mysql_query(dbconn, query) != 0)
-    {
-        printf("Credit Error: MySQL Query Save\n");
-    }
-
-    //printf("Credit Log: Affected rows = %d\n", mysql_affected_rows(dbconn));
 
     /* Deposit */
     sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName);
 
-    if (mysql_ping(dbconn) != 0)
+    if (!dbExec(query))
     {
-        printf("Deposit Error: connection with MySQL server was lost\n");
+        printf("Bank Error: Can't save deposit for %s\n",  players[UCID].UName);
     }
-
-    if (mysql_query(dbconn, query) != 0)
-    {
-        printf("Deposit Error: MySQL Query Save\n");
-    }
-
-    //printf("Deposit Log: Affected rows = %d\n", mysql_affected_rows(dbconn));
 
     /* Capital */
     sprintf(query, "UPDATE bank SET cash = %f WHERE username='_RC_Bank_Capital_'", BankFond);
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        printf("Bank Error: connection with MySQL server was lost\n");
-    }
-
-    if (mysql_query(dbconn, query) != 0)
-    {
-        printf("Bank Error: MySQL Query Save\n");
-    }
-
-    //printf("Capital Log: Affected rows = %d\n", mysql_affected_rows(dbconn));
+    if( !dbExec(query) )
+	{
+		printf("Bank Error: Can't save Capital\n");
+	}
 }
 
 void RCBank::InsimCPR(struct IS_CPR* packet)
@@ -865,25 +744,15 @@ void RCBank::readconfig(const char *Track)
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
 
-    if (mysql_ping(dbconn) != 0)
-        printf("Error: connection with MySQL server was lost\n");
+	DB_ROWS result = dbSelect(query);
 
-    if (mysql_query(dbconn, query) != 0)
-        printf("Error: MySQL Query\n");
-
-    dbres = mysql_store_result(dbconn);
-    if (dbres == NULL)
-        printf("Error: can't get the result description\n");
-
-    if (mysql_num_rows(dbres) > 0)
+    if ( result.size() > 0)
     {
-        dbrow = mysql_fetch_row(dbres);
-        BankFond = atof(dbrow[0]);
+        DB_ROW dbrow = result.front();
+        BankFond = atof( dbrow["cash"].c_str() );
     }
     else
         BankFond = 0;
-
-    mysql_free_result(dbres);
 
     CCText("  ^7RCBank     ^2OK");
 }

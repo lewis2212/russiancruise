@@ -16,37 +16,37 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
     dbconn = conn;
     if (!dbconn)
     {
-        printf("RCEnergy: Can't sctruct MySQL Connector\n");
+        printf("^3RCEnergy:\t^1Can't sctruct MySQL Connector\n");
         return -1;
     }
 
     insim = InSim;
     if (!insim)
     {
-        printf ("RCEnergy Can't struct CInsim class");
+        printf ("^3RCEnergy:\t^1Can't struct CInsim class");
         return -1;
     }
 
     msg = (RCMessage *)Message;
     if (!msg)
     {
-        printf ("RCEnergy Can't struct RCMessage class");
+        printf ("^3RCEnergy:\t^1Can't struct RCMessage class");
         return -1;
     }
 
     bank = (RCBank *)Bank;
     if (!msg)
     {
-        printf ("RCEnergy Can't struct RCBank class");
+        printf ("^3RCEnergy:\t^1Can't struct RCBank class");
         return -1;
     }
 
     if( mysql_ping(dbconn) != 0)
     {
-        printf("RCEnergy Error: connection with MySQL server was lost\n");
+        printf("^3RCEnergy:\t^1Connection with MySQL server was lost\n");
         return -1;
     }
-    printf("RCEnergy Success: Connected to MySQL server\n");
+    CCText("^3RCEnergy:\t^2Connected to MySQL server");
     return 0;
 }
 

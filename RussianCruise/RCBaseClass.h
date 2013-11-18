@@ -76,6 +76,8 @@ public:
      */
     static const char* GetReason(byte Reason);
 
+    // 	virtual void AddObject();
+    // virtual void DelObject();
     virtual void AddMarshal();
     virtual void DeleteMarshal();
 

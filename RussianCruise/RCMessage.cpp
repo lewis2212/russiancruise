@@ -106,9 +106,23 @@ RCMessage::ReadLangFile(const char *file)
             string mesage;
 
             id = strtok (str, "\"");
+
+            if( id.size() == 0 )
+			{
+				CCText("RCMesages: Bad code");
+				continue;
+			}
+
             id.erase(id.find_last_not_of(" \t\r\n\0")+1);
 
             mesage = strtok (NULL, "\"");
+
+			if( mesage.size() == 0 )
+			{
+				CCText("RCMesages: Bad message");
+				continue;
+			}
+
             mesage.erase( mesage.find_last_not_of(" \t\r\n\0")+1);
 
             MsgArray[ lang ].erase( id );
