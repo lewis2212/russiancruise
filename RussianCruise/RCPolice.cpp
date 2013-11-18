@@ -331,19 +331,19 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
         if (players[UCID].Pogonya > 0)
         {
-            SendMTC(UCID, msg->_(UCID, "2103"));
+            SendMTC(UCID, msg->_(UCID, "WherePog"));
             return;
         }
 
         if (players[UCID].DTP != 0)
         {
-            SendMTC(UCID, msg->_(UCID, "2104"));
+            SendMTC(UCID, msg->_(UCID, "WhereDtp"));
             return;
         }
 
         if (players[UCID].Info.Speed * 360 / 32768 > 0)
         {
-            SendMTC(UCID, msg->_(UCID, "2105"));
+            SendMTC(UCID, msg->_(UCID, "NoDtpWhenSp"));
             return;
         }
 
@@ -352,6 +352,8 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             SendMTC(UCID, msg->_(UCID, "2106"));
             return;
         }
+
+		players[UCID].blame = false;
         players[UCID].LastDtpTime = time(NULL);
 
         players[UCID].DTP = 255;
@@ -806,7 +808,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
         if (players[packet->UCID].DTPstatus == 2 and DTPvyzov[2][i] == packet->UCID)
         {
-            sprintf(str, msg->_(packet->UCID,"2114"), players[packet->UCID].PName);
+            sprintf(str, msg->_(DTPvyzov[0][i],"2114"), players[packet->UCID].PName);
             SendMTC(DTPvyzov[0][i], str);
 
             sprintf(str, msg->_(packet->UCID,"2115"), players[DTPvyzov[0][i]].PName);
@@ -816,11 +818,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             if (DTPvyzov[2][i] != 0)
                 players[DTPvyzov[2][i]].DTPstatus = 0;
 
-            DTPvyzov[0][i] = 0;
-            DTPvyzov[1][i] = 0;
-            DTPvyzov[2][i] = 0;
-            SendBFN(255, packet->ClickID);
-
             if (players[packet->UCID].DTPfines > 0)
 			{
                 players[packet->UCID].DoneCount++;
@@ -828,6 +825,25 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 players[packet->UCID].PStat.SolvedIncedents++;
 			}
 			players[packet->UCID].DTPfines = 0;
+
+			//выплата компенсации в виде % от штрафов
+			if (!players[DTPvyzov[0][i]].blame and players[packet->UCID].FineC>0)
+			{
+				sprintf(str, msg->_(DTPvyzov[0][i],"Compens"), (double)((double)players[packet->UCID].FineC*0.05));
+				SendMTC(DTPvyzov[0][i], str);
+				sprintf(str, msg->_(packet->UCID,"CompensPl"), players[DTPvyzov[0][i]].PName, (double)((double)players[packet->UCID].FineC*0.05));
+				SendMTC(packet->UCID, str);
+				bank->RemFrBank(players[packet->UCID].FineC*0.05);
+				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
+			}
+
+			players[packet->UCID].FineC = 0;
+			players[DTPvyzov[0][i]].blame = false;
+
+            DTPvyzov[0][i] = 0;
+            DTPvyzov[1][i] = 0;
+            DTPvyzov[2][i] = 0;
+            SendBFN(255, packet->ClickID);
         }
         else if (DTPvyzov[2][i] <= 0)
         {
@@ -882,6 +898,12 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
+            	if (players[packet->UCID].DTPstatus == 2)
+				{
+					players[play.first].blame = true;
+					players[packet->UCID].FineC += fines[packet->ReqI].cash;
+				}
+
             	players[packet->UCID].PStat.FinedByDay++;
             	players[packet->UCID].PStat.Fined++;
 
@@ -1016,6 +1038,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if (players[packet->ReqI].Pogonya == 0)
             {
+            	players[packet->UCID].FineC = 0;
                 players[packet->UCID].DTPfines = 0;
                 players[packet->UCID].DTPstatus = -1;
                 players[packet->ReqI].Pogonya = 1;
@@ -1043,6 +1066,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
         if (players[packet->ReqI].Pogonya != 0)
         {
+        	players[packet->UCID].FineC = 0;
             //запралата копам, которые были рядом во время ареста
             if (players[packet->UCID].DTPfines > 0)
             {
@@ -2064,7 +2088,7 @@ void RCPolice::Event()
                 SendBFN( UCID , 210);
 
                 char Text[64];
-                sprintf( Text , "/msg ^2| %s %s" , playr.PName , msg->_(  UCID , "1706" ) );
+                sprintf( Text , "/msg ^2| %s %s" , playr.PName, msg->_(  UCID , "1706" ) );
 
                 SendMST(Text);
                 players[ UCID ].Pogonya = 0;
@@ -2143,7 +2167,7 @@ void RCPolice::Event()
                         if (players[UCID].DTPstatus == 1)
                         {
                             char str[96];
-                            sprintf(str, "2121", players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
+                            sprintf(str, msg->_(UCID,"2121"), players[DTPvyzov[0][i]].PName, StreetInfo.StreetRu);
                             SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 3, str);
                         }
                         else
