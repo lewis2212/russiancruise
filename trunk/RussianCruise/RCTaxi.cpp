@@ -206,7 +206,7 @@ void RCTaxi::readconfig(const char *Track)
     FindClose(tt);
     ifstream readt (file, ios::in);
 
-    int i=-1;
+    int i = 0;
     while (readt.good())
     {
         char str[128];
@@ -215,12 +215,12 @@ void RCTaxi::readconfig(const char *Track)
         int c = atoi(strtok (str, ", "));
         if (c!=0)
         {
-            i++;
             ClientPoints[i].X = c;
             ClientPoints[i].Y = atoi(strtok (NULL, ", "));
             ClientPoints[i].Z = atoi(strtok (NULL, ", "));
             ClientPoints[i].Dir = atoi(strtok (NULL, ", "));
             ClientPoints[i].StreetId = atoi(strtok (NULL, ", "));
+            i++;
         }
         ClientCount=i;
     }
@@ -229,19 +229,18 @@ void RCTaxi::readconfig(const char *Track)
     //очистка маршалов
     for (int i=0; i<ClientCount; i++)
     {
-        struct IS_AXM pacAXM;
-        memset(&pacAXM, 0, sizeof(struct IS_AXM));
-        pacAXM.Info[0].Index=255;
-        pacAXM.Info[0].X=ClientPoints[i].X / 4096;
-        pacAXM.Info[0].Y=ClientPoints[i].Y / 4096;
-        pacAXM.Info[0].Zchar=ClientPoints[i].Z;
-        pacAXM.Type=ISP_AXM;
-        pacAXM.ReqI=1;
-        pacAXM.NumO=1;
-        pacAXM.Size=8 + pacAXM.NumO * 8;
-        pacAXM.PMOAction = PMO_DEL_OBJECTS;
-        insim->send_packet(&pacAXM);
+        struct ObjectInfo obj;
+        memset(&obj, 0, sizeof(struct ObjectInfo));
+
+		obj.Index = 255;
+		obj.X = ClientPoints[i].X / 4096;
+		obj.Y = ClientPoints[i].Y / 4096;
+		obj.Zchar = ClientPoints[i].Z;
+
+		delObjects.push( obj );
     }
+
+    DelObjects();
 
     CCText("  ^7RCTaxi     ^2OK");
 }
@@ -281,7 +280,8 @@ void RCTaxi::accept_user( byte UCID )
     if ( players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].CanWork and
             ( players[UCID].WorkAccept == 0 or (players[UCID].WorkAccept == 2 and players[UCID].client_type == 3)))
     {
-        if (players[UCID].AcceptTime >= time(&acctime)) return;
+        if (players[UCID].AcceptTime >= time(&acctime))
+			return;
 
         // тип клиента:
         // чем больше число, тем менше вероятность его появления
@@ -298,14 +298,15 @@ void RCTaxi::accept_user( byte UCID )
         srand(time(NULL));
 
         bool ok = true;
-            while (ok)
-            {
-                DestPoint = rand()%ClientCount;
-                if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
-                    ok = false;
 
-                Sleep(100);
-            }
+		while (ok)
+		{
+			DestPoint = rand()%ClientCount;
+			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
+				ok = false;
+
+			Sleep(100);
+		}
 
         if (players[UCID].client_type == 0)
             players[UCID].client_type = count - (int)sqrt(rand()%(count * count));
@@ -318,27 +319,26 @@ void RCTaxi::accept_user( byte UCID )
         struct streets StreetInfo;
 
         //рисую маршала
-        players[UCID].HandUp=false;
-        struct IS_AXM pacAXM;
-        memset(&pacAXM, 0, sizeof(struct IS_AXM));
-        pacAXM.Info[0].Index=255;
-        pacAXM.Info[0].Heading=ClientPoints[DestPoint].Dir;
-        pacAXM.Info[0].X=ClientPoints[DestPoint].X / 4096;
-        pacAXM.Info[0].Y=ClientPoints[DestPoint].Y / 4096;
-        pacAXM.Info[0].Zchar=ClientPoints[DestPoint].Z;
-        pacAXM.Info[0].Flags=133;
-        pacAXM.Type=ISP_AXM;
-        pacAXM.ReqI=1;
-        pacAXM.NumO=1;
-        pacAXM.Size=8 + pacAXM.NumO * 8;
-        pacAXM.PMOAction = PMO_ADD_OBJECTS;
-        insim->send_packet(&pacAXM);
+        players[UCID].HandUp = false;
+
+        struct ObjectInfo obj;
+
+		obj.Index = 255;
+		obj.Heading = ClientPoints[DestPoint].Dir;
+		obj.X = ClientPoints[DestPoint].X / 4096;
+		obj.Y = ClientPoints[DestPoint].Y / 4096;
+		obj.Zchar = ClientPoints[DestPoint].Z;
+		obj.Flags = 133;
+
+		addObjects.push(obj);
+		AddObjects();
 
         memset(&StreetInfo, 0, sizeof(streets));
         street->CurentStreetInfoByNum(&StreetInfo, players[UCID].WorkStreetDestinaion);
 
         sprintf(str, msg->_(UCID, "TaxiAccept11"), street->GetStreetName(UCID, StreetInfo.StreetID));
         SendMTC(UCID, str);
+
         sprintf(str, msg->_(UCID, "TaxiAccept1"), street->GetStreetName(UCID, StreetInfo.StreetID));
         ButtonInfo(UCID, str);
 
@@ -555,24 +555,24 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
                         ddd=(360-ddd) / 360 * 256; //угол поворота для маршала
 
-                        players[UCID].HandUp=true;
-                        struct IS_AXM pacAXM;
-                        memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                        pacAXM.Info[0].Index=255;
-                        pacAXM.Info[0].Heading=(byte)ddd;
-                        pacAXM.Info[0].X=ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-                        pacAXM.Info[0].Y=ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-                        pacAXM.Info[0].Zchar=ClientPoints[players[UCID].WorkPointDestinaion].Z;
-                        pacAXM.Info[0].Flags=133;
-                        pacAXM.Type=ISP_AXM;
-                        pacAXM.ReqI=1;
-                        pacAXM.NumO=1;
-                        pacAXM.Size=8 + pacAXM.NumO * 8;
-                        pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                        insim->send_packet(&pacAXM);
-                        pacAXM.Info[0].Flags=135;
-                        pacAXM.PMOAction = PMO_ADD_OBJECTS;
-                        insim->send_packet(&pacAXM);
+                        players[UCID].HandUp = true;
+
+                        struct ObjectInfo obj;
+                        memset(&obj, 0, sizeof( ObjectInfo ) );
+						obj.Index = 255;
+						obj.Heading = (byte)ddd;
+						obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+						obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+						obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+						obj.Flags = 133;
+
+                        delObjects.push(obj);
+						DelObjects();
+
+                        obj.Flags = 135;
+
+                        addObjects.push(obj);
+						AddObjects();
                     }
 
                     if (players[UCID].WorkAccept == 2 and players[UCID].PassStress <= 800)
@@ -602,25 +602,24 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     //маршал опускает руку
                     if (players[UCID].HandUp and players[UCID].WorkAccept == 1)
                     {
-                        players[UCID].HandUp=false;
-                        struct IS_AXM pacAXM;
-                        memset(&pacAXM, 0, sizeof(struct IS_AXM));
-                        pacAXM.Info[0].Index=255;
-                        pacAXM.Info[0].Heading=ClientPoints[players[UCID].WorkPointDestinaion].Dir;
-                        pacAXM.Info[0].X=ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-                        pacAXM.Info[0].Y=ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-                        pacAXM.Info[0].Zchar=ClientPoints[players[UCID].WorkPointDestinaion].Z;
-                        pacAXM.Info[0].Flags=135;
-                        pacAXM.Type=ISP_AXM;
-                        pacAXM.ReqI=1;
-                        pacAXM.NumO=1;
-                        pacAXM.Size=8 + pacAXM.NumO * 8;
-                        pacAXM.PMOAction = PMO_DEL_OBJECTS;
-                        insim->send_packet(&pacAXM);
+                        players[UCID].HandUp = false;
 
-                        pacAXM.Info[0].Flags=133;
-                        pacAXM.PMOAction = PMO_ADD_OBJECTS;
-                        insim->send_packet(&pacAXM);
+                        struct ObjectInfo obj;
+                        memset(&obj, 0, sizeof( ObjectInfo ) );
+						obj.Index = 255;
+						obj.Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
+						obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+						obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+						obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+						obj.Flags = 135;
+
+                        delObjects.push(obj);
+						DelObjects();
+
+                        obj.Flags = 133;
+
+                        addObjects.push(obj);
+						AddObjects();
                     }
 
                     if ((players[UCID].WorkAccept == 2 or players[UCID].cf) and players[UCID].PassStress <= 800)
@@ -1074,22 +1073,23 @@ void RCTaxi::read_user( byte UCID )
 
 void RCTaxi::delete_marshal(byte UCID)
 {
-    struct IS_AXM pacAXM;
-    memset(&pacAXM, 0, sizeof(struct IS_AXM));
-    pacAXM.Info[0].Index=255;
-    pacAXM.Info[0].Heading=ClientPoints[players[UCID].WorkPointDestinaion].Dir;
-    pacAXM.Info[0].X=ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-    pacAXM.Info[0].Y=ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-    pacAXM.Info[0].Zchar=ClientPoints[players[UCID].WorkPointDestinaion].Z;
-    pacAXM.Info[0].Flags=133;
-    pacAXM.Type=ISP_AXM;
-    pacAXM.ReqI=1;
-    pacAXM.NumO=1;
-    pacAXM.Size=8 + pacAXM.NumO * 8;
-    pacAXM.PMOAction = PMO_DEL_OBJECTS;
-    insim->send_packet(&pacAXM);
-    pacAXM.Info[0].Flags=135;
-    insim->send_packet(&pacAXM);
+    struct ObjectInfo obj;
+	memset(&obj, 0, sizeof( ObjectInfo ) );
+
+	obj.Index = 255;
+	obj.Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
+	obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+	obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+	obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+	obj.Flags = 133;
+
+	delObjects.push(obj);
+
+	obj.Flags = 135;
+
+	delObjects.push(obj);
+
+	DelObjects();
 }
 
 void RCTaxi::save_user( byte UCID )
@@ -1215,7 +1215,18 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
 
 void RCTaxi::InsimAXM( struct IS_AXM* packet )
 {
-    if (StartPointsAdd == 0 or packet->UCID == 0 or packet->PMOAction != 1)
+
+	if( packet->UCID == 0)
+	{
+		char debug[MAX_PATH];
+		sprintf(debug,"^5DEBUG^7: ^3InsimAXM->NumO = %d", packet->NumO);
+		CCText(debug);
+
+		AddObjects();
+		DelObjects();
+	}
+
+    if (StartPointsAdd == 0 or packet->UCID == 0 or packet->PMOAction != PMO_ADD_OBJECTS)
     {
         return;
     }
