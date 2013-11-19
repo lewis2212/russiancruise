@@ -229,7 +229,7 @@ void RCTaxi::readconfig(const char *Track)
     //очистка маршалов
     for (int i=0; i<ClientCount; i++)
     {
-        struct ObjectInfo obj;
+        ObjectInfo obj;
         memset(&obj, 0, sizeof(struct ObjectInfo));
 
 		obj.Index = 255;
@@ -321,17 +321,17 @@ void RCTaxi::accept_user( byte UCID )
         //рисую маршала
         players[UCID].HandUp = false;
 
-        struct ObjectInfo obj;
+        ObjectInfo *obj = new ObjectInfo;
 
-		obj.Index = 255;
-		obj.Heading = ClientPoints[DestPoint].Dir;
-		obj.X = ClientPoints[DestPoint].X / 4096;
-		obj.Y = ClientPoints[DestPoint].Y / 4096;
-		obj.Zchar = ClientPoints[DestPoint].Z;
-		obj.Flags = 133;
+		obj->Index = 255;
+		obj->Heading = ClientPoints[DestPoint].Dir;
+		obj->X = ClientPoints[DestPoint].X / 4096;
+		obj->Y = ClientPoints[DestPoint].Y / 4096;
+		obj->Zchar = ClientPoints[DestPoint].Z;
+		obj->Flags = 133;
 
-		addObjects.push(obj);
-		AddObjects();
+		AddObject(obj);
+		delete obj;
 
         memset(&StreetInfo, 0, sizeof(streets));
         street->CurentStreetInfoByNum(&StreetInfo, players[UCID].WorkStreetDestinaion);
@@ -557,22 +557,21 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
                         players[UCID].HandUp = true;
 
-                        struct ObjectInfo obj;
-                        memset(&obj, 0, sizeof( ObjectInfo ) );
-						obj.Index = 255;
-						obj.Heading = (byte)ddd;
-						obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-						obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-						obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
-						obj.Flags = 133;
+                        ObjectInfo *obj = new ObjectInfo;
+                        memset(obj, 0, sizeof( ObjectInfo ) );
+						obj->Index = 255;
+						obj->Heading = (byte)ddd;
+						obj->X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+						obj->Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+						obj->Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+						obj->Flags = 133;
 
-                        delObjects.push(obj);
-						DelObjects();
+						DelObject(obj);
 
-                        obj.Flags = 135;
+                        obj->Flags = 135;
 
-                        addObjects.push(obj);
-						AddObjects();
+						AddObject(obj);
+						delete obj;
                     }
 
                     if (players[UCID].WorkAccept == 2 and players[UCID].PassStress <= 800)
@@ -604,22 +603,21 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     {
                         players[UCID].HandUp = false;
 
-                        struct ObjectInfo obj;
-                        memset(&obj, 0, sizeof( ObjectInfo ) );
-						obj.Index = 255;
-						obj.Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
-						obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-						obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-						obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
-						obj.Flags = 135;
+                        ObjectInfo *obj = new ObjectInfo;
+                        memset(obj, 0, sizeof( ObjectInfo ) );
+						obj->Index = 255;
+						obj->Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
+						obj->X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+						obj->Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+						obj->Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+						obj->Flags = 135;
 
-                        delObjects.push(obj);
-						DelObjects();
+						DelObject(obj);
 
-                        obj.Flags = 133;
+                        obj->Flags = 133;
 
-                        addObjects.push(obj);
-						AddObjects();
+						AddObject(obj);
+						delete obj;
                     }
 
                     if ((players[UCID].WorkAccept == 2 or players[UCID].cf) and players[UCID].PassStress <= 800)
@@ -1073,23 +1071,22 @@ void RCTaxi::read_user( byte UCID )
 
 void RCTaxi::delete_marshal(byte UCID)
 {
-    struct ObjectInfo obj;
-	memset(&obj, 0, sizeof( ObjectInfo ) );
+    ObjectInfo *obj = new ObjectInfo;
+	memset(obj, 0, sizeof( ObjectInfo ) );
 
-	obj.Index = 255;
-	obj.Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
-	obj.X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
-	obj.Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
-	obj.Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
-	obj.Flags = 133;
+	obj->Index = 255;
+	obj->Heading = ClientPoints[players[UCID].WorkPointDestinaion].Dir;
+	obj->X = ClientPoints[players[UCID].WorkPointDestinaion].X / 4096;
+	obj->Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 4096;
+	obj->Zchar = ClientPoints[players[UCID].WorkPointDestinaion].Z;
+	obj->Flags = 133;
 
-	delObjects.push(obj);
+	DelObject(obj);
 
-	obj.Flags = 135;
+	obj->Flags = 135;
 
-	delObjects.push(obj);
-
-	DelObjects();
+	DelObject(obj);
+	delete obj;
 }
 
 void RCTaxi::save_user( byte UCID )
