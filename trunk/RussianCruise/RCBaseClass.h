@@ -98,6 +98,24 @@ public:
      */
 	virtual void DelObjects();
 
+	/** @brief Добавление объекта на карту.
+	 *
+     * @param  ObjectInfo *object - указатель на структуру объекта
+     *
+     * @return void - ничего
+     *
+     */
+	virtual void AddObject( ObjectInfo *object );
+
+	/** @brief Удаление объекта с карты
+	 *
+     * @param  ObjectInfo *object - указатель на структуру объекта
+     *
+     * @return void - ничего
+     *
+     */
+	virtual void DelObject( ObjectInfo *object );
+
 	static string NumToString (int n);
 
 	inline string trim(const std::string &s);

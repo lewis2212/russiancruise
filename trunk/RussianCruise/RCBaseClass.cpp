@@ -605,6 +605,40 @@ RCBaseClass::DelObjects()
     delete packAXM;
 }
 
+void
+RCBaseClass::AddObject( ObjectInfo *object )
+{
+	IS_AXM	*packAXM = new IS_AXM;
+    memset(packAXM, 0, sizeof(struct IS_AXM));
+    packAXM->Type = ISP_AXM;
+    packAXM->ReqI = 1;
+    packAXM->PMOAction = PMO_ADD_OBJECTS;
+    packAXM->NumO = 1;
+	packAXM->Size = 8 + packAXM->NumO * 8;
+
+	memcpy( &packAXM->Info[0], object, sizeof( ObjectInfo ) );
+
+    insim->send_packet(packAXM);
+    delete packAXM;
+}
+
+void
+RCBaseClass::DelObject( ObjectInfo *object )
+{
+	IS_AXM	*packAXM = new IS_AXM;
+    memset(packAXM, 0, sizeof(struct IS_AXM));
+    packAXM->Type = ISP_AXM;
+    packAXM->ReqI = 1;
+    packAXM->PMOAction = PMO_DEL_OBJECTS;
+    packAXM->NumO = 1;
+	packAXM->Size = 8 + packAXM->NumO * 8;
+
+	memcpy( &packAXM->Info[0], object, sizeof( ObjectInfo ) );
+
+    insim->send_packet(packAXM);
+    delete packAXM;
+}
+
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
 vector<string>& SplitString::split( const char delim, int rep)
