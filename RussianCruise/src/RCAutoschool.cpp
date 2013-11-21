@@ -1,13 +1,29 @@
 #include "RCAutoschool.h"
 
-RCAutoschool::RCAutoschool()
+RCAutoschool::RCAutoschool(const char *dir)
 {
+	strcpy(RootDir, dir);
 	players.clear();
 }
 
 RCAutoschool::~RCAutoschool()
 {
 	players.clear();
+}
+
+void
+RCAutoschool::init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg)
+{
+	dbconn = rcMaindbConn;
+
+	this->insim = insim;
+	this->msg = msg;
+}
+
+void
+RCAutoschool::readconfig(const char* Track)
+{
+
 }
 
 void
@@ -61,6 +77,13 @@ RCAutoschool::InsimMSO( struct IS_MSO* packet )
     }
 
     byte UCID = packet->UCID;
+
+    string msg = packet->Msg + packet->TextStart;
+
+    if( msg.find( "!erase" ) == 0 )
+	{
+		SendMST(msg.c_str());
+	}
 }
 
 void
@@ -91,6 +114,20 @@ RCAutoschool::InsimHLV( struct IS_HLV* packet )
 void
 RCAutoschool::InsimAXM( struct IS_AXM* packet )
 {
+	if( packet->UCID == 0 )
+		return;
+
+	CCText("^3RCAutoschool^1::^2InsimAXM");
+
+	cout << NumToString( packet->NumO ) << endl;
+	cout << NumToString( packet->UCID ) << endl;
+	cout << NumToString( packet->PMOAction ) << endl;
+	cout << NumToString( packet->PMOFlags ) << endl;
+
+	for( int i = 0; i < packet->NumO; ++i)
+	{
+		cout << "X: " << packet->Info[i].X << "\t" << "Y: " << packet->Info[i].Y << endl;
+	}
 }
 
 void

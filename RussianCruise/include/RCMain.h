@@ -40,7 +40,7 @@ buttons ClickId's:
 using namespace std;
 
 #include <windows.h>
-#include "mysql/include/mysql.h"
+#include <mysql/mysql.h>
 
 
 
@@ -64,14 +64,13 @@ using namespace std;
 #include "RCRoadSign.h"
 //#include "RCBanList.h"
 #include "RCQuest.h"
+#include "RCAutoschool.h"
 
 #define MAX_CARS 30
 
 
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
-
-
 
 // Дескриптор соединения
 MYSQL rcMaindb, *rcMaindbConn;
@@ -91,16 +90,10 @@ ofstream  out;   // выходной файл для протокола работы сервиса
 char RootDir[MAX_PATH];
 char ServiceName[64];
 
-#ifndef __linux__
-SERVICE_STATUS    service_status;
-SERVICE_STATUS_HANDLE  hServiceStatus;
-SC_HANDLE  hServiceControlManager, hService;
 
-VOID WINAPI ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv);
-VOID WINAPI ServiceCtrlHandler(DWORD dwControl);
-#endif
 pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 pthread_t main_tid; // Thread ID
+
 struct cars
 {
     int             id;

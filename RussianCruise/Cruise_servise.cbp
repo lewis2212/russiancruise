@@ -42,58 +42,60 @@
 			<Add option="-Wno-parentheses" />
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
-			<Add directory="src" />
+			<Add directory="include" />
 		</Compiler>
+		<ResourceCompiler>
+			<Add directory="include" />
+		</ResourceCompiler>
 		<Linker>
 			<Add option="-l wsock32" />
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
-			<Add library=".\addons\pthread\lib\x86\libpthreadGC2.a" />
-			<Add library=".\mysql\lib\debug\libmysql.lib" />
-			<Add directory="include" />
+			<Add library=".\lib\pthread\x86\libpthreadGC2.a" />
+			<Add library=".\lib\mysql\debug\libmysql.lib" />
 		</Linker>
 		<Unit filename="4ernovik.txt" />
-		<Unit filename="CInsim.cpp" />
-		<Unit filename="CInsim.h" />
-		<Unit filename="RCAntCheat.cpp" />
-		<Unit filename="RCAntCheat.h" />
-		<Unit filename="RCAutoschool.cpp" />
-		<Unit filename="RCAutoschool.h" />
-		<Unit filename="RCBanList.cpp" />
-		<Unit filename="RCBanList.h" />
-		<Unit filename="RCBank.cpp" />
-		<Unit filename="RCBank.h" />
-		<Unit filename="RCBaseClass.cpp" />
-		<Unit filename="RCBaseClass.h" />
-		<Unit filename="RCButtonClickID.h" />
-		<Unit filename="RCDrivingLicense.cpp" />
-		<Unit filename="RCDrivingLicense.h" />
-		<Unit filename="RCEnergy.cpp" />
-		<Unit filename="RCEnergy.h" />
-		<Unit filename="RCLight.cpp" />
-		<Unit filename="RCLight.h" />
-		<Unit filename="RCMain.cpp" />
-		<Unit filename="RCMain.h" />
-		<Unit filename="RCMessage.cpp" />
-		<Unit filename="RCMessage.h" />
-		<Unit filename="RCPizza.cpp" />
-		<Unit filename="RCPizza.h" />
-		<Unit filename="RCPolice.cpp" />
-		<Unit filename="RCPolice.h" />
-		<Unit filename="RCQuest.cpp" />
-		<Unit filename="RCQuest.h" />
-		<Unit filename="RCRoadSign.cpp" />
-		<Unit filename="RCRoadSign.h" />
-		<Unit filename="RCStreet.cpp" />
-		<Unit filename="RCStreet.h" />
-		<Unit filename="RCTaxi.cpp" />
-		<Unit filename="RCTaxi.h" />
 		<Unit filename="Release note.txt" />
 		<Unit filename="TODO.txt" />
-		<Unit filename="insim.h" />
-		<Unit filename="pthread.h" />
-		<Unit filename="tools.cpp" />
-		<Unit filename="tools.h" />
+		<Unit filename="include/CInsim.h" />
+		<Unit filename="include/RCAntCheat.h" />
+		<Unit filename="include/RCAutoschool.h" />
+		<Unit filename="include/RCBanList.h" />
+		<Unit filename="include/RCBank.h" />
+		<Unit filename="include/RCBaseClass.h" />
+		<Unit filename="include/RCButtonClickID.h" />
+		<Unit filename="include/RCDrivingLicense.h" />
+		<Unit filename="include/RCEnergy.h" />
+		<Unit filename="include/RCLight.h" />
+		<Unit filename="include/RCMain.h" />
+		<Unit filename="include/RCMessage.h" />
+		<Unit filename="include/RCPizza.h" />
+		<Unit filename="include/RCPolice.h" />
+		<Unit filename="include/RCQuest.h" />
+		<Unit filename="include/RCRoadSign.h" />
+		<Unit filename="include/RCStreet.h" />
+		<Unit filename="include/RCTaxi.h" />
+		<Unit filename="include/insim.h" />
+		<Unit filename="include/pthread.h" />
+		<Unit filename="include/tools.h" />
+		<Unit filename="src/CInsim.cpp" />
+		<Unit filename="src/RCAntCheat.cpp" />
+		<Unit filename="src/RCAutoschool.cpp" />
+		<Unit filename="src/RCBanList.cpp" />
+		<Unit filename="src/RCBank.cpp" />
+		<Unit filename="src/RCBaseClass.cpp" />
+		<Unit filename="src/RCDrivingLicense.cpp" />
+		<Unit filename="src/RCEnergy.cpp" />
+		<Unit filename="src/RCLight.cpp" />
+		<Unit filename="src/RCMain.cpp" />
+		<Unit filename="src/RCMessage.cpp" />
+		<Unit filename="src/RCPizza.cpp" />
+		<Unit filename="src/RCPolice.cpp" />
+		<Unit filename="src/RCQuest.cpp" />
+		<Unit filename="src/RCRoadSign.cpp" />
+		<Unit filename="src/RCStreet.cpp" />
+		<Unit filename="src/RCTaxi.cpp" />
+		<Unit filename="src/tools.cpp" />
 		<Unit filename="version.h" />
 		<Extensions>
 			<code_completion />
@@ -101,7 +103,7 @@
 			<envvars />
 			<AutoVersioning>
 				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="0" date_declarations="1" update_manifest="1" do_auto_increment="0" ask_to_increment="1" language="C++" svn="1" svn_directory="D:\backup\cpp\RUCRUISE\RussianCruise" header_path="version.h" />
+				<Settings autoincrement="1" date_declarations="1" update_manifest="1" do_auto_increment="0" ask_to_increment="1" language="C++" svn="1" svn_directory="D:\backup\cpp\RUCRUISE\RussianCruise" header_path="include/version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="RC" />
 			</AutoVersioning>
@@ -112,7 +114,7 @@
 				<doxyfile_warnings />
 				<doxyfile_output />
 				<doxyfile_dot />
-				<general />
+				<general use_at_in_tags="1" />
 			</DoxyBlocks>
 		</Extensions>
 	</Project>

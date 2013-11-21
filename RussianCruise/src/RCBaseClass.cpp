@@ -303,6 +303,13 @@ string RCBaseClass::NumToString (int n)
 	return (string)s;
 }
 
+string RCBaseClass::NumToString (byte n)
+{
+	char s[24];
+	sprintf(s,"%d",n);
+	return (string)s;
+}
+
 void RCBaseClass::SendStringButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, string Text, byte TypeIn )
 {
     IS_BTN *pack = new IS_BTN;

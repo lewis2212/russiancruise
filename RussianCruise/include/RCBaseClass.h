@@ -22,7 +22,7 @@ using namespace std;
 
 #include <direct.h>
 
-#include "mysql/include/mysql.h"
+#include <mysql/mysql.h>
 
 //#include "tools.h"
 #define MAX_PATH	260
@@ -117,6 +117,7 @@ public:
 	virtual void DelObject( ObjectInfo *object );
 
 	static string NumToString (int n);
+	static string NumToString (byte n);
 
 	inline string trim(const std::string &s);
 

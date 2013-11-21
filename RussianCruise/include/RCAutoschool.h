@@ -1,9 +1,10 @@
-#ifndef RCAUTOSCHOOL_H
-#define RCAUTOSCHOOL_H
+#ifndef _RC_AUTOSCHOOL_H
+#define _RC_AUTOSCHOOL_H
 
 #include "RCBaseClass.h"
+#include "RCMessage.h"
 
-struct SchoolPlayer
+struct SchoolPlayer:public GlobalPlayer
 {
 	struct	CompCar	Info;
 	string	UName;
@@ -20,6 +21,8 @@ class RCAutoschool : public RCBaseClass
 	private:
 		map <byte, SchoolPlayer>players;          // Структура игроков
 
+		RCMessage * msg;
+
 		void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
 		void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
 		void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
@@ -33,8 +36,11 @@ class RCAutoschool : public RCBaseClass
 		void InsimAXM( struct IS_AXM* packet );
 
 	public:
-		RCAutoschool();
+		RCAutoschool(const char *dir);
 		~RCAutoschool();
+
+		void init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg);
+		void readconfig(const char* Track);
 
 		void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
