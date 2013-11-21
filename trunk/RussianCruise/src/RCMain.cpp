@@ -1,5 +1,5 @@
 #include "RCMain.h"
-#include "version.h"
+#include <version.h>
 #include "tools.h"
 
 int ok = 1;
@@ -58,9 +58,14 @@ RCRoadSign *RoadSign;
 RCQuest	*quest;
 #endif // _RC_QUEST_H
 
+#ifdef _RC_AUTOSCHOOL_H
+RCAutoschool *school;
+#endif // _RC_AUTOSCHOOL_H
+
 void CreateClasses()
 {
     msg = new RCMessage(RootDir);
+
     bank = new RCBank(RootDir);
 
 #ifdef _RC_ENERGY_H
@@ -106,6 +111,10 @@ void CreateClasses()
 #ifdef _RC_QUEST_H
     quest = new RCQuest(RootDir);
 #endif // _RC_QUEST_H
+
+#ifdef _RC_AUTOSCHOOL_H
+	school = new RCAutoschool(RootDir);
+#endif // _RC_AUTOSCHOOL_H
 
 }
 
@@ -161,6 +170,10 @@ void InitClasses()
     quest->init(rcMaindbConn, insim);
 #endif // _RC_QUEST_H
 
+#ifdef _RC_AUTOSCHOOL_H
+	school->init(rcMaindbConn, insim, msg);
+#endif // _RC_AUTOSCHOOL_H
+
 }
 
 void readconfigs()
@@ -204,6 +217,10 @@ void readconfigs()
 #ifdef _RC_QUEST_H
     quest->readconfig(ginfo->Track);
 #endif // _RC_QUEST_H
+
+#ifdef _RC_AUTOSCHOOL_H
+	school->readconfig(ginfo->Track);
+#endif // _RC_AUTOSCHOOL_H
 
 }
 
@@ -2549,6 +2566,10 @@ void *ThreadMci (void *params)
         quest->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 #endif // _RC_QUEST
 
+#ifdef _RC_AUTOSCHOOL_H
+		school->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
+#endif // _RC_AUTOSCHOOL_H
+
     }
     return 0;
 };
@@ -2843,6 +2864,10 @@ void *ThreadMain(void *CmdLine)
 #ifdef _RC_QUEST
         quest->next_packet();
 #endif // _RC_QUEST
+
+#ifdef _RC_AUTOSCHOOL_H
+		school->next_packet();
+#endif // _RC_AUTOSCHOOL_H
     }
 
     if (insim->isclose() < 0)
@@ -2854,8 +2879,6 @@ void *ThreadMain(void *CmdLine)
     pthread_mutex_destroy(&RCmutex);
     return 0;
 }
-
-int  nCount;     // счетчик
 
 // главная функция приложения
 int main(int argc, char* argv[])
