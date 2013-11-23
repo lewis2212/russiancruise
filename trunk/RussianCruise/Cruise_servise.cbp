@@ -53,6 +53,7 @@
 			<Add option="-static-libgcc" />
 			<Add library=".\lib\pthread\x86\libpthreadGC2.a" />
 			<Add library=".\lib\mysql\debug\libmysql.lib" />
+			<Add library=".\lib\jsoncpp\libjson.a" />
 		</Linker>
 		<Unit filename="4ernovik.txt" />
 		<Unit filename="Release note.txt" />
@@ -112,7 +113,8 @@
 				<doxyfile_project output_language="Russian" />
 				<doxyfile_build />
 				<doxyfile_warnings />
-				<doxyfile_output />
+				<doxyfile_alpha_index alphabetical_index="0" />
+				<doxyfile_output chi="1" />
 				<doxyfile_dot />
 				<general use_at_in_tags="1" />
 			</DoxyBlocks>

@@ -42,8 +42,6 @@ using namespace std;
 #include <windows.h>
 #include <mysql/mysql.h>
 
-
-
 #include <math.h>
 #include <time.h>
 #include <map>

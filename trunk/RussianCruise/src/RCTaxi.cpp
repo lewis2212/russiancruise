@@ -1215,10 +1215,6 @@ void RCTaxi::InsimAXM( struct IS_AXM* packet )
 
 	if( packet->UCID == 0)
 	{
-		//char debug[MAX_PATH];
-		//sprintf(debug,"^5DEBUG^7: ^3InsimAXM->NumO = %d", packet->NumO);
-		//CCText(debug);
-
 		AddObjects();
 		DelObjects();
 	}

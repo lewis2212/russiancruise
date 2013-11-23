@@ -13,7 +13,7 @@ RCBaseClass::~RCBaseClass()
 void RCBaseClass::next_packet()
 {
     if (!insim)
-        return;     //dont work if insim is NULL
+        return;
 
     switch (insim->peek_packet())
     {
@@ -147,11 +147,12 @@ void RCBaseClass::next_packet()
     }
 }
 
-void    RCBaseClass::InsimMCI( struct IS_MCI* packet )
+void
+RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {
     if (!insim)
     {
-        return;/**dont work if insim is NULL**/
+        return;
     }
 }
 
@@ -274,21 +275,7 @@ void RCBaseClass::SendBFNAll ( byte UCID )
 
 void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
-    IS_BTN *pack = new IS_BTN;
-    memset( pack, 0, sizeof( IS_BTN ) );
-    pack->Size = sizeof( IS_BTN );
-    pack->Type = ISP_BTN;
-    pack->ReqI = 1;
-    pack->UCID = UCID;
-    pack->ClickID = 211;
-    pack->BStyle = 16;
-    pack->L = 70;
-    pack->T = 9;
-    pack->W = 60;
-    pack->H = 4;
-    strcpy( pack->Text, Message );
-    insim->send_packet( pack );
-    delete pack;
+    return SendButton(1, UCID, 211, 70, 9, 60, 4, ISB_DARK, Message);
 }
 
 void RCBaseClass::ClearButtonInfo(byte UCID)
@@ -296,21 +283,34 @@ void RCBaseClass::ClearButtonInfo(byte UCID)
     SendBFN( UCID, 211);
 }
 
-string RCBaseClass::NumToString (int n)
+string RCBaseClass::ToString (int i)
 {
 	char s[24];
-	sprintf(s,"%d",n);
-	return (string)s;
+	sprintf(s,"%d",i);
+	return string(s);
 }
 
-string RCBaseClass::NumToString (byte n)
+string RCBaseClass::ToString (byte b)
 {
-	char s[24];
-	sprintf(s,"%d",n);
-	return (string)s;
+	char s[4];
+	sprintf(s,"%d",b);
+	return string(s);
 }
 
-void RCBaseClass::SendStringButton (byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, string Text, byte TypeIn )
+string RCBaseClass::ToString (bool b)
+{
+	if(b)
+		return "true";
+	else
+		return "false";
+}
+
+void RCBaseClass::SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, string Text, byte TypeIn )
+{
+    return SendButton(ReqI,UCID,ClickID,Left,Top,Width,Height,BStyle,Text.c_str(),TypeIn);
+}
+
+void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, const char * Text, byte TypeIn)
 {
     IS_BTN *pack = new IS_BTN;
     memset( pack, 0, sizeof( IS_BTN ) );
@@ -322,31 +322,10 @@ void RCBaseClass::SendStringButton (byte ReqI, byte UCID, byte ClickID, byte L, 
     pack->BStyle = BStyle;
     pack->TypeIn = TypeIn;
     pack->ClickID = ClickID;
-    pack->L = L;
-    pack->T = T;
-    pack->W = W;
-    pack->H = H;
-    strcpy(pack->Text, Text.c_str());
-    insim->send_packet(pack);
-    delete pack;
-}
-
-void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte H, byte BStyle, const char * Text, byte TypeIn)
-{
-    IS_BTN *pack = new IS_BTN;
-    memset( pack, 0, sizeof( IS_BTN ) );
-    pack->Size = sizeof( IS_BTN );
-    pack->Type = ISP_BTN;
-    pack->ReqI = ReqI;
-    pack->UCID = UCID;
-    pack->Inst = 0;
-    pack->BStyle = BStyle;
-    pack->TypeIn = TypeIn;
-    pack->ClickID = ClickID;
-    pack->L = L;
-    pack->T = T;
-    pack->W = W;
-    pack->H = H;
+    pack->L = Left;
+    pack->T = Top;
+    pack->W = Width;
+    pack->H = Height;
     sprintf(pack->Text, Text);
     insim->send_packet( pack );
     delete pack;
@@ -543,10 +522,6 @@ RCBaseClass::AddObjects()
 	if( addObjects.size() == 0 )
 		return;
 
-	//char debug[MAX_PATH];
-	//sprintf(debug,"^6DEBUG^7: ^2addObjects queue = %d", addObjects.size());
-	//CCText(debug);
-
 	IS_AXM	*packAXM = new IS_AXM;
     memset(packAXM, 0, sizeof(struct IS_AXM));
     packAXM->Type = ISP_AXM;
@@ -567,9 +542,6 @@ RCBaseClass::AddObjects()
 			break;
 	}
 
-	//sprintf(debug,"^6DEBUG^7: ^2Add %d objects",packAXM->NumO );
-	//CCText(debug);
-
     packAXM->Size = 8 + packAXM->NumO * 8;
     insim->send_packet(packAXM);
     delete packAXM;
@@ -580,10 +552,6 @@ RCBaseClass::DelObjects()
 {
 	if( delObjects.size() == 0 )
 		return;
-
-	//char debug[MAX_PATH];
-	//sprintf(debug,"^6DEBUG^7: ^1delObjects queue = %d", delObjects.size());
-	//CCText(debug);
 
 	IS_AXM	*packAXM = new IS_AXM;
     memset(packAXM, 0, sizeof(struct IS_AXM));
@@ -603,9 +571,6 @@ RCBaseClass::DelObjects()
 		if( i%30 == 0 )
 			break;
 	}
-
-	//sprintf(debug,"^6DEBUG^7: ^1Del %d objects",packAXM->NumO );
-	//CCText(debug);
 
     packAXM->Size = 8 + packAXM->NumO * 8;
     insim->send_packet(packAXM);
