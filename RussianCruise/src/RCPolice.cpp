@@ -1569,7 +1569,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             BtnPogonya(UCID);
         }
 
-        memcpy(&players[UCID].Info, &packet->Info[i], sizeof(CompCar));
+        players[UCID].Info = packet->Info[i];
     }
 }
 
@@ -2029,24 +2029,24 @@ void RCPolice::ShowCopStat(byte UCID)
         sprintf(tt,"%02d.%02d.%02d, %02d:%02d",t->tm_mday,t->tm_mon+1,t->tm_year+1900,t->tm_hour,t->tm_min);
 
 
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^2" + CopUname + " " + RankArr);
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + (string)tt);
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^2" + CopUname + " " + RankArr);
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CПоследний вход в ДПС : ^2" + (string)tt);
 		count++;
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CЗа последние сутки");
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CЗа последние сутки");
 		count++;
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + NumToString(ArrestWithFineByDay));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + NumToString(ArrestWithOutFineByDay));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + NumToString(SolvedIncedentsByDay));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + NumToString(FinedByDay));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + NumToString(CanceledFinesByDay));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + ToString(ArrestWithFineByDay));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + ToString(ArrestWithOutFineByDay));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + ToString(SolvedIncedentsByDay));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + ToString(FinedByDay));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + ToString(CanceledFinesByDay));
 		count++;
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CВсего");
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^3^CВсего");
 		count++;
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + NumToString(ArrestWithFine));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + NumToString(ArrestWithOutFine));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + NumToString(SolvedIncedents));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + NumToString(Fined));
-		SendStringButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + NumToString(CanceledFines));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (со штрафами) : ^2" + ToString(ArrestWithFine));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CАрестов (без штрафов) : ^2" + ToString(ArrestWithOutFine));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CРазобрано ДТП : ^2" + ToString(SolvedIncedents));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CВыписано штрафов : ^2" + ToString(Fined));
+		SendButton(255, UCID, ClickID++, L, T + 3 * count++, W, 4, 64, "^7^CОтменено штрафов : ^2" + ToString(CanceledFines));
     }
 }
 

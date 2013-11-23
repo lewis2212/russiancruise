@@ -61,7 +61,6 @@ public:
     // Основные функции класса
     int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
     void    readconfig(const char *Track);
-    // функции-повторители основных фунцкий ядра
 
     void    InsimMCI( struct IS_MCI* packet );
 

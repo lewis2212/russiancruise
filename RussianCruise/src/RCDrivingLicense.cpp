@@ -357,7 +357,7 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
         {
             X1=X;
             Y1=Y;
-            memcpy(&players[ UCID ].Info, &pack_mci->Info[i], sizeof(CompCar));
+            players[ UCID ].Info = pack_mci->Info[i];
         }
 
         float Skill = Distance(X, Y, X1, Y1);
@@ -365,7 +365,7 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
         if ((abs((int)Skill) > 10) and (S > 30))
         {
             players[ UCID ].Skill += abs((int)(Skill * 1.5f));
-            memcpy(&players[ UCID ].Info, &pack_mci->Info[i], sizeof(CompCar));
+            players[ UCID ].Info = pack_mci->Info[i];
         }
 
         /** next lvl **/

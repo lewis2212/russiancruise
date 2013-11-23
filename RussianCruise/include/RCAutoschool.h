@@ -11,6 +11,14 @@ struct SchoolPlayer:public GlobalPlayer
 	string	PName;
 	string	CName;
 
+	string	Lesson = "shicane";
+
+	bool	OnPlace = false;
+	bool 	Started = false;
+	bool	Finished = false;
+	int		CheckPoint = 0;
+
+
 	float			Rate = 0;           // Рейтинг Игрока
 	float			TempRate = 0;       // Временный рейтинг на время выполнения упражнения
 	unsigned int	LastTaskTime = 0;   // Время последного выполнения задачи
@@ -34,6 +42,8 @@ class RCAutoschool : public RCBaseClass
 		void InsimOBH( struct IS_OBH* packet );
 		void InsimHLV( struct IS_HLV* packet );
 		void InsimAXM( struct IS_AXM* packet );
+
+		void ShowPanel(byte UCID);
 
 	public:
 		RCAutoschool(const char *dir);

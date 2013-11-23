@@ -517,7 +517,7 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             ShopAccepted = false;
         }
 
-        memcpy(&players[UCID].Info, &pack_mci->Info[i], sizeof(struct CompCar));
+        players[UCID].Info = pack_mci->Info[i];
     }
 }
 

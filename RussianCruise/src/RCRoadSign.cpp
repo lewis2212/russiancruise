@@ -354,6 +354,6 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
         }
 
         if (S > 1)
-            memcpy(&players[UCID].Info, &packet->Info[i], sizeof(struct CompCar) );
+            players[UCID].Info = packet->Info[i];
     }
 }
