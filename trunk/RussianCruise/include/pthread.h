@@ -286,7 +286,7 @@ enum
 #  endif
 #endif
 
-#include "sched.h"
+#include <pthread/sched.h>
 
 /*
  * To avoid including windows.h we define only those things that we

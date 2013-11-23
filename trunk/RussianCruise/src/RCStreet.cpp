@@ -130,7 +130,7 @@ void RCStreet::readconfig(const char *Track)
 
     readf.close();
 
-    CCText("  ^7RCStreet   ^2OK");
+    CCText("  ^7RCStreet\t^2OK");
 }
 
 void RCStreet::InsimCNL( struct IS_CNL* packet )

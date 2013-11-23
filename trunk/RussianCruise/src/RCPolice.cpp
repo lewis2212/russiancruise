@@ -261,7 +261,7 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
 
     if (players[packet->UCID].cop and !(strncmp("^4[^C^7ДПС^4]", players[packet->UCID].PName, 13) == 0 || strncmp("^4[^C^7ГАИ^4]", players[packet->UCID].PName, 13) == 0))
     {
-        SendMTC(packet->UCID, "^2| ^7^CВы больше не инспектор ДПС");
+        SaveCopStat(packet->UCID);
         CopPayRoll(packet->UCID, false);
         SendBFN(packet->UCID, 70);
         players[packet->UCID].cop = false;
@@ -270,6 +270,7 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
         lgh->SetLight3(packet->UCID, false);
 		dl->Unlock(packet->UCID);
 		nrg->Unlock(packet->UCID);
+        SendMTC(packet->UCID, "^2| ^7^CВы больше не инспектор ДПС");
 
         for (int i = 0; i < 32; i++)
         {
@@ -835,6 +836,16 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 				SendMTC(packet->UCID, str);
 				bank->RemFrBank(players[packet->UCID].FineC*0.05);
 				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
+
+				SYSTEMTIME sm;
+                GetLocalTime(&sm);
+                sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", sm.wHour, sm.wMinute, sm.wSecond, players[DTPvyzov[0][i]].UName, (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName);
+
+                char log[MAX_PATH];
+                sprintf(log, "%slogs\\cop\\compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                ofstream readf (log, ios::app);
+                readf << str << endl;
+                readf.close();
 			}
 
 			players[packet->UCID].FineC = 0;
@@ -844,6 +855,14 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             DTPvyzov[1][i] = 0;
             DTPvyzov[2][i] = 0;
             SendBFN(255, packet->ClickID);
+
+            //закрывашка штрафов
+            for (byte c = 80; c < 165; c++)
+                SendBFN(packet->UCID, c);
+
+            //очистка кнопок
+            for (byte i = 60; i < 92; i++)
+                SendBFN(255, i);
         }
         else if (DTPvyzov[2][i] <= 0)
         {
@@ -864,10 +883,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
             players[DTPvyzov[2][i]].DTPstatus = 1;
             players[DTPvyzov[2][i]].DTPfines = 0;
+            players[DTPvyzov[2][i]].FineC = 0;
             players[DTPvyzov[0][i]].DTP = packet->UCID;
         }
-
-        SaveCopStat(packet->UCID);
     }
 
     if ( packet->ClickID == 130 and packet->ReqI == 254 )
@@ -953,7 +971,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 break;
             }
         }
-        SaveCopStat(packet->UCID);
     }
 
     if ( packet->ClickID >= 110 and packet->ClickID <= 130 and packet->ReqI != 255 and packet->ReqI != 254) //отмена штрафа
@@ -967,6 +984,9 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
             {
+                if (players[packet->UCID].DTPstatus == 2)
+					players[packet->UCID].FineC -= fines[packet->ReqI].cash;
+
                 for (int j=0; j < MAX_FINES; j++)
                 {
                     if ( players[ play.first ].fines[j].fine_id == packet->ReqI )
@@ -1012,7 +1032,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 break;
             }
         }
-        SaveCopStat(packet->UCID);
     }
 
     if ( packet->ClickID <= 32 )
@@ -1122,8 +1141,6 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             //очистка кнопок
             for (byte i = 60; i < 92; i++)
                 SendBFN(255, i);
-
-            SaveCopStat(packet->UCID);
         }
         return;
     }
@@ -1602,7 +1619,7 @@ void RCPolice::readconfig()
     }
     readf.close();
 
-    CCText("  ^7RCPolice   ^2OK");
+    CCText("  ^7RCPolice\t^2OK");
 }
 
 void RCPolice::SetSirenLight( string sirenWord )
@@ -1954,7 +1971,7 @@ void RCPolice::ShowCopStat(byte UCID)
 		return;
 
 	count = 0;
-    string query = "SELECT date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled FROM police_stat WHERE username = '";
+    string query = "SELECT date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled FROM police WHERE username = '";
     query += CopUname;
     query += "';";
 
