@@ -65,7 +65,6 @@ RCAutoschool *school;
 void CreateClasses()
 {
     msg = new RCMessage(RootDir);
-
     bank = new RCBank(RootDir);
 
 #ifdef _RC_ENERGY_H
@@ -2517,10 +2516,7 @@ void *ThreadMci (void *params)
         if (insim->udp_next_packet() < 0)
             continue;
 
-        //out << "UDP packet MCI " << endl;
         case_mci ();
-        //case_mci_svetofor ();
-
 
 #ifdef _RC_BANK_H
         bank->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
@@ -2668,7 +2664,7 @@ void *ThreadMain(void *CmdLine)
         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
         Sleep(60000);
     }
-    RCBaseClass::CCText("^3RCMain:\t^2Connected to MySQL server");
+    RCBaseClass::CCText("^3RCMain:\t\t^2Connected to MySQL server");
 
     sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
@@ -2706,33 +2702,31 @@ void *ThreadMain(void *CmdLine)
     pthread_t work_tid; // Thread ID
     pthread_t save_tid; // Thread ID
 
-    RCBaseClass::CCText("^3RCMain:\t^2Cruise started");
-
     if (pthread_create(&work_tid, NULL, ThreadWork, NULL) < 0)
     {
-        printf("^3RCMain:\tCan't start `thread_work` Thread\n");
+        printf("^3RCMain:\t\tCan't start `thread_work` Thread\n");
         return 0;
     }
 
-    Sleep(1000);
+    Sleep(100);
 
     if (pthread_create(&save_tid, NULL, ThreadSave, NULL) < 0)
     {
-        RCBaseClass::CCText("^3RCMain:\t^1Can't start `thread_save` Thread\n");
+        RCBaseClass::CCText("^3RCMain:\t\t^1Can't start `thread_save` Thread\n");
         return 0;
     }
 
-    Sleep(1000);
+    Sleep(100);
 
     if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
     {
-        RCBaseClass::CCText("^3RCMain:\t^1Can't start `thread_mci` Thread\n");
+        RCBaseClass::CCText("^3RCMain:\t\t^1Can't start `thread_mci` Thread\n");
         return 0;
     }
 
-    Sleep(1000);
+    Sleep(100);
 
-    RCBaseClass::CCText("^3RCMain:\t^2All threads started");
+    RCBaseClass::CCText("^7Cruise started");
 
     while (ok > 0)
     {
@@ -2879,6 +2873,8 @@ void *ThreadMain(void *CmdLine)
     pthread_mutex_destroy(&RCmutex);
     return 0;
 }
+
+int  nCount;     // счетчик
 
 // главная функция приложения
 int main(int argc, char* argv[])

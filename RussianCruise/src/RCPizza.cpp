@@ -347,7 +347,7 @@ void RCPizza::readconfig(const char *Track)
     }
     ReadInfo.close();
 
-    CCText("  ^7RCPizza    ^2OK");
+    CCText("  ^7RCPizza\t^2OK");
 }
 
 

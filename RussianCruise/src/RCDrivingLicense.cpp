@@ -158,21 +158,21 @@ int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
     dbconn = conn;
     if (!dbconn)
     {
-        CCText("^3RCDL:\t^1Can't sctruct MySQL Connector");
+        CCText("^3RCDL:\t\t^1Can't sctruct MySQL Connector");
         return -1;
     }
 
     insim = InSim;
     if (!insim)
     {
-        CCText("^3RCDL:\t^1Can't struct CInsim class");
+        CCText("^3RCDL:\t\t^1Can't struct CInsim class");
         return -1;
     }
 
     msg = (RCMessage *)RCMessageClass;
     if (!msg)
     {
-        CCText("^3RCDL:\t^1Can't struct RCMessage class");
+        CCText("^3RCDL:\t\t^1Can't struct RCMessage class");
         return -1;
     }
 
@@ -180,11 +180,11 @@ int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
 
     if ( mysql_ping( dbconn ) != 0 )
     {
-        CCText("^3RCDL:\t^1Connection with MySQL server was lost");
+        CCText("^3RCDL:\t\t^1Connection with MySQL server was lost");
         return -1;
     }
 
-    CCText("^3RCDL:\t^2Connected to MySQL server");
+    CCText("^3RCDL:\t\t^2Connected to MySQL server");
 
     return 0;
 }

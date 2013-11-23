@@ -108,7 +108,7 @@ void RCLight::readconfig(const char *Track)
     LightsCount = i;
     readf.close();
 
-    CCText("  ^7RCLight    ^2OK");
+    CCText("  ^7RCLight\t^2OK");
 }
 
 void RCLight::InsimCNL( struct IS_CNL* packet )

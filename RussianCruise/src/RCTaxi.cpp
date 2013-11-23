@@ -242,7 +242,7 @@ void RCTaxi::readconfig(const char *Track)
 
     DelObjects();
 
-    CCText("  ^7RCTaxi     ^2OK");
+    CCText("  ^7RCTaxi\t^2OK");
 }
 
 void RCTaxi::Event()
@@ -385,7 +385,7 @@ void RCTaxi::accept_user2(byte UCID)
 
     players[UCID].WorkAccept = 2;
 
-    if (players[UCID].cf == 1)
+    if (players[UCID].cf == 1 or players[UCID].cf == 4)
 		players[UCID].PassStress -= 100;
 	else if (players[UCID].client_type == 2)
         players[UCID].PassStress = rand()%300;
@@ -427,7 +427,7 @@ void RCTaxi::accept_user2(byte UCID)
         players[UCID].PassStress = 500;
 	}
 
-	if (players[UCID].cf == 5 and players[UCID].client_type != 1)
+	if (players[UCID].cf == 1 and players[UCID].client_type == 1)
     {
         sprintf(Msg, TaxiDialogs["client_31"][rand()%TaxiDialogs["client_31"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
         players[UCID].cf = 1;
@@ -580,7 +580,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                         {
                             SendMTC(UCID, TaxiDialogs["client_4"][rand()%TaxiDialogs["client_4"].size()].c_str());
                             players[UCID].client_type = 1;
-                            players[UCID].cf = 5;
+                            players[UCID].cf = 4;
                             accept_user2(UCID);
                             return;
                         }
@@ -1113,7 +1113,7 @@ void RCTaxi::taxi_done( byte UCID )
         SendMTC(UCID, TaxiDialogs["done"][ rand()%TaxiDialogs["done"].size() ].c_str() ); // send random dialog phrase
 
         float coef = 1;
-        if (players[UCID].cf == 1)
+        if (players[UCID].cf == 1 or players[UCID].cf == 4)
             coef = 1.5;
 		if (players[UCID].cf == 2)
             coef = 2;
@@ -1215,9 +1215,9 @@ void RCTaxi::InsimAXM( struct IS_AXM* packet )
 
 	if( packet->UCID == 0)
 	{
-		char debug[MAX_PATH];
-		sprintf(debug,"^5DEBUG^7: ^3InsimAXM->NumO = %d", packet->NumO);
-		CCText(debug);
+		//char debug[MAX_PATH];
+		//sprintf(debug,"^5DEBUG^7: ^3InsimAXM->NumO = %d", packet->NumO);
+		//CCText(debug);
 
 		AddObjects();
 		DelObjects();

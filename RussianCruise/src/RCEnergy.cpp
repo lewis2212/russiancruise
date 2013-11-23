@@ -93,7 +93,7 @@ void RCEnergy::readconfig(const char *Track)
     }
     readf.close();
 
-    CCText("  ^7RCEnergy   ^2OK");
+    CCText("  ^7RCEnergy\t^2OK");
 }
 
 void RCEnergy::InsimNCN( struct IS_NCN* packet )

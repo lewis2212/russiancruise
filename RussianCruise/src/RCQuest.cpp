@@ -32,7 +32,7 @@ void RCQuest::readconfig(const char *Track)
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCQuest\\%s.txt", RootDir, Track);
 
-    CCText("  ^7RCQuest    ^2OK");
+    CCText("  ^7RCQuest\t^2OK");
 }
 
 

@@ -59,37 +59,37 @@ int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL
     dbconn = conn;
     if (!dbconn)
     {
-        CCText("^3RCBank:\t^1Can't sctruct MySQL Connector");
+        CCText("^3RCBank:\t\t^1Can't sctruct MySQL Connector");
         return -1;
     }
 
     insim = InSim;
     if (!insim)
     {
-        CCText("^3RCBank:\t^1Can't struct CInsim class");
+        CCText("^3RCBank:\t\t^1Can't struct CInsim class");
         return -1;
     }
 
     msg = RCMessageClass;
     if (!msg)
     {
-        CCText("^3RCBank:\t^1Can't struct RCMessage class");
+        CCText("^3RCBank:\t\t^1Can't struct RCMessage class");
         return -1;
     }
 
     dl = DL;
     if (!dl)
     {
-        CCText("RCBank:\t^1Can't struct RCDL class");
+        CCText("RCBank:\t\t^1Can't struct RCDL class");
         return -1;
     }
 
     if (mysql_ping(dbconn) != 0)
     {
-        CCText("^3RCBank:\t^1Connection with MySQL server was lost");
+        CCText("^3RCBank:\t\t^1Connection with MySQL server was lost");
     }
 
-    CCText("^3RCBank:\t^2Connected to MySQL server");
+    CCText("^3RCBank:\t\t^2Connected to MySQL server");
     return 0;
 }
 
@@ -754,5 +754,5 @@ void RCBank::readconfig(const char *Track)
     else
         BankFond = 0;
 
-    CCText("  ^7RCBank     ^2OK");
+    CCText("  ^7RCBank\t^2OK");
 }

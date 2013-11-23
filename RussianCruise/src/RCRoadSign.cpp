@@ -105,7 +105,7 @@ void RCRoadSign::ReadConfig(const char *Track)
     }
     read.close();
 
-    CCText("  ^7RCRoadSign ^2OK");
+    CCText("  ^7RCRoadSign\t^2OK");
 }
 
 void RCRoadSign::InsimNCN( struct IS_NCN* packet )

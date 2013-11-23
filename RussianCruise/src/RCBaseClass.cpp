@@ -543,9 +543,9 @@ RCBaseClass::AddObjects()
 	if( addObjects.size() == 0 )
 		return;
 
-	char debug[MAX_PATH];
-	sprintf(debug,"^6DEBUG^7: ^2addObjects queue = %d", addObjects.size());
-	CCText(debug);
+	//char debug[MAX_PATH];
+	//sprintf(debug,"^6DEBUG^7: ^2addObjects queue = %d", addObjects.size());
+	//CCText(debug);
 
 	IS_AXM	*packAXM = new IS_AXM;
     memset(packAXM, 0, sizeof(struct IS_AXM));
@@ -567,8 +567,8 @@ RCBaseClass::AddObjects()
 			break;
 	}
 
-	sprintf(debug,"^6DEBUG^7: ^2Add %d objects",packAXM->NumO );
-	CCText(debug);
+	//sprintf(debug,"^6DEBUG^7: ^2Add %d objects",packAXM->NumO );
+	//CCText(debug);
 
     packAXM->Size = 8 + packAXM->NumO * 8;
     insim->send_packet(packAXM);
@@ -581,9 +581,9 @@ RCBaseClass::DelObjects()
 	if( delObjects.size() == 0 )
 		return;
 
-	char debug[MAX_PATH];
-	sprintf(debug,"^6DEBUG^7: ^1delObjects queue = %d", delObjects.size());
-	CCText(debug);
+	//char debug[MAX_PATH];
+	//sprintf(debug,"^6DEBUG^7: ^1delObjects queue = %d", delObjects.size());
+	//CCText(debug);
 
 	IS_AXM	*packAXM = new IS_AXM;
     memset(packAXM, 0, sizeof(struct IS_AXM));
@@ -604,8 +604,8 @@ RCBaseClass::DelObjects()
 			break;
 	}
 
-	sprintf(debug,"^6DEBUG^7: ^1Del %d objects",packAXM->NumO );
-	CCText(debug);
+	//sprintf(debug,"^6DEBUG^7: ^1Del %d objects",packAXM->NumO );
+	//CCText(debug);
 
     packAXM->Size = 8 + packAXM->NumO * 8;
     insim->send_packet(packAXM);
