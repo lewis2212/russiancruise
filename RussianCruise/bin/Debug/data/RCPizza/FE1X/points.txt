@@ -22,11 +22,11 @@ tofu_118
 196,317
 
 point
-tofu_gay1
+tofu_guy
 -107,-141
 
 point
-tofu_gay1
+tofu_guy
 301,-216
 
 point
@@ -42,7 +42,7 @@ tofu_gop
 261,297
 
 point
-tofu_gayonp
+tofu_guyonp
 353,-562
 
 point
@@ -86,7 +86,7 @@ tofu_box10
 -42,-356
 
 point
-tofu_gayonpark
+tofu_guyonpark
 -229,-449
 
 point
@@ -114,7 +114,7 @@ tofu_tyreseller
 -76,-61
 
 point
-tofu_gayonp
+tofu_guyonp
 -93,-383
 
 point
