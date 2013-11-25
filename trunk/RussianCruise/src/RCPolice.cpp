@@ -916,10 +916,12 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  ( players[packet->UCID].BID2 == players[play.first].BID)
             {
+                int FID = packet->ReqI;
             	if (players[packet->UCID].DTPstatus == 2)
 				{
 					players[play.first].blame = true;
-					players[packet->UCID].FineC += fines[packet->ReqI].cash;
+					if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
+                        players[packet->UCID].FineC += fines[packet->ReqI].cash;
 				}
 
             	players[packet->UCID].PStat.FinedByDay++;
@@ -945,7 +947,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                     }
                 }
 
-                int FID = packet->ReqI;
+                FID = packet->ReqI;
                 if (players[play.first].Pogonya == 2 or players[packet->UCID].DTPstatus == 2)
 					if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
 						players[packet->UCID].DTPfines++;
@@ -984,8 +986,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         {
             if  (players[ packet->UCID ].BID2 == players[ play.first ].BID)
             {
+                int FID = packet->ReqI;
                 if (players[packet->UCID].DTPstatus == 2)
-					players[packet->UCID].FineC -= fines[packet->ReqI].cash;
+                    if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
+                        players[packet->UCID].FineC -= fines[packet->ReqI].cash;
 
                 for (int j=0; j < MAX_FINES; j++)
                 {
