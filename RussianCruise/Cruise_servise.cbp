@@ -59,6 +59,7 @@
 		<Unit filename="Release note.txt" />
 		<Unit filename="TODO.txt" />
 		<Unit filename="include/CInsim.h" />
+		<Unit filename="include/CarInfo.h" />
 		<Unit filename="include/RCAntCheat.h" />
 		<Unit filename="include/RCAutoschool.h" />
 		<Unit filename="include/RCBanList.h" />
@@ -80,6 +81,7 @@
 		<Unit filename="include/pthread.h" />
 		<Unit filename="include/tools.h" />
 		<Unit filename="src/CInsim.cpp" />
+		<Unit filename="src/CarInfo.cpp" />
 		<Unit filename="src/RCAntCheat.cpp" />
 		<Unit filename="src/RCAutoschool.cpp" />
 		<Unit filename="src/RCBanList.cpp" />
