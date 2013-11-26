@@ -2698,7 +2698,6 @@ void *ThreadMain(void *CmdLine)
     InitClasses();
 
     pthread_t mci_tid; // Thread ID
-    pthread_t btn_tid; // Thread ID
     pthread_t work_tid; // Thread ID
     pthread_t save_tid; // Thread ID
 

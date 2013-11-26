@@ -43,9 +43,9 @@ typedef list<DB_ROW> DB_ROWS;
 struct GlobalPlayer
 {
     CarInfo Info;
-    char    	UName[24];              // Username
-    char    	PName[24];              // Player name
-    char    	CName[4];             // Car Name
+    string	UName;              // Username
+    string	PName;              // Player name
+    string	CName;             // Car Name
 
     bool DontSave;
 };
@@ -62,6 +62,7 @@ public:
     virtual void SendBFN(byte UCID, byte ClickID);
     virtual void SendBFNAll ( byte UCID );
     virtual void SendMST (const char* Text);
+    virtual void SendMST (string Text){ SendMST( Text.c_str() ); };
 
     virtual void SendMTC (byte UCID, string Msg);
 

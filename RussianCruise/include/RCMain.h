@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <ctime>
+// *** END ***
  #include<clocale>
 
 #ifndef _CRUISE_H_
@@ -8,42 +11,14 @@ Russian Cruise by TurboSnail
 
 **/
 
-#define MAX_PLAYERS 32
-
-/**
-
-buttons ClickId's:
-
-1-49  - users
-50-59 btn_panel
-60- 79 - pogonya users
-80-99 - tuning
-100 149 - info panel
-{
-	100 - 102 main bg;
-}
-150 - 160 - shop
-
-161-189 police
-
-190-202 svetofor
-
-203-205 сирена
-
-210 - pizza clock
-211 - pizza action
-
-212,213 - drive lic
 
 
-*/
-using namespace std;
+
 
 #include <windows.h>
 #include <mysql/mysql.h>
 
 #include <math.h>
-#include <time.h>
 #include <map>
 
 #include "CInsim.h"
@@ -64,7 +39,10 @@ using namespace std;
 #include "RCQuest.h"
 #include "RCAutoschool.h"
 
+#define MAX_PLAYERS 32
 #define MAX_CARS 30
+
+using namespace std;
 
 
 /*** GLOBAL ***/

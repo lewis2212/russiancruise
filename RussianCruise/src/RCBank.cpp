@@ -103,8 +103,8 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     sprintf(kickCmd, "/kick %s",packet->UName);
     sprintf(msg, "^1RCBank error - BAD USER");
 
-    strcpy(players[packet->UCID].UName, packet->UName);
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].PName = packet->PName;
 
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username = '%s' LIMIT 1;", packet->UName);
@@ -266,27 +266,27 @@ void RCBank::InsimCNL(struct IS_CNL* packet)
 void RCBank::bank_save (byte UCID)
 {
     char query[128];
-    sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'", players[UCID].Cash, players[UCID].UName);
+    sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
-        printf("Bank Error: Can't save cash for %s\n",  players[UCID].UName);
+        printf("Bank Error: Can't save cash for %s\n",  players[UCID].UName.c_str());
     }
 
     /* Credit */
-    sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName);
+    sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
-        printf("Bank Error: Can't save credit for %s\n",  players[UCID].UName);
+        printf("Bank Error: Can't save credit for %s\n",  players[UCID].UName.c_str());
     }
 
     /* Deposit */
-    sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName);
+    sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
-        printf("Bank Error: Can't save deposit for %s\n",  players[UCID].UName);
+        printf("Bank Error: Can't save deposit for %s\n",  players[UCID].UName.c_str());
     }
 
     /* Capital */
@@ -300,7 +300,7 @@ void RCBank::bank_save (byte UCID)
 
 void RCBank::InsimCPR(struct IS_CPR* packet)
 {
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].PName = packet->PName;
 }
 
 void RCBank::InsimMSO(struct IS_MSO* packet)
@@ -308,7 +308,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
     char Message[128], Text[128];
     strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if (strncmp(Message, "!bnk", strlen("!bnk")) == 0 and (strcmp(players[packet->UCID].UName, "denis-takumi") == 0 || strcmp(players[packet->UCID].UName, "Lexanom") == 0))
+    if (strncmp(Message, "!bnk", strlen("!bnk")) == 0 and ( players[packet->UCID].UName == "denis-takumi" || players[packet->UCID].UName == "Lexanom" ))
     {
         sprintf(Text, "^5| ^7^CБаланс банка: %0.0f ^3RUR", BankFond);
         SendMTC(packet->UCID, Text);
@@ -686,7 +686,7 @@ void RCBank::BtnCash (byte UCID)
     strcat(pack.Text, "^7 RUR");
     insim->send_packet(&pack);
 
-    if (strcmp(players[UCID].UName, "denis-takumi") == 0)
+    if ( players[UCID].UName == "denis-takumi" )
     {
         pack.ClickID = 167;
         pack.L = 50;

@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <string>
+// *** END ***
 /*
  * Copyright (c) 2013, Cristóbal Marco
  *
@@ -74,7 +77,7 @@ typedef struct
 #include <winsock2.h>
 #include <stdio.h>
 #include <string.h>
-#include "pthread.h"
+#include <pthread.h>
 
 // Includes for *NIX (no winsock2, these headers are needed instead)
 #elif defined __linux__

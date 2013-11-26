@@ -2,7 +2,19 @@
 
 CarInfo::CarInfo()
 {
-	//ctor
+	Node = 0;
+	Lap = 0;
+	PLID = 0;
+	Position = 0;
+	Info = 0;
+	Sp3 = 0;
+	X = 0;
+	Y = 0;
+	Z = 0;
+	Speed = 0;
+	Direction = 0;
+	Heading = 0;
+	AngVel = 0;
 }
 
 CarInfo::~CarInfo()
