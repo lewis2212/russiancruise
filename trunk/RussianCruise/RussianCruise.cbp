@@ -36,12 +36,12 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-march=i386" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 			<Add option="-Wno-parentheses" />
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
+			<Add option="-pipe" />
 			<Add directory="include" />
 		</Compiler>
 		<ResourceCompiler>

@@ -98,8 +98,8 @@ void RCEnergy::readconfig(const char *Track)
 
 void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
-    strcpy(players[packet->UCID].UName, packet->UName);
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].PName = packet->PName;
     players[packet->UCID].Zone = 1;
 
     char query[128];
@@ -160,7 +160,7 @@ void RCEnergy::InsimNPL( struct IS_NPL* packet )
         SendMTC( packet->UCID, msg->_(  packet->UCID, "2403" ) );
 
         char Text[64];
-        sprintf(Text, "/spec %s", players[ packet->UCID ].UName);
+        sprintf(Text, "/spec %s", players[ packet->UCID ].UName.c_str());
         SendMST(Text);
         players[ packet->UCID ].Zone = 1;
         return;
@@ -189,7 +189,7 @@ void RCEnergy::InsimCNL( struct IS_CNL* packet )
 void RCEnergy::energy_save (byte UCID)
 {
     char query[128];
-    sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName);
+    sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName.c_str());
 
     if ( mysql_ping( dbconn ) != 0 )
         printf("Bank Error: connection with MySQL server was lost\n");
@@ -200,7 +200,7 @@ void RCEnergy::energy_save (byte UCID)
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )
 {
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].PName = packet->PName;
 }
 
 void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
@@ -227,7 +227,7 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
         {
             players[UCID].Zone = 1;
             char Text[64];
-            sprintf(Text, "/spec %s", players[UCID].UName);
+            sprintf(Text, "/spec %s", players[UCID].UName.c_str());
             SendMST(Text);
         }
         else
@@ -388,10 +388,10 @@ void RCEnergy::btn_energy ( byte UCID )
     else if (nrg <= 50)
         color = 3;
 
-    sprintf(str, "^%d %s: %d^K£¥", color, msg->_(UCID , "Energy"), nrg);
+    sprintf(str, "^%d %s: %d^KÂ£Â¥", color, msg->_(UCID , "Energy"), nrg);
 
     if (players[UCID].Zone == 3)
-        sprintf(str, "%s ^K¡è", str);
+        sprintf(str, "%s ^KÂ¡Ã¨", str);
 
     SendButton(255, UCID, 208, 100, 1, 30, 4, 32+64, str);
 }

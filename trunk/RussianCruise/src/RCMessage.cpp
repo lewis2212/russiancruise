@@ -137,7 +137,7 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     if (packet->UCID == 0)
         return;
 
-    strcpy(players[ packet->UCID ].UName, packet->UName);
+    players[ packet->UCID ].UName = packet->UName;
 
     string query = "SELECT lang FROM message WHERE username = '";
 	query += packet->UName;
@@ -222,7 +222,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 void RCMessage::save (byte UCID)
 {
     char query[MAX_PATH];
-    sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName, players[ UCID ].Lang.c_str());
+    sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName.c_str(), players[ UCID ].Lang.c_str());
 
     dbExec( query );
 }
