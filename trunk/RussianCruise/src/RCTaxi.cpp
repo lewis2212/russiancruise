@@ -441,7 +441,7 @@ void RCTaxi::InsimCNL( struct IS_CNL* packet )
 {
     //удал€ю маршалов
     delete_marshal( packet->UCID );
-    save_user( packet->UCID );
+    Save( packet->UCID );
     players.erase( packet->UCID );
     NumP --;
 }
@@ -776,11 +776,6 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
     char Message[128];
     strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if (strncmp(Message, "!save", strlen("!save")) == 0)
-    {
-        save_user( packet->UCID );
-    }
-
     if (players[packet->UCID].InZone == 1)
     {
         if (strncmp(Message, "!deal", strlen("!deal")) == 0 )
@@ -1039,7 +1034,7 @@ void RCTaxi::read_user( byte UCID )
         players[UCID].FiredPenalty= 0;
         players[UCID].PenaltyCount = 0;
         players[UCID].PassCount = 0;
-        save_user( UCID );
+        Save( UCID );
     }
     else
     {
@@ -1089,7 +1084,7 @@ void RCTaxi::delete_marshal(byte UCID)
 	delete obj;
 }
 
-void RCTaxi::save_user( byte UCID )
+void RCTaxi::Save( byte UCID )
 {
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);

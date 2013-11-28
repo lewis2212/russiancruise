@@ -246,7 +246,7 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
         }
 
         players[ packet->UCID ].LVL = 0;
-        save( packet->UCID );
+        Save( packet->UCID );
 
     }
 
@@ -274,7 +274,7 @@ void RCDL::InsimPLL( struct IS_PLL* packet )
 
 void RCDL::InsimCNL( struct IS_CNL* packet )
 {
-    save( packet->UCID );
+    Save( packet->UCID );
     players.erase( packet->UCID );
 }
 
@@ -286,14 +286,9 @@ void RCDL::InsimCPR( struct IS_CPR* packet )
 void RCDL::InsimMSO( struct IS_MSO* packet )
 {
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
-    {
-        save( packet->UCID );
-    }
-
 }
 
-void RCDL::save (byte UCID)
+void RCDL::Save (byte UCID)
 {
     char query[128];
     sprintf(query, "UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[ UCID ].LVL , players[ UCID ].Skill, players[ UCID ].UName);

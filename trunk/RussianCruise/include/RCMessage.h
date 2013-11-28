@@ -32,7 +32,7 @@ public:
 
     string GetLang(byte UCID);
 
-    void save(byte UCID);
+    void Save(byte UCID);
 
     const char* _( byte UCID, string CODE );
 

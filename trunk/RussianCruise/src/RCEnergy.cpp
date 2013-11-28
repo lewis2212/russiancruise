@@ -1,4 +1,4 @@
-using namespace std;
+﻿using namespace std;
 #include "RCEnergy.h"
 
 RCEnergy::RCEnergy(const char* Dir)
@@ -144,7 +144,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
         }
 
         players[ packet->UCID ].Energy = 10000;
-        energy_save( packet->UCID );
+        Save( packet->UCID );
     }
     mysql_free_result( dbres );
     btn_energy( packet->UCID );
@@ -182,11 +182,11 @@ void RCEnergy::InsimPLL( struct IS_PLL* packet )
 
 void RCEnergy::InsimCNL( struct IS_CNL* packet )
 {
-    energy_save(packet->UCID);
+    Save(packet->UCID);
     players.erase(packet->UCID);
 }
 
-void RCEnergy::energy_save (byte UCID)
+void RCEnergy::Save (byte UCID)
 {
     char query[128];
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName.c_str());
@@ -360,10 +360,6 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
         bank->AddToBank(100);
     }
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!save", 5) == 0 )
-    {
-        energy_save(packet->UCID);
-    }
 }
 
 void RCEnergy::btn_energy ( byte UCID )
@@ -388,12 +384,12 @@ void RCEnergy::btn_energy ( byte UCID )
     else if (nrg <= 50)
         color = 3;
 
-    sprintf(str, "^%d %s: %d^K£¥", color, msg->_(UCID , "Energy"), nrg);
+    sprintf(str, msg->_(UCID , "Energy"), color, nrg);
 
     if (players[UCID].Zone == 3)
-        sprintf(str, "%s ^K¡è", str);
+        sprintf(str, msg->_(UCID , "EnergyArrow"), str);
 
-    SendButton(255, UCID, 208, 100, 1, 30, 4, 32+64, str);
+    SendButton(255, UCID, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
 }
 
 int RCEnergy::check_pos( byte UCID )
