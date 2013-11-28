@@ -236,7 +236,7 @@ void RCPolice::InsimCNL( struct IS_CNL* packet )
 
     CopPayRoll(packet->UCID, false);
 
-    SaveUserFines(packet->UCID);
+    Save(packet->UCID);
     players.erase(packet->UCID);
 }
 
@@ -1609,7 +1609,7 @@ void RCPolice::SetUserBID ( byte UCID, byte BID )
     players[ UCID ].BID = BID;
 }
 
-void RCPolice::SaveUserFines ( byte UCID )
+void RCPolice::Save ( byte UCID )
 {
     if (players[UCID].cop)
         SaveCopStat(UCID);
@@ -1639,7 +1639,7 @@ void RCPolice::ReadUserFines( byte UCID )
     if (fff == INVALID_HANDLE_VALUE)
     {
         cout << "Can't find " << file << endl;
-        SaveUserFines( UCID );
+        Save( UCID );
     }
     else
     {

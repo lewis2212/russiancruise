@@ -153,13 +153,13 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
 	{
 		printf("Can't find %s\n Create user\n", packet->UName);
         players[ packet->UCID ].Lang = "rus";
-        save( packet->UCID );
+        Save( packet->UCID );
 	}
 }
 
 void RCMessage::InsimCNL( struct IS_CNL* packet )
 {
-    save(packet->UCID);
+    Save(packet->UCID);
     players.erase( packet->UCID );
 }
 
@@ -170,10 +170,6 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 
     char Msg[128];
     strcpy(Msg, packet->Msg + ((unsigned char)packet->TextStart));
-
-
-    if (strncmp(Msg, "!save", 5) == 0 )
-        save( packet->UCID );
 
     if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
     {
@@ -219,7 +215,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 
 }
 
-void RCMessage::save (byte UCID)
+void RCMessage::Save (byte UCID)
 {
     char query[MAX_PATH];
     sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName.c_str(), players[ UCID ].Lang.c_str());

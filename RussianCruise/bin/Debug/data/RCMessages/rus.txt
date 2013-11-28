@@ -2,7 +2,8 @@
 //       интерфейс
 // ************************
 
-Energy 			"^CСилы"
+Energy 			"^%d ^CСилы: %d^KЈҐ"
+EnergyArrow		"%s ^KЎи"
 LvlAndSkill 	" ^C^7Уровень: ^2%d^7, опыт: ^2%4.2f^KЈҐ"
 PitSaveGood 	"^2^CГараж"
 PitSaveNotGood 	"^1^CГараж"

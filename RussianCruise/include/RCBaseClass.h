@@ -56,21 +56,22 @@ public:
     RCBaseClass();
     ~RCBaseClass();
 
-    void        next_packet();   						// Функция переборки типа пакета
-    void        InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
+    void         next_packet();   						// Функция переборки типа пакета
+    virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
 
-    virtual void SendBFN(byte UCID, byte ClickID);
-    virtual void SendBFNAll ( byte UCID );
-    virtual void SendMST (const char* Text);
-    virtual void SendMST (string Text){ SendMST( Text.c_str() ); };
+    void SendBFN(byte UCID, byte ClickID);
+    void SendBFNAll ( byte UCID );
 
-    virtual void SendMTC (byte UCID, string Msg);
+    void SendMST (const char* Text);
+    void SendMST (string Text){ SendMST( Text.c_str() ); };
 
-    virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, const char * Text, byte TypeIn = 0 );
-    virtual void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, string Text, byte TypeIn = 0 );
+    void SendMTC (byte UCID, string Msg);
 
-    virtual void ButtonInfo (byte UCID, const char* Message);
-    virtual void ClearButtonInfo (byte UCID);
+    void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, const char * Text, byte TypeIn = 0 );
+    void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, string Text, byte TypeIn = 0 );
+
+    void ButtonInfo (byte UCID, const char* Message);
+    void ClearButtonInfo (byte UCID);
 
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
@@ -92,7 +93,7 @@ public:
      * @return void - ничего
      *
      */
-    virtual void AddObjects();
+    void AddObjects();
 
     /** @brief Удаление объектов на карте.
      *			Перед вызовом метода, удаляемые объекты необходимо добавить в очередь delObjects,
@@ -101,7 +102,7 @@ public:
      * @return void - ничего
      *
      */
-	virtual void DelObjects();
+	void DelObjects();
 
 	/** @brief Добавление объекта на карту.
 	 *
@@ -110,7 +111,7 @@ public:
      * @return void - ничего
      *
      */
-	virtual void AddObject( ObjectInfo *object );
+	void AddObject( ObjectInfo *object );
 
 	/** @brief Удаление объекта с карты
 	 *
@@ -119,7 +120,7 @@ public:
      * @return void - ничего
      *
      */
-	virtual void DelObject( ObjectInfo *object );
+	void DelObject( ObjectInfo *object );
 
 	static string ToString (int i);
 	static string ToString (byte b);
@@ -167,7 +168,7 @@ protected:
     virtual void InsimPLP( struct IS_PLP* packet ){}
     virtual void InsimPSF( struct IS_PSF* packet ){}
     virtual void InsimREO( struct IS_REO* packet ){}
-    virtual void InsimRST( struct IS_RST* packet ){}
+    virtual void InsimRST( struct IS_RST* packet ){ readconfig( packet->Track ); }
     virtual void InsimSMALL( struct IS_SMALL* packet ){}
     virtual void InsimSPX( struct IS_SPX* packet ){}
     virtual void InsimSTA( struct IS_STA* packet ){}
@@ -175,6 +176,10 @@ protected:
     virtual void InsimTOC( struct IS_TOC* packet ){}
     virtual void InsimVER( struct IS_VER* packet ){}
     virtual void InsimVTN( struct IS_VTN* packet ){}
+
+    virtual void readconfig(const char *Track){};
+    virtual void Save(byte UCID){};
+
 
     //MYSQL
     MYSQL       *dbconn;

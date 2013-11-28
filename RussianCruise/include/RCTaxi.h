@@ -128,7 +128,7 @@ private:
 
 
     void read_user( byte UCID );
-    void save_user( byte UCID );
+    void Save( byte UCID );
 
     void delete_marshal( byte UCID );
 

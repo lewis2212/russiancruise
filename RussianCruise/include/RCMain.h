@@ -20,6 +20,7 @@ Russian Cruise by TurboSnail
 
 #include <math.h>
 #include <map>
+#include <thread>
 
 #include "CInsim.h"
 #include "RCButtonClickID.h"
@@ -35,7 +36,7 @@ Russian Cruise by TurboSnail
 #include "RCTaxi.h"
 #include "RCPolice.h"
 #include "RCRoadSign.h"
-//#include "RCBanList.h"
+
 #include "RCQuest.h"
 #include "RCAutoschool.h"
 
@@ -48,11 +49,11 @@ using namespace std;
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
 
-// Дескриптор соединения
+// Р”РµСЃРєСЂРёРїС‚РѕСЂ СЃРѕРµРґРёРЅРµРЅРёСЏ
 MYSQL rcMaindb, *rcMaindbConn;
-// Дескриптор результирующей таблицы
+// Р”РµСЃРєСЂРёРїС‚РѕСЂ СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ С‚Р°Р±Р»РёС†С‹
 MYSQL_RES *rcMainRes;
-// Массив полей текущей строки
+// РњР°СЃСЃРёРІ РїРѕР»РµР№ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРё
 MYSQL_ROW rcMainRow;
 
 
@@ -61,13 +62,14 @@ int     chek_users =0;
 
 CInsim *insim;
 
-ofstream  out;   // выходной файл для протокола работы сервиса
+ofstream  out;   // РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р» РґР»СЏ РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
 
 char RootDir[MAX_PATH];
 char ServiceName[64];
 
+list<RCBaseClass *> classes;
+list<RCBaseClass *>::iterator cl;
 
-pthread_mutex_t RCmutex;                // Mutex var used for send_packet() method
 pthread_t main_tid; // Thread ID
 
 struct cars

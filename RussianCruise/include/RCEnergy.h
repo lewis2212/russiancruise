@@ -64,7 +64,7 @@ public:
 
     void    InsimMCI( struct IS_MCI* packet );
 
-    void    energy_save(byte UCID);
+    void    Save(byte UCID);
     void    btn_energy ( byte UCID );
 
 

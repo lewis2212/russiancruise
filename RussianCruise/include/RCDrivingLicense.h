@@ -44,7 +44,7 @@ public:
     ~RCDL();
 
     //
-    void    save(byte UCID);
+    void    Save(byte UCID);
 
     int     GetLVL(byte UCID);
     int     GetSkill(byte UCID);

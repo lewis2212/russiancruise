@@ -124,7 +124,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         sprintf(query, "INSERT INTO bank (username) VALUES ('%s');", packet->UName);
 
         players[packet->UCID].Cash = 1000;
-        bank_save(packet->UCID);
+        Save(packet->UCID);
     }
 
     /** кредиты **/
@@ -233,7 +233,7 @@ void RCBank::credit_penalty (byte UCID)
     AddToBank((players[UCID].Credit) * 13 / 10 + 1000 * c); //сдаем в банк
     players[UCID].Credit = 0;
     players[UCID].Date_create = 0;
-    bank_save(UCID); //сохран€емс€
+    Save(UCID); //сохран€емс€
 }
 
 void RCBank::InsimNPL(struct IS_NPL* packet)
@@ -259,11 +259,11 @@ void RCBank::InsimPLL(struct IS_PLL* packet)
 void RCBank::InsimCNL(struct IS_CNL* packet)
 {
     if (players[packet->UCID].ReadTrue)
-        bank_save(packet->UCID);
+        Save(packet->UCID);
     players.erase(packet->UCID);
 }
 
-void RCBank::bank_save (byte UCID)
+void RCBank::Save (byte UCID)
 {
     char query[128];
     sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
@@ -421,7 +421,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             players[ packet->UCID ].Date_create = time(NULL);
             RemFrBank(summ); //берем бабки из банка
             AddCash(packet->UCID, summ, false); //выдаем бабки игроку
-            bank_save(packet->UCID); //сохран€емс€
+            Save(packet->UCID); //сохран€емс€
         }
         if (strncmp(Message, "!repay", strlen("!repay")) == 0)
         {
@@ -442,7 +442,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             AddToBank( players[ packet->UCID ].Credit * 13 / 10 ); //сдаем в банк
             players[ packet->UCID ].Credit = 0;
             players[ packet->UCID ].Date_create = 0;
-            bank_save( packet->UCID ); //сохран€емс€
+            Save( packet->UCID ); //сохран€емс€
         }
 
         /** ¬клады **/
@@ -559,7 +559,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             players[ packet->UCID ].Dep_Date_create = time(NULL);
             RemCash( packet->UCID , summ); //снимаем у игрока
             AddToBank(summ); //кладем в банк
-            bank_save(packet->UCID); //сохран€емс€
+            Save(packet->UCID); //сохран€емс€
         }
         if (strncmp(Message, "!withdraw", strlen("!withdraw")) == 0)
         {
@@ -589,7 +589,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
                     AddCash(packet->UCID, dtt, true); //отдаем игроку
                     players[packet->UCID].Deposit = 0;
                     players[packet->UCID].Dep_Date_create = 0;
-                    bank_save(packet->UCID); //сохран€емс€
+                    Save(packet->UCID); //сохран€емс€
                     return;
                 }
             }
@@ -617,7 +617,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             AddCash(packet->UCID, dtt, true); //отдаем игроку
             players[packet->UCID].Deposit = 0;
             players[packet->UCID].Dep_Date_create = 0;
-            bank_save(packet->UCID); //сохран€емс€
+            Save(packet->UCID); //сохран€емс€
         }
 
     }

@@ -142,7 +142,7 @@ public:
 
     int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
-    void SaveUserFines( byte UCID );
+    void Save( byte UCID );
     void SendMTCToCop(const char* Msg, int Rank, ...);
     void SetUserBID( byte UCID, byte BID);
     void SetSirenLight( string sirenWord );

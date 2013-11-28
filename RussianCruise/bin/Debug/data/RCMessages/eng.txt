@@ -2,7 +2,8 @@
 //       интерфейс
 // ************************
 
-Energy 			"Energy"
+Energy 			"^%d ^LEnergy: %d^KЈҐ"
+EnergyArrow		"%s ^KЎи"
 LvlAndSkill 	" ^7Drive Level: ^2%d^7, skill: ^2%4.2f"
 PitSaveGood 	"^2GARAGE"
 PitSaveNotGood 	"^1GARAGE"
