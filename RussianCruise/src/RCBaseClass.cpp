@@ -275,12 +275,12 @@ void RCBaseClass::SendBFNAll ( byte UCID )
 
 void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
-    return SendButton(1, UCID, 211, 70, 9, 60, 4, ISB_DARK, Message);
+    return SendButton(1, UCID, CLICKID::CLICK_ID_BTN_INFO, 70, 9, 60, 4, ISB_DARK, Message);
 }
 
 void RCBaseClass::ClearButtonInfo(byte UCID)
 {
-    SendBFN( UCID, 211);
+    SendBFN( UCID, CLICKID::CLICK_ID_BTN_INFO);
 }
 
 string RCBaseClass::ToString (int i)
@@ -475,19 +475,7 @@ RCBaseClass::dbSelect( string query )
 bool
 RCBaseClass::dbExec( string query )
 {
-    if (mysql_ping(dbconn) != 0)
-    {
-        printf("DB ERROR: connection with MySQL server was lost\n");
-
-        return false;
-    }
-
-	if( mysql_query(dbconn, query.c_str() ) != 0 )
-	{
-		printf("DB ERROR: %s\n", mysql_error(dbconn));
-		return false;
-	}
-	return true;
+	return dbExec( query.c_str() );
 }
 
 bool

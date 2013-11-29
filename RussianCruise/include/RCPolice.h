@@ -27,13 +27,6 @@ struct user_fine
     string	CopPName;
 };
 
-/** Р°СЂРµСЃС‚РѕРІР°РЅРЅС‹Рµ РёРіСЂРѕРєРё **/
-struct ArestPlayer
-{
-    string    UName;
-    time_t  ArestTime;
-};
-
 struct PoliceStat
 {
     int DateActive;
@@ -55,22 +48,22 @@ struct PoliceStat
 struct PolicePlayer: public GlobalPlayer
 {
     /** GENERAL **/
-    byte	Rank = 0;				// Р—РІР°РЅРёРµ: 0 - РёРіСЂРѕРє, 1 - РјР». Р»РµР№С‚., 2 - Р»РµР№С‚., 3 - СЃС‚Р°СЂ. Р»РµР№С‚., 4 - РєР°РїРёС‚Р°РЅ
+    byte	Rank = 0;				// Звание: 0 - игрок, 1 - мл. лейт., 2 - лейт., 3 - стар. лейт., 4 - капитан
 
     /** COP **/
     bool    cop = false;
-    time_t	StartWork; 	//РІСЂРµРјСЏ Р·Р°СЃС‚СѓРїР»РµРЅРёСЏ РЅР° РІР°С…С‚Сѓ
+    time_t	StartWork; 	//время заступления на вахту
     bool    Sirena;
     bool    Radar;
     struct  PoliceStat  PStat;
 
-    /** Р”РўРџ **/
+    /** ДТП **/
     int		DTP;
     int		DTPstatus;
     int		DTPfines;
     int		DoneCount = 0;
     int 	LastDtpTime = 0;
-    bool 	blame = false;		//РІРёРЅР° РІ РґС‚Рї
+    bool 	blame = false;		//вина в дтп
     int		FineC = 0;
 
     /** other players **/
@@ -104,19 +97,19 @@ private:
     string siren = "";
     string CopUname = "";
 
-    map <byte, PolicePlayer> players; 			// РІСЃРµ РёРіСЂРѕРєРё
-    map <byte, ArestPlayer> ArestPlayers;			// Р°СЂРµСЃС‚РѕРІР°РЅРЅС‹Рµ РёРіСЂРѕРєРё
+    map <byte, PolicePlayer> players; 			// все игроки
+    map <string, time_t> ArestPlayers;			// арестованные игроки
 
     int DTPvyzov[3][32];	// 1 - UCID player, 2 - time, 3 - UCID cop
     int FineAllow[5][MAX_FINES];
 
-    void InsimNCN( struct IS_NCN* packet );   	// РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-    void InsimNPL( struct IS_NPL* packet );   	// РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-    void InsimPLP( struct IS_PLP* packet );   	// РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-    void InsimPLL( struct IS_PLL* packet );   	// РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-    void InsimCNL( struct IS_CNL* packet );   	// РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-    void InsimCPR( struct IS_CPR* packet );   	// РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-    void InsimMSO( struct IS_MSO* packet );   	// РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+    void InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   	// Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   	// Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   	// Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   	// Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   	// Игрок отправил сообщение
     void InsimBTC( struct IS_BTC* packet );
     void InsimBTT( struct IS_BTT* packet );
     void InsimPEN( struct IS_PEN* packet );
@@ -136,7 +129,7 @@ private:
 public:
     RCPolice(const char* Dir);
     ~RCPolice();
-	void readconfig();
+	void readconfig(const char* Track);
 
     struct fine fines[MAX_FINES];
 

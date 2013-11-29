@@ -90,25 +90,22 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
     PLIDtoUCID[packet->PLID] = packet->UCID;
     players[packet->UCID].CName = packet->CName;
 
-    for ( auto& p: ArestPlayers )
-    {
-        if ( ArestPlayers[p.first].UName == players[packet->UCID].UName)
-        {
-            time_t now = time(NULL);
 
-            if (now <= ArestPlayers[p.first].ArestTime)
-            {
-                char str[96];
+	if ( ArestPlayers.end() != ArestPlayers.find( players[ packet->UCID ].UName ) )
+	{
+		time_t now = time(NULL);
 
-                SendMST("/spec " + ArestPlayers[p.first].UName);
+		if ( now <= ArestPlayers[  players[packet->UCID].UName ] )
+		{
+			SendMST("/spec " +  players[packet->UCID].UName );
 
-                sprintf(str, "^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[p.first].ArestTime - now) / 60 + 1));
-                SendMTC(packet->UCID, str);
-            }
+			char str[96];
+			sprintf(str, "^2| ^7^CВы арестованы. До конца ареста осталось ^1%d ^7минут", (int)((ArestPlayers[ players[packet->UCID].UName ] - now) / 60 + 1));
+			SendMTC(packet->UCID, str);
+		}
 
-            break;
-        }
-    }
+	}
+
 
     if ((players[packet->UCID].PName.find("^4[^C^7ДПС^4]") != string::npos || players[packet->UCID].PName.find("^4[^C^7ГАИ^4]") != string::npos) and !players[packet->UCID].cop)
     {
@@ -148,10 +145,7 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
         else
         {
             SendMTC(packet->UCID, msg->_(packet->UCID , "CopFalse"));
-
-            char text[96];
-            sprintf(text, "/spec %s", players[packet->UCID].UName.c_str());
-            SendMST(text);
+            SendMST("/spec " + players[packet->UCID].UName);
         }
     }
 
@@ -1126,31 +1120,19 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
         else if (Min < 5 and Min > 0)
             Min = 5;
 
-        int i=0, finded = -1;
-
-        for(auto& p: ArestPlayers)
-        {
-            i = p.first;
-            if ( ArestPlayers[p.first].UName == players[packet->ReqI].UName )
-            {
-                finded = i;
-                break;
-            }
-        }
-
         if (Min > 0)
         {
-
-            SendMST("/spec %s" + players[packet->ReqI].UName);
+            SendMST("/spec " + players[packet->ReqI].UName);
 
             sprintf(str, msg->_(packet->ReqI, "ArestedMin"), players[packet->ReqI].PName.c_str(), Min);
+
             SendMTC(255, str);
-            ArestPlayers[finded != -1 ? finded : ++i].UName = players[packet->ReqI].UName;
-            ArestPlayers[i].ArestTime = now + Min * 60;
+
+            ArestPlayers[ players[packet->ReqI].UName ] = now + Min * 60;
         }
-        else if (finded != -1)
+        else if ( ArestPlayers.find(  players[packet->ReqI].UName ) != ArestPlayers.end() )
         {
-            ArestPlayers.erase(finded);
+            ArestPlayers.erase(  players[packet->ReqI].UName );
 
             sprintf(str, msg->_(packet->ReqI, "Reliaved"), players[packet->ReqI].PName.c_str());
             SendMTC(255, str);
@@ -1494,7 +1476,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
     }
 }
 
-void RCPolice::readconfig()
+void RCPolice::readconfig(const char* Track)
 {
 	ReadFines();
 
@@ -1506,7 +1488,7 @@ void RCPolice::readconfig()
     hwnd = FindFirstFile(file, &fd);
     if (hwnd == INVALID_HANDLE_VALUE)
     {
-    	CCText("  ^7RCPolice   ^1ERROR: ^8file " + (string)file + " not found");
+    	CCText("  ^7RCPolice   ^1ERROR: ^8file " + string(file) + " not found");
         return;
     }
     FindClose(hwnd);
@@ -1770,13 +1752,11 @@ bool
 RCPolice::LoadCopStat(byte UCID)
 {
 
-    string query = "SELECT rank, active, date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled FROM police WHERE username = '";
+    string query = "SELECT * FROM police WHERE username = '";
     query += players[UCID].UName;
     query += "';";
 
     DB_ROWS res = dbSelect(query);
-
-	cout << res.size() << endl;
 
     if ( res.size() > 0)
     {
@@ -1841,49 +1821,34 @@ void RCPolice::SaveCopStat(byte UCID)
 
 void RCPolice::Event()
 {
-    for( auto& p: ArestPlayers )
-    {
-        string PName;
-        byte UCID = 0;
-        PName = ArestPlayers[p.first].UName;
-
-        for (auto& pp: players)
-        {
-            if ( ArestPlayers[p.first].UName == players[pp.first].UName )
-            {
-                PName = ArestPlayers[pp.first].UName;
-                UCID = pp.first;
-                break;
-            }
-        }
-
-        if (time(NULL) > ArestPlayers[p.first].ArestTime)
-        {
-            ArestPlayers.erase(p.first);
-
-            char str[128];
-            sprintf(str, msg->_(UCID, "Reliaved"), PName.c_str());
-            SendMTC(255, str);
-            SendBFN(UCID, 210);
-            SendBFN(UCID, 211);
-
-            break;
-        }
-        else if (UCID != 0)
-        {
-            char str[10];
-            int TIME = ArestPlayers[p.first].ArestTime - time(NULL);
-            sprintf(str, "^1%02d:%02d", TIME / 60, TIME%60);
-            SendButton(255, UCID, 210, 130, 1, 10, 8, 32, str);
-            SendButton(255, UCID, 211, 120, 9, 20, 5, 32, msg->_(UCID, "YouUndArest"));
-        }
-    }
-
-
     for ( auto& play: players )
     {
         byte UCID = play.first;
         auto playr = play.second;
+
+        // Обработка арестованных игроков
+        if( ArestPlayers.find( playr.UName ) != ArestPlayers.end() )
+		{
+			if ( time(NULL) > ArestPlayers[ playr.UName ] )
+			{
+				ArestPlayers.erase( playr.UName );
+
+				char str[128];
+				sprintf(str, msg->_(UCID, "Reliaved"), playr.UName.c_str() );
+				SendMTC(255, str);
+				SendBFN(UCID, 210);
+				SendBFN(UCID, 211);
+
+			}
+			else
+			{
+				char str[10];
+				int TIME = ArestPlayers[ playr.UName ] - time(NULL);
+				sprintf(str, "^1%02d:%02d", TIME / 60, TIME%60);
+				SendButton(255, UCID, 210, 130, 1, 10, 8, 32, str);
+				SendButton(255, UCID, 211, 120, 9, 20, 5, 32, msg->_(UCID, "YouUndArest"));
+			}
+		}
 
         if ( playr.Pogonya == 1 )
         {
