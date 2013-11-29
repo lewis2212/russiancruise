@@ -359,6 +359,11 @@ void SaveAll()
 			save_car(&ginfo->players[j]);
 			save_user_cars(&ginfo->players[j]);
 
+			for( cl = classes.begin(); cl != classes.end(); ++cl )
+			{
+				(*cl)->Save( ginfo->players[j].UCID );
+			}
+
 			SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "3000" ));
 		}
 	}
@@ -373,6 +378,11 @@ void Save(byte UCID)
 		{
 			save_car(&ginfo->players[j]);
 			save_user_cars(&ginfo->players[j]);
+
+			for( cl = classes.begin(); cl != classes.end(); ++cl )
+			{
+				(*cl)->Save( UCID );
+			}
 
 			SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "3000" ));
 			break;
@@ -1097,9 +1107,6 @@ void case_mso ()
         out << ginfo->players[i].UName << " send !save" << endl;
 
         Save(ginfo->players[i].UCID);
-
-        SendMTC(ginfo->players[i].UCID, msg->_( ginfo->players[i].UCID, "3000" ));
-
     }
 
     if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
