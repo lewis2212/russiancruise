@@ -1715,7 +1715,7 @@ void case_mso ()
         ginfo->players[i].Zone = 1;
         bank->RemCash(ginfo->players[i].UCID, 500);
         bank->AddToBank(500);
-        taxi->taxi_loss(ginfo->players[i].UCID);
+        taxi->PassLoss(ginfo->players[i].UCID);
     }
     if ((strncmp(Msg, "!test", 5) == 0))
     {
@@ -1953,7 +1953,7 @@ void case_pen ()
             if (pack_pen->Reason == PENR_WRONG_WAY)
             {
 #ifdef _RC_TAXI_H
-                taxi->dead_pass(ginfo->players[i].UCID);
+                taxi->PassDead(ginfo->players[i].UCID);
 #endif
             }
 
