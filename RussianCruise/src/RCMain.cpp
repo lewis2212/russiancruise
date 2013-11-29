@@ -970,11 +970,14 @@ void case_mci ()
                     LastX=X;
                     LastY=Y;
                 }
-                float Dist = dl->Distance(X, Y, LastX, LastY);
+                float Dist = Dist = dl->Distance(X, Y, LastX, LastY);;
 
-                ginfo->players[j].Distance += Dist;
-                /** Bonus **/
-                ginfo->players[j].Bonus_dist += Dist;
+                if (Dist<50)
+                {
+                    ginfo->players[j].Distance += Dist;
+                    /** Bonus **/
+                    ginfo->players[j].Bonus_dist += Dist;
+                }
 
                 if ( S > 30 and dl->GetLVL(ginfo->players[j].UCID) < 20 )
                 {
@@ -1007,7 +1010,6 @@ void case_mci ()
                     char bonus_c[64];
                     sprintf(bonus_c, msg->_( ginfo->players[j].UCID, "1500" ), bonus);
                     SendMTC(ginfo->players[j].UCID, bonus_c);
-
                 }
 
                 /** Zones (PitSave, shop, etc) **/
