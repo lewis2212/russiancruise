@@ -69,7 +69,6 @@ int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RC
         return -1;
     }
 
-    inited = 1;
     return 0;
 }
 
@@ -275,7 +274,7 @@ void RCTaxi::Event()
     }
 }
 
-void RCTaxi::accept_user( byte UCID )
+void RCTaxi::PassAccept( byte UCID )
 {
     if ( players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].CanWork and
             ( players[UCID].WorkAccept == 0 or (players[UCID].WorkAccept == 2 and players[UCID].client_type == 3)))
@@ -346,7 +345,7 @@ void RCTaxi::accept_user( byte UCID )
     }
 }
 
-void RCTaxi::accept_user2(byte UCID)
+void RCTaxi::PassAccept2(byte UCID)
 {
     srand(time(NULL));
     lgh->OnRedFalse(UCID);
@@ -376,7 +375,7 @@ void RCTaxi::accept_user2(byte UCID)
 
 
     //удаляю маршала
-    delete_marshal( UCID );
+    DeleteMarshal( UCID );
 
     players[UCID].WorkPointDestinaion = DestPoint;
     players[UCID].WorkStreetDestinaion = DestStreet;
@@ -413,7 +412,7 @@ void RCTaxi::accept_user2(byte UCID)
         SendMTC(UCID, Msg);
         ButtonInfo(UCID, Btn);
         players[UCID].cf = 1;
-        accept_user(UCID);
+        PassAccept(UCID);
         return;
     }
 
@@ -440,7 +439,7 @@ void RCTaxi::accept_user2(byte UCID)
 void RCTaxi::InsimCNL( struct IS_CNL* packet )
 {
     //удаляю маршалов
-    delete_marshal( packet->UCID );
+    DeleteMarshal( packet->UCID );
     Save( packet->UCID );
     players.erase( packet->UCID );
     NumP --;
@@ -448,7 +447,7 @@ void RCTaxi::InsimCNL( struct IS_CNL* packet )
 
 void RCTaxi::InsimCPR( struct IS_CPR* packet )
 {
-    strcpy( players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].PName = packet->PName;
 }
 
 void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
@@ -463,7 +462,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
         {
             SendMTC(UCID, msg->_(UCID, "1303" ));
             players[UCID].CanWork=false;
-            delete_marshal(UCID);
+            DeleteMarshal(UCID);
             players[UCID].WorkAccept = 0;
             players[UCID].WorkPointDestinaion = 0;
             players[UCID].WorkStreetDestinaion = 0;
@@ -581,7 +580,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                             SendMTC(UCID, TaxiDialogs["client_4"][rand()%TaxiDialogs["client_4"].size()].c_str());
                             players[UCID].client_type = 1;
                             players[UCID].cf = 4;
-                            accept_user2(UCID);
+                            PassAccept2(UCID);
                             return;
                         }
 
@@ -594,7 +593,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     }
 
                     if (Speed < 5 and players[UCID].WorkAccept == 2)
-                        taxi_done( UCID ); //высадили
+                        PassDone( UCID ); //высадили
                 }
                 else
                 {
@@ -633,7 +632,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                 }
 
                 if (Dist < 5 and Speed < 5 and players[UCID].WorkAccept == 1)
-                    accept_user2( UCID ); // посадили
+                    PassAccept2( UCID ); // посадили
             }
             else
             {
@@ -710,7 +709,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     Z1=Z;
                 }
 
-                btn_stress( UCID );
+                BtnStress( UCID );
                 char d[128];
                 sprintf(d, "^7%0.0f ^Cм ", (Dist-(int)Dist%5));
 
@@ -733,7 +732,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                         players[UCID].StressOverCount = 0;
 
                     if (Speed < 5)
-                        taxi_done( UCID );
+                        PassDone( UCID );
                 }
             }
         }
@@ -741,18 +740,18 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
         memcpy( &players[UCID].Info , &pack_mci->Info[i] , sizeof( CompCar ) );
 
         /** thread xD **/
-        accept_user( UCID );
+        PassAccept( UCID );
         /** thread **/
     }
 }
 
-void RCTaxi::dead_pass(byte UCID)
+void RCTaxi::PassDead(byte UCID)
 {
     if (players[UCID].WorkAccept != 0
             and abs(ClientPoints[players[UCID].WorkPointDestinaion].X / 65536 - players[UCID].Info.X / 65536) < 5 )
     {
         //удаляем маршала
-        delete_marshal( UCID );
+        DeleteMarshal( UCID );
         players[UCID].WorkAccept = 0;
         players[UCID].WorkPointDestinaion = 0;
         players[UCID].WorkStreetDestinaion = 0;
@@ -805,7 +804,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             }
             SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog10"));
             //удаляю маршалов
-            delete_marshal( packet->UCID );
+            DeleteMarshal( packet->UCID );
 
             players[packet->UCID].WorkAccept = 0;
             players[packet->UCID].WorkPointDestinaion = 0;
@@ -863,7 +862,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog16"));
 
             //удаляю маршалов
-            delete_marshal( packet->UCID );
+            DeleteMarshal( packet->UCID );
 
             players[packet->UCID].WorkNow = 0;
             players[packet->UCID].WorkAccept = 0;
@@ -874,7 +873,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))
+    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0 and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom") )
     {
         strtok(Message, " ");
         char * uname = strtok(NULL, " ");
@@ -886,40 +885,38 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
 
         for ( auto& p: players )
-			if ( strcmp(uname, players[p.first].UName) == 0 )
+			if ( uname == players[p.first].UName )
 			{
-				char str[96];
-
-				sprintf(str,"^6| ^C^7Статистика работы в такси ^8%s ^7(^9%s^7)", players[p.first].PName, players[p.first].UName);
+				string str = StringFormat("^6| ^C^7Статистика работы в такси ^8%s ^7(^9%s^7)", players[p.first].PName.c_str(), players[p.first].UName.c_str());
 				SendMTC(packet->UCID, str);
 
 				if (players[p.first].Work == 0)
 				{
-					sprintf(str,"^6| ^C^7Не работает");
+					str ="^6| ^C^7Не работает";
 					SendMTC(packet->UCID, str);
 				}
 				else
                 {
                     if (players[p.first].WorkNow == 0)
                     {
-                        sprintf(str,"^6| ^C^7Не на вахте");
+                        str = "^6| ^C^7Не на вахте";
                         SendMTC(packet->UCID, str);
                     }
                     else
                     {
-                        sprintf(str,"^6| ^C^7Текущая занятость: %d", players[p.first].WorkAccept);
+                        str = StringFormat("^6| ^C^7Текущая занятость: %d", players[p.first].WorkAccept);
                         SendMTC(packet->UCID, str);
                     }
                 }
 
-				sprintf(str,"^6| ^C^7Всего отвез пассажиров: %d", players[p.first].PassCount);
+				str = StringFormat("^6| ^C^7Всего отвез пассажиров: %d", players[p.first].PassCount);
 				SendMTC(packet->UCID, str);
 				return;
 			}
 		SendMTC(packet->UCID, "^6| ^C^7Игрок не найден");
     }
 
-    if (strncmp(Message, "!points", strlen("!points")) == 0 and (strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Lexanom") == 0))
+    if (strncmp(Message, "!points", strlen("!points")) == 0 and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom" ))
     {
         if (StartPointsAdd == 0)
         {
@@ -946,28 +943,28 @@ void RCTaxi::InsimNCN( struct IS_NCN* packet )
         return;
     }
 
-    strcpy(players[packet->UCID].UName, packet->UName);
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].PName = packet->PName;
 
-    read_user( packet->UCID );
+    ReadUser( packet->UCID );
     NumP ++;
 }
 
 void RCTaxi::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
-    strcpy(players[packet->UCID].CName , packet->CName);
+    players[packet->UCID].CName = packet->CName;
 
-    if (strcmp(players[packet->UCID].CName, "MRT") == 0 or
-            strcmp(players[packet->UCID].CName, "UFR") == 0 or
-            strcmp(players[packet->UCID].CName, "XFR") == 0 or
-            //strcmp(players[packet->UCID].CName, "FXR") == 0 or
-            strcmp(players[packet->UCID].CName, "XRR") == 0 or
-            strcmp(players[packet->UCID].CName, "FZR") == 0 or
-            strcmp(players[packet->UCID].CName, "FBM") == 0 or
-            strcmp(players[packet->UCID].CName, "FOX") == 0 or
-            strcmp(players[packet->UCID].CName, "FO8") == 0 or
-            strcmp(players[packet->UCID].CName, "BF1") == 0)
+    if ( players[packet->UCID].CName == "MRT" or
+            players[packet->UCID].CName == "UFR" or
+            players[packet->UCID].CName == "XFR" or
+            //players[packet->UCID].CName == "FXR" or
+            players[packet->UCID].CName == "XRR" or
+            players[packet->UCID].CName == "FZR" or
+            players[packet->UCID].CName == "FBM" or
+            players[packet->UCID].CName == "FOX" or
+            players[packet->UCID].CName == "FO8" or
+            players[packet->UCID].CName == "BF1")
         players[packet->UCID].CanWork=false;
     else
         players[packet->UCID].CanWork=true;
@@ -975,7 +972,7 @@ void RCTaxi::InsimNPL( struct IS_NPL* packet )
     if (players[packet->UCID].WorkNow != 0 and !players[packet->UCID].CanWork)
     {
         SendMTC(packet->UCID, msg->_(packet->UCID, "TaxiDialog13"));
-        delete_marshal(packet->UCID);
+        DeleteMarshal(packet->UCID);
         players[packet->UCID].WorkAccept = 0;
         players[packet->UCID].WorkPointDestinaion = 0;
         players[packet->UCID].WorkStreetDestinaion = 0;
@@ -984,7 +981,7 @@ void RCTaxi::InsimNPL( struct IS_NPL* packet )
     }
 }
 
-void RCTaxi::taxi_loss(byte UCID)
+void RCTaxi::PassLoss(byte UCID)
 {
     if (players[UCID].WorkAccept == 2 or players[UCID].cf)
     {
@@ -1008,63 +1005,45 @@ void RCTaxi::taxi_loss(byte UCID)
 void RCTaxi::InsimPLP( struct IS_PLP* packet)
 {
     byte UCID = PLIDtoUCID[packet->PLID];
-    taxi_loss(UCID);
+    PassLoss(UCID);
 }
 
 void RCTaxi::InsimPLL( struct IS_PLL* packet )
 {
 
     byte UCID = PLIDtoUCID[packet->PLID];
-    taxi_loss(UCID);
+    PassLoss(UCID);
 
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCTaxi::read_user( byte UCID )
+void RCTaxi::ReadUser( byte UCID )
 {
-    char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-        players[UCID].Work= 0;
-        players[UCID].FiredPenalty= 0;
-        players[UCID].PenaltyCount = 0;
-        players[UCID].PassCount = 0;
-        Save( UCID );
-    }
-    else
-    {
-        ifstream readf (file, ios::in);
+	string query = StringFormat("SELECT * FROM taxi WHERE username = '%s'",players[UCID].UName.c_str());
 
-        while (readf.good())
-        {
-            char str[128];
-            readf.getline(str, 128);
-            if (strlen(str) > 0)
-            {
-                if (strncmp("Work=", str, strlen("Work="))==0)
-                    players[UCID].Work = atoi(str + strlen("Work="));
+	DB_ROWS res = dbSelect( query );
 
-                if (strncmp("FiredPenalty=", str, strlen("FiredPenalty="))==0)
-                    players[UCID].FiredPenalty= atoi(str + strlen("FiredPenalty="));
+	if( res.size() > 0 )
+	{
+		DB_ROW row = res.front();
 
-                if (strncmp("PenaltyCount=", str, strlen("PenaltyCount="))==0)
-                    players[UCID].PenaltyCount = atoi(str + strlen("PenaltyCount="));
+		players[UCID].Work = atoi( row["Work"].c_str() );
+		players[UCID].FiredPenalty= atoi( row["FiredPenalty"].c_str() );
+		players[UCID].PenaltyCount = atoi( row["PenaltyCount"].c_str() );
+		players[UCID].PassCount = atoi( row["PassCount"].c_str() );
+	}
+	else
+	{
+		players[UCID].Work= 0;
+		players[UCID].FiredPenalty= 0;
+		players[UCID].PenaltyCount = 0;
+		players[UCID].PassCount = 0;
+		Save( UCID );
+	}
 
-                if (strncmp("PassCount=", str, strlen("PassCount="))==0)
-                    players[UCID].PassCount = atoi(str + strlen("PassCount="));
-            }
-        }
-        readf.close();
-    }
-    FindClose(fff);
 }
 
-void RCTaxi::delete_marshal(byte UCID)
+void RCTaxi::DeleteMarshal(byte UCID)
 {
     ObjectInfo *obj = new ObjectInfo;
 	memset(obj, 0, sizeof( ObjectInfo ) );
@@ -1086,17 +1065,18 @@ void RCTaxi::delete_marshal(byte UCID)
 
 void RCTaxi::Save( byte UCID )
 {
-    char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCTaxi\\users\\%s.txt", RootDir, players[UCID].UName);
-    ofstream writef (file, ios::out);
-    writef << "Work=" << players[UCID].Work << endl;
-    writef << "FiredPenalty=" << players[UCID].FiredPenalty << endl;
-    writef << "PenaltyCount=" << players[UCID].PenaltyCount << endl;
-    writef << "PassCount=" << players[UCID].PassCount << endl;
-    writef.close();
+	string query = StringFormat("REPLACE INTO taxi (username, Work, FiredPenalty, PenaltyCount, PassCount) VALUES ('%s',%d,%d,%d,%d)",
+								players[UCID].UName.c_str(),
+								players[UCID].Work,
+								players[UCID].FiredPenalty,
+								players[UCID].PenaltyCount,
+								players[UCID].PassCount);
+
+	dbExec( query );
+
 }
 
-void RCTaxi::taxi_done( byte UCID )
+void RCTaxi::PassDone( byte UCID )
 {
     SendBFN(UCID, 206);
     SendBFN(UCID, 207);
@@ -1284,7 +1264,7 @@ void RCTaxi::InsimHLV( struct IS_HLV* packet )
     }
 }
 
-void RCTaxi::btn_stress( byte UCID )
+void RCTaxi::BtnStress( byte UCID )
 {
     struct IS_BTN pack;
     memset(&pack, 0, sizeof(struct IS_BTN));

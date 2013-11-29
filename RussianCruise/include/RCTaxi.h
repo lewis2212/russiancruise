@@ -42,12 +42,8 @@ struct Taxi_clients
 
 // Задаем структуру игрока
 
-struct TaxiPlayer
+struct TaxiPlayer: public GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    char    CName[3];              // Car Name
     byte    Zone;
 
     /** Work **/
@@ -110,9 +106,9 @@ private:
     map<string, map<int,string> >TaxiDialogs;
     map<byte, TaxiPlayer>players;     // Структура игроков
 
-    void accept_user( byte UCID );
-    void accept_user2( byte UCID );
-    void taxi_done( byte UCID );
+    void PassAccept( byte UCID );
+    void PassAccept2( byte UCID );
+    void PassDone( byte UCID );
 
     void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
     void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
@@ -127,13 +123,13 @@ private:
     void InsimAXM( struct IS_AXM* packet );
 
 
-    void read_user( byte UCID );
+    void ReadUser( byte UCID );
     void Save( byte UCID );
 
-    void delete_marshal( byte UCID );
+    void DeleteMarshal( byte UCID );
 
-    void btn_stress( byte UCID );
-    void btn_Dist( byte UCID , const char* Text);
+    void BtnStress( byte UCID );
+    void BtnDistanse( byte UCID , const char* Text);
 
 public:
 
@@ -143,15 +139,15 @@ public:
 
     // Основные функции класса
     int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
-    byte inited;
 
-    void dead_pass(byte UCID);
+
     void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
 
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     bool IfWork(byte UCID);
-    void taxi_loss(byte UCID);
+	void PassDead(byte UCID);
+    void PassLoss(byte UCID);
     void Event();
 
 
