@@ -38,7 +38,7 @@ Russian Cruise by TurboSnail
 #include "RCRoadSign.h"
 
 #include "RCQuest.h"
-#include "RCAutoschool.h"
+// #include "RCAutoschool.h"
 
 #define MAX_PLAYERS 32
 #define MAX_CARS 30
@@ -49,11 +49,11 @@ using namespace std;
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
 
-// Р”РµСЃРєСЂРёРїС‚РѕСЂ СЃРѕРµРґРёРЅРµРЅРёСЏ
+// Дескриптор соединения
 MYSQL rcMaindb, *rcMaindbConn;
-// Р”РµСЃРєСЂРёРїС‚РѕСЂ СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ С‚Р°Р±Р»РёС†С‹
+// Дескриптор результирующей таблицы
 MYSQL_RES *rcMainRes;
-// РњР°СЃСЃРёРІ РїРѕР»РµР№ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРё
+// Массив полей текущей строки
 MYSQL_ROW rcMainRow;
 
 
@@ -62,7 +62,7 @@ int     chek_users =0;
 
 CInsim *insim;
 
-ofstream  out;   // РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р» РґР»СЏ РїСЂРѕС‚РѕРєРѕР»Р° СЂР°Р±РѕС‚С‹ СЃРµСЂРІРёСЃР°
+ofstream  out;   // выходной файл для протокола работы сервиса
 
 char RootDir[MAX_PATH];
 char ServiceName[64];
