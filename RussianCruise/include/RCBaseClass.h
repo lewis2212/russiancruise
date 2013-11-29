@@ -1,4 +1,4 @@
-п»їusing namespace std;
+using namespace std;
 #ifndef RCBASECLASS_H
 #define RCBASECLASS_H
 
@@ -13,14 +13,16 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include <time.h>       // РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РІСЂРµРјРµРЅРµРј Рё СЂР°РЅРґРѕРјРѕРј
+#include <time.h>       // для работы с временем и рандомом
 
-#include <list>
-#include <exception>
-#include <map>
-#include <vector>
-#include <queue>
+// c++
 #include <algorithm>
+#include <exception>
+#include <list>
+#include <map>
+#include <memory>
+#include <queue>
+#include <vector>
 
 #include <direct.h>
 
@@ -31,13 +33,13 @@
 //#include "tools.h"
 #define MAX_PATH	260
 
-/**< РїРµСЂРµРјРµРЅРЅР°СЏ - РѕС‡РµСЂРµРґСЊ РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ */
+/**< переменная - очередь игровых объектов */
 typedef queue< ObjectInfo > ObjectsInfo;
 
-/**< РїРµСЂРµРјРµРЅРЅР°СЏ - Р°СЃРѕС†РёР°С‚РёРІРЅС‹Р№ РјР°СЃСЃРёРІ РІРёРґР° "РЅР°Р·РІР°РЅРёРµ РїРѕР»СЏ" -> "Р·РЅР°С‡РµРЅРёРµ РїРѕР»СЏ" */
+/**< переменная - асоциативный массив вида "название поля" -> "значение поля" */
 typedef map< string, string > DB_ROW;
 
-/**< РїРµСЂРµРјРµРЅРЅР°СЏ - РјР°СЃСЃРёРІ СЃРѕСЃС‚РѕСЏС‰РёР№ РёР· СЌР»РµРјРµРЅС‚РѕРІ DB_ROW */
+/**< переменная - массив состоящий из элементов DB_ROW */
 typedef list<DB_ROW> DB_ROWS;
 
 struct GlobalPlayer
@@ -56,8 +58,10 @@ public:
     RCBaseClass();
     ~RCBaseClass();
 
-    void         next_packet();   						// Р¤СѓРЅРєС†РёСЏ РїРµСЂРµР±РѕСЂРєРё С‚РёРїР° РїР°РєРµС‚Р°
-    virtual void InsimMCI( struct IS_MCI* packet );     	// РџР°РєРµС‚ СЃ РґР°РЅРЅС‹РјРё Рѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… Рё С‚.Рґ.
+    void         next_packet();   						// Функция переборки типа пакета
+    virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
+
+    virtual void Save(byte UCID){};
 
     void SendBFN(byte UCID, byte ClickID);
     void SendBFNAll ( byte UCID );
@@ -78,46 +82,46 @@ public:
 
     static void CCText(string Text);
 
-    /** @brief РџРѕР»СѓС‡РµРЅРёРµ РїСЂРёС‡РёРЅС‹ РѕС‚РєР»СЋС‡РµРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃ СЃРµСЂРІРµСЂР°
+    /** @brief Получение причины отключения пользователя с сервера
      *
-     * @param  byte Reason - Р§РёСЃР»РѕРІРѕР№ РёРЅРґРµС‚РёС„РёРєР°С‚РѕСЂ РєРѕРґР°
-     * @return static const char* - Р‘СѓРєРІРµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РєРѕРґР°
+     * @param  byte Reason - Числовой индетификатор кода
+     * @return static const char* - Буквенное значение кода
      *
      */
     static const char* GetReason(byte Reason);
 
-    /** @brief Р”РѕР±Р°РІР»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ РЅР° РєР°СЂС‚Сѓ.
-     *			РџРµСЂРµРґ РІС‹Р·РѕРІРѕРј РјРµС‚РѕРґР°, РґРѕР±Р°РІР»СЏРµРјС‹Рµ РѕР±СЉРµРєС‚С‹ РЅРµРѕР±С…РѕРґРёРјРѕ РґРѕР±Р°РІРёС‚СЊ РІ РѕС‡РµСЂРµРґСЊ addObjects,
-     *			РёСЃРїРѕР»СЊР·СѓСЏ РјРµС‚РѕРґ addObjects.push( ObjectInfo object )
+    /** @brief Добавление объектов на карту.
+     *			Перед вызовом метода, добавляемые объекты необходимо добавить в очередь addObjects,
+     *			используя метод addObjects.push( ObjectInfo object )
      *
-     * @return void - РЅРёС‡РµРіРѕ
+     * @return void - ничего
      *
      */
     void AddObjects();
 
-    /** @brief РЈРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ РЅР° РєР°СЂС‚Рµ.
-     *			РџРµСЂРµРґ РІС‹Р·РѕРІРѕРј РјРµС‚РѕРґР°, СѓРґР°Р»СЏРµРјС‹Рµ РѕР±СЉРµРєС‚С‹ РЅРµРѕР±С…РѕРґРёРјРѕ РґРѕР±Р°РІРёС‚СЊ РІ РѕС‡РµСЂРµРґСЊ delObjects,
-     *			РёСЃРїРѕР»СЊР·СѓСЏ РјРµС‚РѕРґ delObjects.push( ObjectInfo object )
+    /** @brief Удаление объектов на карте.
+     *			Перед вызовом метода, удаляемые объекты необходимо добавить в очередь delObjects,
+     *			используя метод delObjects.push( ObjectInfo object )
      *
-     * @return void - РЅРёС‡РµРіРѕ
+     * @return void - ничего
      *
      */
 	void DelObjects();
 
-	/** @brief Р”РѕР±Р°РІР»РµРЅРёРµ РѕР±СЉРµРєС‚Р° РЅР° РєР°СЂС‚Сѓ.
+	/** @brief Добавление объекта на карту.
 	 *
-     * @param  ObjectInfo *object - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃС‚СЂСѓРєС‚СѓСЂСѓ РѕР±СЉРµРєС‚Р°
+     * @param  ObjectInfo *object - указатель на структуру объекта
      *
-     * @return void - РЅРёС‡РµРіРѕ
+     * @return void - ничего
      *
      */
 	void AddObject( ObjectInfo *object );
 
-	/** @brief РЈРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚Р° СЃ РєР°СЂС‚С‹
+	/** @brief Удаление объекта с карты
 	 *
-     * @param  ObjectInfo *object - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃС‚СЂСѓРєС‚СѓСЂСѓ РѕР±СЉРµРєС‚Р°
+     * @param  ObjectInfo *object - указатель на структуру объекта
      *
-     * @return void - РЅРёС‡РµРіРѕ
+     * @return void - ничего
      *
      */
 	void DelObject( ObjectInfo *object );
@@ -129,19 +133,21 @@ public:
 	static string ToString (double d);
 	static string ToString (const char *c);
 
-	inline string trim(const std::string &s);
+	inline string Trim(const string &s);
+
+	static string StringFormat(const string fmt_str, ...);
 
 protected:
-    CInsim      *insim;         	// РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ CInsim
-    char        RootDir[MAX_PATH]; 	// РџРѕР»РЅС‹Р№ РїСѓС‚СЊ РґРѕ РїР°РїРєРё СЃ РїСЂРѕРіСЂР°РјРјРѕР№
+    CInsim      *insim;         	// Переменная-указатель на класс CInsim
+    char        RootDir[MAX_PATH]; 	// Полный путь до папки с программой
     map< byte, byte >PLIDtoUCID;
 
 
     ObjectsInfo addObjects;
-    /**< РѕС‡РµСЂРµРґСЊ РѕР±СЉРµРєС‚РѕРІ РґР»СЏ РёС… РґРѕР±Р°РІР»РµРЅРёСЏ РЅР° РєР°СЂС‚Сѓ */
+    /**< очередь объектов для их добавления на карту */
 
     ObjectsInfo delObjects;
-    /**< РѕС‡РµСЂРµРґСЊ РѕР±СЉРµРєС‚РѕРІ РґР»СЏ РёС… СѓРґР°Р»РµРЅРёСЏ СЃ РєР°СЂС‚С‹ */
+    /**< очередь объектов для их удаления с карты */
 
     virtual void InsimACR( struct IS_ACR* packet ){}
     virtual void InsimAXM( struct IS_AXM* packet ){}
@@ -178,35 +184,33 @@ protected:
     virtual void InsimVTN( struct IS_VTN* packet ){}
 
     virtual void readconfig(const char *Track){};
-    virtual void Save(byte UCID){};
-
 
     //MYSQL
     MYSQL       *dbconn;
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
-    /** @brief Р’С‹Р±РѕСЂРєР° РґР°РЅРЅС‹С… РёР· Р±Р°Р·С‹ РґР°РЅРЅС‹С…
+    /** @brief Выборка данных из базы данных
 	 *
-	 * @param string query - СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ SQL РєРѕРјР°РЅРґР°
-	 * @return DB_ROWS - РјР°СЃСЃРёРІ СЌР»РµРјРµРЅС‚РѕРІ DB_ROW
+	 * @param string query - стандартная SQL команда
+	 * @return DB_ROWS - массив элементов DB_ROW
 	 *
 	 */
 	DB_ROWS dbSelect( string query );
 
-	/** @brief Р’С‹РїРѕР»РЅРµРЅРёРµ SQL Р·Р°РїСЂРѕСЃР°, РєРѕС‚РѕСЂС‹Р№ РЅРµ РІРѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ (РѕР±РЅРѕРІР»РµРЅРёРµ СЃС‚СЂРѕРє, СЃР»СѓР¶РµР±РЅС‹Рµ Р·Р°РїСЂРѕСЃС‹)
+	/** @brief Выполнение SQL запроса, который не возвращает данные (обновление строк, служебные запросы)
 	 *
-	 * @param string query - СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ SQL РєРѕРјР°РЅРґР°
-	 * @return bool - СЂРµР·СѓР»СЊС‚Р°С‚ С„СѓРЅРєС†РёРё mysql_query()
+	 * @param string query - стандартная SQL команда
+	 * @return bool - результат функции mysql_query()
 	 *
 	 */
 	bool dbExec( string query );
 	bool dbExec( const char *query );
 
-	/** @brief Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ Р±Р°Р·Сѓ
+	/** @brief Добавление данных в базу
 	 *
-	 * @param string query - СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ SQL РєРѕРјР°РЅРґР°
-	 * @return unsigned int - ID РїРѕСЃР»РµРґРЅРµР№ РґРѕР±Р°РІР»РµРЅРѕР№ СЃС‚СЂРѕРєРё, РµСЃР»Рё РµСЃС‚СЊ PRIMARY KEY (СЂРµР·СѓР»СЊС‚Р°С‚ Р·Р°РїСЂРѕСЃР° SELECT LAST_INSERT_ID();)
+	 * @param string query - стандартная SQL команда
+	 * @return unsigned int - ID последней добавленой строки, если есть PRIMARY KEY (результат запроса SELECT LAST_INSERT_ID();)
 	 *
 	 */
 	unsigned int dbInsert( string query );
@@ -222,13 +226,13 @@ private:
 
 class SplitString : public string
 {
-    std::vector<string> flds;
+    vector<string> flds;
 public:
     SplitString(char *s) : string(s) { };
     SplitString(const char *s) : string(s) { };
     SplitString(string s) : string(s) { };
     SplitString() : string() { };
-    std::vector<string>& split( const char delim, int rep=0);
+    vector<string>& split( const char delim, int rep=0);
 };
 
 #endif // RCBASECLASS_H
