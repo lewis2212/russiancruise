@@ -49,8 +49,8 @@ struct TaxiPlayer: public GlobalPlayer
     /** Work **/
     bool 	CanWork;
     bool 	HandUp;
-    int 	spd;
-    int 	client_type;
+    int 	OverSpeedCount;		// счетчик превышения скорости для нервного пассажира
+    int 	ClientType;
     int		cf = 0;
 
     int		AcceptTime;
@@ -64,6 +64,7 @@ struct TaxiPlayer: public GlobalPlayer
     bool    OnStreet;
     bool    InPasZone;
     byte    WorkNow;
+
     int     Work;
     int     FiredPenalty;
     int     PenaltyCount;
