@@ -250,7 +250,7 @@ void RCTaxi::Event()
     {
         byte UCID = play.first;
 
-        if (players[UCID].client_type == 2 and players[UCID].WorkAccept == 2)
+        if (players[UCID].ClientType == 2 and players[UCID].WorkAccept == 2)
 		{
 			if (players[UCID].PassStress <= 800)
 			{
@@ -277,7 +277,7 @@ void RCTaxi::Event()
 void RCTaxi::PassAccept( byte UCID )
 {
     if ( players[UCID].Work == 1 and players[UCID].WorkNow == 1 and players[UCID].CanWork and
-            ( players[UCID].WorkAccept == 0 or (players[UCID].WorkAccept == 2 and players[UCID].client_type == 3)))
+            ( players[UCID].WorkAccept == 0 or (players[UCID].WorkAccept == 2 and players[UCID].ClientType == 3)))
     {
         if (players[UCID].AcceptTime >= time(&acctime))
 			return;
@@ -307,10 +307,10 @@ void RCTaxi::PassAccept( byte UCID )
 			Sleep(100);
 		}
 
-        if (players[UCID].client_type == 0)
-            players[UCID].client_type = count - (int)sqrt(rand()%(count * count));
+        if (players[UCID].ClientType == 0)
+            players[UCID].ClientType = count - (int)sqrt(rand()%(count * count));
         else
-            players[UCID].client_type = 1;
+            players[UCID].ClientType = 1;
 
         players[UCID].WorkPointDestinaion = DestPoint;
         players[UCID].WorkStreetDestinaion = ClientPoints[DestPoint].StreetId; //улица назначения
@@ -386,7 +386,7 @@ void RCTaxi::PassAccept2(byte UCID)
 
     if (players[UCID].cf == 1 or players[UCID].cf == 4)
 		players[UCID].PassStress -= 100;
-	else if (players[UCID].client_type == 2)
+	else if (players[UCID].ClientType == 2)
         players[UCID].PassStress = rand()%300;
     else
 		players[UCID].PassStress = rand()%500;
@@ -396,16 +396,16 @@ void RCTaxi::PassAccept2(byte UCID)
 
     sprintf(Btn, msg->_(UCID,"TaxiAccept2"), street->GetStreetName(UCID, StreetInfo.StreetID));
 
-    if (players[UCID].client_type == 1)
+    if (players[UCID].ClientType == 1)
         sprintf(Msg, TaxiDialogs["client_1"][rand()%TaxiDialogs["client_1"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
 
-    if (players[UCID].client_type == 2)
+    if (players[UCID].ClientType == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
 		players[UCID].WorkTime = time(NULL) + 70 + (int)rand()%40;
 	}
 
-    if (players[UCID].client_type == 3)
+    if (players[UCID].ClientType == 3)
     {
         sprintf(Msg, TaxiDialogs["client_3"][rand()%TaxiDialogs["client_3"].size()].c_str());
 
@@ -416,17 +416,17 @@ void RCTaxi::PassAccept2(byte UCID)
         return;
     }
 
-    if (players[UCID].client_type == 4)
+    if (players[UCID].ClientType == 4)
         sprintf(Msg, TaxiDialogs["client_1"][rand()%TaxiDialogs["client_1"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
 
-	if (players[UCID].client_type == 5)
+	if (players[UCID].ClientType == 5)
 	{
 		players[UCID].cf = 2;
         sprintf(Msg, TaxiDialogs["client_5"][rand()%TaxiDialogs["client_5"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
         players[UCID].PassStress = 500;
 	}
 
-	if (players[UCID].cf == 1 and players[UCID].client_type == 1)
+	if (players[UCID].cf == 1 and players[UCID].ClientType == 1)
     {
         sprintf(Msg, TaxiDialogs["client_31"][rand()%TaxiDialogs["client_31"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
         players[UCID].cf = 1;
@@ -498,19 +498,19 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                 struct streets StreetInfo;
                 memset(&StreetInfo, 0, sizeof(streets));
                 street->CurentStreetInfoByNum(&StreetInfo, street->CurentStreetNum( UCID ));
-                if (players[UCID].client_type != 2 and Speed>(StreetInfo.SpeedLimit + 10) and players[UCID].PassStress <= 800)
+                if (players[UCID].ClientType != 2 and Speed>(StreetInfo.SpeedLimit + 10) and players[UCID].PassStress <= 800)
                 {
-                    if (players[UCID].spd==5)
-                        players[UCID].spd=0;
+                    if (players[UCID].OverSpeedCount==5)
+                        players[UCID].OverSpeedCount=0;
 
-                    if (players[UCID].spd==0)
+                    if (players[UCID].OverSpeedCount==0)
                         SendMTC(UCID,  TaxiDialogs["speed"][ rand()%TaxiDialogs["speed"].size() ].c_str() ); // превышаешь скорость
 
-                    players[UCID].spd++;
+                    players[UCID].OverSpeedCount++;
                     players[UCID].PassStress += Speed-StreetInfo.SpeedLimit + 10;
                 }
 
-                if (players[UCID].client_type != 2 and lgh->CheckOnRed(UCID))
+                if (players[UCID].ClientType != 2 and lgh->CheckOnRed(UCID))
                 {
                     SendMTC(UCID,  TaxiDialogs["redlight"][ rand()%TaxiDialogs["redlight"].size() ].c_str() ); // красный светофор
                     players[UCID].PassStress += 200;
@@ -575,10 +575,10 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
                     if (players[UCID].WorkAccept == 2 and players[UCID].PassStress <= 800)
                     {
-                        if (players[UCID].client_type == 4)
+                        if (players[UCID].ClientType == 4)
                         {
                             SendMTC(UCID, TaxiDialogs["client_4"][rand()%TaxiDialogs["client_4"].size()].c_str());
-                            players[UCID].client_type = 1;
+                            players[UCID].ClientType = 1;
                             players[UCID].cf = 4;
                             PassAccept2(UCID);
                             return;
@@ -694,7 +694,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                 int K = (int)sqrt(abs((dD-dH) * (1 + dA) * dS)) / 8;
 
 				int coef = 1;
-				if (players[UCID].client_type == 5)
+				if (players[UCID].ClientType == 5)
 					coef = 5;
 
                 players[UCID].PassStress += K * coef;
@@ -784,12 +784,19 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
                 SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog6"));
                 return;
             }
-            /** DO SOME CODE **/
-            if (players[packet->UCID].Work !=0)
+
+            if (players[packet->UCID].Work != 0)
             {
                 SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog7"));
                 return;
             }
+
+            if (players[UCID].FiredPenalty > time(NULL))
+			{
+				int PenaltyTime = ( players[UCID].FiredPenalty - time(NULL) ) / 60;
+				SendMTC(packet->UCID, StringFormat( msg->_(UCID, "TaxiFiredPenalty" ), PenaltyTime) );
+                return;
+			}
 
             SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog8"));
             players[packet->UCID].Work = 1;
@@ -840,6 +847,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
                 SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog13"));
                 return;
             }
+
             players[packet->UCID].AcceptTime = time(NULL) + PASSANGER_INTERVAL / (NumP + 1);
             players[packet->UCID].WorkNow = 1;
             SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog14"));
@@ -991,7 +999,7 @@ void RCTaxi::PassLoss(byte UCID)
         SendBFN(UCID, 212);
         ClearButtonInfo(UCID);
         players[UCID].cf = 0;
-        players[UCID].client_type = 0;
+        players[UCID].ClientType = 0;
         players[UCID].AcceptTime = time(NULL) + rand()%PASSANGER_INTERVAL / (NumP + 1);
         players[UCID].WorkAccept = 0;
         players[UCID].WorkPointDestinaion = 0;
@@ -1100,13 +1108,27 @@ void RCTaxi::PassDone( byte UCID )
     }
     else
     {
+    	players[UCID].PenaltyCount++;
         srand (time(NULL));
         SendMTC(UCID, TaxiDialogs["exit"][ rand()%TaxiDialogs["exit"].size() ].c_str() ); // send random dialog phrase
+
+        if( players[UCID].PenaltyCount % 3 == 0 )
+		{
+			players[UCID].FiredPenalty = time(NULL) + 60 * players[UCID].PenaltyCount;
+
+			players[UCID].WorkAccept = 0;
+            players[UCID].WorkPointDestinaion = 0;
+            players[UCID].WorkStreetDestinaion = 0;
+            players[UCID].StressOverCount = 0;
+            players[UCID].PassStress = 0;
+            players[UCID].WorkNow = 0;
+            players[UCID].Work = 0;
+		}
     }
 
 	ClearButtonInfo(UCID);
     players[UCID].cf = 0;
-    players[UCID].client_type = 0;
+    players[UCID].ClientType = 0;
     players[UCID].AcceptTime = time(NULL) + rand()%PASSANGER_INTERVAL / (NumP + 1);
     players[UCID].WorkAccept = 0;
     players[UCID].WorkPointDestinaion = 0;
@@ -1125,7 +1147,7 @@ void RCTaxi::InsimCON( struct IS_CON* packet )
     time_t now = time(NULL);
 
     int coef = 10;
-    if (players[UCIDA].client_type == 5 or players[UCIDB].client_type == 5)
+    if (players[UCIDA].ClientType == 5 or players[UCIDB].ClientType == 5)
         coef = 30;
 
     if ((players[ UCIDA ].WorkAccept == 2 or players[UCIDA].cf) and (now - players[UCIDA].LastT) > 1)
@@ -1163,7 +1185,7 @@ void RCTaxi::InsimOBH( struct IS_OBH* packet )
     if (players[UCID].WorkAccept == 2 or players[UCID].cf)
     {
         int coef = 1;
-        if (players[UCID].client_type == 5)
+        if (players[UCID].ClientType == 5)
             coef = 5;
 
         if ((packet->Index==128 or packet->Index==129) and packet->SpClose>50)
@@ -1252,7 +1274,7 @@ void RCTaxi::InsimHLV( struct IS_HLV* packet )
         players[UCID].LastT = now;
 
         int coef = 10;
-        if (players[UCID].client_type == 5)
+        if (players[UCID].ClientType == 5)
             coef = 30;
 
         if (players[UCID].WorkAccept == 2 or players[UCID].cf)
