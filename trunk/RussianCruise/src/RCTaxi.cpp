@@ -1123,6 +1123,8 @@ void RCTaxi::PassDone( byte UCID )
             players[UCID].PassStress = 0;
             players[UCID].WorkNow = 0;
             players[UCID].Work = 0;
+
+            SendMTC(UCID, msg->_(UCID,"TaxiDialog10") );
 		}
     }
 
