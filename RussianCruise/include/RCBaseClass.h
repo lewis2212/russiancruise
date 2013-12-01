@@ -216,6 +216,9 @@ protected:
 	unsigned int dbInsert( string query );
 	unsigned int dbInsert( const char *query );
 
+	bool dbUpdate( string table, DB_ROW fields, pair<string, string> where );
+	bool dbUpdate( string table, DB_ROW fields, pair<string, int> where );
+
 	Json::Value 		config;
 	Json::Reader 		configReader;
 	Json::StyledWriter 	configWriter;

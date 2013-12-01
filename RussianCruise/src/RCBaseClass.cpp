@@ -331,7 +331,7 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte
     delete pack;
 }
 
-list<DB_ROW>
+DB_ROWS
 RCBaseClass::dbSelect( string query )
 {
 	list<DB_ROW> out;
@@ -494,6 +494,27 @@ RCBaseClass::dbExec( const char *query )
 		return false;
 	}
 	return true;
+}
+
+
+bool
+RCBaseClass::dbUpdate( string table, DB_ROW fields, pair<string, string> where )
+{
+    string query = "UPDATE " + table + " SET ";
+
+    bool first = true;
+    for( auto row: fields )
+    {
+        if( !first )
+        {
+            query += ", ";
+        }
+
+        //query +=
+    }
+
+
+
 }
 
 inline string
