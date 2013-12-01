@@ -5,7 +5,6 @@ namespace tools
 
 void log(const char *text)
 {
-
     FILE *file;
 
     file = fopen("C:\\cruise.log", "a");
