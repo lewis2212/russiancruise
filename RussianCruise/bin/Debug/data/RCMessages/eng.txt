@@ -171,7 +171,7 @@ NoTofuWhWork	"^3| ^7You can't order a tofu because you work here"
 4103 			"^3| ^7Need level ^1below 20"
 4104 			"^3| ^7No positions available"
 
-4200 			"^3|^7 Deliver order %s, %s"
+4200 			"^7Deliver order %s, %s"
 4201 			"^3|^7 Deliver custom player %s"
 4202 			"^3|^7 Take first this order"
 4203 			"^3|^7 Wait until I call you"

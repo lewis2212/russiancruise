@@ -86,7 +86,7 @@ tofu_box10
 -42,-356
 
 point
-tofu_guyonpark
+tofu_gayonpark
 -229,-449
 
 point
