@@ -708,7 +708,7 @@ void RCBank::BtnCash (byte UCID)
     }
 }
 
-void RCBank::readconfig(const char *Track)
+void RCBank::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCBank\\tracks\\%s.txt", RootDir, Track);

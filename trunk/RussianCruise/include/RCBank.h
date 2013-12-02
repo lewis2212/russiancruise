@@ -65,7 +65,7 @@ public:
 
     // Основные функции класса
     int init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL);
-    void readconfig(const char *Track);
+    void ReadConfig(const char *Track);
     void Save(byte UCID);
 
     void credit_penalty(byte UCID);

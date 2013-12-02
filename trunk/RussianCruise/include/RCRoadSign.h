@@ -39,13 +39,13 @@ private:
     map<byte, RoadPlayer> players;
 
 
-    void InsimNCN(struct IS_NCN* packet);   // РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-    void InsimNPL(struct IS_NPL* packet);   // РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-    void InsimPLP(struct IS_PLP* packet);   // РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-    void InsimPLL(struct IS_PLL* packet);   // РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-    void InsimCNL(struct IS_CNL* packet);   // РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-    void InsimCPR(struct IS_CPR* packet);   // РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-    void InsimMSO(struct IS_MSO* packet);   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+    void InsimNCN(struct IS_NCN* packet);   // Новый игрок зашел на сервер
+    void InsimNPL(struct IS_NPL* packet);   // Игрок вышел из боксов
+    void InsimPLP(struct IS_PLP* packet);   // Игрок ушел в боксы
+    void InsimPLL(struct IS_PLL* packet);   // Игрок ушел в зрители
+    void InsimCNL(struct IS_CNL* packet);   // Игрок ушел с сервера
+    void InsimCPR(struct IS_CPR* packet);   // Игрок переименовался
+    void InsimMSO(struct IS_MSO* packet);   // Игрок отправил сообщение
 
     void ShowSign(byte UCID, byte ID, byte Count);
 

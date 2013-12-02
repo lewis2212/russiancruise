@@ -54,7 +54,7 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
     else return "NULL";
 }
 
-void RCStreet::readconfig(const char *Track)
+void RCStreet::ReadConfig(const char *Track)
 {
     char file[255];
     sprintf(file, "%s\\data\\RCStreet\\tracks\\%s.txt", RootDir, Track);

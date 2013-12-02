@@ -2,11 +2,8 @@
 #include <version.h>
 #include "tools.h"
 
-int ok = 1;
 GlobalInfo *ginfo;
 
-struct IS_VER pack_ver;
-word	isf_flag;
 
 #ifdef _RC_PIZZA_H
 RCPizza *pizza;
@@ -189,15 +186,6 @@ int GetCarID(char *CarName)
     return 0;
 }
 
-user_car AddUserCar(const char *car = "UF1", float dist =0, int tuning = 0)
-{
-    user_car c;
-    strcpy(c.car, car);
-    c.dist = dist;
-    c.tuning = tuning;
-    return c;
-}
-
 cars AddCar(int id = 0, const char *car = "UF1", int cash =0, int sell = 0, unsigned PLC = 0)
 {
     cars c;
@@ -219,7 +207,7 @@ void read_words()
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        out << "Can't find " << file << endl;
+        cout << "Can't find " << file << endl;
         return;
     }
     fclose(fff);
@@ -336,7 +324,7 @@ void read_user_cars(struct player *splayer)
 void save_car (struct player *splayer)
 {
 
-    out <<splayer->UName << " save " << splayer->CName << " info" << endl;
+    cout <<splayer->UName << " save " << splayer->CName << " info" << endl;
 
     for (int i=0; i<MAX_CARS; i++)
     {
@@ -462,17 +450,17 @@ void help_cmds (struct player *splayer, int h_type)
 
 void btn_info (struct player *splayer, int b_type)
 {
-    char about_text[10][100];
-    sprintf(about_text[0], "^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME);
-    strncpy(about_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov", 99);
-    strncpy(about_text[2], "^C^7Jabber: denis-kostin@jabber.ru", 99);
-    strncpy(about_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru", 99);
-    strncpy(about_text[4], "^7", 99);
-    strncpy(about_text[5], "^C^7More information", 99);
-    strncpy(about_text[6], "^C^7http://vk.com/russiancruise", 99);
-    strncpy(about_text[7], "^7", 99);
-    strncpy(about_text[8], "^C^7Thanks:", 99);
-    strncpy(about_text[9], "^C^3repeat, nose, R.Ratzinger", 99);
+    char abcout_text[10][100];
+    sprintf(abcout_text[0], "^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME);
+    strncpy(abcout_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov", 99);
+    strncpy(abcout_text[2], "^C^7Jabber: denis-kostin@jabber.ru", 99);
+    strncpy(abcout_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru", 99);
+    strncpy(abcout_text[4], "^7", 99);
+    strncpy(abcout_text[5], "^C^7More information", 99);
+    strncpy(abcout_text[6], "^C^7http://vk.com/russiancruise", 99);
+    strncpy(abcout_text[7], "^7", 99);
+    strncpy(abcout_text[8], "^C^7Thanks:", 99);
+    strncpy(abcout_text[9], "^C^3repeat, nose, R.Ratzinger", 99);
 
     char Text[128];
 
@@ -481,7 +469,7 @@ void btn_info (struct player *splayer, int b_type)
 #ifdef _RC_POLICE_H
     if (b_type == 2) c=police->GetFineCount();	//количество строк для 2 вкладки
 #endif
-    if (b_type == 3) c=sizeof(about_text)/100;	//да, да, ты угадал
+    if (b_type == 3) c=sizeof(abcout_text)/100;	//да, да, ты угадал
     byte
     UCID = splayer->UCID,
     id=134, 			//стартовый ид кнопок
@@ -539,7 +527,7 @@ void btn_info (struct player *splayer, int b_type)
 
     if (b_type == 3)
         for (int i=0; i<c; i++)
-            SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, about_text[i]);
+            SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, abcout_text[i]);
 
     for (int i=id; i<165; i++)
         SendBFN(UCID, i);
@@ -807,7 +795,7 @@ void case_btt ()
                         {
                             if (bank->GetCash(ginfo->players[i].UCID) > atoi(pack_btt->Text))
                             {
-                                out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
+                                cout << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
 
                                 char Msg[126];
                                 sprintf(Msg, msg->_(ginfo->players[i].UCID, "GetMoney" ), ginfo->players[i].PName, atoi(pack_btt->Text));
@@ -843,7 +831,7 @@ void case_btt ()
                     {
                         if (strlen(pack_btt->Text) > 0)
                         {
-                            out << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
+                            cout << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                             char Msg[128];
                             sprintf(Msg, msg->_( ginfo->players[g].UCID, "MsgFrom" ), ginfo->players[i].PName, pack_btt->Text );
                             SendMTC(ginfo->players[g].UCID, Msg);
@@ -908,7 +896,7 @@ void case_cpr ()
     {
         if (ginfo->players[i].UCID == pack_cpr->UCID)
         {
-            out << ginfo->players[i].PName << " rename to " << pack_cpr->PName << endl;
+            cout << ginfo->players[i].PName << " rename to " << pack_cpr->PName << endl;
             strcpy(ginfo->players[i].PName, pack_cpr->PName);
             break;
         }
@@ -1080,17 +1068,20 @@ void case_mso ()
             SendBFN(ginfo->players[i].UCID, j);
         }
         btn_info(&ginfo->players[i], 1);
+        return;
     }
 
     if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
     {
-        out << ginfo->players[i].UName << " send !help" << endl;
+        cout << ginfo->players[i].UName << " send !help" << endl;
         help_cmds(&ginfo->players[i], 1);
+        return;
     }
     if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
     {
-        out << ginfo->players[i].UName << " send !cars" << endl;
+        cout << ginfo->players[i].UName << " send !cars" << endl;
         help_cmds(&ginfo->players[i], 2);
+        return;
     }
 
     //!save
@@ -1106,9 +1097,10 @@ void case_mso ()
         }
         ginfo->players[i].LastSave = now;
 
-        out << ginfo->players[i].UName << " send !save" << endl;
+        cout << ginfo->players[i].UName << " send !save" << endl;
 
         Save(ginfo->players[i].UCID);
+        return;
     }
 
     if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
@@ -1123,7 +1115,7 @@ void case_mso ()
         FILE *fff = fopen(file, "r");
         if (fff == nullptr)
         {
-            out << "Can't find " << file << endl;
+            cout << "Can't find " << file << endl;
             return;
         }
         fclose(fff);
@@ -1185,6 +1177,7 @@ void case_mso ()
             }
         }
         readf.close();
+        return;
     }
 
     //!show
@@ -1260,6 +1253,7 @@ void case_mso ()
 
         sprintf(Text, "/msg ^1------------------------------");
         SendMST(Text);
+        return;
     }
     //!tunning
 
@@ -1652,20 +1646,24 @@ void case_mso ()
 		SaveAll();
 
         ok=0;
+
+        return;
     }
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
 
-        struct IS_TINY *pack_requests;
+        IS_TINY *pack_requests = new IS_TINY;
         memset(pack_requests, 0, sizeof(struct IS_TINY));
         pack_requests->Size = sizeof(struct IS_TINY);
         pack_requests->Type = ISP_TINY;
         pack_requests->ReqI = 255;
         pack_requests->SubT = TINY_RST;
         insim->send_packet(pack_requests);
-        delete pack_requests;
+        pack_requests;
+
+        return;
     }
 
     if (strncmp(Msg, "!debug", 7) == 0)
@@ -1679,6 +1677,8 @@ void case_mso ()
 #endif
             ginfo->players[i].Svetofor = 0;
         }
+
+        return;
     }
 
     if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
@@ -1718,14 +1718,21 @@ void case_mso ()
         bank->RemCash(ginfo->players[i].UCID, 500);
         bank->AddToBank(500);
         taxi->PassLoss(ginfo->players[i].UCID);
+
+        return;
     }
     if ((strncmp(Msg, "!test", 5) == 0))
     {
+    	return;
     }
 
     //!users
     if ((strncmp(Msg, "!users", 6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
-        ShowUsersList(ginfo->players[i].UCID);
+	{
+		ShowUsersList(ginfo->players[i].UCID);
+		return;
+	}
+
 
 }
 
@@ -2035,7 +2042,7 @@ void case_pll ()
 
 void case_plp ()
 {
-    // out << "player leaves race" << endl;
+    // cout << "player leaves race" << endl;
     int i;
 
     struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
@@ -2161,7 +2168,7 @@ int core_connect(void *pack_ver)
 
     if (insim->init (ginfo->IP, ginfo->TCPPORT, IS_PRODUCT_NAME, ginfo->ADMIN, pack_v, '!', isf_flag, 500, ginfo->UDPPORT) < 0)
     {
-        out << "\n * Error during initialization * " << endl;
+        cout << "\n * Error during initialization * " << endl;
         return -1;
     }
 
@@ -2189,7 +2196,7 @@ int core_reconnect(void *pack_ver)
 {
     insim->isclose();
 
-    out << "wait 1 minute and reconnect \n";
+    cout << "wait 1 minute and reconnect \n";
 
     Sleep(60000);
 
@@ -2198,7 +2205,7 @@ int core_reconnect(void *pack_ver)
 
     if (insim->init (ginfo->IP, ginfo->TCPPORT, IS_PRODUCT_NAME, ginfo->ADMIN, pack_v, '!', isf_flag, 500, ginfo->UDPPORT) < 0)
     {
-        out << "\n * Error during initialization * " << endl;
+        cout << "\n * Error during initialization * " << endl;
         return -1;
     }
 
@@ -2230,7 +2237,7 @@ void read_track()
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        out << "Can't find " << file << endl;
+        cout << "Can't find " << file << endl;
         return;
     }
     fclose(fff);
@@ -2317,7 +2324,7 @@ void read_car()
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        out << "Can't find " << file << endl;
+        cout << "Can't find " << file << endl;
         return;
     }
     fclose(fff);
@@ -2363,15 +2370,13 @@ void read_car()
 
 void read_cfg()
 {
-    out << "Read Server Config" << endl;
-
     char file[255];
     sprintf(file, "%smisc\\%s.cfg", RootDir, ServiceName);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {
-        out << "Can't find " << file << endl;
+        cout << "Can't find " << file << endl;
         return;
     }
     fclose(fff);
@@ -2407,7 +2412,6 @@ void read_cfg()
 
 void *ThreadMci (void *params)
 {
-    out << "\tthread \"Multi Car Info\" started" << endl;
     while (true)
     {
         if (insim->udp_next_packet() < 0)
@@ -2474,10 +2478,25 @@ void *ThreadWork (void *params)
     return 0;
 };
 
-
-void *ThreadMain(void *CmdLine)
+// главная функция приложения
+int main(int argc, char* argv[])
 {
-    if (!mysql_init(&rcMaindb))
+	setlocale(LC_CTYPE, "");
+    isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
+
+    int need = 92;
+    int d;
+
+    for (d = strlen(argv[0]); d > 0; d--)
+    {
+        if ( int(argv[0][d]) == need )
+            break;
+    }
+
+    strncpy(RootDir, argv[0], d+1);
+    strcpy(ServiceName, argv[1]);
+
+	if (!mysql_init(&rcMaindb))
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't create MySQL-descriptor");
         return 0;
@@ -2519,7 +2538,7 @@ void *ThreadMain(void *CmdLine)
     if (pack_ver.InSimVer != 5)
     {
         RCBaseClass::CCText("^3RCMain:\t^1INSIM VER != 5");
-        return nullptr;
+        return -1;
     }
 
     CreateClasses();
@@ -2567,7 +2586,7 @@ void *ThreadMain(void *CmdLine)
         switch (insim->peek_packet())
         {
         case ISP_MSO:
-            case_mso ();
+            case_mso();
             case_mso_flood();
             break;
 
@@ -2650,45 +2669,6 @@ void *ThreadMain(void *CmdLine)
 
     delete insim;
     delete ginfo;
-
-    return 0;
-}
-
-// главная функция приложения
-int main(int argc, char* argv[])
-{
-	setlocale(LC_CTYPE, "");
-    isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
-
-    int need = 92;
-    int d;
-
-    for (d = strlen(argv[0]); d > 0; d--)
-    {
-        if ( int(argv[0][d]) == need )
-            break;
-    }
-
-    strncpy(RootDir, argv[0], d+1);
-    strcpy(ServiceName, argv[1]);
-
-    SYSTEMTIME sm;
-    GetLocalTime(&sm);
-
-    char log[MAX_PATH];
-    sprintf(log, "%slogs\\%s(%d.%d.%d).log", RootDir, ServiceName, sm.wDay, sm.wMonth, sm.wYear);
-
-    out.open(log);
-
-    pthread_create(&main_tid, NULL, ThreadMain, NULL);
-
-	void *ret;
-    pthread_join(main_tid, &ret);
-
-
-    out.close();
-
-    Sleep(10000);
 
     return 0;
 }

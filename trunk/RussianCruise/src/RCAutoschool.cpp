@@ -21,7 +21,7 @@ RCAutoschool::init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg)
 }
 
 void
-RCAutoschool::readconfig(const char* Track)
+RCAutoschool::ReadConfig(const char* Track)
 {
 	char confFile[MAX_PATH];
 	sprintf(confFile, "%s\\data\\RCAutoschool\\%s\\config.json", RootDir, Track);
@@ -208,7 +208,7 @@ RCAutoschool::InsimHLV( struct IS_HLV* packet )
 {
 	 byte UCID = PLIDtoUCID[ packet->PLID ];
 
-    /** СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃРѕ СЃС‚РµРЅРѕР№ **/
+    /** столкновение со стеной **/
     if (packet->HLVC==1)
     {
 
@@ -231,7 +231,7 @@ RCAutoschool::InsimAXM( struct IS_AXM* packet )
 void
 RCAutoschool::InsimMCI ( struct IS_MCI* packet )
 {
-    for (int i = 0; i < packet->NumC; i++) // РїСЂРѕРіРѕРЅ РїРѕ РІСЃРµРјСѓ РјР°СЃСЃРёРІСѓ packet->Info[i]
+    for (int i = 0; i < packet->NumC; i++) // прогон по всему массиву packet->Info[i]
     {
         byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
 

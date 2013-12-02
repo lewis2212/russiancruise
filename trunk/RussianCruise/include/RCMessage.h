@@ -28,7 +28,7 @@ public:
     ~RCMessage();
 
     int init(MYSQL *conn, CInsim *InSim);
-    void readconfig(const char *Track);
+    void ReadConfig(const char *Track);
 
     string GetLang(byte UCID);
 

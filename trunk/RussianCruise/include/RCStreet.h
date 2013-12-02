@@ -1,4 +1,4 @@
-#ifndef _RC_STREET_H // РџСЂРѕРІРµСЂРєР°, С‡С‚РѕР±С‹ С„Р°Р№Р» РїРѕРґРєР»СЋС‡Р°Р»СЃСЏ РѕРґРёРЅ СЂР°Р·
+#ifndef _RC_STREET_H // Проверка, чтобы файл подключался один раз
 #define _RC_STREET_H
 
 #include "RCBaseClass.h"
@@ -9,7 +9,7 @@
 
 #define MAX_STREETS 32
 #define DEFAULT_STREET_NUM 250
-// Р—Р°РґР°РµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ РёРіСЂРѕРєР°
+// Задаем структуру игрока
 
 struct StrPlayer
 {
@@ -31,38 +31,38 @@ struct streets
 };
 
 
-// РћРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР° РўР°РєСЃРё
+// Описание класса Такси
 class RCStreet:public RCBaseClass
 {
 private:
-    char RootDir[MAX_PATH]; // РџРѕР»РЅС‹Р№ РїСѓС‚СЊ РґРѕ РїР°РїРєРё СЃ РїСЂРѕРіСЂР°РјРјРѕР№
+    char RootDir[MAX_PATH]; // Полный путь до папки с программой
 
     char errmsg[64];
 
-    RCMessage   *msg;   // РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCMessage
-    RCBank      *bank;  // РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCBank
+    RCMessage   *msg;   // Переменная-указатель на класс RCMessage
+    RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    //struct  StrPlayer *players;     // РЎС‚СЂСѓРєС‚СѓСЂР° РёРіСЂРѕРєРѕРІ
+    //struct  StrPlayer *players;     // Структура игроков
     map< byte, StrPlayer >players;
 
     // struct  streets2 Street2[30];             // Array of streets
 
-    // С„СѓРЅРєС†РёРё-РїРѕРІС‚РѕСЂРёС‚РµР»Рё РѕСЃРЅРѕРІРЅС‹С… С„СѓРЅС†РєРёР№ СЏРґСЂР°
-    void InsimNCN( struct IS_NCN* packet );   // РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-    void InsimNPL( struct IS_NPL* packet );   // РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-    void InsimPLP( struct IS_PLP* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-    void InsimPLL( struct IS_PLL* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-    void InsimCNL( struct IS_CNL* packet );   // РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-    void InsimCPR( struct IS_CPR* packet );   // РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-    void InsimMSO( struct IS_MSO* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+    // функции-повторители основных фунцкий ядра
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
 
     void BtnStreet( byte UCID );
 
 public:
-    // РџРµСЂРµРјРµРЅРЅС‹Рµ Рё С„СѓРЅРєС†РёРё, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РІСЃРµС…
+    // Переменные и функции, доступные для всех
 
-    RCStreet(const char* Dir);   // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
-    ~RCStreet();  // Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
+    RCStreet(const char* Dir);   // Конструктор класса (обязательно)
+    ~RCStreet();  // Деструктор класса (обязательно)
 
     byte    StreetNums;                          // Count of streets
     struct  streets Street[ MAX_STREETS ];       // Array of streets
@@ -76,8 +76,8 @@ public:
     const char* GetStreetName(byte UCID, int StreetID);
 
     int init(MYSQL *conn,CInsim *InSim, void *Message);
-    void readconfig(const char *Track); 	// Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ С‚РѕС‡РєР°С… "РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ"
+    void ReadConfig(const char *Track); 	// Чтение данных о точках "Пункт назначения"
 
-    void InsimMCI( struct IS_MCI* packet );   // РџР°РєРµС‚ СЃ РґР°РЅРЅС‹РјРё Рѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… Рё С‚.Рґ.
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H
