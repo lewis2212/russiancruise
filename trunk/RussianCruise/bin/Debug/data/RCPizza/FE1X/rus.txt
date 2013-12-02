@@ -1,6 +1,6 @@
 tofu_daln 		"дальнобойщикам"
 tofu_118 		"дом 118"
-tofu_gay1 		"парню"
+tofu_guy 		"парню"
 tofu_forest 	"лесничим"
 tofu_post 		"постовым"
 tofu_gop 		"калининскому гопнику"
