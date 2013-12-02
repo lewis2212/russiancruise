@@ -32,7 +32,7 @@ public:
     ~RCQuest();
     void init(MYSQL *conn, CInsim *InSim);
     void insim_mci();
-    void readconfig(const char *Track);
+    void ReadConfig(const char *Track);
 
 private:
 

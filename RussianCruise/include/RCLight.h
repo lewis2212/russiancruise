@@ -1,4 +1,4 @@
-#ifndef _RC_LIGHT_H // РџСЂРѕРІРµСЂРєР°, С‡С‚РѕР±С‹ С„Р°Р№Р» РїРѕРґРєР»СЋС‡Р°Р»СЃСЏ РѕРґРёРЅ СЂР°Р·
+#ifndef _RC_LIGHT_H // Проверка, чтобы файл подключался один раз
 #define _RC_LIGHT_H
 
 #include "RCBaseClass.h"
@@ -19,7 +19,7 @@ struct LghPlayer
     bool	RedLight;
     byte 	LightNum;
     byte 	DiffDir;
-    bool 	OnRed = false; //РїСЂРѕРµС…Р°Р» Р»Рё РЅР° РєСЂР°СЃРЅС‹Р№
+    bool 	OnRed = false; //проехал ли на красный
 };
 
 struct Lights
@@ -34,9 +34,9 @@ struct Lights
 class RCLight:public RCBaseClass
 {
 private:
-    char RootDir[MAX_PATH]; // РџРѕР»РЅС‹Р№ РїСѓС‚СЊ РґРѕ РїР°РїРєРё СЃ РїСЂРѕРіСЂР°РјРјРѕР№
+    char RootDir[MAX_PATH]; // Полный путь до папки с программой
     char TrackName[5];
-    RCMessage   *msg;   // РџРµСЂРµРјРµРЅРЅР°СЏ-СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCMessage
+    RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCDL        *dl;
 
     map< byte, LghPlayer > players;
@@ -51,13 +51,13 @@ private:
 
     time_t sstime;
 
-    void InsimNCN( struct IS_NCN* packet );   // РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-    void InsimNPL( struct IS_NPL* packet );   // РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-    void InsimPLP( struct IS_PLP* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-    void InsimPLL( struct IS_PLL* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-    void InsimCNL( struct IS_CNL* packet );   // РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-    void InsimCPR( struct IS_CPR* packet );   // РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-    void InsimMSO( struct IS_MSO* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
 
 
     void Svetofor1 ( byte UCID );
@@ -67,8 +67,8 @@ private:
 
 
 public:
-    RCLight(const char* Dir);   // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
-    ~RCLight();  // Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
+    RCLight(const char* Dir);   // Конструктор класса (обязательно)
+    ~RCLight();  // Деструктор класса (обязательно)
 
     bool SetLight3(byte UCID,bool Key);
     void Event();
@@ -77,8 +77,8 @@ public:
     void OnRedFalse(byte UCID);
     bool CheckOnRed(byte UCID);
 
-    int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»Р°СЃСЃ RCStreet.
-    void readconfig(const char *Track); // Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ С‚РѕС‡РєР°С… "РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ"
-    void InsimMCI( struct IS_MCI* packet );   // РџР°РєРµС‚ СЃ РґР°РЅРЅС‹РјРё Рѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… Рё С‚.Рґ.
+    int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
+    void ReadConfig(const char *Track); // Чтение данных о точках "Пункт назначения"
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H

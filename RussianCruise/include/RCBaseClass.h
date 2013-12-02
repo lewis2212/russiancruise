@@ -174,7 +174,7 @@ protected:
     virtual void InsimPLP( struct IS_PLP* packet ){}
     virtual void InsimPSF( struct IS_PSF* packet ){}
     virtual void InsimREO( struct IS_REO* packet ){}
-    virtual void InsimRST( struct IS_RST* packet ){ readconfig( packet->Track ); }
+    virtual void InsimRST( struct IS_RST* packet ){ ReadConfig( packet->Track ); }
     virtual void InsimSMALL( struct IS_SMALL* packet ){}
     virtual void InsimSPX( struct IS_SPX* packet ){}
     virtual void InsimSTA( struct IS_STA* packet ){}
@@ -183,7 +183,7 @@ protected:
     virtual void InsimVER( struct IS_VER* packet ){}
     virtual void InsimVTN( struct IS_VTN* packet ){}
 
-    virtual void readconfig(const char *Track){};
+    virtual void ReadConfig(const char *Track){};
 
     //MYSQL
     MYSQL       *dbconn;

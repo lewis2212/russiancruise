@@ -27,15 +27,15 @@ struct PizzaPlayer
     char    PName[24];             // Player name
     char    CName[4];              // Car Name
     byte    Zone;
-    byte    Pizza;                  // Р•СЃР»Рё РёРіСЂРѕРє Р·Р°РєР°Р·Р°Р» РїРёС†С†Сѓ, С‚Рѕ РµРіРѕ СЃС‚Р°РІСЏС‚ РІ РѕС‡РµСЂРµРґСЊ
+    byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
     /** Work **/
     char    WorkDest[96];       // destination text
     byte    WorkType;
     byte    WorkZone;
-    byte    WorkAccept;			// 0 = РЅРµ Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№ , 1 = Р·Р°РЅСЏС‚ СЂР°Р±РѕС‚РѕР№
-    byte    WorkPlayerAccept;   // РµСЃР»Рё РєР°РєРѕР№С‚Рѕ РїР»РµРµСЂ Р·Р°РєР°Р·Р°Р» РїРёС†С†Сѓ (100 + РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ)
-    byte    WorkDestinaion;		// РЅРѕРјРµСЂ С‚РѕС‡РєРё РґРѕСЃС‚Р°РІРєРё
-    int     WorkTime;			// РІСЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РѕРЅ РґРѕР»Р¶РµРЅ РґРѕСЃС‚Р°РІРёС‚СЊ С‚РѕРІР°СЂ
+    byte    WorkAccept;			// 0 = не занят работой , 1 = занят работой
+    byte    WorkPlayerAccept;   // если какойто плеер заказал пиццу (100 + позиция в массиве)
+    byte    WorkDestinaion;		// номер точки доставки
+    int     WorkTime;			// время за которое он должен доставить товар
     int     WorkCountDone;
     bool    FreeEat;
 };
@@ -49,11 +49,11 @@ enum
 struct  Store
 {
     /**
-    *   РћРґРЅР° РїРѕСЂС†РёСЏ РїРёС†С†С‹ - 1 РєРі РјСѓРєРё 0.6 РєРі РІРѕРґР°, 0.9 С‚РѕРјР°С‚РѕРІ, 0.4 СЃС‹СЂР°
-    *   РЎРµР±РµСЃС‚РѕРёРјРѕСЃС‚СЊ Р·Р° РїРѕСЂС†РёСЋ = 12+ 9 +72 +224 = 317 СЂСѓР±
-    *   РћРєРѕРЅС‡Р°С‚РµР»СЊРЅР°СЏ С†РµРЅР° 552 СЂСѓР±
-    *   РѕРїР»Р°С‚Р° Р·Р° РёР·РіРѕС‚РѕРІР»РµРЅРёРµ 235 СЂСѓР±
-    *   РѕРїР»Р°С‚Р° Р·Р° РґРѕСЃС‚Р°РІРєСѓ 248 СЂСѓР±.
+    *   Одна порция пиццы - 1 кг муки 0.6 кг вода, 0.9 томатов, 0.4 сыра
+    *   Себестоимость за порцию = 12+ 9 +72 +224 = 317 руб
+    *   Окончательная цена 552 руб
+    *   оплата за изготовление 235 руб
+    *   оплата за доставку 248 руб.
     **/
     // all max = 1000 (1000kg)
     float    Muka; // 12000 rur/t.
@@ -104,16 +104,16 @@ private:
     void InsimCPR( struct IS_CPR* packet );
     void InsimMSO( struct IS_MSO* packet );
 
-    // Р¤СѓРЅРєС†РёРё-СѓС‚РёР»РёС‚С‹
+    // Функции-утилиты
     int check_pos ( byte UCID );
 
 public:
     RCPizza(const char* Dir);
     ~RCPizza();
 
-    // РћСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РєР»Р°СЃСЃР°
+    // Основные функции класса
     int init(MYSQL *conn, CInsim *InSim, void *Message,void *Bank,void *Energy,void *DrLic, void * STreet);
-    void readconfig(const char *Track);
+    void ReadConfig(const char *Track);
 
 
     void InsimMCI( struct IS_MCI* packet );

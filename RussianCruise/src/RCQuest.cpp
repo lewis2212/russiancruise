@@ -27,7 +27,7 @@ void RCQuest::init(MYSQL *conn, CInsim *InSim)
     }
 }
 
-void RCQuest::readconfig(const char *Track)
+void RCQuest::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCQuest\\%s.txt", RootDir, Track);

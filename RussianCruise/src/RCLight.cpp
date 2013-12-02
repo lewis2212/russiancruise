@@ -53,7 +53,7 @@ int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
     return 0;
 }
 
-void RCLight::readconfig(const char *Track)
+void RCLight::ReadConfig(const char *Track)
 {
     strcpy(TrackName, Track);
     char file[255];

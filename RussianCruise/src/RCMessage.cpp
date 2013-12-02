@@ -46,7 +46,7 @@ int RCMessage::init(MYSQL *conn, CInsim *InSim)
     return 0;
 }
 
-void RCMessage::readconfig(const char *Track)
+void RCMessage::ReadConfig(const char *Track)
 {
     char dir[ MAX_PATH ];
     sprintf(dir, "%s\\data\\RCMessages", RootDir);
@@ -171,7 +171,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
     char Msg[128];
     strcpy(Msg, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^CСЏР·С‹Рє", 7) == 0 ))
+    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
     {
         cout << players[ packet->UCID ].UName << " send !lang" << endl;
 

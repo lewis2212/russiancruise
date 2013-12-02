@@ -72,7 +72,7 @@ int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RC
     return 0;
 }
 
-void RCTaxi::readconfig(const char *Track)
+void RCTaxi::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCTaxi\\tracks\\%s.txt", RootDir, Track);

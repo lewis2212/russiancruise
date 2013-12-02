@@ -1476,7 +1476,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
     }
 }
 
-void RCPolice::readconfig(const char* Track)
+void RCPolice::ReadConfig(const char* Track)
 {
 	ReadFines();
 

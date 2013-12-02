@@ -1,4 +1,4 @@
-﻿using namespace std;
+using namespace std;
 #include "RCEnergy.h"
 
 RCEnergy::RCEnergy(const char* Dir)
@@ -51,7 +51,7 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
 }
 
 
-void RCEnergy::readconfig(const char *Track)
+void RCEnergy::ReadConfig(const char *Track)
 {
     char file[255];
     sprintf(file, "%s\\data\\RCEnergy\\maps\\%s.txt", RootDir, Track );

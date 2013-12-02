@@ -58,9 +58,9 @@ public:
 
     struct  place zone;
 
-    // РћСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РєР»Р°СЃСЃР°
+    // Основные функции класса
     int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
-    void    readconfig(const char *Track);
+    void    ReadConfig(const char *Track);
 
     void    InsimMCI( struct IS_MCI* packet );
 

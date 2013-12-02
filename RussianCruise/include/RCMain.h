@@ -62,7 +62,10 @@ int     chek_users =0;
 
 CInsim *insim;
 
-ofstream  out;   // выходной файл для протокола работы сервиса
+int ok = 1;
+
+struct IS_VER pack_ver;
+word	isf_flag;
 
 char RootDir[MAX_PATH];
 char ServiceName[64];

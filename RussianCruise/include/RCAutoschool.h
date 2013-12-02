@@ -19,25 +19,25 @@ struct SchoolPlayer:public GlobalPlayer
 	int		CheckPoint = 0;
 
 
-	float			Rate = 0;           // Р РµР№С‚РёРЅРі РРіСЂРѕРєР°
-	float			TempRate = 0;       // Р’СЂРµРјРµРЅРЅС‹Р№ СЂРµР№С‚РёРЅРі РЅР° РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ СѓРїСЂР°Р¶РЅРµРЅРёСЏ
-	unsigned int	LastTaskTime = 0;   // Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРѕРіРѕ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡Рё
+	float			Rate = 0;           // Рейтинг Игрока
+	float			TempRate = 0;       // Временный рейтинг на время выполнения упражнения
+	unsigned int	LastTaskTime = 0;   // Время последного выполнения задачи
 };
 
 class RCAutoschool : public RCBaseClass
 {
 	private:
-		map <byte, SchoolPlayer>players;          // РЎС‚СЂСѓРєС‚СѓСЂР° РёРіСЂРѕРєРѕРІ
+		map <byte, SchoolPlayer>players;          // Структура игроков
 
 		RCMessage * msg;
 
-		void InsimNCN( struct IS_NCN* packet );   // РќРѕРІС‹Р№ РёРіСЂРѕРє Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ
-		void InsimNPL( struct IS_NPL* packet );   // РРіСЂРѕРє РІС‹С€РµР» РёР· Р±РѕРєСЃРѕРІ
-		void InsimPLP( struct IS_PLP* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р±РѕРєСЃС‹
-		void InsimPLL( struct IS_PLL* packet );   // РРіСЂРѕРє СѓС€РµР» РІ Р·СЂРёС‚РµР»Рё
-		void InsimCNL( struct IS_CNL* packet );   // РРіСЂРѕРє СѓС€РµР» СЃ СЃРµСЂРІРµСЂР°
-		void InsimCPR( struct IS_CPR* packet );   // РРіСЂРѕРє РїРµСЂРµРёРјРµРЅРѕРІР°Р»СЃСЏ
-		void InsimMSO( struct IS_MSO* packet );   // РРіСЂРѕРє РѕС‚РїСЂР°РІРёР» СЃРѕРѕР±С‰РµРЅРёРµ
+		void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+		void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+		void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
+		void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+		void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
+		void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+		void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
 		void InsimCON( struct IS_CON* packet );
 		void InsimOBH( struct IS_OBH* packet );
 		void InsimHLV( struct IS_HLV* packet );
@@ -50,9 +50,9 @@ class RCAutoschool : public RCBaseClass
 		~RCAutoschool();
 
 		void init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg);
-		void readconfig(const char* Track);
+		void ReadConfig(const char* Track);
 
-		void InsimMCI( struct IS_MCI* packet );   // РџР°РєРµС‚ СЃ РґР°РЅРЅС‹РјРё Рѕ РєРѕРѕСЂРґРёРЅР°С‚Р°С… Рё С‚.Рґ.
+		void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 
 #endif // RCAUTOSCHOOL_H

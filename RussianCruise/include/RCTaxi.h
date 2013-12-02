@@ -142,7 +142,7 @@ public:
     int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
 
 
-    void readconfig(const char *Track); // Чтение данных о точках "Пункт назначения"
+    void ReadConfig(const char *Track); // Чтение данных о точках "Пункт назначения"
 
 
     void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.

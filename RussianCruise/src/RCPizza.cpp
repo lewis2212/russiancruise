@@ -206,7 +206,7 @@ void RCPizza::Done(byte UCID)
     }
 }
 
-void RCPizza::readconfig(const char *Track)
+void RCPizza::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s\\data\\RCPizza\\%s", RootDir, Track);

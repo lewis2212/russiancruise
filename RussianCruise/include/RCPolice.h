@@ -129,7 +129,7 @@ private:
 public:
     RCPolice(const char* Dir);
     ~RCPolice();
-	void readconfig(const char* Track);
+	void ReadConfig(const char* Track);
 
     struct fine fines[MAX_FINES];
 
