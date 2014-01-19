@@ -120,8 +120,11 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     }
     else
     {
-        printf("Can't find %s\n Create user\n", packet->UName);
+        printf("RCBank: Can't find %s, create user\n", packet->UName);
         sprintf(query, "INSERT INTO bank (username) VALUES ('%s');", packet->UName);
+
+        if (!dbExec(query))
+            printf("Error credits: MySQL Query\n");
 
         players[packet->UCID].Cash = 1000;
         Save(packet->UCID);

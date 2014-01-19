@@ -87,7 +87,7 @@ void RCPizza::Deal(byte UCID)
         }
         else
         {
-            SendMTC(UCID, "4104");
+            SendMTC(UCID, msg->_(UCID, "4104"));
             return;
         }
     }
@@ -471,7 +471,7 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
             {
                 Done(UCID);
                 bank->RemCash(PL_UCID, 800);
-                nrg->AddEnergy(PL_UCID, 5000);
+                nrg->AddEnergy(PL_UCID, 8000);
                 SendMTC(PL_UCID, msg->_(PL_UCID, "1604"));
                 players[PL_UCID].Pizza = 0;
             }
@@ -528,7 +528,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
     {
-        char Text[64];
+        char Text[96];
         sprintf(Text, msg->_(packet->UCID, "4206"), Capital);
         SendMTC(packet->UCID, Text);
         sprintf(Text, msg->_(packet->UCID, "4207"), PStore.Voda, PStore.Muka, PStore.Ovoshi, PStore.Cheese);
@@ -543,15 +543,18 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             sprintf(Text, msg->_(packet->UCID, "4209"), CarsInWork, NumCars);
             SendMTC(packet->UCID, Text);
 
+            int jjjk=0;
+
             for (auto& p: players)
 			{
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
+                    if (jjjk>6) return;
                     sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
                     SendMTC(packet->UCID, Text);
+                    jjjk++;
                 }
 			}
-            return;
         }
     }
 
@@ -560,7 +563,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     {
         if (players[packet->UCID].FreeEat)
         {
-            nrg->AddEnergy(packet->UCID, 50000);
+            nrg->AddEnergy(packet->UCID, 80000);
             SendMTC(packet->UCID, msg->_(packet->UCID, "4211"));
             players[packet->UCID].FreeEat = false;
         }
@@ -630,6 +633,28 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         }
         else
             SendMTC(packet->UCID, msg->_(packet->UCID, "UAreDel")); //ты уже заказал
+    }
+
+    //!test
+    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!test", 5) == 0)
+    {
+        for (int i=0;i<zone.NumPoints;i++)
+        {
+            char Text[96], str[64];
+
+            int StreetID = -1;
+            for (int g = 0; g < street->StreetNums; g++)
+			{
+                if (Check_Pos(street->Street[g].PointCount, street->Street[g].StreetX, street->Street[g].StreetY, zone.point[i].X, zone.point[i].Y))
+                {
+                    StreetID = g;
+                    break;
+                }
+			}
+
+            sprintf(str, msg->_(packet->UCID, "4200"), msg->_(packet->UCID, zone.point[i].PlaceName), street->GetStreetName(packet->UCID, StreetID));
+            SendMTC(packet->UCID, "^3| " +  (string)str);
+        }
     }
 }
 

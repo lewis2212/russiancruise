@@ -159,11 +159,11 @@ void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
                 if (players[ UCID ].StreetNum != g)
                 {
                     players[ UCID ].StreetNum = g;
-                    BtnStreet( UCID );
                     break;
                 }
             }
         }
+        BtnStreet( UCID );
     }
 }
 
@@ -207,9 +207,17 @@ void RCStreet::InsimPLL( struct IS_PLL* packet )
 
 void RCStreet::BtnStreet (byte UCID)
 {
-    char str[96];
-    sprintf(str, "%s ^2(^1%d ^C^7κμ/χ^2)", GetStreetName(UCID, players[UCID].StreetNum), Street[ players[ UCID ].StreetNum ].SpeedLimit);
-    SendButton(255, UCID, 50, 140, 1, 60, 6, 1, str);
+    //char str[96];
+    //sprintf(str, "%s ^2(^1%d ^C^7κμ/χ^2)", GetStreetName(UCID, players[UCID].StreetNum), Street[ players[ UCID ].StreetNum ].SpeedLimit);
+
+    //SendButton(255, UCID, 50, 140, 1, 60, 6, 1, str);
+
+    if (players[ UCID ].StreetNum > StreetCount())
+        return;
+
+    SendButton(255, UCID, 50, 170, 8, 29, 6, 32, GetStreetName(UCID, players[UCID].StreetNum));
+    SendButton(255, UCID, 51, 156, 2, 21, 19, 0, "^1^S‘π");
+    SendButton(255, UCID, 52, 156, 7, 21, 8, 3, ToString(Street[ players[ UCID ].StreetNum ].SpeedLimit));
 }
 
 int RCStreet::CurentStreetNum(byte UCID)
