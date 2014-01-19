@@ -360,7 +360,7 @@ void RCTaxi::PassAccept2(byte UCID)
             X2 = players[UCID].Info.X / 65536,
             Y2 = players[UCID].Info.Y / 65536;
 
-		int MINDIST = 300;
+		int MINDIST = 200;
 
         if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID ) and Distance(X1, Y1, X2, Y2)>MINDIST)
             ok = false;
@@ -402,7 +402,7 @@ void RCTaxi::PassAccept2(byte UCID)
     if (players[UCID].ClientType == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
-		players[UCID].WorkTime = time(NULL) + 70 + (int)rand()%40;
+		players[UCID].WorkTime = time(NULL) + 40 + (int)rand()%30;
 	}
 
     if (players[UCID].ClientType == 3)
@@ -693,7 +693,9 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
                 int K = (int)sqrt(abs((dD-dH) * (1 + dA) * dS)) / 8;
 
-				int coef = 1;
+				float coef = 1;
+				if (players[UCID].ClientType == 2)
+					coef = 0.5;
 				if (players[UCID].ClientType == 5)
 					coef = 5;
 

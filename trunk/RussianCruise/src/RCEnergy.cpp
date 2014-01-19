@@ -306,18 +306,10 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 void RCEnergy::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-    {
         return;
-    }
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!coffee", 7) == 0)
     {
-        if ( players[ packet->UCID ].Energy > 9900 )
-        {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
-            return;
-        }
-
         if (bank->GetCash( packet->UCID ) < 50)
         {
             SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
@@ -330,6 +322,12 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
             return;
         }
 
+        if ( players[ packet->UCID ].Energy > 9900 )
+        {
+            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
+            return;
+        }
+
         players[ packet->UCID ].Energy += 500;
         bank->RemCash(packet->UCID, 50);
         bank->AddToBank(50);
@@ -338,12 +336,6 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
     //!redbule
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!redbull", 8) == 0)
     {
-        if ( players[ packet->UCID ].Energy > 9900 )
-        {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
-            return;
-        }
-
         if (bank->GetCash( packet->UCID ) < 100)
         {
             SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
@@ -355,6 +347,13 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
             SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
             return;
         }
+
+        if ( players[ packet->UCID ].Energy > 9900 )
+        {
+            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
+            return;
+        }
+
         players[ packet->UCID ].Energy += 1000;
         bank->RemCash(packet->UCID, 100);
         bank->AddToBank(100);

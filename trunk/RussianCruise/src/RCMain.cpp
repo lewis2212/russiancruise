@@ -294,11 +294,10 @@ void read_user_cars(struct player *splayer)
             splayer->PLC += ginfo->carMap[ rcMainRow[0] ].PLC;
             i++;
         }
-
     }
     else
     {
-        printf("Can't find %s\n Create user\n", splayer->UName);
+        RCBaseClass::CCText("^7Can't find " + (string)splayer->UName + ", create new user");
 
         sprintf(query, "INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');", splayer->UName);
 
@@ -315,7 +314,6 @@ void read_user_cars(struct player *splayer)
         splayer->PLC += ginfo->carMap[ "UF1" ].PLC;
 
         save_user_cars(splayer);
-
     }
     mysql_free_result( rcMainRes );
     SendPLC(splayer->UCID, splayer->PLC);
@@ -323,8 +321,6 @@ void read_user_cars(struct player *splayer)
 
 void save_car (struct player *splayer)
 {
-
-    cout <<splayer->UName << " save " << splayer->CName << " info" << endl;
 
     for (int i=0; i<MAX_CARS; i++)
     {
@@ -348,9 +344,10 @@ void SaveAll()
 			save_user_cars(&ginfo->players[j]);
 
 			for( cl = classes.begin(); cl != classes.end(); ++cl )
-			{
 				(*cl)->Save( ginfo->players[j].UCID );
-			}
+
+            if (police->IsCop(ginfo->players[j].UCID))
+                police->SaveCopStat(ginfo->players[j].UCID);
 
 			SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "3000" ));
 		}
@@ -798,7 +795,7 @@ void case_btt ()
                                 cout << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
 
                                 char Msg[126];
-                                sprintf(Msg, msg->_(ginfo->players[i].UCID, "GetMoney" ), ginfo->players[i].PName, atoi(pack_btt->Text));
+                                sprintf(Msg, msg->_(ginfo->players[g].UCID, "GetMoney" ), ginfo->players[i].PName, atoi(pack_btt->Text));
                                 SendMTC(ginfo->players[g].UCID, Msg);
                                 sprintf(Msg, msg->_(ginfo->players[i].UCID, "SendMoney" ), ginfo->players[g].PName, atoi(pack_btt->Text));
                                 SendMTC(ginfo->players[i].UCID, Msg);
@@ -824,17 +821,17 @@ void case_btt ()
             */
             if (pack_btt->ClickID == 37)
             {
-
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
                     if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
                     {
                         if (strlen(pack_btt->Text) > 0)
                         {
-                            cout << ginfo->players[i].UName << " send " << pack_btt->Text << " to "  << ginfo->players[g].UName << endl;
                             char Msg[128];
                             sprintf(Msg, msg->_( ginfo->players[g].UCID, "MsgFrom" ), ginfo->players[i].PName, pack_btt->Text );
                             SendMTC(ginfo->players[g].UCID, Msg);
+
+                            RCBaseClass::CCText("^1" + (string)ginfo->players[i].UName + " send message " + (string)ginfo->players[g].UName + ": ^7" + (string)pack_btt->Text);
                         }
                         break;
                     }
@@ -896,7 +893,7 @@ void case_cpr ()
     {
         if (ginfo->players[i].UCID == pack_cpr->UCID)
         {
-            cout << ginfo->players[i].PName << " rename to " << pack_cpr->PName << endl;
+            //cout << ginfo->players[i].PName << " rename to " << pack_cpr->PName << endl;
             strcpy(ginfo->players[i].PName, pack_cpr->PName);
             break;
         }
@@ -1645,6 +1642,7 @@ void case_mso ()
 
 		SaveAll();
 
+
         ok=0;
 
         return;
@@ -1653,6 +1651,7 @@ void case_mso ()
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
+        RCBaseClass::CCText("^7Config reload");
 
         IS_TINY *pack_requests = new IS_TINY;
         memset(pack_requests, 0, sizeof(struct IS_TINY));
