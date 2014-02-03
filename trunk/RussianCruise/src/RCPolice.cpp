@@ -513,6 +513,16 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 return;
             }
 
+
+            struct streets StreetInfo;
+            street->CurentStreetInfo(&StreetInfo, packet->UCID);
+
+            if (StreetInfo.SpeedLimit == 0)
+            {
+                SendMTC(UCID, "^2| ^7Вы не можете поставить радар в этом месте");
+                return;
+            }
+
             if (players[UCID].DTPstatus <= 0)
             {
                 if (players[packet->UCID].Radar)
@@ -976,7 +986,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             {
             	players[packet->UCID].FineC = 0;
                 players[packet->UCID].DTPfines = 0;
-                players[packet->UCID].DTPstatus = -1;
+                //players[packet->UCID].DTPstatus = -1;
                 players[packet->ReqI].Pogonya = 1;
                 int worktime = time(NULL);
                 players[packet->ReqI].WorkTime = worktime + 60 * 5;
@@ -1013,7 +1023,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 players[packet->UCID].DTPfines = 0;
                 for (auto& p: players)
                 {
-                    if (players[p.first].cop and p.first != packet->UCID)
+                    if (players[p.first].cop and p.first != packet->UCID and players[p.first].Rank > 1)
                     {
                         int X1 = players[packet->ReqI].Info.X / 65536,
                             Y1 = players[packet->ReqI].Info.Y / 65536,
@@ -1729,14 +1739,10 @@ void RCPolice::ButtonClock( byte UCID )
 
 char* RCPolice::GetFineName(byte UCID, int FineID)
 {
-    if (msg->GetLang(UCID) == "rus")
-    {
-        return fines[FineID].NameRu;
-    }
-    else
-    {
+    if (msg->GetLang(UCID) == "eng")
         return fines[FineID].NameEn;
-    }
+    else
+        return fines[FineID].NameRu;
 }
 
 void RCPolice::SendMTCToCop(const char* Msg, int Rank, ...)
@@ -1853,7 +1859,6 @@ void RCPolice::Event()
 				SendMTC(255, str);
 				SendBFN(UCID, 210);
 				SendBFN(UCID, 211);
-
 			}
 			else
 			{
@@ -1919,9 +1924,7 @@ void RCPolice::Event()
                             players[DTPvyzov[0][i]].DTP = 0;
 
                             if (DTPvyzov[2][i] != 0)
-                            {
                                 players[DTPvyzov[2][i]].DTPstatus = 0;
-                            }
 
                             DTPvyzov[0][i] = 0;
                             DTPvyzov[1][i] = 0;
@@ -1931,7 +1934,7 @@ void RCPolice::Event()
                             //штраф всем копам что профукали заявку
                             for (auto& play: players)
                             {
-                                if (players[play.first].cop and players[play.first].DTPstatus == 0 and players[UCID].Rank != 3)
+                                if (players[play.first].cop and players[play.first].Rank != 3 and players[play.first].DTPstatus == 0)
                                 {
                                     SendMTC(play.first, msg->_(play.first,"2120"));
                                     if (dl->Islocked(play.first))
