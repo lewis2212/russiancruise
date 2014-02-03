@@ -677,16 +677,14 @@ void RCBank::BtnCash (byte UCID)
     pack.W = 15;
     pack.H = 4;
 
-    char cash[10];
-    sprintf(cash, "%d", (int)players[UCID].Cash);
+    char col[3];
 
     if (players[UCID].Cash > 0)
-        strcpy(pack.Text, "^2");
+        strcpy(col, "^2");
     else
-        strcpy(pack.Text, "^1");
+        strcpy(col, "^1");
 
-    strcat(pack.Text, cash);
-    strcat(pack.Text, "^7 RUR");
+    sprintf(pack.Text, msg->_(UCID, "Cash"), col, (int)players[UCID].Cash);
     insim->send_packet(&pack);
 
     if ( players[UCID].UName == "denis-takumi" )

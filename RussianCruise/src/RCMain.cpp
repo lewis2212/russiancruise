@@ -831,7 +831,8 @@ void case_btt ()
                             sprintf(Msg, msg->_( ginfo->players[g].UCID, "MsgFrom" ), ginfo->players[i].PName, pack_btt->Text );
                             SendMTC(ginfo->players[g].UCID, Msg);
 
-                            RCBaseClass::CCText("^1" + (string)ginfo->players[i].UName + " send message " + (string)ginfo->players[g].UName + ": ^7" + (string)pack_btt->Text);
+                            RCBaseClass::CCText("^1" + (string)ginfo->players[i].UName + " ^7передал сообщение " + (string)ginfo->players[g].UName + ":");
+                            printf("%s\n", pack_btt->Text);
                         }
                         break;
                     }
@@ -2480,7 +2481,8 @@ void *ThreadWork (void *params)
 // главная функция приложения
 int main(int argc, char* argv[])
 {
-	setlocale(LC_CTYPE, "");
+	//setlocale(LC_ALL, "rus");
+
     isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
     int need = 92;

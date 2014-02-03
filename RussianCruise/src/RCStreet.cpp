@@ -10,7 +10,6 @@ RCStreet::RCStreet(const char* Dir)
 
 RCStreet::~RCStreet()
 {
-
 }
 
 int RCStreet::init(MYSQL *conn, CInsim *InSim, void *Message)
@@ -46,10 +45,10 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
 {
     if (StreetID>=0)
     {
-        if (msg->GetLang(UCID) == "rus")
-            return Street[StreetID].StreetRu;
-        else
+        if (msg->GetLang(UCID) == "eng")
             return Street[StreetID].StreetEn;
+        else
+            return Street[StreetID].StreetRu;
     }
     else return "NULL";
 }
@@ -170,9 +169,7 @@ void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
 void RCStreet::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-    {
         return;
-    }
 }
 
 
@@ -181,9 +178,7 @@ void RCStreet::InsimNCN( struct IS_NCN* packet )
     int i;
 
     if (packet->UCID == 0)
-    {
         return;
-    }
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
@@ -207,11 +202,6 @@ void RCStreet::InsimPLL( struct IS_PLL* packet )
 
 void RCStreet::BtnStreet (byte UCID)
 {
-    //char str[96];
-    //sprintf(str, "%s ^2(^1%d ^C^7κμ/χ^2)", GetStreetName(UCID, players[UCID].StreetNum), Street[ players[ UCID ].StreetNum ].SpeedLimit);
-
-    //SendButton(255, UCID, 50, 140, 1, 60, 6, 1, str);
-
     if (players[ UCID ].StreetNum > StreetCount())
         return;
 
@@ -228,22 +218,16 @@ int RCStreet::CurentStreetNum(byte UCID)
 int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 {
     if ( players[ UCID ].StreetNum == DEFAULT_STREET_NUM )
-    {
         return -1;
-    }
 
     if (memcpy(StreetInfo, &Street[ players[ UCID ].StreetNum ], sizeof(streets)))
-    {
         return 1;
-    }
 }
 
 int RCStreet::CurentStreetInfoByNum(void *StreetInfo, int StrNum)
 {
     if (memcpy(StreetInfo, &Street[StrNum], sizeof(streets)))
-    {
         return 1;
-    }
 
     return -1;
 }

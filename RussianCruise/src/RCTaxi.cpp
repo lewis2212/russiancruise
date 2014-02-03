@@ -386,7 +386,7 @@ void RCTaxi::PassAccept2(byte UCID)
 
     if (players[UCID].cf == 1 or players[UCID].cf == 4)
 		players[UCID].PassStress -= 100;
-	else if (players[UCID].ClientType == 2)
+	else if (players[UCID].ClientType == 2 or players[UCID].ClientType == 5)
         players[UCID].PassStress = rand()%300;
     else
 		players[UCID].PassStress = rand()%500;
@@ -402,7 +402,7 @@ void RCTaxi::PassAccept2(byte UCID)
     if (players[UCID].ClientType == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
-		players[UCID].WorkTime = time(NULL) + 40 + (int)rand()%30;
+		players[UCID].WorkTime = time(NULL) + 50 + (int)rand()%30;
 	}
 
     if (players[UCID].ClientType == 3)
@@ -883,14 +883,15 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0 and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom") )
+    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0)
     {
-        strtok(Message, " ");
-        char * uname = strtok(NULL, " ");
+        string uname = players[UCID].UName;
+        if (strlen(Message)>7 and (players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom"))
+            uname = Message + 7;
 
-        if (!uname)
+        if (uname.length() == 0)
         {
-            SendMTC(packet->UCID, msg->_(packet->UCID, "TaxiDialog17"));
+            SendMTC(UCID, msg->_(packet->UCID, "TaxiDialog17"));
             return;
         }
 
