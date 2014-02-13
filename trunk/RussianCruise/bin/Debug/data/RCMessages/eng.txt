@@ -302,7 +302,10 @@ RadarOff 		"^2| ^7Radar Off"
 //        прочее
 // ************************
 
+GetLvl 			"^5| ^8^C%s ^1get ^3%d ^1lvl"
 1500 			"^1| ^7Bonus: %d ^3RUR"
+AddSkill		"^1| ^2+ ^3%2.2f%% ^7skill"
+RemSkill 		"^1| ^1- ^3%2.2f%% ^7skill"
 
 1801 			"^1| ^7Take coffee (^3!coffee^7) or Redbull (^3!redbull^7)"
 
