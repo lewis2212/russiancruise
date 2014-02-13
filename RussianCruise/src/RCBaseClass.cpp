@@ -2,12 +2,10 @@
 
 RCBaseClass::RCBaseClass()
 {
-    //ctor
 }
 
 RCBaseClass::~RCBaseClass()
 {
-    //dtor
 }
 
 void RCBaseClass::next_packet()
@@ -151,15 +149,13 @@ void
 RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {
     if (!insim)
-    {
         return;
-    }
 }
 
 bool RCBaseClass::Check_Pos(int polySides, int polyX[], int polyY[], float x, float y)
 {
-    int		i, j=polySides-1 ;
-    bool	oddNodes=false;
+    int		i, j = polySides - 1;
+    bool	oddNodes = false;
     try
     {
         for (i=0; i<polySides; i++)
@@ -229,10 +225,10 @@ const char* RCBaseClass::GetReason(byte Reason)
         return "DISCONNECT";
         break;
     case 1:
-        return "TIME_OUT";
+        return "TIME OUT";
         break;
     case 2:
-        return "LOST_CONNECTION";
+        return "LOST CONNECTION";
         break;
     case 3:
         return "KICKED";
@@ -334,6 +330,9 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte
 DB_ROWS
 RCBaseClass::dbSelect( string query )
 {
+    //if( dbres != nullptr)
+    //  mysql_free_result(dbres);
+
 	list<DB_ROW> out;
     out.clear();
 
@@ -344,7 +343,6 @@ RCBaseClass::dbSelect( string query )
 
 	if( pos != string::npos )
 	{
-
 		pos = query.find("FROM");
 
 		if(pos == string::npos)
@@ -352,7 +350,7 @@ RCBaseClass::dbSelect( string query )
 
 		if(pos == string::npos)
 		{
-		   printf( "RCBaseclass::Slect - Can't find 'FROM' in query");
+		   printf( "RCBaseclass::Select - Can't find 'FROM' in query");
 		   return out;
 		}
 
@@ -366,7 +364,7 @@ RCBaseClass::dbSelect( string query )
 
 		if( mysql_query(dbconn, colQuery) != 0 )
 		{
-			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			CCText("^1DB SELECT ERROR: " + (string)mysql_error(dbconn));
 			return out;
 		}
 
@@ -392,7 +390,7 @@ RCBaseClass::dbSelect( string query )
 
 		if( mysql_query(dbconn, query.c_str() ) != 0 )
 		{
-			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			CCText("^1DB SELECT ERROR: " + (string)mysql_error(dbconn));
 			return out;
 		}
 
@@ -401,7 +399,7 @@ RCBaseClass::dbSelect( string query )
 		// если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
 		if( dbres == NULL)
 		{
-			printf("DB ERROR: Can't store result\n", tableName.c_str());
+			CCText("^1DB SELECT ERROR: Can't store result");
 			return out;
 		}
 
@@ -427,7 +425,7 @@ RCBaseClass::dbSelect( string query )
 
 		if(pos == string::npos)
 		{
-		   printf( "RCBaseclass::Slect - Can't find 'FROM' in query");
+		   printf( "RCBaseclass::Select - Can't find 'FROM' in query");
 		   return out;
 		}
 
@@ -443,7 +441,7 @@ RCBaseClass::dbSelect( string query )
 
 		if( mysql_query(dbconn, query.c_str() ) != 0 )
 		{
-			printf("DB ERROR: %s\n", mysql_error(dbconn));
+			CCText("^1DB SELECT ERROR: " + (string)mysql_error(dbconn));
 			return out;
 		}
 
@@ -452,7 +450,7 @@ RCBaseClass::dbSelect( string query )
 		// если все гуд делаем массив 0 -> Name string colums[ mysql_num_rows() ]
 		if( dbres == NULL)
 		{
-			printf("DB ERROR: Can't store result\n", tableName.c_str());
+			CCText("^1DB SELECT ERROR: Can't store result");
 			return out;
 		}
 
@@ -467,6 +465,7 @@ RCBaseClass::dbSelect( string query )
 			}
 			out.push_back( row );
 		}
+		mysql_free_result(dbres);
     }
 
     return out;
@@ -481,18 +480,21 @@ RCBaseClass::dbExec( string query )
 bool
 RCBaseClass::dbExec( const char *query )
 {
+
     if (mysql_ping(dbconn) != 0)
     {
-        printf("DB ERROR: connection with MySQL server was lost\n");
-
+        CCText("^1DB EXEC ERROR: connection with MySQL server was lost");
         return false;
     }
 
+    tools::log( query );
+
 	if( mysql_query(dbconn, query ) != 0 )
 	{
-		printf("DB ERROR: %s\n", mysql_error(dbconn));
+	    CCText("^1DB EXEC ERROR: " + (string)mysql_error(dbconn));
 		return false;
 	}
+
 	return true;
 }
 
@@ -500,21 +502,23 @@ RCBaseClass::dbExec( const char *query )
 bool
 RCBaseClass::dbUpdate( string table, DB_ROW fields, pair<string, string> where )
 {
+
     string query = "UPDATE " + table + " SET ";
 
     bool first = true;
     for( auto row: fields )
     {
         if( !first )
-        {
             query += ", ";
-        }
 
-        //query +=
+        first = false;
+
+        query += row.first + "='" + row.second + "'";
     }
 
+    query += " WHERE " +where.first +"='"+ where.second+"'";
 
-
+    return dbExec( query );
 }
 
 inline string
