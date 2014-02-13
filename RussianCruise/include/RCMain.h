@@ -40,7 +40,7 @@ Russian Cruise by TurboSnail
 #include "RCQuest.h"
 // #include "RCAutoschool.h"
 
-#define MAX_PLAYERS 32
+#define MAX_PLAYERS 64
 #define MAX_CARS 30
 
 using namespace std;
