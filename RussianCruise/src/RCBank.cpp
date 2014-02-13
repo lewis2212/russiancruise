@@ -115,7 +115,6 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     if( result.size() != 0 )
     {
     	row = result.front();
-
         players[packet->UCID].Cash = atof(row["cash"].c_str());
     }
     else
@@ -244,9 +243,7 @@ void RCBank::InsimNPL(struct IS_NPL* packet)
     PLIDtoUCID[packet->PLID] = packet->UCID;
 
     if (players[packet->UCID].Cash > 5000000)
-    {
         players[packet->UCID].Cash = 5000000;
-    }
 }
 
 void RCBank::InsimPLP(struct IS_PLP* packet)

@@ -15,7 +15,10 @@ RCMessage::~RCMessage()
 const char* RCMessage::_( byte UCID, string CODE )
 {
     if ( players[ UCID ].Lang.size() == 0)
-        return (char*)("^1Lang = 0");
+	{
+		players[ UCID ].Lang = "rus";
+        return (char*)("^1Set default language");
+	}
 
     if ( MsgArray[ players[ UCID ].Lang ].find( CODE ) == MsgArray[ players[ UCID ].Lang ].end() )
         return CODE.c_str();
