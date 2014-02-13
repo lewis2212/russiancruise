@@ -17,6 +17,7 @@ struct LghPlayer
     /** misc **/
     byte	WrongWay;
     bool	RedLight;
+    bool	GreenLight;
     byte 	LightNum;
     byte 	DiffDir;
     bool 	OnRed = false; //проехал ли на красный
@@ -76,6 +77,7 @@ public:
     bool GetOnLight(byte UCID);
     void OnRedFalse(byte UCID);
     bool CheckOnRed(byte UCID);
+    int CheckLight(byte UCID);
 
     int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void ReadConfig(const char *Track); // „тение данных о точках "ѕункт назначени€"
