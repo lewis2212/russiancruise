@@ -14,6 +14,7 @@
 
 #define MAX_POINTS 2048
 #define PASSANGER_INTERVAL 1200
+#define MAX_PASS_STRESS 1000
 
 struct Taxi_info
 {
@@ -72,6 +73,7 @@ struct TaxiPlayer: public GlobalPlayer
 
     int		PassStress; // from 0 to 1000
     int		StressOverCount;
+    bool 	blink;
 
     time_t  LastT;
 };
