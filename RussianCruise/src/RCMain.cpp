@@ -344,10 +344,7 @@ void SaveAll()
 			save_user_cars(&ginfo->players[j]);
 
 			for( cl = classes.begin(); cl != classes.end(); ++cl )
-				(*cl)->Save( ginfo->players[j].UCID );
-
-            if (police->IsCop(ginfo->players[j].UCID))
-                police->SaveCopStat(ginfo->players[j].UCID);
+				(*cl)->Save(ginfo->players[j].UCID);
 
 			SendMTC(ginfo->players[j].UCID, msg->_( ginfo->players[j].UCID, "3000" ));
 		}
@@ -1636,16 +1633,16 @@ void case_mso ()
     }
 
     //!EXIT
-    if ( ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0))
+    if (
+        ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and
+        (strcmp(ginfo->players[i].UName, "denis-takumi") == 0 or strcmp(ginfo->players[i].UName, "Lexanom") == 0 || pack_mso->UCID == 0))
     {
         SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
         SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
 
 		SaveAll();
 
-
         ok=0;
-
         return;
     }
 
