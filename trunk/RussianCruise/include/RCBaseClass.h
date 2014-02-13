@@ -30,7 +30,7 @@ using namespace std;
 
 #include <json/json.h>
 
-//#include "tools.h"
+#include "tools.h"
 #define MAX_PATH	260
 
 /**< переменная - очередь игровых объектов */
