@@ -280,6 +280,16 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
     }
 }
 
+int RCLight::CheckLight(byte UCID)
+{
+	if (players[UCID].Light>0)
+		if (players[UCID].RedLight)
+			return 2;
+		else if (players[UCID].GreenLight)
+			return 1;
+	return 0;
+}
+
 bool RCLight::CheckOnRed(byte UCID)
 {
     return players[UCID].OnRed;
@@ -364,11 +374,13 @@ void RCLight::Svetofor1 ( byte UCID )
     {
         Y = 3;
         players[UCID].RedLight = false;
+        players[UCID].GreenLight = false;
     }
 
     if (green1 == 1)
     {
         G = 2;
+        players[UCID].GreenLight = true;
     }
 
     sprintf(cR, "^%d^S¡ñ", R);
@@ -427,11 +439,13 @@ void RCLight::Svetofor2 ( byte UCID )
     {
         Y = 3;
         players[UCID].RedLight = false;
+        players[UCID].GreenLight = false;
     }
 
     if (green2 == 1)
     {
         G = 2;
+        players[UCID].GreenLight = true;
     }
 
     sprintf(cR, "^%d^S¡ñ", R);
