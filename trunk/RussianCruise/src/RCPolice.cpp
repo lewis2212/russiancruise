@@ -166,6 +166,9 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     if (players[UCID].Sirena)
         players[UCID].Sirena = false;
 
+    if (players[UCID].Radar)
+        players[UCID].Radar = false;
+
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
     nrg->Unlock(UCID);
@@ -185,6 +188,9 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
 
     if (players[UCID].Sirena)
         players[UCID].Sirena = false;
+
+    if (players[UCID].Radar)
+        players[UCID].Radar = false;
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
@@ -399,7 +405,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if (strncmp(Msg, "!pay", strlen("!pay")) == 0 or strncmp(Msg, "!^Cоплатить", strlen("!^Cоплатить")) == 0)
     {
-        CCText(players[ packet->UCID ].UName + " send " + (string)Msg);
+        //CCText(players[ packet->UCID ].UName + " send " + (string)Msg);
 
         char _2[128];
         strcpy(_2, Msg);
@@ -1797,47 +1803,28 @@ RCPolice::LoadCopStat(byte UCID)
 void RCPolice::SaveCopStat(byte UCID)
 {
 
-    char query[512];
-    sprintf(query,
-            "REPLACE INTO police (username, rank, date_active, current_day, arrests_with_fine_by_day, arrests_without_fine_by_day, solved_accidents_by_day, fined_by_day, fines_canceled_by_day, arrests_with_fine, arrests_without_fine, solved_accidents, fined, fines_canceled) VALUES ('%s',%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)",
-            players[UCID].UName.c_str(),
-            players[UCID].Rank,
-            players[UCID].PStat.DateActive,
-			players[UCID].PStat.CurrentDay,
-			players[UCID].PStat.ArrestWithFineByDay,
-			players[UCID].PStat.ArrestWithOutFineByDay,
-			players[UCID].PStat.SolvedIncedentsByDay,
-			players[UCID].PStat.FinedByDay,
-			players[UCID].PStat.CanceledFinesByDay,
-			players[UCID].PStat.ArrestWithFine,
-			players[UCID].PStat.ArrestWithOutFine,
-			players[UCID].PStat.SolvedIncedents,
-			players[UCID].PStat.Fined,
-			players[UCID].PStat.CanceledFines
-            );
+    DB_ROW arFields;
+    arFields["date_active"] = ToString(players[UCID].PStat.DateActive);
+    arFields["current_day"] = ToString(players[UCID].PStat.CurrentDay);
+    arFields["arrests_with_fine_by_day"] = ToString(players[UCID].PStat.ArrestWithFineByDay);
+    arFields["arrests_without_fine_by_day"] = ToString(players[UCID].PStat.ArrestWithOutFineByDay);
+    arFields["solved_accidents_by_day"] = ToString(players[UCID].PStat.SolvedIncedentsByDay);
+    arFields["fined_by_day"] = ToString(players[UCID].PStat.FinedByDay);
+    arFields["fines_canceled_by_day"] = ToString(players[UCID].PStat.CanceledFinesByDay);
+    arFields["arrests_with_fine"] = ToString(players[UCID].PStat.ArrestWithFine);
+    arFields["arrests_without_fine"] = ToString(players[UCID].PStat.ArrestWithOutFine);
+    arFields["solved_accidents"] = ToString(players[UCID].PStat.SolvedIncedents);
+    arFields["fined"] = ToString(players[UCID].PStat.Fined);
+    arFields["fines_canceled"] = ToString(players[UCID].PStat.CanceledFines);
 
-    if ( !dbExec(query) )
+    bool up = dbUpdate("police", arFields, {"username",players[UCID].UName});
+
+    if ( !up )
     {
-        printf("RCPolice::Save Cop Stat Error: MySQL Query\n");
-        SendMTC(255, "^1RCPolice::Save Cop Stat error - BAD USER");
+        CCText("^1RCPolice: " + (string)players[UCID].UName + " SaveStat error");
+        SendMTC(255, "^1RCPolice: " + (string)players[UCID].UName + " SaveStat error");
         return;
     }
-
-    /*DB_ROW arFields;
-    arFields["date_active"] = players[UCID].PStat.DateActive;
-    arFields["current_day"] = players[UCID].PStat.CurrentDay;
-    arFields["arrests_with_fine_by_day"] = players[UCID].PStat.ArrestWithFineByDay;
-    arFields["arrests_without_fine_by_day"] = players[UCID].PStat.ArrestWithOutFineByDay;
-    arFields["solved_accidents_by_day"] = players[UCID].PStat.SolvedIncedentsByDay;
-    arFields["fined_by_day"] = players[UCID].PStat.FinedByDay;
-    arFields["fines_canceled_by_day"] = players[UCID].PStat.CanceledFinesByDay;
-    arFields["arrests_with_fine"] = players[UCID].PStat.ArrestWithFine;
-    arFields["arrests_without_fine"] = players[UCID].PStat.ArrestWithOutFine;
-    arFields["solved_accidents"] = players[UCID].PStat.SolvedIncedents;
-    arFields["fined"] = players[UCID].PStat.Fined;
-    arFields["fines_canceled"] = players[UCID].PStat.CanceledFines;
-
-    dbUpdate("police", arFields, {"username",players[UCID].UName});*/
 }
 
 void RCPolice::Event()

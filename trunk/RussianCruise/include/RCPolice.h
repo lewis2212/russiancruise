@@ -124,13 +124,12 @@ private:
 
     //Stat
     bool LoadCopStat(byte UCID);
+    void SaveCopStat(byte UCID);
 
 public:
     RCPolice(const char* Dir);
     ~RCPolice();
 	void ReadConfig(const char* Track);
-
-    void SaveCopStat(byte UCID);
 
     struct fine fines[MAX_FINES];
 
