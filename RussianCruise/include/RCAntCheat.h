@@ -46,8 +46,6 @@ private:
     RCMessage   *msg;   // Переменная-указатель на класс RCMessage
     RCBank      *bank;  // Переменная-указатель на класс RCBank
 
-    //struct  Player players[ MAX_PLAYERS ];     // Структура игроков
-    //struct  Player *players;     // Структура игроков
     map<byte, Player>players;
 
     // Переменные и функции, доступные только самому классу
