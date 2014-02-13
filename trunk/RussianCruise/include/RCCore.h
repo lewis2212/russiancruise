@@ -129,7 +129,7 @@ class RCCore
 	private:
 
 	char RootDir[MAX_PATH];
-	struct  player players[MAX_PLAYERS];     // Array of players
+	map<byte, player>players;
 
 	 /** IS_RST **/
 	word	Node_Finish;		// node index - finish line

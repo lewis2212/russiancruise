@@ -31,7 +31,7 @@ bool RCDL::AddSkill(byte UCID)
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100;
-        sprintf( Text, "^2 + ^3%2.2f%% ^7Skill", skl);
+        sprintf( Text, msg->_(UCID, "AddSkill"), skl);
         SendMTC( UCID, Text );
         return true;
     }
@@ -52,7 +52,7 @@ bool RCDL::AddSkill(byte UCID, float coef)
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100 * coef;
-        sprintf( Text, "^2 + ^3%2.2f%% ^7Skill", skl);
+        sprintf( Text, msg->_(UCID, "AddSkill"), skl);
         SendMTC( UCID, Text );
         return true;
     }
@@ -85,7 +85,7 @@ bool RCDL::RemSkill(byte UCID)
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
-        sprintf(Text, "^1 - ^3%2.2f%% ^7Skill", skl );
+        sprintf(Text, msg->_(UCID, "RemSkill"), skl );
         SendMTC( UCID, Text );
         return true;
     }
@@ -120,7 +120,7 @@ bool RCDL::RemSkill(byte UCID, float coef)
         char Text[64];
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
-        sprintf(Text, "^1 - ^3%2.2f%% ^7Skill", skl * coef );
+        sprintf(Text, msg->_(UCID, "RemSkill"), skl * coef );
         SendMTC( UCID , Text);
 
         return true;
@@ -369,15 +369,13 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
 
         if (players[ UCID ].Skill > nextlvl)
         {
-            players[ UCID ].LVL ++;
-            players[ UCID ].Skill = 0;
+            players[UCID].LVL ++;
+            players[UCID].Skill = 0;
             char Msg[64];
-            sprintf(Msg, "/msg ^5| ^8^C%s ^1get ^3%d ^1lvl", players[ UCID ].PName, players[ UCID ].LVL);
+            sprintf(Msg, msg->_(UCID, "GetLvl"), players[ UCID ].PName, players[ UCID ].LVL);
 
-            if ( UCID !=0 )
-            {
-                SendMST(Msg);
-            }
+            if (UCID != 0)
+                SendMTC(255, Msg);
         }
 
         /** buttons **/
