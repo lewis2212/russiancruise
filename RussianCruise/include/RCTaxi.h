@@ -74,6 +74,8 @@ struct TaxiPlayer: public GlobalPlayer
     int		PassStress; // from 0 to 1000
     int		StressOverCount;
     bool 	blink;
+    int 	SpeedOff;
+    bool    IsPursuit=false;
 
     time_t  LastT;
 };

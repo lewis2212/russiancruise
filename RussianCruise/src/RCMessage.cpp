@@ -166,6 +166,14 @@ void RCMessage::InsimCNL( struct IS_CNL* packet )
     players.erase( packet->UCID );
 }
 
+string RCMessage::GetLangList()
+{
+    string lang = "";
+    for( auto& l: MsgArray )
+        lang += ", " + l.first;
+    return lang.substr(2);
+}
+
 void RCMessage::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
@@ -203,7 +211,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 		{
 			if( l.first == id )
 			{
-				 players[ packet->UCID ].Lang = string(id);
+                players[ packet->UCID ].Lang = string(id);
 
 				sprintf(str, _(packet->UCID, "^1| ^7Language: %s"), id);
 				SendMTC(packet->UCID, str);

@@ -378,7 +378,7 @@ void help_cmds (struct player *splayer, int h_type)
     if (h_type == 1)
     {
         SendMTC(UCID, msg->_(UCID, "Help1"));
-        SendMTC(UCID, msg->_(UCID, "Help2"));
+        SendMTC(UCID, RCBaseClass::StringFormat(msg->_(UCID, "Help2"), msg->GetLangList().c_str()));
         SendMTC(UCID, msg->_(UCID, "Help3"));
         SendMTC(UCID, msg->_(UCID, "Help4"));
         SendMTC(UCID, msg->_(UCID, "Help5"));
@@ -608,10 +608,9 @@ void case_btc ()
             sprintf(log, "%slogs\\shop\\shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
             /** Пользователь кликнул по другому пользователю **/
-            if (pack_btc->ClickID<=32)
+            if (pack_btc->ClickID<=48)
             {
             	ShowUsersList(pack_btc->UCID);
-                ginfo->players[i].BID2 = pack_btc->ClickID;
 
                     struct IS_BTN pack_btn;
                     memset(&pack_btn, 0, sizeof(struct IS_BTN));
@@ -619,14 +618,14 @@ void case_btc ()
                     pack_btn.Type = ISP_BTN;
                     pack_btn.ReqI = pack_btc->ReqI;
                     pack_btn.UCID = ginfo->players[i].UCID;
-                    pack_btn.L = 25;
+                    pack_btn.L = 23;
 
                     int count;
                     for (int j=0; j<MAX_PLAYERS; j++)
 						if (ginfo->players[j].UCID != 0)
 							count++;
-                    if (count>16)
-                        pack_btn.L += 24;
+                    if (count>24)
+                        pack_btn.L += 22;
 
                     pack_btn.T = 187;
 #ifdef _RC_POLICE_H
@@ -715,7 +714,7 @@ void case_btc ()
             }
 
             /** Скрыть кнопки с пользователями **/
-            if (pack_btc->ClickID==34)
+            if (pack_btc->ClickID==48)
             {
                 for (int j=0; j<50; j++)
                     SendBFN(ginfo->players[i].UCID, j);
@@ -783,7 +782,7 @@ void case_btt ()
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
+                    if  (ginfo->players[g].UCID == pack_btt->ReqI)
                     {
                         if (atoi(pack_btt->Text) > 0)
                         {
@@ -820,7 +819,7 @@ void case_btt ()
             {
                 for (int g=0; g<MAX_PLAYERS; g++)
                 {
-                    if  (ginfo->players[i].BID2 == ginfo->players[g].BID)
+                    if  (ginfo->players[g].UCID == pack_btt->ReqI)
                     {
                         if (strlen(pack_btt->Text) > 0)
                         {
@@ -2116,46 +2115,22 @@ void case_vtn ()
 
 void ShowUsersList(byte UCID)
 {
-    for (int h=0; h<50; h++) SendBFN(UCID, h);
+    for (int i=0; i<50; i++)
+        SendBFN(UCID, i);
 
-    struct IS_BTN pack_btn;
-    memset(&pack_btn, 0, sizeof(struct IS_BTN));
-    pack_btn.Size = sizeof(struct IS_BTN);
-    pack_btn.Type = ISP_BTN;
-    pack_btn.UCID = UCID;
-    pack_btn.L = 1;
-    pack_btn.T = 191;
-    pack_btn.W = 24;
-    pack_btn.H = 4;
-    pack_btn.BStyle = 16 + ISB_CLICK;
-
-    int col = 0;
+    byte count = 0, L = 0, T = 0;
     for (int j=0; j<MAX_PLAYERS; j++)
-    {
         if (ginfo->players[j].UCID != 0)
         {
-            if (col == 16)
+            if (count == 24)
             {
-                pack_btn.L += 24;
-                pack_btn.T = 191;
+                L += 22;
+                T = 0;
             }
-            pack_btn.ReqI = ginfo->players[j].UCID;
-            pack_btn.ClickID = ginfo->players[j].BID;
-            sprintf(pack_btn.Text, "%s", ginfo->players[j].PName);
-            insim->send_packet(&pack_btn);
-            pack_btn.T -= 4;
-            col++;
+            SendButton(ginfo->players[j].UCID, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, ginfo->players[j].PName);
         }
-    }
-    pack_btn.ClickID = 34;
-    pack_btn.BStyle = 16 + ISB_CLICK;
-    pack_btn.T = 195;
-    pack_btn.L = 1;
-    pack_btn.W = 24;
-    if (col > 16) pack_btn.W += 24;
 
-    strcpy(pack_btn.Text, msg->_( UCID, "604" ));
-    insim->send_packet(&pack_btn);
+    SendButton(255, UCID, 48, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
 }
 
 int core_connect(void *pack_ver)
