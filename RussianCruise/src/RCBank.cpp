@@ -84,11 +84,6 @@ int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL
         return -1;
     }
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        CCText("^3RCBank:\t\t^1Connection with MySQL server was lost");
-    }
-
     CCText("^3RCBank:\t\t^2Connected to MySQL server");
     return 0;
 }

@@ -41,11 +41,6 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
         return -1;
     }
 
-    if( mysql_ping(dbconn) != 0)
-    {
-        printf("^3RCEnergy:\t^1Connection with MySQL server was lost\n");
-        return -1;
-    }
     CCText("^3RCEnergy:\t^2Connected to MySQL server");
     return 0;
 }
@@ -105,27 +100,14 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT energy FROM energy WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if ( mysql_ping( dbconn ) != 0 )
-    {
-        printf("Error: connection with MySQL server was lost\n");
-    }
+    DB_ROWS result = dbSelect(query);
 
-    if ( mysql_query( dbconn , query) != 0 )
-    {
-        printf("Error: MySQL Query\n");
-    }
+    DB_ROW row;
 
-    dbres = mysql_store_result( dbconn );
-
-    if (dbres == NULL)
+    if( result.size() != 0 )
     {
-        printf("Error: can't get the result description\n");
-    }
-
-    if (mysql_num_rows( dbres ) > 0)
-    {
-        dbrow = mysql_fetch_row( dbres );
-        players[ packet->UCID ].Energy = atof( dbrow[0] );
+    	row = result.front();
+        players[packet->UCID].Energy = atof(row["energy"].c_str());
     }
     else
     {
@@ -133,20 +115,12 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
 
         sprintf(query, "INSERT INTO energy (username) VALUES ('%s');", packet->UName);
 
-        if ( mysql_ping( dbconn ) != 0 )
-        {
-            printf("Error: connection with MySQL server was lost\n");
-        }
-
-        if ( mysql_query( dbconn , query) != 0 )
-        {
-            printf("Error: MySQL Query\n");
-        }
+        dbExec(query);
 
         players[ packet->UCID ].Energy = 10000;
         Save( packet->UCID );
     }
-    mysql_free_result( dbres );
+
     btn_energy( packet->UCID );
 }
 
@@ -191,11 +165,7 @@ void RCEnergy::Save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName.c_str());
 
-    if ( mysql_ping( dbconn ) != 0 )
-        printf("Bank Error: connection with MySQL server was lost\n");
-
-    if ( mysql_query( dbconn , query) != 0 )
-        printf("Bank Error: MySQL Query Save\n");
+    dbExec(query);
 }
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )

@@ -2469,13 +2469,19 @@ int main(int argc, char* argv[])
     strncpy(RootDir, argv[0], d+1);
     strcpy(ServiceName, argv[1]);
 
+    if (strlen(ServiceName) == 0)
+    {
+		RCBaseClass::CCText("^3RCMain:\t^C^1Не задан файл конфигурации");
+		return 0;
+    }
+
 	if (!mysql_init(&rcMaindb))
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't create MySQL-descriptor");
         return 0;
     }
 
-    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    // mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
 
     mysqlConf conf;
     char path[MAX_PATH];
@@ -2490,13 +2496,6 @@ int main(int argc, char* argv[])
     RCBaseClass::CCText("^3RCMain:\t\t^2Connected to MySQL server");
 
     sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);
-
-
-    if (strlen(ServiceName) == 0)
-    {
-		RCBaseClass::CCText("^3RCMain:\t^C^1Не задан файл конфигурации");
-		return 0;
-    }
 
     insim = new CInsim();
     ginfo = new GlobalInfo();
