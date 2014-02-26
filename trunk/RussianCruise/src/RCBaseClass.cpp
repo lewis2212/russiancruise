@@ -338,20 +338,21 @@ bool
 RCBaseClass::dbPing()
 {
 	if ( mysql_ping( dbconn ) != 0 )
+    {
         CCText("^3RCBaseClass: Connection with MySQL server was lost");
 
-	mysqlConf conf;
-    char path[MAX_PATH];
-    sprintf(path, "%smisc\\mysql.cfg", RootDir);
-    tools::read_mysql(path, &conf);
+        mysqlConf conf;
+        char path[MAX_PATH];
+        sprintf(path, "%smisc\\mysql.cfg", RootDir);
+        tools::read_mysql(path, &conf);
 
-    while ( (dbconn = mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
-    {
-        CCText("^3RCBaseClass: ^1Can't connect to MySQL server");
-        Sleep(1000);
+        while ( (dbconn = mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+        {
+            CCText("^3RCBaseClass: ^1Can't connect to MySQL server");
+            Sleep(1000);
+        }
+        CCText("^3RCBaseClass:\t\t^2Connected to MySQL server");
     }
-    CCText("^3RCBaseClass:\t\t^2Connected to MySQL server");
-
     return true;
 }
 
