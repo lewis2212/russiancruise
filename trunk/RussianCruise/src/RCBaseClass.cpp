@@ -286,6 +286,13 @@ string RCBaseClass::ToString (int i)
 	return string(s);
 }
 
+string RCBaseClass::ToString (unsigned int i)
+{
+	char s[24];
+	sprintf(s,"%d",i);
+	return string(s);
+}
+
 string RCBaseClass::ToString (byte b)
 {
 	char s[4];
@@ -327,11 +334,31 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte
     delete pack;
 }
 
+bool
+RCBaseClass::dbPing()
+{
+	if ( mysql_ping( dbconn ) != 0 )
+        CCText("^3RCBaseClass: Connection with MySQL server was lost");
+
+	mysqlConf conf;
+    char path[MAX_PATH];
+    sprintf(path, "%smisc\\mysql.cfg", RootDir);
+    tools::read_mysql(path, &conf);
+
+    while ( (dbconn = mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+    {
+        CCText("^3RCBaseClass: ^1Can't connect to MySQL server");
+        Sleep(1000);
+    }
+    CCText("^3RCBaseClass:\t\t^2Connected to MySQL server");
+
+    return true;
+}
+
 DB_ROWS
 RCBaseClass::dbSelect( string query )
 {
-    //if( dbres != nullptr)
-    //  mysql_free_result(dbres);
+	dbPing();
 
 	list<DB_ROW> out;
     out.clear();
@@ -481,13 +508,7 @@ bool
 RCBaseClass::dbExec( const char *query )
 {
 
-    if (mysql_ping(dbconn) != 0)
-    {
-        CCText("^1DB EXEC ERROR: connection with MySQL server was lost");
-        return false;
-    }
-
-    tools::log( query );
+    dbPing();
 
 	if( mysql_query(dbconn, query ) != 0 )
 	{
@@ -502,6 +523,7 @@ RCBaseClass::dbExec( const char *query )
 bool
 RCBaseClass::dbUpdate( string table, DB_ROW fields, pair<string, string> where )
 {
+	dbPing();
 
     string query = "UPDATE " + table + " SET ";
 

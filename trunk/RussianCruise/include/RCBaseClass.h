@@ -127,6 +127,7 @@ public:
 	void DelObject( ObjectInfo *object );
 
 	static string ToString (int i);
+	static string ToString (unsigned int i);
 	static string ToString (byte b);
 	static string ToString (bool b);
 	static string ToString (float f);
@@ -190,6 +191,8 @@ protected:
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
+    bool dbPing();
+
     /** @brief ¬ыборка данных из базы данных
 	 *
 	 * @param string query - стандартна€ SQL команда
@@ -216,8 +219,15 @@ protected:
 	unsigned int dbInsert( string query );
 	unsigned int dbInsert( const char *query );
 
+	/** @brief ќбновлени€ данных в базе
+	 *
+	 * @param string table - обновл€ема€ таблица
+	 * @param DB_ROW fields - ассоциативный массив с обновл€емыми данными
+	 * @param pair<string, string> where - пара {"ключ","значение"} фильтр по которому будет происходить обновление
+	 * @return bool - результат работы mysql_exec
+	 *
+	 */
 	bool dbUpdate( string table, DB_ROW fields, pair<string, string> where );
-	bool dbUpdate( string table, DB_ROW fields, pair<string, int> where );
 
 	Json::Value 		config;
 	Json::Reader 		configReader;

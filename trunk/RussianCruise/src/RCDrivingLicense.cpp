@@ -178,12 +178,6 @@ int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
 
     inited = 1;
 
-    if ( mysql_ping( dbconn ) != 0 )
-    {
-        CCText("^3RCDL:\t\t^1Connection with MySQL server was lost");
-        return -1;
-    }
-
     CCText("^3RCDL:\t\t^2Connected to MySQL server");
 
     return 0;
@@ -203,55 +197,31 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT lvl, skill FROM dl WHERE username='%s' LIMIT 1;", packet->UName);
 
-    if ( mysql_ping( dbconn ) != 0 )
-    {
-        printf("Error: connection with MySQL server was lost\n");
-        // произвести кик пользователя чтоль
-    }
+    DB_ROWS result = dbSelect(query);
+    DB_ROW row;
 
-    if ( mysql_query( dbconn , query) != 0 )
-    {
-        printf("Error: MySQL Query\n");
-        // произвести кик пользователя чтоль
-    }
-
-    dbres = mysql_store_result( dbconn );
     if (dbres == NULL)
     {
         printf("Error: can't get the result description\n");
     }
 
-    if (mysql_num_rows( dbres ) > 0)
+    if( result.size() != 0 )
     {
-        dbrow = mysql_fetch_row( dbres );
-        players[ packet->UCID ].LVL = atof( dbrow[0] );
-        players[ packet->UCID ].Skill = atof( dbrow[1] );
+    	row = result.front();
+        players[packet->UCID].LVL = atof(row["lvl"].c_str());
+        players[packet->UCID].Skill = atof(row["skill"].c_str());
     }
     else
     {
-        printf("Can't find %s\n Create user\n", packet->UName);
+        printf("RCDL: Can't find %s - Create user\n", packet->UName);
 
         sprintf(query, "INSERT INTO dl (username) VALUES ('%s');", packet->UName);
-
-        if ( mysql_ping( dbconn ) != 0 )
-        {
-            printf("Error: connection with MySQL server was lost\n");
-            // произвести кик пользователя чтоль
-        }
-
-        if ( mysql_query( dbconn , query) != 0 )
-        {
-            printf("Error: MySQL Query\n");
-            // произвести кик пользователя чтоль
-        }
+        dbExec(query);
 
         players[ packet->UCID ].LVL = 0;
         Save( packet->UCID );
 
     }
-
-    mysql_free_result( dbres );
-
     btn_dl( packet->UCID );
 }
 
@@ -290,20 +260,10 @@ void RCDL::InsimMSO( struct IS_MSO* packet )
 
 void RCDL::Save (byte UCID)
 {
-    char query[128];
-    sprintf(query, "UPDATE dl SET lvl = %d, skill = %d WHERE username='%s'" , players[ UCID ].LVL , players[ UCID ].Skill, players[ UCID ].UName);
-
-    if ( mysql_ping( dbconn ) != 0 )
-    {
-        printf("Bank Error: connection with MySQL server was lost\n");
-    }
-
-    if ( mysql_query( dbconn , query) != 0 )
-    {
-        printf("Bank Error: MySQL Query Save\n");
-    }
-
-    //printf("Bank Log: Affected rows = %d\n", mysql_affected_rows( dbconn ) );
+    DB_ROW query;
+    query["lvl"] = ToString(players[ UCID ].LVL);
+    query["skill"] = ToString(players[ UCID ].Skill);
+    dbUpdate("dl",query,{"username",players[ UCID ].UName});
 
 }
 
