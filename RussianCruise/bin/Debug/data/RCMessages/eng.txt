@@ -22,7 +22,7 @@ Cash 			"%s%d ^7RUR"
 202 			"^2About"
 
 Help1			"^1| ^7RUSSIAN CRUISE"
-Help2 			"^1| ^7!lang rus, eng, slv - ^3choose your language"
+Help2 			"^1| ^7!lang %s - ^3choose your language"
 Help3 			"^1| ^7!info (shift+i) - ^3info screen"
 Help4 			"^1| ^7!fines - ^3list of fines"
 Help5 			"^1| ^7!cars - ^3list of alloved cars"
