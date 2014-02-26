@@ -38,6 +38,7 @@ public:
 
     void ReadLangDir( const char *path );
     void ReadLangFile(const char *file);
+    string GetLangList();
 
 }; // this method is not good but better when old method.
 

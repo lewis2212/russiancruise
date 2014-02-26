@@ -262,6 +262,7 @@ void RCTaxi::Event()
 					SendMTC(UCID, TaxiDialogs["endtimer"][rand()%TaxiDialogs["endtimer"].size()].c_str());
 					players[UCID].PassStress += 100;
 					players[UCID].cf = 3;
+					players[UCID].IsPursuit = false;
 				}
 
                 if (time2>=0)
@@ -306,6 +307,8 @@ void RCTaxi::PassAccept( byte UCID )
 
 			Sleep(100);
 		}
+
+		players[UCID].IsPursuit = false;
 
         if (players[UCID].ClientType == 0)
             players[UCID].ClientType = count - (int)sqrt(rand()%(count * count));
@@ -714,10 +717,26 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     Z1=Z;
                 }
 
-				if (lgh->CheckLight(UCID) == 2 and Speed == 0 and players[UCID].PassStress>0)
-					players[UCID].PassStress -= 3;
-				if (lgh->CheckLight(UCID) == 1 and Speed == 0)
-					players[UCID].PassStress += 3;
+                if (Speed == 0 and players[UCID].PassStress < 1000)
+                {
+                    if (lgh->CheckLight(UCID) == 2)
+                    {
+                        players[UCID].PassStress -= 3;
+                        players[UCID].SpeedOff = 0;
+                    }
+                    if (lgh->CheckLight(UCID) == 1)
+                        players[UCID].PassStress += 3;
+
+                    if (players[UCID].SpeedOff>10 and lgh->CheckLight(UCID) != 2)
+                    {
+                        players[UCID].SpeedOff=0;
+                        players[UCID].PassStress += 300;
+                        SendMTC(UCID,  TaxiDialogs["speedoff"][ rand()%TaxiDialogs["speedoff"].size() ].c_str() ); // пугаецца, требует ехать а не шашечки
+                    }
+                    players[UCID].SpeedOff++;
+                }
+                else if (players[UCID].SpeedOff != 0)
+                    players[UCID].SpeedOff = 0;
 
                 BtnStress( UCID );
                 char d[128];
@@ -744,6 +763,24 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     if (Speed == 0)
                         PassDone( UCID );
                 }
+                else if(police->IsPursuit(UCID))
+                {
+                    if (players[UCID].ClientType == 2)
+                    {
+                        if (!players[UCID].IsPursuit)
+                        {
+                            players[UCID].IsPursuit = true;
+                            players[UCID].PassStress -= 200;
+                            SendMTC(UCID,  TaxiDialogs["client_21"][ rand()%TaxiDialogs["client_21"].size() ].c_str() );
+                        }
+                    }
+                    else
+                    {
+                        players[UCID].PassStress = MAX_PASS_STRESS;
+                        SendMTC(UCID,  TaxiDialogs["pursuit"][ rand()%TaxiDialogs["pursuit"].size() ].c_str() ); // пугаецца, требует остановить
+                    }
+                }
+
             }
         }
 
@@ -1121,6 +1158,11 @@ void RCTaxi::PassDone( byte UCID )
 		}
         if (players[UCID].cf == 3)
             coef = 0.5;
+        if (players[UCID].ClientType == 2 and players[UCID].IsPursuit)
+        {
+            coef = 1.5;
+			coef2 = 1.2;
+		}
 
         bank->AddCash(UCID, (1000*coef - players[UCID].PassStress / 2), true);
         dl->AddSkill(UCID, coef2);

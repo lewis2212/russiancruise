@@ -34,12 +34,14 @@ struct PoliceStat
     // Day Stat
     int ArrestWithFineByDay;
     int ArrestWithOutFineByDay;
+    int HelpArrestByDay;
     int SolvedIncedentsByDay;
     int FinedByDay;
     int CanceledFinesByDay;
     // All Stat
     int ArrestWithFine;
     int ArrestWithOutFine;
+    int HelpArrest;
     int SolvedIncedents;
     int Fined;
     int CanceledFines;
@@ -146,6 +148,7 @@ public:
     int GetFineCount();
     int GetCopCount();
     char* GetFineName(byte UCID, int FineID);
+    bool IsPursuit(byte UCID);
 
     void Event();
 

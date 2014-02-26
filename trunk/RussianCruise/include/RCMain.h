@@ -33,8 +33,8 @@ Russian Cruise by TurboSnail
 #include "RCAntCheat.h"
 #include "RCStreet.h"
 #include "RCLight.h"
-#include "RCTaxi.h"
 #include "RCPolice.h"
+#include "RCTaxi.h"
 #include "RCRoadSign.h"
 
 #include "RCQuest.h"
@@ -169,14 +169,14 @@ void read_track();
 void read_car();
 void ShowUsersList(byte UCID);
 
-void SendMTC (byte UCID,const char* Msg)
+void SendMTC (byte UCID, string Msg)
 {
     IS_MTC *pack = new IS_MTC;
     memset( pack, 0, sizeof( IS_MTC ) );
     pack->Size = sizeof( IS_MTC );
     pack->Type = ISP_MTC;
     pack->UCID = UCID;
-    sprintf( pack->Text, "%.127s\0", Msg );
+    sprintf( pack->Text, "%.127s\0", Msg.c_str() );
     insim->send_packet( pack );
     delete pack;
 };
