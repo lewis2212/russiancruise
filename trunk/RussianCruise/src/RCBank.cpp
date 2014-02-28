@@ -237,8 +237,8 @@ void RCBank::InsimNPL(struct IS_NPL* packet)
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
 
-    if (players[packet->UCID].Cash > 5000000)
-        players[packet->UCID].Cash = 5000000;
+    //if (players[packet->UCID].Cash > 5000000)
+        //players[packet->UCID].Cash = 5000000;
 }
 
 void RCBank::InsimPLP(struct IS_PLP* packet)

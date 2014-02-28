@@ -1823,10 +1823,6 @@ void case_ncn ()
     strcpy(ginfo->players[i].UName, pack_ncn->UName);
     strcpy(ginfo->players[i].PName, pack_ncn->PName);
     ginfo->players[i].UCID = pack_ncn->UCID;
-    ginfo->players[i].BID = i;
-#ifdef _RC_POLICE_H
-    police->SetUserBID( ginfo->players[i].UCID, ginfo->players[i].BID );
-#endif // _RC_POLICE_H
 
     ginfo->players[i].Zone = 1;
 
