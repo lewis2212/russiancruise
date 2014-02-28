@@ -341,6 +341,8 @@ RCBaseClass::dbPing()
     {
         CCText("^3RCBaseClass: Connection with MySQL server was lost");
 
+        mysql_close(dbconn);
+
         mysqlConf conf;
         char path[MAX_PATH];
         sprintf(path, "%smisc\\mysql.cfg", RootDir);

@@ -75,9 +75,6 @@ struct PolicePlayer: public GlobalPlayer
 
     struct 	user_fine fines[MAX_FINES];
 
-    byte    BID;
-    byte    BID2;
-
     int 	ThisFineCount;
     char 	ThisFine[20][200];
 
@@ -139,7 +136,7 @@ public:
 
     void Save( byte UCID );
     void SendMTCToCop(const char* Msg, int Rank, ...);
-    void SetUserBID( byte UCID, byte BID);
+
     void SetSirenLight( string sirenWord );
     bool IsCop(byte UCID);
     int GetCopRank(byte UCID);

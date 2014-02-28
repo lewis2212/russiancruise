@@ -115,9 +115,6 @@ struct player
     byte    H_TRes;
     byte    UCID;                  // Connection ID
     byte    PLID;                  // Player ID
-    byte    BID;
-    byte    BID2;
-    byte    bfn;
     float   Distance;
     byte    Zone;
     //bool    Pitlane;
@@ -144,9 +141,9 @@ struct player
 class GlobalInfo
 {
 public:
-    struct  player players[MAX_PLAYERS];     // Array of players
-
-    struct  cars car[MAX_CARS];                    // Array of cars (need for shop)
+    player players[MAX_PLAYERS];     // Array of players
+    //map < byte, player > players;
+    cars car[MAX_CARS];                    // Array of cars (need for shop)
     map < string , cars > carMap;
 
     /** Bad words **/

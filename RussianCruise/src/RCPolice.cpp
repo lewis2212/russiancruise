@@ -1489,11 +1489,6 @@ void RCPolice::BtnPogonya(byte UCID)
     }
 }
 
-void RCPolice::SetUserBID ( byte UCID, byte BID )
-{
-    players[ UCID ].BID = BID;
-}
-
 void RCPolice::Save ( byte UCID )
 {
     if (players[UCID].cop)
