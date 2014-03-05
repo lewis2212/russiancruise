@@ -6,6 +6,7 @@ using namespace std;
 
 RCAntCheat::RCAntCheat(const char* Dir)
 {
+    ClassName = "RCAntCheat";
     strcpy(RootDir,Dir);
 }
 

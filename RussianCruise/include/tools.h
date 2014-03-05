@@ -41,9 +41,8 @@ struct mysqlConf
 
 namespace tools
 {
-
-void log(const char *text);
-void read_mysql(const char *path ,mysqlConf *conf);
+    void log(const char *text);
+    bool read_mysql(const char *path ,mysqlConf *conf);
 };
 
 #endif

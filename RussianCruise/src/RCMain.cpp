@@ -2465,6 +2465,8 @@ int main(int argc, char* argv[])
     strncpy(RootDir, argv[0], d+1);
     strcpy(ServiceName, argv[1]);
 
+    //tools::rootDir = RootDir;
+
     if (strlen(ServiceName) == 0)
     {
 		RCBaseClass::CCText("^3RCMain:\t^C^1Не задан файл конфигурации");
@@ -2476,11 +2478,12 @@ int main(int argc, char* argv[])
         RCBaseClass::CCText("^3RCMain: ^1Can't create MySQL-descriptor");
         return 0;
     }
-
-    // mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, "true" ); // разрешаем переподключение
+    my_bool reconnect = 1;
+    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, &reconnect ); // разрешаем переподключение
 
     mysqlConf conf;
     char path[MAX_PATH];
+    memset(&path,0,MAX_PATH);
     sprintf(path, "%smisc\\mysql.cfg", RootDir);
     tools::read_mysql(path, &conf);
 

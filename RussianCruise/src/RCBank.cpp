@@ -4,6 +4,7 @@ using namespace std;
 
 RCBank::RCBank(const char* Dir)
 {
+    ClassName = "RCBank";
     strcpy(RootDir,Dir);
 }
 
@@ -261,7 +262,7 @@ void RCBank::InsimCNL(struct IS_CNL* packet)
 void RCBank::Save (byte UCID)
 {
     char query[128];
-    sprintf(query, "UPDATE bank SET cash = %f WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank SET cash = '%f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
@@ -269,7 +270,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Credit */
-    sprintf(query, "UPDATE bank_credits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank_credits SET cash = '%d', date_create = '%d' WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
@@ -277,7 +278,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Deposit */
-    sprintf(query, "UPDATE bank_deposits SET cash = %d, date_create = %d WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank_deposits SET cash = '%d', date_create = '%d' WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
@@ -285,7 +286,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Capital */
-    sprintf(query, "UPDATE bank SET cash = %f WHERE username='_RC_Bank_Capital_'", BankFond);
+    sprintf(query, "UPDATE bank SET cash = '%f' WHERE username='_RC_Bank_Capital_'", BankFond);
 
     if( !dbExec(query) )
 	{

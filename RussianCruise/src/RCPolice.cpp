@@ -1,6 +1,7 @@
 #include "RCPolice.h"
 RCPolice::RCPolice(const char* Dir)
 {
+    ClassName = "RCPolice";
     strcpy(RootDir,Dir);
     memset( &fines, 0, sizeof( fine ) * MAX_FINES );
 }
