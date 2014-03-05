@@ -40,7 +40,6 @@ Russian Cruise by TurboSnail
 #include "RCQuest.h"
 // #include "RCAutoschool.h"
 
-#define MAX_PLAYERS 64
 #define MAX_CARS 30
 
 using namespace std;
@@ -113,8 +112,6 @@ struct player
     int     CTune;                 // Car Tuning
     byte    SetF;
     byte    H_TRes;
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // Player ID
     float   Distance;
     byte    Zone;
     //bool    Pitlane;
@@ -127,7 +124,7 @@ struct player
     byte    Svetofor;
 
     /** Flood **/
-    char  	Msg[128];
+    char    Msg[128];
     int     FloodCount;
     int     FloodTime;
 
@@ -138,13 +135,15 @@ struct player
     unsigned PLC;
 };
 
+map < byte, player > players;
+map < byte, byte >PLIDtoUCID;
+map < string , cars > carMap;
+
 class GlobalInfo
 {
 public:
-    player players[MAX_PLAYERS];     // Array of players
-    //map < byte, player > players;
+
     cars car[MAX_CARS];                    // Array of cars (need for shop)
-    map < string , cars > carMap;
 
     /** Bad words **/
     int     WordsCount;
@@ -213,13 +212,13 @@ void SendButton(byte ReqI, byte UCID, byte ClickID, byte L, byte T, byte W, byte
     delete pack;
 }
 
-void SendMST (const char* Text)
+void SendMST (string Text)
 {
     IS_MST *pack = new IS_MST;
     memset( pack, 0, sizeof( IS_MST));
     pack->Size = sizeof( IS_MST);
     pack->Type = ISP_MST;
-    sprintf( pack->Msg, "%.63s\0", Text );
+    sprintf( pack->Msg, "%.63s\0", Text.c_str() );
     insim->send_packet( pack );
     delete pack;
 };
