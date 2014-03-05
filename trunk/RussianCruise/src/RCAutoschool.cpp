@@ -2,6 +2,7 @@
 
 RCAutoschool::RCAutoschool(const char *dir)
 {
+    ClassName = "RCAutoschool";
 	strcpy(RootDir, dir);
 	players.clear();
 }

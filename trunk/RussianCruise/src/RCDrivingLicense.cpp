@@ -4,6 +4,7 @@ using namespace std;
 
 RCDL::RCDL(const char* Dir)
 {
+    ClassName = "RCDL";
     strcpy(RootDir,Dir);
 }
 

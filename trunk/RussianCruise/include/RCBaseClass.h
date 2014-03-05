@@ -58,6 +58,8 @@ public:
     RCBaseClass();
     ~RCBaseClass();
 
+    string ClassName = "RCBaseClass";
+
     void         next_packet();   						// Функция переборки типа пакета
     virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
 

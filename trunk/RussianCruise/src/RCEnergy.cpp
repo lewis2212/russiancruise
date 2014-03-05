@@ -3,6 +3,7 @@ using namespace std;
 
 RCEnergy::RCEnergy(const char* Dir)
 {
+    ClassName = "RCEnergy";
     strcpy(RootDir,Dir);
 }
 

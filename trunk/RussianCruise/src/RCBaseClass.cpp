@@ -337,24 +337,39 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte
 bool
 RCBaseClass::dbPing()
 {
-	if ( mysql_ping( dbconn ) != 0 )
-    {
-        CCText("^3RCBaseClass: Connection with MySQL server was lost");
+    CCText( "^3Ping From " + ClassName );
 
+    int cnt = 0;
+    while ( mysql_ping( dbconn ) != 0  && cnt++ < 10)
+    {
+        CCText("^3" + ClassName + ": Connection with MySQL server was lost");
+        CCText( mysql_error(dbconn) );
+        /*system("pause");
         mysql_close(dbconn);
 
         mysqlConf conf;
         char path[MAX_PATH];
+        memset(&path,0,MAX_PATH);
         sprintf(path, "%smisc\\mysql.cfg", RootDir);
-        tools::read_mysql(path, &conf);
+        CCText( "^3" + ClassName + string( path ) );
 
-        while ( (dbconn = mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+        while (!tools::read_mysql(path, &conf) || !mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) )
         {
-            CCText("^3RCBaseClass: ^1Can't connect to MySQL server");
+            CCText("^3" + ClassName + ": ^1Can't connect to MySQL server");
+            CCText( mysql_error(dbconn) );
+
             Sleep(1000);
-        }
-        CCText("^3RCBaseClass:\t\t^2Connected to MySQL server");
+
+            memset(&path,0,MAX_PATH);
+            sprintf(path, "%smisc\\mysql.cfg", RootDir);
+        }*/
+
+        //CCText("^3" + ClassName + "::\t\t^2Connected to MySQL server");
     }
+
+    if(cnt >= 10)
+        return false;
+
     return true;
 }
 
@@ -380,7 +395,7 @@ RCBaseClass::dbSelect( string query )
 
 		if(pos == string::npos)
 		{
-		   printf( "RCBaseclass::Select - Can't find 'FROM' in query");
+		   CCText( ClassName + "::Select - Can't find 'FROM' in query");
 		   return out;
 		}
 
@@ -455,7 +470,7 @@ RCBaseClass::dbSelect( string query )
 
 		if(pos == string::npos)
 		{
-		   printf( "RCBaseclass::Select - Can't find 'FROM' in query");
+		   CCText( ClassName + "::Select - Can't find 'FROM' in query");
 		   return out;
 		}
 

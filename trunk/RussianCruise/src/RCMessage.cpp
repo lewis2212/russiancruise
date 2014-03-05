@@ -4,6 +4,7 @@ using namespace std;
 
 RCMessage::RCMessage(const char* Dir)
 {
+    ClassName = "RCMessage";
     strcpy(RootDir,Dir);
 }
 

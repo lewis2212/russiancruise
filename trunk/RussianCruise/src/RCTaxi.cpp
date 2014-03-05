@@ -3,6 +3,7 @@ using namespace std;
 
 RCTaxi::RCTaxi(const char* Dir)
 {
+    ClassName = "RCTaxi";
     strcpy(RootDir,Dir);
     memset(ClientPoints, 0, sizeof( Taxi_clients ) * MAX_POINTS );
 }
