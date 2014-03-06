@@ -825,7 +825,13 @@ void case_mci ()
 
     for (int i = 0; i < pack_mci->NumC; i++)
     {
+        if(PLIDtoUCID.find(pack_mci->Info[i].PLID) == PLIDtoUCID.end())
+            continue;
+
         byte UCID = PLIDtoUCID[pack_mci->Info[i].PLID];
+
+        if(players.find(UCID) == players.end())
+            continue;
 
         btn_panel(UCID);
 
@@ -1937,15 +1943,17 @@ void ShowUsersList(byte UCID)
         SendBFN(UCID, i);
 
     byte count = 0, L = 0, T = 0;
-
-    if (players.size() == 24)
+    for (auto& plr: players)
     {
-        L += 22;
-        T = 0;
+
+        if (count == 24)
+        {
+            L += 22;
+            T = 0;
+        }
+
+        SendButton(plr.first, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[plr.first].PName);
     }
-    SendButton(UCID, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[UCID].PName);
-
-
     SendButton(255, UCID, 48, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
 }
 
@@ -2328,6 +2336,8 @@ int main(int argc, char* argv[])
         RCBaseClass::CCText("^3RCMain:\t^1INSIM VER != 5");
         return -1;
     }
+
+    players.clear();
 
     CreateClasses();
     InitClasses();
