@@ -334,21 +334,6 @@ void save_car (byte UCID)
 
 }
 
-void SaveAll()
-{
-	for(auto& pl: players)
-	{
-		save_car(pl.first);
-		save_user_cars(pl.first);
-
-		for( cl = classes.begin(); cl != classes.end(); ++cl )
-			(*cl)->Save(pl.first);
-
-		SendMTC(pl.first, msg->_( pl.first, "3000" ));
-	}
-	RCBaseClass::CCText("^2DATA SAVED");
-}
-
 void Save(byte UCID)
 {
 	save_car(UCID);
@@ -360,6 +345,15 @@ void Save(byte UCID)
 	}
 
 	SendMTC(UCID, msg->_( UCID, "3000" ));
+}
+
+void SaveAll()
+{
+	for(auto& pl: players)
+	{
+		Save(pl.first);
+	}
+	RCBaseClass::CCText("^2DATA SAVED");
 }
 
 void help_cmds (byte UCID, int h_type)
