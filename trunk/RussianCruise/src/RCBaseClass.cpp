@@ -335,15 +335,17 @@ void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte
 }
 
 bool
-RCBaseClass::dbPing()
+RCBaseClass::dbPing( string query )
 {
-    CCText( "^3Ping From " + ClassName );
+    //CCText( "^3Ping From " + ClassName );
 
     int cnt = 0;
     while ( mysql_ping( dbconn ) != 0  && cnt++ < 10)
     {
         CCText("^3" + ClassName + ": Connection with MySQL server was lost");
         CCText( mysql_error(dbconn) );
+
+        tools::log(query.c_str());
         /*system("pause");
         mysql_close(dbconn);
 
@@ -376,7 +378,7 @@ RCBaseClass::dbPing()
 DB_ROWS
 RCBaseClass::dbSelect( string query )
 {
-	dbPing();
+	dbPing(query);
 
 	list<DB_ROW> out;
     out.clear();
@@ -526,7 +528,7 @@ bool
 RCBaseClass::dbExec( const char *query )
 {
 
-    dbPing();
+    dbPing(query);
 
 	if( mysql_query(dbconn, query ) != 0 )
 	{
@@ -541,9 +543,7 @@ RCBaseClass::dbExec( const char *query )
 bool
 RCBaseClass::dbUpdate( string table, DB_ROW fields, pair<string, string> where )
 {
-	dbPing();
-
-    string query = "UPDATE " + table + " SET ";
+	string query = "UPDATE " + table + " SET ";
 
     bool first = true;
     for( auto row: fields )

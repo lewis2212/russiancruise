@@ -336,6 +336,9 @@ void save_car (byte UCID)
 
 void Save(byte UCID)
 {
+    if(players.find(UCID) == players.end())
+        return;
+
 	save_car(UCID);
 	save_user_cars(UCID);
 
@@ -724,12 +727,9 @@ void case_btt ()
     GetLocalTime(&sm);
 
     char send_c[255];
-    sprintf(send_c, "%slogs\\sends\\send.txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+    sprintf(send_c, "%slogs\\sends\\send.txt", RootDir);
     char fine_c[255];
     sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-
-
-    int i;
 
     /**
     Пользователь передает деньги
@@ -751,7 +751,7 @@ void case_btt ()
                 bank->RemCash(pack_btt->UCID, atoi(pack_btt->Text));
                 bank->AddCash(pack_btt->ReqI, atoi(pack_btt->Text), false);
 
-                sprintf(Msg, "[%02d.%02d.%d, %02d:%02d] %s => %s (%s RUR)", sm.wDay, sm.wMonth, sm.wYear, sm.wHour, sm.wMinute, players[pack_btt->UCID].UName, players[pack_btt->ReqI].UName, (int)pack_btt->Text);
+                sprintf(Msg, "[%02d.%02d.%d, %02d:%02d] %s => %s (%s RUR)", sm.wDay, sm.wMonth, sm.wYear, sm.wHour, sm.wMinute, players[pack_btt->UCID].UName, players[pack_btt->ReqI].UName, pack_btt->Text);
                 ofstream readf (send_c, ios::app);
                 readf << Msg << endl;
                 readf.close();
@@ -769,8 +769,9 @@ void case_btt ()
     {
         if (strlen(pack_btt->Text) > 0)
         {
+
             char Msg[128];
-            sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players[i].PName, pack_btt->Text );
+            sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players[pack_btt->UCID].PName, pack_btt->Text );
             SendMTC(pack_btt->ReqI, Msg);
 
             RCBaseClass::CCText("^1" + (string)players[pack_btt->UCID].UName + " ^7передал сообщение " + (string)players[pack_btt->ReqI].UName + ":");
@@ -808,17 +809,6 @@ void case_cpr ()
 	strcpy(players[pack_cpr->UCID].PName, pack_cpr->PName);
 }
 
-
-void case_flg ()
-{
-    struct IS_FLG *pack_flg = (struct IS_FLG*)insim->get_packet();
-}
-
-void case_lap ()
-{
-    struct IS_LAP *pack_lap = (struct IS_LAP*)insim->get_packet();
-}
-
 void case_mci ()
 {
     struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
@@ -851,7 +841,7 @@ void case_mci ()
             LastX=X;
             LastY=Y;
         }
-        float Dist = Dist = dl->Distance(X, Y, LastX, LastY);;
+        float Dist = dl->Distance(X, Y, LastX, LastY);;
 
         if (Dist<50)
         {
@@ -1543,7 +1533,7 @@ void case_mso ()
         pack_requests->ReqI = 255;
         pack_requests->SubT = TINY_RST;
         insim->send_packet(pack_requests);
-        pack_requests;
+        delete pack_requests;
 
         return;
     }
@@ -1575,7 +1565,7 @@ void case_mso ()
         if ( police->InPursuite( pack_mso->UCID ) == 1 )
         {
             char Msg[64];
-            sprintf(Msg, "/pitlane %s", players[pack_mso->UCID].UName, 10000);
+            sprintf(Msg, "/pitlane %s", players[pack_mso->UCID].UName);
             SendMST(Msg);
 
             int pay = 10000;
@@ -1804,8 +1794,6 @@ void case_npl ()
 
 void case_pen ()
 {
-    int i;
-
     struct IS_PEN *pack_pen = (struct IS_PEN*)insim->get_packet();
 
     byte UCID = PLIDtoUCID[pack_pen->PLID];
@@ -1816,11 +1804,6 @@ void case_pen ()
         taxi->PassDead(UCID);
 #endif
     }
-}
-
-void case_pla ()
-{
-    struct IS_PLA *pack_pla = (struct IS_PLA*)insim->get_packet();
 }
 
 void case_pll ()
@@ -1945,6 +1928,9 @@ void ShowUsersList(byte UCID)
     byte count = 0, L = 0, T = 0;
     for (auto& plr: players)
     {
+        // Viva La Костыль
+        if(plr.first == 0 || strlen(plr.second.PName) == 0)
+            continue;
 
         if (count == 24)
         {
@@ -2434,16 +2420,8 @@ int main(int argc, char* argv[])
         case ISP_NLP:
             break;
 
-        case ISP_FLG:
-            case_flg ();
-            break;
-
-        case ISP_PEN:
+       case ISP_PEN:
             case_pen ();
-            break;
-
-        case  ISP_PLA:
-            case_pla();
             break;
 
         case ISP_VTN:

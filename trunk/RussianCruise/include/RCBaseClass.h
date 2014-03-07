@@ -193,7 +193,7 @@ protected:
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
-    bool dbPing();
+    bool dbPing(string query);
 
     /** @brief Выборка данных из базы данных
 	 *
