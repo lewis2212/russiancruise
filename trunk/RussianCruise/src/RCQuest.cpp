@@ -89,6 +89,6 @@ void RCQuest::insim_mci(struct IS_MCI *packet)
 {
     for (int i = 0; i < packet->NumC; i++)
     {
-        byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
+        //byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
     }
 }

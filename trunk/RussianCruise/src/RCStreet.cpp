@@ -175,8 +175,6 @@ void RCStreet::InsimMSO( struct IS_MSO* packet )
 
 void RCStreet::InsimNCN( struct IS_NCN* packet )
 {
-    int i;
-
     if (packet->UCID == 0)
         return;
 
@@ -222,6 +220,8 @@ int RCStreet::CurentStreetInfo(void *StreetInfo, byte UCID)
 
     if (memcpy(StreetInfo, &Street[ players[ UCID ].StreetNum ], sizeof(streets)))
         return 1;
+
+    return 1;
 }
 
 int RCStreet::CurentStreetInfoByNum(void *StreetInfo, int StrNum)

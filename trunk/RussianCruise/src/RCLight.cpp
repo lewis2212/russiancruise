@@ -18,6 +18,8 @@ bool RCLight::SetLight3( byte UCID, bool Key)
             SendBFN( UCID, f);
 
     players[UCID].Light3 = Key;
+
+    return true;
 }
 
 int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
@@ -512,7 +514,6 @@ void RCLight::Svetofor3 ( byte UCID )
     if (green2 == 1)
         signal13 ="^2•";
 
-    byte ClickID = 195;
 
     // TODO: refactoring
     struct IS_BTN pack_btn;

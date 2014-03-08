@@ -453,7 +453,7 @@ RCBaseClass::dbSelect( string query )
 		while( (dbrow = mysql_fetch_row(dbres)) != NULL )
 		{
 			DB_ROW row;
-			for( int i = 0; i < mysql_num_fields(dbres); i++ )
+			for( unsigned int i = 0; i < mysql_num_fields(dbres); i++ )
 			{
 				row[ columns[ i ] ] = string( dbrow[ i ] );
 			}
@@ -671,7 +671,7 @@ vector<string>& SplitString::split( const char delim, int rep)
     if (!flds.empty()) flds.clear();  // empty vector if necessary
     string work = data();
     string buf = "";
-    int i = 0;
+    unsigned int i = 0;
     while (i < work.length())
     {
         if (work[i] != delim)
