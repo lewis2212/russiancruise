@@ -142,7 +142,7 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkDestinaion = place;
             players[UCID].WorkAccept = 2;
 
-            char Text[96], str[64];
+            char str[64];
 
             int StreetID = -1;
             for (int g = 0; g < street->StreetNums; g++)
@@ -640,7 +640,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     {
         for (int i=0;i<zone.NumPoints;i++)
         {
-            char Text[96], str[64];
+            char str[64];
 
             int StreetID = -1;
             for (int g = 0; g < street->StreetNums; g++)

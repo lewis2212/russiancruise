@@ -34,9 +34,9 @@
 
 //using namespace std;
 
-#include <CInsim.h>
+#include "cinsim.h"
 
-#ifdef __linux__
+#ifdef CIS_LINUX
 #define INVALID_SOCKET -1
 #endif
 
@@ -86,11 +86,11 @@ CInsim::~CInsim ()
 * Initialize the socket and the Insim connection
 * If "struct IS_VER *pack_ver" is set it will contain an IS_VER packet after returning. It's an optional argument
 */
-int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_VER *pack_ver, byte prefix, word flags, word interval, word udpport)
+int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_VER *pack_ver, unsigned char prefix, word flags, word interval, word udpport)
 {
     // Initialise WinSock
     // Only required on Windows
-    #ifdef _WINDOWS
+    #ifdef CIS_WINDOWS
     WSADATA wsadata;
     if (WSAStartup(0x202, &wsadata) == SOCKET_ERROR) {
       WSACleanup();
@@ -103,10 +103,10 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
     // Could we get the socket handle? If not the OS might be too busy or has run out of available socket descriptors
     if (sock == INVALID_SOCKET) {
-      #ifdef _WINDOWS
+      #ifdef CIS_WINDOWS
       closesocket(sock);
       WSACleanup();
-      #elif defined __linux__
+      #elif defined CIS_LINUX
       close(sock);
       #endif
 
@@ -127,15 +127,15 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
     else
       saddr.sin_addr.s_addr = inet_addr(addr);
 
-    // Set the port number in the socket structure - we convert it from host byte order, to network
+    // Set the port number in the socket structure - we convert it from host unsigned char order, to network
     saddr.sin_port = htons(port);
 
     // Now the socket address structure is full, lets try to connect
     if (connect(sock, (struct sockaddr *) &saddr, sizeof(saddr)) < 0) {
-      #ifdef _WINDOWS
+      #ifdef CIS_WINDOWS
       closesocket(sock);
       WSACleanup();
-      #elif defined __linux__
+      #elif defined CIS_LINUX
       close(sock);
       #endif
 
@@ -149,11 +149,11 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
         // Could we get the socket handle? If not the OS might be too busy or have run out of available socket descriptors
         if (sockudp == INVALID_SOCKET) {
-            #ifdef _WINDOWS
+            #ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #elif defined __linux__
+            #elif defined CIS_LINUX
             close(sock);
             close(sockudp);
             #endif
@@ -166,8 +166,8 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         memset(&my_addr, 0, sizeof(my_addr));
 
         // Bind the UDP socket to my specified udpport and address
-        my_addr.sin_family = AF_INET;         // host byte order
-        my_addr.sin_port = htons(udpport);     // short, network byte order
+        my_addr.sin_family = AF_INET;         // host unsigned char order
+        my_addr.sin_port = htons(udpport);     // short, network unsigned char order
         my_addr.sin_addr.s_addr = INADDR_ANY;
         memset(my_addr.sin_zero, '\0', sizeof my_addr.sin_zero);
 
@@ -185,16 +185,16 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         else
             udp_saddr.sin_addr.s_addr = inet_addr(addr);
 
-        // Set the UDP port number in the UDP socket structure - we convert it from host byte order, to network
+        // Set the UDP port number in the UDP socket structure - we convert it from host unsigned char order, to network
         udp_saddr.sin_port = htons(port);
 
         // Connect the UDP using the same address as in the TCP socket
         if (connect(sockudp, (struct sockaddr *) &udp_saddr, sizeof(udp_saddr)) < 0) {
-            #ifdef _WINDOWS
+            #ifdef CIS_WINDOWS
             closesocket(sock);
             closesocket(sockudp);
             WSACleanup();
-            #elif defined __linux__
+            #elif defined CIS_LINUX
             close(sock);
             close(sockudp);
             #endif
@@ -224,17 +224,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
     // Send the initialization packet
     if(send_packet(&isi_p) < 0) {
         if (using_udp) {
-            #ifdef _WINDOWS
+            #ifdef CIS_WINDOWS
             closesocket(sockudp);
-            #elif defined __linux__
+            #elif defined CIS_LINUX
             close(sockudp);
             #endif
 	}
 
-        #ifdef _WINDOWS
+        #ifdef CIS_WINDOWS
         closesocket(sock);
         WSACleanup();
-        #elif defined __linux__
+        #elif defined CIS_LINUX
         close(sock);
         #endif
         return -1;
@@ -242,9 +242,9 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
 
     // Set the timeout period
     select_timeout.tv_sec = IS_TIMEOUT;
-    #ifdef _WINDOWS
+    #ifdef CIS_WINDOWS
     select_timeout.tv_usec = 0;
-    #elif defined __linux__
+    #elif defined CIS_LINUX
     select_timeout.tv_nsec = 0;
     #endif
 
@@ -254,17 +254,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
         if (next_packet() < 0) {             // Get next packet, supposed to be an IS_VER
             if (isclose() < 0) {
                 if (using_udp) {
-                    #ifdef _WINDOWS
+                    #ifdef CIS_WINDOWS
                     closesocket(sockudp);
-                    #elif defined __linux__
+                    #elif defined CIS_LINUX
                     close(sockudp);
                     #endif
                 }
 
-                #ifdef _WINDOWS
+                #ifdef CIS_WINDOWS
                 closesocket(sock);
                 WSACleanup();
-                #elif defined __linux__
+                #elif defined CIS_LINUX
                 close(sock);
                 #endif
                 return -1;
@@ -280,17 +280,17 @@ int CInsim::init (char *addr, word port, char *product, char *admin, struct IS_V
             default:                          // It wasn't, something went wrong. Quit
                 if (isclose() < 0) {
                     if (using_udp) {
-                        #ifdef _WINDOWS
+                        #ifdef CIS_WINDOWS
                         closesocket(sockudp);
-                        #elif defined __linux__
+                        #elif defined CIS_LINUX
                         close(sockudp);
                         #endif
                     }
 
-                    #ifdef _WINDOWS
+                    #ifdef CIS_WINDOWS
                     closesocket(sock);
                     WSACleanup();
-                    #elif defined __linux__
+                    #elif defined CIS_LINUX
                     close(sock);
                     #endif
                 }
@@ -315,17 +315,17 @@ int CInsim::isclose()
         return -1;
 
     if (using_udp) {
-        #ifdef _WINDOWS
+        #ifdef CIS_WINDOWS
         closesocket(sockudp);
-        #elif defined __linux__
+        #elif defined CIS_LINUX
         close(sockudp);
         #endif
     }
 
-    #ifdef _WINDOWS
+    #ifdef CIS_WINDOWS
     closesocket(sock);
     WSACleanup();
-    #elif defined __linux__
+    #elif defined CIS_LINUX
     close(sock);
     #endif
     return 0;
@@ -337,13 +337,13 @@ int CInsim::isclose()
 */
 int CInsim::next_packet()
 {
-    byte oldp_size, p_size;
+    unsigned char oldp_size, p_size;
     bool alive = true;
 
     while (alive)                                               // Keep the connection alive!
     {
         alive = false;
-        oldp_size = (byte)*lbuf.buffer;
+        oldp_size = (unsigned char)*lbuf.buffer;
 
         if ((lbuf.bytes > 0) && (lbuf.bytes >= oldp_size)) {        // There's an old packet in the local buffer, skip it
             // Copy the leftovers from local buffer to global buffer
@@ -356,7 +356,7 @@ int CInsim::next_packet()
             lbuf.bytes = gbuf.bytes;
         }
 
-        p_size = (byte)*lbuf.buffer;
+        p_size = (unsigned char)*lbuf.buffer;
 
         while ((lbuf.bytes < p_size) || (lbuf.bytes < 1))       // Read until we have a full packet
         {
@@ -368,9 +368,9 @@ int CInsim::next_packet()
             FD_SET(sock, &readfd);
             FD_SET(sock, &exceptfd);
 
-            #ifdef _WINDOWS
+            #ifdef CIS_WINDOWS
             int rc = select(0, &readfd, NULL, &exceptfd, &select_timeout);
-            #elif defined __linux__
+            #elif defined CIS_LINUX
             int rc = pselect(sock + 1, &readfd, NULL, &exceptfd, &select_timeout, NULL);
             #endif
 
@@ -459,9 +459,9 @@ int CInsim::udp_next_packet()
         FD_SET(sockudp, &udp_readfd);
         FD_SET(sockudp, &udp_exceptfd);
 
-        #ifdef _WINDOWS
+        #ifdef CIS_WINDOWS
         int rc = select(0, &udp_readfd, NULL, &udp_exceptfd, &select_timeout);
-        #elif defined __linux__
+        #elif defined CIS_LINUX
         int rc = pselect(sockudp + 1, &udp_readfd, NULL, &udp_exceptfd, &select_timeout, NULL);
         #endif
 
@@ -487,7 +487,7 @@ int CInsim::udp_next_packet()
 
     }
 
-    memcpy(udp_packet, udp_lbuf.buffer, (byte)*udp_lbuf.buffer);
+    memcpy(udp_packet, udp_lbuf.buffer, (unsigned char)*udp_lbuf.buffer);
 
     return 0;
 }
@@ -519,12 +519,12 @@ int CInsim::send_packet(void* s_packet)
     pthread_mutex_lock (&ismutex);
 
     //Detect packet type
-    switch(*((byte*)s_packet+1))
+    switch(*((unsigned char*)s_packet+1))
     {
         case ISP_BTN:
         {
             struct IS_BTN* pack = (struct IS_BTN*)s_packet;
-            byte text_len = strlen(pack->Text);
+            unsigned char text_len = strlen(pack->Text);
 
             /*TODO: Should we truncate the string if it's too long
             * or should we just discard the packet?
@@ -536,8 +536,8 @@ int CInsim::send_packet(void* s_packet)
                 return -1;
             }
 
-            byte texttosend;
-            byte remdr = text_len % 4;
+            unsigned char texttosend;
+            unsigned char remdr = text_len % 4;
 
             if(remdr == 0)
                 texttosend = text_len;
@@ -551,7 +551,7 @@ int CInsim::send_packet(void* s_packet)
         case ISP_MTC:
         {
             struct IS_MTC* pack = (struct IS_MTC*)s_packet;
-            byte text_len = strlen(pack->Text);
+            unsigned char text_len = strlen(pack->Text);
 
             //Same as above
             if(text_len > IS_MTC_MAXTLEN)
@@ -560,7 +560,7 @@ int CInsim::send_packet(void* s_packet)
                 return -1;
             }
 
-            byte texttosend = text_len + 4 - text_len % 4;
+            unsigned char texttosend = text_len + 4 - text_len % 4;
 
             pack->Size = IS_MTC_HDRSIZE + texttosend;
         }
@@ -570,7 +570,7 @@ int CInsim::send_packet(void* s_packet)
             break;
     }
 
-    if (send(sock, (const char *)s_packet, *((byte*)s_packet), 0) < 0)
+    if (send(sock, (const char *)s_packet, *((unsigned char*)s_packet), 0) < 0)
     {
         pthread_mutex_unlock (&ismutex);
         return -1;

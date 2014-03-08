@@ -1088,7 +1088,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
         SendBFN(packet->UCID, 78);
 
         char Text[128];
-        sprintf(Text, "^2| ^C^7—ход с трассы во врем€ погони", players[packet->ReqI].PName.c_str(), msg->_(packet->ReqI, "1702"));
+        sprintf(Text, "^2| ^C^7—ход с трассы во врем€ погони");
         SendMTC(packet->ReqI, Text);
         sprintf(Text, "^2| %s%s", players[packet->ReqI].PName.c_str(), msg->_(packet->ReqI, "1702"));
         SendMTC(255, Text);
@@ -1769,7 +1769,7 @@ void RCPolice::Event()
 
             char smn[32];
             int TM = 1800 - (time(NULL) - players[UCID].StartWork)%1800;
-            sprintf(smn, "^C—мена: %02d:%02d", (TM / 60)%60, TM%60, players[UCID].DoneCount);
+            sprintf(smn, "^C—мена: %02d:%02d", (TM / 60)%60, TM%60);
             SendButton(255, UCID, 70, 115, 1, 15, 4, 3 + 128, smn);
 
             //за€вки на дтп

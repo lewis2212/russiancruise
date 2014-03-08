@@ -270,7 +270,7 @@ void RCDL::Save (byte UCID)
 
 void RCDL::InsimCON( struct IS_CON* packet )
 {
-    struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
+    //struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
     /*
     	for (int i=0; i<MAX_PLAYERS; i++)
     	{

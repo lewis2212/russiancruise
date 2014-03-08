@@ -106,7 +106,7 @@ RCAutoschool::InsimMSO( struct IS_MSO* packet )
         return;
     }
 
-    byte UCID = packet->UCID;
+    //byte UCID = packet->UCID;
 
     string msg = packet->Msg + packet->TextStart;
 
@@ -194,20 +194,20 @@ RCAutoschool::InsimMSO( struct IS_MSO* packet )
 void
 RCAutoschool::InsimCON( struct IS_CON* packet )
 {
-	byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
-    byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
+	//byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
+    //byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
 }
 
 void
 RCAutoschool::InsimOBH( struct IS_OBH* packet )
 {
-	 byte UCID = PLIDtoUCID[ packet->PLID ];
+	 //byte UCID = PLIDtoUCID[ packet->PLID ];
 }
 
 void
 RCAutoschool::InsimHLV( struct IS_HLV* packet )
 {
-	 byte UCID = PLIDtoUCID[ packet->PLID ];
+	 //byte UCID = PLIDtoUCID[ packet->PLID ];
 
     /** столкновение со стеной **/
     if (packet->HLVC==1)
@@ -255,7 +255,7 @@ RCAutoschool::InsimMCI ( struct IS_MCI* packet )
         int arX[ lesson["position"].size() ];
         int arY[ lesson["position"].size() ];
 
-        for( int i = 0; i < lesson["position"].size(); ++i )
+        for( unsigned int i = 0; i < lesson["position"].size(); ++i )
 		{
 			arX[i] = lesson["position"][i]["X"].asInt();
 			arY[i] = lesson["position"][i]["Y"].asInt();

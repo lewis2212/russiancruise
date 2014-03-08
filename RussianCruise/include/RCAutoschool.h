@@ -16,7 +16,7 @@ struct SchoolPlayer:public GlobalPlayer
 	bool	OnPlace = false;
 	bool 	Started = false;
 	bool	Finished = false;
-	int		CheckPoint = 0;
+	unsigned int		CheckPoint = 0;
 
 
 	float			Rate = 0;           // Рейтинг Игрока
