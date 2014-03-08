@@ -33,7 +33,7 @@ bool RCDL::AddSkill(byte UCID)
         float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100;
         sprintf( Text, msg->_(UCID, "AddSkill"), skl);
-        SendMTC( UCID, Text );
+        insim->SendMTC( UCID, Text );
         return true;
     }
     return false;
@@ -54,7 +54,7 @@ bool RCDL::AddSkill(byte UCID, float coef)
         float nextlvl = ( pow( players[ UCID ].LVL, 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 250 / nextlvl ) * 100 * coef;
         sprintf( Text, msg->_(UCID, "AddSkill"), skl);
-        SendMTC( UCID, Text );
+        insim->SendMTC( UCID, Text );
         return true;
     }
     return false;
@@ -87,7 +87,7 @@ bool RCDL::RemSkill(byte UCID)
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
         sprintf(Text, msg->_(UCID, "RemSkill"), skl );
-        SendMTC( UCID, Text );
+        insim->SendMTC( UCID, Text );
         return true;
     }
     return false;
@@ -122,7 +122,7 @@ bool RCDL::RemSkill(byte UCID, float coef)
         float nextlvl = ( pow( players[ UCID ].LVL , 2 ) * 0.5 + 100 ) * 1000;
         float skl = ( players[ UCID ].LVL * 500 / nextlvl ) * 100;
         sprintf(Text, msg->_(UCID, "RemSkill"), skl * coef );
-        SendMTC( UCID , Text);
+        insim->SendMTC( UCID , Text);
 
         return true;
     }
@@ -336,7 +336,7 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
             sprintf(Msg, msg->_(UCID, "GetLvl"), players[ UCID ].PName, players[ UCID ].LVL);
 
             if (UCID != 0)
-                SendMTC(255, Msg);
+                insim->SendMTC(255, Msg);
         }
 
         /** buttons **/

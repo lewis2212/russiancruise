@@ -260,16 +260,16 @@ void read_user_cars(byte UCID)
     if ( mysql_ping( rcMaindbConn ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
-        SendMST(msg);
-        SendMST(kickCmd);
+        insim->SendMST(msg);
+        insim->SendMST(kickCmd);
         return;
     }
 
     if ( mysql_query( rcMaindbConn , query) != 0 )
     {
         printf("Error: MySQL Query\n");
-        SendMST(msg);
-        SendMST(kickCmd);
+        insim->SendMST(msg);
+        insim->SendMST(kickCmd);
         return;
     }
 
@@ -277,8 +277,8 @@ void read_user_cars(byte UCID)
     if (rcMainRes == NULL)
     {
         printf("Error: can't get the result description\n");
-        SendMST(msg);
-        SendMST(kickCmd);
+        insim->SendMST(msg);
+        insim->SendMST(kickCmd);
         return;
     }
 
@@ -316,7 +316,7 @@ void read_user_cars(byte UCID)
         save_user_cars(UCID);
     }
     mysql_free_result( rcMainRes );
-    SendPLC(UCID, players[UCID].PLC);
+    insim->SendPLC(UCID, players[UCID].PLC);
 }
 
 void save_car (byte UCID)
@@ -347,7 +347,7 @@ void Save(byte UCID)
 		(*cl)->Save( UCID );
 	}
 
-	SendMTC(UCID, msg->_( UCID, "3000" ));
+	insim->SendMTC(UCID, msg->_( UCID, "3000" ));
 }
 
 void SaveAll()
@@ -363,23 +363,23 @@ void help_cmds (byte UCID, int h_type)
 {
     if (h_type == 1)
     {
-        SendMTC(UCID, msg->_(UCID, "Help1"));
-        SendMTC(UCID, RCBaseClass::StringFormat(msg->_(UCID, "Help2"), msg->GetLangList().c_str()));
-        SendMTC(UCID, msg->_(UCID, "Help3"));
-        SendMTC(UCID, msg->_(UCID, "Help4"));
-        SendMTC(UCID, msg->_(UCID, "Help5"));
-        SendMTC(UCID, msg->_(UCID, "Help6"));
-        SendMTC(UCID, msg->_(UCID, "Help7"));
-        SendMTC(UCID, msg->_(UCID, "Help8"));
-        SendMTC(UCID, msg->_(UCID, "Help9"));
-        SendMTC(UCID, msg->_(UCID, "Help10"));
-        SendMTC(UCID, msg->_(UCID, "Help11"));
-        SendMTC(UCID, msg->_(UCID, "Help12"));
-        SendMTC(UCID, msg->_(UCID, "Help13"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help1"));
+        insim->SendMTC(UCID, RCBaseClass::StringFormat(msg->_(UCID, "Help2"), msg->GetLangList().c_str()));
+        insim->SendMTC(UCID, msg->_(UCID, "Help3"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help4"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help5"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help6"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help7"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help8"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help9"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help10"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help11"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help12"));
+        insim->SendMTC(UCID, msg->_(UCID, "Help13"));
     }
     if (h_type == 2)
     {
-        SendMTC(UCID, msg->_( UCID, "3100" ));
+        insim->SendMTC(UCID, msg->_( UCID, "3100" ));
         for ( int i=0; i<MAX_CARS; i++)
         {
             if (strlen(players[UCID].cars[i].car)>0)
@@ -422,7 +422,7 @@ void help_cmds (byte UCID, int h_type)
                 }
 
                 sprintf(Text, "^1| ^C^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[UCID].cars[i].car, players[UCID].cars[i].dist/1000, Tun, tune2);
-                SendMTC(UCID, Text);
+                insim->SendMTC(UCID, Text);
             }
         }
     }
@@ -457,20 +457,20 @@ void btn_info (byte UCID, int b_type)
     w=100, 				//ширина поля
     h=16+c*hButton; 	//высота поля
 
-    SendButton(255, UCID, 128, l-w/2, t-h/2, w, h+8, 32, "");                                   //фон
+    insim->SendButton(255, UCID, 128, l-w/2, t-h/2, w, h+8, 32, "");                                   //фон
     id++;
-    SendButton(255, UCID, 129, l-w/2, t-h/2, w, h+8, 32, "");
+    insim->SendButton(255, UCID, 129, l-w/2, t-h/2, w, h+8, 32, "");
     id++;
-    SendButton(254, UCID, 130, l-7, t-h/2+h+1, 14, 6, 16+8, "^2OK");                            //закрывашка
+    insim->SendButton(254, UCID, 130, l-7, t-h/2+h+1, 14, 6, 16+8, "^2OK");                            //закрывашка
     id++;
-    SendButton(255, UCID, id++, l-w/2, t-h/2, 25, 10, 3+64, "RUSSIAN CRUISE");                  //заголовок
-    SendButton(255, UCID, id++, l-w/2+24, t-h/2+2, 20, 3, 5+64, IS_PRODUCT_NAME);               //версия
+    insim->SendButton(255, UCID, id++, l-w/2, t-h/2, 25, 10, 3+64, "RUSSIAN CRUISE");                  //заголовок
+    insim->SendButton(255, UCID, id++, l-w/2+24, t-h/2+2, 20, 3, 5+64, IS_PRODUCT_NAME);               //версия
 
-    SendButton(254, UCID, 131, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));	//вкладка раз
+    insim->SendButton(254, UCID, 131, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));	//вкладка раз
     id++;
-    SendButton(254, UCID, 132, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
+    insim->SendButton(254, UCID, 132, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
     id++;
-    SendButton(254, UCID, 133, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
+    insim->SendButton(254, UCID, 133, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
     id++;
 
     if (b_type == 1)
@@ -491,7 +491,7 @@ void btn_info (byte UCID, int b_type)
                 sprintf(Text, "^3%d lvl ^2%s ^3(^2%d^3/%d)", (i-1)*5, ginfo->car[i].car, (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
             else
                 sprintf(Text, "%d lvl %s (%d/%d)", (i-1)*5, ginfo->car[i].car, (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
-            SendButton(255, UCID, id++, l-w/2+1+plW, t-h/2+16+hButton*(i-plH), w/2-1, hButton, 16+64, Text);
+            insim->SendButton(255, UCID, id++, l-w/2+1+plW, t-h/2+16+hButton*(i-plH), w/2-1, hButton, 16+64, Text);
         }
 
 #ifdef _RC_POLICE_H
@@ -500,16 +500,16 @@ void btn_info (byte UCID, int b_type)
         {
             sprintf(Text, "^7ID = %02d. %s (^2%d RUR^7)", police->fines[i+1].id, police->GetFineName(UCID, i+1), police->fines[i+1].cash);
 
-            SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 16+64, Text);
+            insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 16+64, Text);
         }
 #endif
 
     if (b_type == 3)
         for (int i=0; i<c; i++)
-            SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, abcout_text[i]);
+            insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, abcout_text[i]);
 
     for (int i=id; i<165; i++)
-        SendBFN(UCID, i);
+        insim->SendBFN(UCID, i);
 }
 
 
@@ -564,7 +564,7 @@ void case_bfn ()
 
 	if ((now - players[pack_bfn->UCID].LastBFN) < 5)
 	{
-		//SendMTC(pack_bfn->UCID, "^1^CНельзя так часто жать кнопки");
+		//insim->SendMTC(pack_bfn->UCID, "^1^CНельзя так часто жать кнопки");
 		return;
 	}
 
@@ -671,10 +671,10 @@ void case_btc ()
             }
             else
             {
-                SendBFN(pack_btc->UCID, 38);
-                SendBFN(pack_btc->UCID, 39);
-                SendBFN(pack_btc->UCID, 40);
-                SendBFN(pack_btc->UCID, 41);
+                insim->SendBFN(pack_btc->UCID, 38);
+                insim->SendBFN(pack_btc->UCID, 39);
+                insim->SendBFN(pack_btc->UCID, 40);
+                insim->SendBFN(pack_btc->UCID, 41);
             }
 #endif
     }
@@ -683,7 +683,7 @@ void case_btc ()
     if (pack_btc->ClickID==48)
     {
         for (int j=0; j<50; j++)
-            SendBFN(pack_btc->UCID, j);
+            insim->SendBFN(pack_btc->UCID, j);
     }
 
     /**
@@ -693,7 +693,7 @@ void case_btc ()
     {
         players[i].bfn=0;
         for (int j=159; j>0; j--)
-            SendBFN(pack_btc->UCID, j);
+            insim->SendBFN(pack_btc->UCID, j);
     }*/
 
     if (pack_btc->ReqI==254)
@@ -713,7 +713,7 @@ void case_btc ()
     if (pack_btc->ClickID == 200)
     {
         for (int j=0; j<5; j++)
-            SendBFN(pack_btc->UCID, 200+j);
+            insim->SendBFN(pack_btc->UCID, 200+j);
     }
 
 }
@@ -744,9 +744,9 @@ void case_btt ()
 
                 char Msg[126];
                 sprintf(Msg, msg->_(pack_btt->ReqI, "GetMoney" ), players[pack_btt->UCID].PName, atoi(pack_btt->Text));
-                SendMTC(pack_btt->ReqI, Msg);
+                insim->SendMTC(pack_btt->ReqI, Msg);
                 sprintf(Msg, msg->_(pack_btt->UCID, "SendMoney" ), players[pack_btt->ReqI].PName, atoi(pack_btt->Text));
-                SendMTC(pack_btt->UCID, Msg);
+                insim->SendMTC(pack_btt->UCID, Msg);
 
                 bank->RemCash(pack_btt->UCID, atoi(pack_btt->Text));
                 bank->AddCash(pack_btt->ReqI, atoi(pack_btt->Text), false);
@@ -757,7 +757,7 @@ void case_btt ()
                 readf.close();
             }
             else
-                SendMTC(pack_btt->UCID, msg->_( pack_btt->UCID, "1101" ));
+                insim->SendMTC(pack_btt->UCID, msg->_( pack_btt->UCID, "1101" ));
         } // if atoi(pack_btt->Text) > 0
 
     }
@@ -772,7 +772,7 @@ void case_btt ()
 
             char Msg[128];
             sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players[pack_btt->UCID].PName, pack_btt->Text );
-            SendMTC(pack_btt->ReqI, Msg);
+            insim->SendMTC(pack_btt->ReqI, Msg);
 
             RCBaseClass::CCText("^1" + (string)players[pack_btt->UCID].UName + " ^7передал сообщение " + (string)players[pack_btt->ReqI].UName + ":");
             printf("%s\n", pack_btt->Text);
@@ -798,8 +798,8 @@ void case_toc ()
 {
     struct IS_TOC *pack_toc = (struct IS_TOC*)insim->get_packet();
 
-	SendMTC(pack_toc->NewUCID, "^1Access Denine");
-	SendMST("/spec " + string(players[pack_toc->NewUCID].UName));
+	insim->SendMTC(pack_toc->NewUCID, "^1Access Denine");
+	insim->SendMST("/spec " + string(players[pack_toc->NewUCID].UName));
 
 }
 
@@ -880,7 +880,7 @@ void case_mci ()
 
             char bonus_c[64];
             sprintf(bonus_c, msg->_( UCID, "1500" ), bonus);
-            SendMTC(UCID, bonus_c);
+            insim->SendMTC(UCID, bonus_c);
         }
 
         /** Zones (PitSave, shop, etc) **/
@@ -893,11 +893,11 @@ void case_mci ()
             if (players[UCID].Zone!=2)
             {
                 players[UCID].Zone = 2;
-                SendMTC(UCID, msg->_( UCID, "ShopDialog1" ));
-                SendMTC(UCID, msg->_( UCID, "ShopDialog2" ));
-                SendMTC(UCID, msg->_( UCID, "ShopDialog3" ));
-                SendMTC(UCID, msg->_( UCID, "ShopDialog4" ));
-                SendMTC(UCID, msg->_( UCID, "ShopDialog5" ));
+                insim->SendMTC(UCID, msg->_( UCID, "ShopDialog1" ));
+                insim->SendMTC(UCID, msg->_( UCID, "ShopDialog2" ));
+                insim->SendMTC(UCID, msg->_( UCID, "ShopDialog3" ));
+                insim->SendMTC(UCID, msg->_( UCID, "ShopDialog4" ));
+                insim->SendMTC(UCID, msg->_( UCID, "ShopDialog5" ));
             }
         }
         else
@@ -935,7 +935,7 @@ void case_mso ()
     {
         for (int j=159; j>0; j--)
         {
-            SendBFN(pack_mso->UCID, j);
+            insim->SendBFN(pack_mso->UCID, j);
         }
         btn_info(pack_mso->UCID, 1);
         return;
@@ -962,7 +962,7 @@ void case_mso ()
 
         if ((now - players[pack_mso->UCID].LastSave) < 5*3600)
         {
-            SendMTC(pack_mso->UCID, "^1^CНельзя так часто сохраняться");
+            insim->SendMTC(pack_mso->UCID, "^1^CНельзя так часто сохраняться");
             return;
         }
         players[pack_mso->UCID].LastSave = now;
@@ -1010,7 +1010,7 @@ void case_mso ()
                         char Text[64];
                         strcpy(Text, "^1| ^C^7");
                         strncat(Text, str, 110);
-                        SendMTC(pack_mso->UCID, Text);
+                        insim->SendMTC(pack_mso->UCID, Text);
                     }
                 }
             }
@@ -1027,7 +1027,7 @@ void case_mso ()
             }
             readf.close();
 
-            SendMTC(pack_mso->UCID, "^1| ^3LAST TRANSFERS:");
+            insim->SendMTC(pack_mso->UCID, "^1| ^3LAST TRANSFERS:");
             ifstream readf (file, ios::in);
             while (readf.good())
             {
@@ -1040,7 +1040,7 @@ void case_mso ()
                         char Text[96];
                         strcpy(Text, "^1| ^C^7");
                         strncat(Text, str, 55);
-                        SendMTC(pack_mso->UCID, Text);
+                        insim->SendMTC(pack_mso->UCID, Text);
                     }
                     PostCount++;
                 }
@@ -1056,23 +1056,23 @@ void case_mso ()
         char Text[64];
 
         sprintf(Text, "/msg ^1------------------------------");
-        SendMST(Text);
+        insim->SendMST(Text);
 
         sprintf(Text, "/msg ^7 %s", players[pack_mso->UCID].PName);
-        SendMST(Text);
+        insim->SendMST(Text);
 
         sprintf(Text, "/msg ^7Cash: ^1%d", bank->GetCash(pack_mso->UCID));
-        SendMST(Text);
+        insim->SendMST(Text);
 #ifdef _RC_LEVEL_H
         sprintf(Text, "/msg ^7Drive Level: ^1%d", dl->GetLVL(pack_mso->UCID));
-        SendMST(Text);
+        insim->SendMST(Text);
 
         float nextlvl = (pow(dl->GetLVL(pack_mso->UCID), 2)*0.5+100)*1000;
 
         int prog = int(dl->GetSkill(pack_mso->UCID)/nextlvl*100);
 
         sprintf(Text, "/msg ^7Drive Skill: ^1%d%s", prog, "%");
-        SendMST(Text);
+        insim->SendMST(Text);
 #endif
         for ( int j=0; j<MAX_CARS; j++)
         {
@@ -1117,12 +1117,12 @@ void case_mso ()
                 }
 
                 sprintf(Text, "/msg ^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[pack_mso->UCID].cars[j].car, players[pack_mso->UCID].cars[j].dist/1000, Tun, tune2);
-                SendMST(Text);
+                insim->SendMST(Text);
             }
         }
 
         sprintf(Text, "/msg ^1------------------------------");
-        SendMST(Text);
+        insim->SendMST(Text);
         return;
     }
     //!tunning
@@ -1131,7 +1131,7 @@ void case_mso ()
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
-            SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1142,7 +1142,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            SendMTC(pack_mso->UCID, "Error");
+            insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
@@ -1156,7 +1156,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вам нужен уровень: ^1%d", needlvl);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 #endif
@@ -1164,7 +1164,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 У вас уже есть ECU");
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 
@@ -1173,7 +1173,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune +=1;
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вы купили ECU (%d RUR.)", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->RemCash(pack_mso->UCID, needcash);
                 bank->AddToBank(needcash);
             }
@@ -1181,7 +1181,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вам нужно %d RUR.", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
             }
         }
         else if (strcmp(id, "TRB")==0)
@@ -1193,7 +1193,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вам нужен уровень: ^1%d", needlvl);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 #endif
@@ -1201,7 +1201,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 У вас уже есть Turbo");
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 
@@ -1210,7 +1210,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune +=2;
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вы купили Turbo (%d RUR.)", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->RemCash(pack_mso->UCID, needcash);
                 bank->AddToBank(needcash);
             }
@@ -1218,7 +1218,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вам нужно %d RUR.", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
             }
 
         }
@@ -1231,7 +1231,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вам нужен уровень: ^1%d", needlvl);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 #endif
@@ -1239,7 +1239,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7У вас уже установлено \"Облегчение веса\"");
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
 
@@ -1248,7 +1248,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune+=4;
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вы купили \"Облегчение веса\" (%d RUR.)", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->RemCash(pack_mso->UCID, needcash);
                 bank->AddToBank(needcash);
             }
@@ -1256,7 +1256,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вам нужно %d RUR.", needcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
             }
 
         }
@@ -1268,7 +1268,7 @@ void case_mso ()
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
-            SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1279,7 +1279,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            SendMTC(pack_mso->UCID, "Error");
+            insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
@@ -1292,7 +1292,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune -=1;
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вы продали ECU (%d RUR.)", sellcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->AddCash(pack_mso->UCID, sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1307,7 +1307,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune -=2;
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вы продали Turbo (%d RUR.)", sellcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->AddCash(pack_mso->UCID, sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1322,7 +1322,7 @@ void case_mso ()
                 players[pack_mso->UCID].CTune -=4;
                 char msg[64];
                 sprintf(msg, "^C^2| ^7Вы продали \"Облегчение веса\" (%d RUR.)", sellcash);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 bank->AddCash(pack_mso->UCID, sellcash, true);
                 bank->RemFrBank(sellcash);
             }
@@ -1334,7 +1334,7 @@ void case_mso ()
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
-            SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1345,7 +1345,7 @@ void case_mso ()
 
         if ((!id) or (strlen(id) != 3))
         {
-            SendMTC(pack_mso->UCID, "Error");
+            insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
@@ -1361,7 +1361,7 @@ void case_mso ()
 
         if (CarID == MAX_CARS)
         {
-            SendMTC(pack_mso->UCID, "^C^2| ^7У нас нет такой машины!");
+            insim->SendMTC(pack_mso->UCID, "^C^2| ^7У нас нет такой машины!");
             return;
         }
 
@@ -1371,7 +1371,7 @@ void case_mso ()
         {
             char msg[64];
             sprintf(msg, "^C^2| ^7Нужен уровень: ^1%d", needlvl);
-            SendMTC(pack_mso->UCID, msg);
+            insim->SendMTC(pack_mso->UCID, msg);
             return;
         }
 #endif
@@ -1379,7 +1379,7 @@ void case_mso ()
         {
             char msg[64];
             sprintf(msg, "^C^2| ^7Нужно ^1%d ^7RUR.", (int)ginfo->car[CarID].cash);
-            SendMTC(pack_mso->UCID, msg);
+            insim->SendMTC(pack_mso->UCID, msg);
             return;
         }
 
@@ -1390,7 +1390,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7У вас уже есть такая машина");
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
                 return;
             }
         }
@@ -1405,13 +1405,13 @@ void case_mso ()
                 players[pack_mso->UCID].cars[j].dist=0;
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вы купили %s", id);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
 
                 bank->RemCash(pack_mso->UCID, ginfo->car[CarID].cash);
                 bank->AddToBank(ginfo->car[CarID].cash);
 
                 players[pack_mso->UCID].PLC += ginfo->car[CarID].PLC;
-                SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
+                insim->SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
 
                 SYSTEMTIME sm;
                 GetLocalTime(&sm);
@@ -1438,7 +1438,7 @@ void case_mso ()
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
-            SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
         char * comand;
@@ -1449,7 +1449,7 @@ void case_mso ()
         // test if "id" NULL or != 3
         if ( ( !id ) or ( strlen( id ) != 3 ) )
         {
-            SendMTC(pack_mso->UCID, "Error");
+            insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
@@ -1467,7 +1467,7 @@ void case_mso ()
         // if user now  on this car
         if (strcmp(id, players[pack_mso->UCID].CName)==0)
         {
-            SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "1009" ));
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "1009" ));
             return;
         }
 
@@ -1477,7 +1477,7 @@ void case_mso ()
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вы продали %s", id);
-                SendMTC(pack_mso->UCID, msg);
+                insim->SendMTC(pack_mso->UCID, msg);
 
                 strcpy(players[pack_mso->UCID].cars[k].car, "");
                 players[pack_mso->UCID].cars[k].tuning=0;
@@ -1495,7 +1495,7 @@ void case_mso ()
                 bank->RemFrBank(ginfo->car[j].sell);
 
                 players[pack_mso->UCID].PLC -= ginfo->car[j].PLC;
-                SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
+                insim->SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
 
                 char sql[128];
                 sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", players[pack_mso->UCID].UName , ginfo->car[j].car );
@@ -1512,8 +1512,8 @@ void case_mso ()
         ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and
         (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 || pack_mso->UCID == 0))
     {
-        SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-        SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
+        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
+        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
 
 		SaveAll();
 
@@ -1523,7 +1523,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0))
     {
-        SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
+        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
         RCBaseClass::CCText("^7Config reload");
 
         IS_TINY *pack_requests = new IS_TINY;
@@ -1557,7 +1557,7 @@ void case_mso ()
     {
     	if (bank->GetCash(pack_mso->UCID)<=250)
 		{
-			SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "NoManyPay" ));
+			insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "NoManyPay" ));
 			return;
 		}
 
@@ -1566,14 +1566,14 @@ void case_mso ()
         {
             char Msg[64];
             sprintf(Msg, "/pitlane %s", players[pack_mso->UCID].UName);
-            SendMST(Msg);
+            insim->SendMST(Msg);
 
             int pay = 10000;
 
             char str[96];
             sprintf(str, msg->_(pack_mso->UCID, "2700"), pay);
 
-            SendMTC(pack_mso->UCID, str);
+            insim->SendMTC(pack_mso->UCID, str);
             bank->RemCash(pack_mso->UCID, pay);
             bank->AddToBank(pay);
 
@@ -1585,7 +1585,7 @@ void case_mso ()
 #endif
         char Msg[64];
         sprintf(Msg, "/pitlane %s", players[pack_mso->UCID].UName);
-        SendMST(Msg);
+        insim->SendMST(Msg);
         players[pack_mso->UCID].Zone = 1;
         bank->RemCash(pack_mso->UCID, 500);
         bank->AddToBank(500);
@@ -1644,7 +1644,7 @@ void case_mso_flood ()
 
             char str[96];
             sprintf(str, msg->_(pack_mso->UCID, "flood"), pay);
-            SendMTC(pack_mso->UCID, str);
+            insim->SendMTC(pack_mso->UCID, str);
 
             players[pack_mso->UCID].FloodCount = 0;
             bank->RemCash(pack_mso->UCID, pay);
@@ -1660,7 +1660,7 @@ void case_mso_flood ()
 
                 char str[96];
                 sprintf(str, msg->_(pack_mso->UCID, "swear"), pay);
-                SendMTC(pack_mso->UCID, str);
+                insim->SendMTC(pack_mso->UCID, str);
 
                 bank->RemCash(pack_mso->UCID, pay);
                 bank->AddToBank(pay);
@@ -1690,8 +1690,8 @@ void case_ncn ()
     read_user_cars(pack_ncn->UCID);
 
     //help_cmds(&players[pack_ncn->UCID], 1);
-    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help1" ));
-    SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help14" ));
+    insim->SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help1" ));
+    insim->SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help14" ));
 
     btn_panel(pack_ncn->UCID);
 }
@@ -1707,7 +1707,7 @@ void case_npl ()
 
     if (pack_npl->PType != 6)
     {
-        msg->SendBFNAll( pack_npl->UCID );
+       insim->SendBFNAll( pack_npl->UCID );
 
         //players[i].Pitlane = 1;
 
@@ -1748,12 +1748,12 @@ void case_npl ()
             if (dl->GetLVL(pack_npl->UCID) < needlvl)
             {
                 players[pack_npl->UCID].Zone = 1;
-                SendMST( specText );
+                insim->SendMST( specText );
 
                 char msg2[64];
                 sprintf(msg2, "^C^1|^7 Нужен уровень: %d", needlvl);
-                SendMTC(pack_npl->UCID, msg2);
-                SendMTC(pack_npl->UCID, msg->_( pack_npl->UCID, "2404" ));
+                insim->SendMTC(pack_npl->UCID, msg2);
+                insim->SendMTC(pack_npl->UCID, msg->_( pack_npl->UCID, "2404" ));
 
                 char Text2[64];
                 strcpy(Text2, "^1| ^2");
@@ -1765,26 +1765,26 @@ void case_npl ()
                         strcat(Text2, " ");
                     }
                 }
-                SendMTC(pack_npl->UCID, Text2);
+                insim->SendMTC(pack_npl->UCID, Text2);
                 return;
             }
             else if ((pack_npl->H_TRes < tune))
             {
                 players[pack_npl->UCID].Zone = 1;
-                SendMST( specText );
+                insim->SendMST( specText );
 
                 char Texxt[32];
                 sprintf(Texxt, "%s %d %%", msg->_( pack_npl->UCID, "2400" ), tune);
-                SendMTC(pack_npl->UCID, Texxt);
+                insim->SendMTC(pack_npl->UCID, Texxt);
             }
 #endif
         }
         else
         {
-            SendMTC(pack_npl->UCID, msg->_( pack_npl->UCID, "2404" ));
+            insim->SendMTC(pack_npl->UCID, msg->_( pack_npl->UCID, "2404" ));
             help_cmds(pack_npl->UCID, 2);
             players[pack_npl->UCID].Zone = 1;
-            SendMST( specText );
+            insim->SendMST( specText );
             return;
         }
     } //if PTupe != 6
@@ -1822,7 +1822,7 @@ void case_pll ()
 
         char str[96];
         sprintf(str, msg->_(UCID, "2600"), pay);
-        SendMTC(UCID, str);
+        insim->SendMTC(UCID, str);
 
 
         bank->RemCash(UCID, pay);
@@ -1840,7 +1840,7 @@ void case_pll ()
 
             char str[96];
             sprintf(str, msg->_(UCID, "2602"), pay);
-            SendMTC(UCID, str);
+            insim->SendMTC(UCID, str);
 
             bank->RemCash(UCID, pay);
             bank->AddToBank(pay);
@@ -1869,7 +1869,7 @@ void case_plp ()
 
         char str[96];
         sprintf(str, msg->_(UCID, "2700"), pay);
-        SendMTC(UCID, str);
+        insim->SendMTC(UCID, str);
 
         bank->RemCash(UCID, pay);
         bank->AddToBank(pay);
@@ -1886,7 +1886,7 @@ void case_plp ()
 
             char str[96];
             sprintf(str, msg->_(UCID, "2702"), pay);
-            SendMTC(UCID, str);
+            insim->SendMTC(UCID, str);
 
             bank->RemCash(UCID, pay);
             bank->AddToBank(pay);
@@ -1917,13 +1917,13 @@ void case_vtn ()
 
     if (pack_vtn->UCID == 0) return;
 
-	SendMST("/cv");
+	insim->SendMST("/cv");
 }
 
 void ShowUsersList(byte UCID)
 {
     for (int i=0; i<50; i++)
-        SendBFN(UCID, i);
+        insim->SendBFN(UCID, i);
 
     byte count = 0, L = 0, T = 0;
     for (auto& plr: players)
@@ -1938,9 +1938,9 @@ void ShowUsersList(byte UCID)
             T = 0;
         }
 
-        SendButton(plr.first, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[plr.first].PName);
+        insim->SendButton(plr.first, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[plr.first].PName);
     }
-    SendButton(255, UCID, 48, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
+    insim->SendButton(255, UCID, 48, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
 }
 
 int core_connect(void *pack_ver)

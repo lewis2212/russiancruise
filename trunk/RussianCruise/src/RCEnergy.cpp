@@ -131,12 +131,12 @@ void RCEnergy::InsimNPL( struct IS_NPL* packet )
 
     if ( players[packet->UCID].Energy < 500 )
     {
-        SendMTC( packet->UCID, msg->_(  packet->UCID, "2402" ) );
-        SendMTC( packet->UCID, msg->_(  packet->UCID, "2403" ) );
+        insim->SendMTC( packet->UCID, msg->_(  packet->UCID, "2402" ) );
+        insim->SendMTC( packet->UCID, msg->_(  packet->UCID, "2403" ) );
 
         char Text[64];
         sprintf(Text, "/spec %s", players[ packet->UCID ].UName.c_str());
-        SendMST(Text);
+        insim->SendMST(Text);
         players[ packet->UCID ].Zone = 1;
         return;
     }
@@ -199,7 +199,7 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
             players[UCID].Zone = 1;
             char Text[64];
             sprintf(Text, "/spec %s", players[UCID].UName.c_str());
-            SendMST(Text);
+            insim->SendMST(Text);
         }
         else
         {
@@ -283,19 +283,19 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
     {
         if (bank->GetCash( packet->UCID ) < 50)
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
             return;
         }
 
         if ( !( players[ packet->UCID ].Zone == 1 and players[ packet->UCID ].Energy < 500 ) and ( players[ packet->UCID ].Zone != 3 ) )
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
             return;
         }
 
         if ( players[ packet->UCID ].Energy > 9900 )
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
             return;
         }
 
@@ -309,19 +309,19 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
     {
         if (bank->GetCash( packet->UCID ) < 100)
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
             return;
         }
 
         if ( !(players[packet->UCID].Zone == 1 and players[packet->UCID].Energy < 500) and (players[packet->UCID].Zone != 3 ) )
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
             return;
         }
 
         if ( players[ packet->UCID ].Energy > 9900 )
         {
-            SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
             return;
         }
 
@@ -359,7 +359,7 @@ void RCEnergy::btn_energy ( byte UCID )
     if (players[UCID].Zone == 3)
         sprintf(str, msg->_(UCID , "EnergyArrow"), str);
 
-    SendButton(255, UCID, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
+    insim->SendButton(255, UCID, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
 }
 
 int RCEnergy::check_pos( byte UCID )

@@ -65,17 +65,6 @@ public:
 
     virtual void Save(byte UCID){};
 
-    void SendBFN(byte UCID, byte ClickID);
-    void SendBFNAll ( byte UCID );
-
-    void SendMST (const char* Text);
-    void SendMST (string Text){ SendMST( Text.c_str() ); };
-
-    void SendMTC (byte UCID, string Msg);
-
-    void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, const char * Text, byte TypeIn = 0 );
-    void SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, string Text, byte TypeIn = 0 );
-
     void ButtonInfo (byte UCID, const char* Message);
     void ClearButtonInfo (byte UCID);
 

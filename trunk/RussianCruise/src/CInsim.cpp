@@ -579,6 +579,98 @@ int CInsim::send_packet(void* s_packet)
     return 0;
 }
 
+void
+CInsim::SendMTC (byte UCID, std::string Msg)
+{
+    IS_MTC *pack = new IS_MTC;
+    memset( pack, 0, sizeof( IS_MTC ) );
+    pack->Size = sizeof( IS_MTC );
+    pack->Type = ISP_MTC;
+    pack->UCID = UCID;
+    strcpy( pack->Text, Msg.c_str());
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendMST (std::string Text)
+{
+    IS_MST *pack = new IS_MST;
+    memset( pack, 0, sizeof( IS_MST));
+    pack->Size = sizeof( IS_MST);
+    pack->Type = ISP_MST;
+    sprintf( pack->Msg, "%.63s\0", Text.c_str() );
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendBFN (byte UCID, byte ClickID)
+{
+    IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->UCID = UCID;
+    pack->ClickID = ClickID;
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendBFNAll ( byte UCID )
+{
+    IS_BFN *pack = new IS_BFN;
+    memset( pack, 0, sizeof( IS_BFN ) );
+    pack->Size = sizeof( IS_BFN );
+    pack->Type = ISP_BFN;
+    pack->UCID = UCID;
+    pack->SubT = BFN_CLEAR;
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendPLC (byte UCID, unsigned PLC)
+{
+    IS_PLC *pack = new IS_PLC;
+    memset( pack, 0, sizeof( IS_PLC ) );
+    pack->Size = sizeof( IS_PLC );
+    pack->Type = ISP_PLC;
+    pack->UCID = UCID;
+    pack->Cars = PLC;
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, std::string Text)
+{
+    SendButton(ReqI, UCID, ClickID, Left, Top, Width, Height, BStyle, Text, 0);
+}
+
+void
+CInsim::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, std::string Text, byte TypeIn)
+{
+    IS_BTN *pack = new IS_BTN;
+    memset( pack, 0, sizeof( IS_BTN ) );
+    pack->Size = sizeof( IS_BTN );
+    pack->Type = ISP_BTN;
+    pack->ReqI = ReqI;
+    pack->UCID = UCID;
+    pack->Inst = 0;
+    pack->BStyle = BStyle;
+    pack->TypeIn = TypeIn;
+    pack->ClickID = ClickID;
+    pack->L = Left;
+    pack->T = Top;
+    pack->W = Width;
+    pack->H = Height;
+    sprintf(pack->Text, Text.c_str());
+    send_packet( pack );
+    delete pack;
+}
+
 
 /**
 * Other functions!!!

@@ -181,7 +181,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
         if (s == 0)
         {
             sprintf(text, "^1Error: ^Cóêàæè ID");
-            SendMTC(UCID, text);
+            insim->SendMTC(UCID, text);
             return;
         }
         else
@@ -196,7 +196,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
         listSing.close();
 
         sprintf(text, "^2Sign added (ID = %d, Dir = %d)", ID, Dir);
-        SendMTC(UCID, text);
+        insim->SendMTC(UCID, text);
     }
 }
 
@@ -209,58 +209,58 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
         Height=52;
     }
     //ïîäâåñ
-    SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
-    SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
-    SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
+    insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
+    insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
+    insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
     ClickID = 93+10 * Count;
 
     /** ãëàâíàÿ äîðîãà 2.1 **/
     if (ID == 1)
     {
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JŸ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JŸ");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^JŸ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^JŸ");
         Width-=10;
         Top+=5;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JŸ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JŸ");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^3^JŸ");
-        SendBFN(UCID, ClickID++);
-        SendBFN(UCID, ClickID++);
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^3^JŸ");
+        insim->SendBFN(UCID, ClickID++);
+        insim->SendBFN(UCID, ClickID++);
     }
     /** óñòóïè äîðîãó 2.4 **/
     if (ID == 2)
     {
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J¥");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J¥");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^J¥");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^J¥");
         Width-=12;
         Top+=6;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top-1, Width, Width, 0, "^7^J¥");
-        SendBFN(UCID, ClickID++);
-        SendBFN(UCID, ClickID++);
-        SendBFN(UCID, ClickID++);
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top-1, Width, Width, 0, "^7^J¥");
+        insim->SendBFN(UCID, ClickID++);
+        insim->SendBFN(UCID, ClickID++);
+        insim->SendBFN(UCID, ClickID++);
     }
     /** èñê. íåðîâíîñòü 1.17 **/
     if (ID == 3)
     {
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J£");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J£");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^J£");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^J£");
         Width-=12;
         Top+=6;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top+1, Width, Width, 0, "^7^J£");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top+1, Width, Width, 0, "^7^J£");
         Width-=14;
         Top+=16;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JÜ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^JÜ");
         Width+=6;
         Top-=13;
-        SendButton(255, UCID, ClickID++, Left-Width / 2+1, Top, Width-1, Width, 0, "^0^JQ");
-        SendBFN(UCID, ClickID++);
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2+1, Top, Width-1, Width, 0, "^0^JQ");
+        insim->SendBFN(UCID, ClickID++);
     }
     /** ïåøåõîäíûé ïåðåõîä 1.22 **/
     if (ID == 4)
@@ -273,34 +273,34 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
     /** ïðîåçä çàïðåùåí 3.1 **/
     if (ID == 6)
     {
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^Jœ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^Jœ");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^Jœ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^Jœ");
         Width-=4;
         Top+=2;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^Jœ");
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top-1, Width, Width, 0, "^7^K£­");
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top+1, Width, Width, 0, "^7^K£­");
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^K£­");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^1^Jœ");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top-1, Width, Width, 0, "^7^K£­");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top+1, Width, Width, 0, "^7^K£­");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^K£­");
     }
     /** êîëüöåâàÿ äîðîãà 4.3 **/
     /** îãðàíè÷åíèå ñêîðîñòè 3.24 **/
     /** ñòîÿíêà 6.4 **/
     if (ID == 9)
     {
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J¡");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^0^J¡");
         Width-=2;
         Top+=1;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^J¡");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^J¡");
         Width-=4;
         Top+=2;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 6, "^J¡");
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 6, "^J¡");
         Width-=10;
         Top+=5;
-        SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^K£Ð");
-        SendBFN(UCID, ClickID++);
-        SendBFN(UCID, ClickID++);
+        insim->SendButton(255, UCID, ClickID++, Left-Width / 2, Top, Width, Width, 0, "^7^K£Ð");
+        insim->SendBFN(UCID, ClickID++);
+        insim->SendBFN(UCID, ClickID++);
     }
     /** òóïèê 6.8 **/
     if (ID == 10)
@@ -340,7 +340,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
         if (SignCount == 0 and players[UCID].OnSign)
         {
             for (int f = 90; f < 110; f++)
-                SendBFN(UCID, f);
+                insim->SendBFN(UCID, f);
 
             players[UCID].SignCount = 0;
             players[UCID].OnSign = 0;
@@ -349,7 +349,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
         if (SignCount != players[UCID].SignCount and players[UCID].OnSign)
         {
             for (int f = 90 + 10 * SignCount; f < 110; f++)
-                SendBFN(UCID, f);
+                insim->SendBFN(UCID, f);
             players[UCID].SignCount = SignCount;
         }
 
