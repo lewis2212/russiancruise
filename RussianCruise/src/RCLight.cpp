@@ -15,7 +15,7 @@ bool RCLight::SetLight3( byte UCID, bool Key)
 {
     if (players[UCID].Light3 and !Key)
         for (int f = 190; f < 203; f++)
-            SendBFN( UCID, f);
+            insim->SendBFN( UCID, f);
 
     players[UCID].Light3 = Key;
 
@@ -199,7 +199,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 
                 for (int f = 170; f < 203; f++)
                 {
-                    SendBFN( UCID, f);
+                    insim->SendBFN( UCID, f);
                 }
                 players[UCID].Light = 0;
             }
@@ -228,8 +228,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     if (players[UCID].WrongWay == 1)
                     {
                         players[UCID].WrongWay = 0;
-                        SendBFN( UCID, 203);
-                        SendBFN( UCID, 204);
+                        insim->SendBFN( UCID, 203);
+                        insim->SendBFN( UCID, 204);
                     }
                 }
                 else
@@ -254,8 +254,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     if (players[UCID].WrongWay == 1)
                     {
                         players[UCID].WrongWay =0;
-                        SendBFN( UCID, 203);
-                        SendBFN( UCID, 204);
+                        insim->SendBFN( UCID, 203);
+                        insim->SendBFN( UCID, 204);
                     }
                 }
                 else
@@ -274,8 +274,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 if (players[UCID].WrongWay == 1)
                 {
                     players[UCID].WrongWay =0;
-                    SendBFN( UCID, 203);
-                    SendBFN( UCID, 204);
+                    insim->SendBFN( UCID, 203);
+                    insim->SendBFN( UCID, 204);
                 }
             }
         }
@@ -312,12 +312,12 @@ void RCLight::InsimMSO( struct IS_MSO* packet )
         if (LightWorks == true)
         {
             LightWorks = false;
-            SendMTC(packet->UCID, "^1| ^7^CÑâåòîôîðû ^1âûêëþ÷åíû");
+            insim->SendMTC(packet->UCID, "^1| ^7^CÑâåòîôîðû ^1âûêëþ÷åíû");
         }
         else
         {
             LightWorks = true;
-            SendMTC(packet->UCID, "^1| ^7^CÑâåòîôîðû ^2âêëþ÷åíû");
+            insim->SendMTC(packet->UCID, "^1| ^7^CÑâåòîôîðû ^2âêëþ÷åíû");
         }
     }
 }
@@ -390,34 +390,34 @@ void RCLight::Svetofor1 ( byte UCID )
     sprintf(cG, "^%d^S¡ñ", G);
 
     //ïîäâåñ
-    SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
-    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
-    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
+    insim->SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
 
     //ïîäëîæêà
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
 
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
 
     //óãîëêè ïî áîêàì
-    SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l - 8, t + 2*16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t + 2*16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
 
     //red
-    SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
 
     //yell
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
 
     //green
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
 }
 
 void RCLight::Svetofor2 ( byte UCID )
@@ -455,34 +455,34 @@ void RCLight::Svetofor2 ( byte UCID )
     sprintf(cG, "^%d^S¡ñ", G);
 
     //ïîäâåñ
-    SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
-    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
-    SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, l - 3, t - 3, 6, 6, 0, "^0^C^H¡_");
+    insim->SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, l - 1, 0, 2, 13, 32, "");
 
     //ïîäëîæêà
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 2 + 16 / 1.3, w - 10, 13, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 3 + 2*16 / 1.3, w - 10, 13, 32, "");
 
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 5), t + 1, w - 10, 3*16 - 9, 32, "");
 
     //óãîëêè ïî áîêàì
-    SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
-    SendButton(255, UCID, ClickId++, l - 8, t + 2 * 16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t + 16 - 3, 16, 16 - 1, 0, "^0^C^S¨               ¨");
+    insim->SendButton(255, UCID, ClickId++, l - 8, t + 2 * 16 - 6, 16, 16 - 1, 0, "^0^C^S¨               ¨");
 
     //red
-    SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), t - 1, w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), t + 2, w - 8, 16 - 3, 7, cR);
 
     //yell
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), (t + 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 16 / 1.3 + 3), w - 8, 16 - 3, 7, cY);
 
     //green
-    SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
-    SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2), (t + 1 + 2 * 16 / 1.3), w, 16 + 1, 0, "  ^0^C^S¡ñ  ");
+    insim->SendButton(255, UCID, ClickId++, (l - w / 2 + 4), (t + 1 + 2 * 16 / 1.3 + 3), w - 8, 16 - 3, 7, cG);
 }
 
 void RCLight::Svetofor3 ( byte UCID )

@@ -182,41 +182,6 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
     return (int)sqrt((pow(X-X1, 2))+(pow(Y-Y1, 2)));
 }
 
-void RCBaseClass::SendMTC (byte UCID, string Msg)
-{
-    IS_MTC *pack = new IS_MTC;
-    memset( pack, 0, sizeof( IS_MTC ) );
-    pack->Size = sizeof( IS_MTC );
-    pack->Type = ISP_MTC;
-    pack->UCID = UCID;
-    strcpy( pack->Text, Msg.c_str());
-    insim->send_packet( pack );
-    delete pack;
-}
-
-void RCBaseClass::SendMST (const char* Text)
-{
-    IS_MST *pack = new IS_MST;
-    memset( pack, 0, sizeof( IS_MST));
-    pack->Size = sizeof( IS_MST);
-    pack->Type = ISP_MST;
-    sprintf( pack->Msg, "%.63s\0", Text );
-    insim->send_packet( pack );
-    delete pack;
-}
-
-void RCBaseClass::SendBFN (byte UCID, byte ClickID)
-{
-    IS_BFN *pack = new IS_BFN;
-    memset( pack, 0, sizeof( IS_BFN ) );
-    pack->Size = sizeof( IS_BFN );
-    pack->Type = ISP_BFN;
-    pack->UCID = UCID;
-    pack->ClickID = ClickID;
-    insim->send_packet( pack );
-    delete pack;
-}
-
 const char* RCBaseClass::GetReason(byte Reason)
 {
     switch(Reason)
@@ -257,26 +222,14 @@ const char* RCBaseClass::GetReason(byte Reason)
     }
 }
 
-void RCBaseClass::SendBFNAll ( byte UCID )
-{
-    IS_BFN *pack = new IS_BFN;
-    memset( pack, 0, sizeof( IS_BFN ) );
-    pack->Size = sizeof( IS_BFN );
-    pack->Type = ISP_BFN;
-    pack->UCID = UCID;
-    pack->SubT = BFN_CLEAR;
-    insim->send_packet( pack );
-    delete pack;
-}
-
 void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
-    return SendButton(1, UCID, CLICKID::CLICK_ID_BTN_INFO, 70, 9, 60, 4, ISB_DARK, Message);
+    return insim->SendButton(1, UCID, CLICKID::CLICK_ID_BTN_INFO, 70, 9, 60, 4, ISB_DARK, Message);
 }
 
 void RCBaseClass::ClearButtonInfo(byte UCID)
 {
-    SendBFN( UCID, CLICKID::CLICK_ID_BTN_INFO);
+    insim->SendBFN( UCID, CLICKID::CLICK_ID_BTN_INFO);
 }
 
 string RCBaseClass::ToString (int i)
@@ -306,32 +259,6 @@ string RCBaseClass::ToString (bool b)
 		return "true";
 	else
 		return "false";
-}
-
-void RCBaseClass::SendButton (byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, string Text, byte TypeIn )
-{
-    return SendButton(ReqI,UCID,ClickID,Left,Top,Width,Height,BStyle,Text.c_str(),TypeIn);
-}
-
-void RCBaseClass::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte Width, byte Height, byte BStyle, const char * Text, byte TypeIn)
-{
-    IS_BTN *pack = new IS_BTN;
-    memset( pack, 0, sizeof( IS_BTN ) );
-    pack->Size = sizeof( IS_BTN );
-    pack->Type = ISP_BTN;
-    pack->ReqI = ReqI;
-    pack->UCID = UCID;
-    pack->Inst = 0;
-    pack->BStyle = BStyle;
-    pack->TypeIn = TypeIn;
-    pack->ClickID = ClickID;
-    pack->L = Left;
-    pack->T = Top;
-    pack->W = Width;
-    pack->H = Height;
-    sprintf(pack->Text, Text);
-    insim->send_packet( pack );
-    delete pack;
 }
 
 bool

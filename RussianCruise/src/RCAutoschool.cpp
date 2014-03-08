@@ -268,14 +268,14 @@ RCAutoschool::InsimMCI ( struct IS_MCI* packet )
 		if( Check_Pos(lesson["position"].size(),arX,arY,X,Y) )
 		{
 			if( !players[UCID].OnPlace )
-				SendMTC(UCID, msg->_(UCID,"Please go to start and stop!") );
+				insim->SendMTC(UCID, msg->_(UCID,"Please go to start and stop!") );
 
 			players[UCID].OnPlace = true;
 
 			if( StartDist < 15 && dStartHeading < 15  && Speed == 0 && players[UCID].CheckPoint == 0)
 			{
 				if( !players[UCID].Started )
-					SendMTC(UCID, msg->_(UCID,"Let's do an exercise!") );
+					insim->SendMTC(UCID, msg->_(UCID,"Let's do an exercise!") );
 
 				players[UCID].Started = true;
 			}
@@ -297,7 +297,7 @@ RCAutoschool::InsimMCI ( struct IS_MCI* packet )
 				if( FinishDist < 15 && dFinishHeading < 15  && Speed == 0)
 				{
 					if( !players[UCID].Finished )
-						SendMTC(UCID, msg->_(UCID,"Exellent!") );
+						insim->SendMTC(UCID, msg->_(UCID,"Exellent!") );
 
 					players[UCID].Finished = true;
 				}
@@ -319,14 +319,14 @@ RCAutoschool::InsimMCI ( struct IS_MCI* packet )
 	byte Height = 4;
 
 
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7" + players[UCID].Lesson );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnPlace: " + ToString( players[UCID].OnPlace ) );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnStart: " + ToString( players[UCID].Started ) );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnFinish: " + ToString( players[UCID].Finished ) );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7CheckPoint: " + ToString( players[UCID].CheckPoint ) );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^2Point Dist: " + ToString( PointDist ) );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^3Finish Dist: " + ToString( FinishDist ) + " ^1(X: " + ToString( lesson["finish"]["X"].asInt() ) + " Y: " + ToString( lesson["finish"]["Y"].asInt() ) +")" );
-	SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^3Finish Head: " + ToString( dFinishHeading ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7" + players[UCID].Lesson );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnPlace: " + ToString( players[UCID].OnPlace ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnStart: " + ToString( players[UCID].Started ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7OnFinish: " + ToString( players[UCID].Finished ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^7CheckPoint: " + ToString( players[UCID].CheckPoint ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^2Point Dist: " + ToString( PointDist ) );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^3Finish Dist: " + ToString( FinishDist ) + " ^1(X: " + ToString( lesson["finish"]["X"].asInt() ) + " Y: " + ToString( lesson["finish"]["Y"].asInt() ) +")" );
+	insim->SendButton(255,UCID,ClickID++,Left,Top += 5,Width,Height,ISB_DARK,"^3Finish Head: " + ToString( dFinishHeading ) );
 
         ShowPanel(UCID);
         players[UCID].Info = packet->Info[i];
