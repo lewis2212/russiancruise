@@ -1526,14 +1526,7 @@ void case_mso ()
         insim->SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
         RCBaseClass::CCText("^7Config reload");
 
-        IS_TINY *pack_requests = new IS_TINY;
-        memset(pack_requests, 0, sizeof(struct IS_TINY));
-        pack_requests->Size = sizeof(struct IS_TINY);
-        pack_requests->Type = ISP_TINY;
-        pack_requests->ReqI = 255;
-        pack_requests->SubT = TINY_RST;
-        insim->send_packet(pack_requests);
-        delete pack_requests;
+        insim->SendTiny(TINY_RST,255);
 
         return;
     }
@@ -1956,20 +1949,9 @@ int core_connect(void *pack_ver)
 
     strcpy(ginfo->Product, pack_v->Product);
 
-    struct IS_TINY pack_requests;
-    memset(&pack_requests, 0, sizeof(struct IS_TINY));
-    pack_requests.Size = sizeof(struct IS_TINY);
-    pack_requests.Type = ISP_TINY;
-    pack_requests.ReqI = 255;
-
-    pack_requests.SubT = TINY_RST;
-    insim->send_packet(&pack_requests);
-
-    pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
-    insim->send_packet(&pack_requests);
-
-    pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-    insim->send_packet(&pack_requests);
+    insim->SendTiny(TINY_RST,255);
+    insim->SendTiny(TINY_NCN,255);
+    insim->SendTiny(TINY_NPL,255);
 
     return 1;
 }
@@ -1993,20 +1975,9 @@ int core_reconnect(void *pack_ver)
 
     strcpy(ginfo->Product, pack_v->Product);
 
-    struct IS_TINY pack_requests;
-    memset(&pack_requests, 0, sizeof(struct IS_TINY));
-    pack_requests.Size = sizeof(struct IS_TINY);
-    pack_requests.Type = ISP_TINY;
-    pack_requests.ReqI = 1;
-
-    pack_requests.SubT = TINY_RST;      // Request all players in-grid to know their PLID
-    insim->send_packet(&pack_requests);
-
-    pack_requests.SubT = TINY_NCN;      // Request all connections to store their user data
-    insim->send_packet(&pack_requests);
-
-    pack_requests.SubT = TINY_NPL;      // Request all players in-grid to know their PLID
-    insim->send_packet(&pack_requests);
+    insim->SendTiny(TINY_RST,255);
+    insim->SendTiny(TINY_NCN,255);
+    insim->SendTiny(TINY_NPL,255);
 
     return 1;
 }

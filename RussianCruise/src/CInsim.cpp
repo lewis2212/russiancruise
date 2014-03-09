@@ -599,7 +599,19 @@ CInsim::SendMST (std::string Text)
     memset( pack, 0, sizeof( IS_MST));
     pack->Size = sizeof( IS_MST);
     pack->Type = ISP_MST;
-    sprintf( pack->Msg, "%.63s\0", Text.c_str() );
+    sprintf( pack->Msg, "%.63s", Text.c_str() );
+    send_packet( pack );
+    delete pack;
+}
+
+void
+CInsim::SendMSX(std::string Text)
+{
+    IS_MST *pack = new IS_MST;
+    memset( pack, 0, sizeof( IS_MST ));
+    pack->Size = sizeof( IS_MST );
+    pack->Type = ISP_MST;
+    sprintf( pack->Msg, "%.95s", Text.c_str() );
     send_packet( pack );
     delete pack;
 }
@@ -671,6 +683,44 @@ CInsim::SendButton(byte ReqI, byte UCID, byte ClickID, byte Left, byte Top, byte
     delete pack;
 }
 
+void
+CInsim::SendTiny(byte SubT)
+{
+    SendTiny(SubT,0);
+}
+
+void
+CInsim::SendTiny(byte SubT, byte ReqI)
+{
+    IS_TINY *packet = new IS_TINY;
+    memset(packet, 0, sizeof(IS_TINY));
+    packet->Size = sizeof(IS_TINY);
+    packet->Type = ISP_TINY;
+    packet->ReqI = ReqI;
+    packet->SubT = SubT;
+    send_packet(packet);
+    delete packet;
+}
+
+void
+CInsim::SendSmall(byte SubT, unsigned UVal)
+{
+    SendSmall(SubT,UVal,0);
+}
+
+void
+CInsim::SendSmall(byte SubT, unsigned UVal, byte ReqI)
+{
+    IS_SMALL *packet = new IS_SMALL;
+    memset(packet, 0, sizeof(IS_SMALL));
+    packet->Size = sizeof(IS_SMALL);
+    packet->Type = ISP_SMALL;
+    packet->ReqI = ReqI;
+    packet->SubT = SubT;
+    packet->UVal = UVal;
+    send_packet(packet);
+    delete packet;
+}
 
 /**
 * Other functions!!!
