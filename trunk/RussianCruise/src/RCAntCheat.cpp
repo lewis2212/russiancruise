@@ -150,14 +150,7 @@ void RCAntCheat::InsimPLL( struct IS_PLL* packet )
 
 void RCAntCheat::InsimPLA( struct IS_PLA* packet )
 {
-
-    struct IS_TINY pack_requests;
-    memset(&pack_requests, 0, sizeof(struct IS_TINY));
-    pack_requests.Size = sizeof(struct IS_TINY);
-    pack_requests.Type = ISP_TINY;
-    pack_requests.ReqI = 1;
-    pack_requests.SubT = TINY_REO;      //
-    insim->send_packet(&pack_requests);
+    insim->SendTiny(TINY_REO,255);
 }
 
 /*void RCAntCheat::InsimREO( struct IS_REO* packet )
