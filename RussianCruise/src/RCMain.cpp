@@ -336,7 +336,7 @@ void save_car (byte UCID)
 
 void Save(byte UCID)
 {
-    if(players.find(UCID) == players.end())
+    if(UCID == 255)
         return;
 
 	save_car(UCID);
@@ -632,7 +632,7 @@ void case_btc ()
                 sprintf(pack_btn.Text, msg->_( pack_btc->UCID, "MsgPlFor" ), players[pack_btc->ReqI].PName);
 #ifdef _RC_POLICE_H
                 if (police->IsCop(pack_btc->UCID))
-                    sprintf(pack_btn.Text, "^7^CÄëÿ %s ^8(%s^8) ^7:", players[pack_btc->UCID].PName, players[pack_btc->UCID].UName);
+                    sprintf(pack_btn.Text, "^7^CÄëÿ %s ^8(%s^8) ^7:", players[pack_btc->ReqI].PName, players[pack_btc->ReqI].UName);
 #endif
                 insim->send_packet(&pack_btn);
                 pack_btn.BStyle = 3 + 16 + ISB_CLICK;
@@ -2175,10 +2175,15 @@ void read_cfg()
 
 void ReadBonuses()
 {
+    RCBaseClass::CCText("^3Restore bonus");
+
     string filename = string(RootDir) + "\\bonuses.json";
 
     if(!RCBaseClass::FileExists(filename))
+    {
+        RCBaseClass::CCText("^1Bonus file not found " + filename);
         return;
+    }
 
     ifstream file;
 
@@ -2186,7 +2191,7 @@ void ReadBonuses()
 
 	if( !file.is_open() )
 	{
-		cout  << "Failed to open bonuses file\n";
+		RCBaseClass::CCText("^1Failed to open bonuses file");
 		return;
 	}
 
@@ -2205,14 +2210,14 @@ void ReadBonuses()
     {
         byte UCID = pl.first;
 
-        if( bonuses[ players[UCID].UName ].isArray() )
-        {
-            Json::Value b = bonuses[players[UCID].UName];
-            players[UCID].Bonus_count = b["count"].asInt();
-            players[UCID].Bonus_dist = b["dist"].asFloat();
-        }
+        Json::Value b = bonuses[players[UCID].UName];
+        players[UCID].Bonus_count = b["count"].asInt();
+        players[UCID].Bonus_dist = b["dist"].asFloat();
+
+        insim->SendMTC(UCID, msg->_(UCID,"Your bonus is restored"));
     }
-    //remove(filename.c_str());
+
+    remove(filename.c_str());
     bonuses.clear();
     return;
 }
