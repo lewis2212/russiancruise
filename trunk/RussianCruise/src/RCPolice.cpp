@@ -614,6 +614,54 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 dbExec(query);
             }
         }
+
+        if (strncmp(Msg, "!cop_up", 7) == 0 )
+        {
+            char param[24];
+            strcpy(param, Msg + 8);
+
+            if (param!=NULL)
+            for (auto& p: players)
+                if (string(players[p.first].UName) == string(param))
+                {
+                    if (players[p.first].Rank < 4)
+                    {
+                        players[p.first].Rank++;
+                        insim->SendMTC(255, "^2| ^8" + string(players[p.first].PName) + " ^2^Cповышен до ^7" + ToString(players[p.first].Rank) + " ^2ранга");
+                        insim->SendBFNAll(p.first);
+                    }
+                    else
+                        insim->SendMTC(UCID, "^2| ^8" + string(players[p.first].PName) + " ^7^Cдостиг максимального ранга");
+
+                    return;
+                }
+            insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
+        }
+
+        if (strncmp(Msg, "!cop_down", 9) == 0 )
+        {
+            char param[24];
+            strcpy(param, Msg + 10);
+
+            CCText((string)param);
+
+            if (param!=NULL)
+            for (auto& p: players)
+                if (string(players[p.first].UName) == string(param))
+                {
+                    if (players[p.first].Rank > 0)
+                    {
+                        players[p.first].Rank--;
+                        insim->SendMTC(255, "^2| ^8" + string(players[p.first].PName) + " ^1^Cпонижен до ^7" + ToString(players[p.first].Rank) + " ^1ранга");
+                        insim->SendBFNAll(p.first);
+                    }
+                    else
+                        insim->SendMTC(UCID, "^2| ^8" + string(players[p.first].PName) + " ^7^Cдостиг минимального ранга");
+
+                    return;
+                }
+            insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
+        }
     }
 }
 
