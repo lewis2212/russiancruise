@@ -129,6 +129,11 @@ public:
 
 	static string StringFormat(const string fmt_str, ...);
 
+	static inline bool FileExists (const std::string& name)
+	{
+		return ( access( name.c_str(), F_OK ) != -1 );
+	}
+
 protected:
     CInsim      *insim;         	// Переменная-указатель на класс CInsim
     char        RootDir[MAX_PATH]; 	// Полный путь до папки с программой

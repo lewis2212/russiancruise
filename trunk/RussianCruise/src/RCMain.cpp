@@ -350,13 +350,26 @@ void Save(byte UCID)
 	insim->SendMTC(UCID, msg->_( UCID, "3000" ));
 }
 
-void SaveAll()
+void SaveAll(bool SaveBonus)
 {
 	for(auto& pl: players)
 	{
-		Save(pl.first);
+	    byte UCID = pl.first;
+
+		Save(UCID);
+
+		if(SaveBonus)
+        {
+            bonuses[ players[UCID].UName ]["count"] = players[UCID].Bonus_count;
+            bonuses[ players[UCID].UName ]["dist"] = players[UCID].Bonus_dist;
+        }
 	}
 	RCBaseClass::CCText("^2DATA SAVED");
+
+	if(SaveBonus)
+    {
+        SaveBonuses();
+    }
 }
 
 void help_cmds (byte UCID, int h_type)
@@ -1515,7 +1528,7 @@ void case_mso ()
         insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
         insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
 
-		SaveAll();
+		SaveAll(true);
 
         ok=0;
         return;
@@ -2160,6 +2173,60 @@ void read_cfg()
     }
 }
 
+void ReadBonuses()
+{
+    string filename = string(RootDir) + "\\bonuses.json";
+
+    if(!RCBaseClass::FileExists(filename))
+        return;
+
+    ifstream file;
+
+	file.open(filename, ios::binary);
+
+	if( !file.is_open() )
+	{
+		cout  << "Failed to open bonuses file\n";
+		return;
+	}
+
+	bool readed = bonusesReader.parse( file, bonuses, false );
+
+	if ( !readed )
+	{
+		file.close();
+		// report to the user the failure and their locations in the document.
+		cout << "Failed to parse bonuses\n" << bonusesReader.getFormattedErrorMessages();
+		return;
+	}
+	file.close();
+
+    for(auto& pl:players)
+    {
+        byte UCID = pl.first;
+
+        if( bonuses[ players[UCID].UName ].isArray() )
+        {
+            Json::Value b = bonuses[players[UCID].UName];
+            players[UCID].Bonus_count = b["count"].asInt();
+            players[UCID].Bonus_dist = b["dist"].asFloat();
+        }
+    }
+    //remove(filename.c_str());
+    bonuses.clear();
+    return;
+}
+
+void SaveBonuses()
+{
+    string filename = string(RootDir) + "\\bonuses.json";
+
+    ofstream f;
+    f.open(filename, ios::out);
+    f << bonusesWriter.write( bonuses );
+    f.close();
+}
+
 /*********************************************/
 
 void *ThreadMci (void *params)
@@ -2187,7 +2254,7 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
-			SaveAll();
+			SaveAll(false);
         }
 
         Sleep(500);
@@ -2210,6 +2277,8 @@ void *ThreadSave (void *params)
 void *ThreadWork (void *params)
 {
     Sleep(10000);
+
+    ReadBonuses();
 
     while (ok > 0)
     {
@@ -2276,7 +2345,7 @@ int main(int argc, char* argv[])
     }
     RCBaseClass::CCText("^3RCMain:\t\t^2Connected to MySQL server");
 
-    sprintf(IS_PRODUCT_NAME, "RC-%s\0", AutoVersion::RC_UBUNTU_VERSION_STYLE);
+    sprintf(IS_PRODUCT_NAME, "RC-%.15s", AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
     insim = new CInsim();
     ginfo = new GlobalInfo();
