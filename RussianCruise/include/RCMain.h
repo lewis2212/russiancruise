@@ -18,6 +18,8 @@ Russian Cruise by TurboSnail
 #include <windows.h>
 #include <mysql/mysql.h>
 
+#include <json/json.h>
+
 #include <math.h>
 #include <map>
 #include <thread>
@@ -164,4 +166,10 @@ public:
 void read_track();
 void read_car();
 void ShowUsersList(byte UCID);
+
+Json::Value 		bonuses;
+Json::Reader 		bonusesReader;
+Json::StyledWriter 	bonusesWriter;
+void ReadBonuses();
+void SaveBonuses();
 #endif
