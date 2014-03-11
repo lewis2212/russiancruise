@@ -70,7 +70,7 @@ public:
 
     void credit_penalty(byte UCID);
 
-    void BtnCash( byte UCID );
+    void Event();
 
     void InsimMCI( struct IS_MCI* packet );
 };

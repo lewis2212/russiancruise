@@ -223,7 +223,6 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
         Save( packet->UCID );
 
     }
-    btn_dl( packet->UCID );
 }
 
 void RCDL::InsimNPL( struct IS_NPL* packet )
@@ -338,33 +337,18 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
             if (UCID != 0)
                 insim->SendMTC(255, Msg);
         }
-
-        /** buttons **/
-        btn_dl( UCID );
     }
 }
 
-void RCDL::btn_dl( byte UCID )
+void RCDL::Event()
 {
-    //TODO: refactoring
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.ClickID = 230;
-    pack.BStyle = 32+64;
-    pack.L = 100;
-    pack.T = 5;
-    pack.W = 30;
-    pack.H = 4;
+    // левел и скилл игрока
+    for ( auto& play: players )
+    {
+        float nextlvl = ( pow( players[ play.first ].LVL, 2) * 0.5 + 100 ) * 1000;
+        float skl = ( players[ play.first ].Skill / nextlvl ) * 100;
 
-    float nextlvl = ( pow( players[ UCID ].LVL, 2) * 0.5 + 100 ) * 1000;
-    float skl = ( players[ UCID ].Skill / nextlvl ) * 100;
-
-    sprintf( pack.Text, msg->_(UCID, "LvlAndSkill"), players[ UCID ].LVL, skl);
-    insim->send_packet(&pack);
+        insim->SendButton(255, play.first, 230, 100, 5, 30, 4, 32 + 64,
+                        StringFormat(msg->_(play.first, "LvlAndSkill"), players[ play.first ].LVL, skl));
+    }
 }

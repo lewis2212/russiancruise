@@ -525,46 +525,26 @@ void btn_info (byte UCID, int b_type)
         insim->SendBFN(UCID, i);
 }
 
-
-
-void btn_panel (byte UCID)
+void Event ()
 {
-    /****************************/
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID = UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.BStyle = 1;
-    pack.ClickID = 54;
-    pack.BStyle = 32;
-    pack.L = 85;
-    pack.T = 1;
-    pack.W = 15;
-    pack.H = 8;
+    // одометр
+    for (auto& plr: players)
+    {
+        string str;
+        if (players[plr.first].Zone== 1)
+            str = msg->_(plr.first, "PitSaveGood");
+        else if (players[plr.first].Zone== 2)
+            str = msg->_( plr.first, "401" );
+        else if (players[plr.first].Zone== 3)
+            str = msg->_( plr.first, "402" );
+        else if (players[plr.first].Zone== 4)
+            str = msg->_( plr.first, "404" );
+        else
+            str = msg->_(plr.first, "PitSaveNotGood");
+        insim->SendButton(255, plr.first, 54, 85, 1, 15, 8, 32+7, str);
 
-    if (players[UCID].Zone== 1)
-        strcpy(pack.Text, msg->_(UCID, "PitSaveGood"));
-    else if (players[UCID].Zone== 2)
-        strcpy(pack.Text, msg->_( UCID, "401" ));
-    else if (players[UCID].Zone== 3)
-        strcpy(pack.Text, msg->_( UCID, "402" ));
-    else if (players[UCID].Zone== 4)
-        strcpy(pack.Text, msg->_( UCID, "404" ));
-    else
-        strcpy(pack.Text, msg->_(UCID, "PitSaveNotGood"));
-    insim->send_packet(&pack);
-
-    pack.ClickID = 55;
-    pack.L = 70;
-    pack.T = 5;
-    pack.W = 15;
-    pack.H = 4;
-    sprintf(pack.Text, msg->_(UCID, "Dist" ), players[UCID].Distance/1000);
-    insim->send_packet(&pack);
+        insim->SendButton(255, plr.first, 55, 70, 5, 15, 4, 32, RCBaseClass::StringFormat(msg->_(plr.first, "Dist" ), players[plr.first].Distance/1000));
+    }
 }
 
 /****************************************/
@@ -836,8 +816,6 @@ void case_mci ()
         if(players.find(UCID) == players.end())
             continue;
 
-        btn_panel(UCID);
-
         struct streets StreetInfo;
         street->CurentStreetInfo(&StreetInfo, UCID);
 
@@ -899,6 +877,8 @@ void case_mci ()
         /** Zones (PitSave, shop, etc) **/
         if (bank->InBank(UCID))
             players[UCID].Zone = 4;
+        else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.CafeCount, ginfo->TrackInf.XCafe, ginfo->TrackInf.YCafe, X, Y))
+            players[UCID].Zone = 3;
         else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.PitCount, ginfo->TrackInf.XPit, ginfo->TrackInf.YPit, X, Y))
             players[UCID].Zone = 1;
         else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.ShopCount, ginfo->TrackInf.XShop, ginfo->TrackInf.YShop, X, Y))
@@ -1698,8 +1678,6 @@ void case_ncn ()
     //help_cmds(&players[pack_ncn->UCID], 1);
     insim->SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help1" ));
     insim->SendMTC(pack_ncn->UCID, msg->_( pack_ncn->UCID, "Help14" ));
-
-    btn_panel(pack_ncn->UCID);
 }
 
 void case_npl ()
@@ -2074,6 +2052,33 @@ void read_track()
                     ginfo->TrackInf.YShop[i] = atoi(Y);
                 }
             }
+
+            if (strncmp(str, "/cafe", 5)==0)
+            {
+                readf.getline(str, 128);
+                int count = atoi(str);
+                ginfo->TrackInf.CafeCount = count;
+
+                if ( ginfo->TrackInf.XCafe != NULL )
+                    delete[] ginfo->TrackInf.XCafe;
+
+                if ( ginfo->TrackInf.YCafe != NULL )
+                    delete[] ginfo->TrackInf.YCafe;
+
+                ginfo->TrackInf.XCafe = new int[count];
+                ginfo->TrackInf.YCafe = new int[count];
+
+                for (int i=0 ; i<count; i++)
+                {
+                    readf.getline(str, 128);
+                    char * X;
+                    char * Y;
+                    X = strtok (str, ";");
+                    Y = strtok (NULL, ";");
+                    ginfo->TrackInf.XCafe[i] = atoi(X);
+                    ginfo->TrackInf.YCafe[i] = atoi(Y);
+                }
+            }
         } // if strlen > 0
     } //while readf.good()
 
@@ -2214,7 +2219,7 @@ void ReadBonuses()
         players[UCID].Bonus_count = b["count"].asInt();
         players[UCID].Bonus_dist = b["dist"].asFloat();
 
-        insim->SendMTC(UCID, msg->_(UCID,"Your bonus is restored"));
+        insim->SendMTC(UCID, msg->_(UCID, "> ^1BONUS RESTORED"));
     }
 
     remove(filename.c_str());
@@ -2297,6 +2302,14 @@ void *ThreadWork (void *params)
         taxi->Event();
 #endif // _RC_TAXI_H
         lgh->Event();
+
+        bank->Event();
+
+        dl->Event();
+
+        nrg->Event();
+
+        Event();
 
         Sleep(500);
 

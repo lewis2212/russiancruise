@@ -205,9 +205,6 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     players[packet->UCID].ReadTrue = true;
 
     /** credit **/
-
-    BtnCash(packet->UCID);
-
     return ;
 }
 
@@ -625,9 +622,6 @@ void RCBank::InsimMCI(struct IS_MCI* pack_mci)
     {
         byte UCID = PLIDtoUCID[pack_mci->Info[i].PLID];
 
-        //баланс игрока
-        BtnCash(UCID);
-
         //зона банк
         int X = pack_mci->Info[i].X/65536;
         int Y = pack_mci->Info[i].Y/65536;
@@ -652,54 +646,13 @@ void RCBank::InsimMCI(struct IS_MCI* pack_mci)
     }
 }
 
-void RCBank::BtnCash (byte UCID)
+void RCBank::Event()
 {
-    struct IS_BTN pack;
-    memset(&pack, 0, sizeof(struct IS_BTN));
-    pack.Size = sizeof(struct IS_BTN);
-    pack.Type = ISP_BTN;
-    pack.ReqI = 1;
-    pack.UCID =  UCID;
-    pack.Inst = 0;
-    pack.TypeIn = 0;
-    pack.BStyle = 32;
-    //
-    pack.ClickID = 66;
-    pack.L = 70;
-    pack.T = 1;
-    pack.W = 15;
-    pack.H = 4;
-
-    char col[3];
-
-    if (players[UCID].Cash > 0)
-        strcpy(col, "^2");
-    else
-        strcpy(col, "^1");
-
-    sprintf(pack.Text, msg->_(UCID, "Cash"), col, (int)players[UCID].Cash);
-    insim->send_packet(&pack);
-
-    if ( players[UCID].UName == "denis-takumi" )
-    {
-        pack.ClickID = 167;
-        pack.L = 50;
-        pack.T = 1;
-        pack.W = 20;
-        pack.H = 4;
-
-        char cash[10];
-        sprintf(cash, "%.0f", BankFond);
-
-        if (BankFond > 0)
-            strcpy(pack.Text, "^2");
-        else
-            strcpy(pack.Text, "^1");
-
-        strcat(pack.Text, cash);
-        strcat(pack.Text, "^7 RUR");
-        insim->send_packet(&pack);
-    }
+    // баланс игрока
+    for ( auto& play: players )
+        insim->SendButton(255, play.first, 66, 70, 1, 15, 4, 32,
+                        (players[play.first].Cash > 0 ? "^2" : "^1") +
+                        StringFormat(msg->_(play.first, "Cash"), (int)players[play.first].Cash));
 }
 
 void RCBank::ReadConfig(const char *Track)

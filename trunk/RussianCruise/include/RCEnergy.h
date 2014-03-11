@@ -65,7 +65,6 @@ public:
     void    InsimMCI( struct IS_MCI* packet );
 
     void    Save(byte UCID);
-    void    btn_energy ( byte UCID );
 
 
     int     GetEnergy(byte UCID);
@@ -76,6 +75,7 @@ public:
     bool	AddEnergy( byte UCID, int Energy);
     bool	RemoveEnergy( byte UCID, int Energy);
 
+    void    Event();
 };
 
 #endif
