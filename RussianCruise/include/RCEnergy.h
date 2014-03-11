@@ -48,7 +48,6 @@ private:
     void InsimOBH( struct IS_OBH* packet );
     void InsimHLV( struct IS_HLV* packet );
 
-    int check_pos ( byte UCID );
 public:
     RCEnergy(const char* Dir);
     ~RCEnergy();
@@ -66,7 +65,6 @@ public:
 
     void    Save(byte UCID);
 
-
     int     GetEnergy(byte UCID);
     bool    Lock(byte UCID);
     bool    Unlock(byte UCID);
@@ -74,6 +72,8 @@ public:
 
     bool	AddEnergy( byte UCID, int Energy);
     bool	RemoveEnergy( byte UCID, int Energy);
+
+    bool    InCafe ( byte UCID );
 
     void    Event();
 };
