@@ -219,8 +219,8 @@ Pocrishkina str.
 404;-462
 
 #Street
-Кафе
-Cafe
+ Майдан Незалежності
+ Independence Square
 50
 4
 -154;524

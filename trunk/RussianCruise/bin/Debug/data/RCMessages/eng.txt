@@ -5,13 +5,13 @@
 Energy 			"^%d ^LEnergy: %d^K£₯"
 EnergyArrow		"%s ^K‘θ"
 LvlAndSkill 	" ^7Drive Level: ^2%d^7, skill: ^2%4.2f"
-PitSaveGood 	"^2GARAGE"
-PitSaveNotGood 	"^1GARAGE"
+PitSaveGood 	"^2Garage"
+PitSaveNotGood 	"^3City"
 401 			"^3Shop"
-402 			"^3Cafe"
+402 			"^2Cafe"
 404 			"^3Bank"
 Dist			"^2%4.3f Km"
-Cash 			"%s%d ^7RUR"
+Cash 			"%d ^7RUR"
 
 // ************************
 //       υελοεπ
