@@ -121,8 +121,6 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
         players[ packet->UCID ].Energy = 10000;
         Save( packet->UCID );
     }
-
-    btn_energy( packet->UCID );
 }
 
 void RCEnergy::InsimNPL( struct IS_NPL* packet )
@@ -268,7 +266,6 @@ void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
             Z1=Z;
         }
 
-        btn_energy(UCID);
         memcpy( &players[UCID].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
     }
 }
@@ -332,34 +329,39 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
 
 }
 
-void RCEnergy::btn_energy ( byte UCID )
+
+void RCEnergy::Event()
 {
-    char str[64];
-    int nrg = players[UCID].Energy / 100;
-    int color = 2;
-
-    if (nrg <= 10)
+    // энергия игрока
+    for ( auto& play: players )
     {
-        if ( players[UCID].EnergyAlarm )
+        char str[64];
+        int nrg = players[play.first].Energy / 100;
+        int color = 2;
+
+        if (nrg <= 10)
         {
-            players[UCID].EnergyAlarm = false;
-            color = 0;
+            if ( players[play.first].EnergyAlarm )
+            {
+                players[play.first].EnergyAlarm = false;
+                color = 0;
+            }
+            else
+            {
+                players[play.first].EnergyAlarm = true;
+                color = 1;
+            }
         }
-        else
-        {
-            players[UCID].EnergyAlarm = true;
-            color = 1;
-        }
+        else if (nrg <= 50)
+            color = 3;
+
+        sprintf(str, msg->_(play.first , "Energy"), color, nrg);
+
+        if (players[play.first].Zone == 3)
+            sprintf(str, msg->_(play.first , "EnergyArrow"), str);
+
+        insim->SendButton(255, play.first, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
     }
-    else if (nrg <= 50)
-        color = 3;
-
-    sprintf(str, msg->_(UCID , "Energy"), color, nrg);
-
-    if (players[UCID].Zone == 3)
-        sprintf(str, msg->_(UCID , "EnergyArrow"), str);
-
-    insim->SendButton(255, UCID, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
 }
 
 int RCEnergy::check_pos( byte UCID )

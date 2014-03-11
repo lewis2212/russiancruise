@@ -100,6 +100,9 @@ struct track_info
     int     ShopCount;
     int     *XShop = NULL;
     int     *YShop = NULL;
+    int     CafeCount;
+    int     *XCafe = NULL;
+    int     *YCafe = NULL;
 };
 
 struct player

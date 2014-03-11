@@ -37,8 +37,6 @@ private:
     void InsimMSO( struct IS_MSO* packet );
     void InsimCON( struct IS_CON* packet );
 
-    void btn_dl( byte UCID );
-
 public:
     RCDL(const char* Dir);
     ~RCDL();
@@ -59,6 +57,7 @@ public:
     byte    inited;
 
     void    InsimMCI( struct IS_MCI* packet );
+    void    Event();
 
     // Основные функции класса
     int init(MYSQL *conn,CInsim *InSim, void *RCMessageClass);
