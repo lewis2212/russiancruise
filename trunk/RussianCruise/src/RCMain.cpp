@@ -530,6 +530,9 @@ void Event ()
     // одометр
     for (auto& plr: players)
     {
+        if (plr.first == 0 or plr.first == 255)
+            continue;
+
         string str;
         if (players[plr.first].Zone== 1)
             str = msg->_(plr.first, "PitSaveGood");
@@ -877,7 +880,7 @@ void case_mci ()
         /** Zones (PitSave, shop, etc) **/
         if (bank->InBank(UCID))
             players[UCID].Zone = 4;
-        else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.CafeCount, ginfo->TrackInf.XCafe, ginfo->TrackInf.YCafe, X, Y))
+        else if ( nrg->InCafe(UCID))
             players[UCID].Zone = 3;
         else if ( RCBaseClass::Check_Pos(ginfo->TrackInf.PitCount, ginfo->TrackInf.XPit, ginfo->TrackInf.YPit, X, Y))
             players[UCID].Zone = 1;
@@ -1503,10 +1506,9 @@ void case_mso ()
     //!EXIT
     if (
         ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and
-        (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 || pack_mso->UCID == 0))
+        (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
-        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение");
-        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CСохранение данных");
+        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение, сохранение данных");
 
 		SaveAll(true);
 
@@ -1514,7 +1516,7 @@ void case_mso ()
         return;
     }
 
-    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0))
+    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
         insim->SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
         RCBaseClass::CCText("^7Config reload");
@@ -2264,7 +2266,7 @@ void *ThreadSave (void *params)
         GetLocalTime(&sm); //seconds = time (NULL);
         if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
         {
-			SaveAll(false);
+			SaveAll(true);
         }
 
         Sleep(500);
@@ -2287,32 +2289,16 @@ void *ThreadSave (void *params)
 void *ThreadWork (void *params)
 {
     Sleep(10000);
-
     ReadBonuses();
 
     while (ok > 0)
     {
-#ifdef _RC_POLICE_H
-        police->Event();
-#endif
-#ifdef _RC_PIZZA_H
-        pizza->Event();
-#endif
-#ifdef _RC_TAXI_H
-        taxi->Event();
-#endif // _RC_TAXI_H
-        lgh->Event();
-
-        bank->Event();
-
-        dl->Event();
-
-        nrg->Event();
+        for( cl = classes.begin(); cl != classes.end(); ++cl )
+            (*cl)->Event();
 
         Event();
 
         Sleep(500);
-
     }
     return 0;
 };

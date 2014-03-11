@@ -364,17 +364,11 @@ void RCEnergy::Event()
     }
 }
 
-int RCEnergy::check_pos( byte UCID )
+bool RCEnergy::InCafe( byte UCID )
 {
-    int PLX = players[UCID].Info.X / 65536;
-    int PLY = players[UCID].Info.Y / 65536;
-
-    if (Check_Pos(4, zone.dealX, zone.dealY, PLX, PLY))
-    {
-        return 1;
-    }
-
-    return 0;
+    if (players[UCID].Zone == 3)
+        return true;
+    return false;
 }
 
 

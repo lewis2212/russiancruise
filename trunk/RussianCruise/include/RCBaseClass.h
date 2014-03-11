@@ -64,6 +64,7 @@ public:
     virtual void InsimMCI( struct IS_MCI* packet );     	// ѕакет с данными о координатах и т.д.
 
     virtual void Save(byte UCID){};
+    virtual void Event(){};
 
     void ButtonInfo (byte UCID, const char* Message);
     void ClearButtonInfo (byte UCID);
