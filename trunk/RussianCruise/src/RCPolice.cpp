@@ -230,7 +230,7 @@ void RCPolice::InsimCNL( struct IS_CNL* packet )
                 DTPvyzov[0][i] = 0;
                 DTPvyzov[1][i] = 0;
                 DTPvyzov[2][i] = 0;
-                insim->SendBFN(255, 135 + i);
+                insim->SendBFN(255, 91 + i);
                 break;
             }
         }
@@ -283,7 +283,7 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
                     DTPvyzov[0][i] = 0;
                     DTPvyzov[1][i] = 0;
                     DTPvyzov[2][i] = 0;
-                    insim->SendBFN(255, 135 + i);
+                    insim->SendBFN(255, 91 + i);
                     break;
                 }
             }
@@ -730,15 +730,15 @@ void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
 
 void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 {
-    insim->SendBFN(UCID, 78);
     insim->SendBFN(UCID, 79);
+    insim->SendBFN(UCID, 80);
 
     char Text[128];
     byte c = GetFineCount();
 
     byte
-    id=84, 				//стартовый ид кнопок
-    id2=110,
+    id=180, 				//стартовый ид кнопок
+    id2=205,
     l=100, 				//не менять
     t=90,				//не менять
     hButton=5, 			//высота строки
@@ -747,16 +747,16 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 
     sprintf(Text, "^C^7Панель выписки штрафов (^8%s^7)", players[UCID2].PName.c_str());
 
-    insim->SendButton(255, UCID, 81, l - w / 2, t - h / 2, w, h + 8, 32, ""); 				    //фон
-    insim->SendButton(255, UCID, 82, l - w / 2, t - h / 2, w, h + 8, 32, "");				    //фон
-    insim->SendButton(255, UCID, 83, l - w / 2, t - h / 2, w, 10, 64, Text); 				    //заголовок
-    insim->SendButton(254, UCID, 80, l - 7, t - h / 2 + h + 1, 14, 6, 16 + ISB_CLICK, "^2OK"); //закрывашка
+    insim->SendButton(255, UCID, 176, l - w / 2, t - h / 2, w, h + 8, 32, ""); 				    //фон
+    insim->SendButton(255, UCID, 177, l - w / 2, t - h / 2, w, h + 8, 32, "");				    //фон
+    insim->SendButton(255, UCID, 178, l - w / 2, t - h / 2, w, 10, 64, Text); 				    //заголовок
+    insim->SendButton(254, UCID, 179, l - 7, t - h / 2 + h + 1, 14, 6, 16 + ISB_CLICK, "^2OK"); //закрывашка
 
     if ( players[UCID].UName == "Lexanom" or (players[UCID].Rank > 2 and players[UCID2].Pogonya == 2))
-        insim->SendButton(UCID2, UCID, 79, l + w / 2 - 15, t - h / 2 + h + 1, 14, 6, 16 + 8 + 5, "^CАрестовать", 2);
+        insim->SendButton(UCID2, UCID, 80, l + w / 2 - 15, t - h / 2 + h + 1, 14, 6, 16 + 8 + 5, "^CАрестовать", 2);
 
 	if (players[UCID].Rank > 1 and players[UCID2].Pogonya == 1 and players[UCID2].Info.Speed * 360 / 32768 == 0)
-		insim->SendButton(UCID2, UCID, 78, l - w / 2 + 1, t - h / 2 + h + 1, 20, 6, 16 + 8 + 5, "^CСошел с трассы?", 1);
+		insim->SendButton(UCID2, UCID, 79, l - w / 2 + 1, t - h / 2 + h + 1, 20, 6, 16 + 8 + 5, "^CСошел с трассы?", 1);
 
     for (int i = 0; i < c; i++)
     {
@@ -794,7 +794,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
     if (packet->ReqI == 200)
     {
-        int i = packet->ClickID - 135;
+        int i = packet->ClickID - 91;
         char str[96];
 
         if (players[packet->UCID].DTPstatus == 2 and DTPvyzov[2][i] == packet->UCID)
@@ -847,11 +847,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             insim->SendBFN(255, packet->ClickID);
 
             //закрывашка штрафов
-            for (byte c = 80; c < 165; c++)
+            for (byte c = 176; c < 239; c++)
                 insim->SendBFN(packet->UCID, c);
 
             //очистка кнопок
-            for (byte i = 60; i < 92; i++)
+            for (byte i = 91; i < 110; i++)
                 insim->SendBFN(255, i);
         }
         else if (DTPvyzov[2][i] <= 0)
@@ -878,11 +878,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         }
     }
 
-    if ( packet->ClickID == 130 and packet->ReqI == 254 )
+    if ( packet->ClickID == 178 and packet->ReqI == 254 )
     {
         players[packet->UCID].ThisFineCount = 0;
 
-        for (int i=128; i < 165; i++)
+        for (int i=176; i < 239; i++)
             insim->SendBFN(packet->UCID, i);
 
         for (int j=0; j < 20; j++)
@@ -891,18 +891,18 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 		CopUname = "";
     }
 
-    if ( packet->ClickID == 80 and packet->ReqI == 254 ) //погоня офф
-        for(int i=78; i < 185; i++)
+    if ( packet->ClickID == 179 and packet->ReqI == 254 ) //погоня офф
+        for(int i=21; i < 239; i++)
             insim->SendBFN(packet->UCID, i);
 
-    if ( packet->ClickID > 84 and packet->ClickID <= 110) //выписка штрафа
+    if ( packet->ClickID > 180 and packet->ClickID <= 205 and packet->ReqI != 255) //выписка штрафа
     {
         SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
         sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
-        int FID = packet->ClickID-84;
+        int FID = packet->ClickID-180;
 
         if (players[packet->UCID].DTPstatus == 2)
         {
@@ -957,14 +957,14 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
         }
     }
 
-    if ( packet->ClickID > 110 and packet->ClickID <= 132) //отмена штрафа
+    if ( packet->ClickID > 205 and packet->ClickID <= 239 and packet->ReqI != 255) //отмена штрафа
     {
         SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
         sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
-        int FID = packet->ClickID-110;
+        int FID = packet->ClickID-205;
         if (players[packet->UCID].DTPstatus == 2)
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
                 players[packet->UCID].FineC -= fines[FID].cash;
@@ -1013,11 +1013,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     }
 
     /** Штрафы **/
-    if (packet->ClickID == 38 and players[packet->UCID].cop)
+    if (packet->ClickID == 73 and players[packet->UCID].cop)
         ShowFinesPanel(packet->UCID, packet->ReqI);
 
     /** Включаем погоню **/
-    if (packet->ClickID == 40)
+    if (packet->ClickID == 74)
     {
         if ( players[packet->ReqI].UName.length() == 0 )
             return;
@@ -1047,7 +1047,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     }
 
     /** Выключаем погоню **/
-    if (packet->ClickID == 41)
+    if (packet->ClickID == 75)
     {
         if ( players[packet->ReqI].UName.length() == 0)
             return;
@@ -1109,11 +1109,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             nrg->Unlock(packet->ReqI);
 
             //закрывашка штрафов
-            for (byte c = 80; c < 165; c++)
+            for (byte c = 21; c < 165; c++)
                 insim->SendBFN(packet->UCID, c);
 
             //очистка кнопок
-            for (byte i = 60; i < 92; i++)
+            for (byte i = 101; i < 110; i++)
                 insim->SendBFN(255, i);
         }
         return;
@@ -1129,11 +1129,11 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
     sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
     /** Игрок в погоне сошел с трассы **/
-    if ( packet->ClickID == 78)
+    if ( packet->ClickID == 79)
     {
         players[packet->ReqI].Pogonya = 2;
         ShowFinesPanel(packet->UCID, packet->ReqI);
-        insim->SendBFN(packet->UCID, 78);
+        insim->SendBFN(packet->UCID, 79);
 
         char Text[128];
         sprintf(Text, "^2| ^C^7Сход с трассы во время погони");
@@ -1144,7 +1144,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
     }
 
     /** Арест на Х минут **/
-    if ( packet->ClickID == 79)
+    if ( packet->ClickID == 80)
     {
         if (strlen(packet->Text) == 0)
             return;
@@ -1153,11 +1153,11 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
         nrg->Unlock(packet->ReqI);
 
         //закрывашка штрафов
-        for (byte c = 80; c < 165; c++)
+        for (byte c = 176; c < 239; c++)
             insim->SendBFN(packet->UCID, c);
 
         //очистка кнопок
-        for (byte i = 60; i < 92; i++)
+        for (byte i = 81; i < 175; i++)
             insim->SendBFN(255, i);
 
         time_t now = time(NULL);
@@ -1192,8 +1192,8 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 
             sprintf(str, msg->_(packet->ReqI, "Reliaved"), players[packet->ReqI].PName.c_str());
             insim->SendMTC(255, str);
-            insim->SendBFN(packet->ReqI, 210);
-            insim->SendBFN(packet->ReqI, 211);
+            insim->SendBFN(packet->ReqI, 85);
+            insim->SendBFN(packet->ReqI, 86);
         }
     }
 }
@@ -1286,11 +1286,11 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         /** окошко со штрафами **/
         if ( players[UCID].ThisFineCount != 0 )
         {
-            byte ClickID=CLICKID::CLICK_ID_128, w=90, h=10 + 5 * players[UCID].ThisFineCount, l=100, t=90;
-            insim->SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, h + 8, 32, "");
-            insim->SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, h + 8, 32, "");									//фон
-            insim->SendButton(254, UCID, ClickID++, l - 7, t - h / 2 + h + 1, 14, 6, ISB_LIGHT + ISB_CLICK, "^2OK"); 		//закрывашка
-            insim->SendButton(255, UCID, ClickID++, l - w / 2, t - h / 2, w, 10, 3 + 64, msg->_(UCID, "GiveFine3")); 			//заголовок
+            byte ClickID=180, w=90, h=10 + 5 * players[UCID].ThisFineCount, l=100, t=90;
+            insim->SendButton(255, UCID, 176, l - w / 2, t - h / 2, w, h + 8, 32, "");
+            insim->SendButton(255, UCID, 177, l - w / 2, t - h / 2, w, h + 8, 32, "");									//фон
+            insim->SendButton(254, UCID, 178, l - 7, t - h / 2 + h + 1, 14, 6, 16 + 8, "^2OK"); 		    //закрывашка
+            insim->SendButton(255, UCID, 179, l - w / 2, t - h / 2, w, 10, 3 + 64, msg->_(UCID, "GiveFine3")); 			//заголовок
 
             for (int j=0; j < players[UCID].ThisFineCount; j++)
                 insim->SendButton(255, UCID, ClickID++, l - w / 2 + 1, t - h / 2 + 10 + 5 * j, w - 2, 5, ISB_LEFT + ISB_LIGHT, players[UCID].ThisFine[j]);
@@ -1305,13 +1305,9 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
         /** сирена копа **/
         if (players[UCID].cop and players[UCID].Sirena)
-        {
-            insim->SendButton(255, UCID, 140, 90, 26, 20, 10, 32, siren.c_str());
-        }
+            insim->SendButton(255, UCID, 81, 90, 26, 20, 10, 32, siren.c_str());
         else if (players[UCID].cop)
-        {
-            insim->SendBFN(UCID, 140);
-        }
+            insim->SendBFN(UCID, 81);
 
         for (auto& play: players)
         {
@@ -1402,21 +1398,21 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         if (SirenaCount > 0)
         {
             if (players[UCID].cop)
-                insim->SendButton(255, UCID, 141, 0, 36, 200, (byte)((180 - players[UCID].SirenaDist + 4) / 10)+1, 0, siren.c_str());
+                insim->SendButton(255, UCID, 82, 0, 36, 200, (byte)((180 - players[UCID].SirenaDist + 4) / 10)+1, 0, siren.c_str());
             else
-                insim->SendButton(255, UCID, 141, 0, 36, 200, (180 - players[UCID].SirenaDist + 4) / 4, 0, siren.c_str());
+                insim->SendButton(255, UCID, 82, 0, 36, 200, (180 - players[UCID].SirenaDist + 4) / 4, 0, siren.c_str());
         }
         else if (players[UCID].SirenaDist > 0 or SirenaCount == 0)
         {
             players[UCID].SirenaDist = 0;
-            insim->SendBFN(UCID, 141);
+            insim->SendBFN(UCID, 82);
         }
 
         if (players[UCID].Pogonya == 0)
         {
-            insim->SendBFN(UCID, 204);
-            insim->SendBFN(UCID, 205);
-            insim->SendBFN(UCID, 210);
+            insim->SendBFN(UCID, 83);
+            insim->SendBFN(UCID, 84);
+            insim->SendBFN(UCID, 85);
         }
 
         if (players[UCID].Pogonya != 0)
@@ -1528,13 +1524,13 @@ void RCPolice::BtnPogonya(byte UCID)
 {
     if (players[UCID].Pogonya == 1)
     {
-        insim->SendButton(255, UCID, 204, 0, 20, 200, 30, 1, msg->_(UCID, "RideButton" ));
-        insim->SendButton(255, UCID, 205, 0, 43, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
+        insim->SendButton(255, UCID, 83, 0, 20, 200, 30, 1, msg->_(UCID, "RideButton" ));
+        insim->SendButton(255, UCID, 84, 0, 43, 200, 6, 0, msg->_(UCID, "RightAndStop" ));
     }
     else if (players[UCID].Pogonya == 2)
     {
-        insim->SendButton(255, UCID, 204, 0, 20, 200, 30, 1, msg->_(UCID, "ArestButton"));
-        insim->SendBFN(UCID, 205);
+        insim->SendButton(255, UCID, 83, 0, 20, 200, 30, 1, msg->_(UCID, "ArestButton"));
+        insim->SendBFN(UCID, 84);
     }
 }
 
@@ -1665,7 +1661,7 @@ void RCPolice::ButtonClock( byte UCID )
     int TIME = players[UCID].WorkTime - time(NULL);
     sprintf(str, "^2%02d:%02d", TIME / 60, TIME%60);
 
-    insim->SendButton(255, UCID, 210, 130, 1, 10, 8, 32, str);
+    insim->SendButton(255, UCID, 85, 130, 1, 10, 8, 32, str);
 }
 
 char* RCPolice::GetFineName(byte UCID, int FineID)
@@ -1774,16 +1770,16 @@ void RCPolice::Event()
 				char str[128];
 				sprintf(str, msg->_(UCID, "Reliaved"), playr.UName.c_str() );
 				insim->SendMTC(255, str);
-				insim->SendBFN(UCID, 210);
-				insim->SendBFN(UCID, 211);
+				insim->SendBFN(UCID, 85);
+				insim->SendBFN(UCID, 86);
 			}
 			else
 			{
 				char str[10];
 				int TIME = ArestPlayers[ playr.UName ] - time(NULL);
 				sprintf(str, "^1%02d:%02d", TIME / 60, TIME%60);
-				insim->SendButton(255, UCID, 210, 130, 1, 10, 8, 32, str);
-				insim->SendButton(255, UCID, 211, 120, 9, 20, 5, 32, msg->_(UCID, "YouUndArest"));
+				insim->SendButton(255, UCID, 85, 130, 1, 10, 8, 32, str);
+				insim->SendButton(255, UCID, 86, 120, 9, 20, 5, 32, msg->_(UCID, "YouUndArest"));
 			}
 		}
 
@@ -1793,7 +1789,7 @@ void RCPolice::Event()
             int nowtime = time( NULL );
             if (playr.WorkTime <= nowtime)
             {
-                insim->SendBFN( UCID , 210);
+                insim->SendBFN( UCID , 85);
 
                 char Text[64];
                 sprintf( Text , "/msg ^2| %s %s" , playr.PName.c_str(), msg->_(  UCID , "1706" ) );
@@ -1818,7 +1814,7 @@ void RCPolice::Event()
             char smn[32];
             int TM = 1800 - (time(NULL) - players[UCID].StartWork)%1800;
             sprintf(smn, "^CСмена: %02d:%02d", (TM / 60)%60, TM%60);
-            insim->SendButton(255, UCID, 70, 115, 1, 15, 4, 3 + 128, smn);
+            insim->SendButton(255, UCID, 87, 115, 1, 15, 4, 3 + 128, smn);
 
             //заявки на дтп
             for (int i = 0; i < 32; i++)
@@ -1826,7 +1822,7 @@ void RCPolice::Event()
                 if (DTPvyzov[0][i] >= 0 and DTPvyzov[1][i] >= 0 and players[UCID].DTPstatus != -1 and players[UCID].Rank != 3)
                 {
                     street->CurentStreetInfo(&StreetInfo, DTPvyzov[0][i]);	// улица, где дтп
-                    byte id = 135;											// стартовый ИД кнопок
+                    byte id = 91;											// стартовый ИД кнопок
 
                     if (DTPvyzov[2][i] <= 0 and DTPvyzov[1][i] > 0)
                     {
@@ -1892,8 +1888,8 @@ void RCPolice::Event()
                 }
             }
 
-            // Погоны
-            int id = 214,
+            /** Погоны */
+            int id = 111,
                 L = 58,
                 H = 1;
 
@@ -1931,23 +1927,10 @@ void RCPolice::Event()
             }
 
 
-            /** ====== **/
+            /** список погонь **/
 
-            struct IS_BTN pack;
-            memset(&pack, 0, sizeof(struct IS_BTN));
-            pack.Size = sizeof(struct IS_BTN);
-            pack.Type = ISP_BTN;
-            pack.ReqI = 1;
-            pack.UCID =  UCID ;
-            pack.Inst = 0;
-            pack.TypeIn = 0;
-            pack.ClickID = CLICKID::CLICK_ID_60;
-            pack.BStyle = 32;
-            pack.L = 73;
-            pack.T = 191;
-            pack.W = 50;
-            pack.H = 4;
-
+            id = 101;
+            byte T = 191;
             for ( auto& play2: players)
             {
                 byte UCID2 = play2.first;
@@ -1962,14 +1945,13 @@ void RCPolice::Event()
 
                     street->CurentStreetInfo(&StreetInfo, UCID2);
 
-                    if (playr2.Pogonya == 1)
-                        sprintf(pack.Text, "%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName.c_str(), StreetInfo.StreetRu, D, min, sec );
-                    else if (playr2.Pogonya == 2)
-                        sprintf(pack.Text, msg->_(UCID,"2124"), playr2.PName.c_str(), StreetInfo.StreetRu);
+                    string str = StringFormat("%s^7 - %s, %0.0f ^Cм ^2(^1%02d:%02d^2)", playr2.PName.c_str(), StreetInfo.StreetRu, D, min, sec);
 
-                    insim->send_packet(&pack);
-                    pack.T -=4;
-                    pack.ClickID ++;
+                    if (playr2.Pogonya == 2)
+                        str = StringFormat(msg->_(UCID,"2124"), playr2.PName.c_str(), StreetInfo.StreetRu);
+
+                    insim->SendButton(255, UCID, id++, 75, T, 50, 4, 32, str);
+                    T -=4;
                 }
             }
         }

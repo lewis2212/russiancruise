@@ -14,7 +14,7 @@ RCLight::~RCLight()
 bool RCLight::SetLight3( byte UCID, bool Key)
 {
     if (players[UCID].Light3 and !Key)
-        for (int f = 190; f < 203; f++)
+        for (int f = 121; f < 139; f++)
             insim->SendBFN( UCID, f);
 
     players[UCID].Light3 = Key;
@@ -197,7 +197,7 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     players[UCID].OnRed = false;
                 }
 
-                for (int f = 170; f < 203; f++)
+                for (int f = 121; f < 139; f++)
                 {
                     insim->SendBFN( UCID, f);
                 }
@@ -219,32 +219,26 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
             int pit2x[10] = {229, 236, 247, 239};
             int pit2y[10] = {-97, -39, -40, -100};
 
-            //printf ("test wrong route\n");
             if ( Check_Pos( 4, pit1x, pit1y, X, Y ) )
             {
-                //SendMST("in zone");
                 if ( (D < 190 + 90) and (D > 190 - 90) )
                 {
                     if (players[UCID].WrongWay == 1)
                     {
                         players[UCID].WrongWay = 0;
-                        insim->SendBFN( UCID, 203);
-                        insim->SendBFN( UCID, 204);
+                        insim->SendBFN( UCID, 140);
+                        insim->SendBFN( UCID, 141);
                     }
                 }
                 else
                 {
                     if (players[UCID].WrongWay == 0)
-                    {
                         players[UCID].WrongWay =1;
-                    }
 
                     WrongWay( UCID );
 
                     if (S > 10)
-                    {
                         dl->RemSkill( UCID );
-                    }
                 }
             }
             else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
@@ -254,8 +248,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                     if (players[UCID].WrongWay == 1)
                     {
                         players[UCID].WrongWay =0;
-                        insim->SendBFN( UCID, 203);
-                        insim->SendBFN( UCID, 204);
+                        insim->SendBFN( UCID, 140);
+                        insim->SendBFN( UCID, 141);
                     }
                 }
                 else
@@ -274,8 +268,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
                 if (players[UCID].WrongWay == 1)
                 {
                     players[UCID].WrongWay =0;
-                    insim->SendBFN( UCID, 203);
-                    insim->SendBFN( UCID, 204);
+                        insim->SendBFN( UCID, 140);
+                        insim->SendBFN( UCID, 141);
                 }
             }
         }
@@ -357,7 +351,7 @@ bool RCLight::GetOnLight(byte UCID)
 
 void RCLight::Svetofor1 ( byte UCID )
 {
-    byte ClickId = 170, l = 145, t = 12, w = 18;
+    byte ClickId = 121, l = 145, t = 12, w = 18;
 
     char cR [10], cY [10], cG [10];
     int R = 8, Y = 8, G = 8;
@@ -422,7 +416,7 @@ void RCLight::Svetofor1 ( byte UCID )
 
 void RCLight::Svetofor2 ( byte UCID )
 {
-    byte ClickId = 170, l = 145, t = 12, w = 18;
+    byte ClickId = 121, l = 145, t = 12, w = 18;
 
     char cR [10], cY [10], cG [10];
     int R = 8, Y = 8, G = 8;
@@ -514,109 +508,24 @@ void RCLight::Svetofor3 ( byte UCID )
     if (green2 == 1)
         signal13 ="^2•";
 
+    byte id = 140;
+    insim->SendButton(255, UCID, id++, 168, 112, 6, 17, 32, "");    //telo1
 
-    // TODO: refactoring
-    struct IS_BTN pack_btn;
-    memset(&pack_btn, 0, sizeof(struct IS_BTN));
-    pack_btn.Size = sizeof(struct IS_BTN);
-    pack_btn.Type = ISP_BTN;
-    pack_btn.ReqI = 1;
-    pack_btn.UCID = UCID;
-    pack_btn.Inst = 0;
-    pack_btn.BStyle = 32;
-    pack_btn.TypeIn = 0;
+    insim->SendButton(255, UCID, id++, 165, 107, 12, 16, 1, signal1);
+    insim->SendButton(255, UCID, id++, 165, 112, 12, 16, 1, signal2);
+    insim->SendButton(255, UCID, id++, 165, 117, 12, 16, 1, signal3);
 
-    /**** telo1 **/
-    pack_btn.ClickID = 195;
-    pack_btn.L = 168;
-    pack_btn.T = 112;
-    pack_btn.W = 6;
-    pack_btn.H = 17;
-    strcpy(pack_btn.Text, "");
-    insim->send_packet(&pack_btn);
+    insim->SendButton(255, UCID, id++, 162, 112, 6, 17, 32, "");    //telo2
 
-    /**********/
-    pack_btn.BStyle = 1;
-    pack_btn.ClickID = 196;
-    pack_btn.L = 165;
-    pack_btn.T = 107;
-    pack_btn.W = 12;
-    pack_btn.H = 16;
-    strcpy(pack_btn.Text, signal1);
-    insim->send_packet(&pack_btn);
-
-    pack_btn.ClickID = 197;
-    pack_btn.T = 112;
-    strcpy(pack_btn.Text, signal2);
-    insim->send_packet(&pack_btn);
-
-    pack_btn.ClickID = 198;
-    pack_btn.T = 117;
-    strcpy(pack_btn.Text, signal3);
-    insim->send_packet(&pack_btn);
-
-    /********************************/
-    /**** telo 2 *******/
-    pack_btn.BStyle = 32;
-    pack_btn.ClickID = 199;
-    pack_btn.L = 162;
-    pack_btn.T = 112;
-    pack_btn.W = 6;
-    pack_btn.H = 17;
-    strcpy(pack_btn.Text, "");
-    insim->send_packet(&pack_btn);
-    /*************************/
-    pack_btn.BStyle = 1;
-
-    pack_btn.ClickID = 200;
-    pack_btn.L = 159;
-    pack_btn.T = 107;
-    pack_btn.W = 12;
-    pack_btn.H = 16;
-    strcpy(pack_btn.Text, signal11);
-    insim->send_packet(&pack_btn);
-
-
-    pack_btn.ClickID = 201;
-    pack_btn.T = 112;
-    strcpy(pack_btn.Text, signal12);
-    insim->send_packet(&pack_btn);
-
-    pack_btn.ClickID = 202;
-    pack_btn.T = 117;
-    strcpy(pack_btn.Text, signal13);
-    insim->send_packet(&pack_btn);
+    insim->SendButton(255, UCID, id++, 159, 107, 12, 16, 1, signal11);
+    insim->SendButton(255, UCID, id++, 159, 112, 12, 16, 1, signal12);
+    insim->SendButton(255, UCID, id++, 159, 117, 12, 16, 1, signal13);
 }
 
 void RCLight::WrongWay(byte UCID)
 {
-    // TODO: refactoring
-    struct IS_BTN pack_btn;
-    memset(&pack_btn, 0, sizeof(struct IS_BTN));
-    pack_btn.Size = sizeof(struct IS_BTN);
-    pack_btn.Type = ISP_BTN;
-    pack_btn.ReqI = 1;
-    pack_btn.UCID = UCID;
-    pack_btn.Inst = 0;
-    pack_btn.BStyle = 0;
-    pack_btn.TypeIn = 0;
-    /**** telo1 **/
-    pack_btn.ClickID = CLICKID::CLICK_ID_WRONG_WAY;
-    pack_btn.L = 0;
-    pack_btn.T = 0;
-    pack_btn.W = 200;
-    pack_btn.H = 200;
-    strcpy(pack_btn.Text, "^1•");
-    insim->send_packet(&pack_btn);
-    /**** telo2 **/
-    pack_btn.ClickID = CLICKID::CLICK_ID_WRONG_WAY_1;
-    pack_btn.L = 25;
-    pack_btn.T = 26;
-    pack_btn.W = 150;
-    pack_btn.H = 150;
-    strcpy(pack_btn.Text, "^7-");
-    insim->send_packet(&pack_btn);
-    /**********/
+    insim->SendButton(255, UCID, 140, 0, 0, 200, 200, 0, "^1•");
+    insim->SendButton(255, UCID, 141, 25, 26, 150, 150, 3, "-");
 }
 
 void RCLight::Event()

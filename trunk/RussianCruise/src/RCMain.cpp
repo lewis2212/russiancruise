@@ -459,31 +459,31 @@ void btn_info (byte UCID, int b_type)
 
     byte c;
     if (b_type == 1) c=MAX_CARS/2;				//количество строк для 1 вкладки
-#ifdef _RC_POLICE_H
+    #ifdef _RC_POLICE_H
     if (b_type == 2) c=police->GetFineCount();	//количество строк для 2 вкладки
-#endif
+    #endif
     if (b_type == 3) c=sizeof(abcout_text)/100;	//да, да, ты угадал
     byte
-    id=134, 			//стартовый ид кнопок
+    id=183, 			//стартовый ид кнопок
     l=100, t=90,		//центр поля
     hButton=5, 			//высота одной строки
     w=100, 				//ширина поля
     h=16+c*hButton; 	//высота поля
 
-    insim->SendButton(255, UCID, 128, l-w/2, t-h/2, w, h+8, 32, "");                                   //фон
+    insim->SendButton(255, UCID, 176, l-w/2, t-h/2, w, h+8, 32, "");                                   //фон
     id++;
-    insim->SendButton(255, UCID, 129, l-w/2, t-h/2, w, h+8, 32, "");
+    insim->SendButton(255, UCID, 177, l-w/2, t-h/2, w, h+8, 32, "");
     id++;
-    insim->SendButton(254, UCID, 130, l-7, t-h/2+h+1, 14, 6, 16+8, "^2OK");                            //закрывашка
+    insim->SendButton(254, UCID, 178, l-7, t-h/2+h+1, 14, 6, 16+8, "^2OK");                            //закрывашка
     id++;
     insim->SendButton(255, UCID, id++, l-w/2, t-h/2, 25, 10, 3+64, "RUSSIAN CRUISE");                  //заголовок
     insim->SendButton(255, UCID, id++, l-w/2+24, t-h/2+2, 20, 3, 5+64, IS_PRODUCT_NAME);               //версия
 
-    insim->SendButton(254, UCID, 131, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));	//вкладка раз
+    insim->SendButton(255, UCID, 180, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));	//вкладка раз
     id++;
-    insim->SendButton(254, UCID, 132, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
+    insim->SendButton(255, UCID, 181, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
     id++;
-    insim->SendButton(254, UCID, 133, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
+    insim->SendButton(255, UCID, 182, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
     id++;
 
     if (b_type == 1)
@@ -521,7 +521,7 @@ void btn_info (byte UCID, int b_type)
         for (int i=0; i<c; i++)
             insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, abcout_text[i]);
 
-    for (int i=id; i<165; i++)
+    for (int i=id; i<239; i++)
         insim->SendBFN(UCID, i);
 }
 
@@ -544,9 +544,9 @@ void Event ()
             str = msg->_( plr.first, "404" );
         else
             str = msg->_(plr.first, "PitSaveNotGood");
-        insim->SendButton(255, plr.first, 54, 85, 1, 15, 8, 32+7, str);
+        insim->SendButton(255, plr.first, 3, 85, 1, 15, 8, 32+7, str);
 
-        insim->SendButton(255, plr.first, 55, 70, 5, 15, 4, 32, RCBaseClass::StringFormat(msg->_(plr.first, "Dist" ), players[plr.first].Distance/1000));
+        insim->SendButton(255, plr.first, 4, 70, 5, 15, 4, 32, RCBaseClass::StringFormat(msg->_(plr.first, "Dist" ), players[plr.first].Distance/1000));
     }
 }
 
@@ -559,10 +559,7 @@ void case_bfn ()
 	time(&now);
 
 	if ((now - players[pack_bfn->UCID].LastBFN) < 5)
-	{
-		//insim->SendMTC(pack_bfn->UCID, "^1^CНельзя так часто жать кнопки");
 		return;
-	}
 
 	players[pack_bfn->UCID].LastBFN = now;
 	btn_info(pack_bfn->UCID, 1);
@@ -571,6 +568,7 @@ void case_bfn ()
 void case_btc ()
 {
     struct IS_BTC *pack_btc = (struct IS_BTC*)insim->get_packet();
+    byte UCID = pack_btc->UCID;
 
     SYSTEMTIME sm;
     GetLocalTime(&sm);
@@ -578,145 +576,83 @@ void case_btc ()
     sprintf(log, "%slogs\\shop\\shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
     /** Пользователь кликнул по другому пользователю **/
-    if (pack_btc->ClickID<=48)
+    if (pack_btc->ClickID<69)
     {
         ShowUsersList(pack_btc->UCID);
 
-            struct IS_BTN pack_btn;
-            memset(&pack_btn, 0, sizeof(struct IS_BTN));
-            pack_btn.Size = sizeof(struct IS_BTN);
-            pack_btn.Type = ISP_BTN;
-            pack_btn.ReqI = pack_btc->ReqI;
-            pack_btn.UCID = pack_btc->UCID;
-            pack_btn.L = 23;
+        byte L = 23, T = 187;
+        string uname = RCBaseClass::StringFormat(msg->_( pack_btc->UCID, "MsgPlFor" ), players[pack_btc->ReqI].PName);
 
+        if (pack_btc->ReqI == UCID)
+            uname = string(msg->_(UCID, "ItsYou"));
 
-            if (players.size()>24)
-                pack_btn.L += 22;
+        if (players.size()>24)
+            L = 45;
 
-            pack_btn.T = 187;
-#ifdef _RC_POLICE_H
-            if (police->IsCop(pack_btc->UCID) and !police->IsCop(pack_btc->ReqI))
-                pack_btn.T = 175;
-#endif
-            pack_btn.W = 24;
-            pack_btn.H = 4;
-            pack_btn.ClickID = 35;
-            pack_btn.BStyle = 32 + 64;
+        #ifdef _RC_POLICE_H
+        if (police->IsCop(UCID))
+        {
+            uname += RCBaseClass::StringFormat(" ^8(%s^8)", players[pack_btc->ReqI].UName);
+            if (!police->IsCop(pack_btc->ReqI))
+                T = 175;
+        }
+        #endif
 
-            if (pack_btc->ReqI == pack_btc->UCID)
-            {
-                sprintf(pack_btn.Text, msg->_( pack_btc->UCID, "ItsYou" ));
-                insim->send_packet(&pack_btn);
-                pack_btn.BStyle = 7 + 16;
-            }
-            else
-            {
-                sprintf(pack_btn.Text, msg->_( pack_btc->UCID, "MsgPlFor" ), players[pack_btc->ReqI].PName);
-#ifdef _RC_POLICE_H
-                if (police->IsCop(pack_btc->UCID))
-                    sprintf(pack_btn.Text, "^7^CДля %s ^8(%s^8) ^7:", players[pack_btc->ReqI].PName, players[pack_btc->ReqI].UName);
-#endif
-                insim->send_packet(&pack_btn);
-                pack_btn.BStyle = 3 + 16 + ISB_CLICK;
-            }
+        insim->SendButton(255, UCID, 70, L, T, 24, 4, 32 + 64, uname); // на какого игрока нажали
 
-            pack_btn.TypeIn = 7;
-            pack_btn.T += 4;
-            pack_btn.ClickID = 36;
-            strcpy(pack_btn.Text, msg->_( pack_btc->UCID, "1000" ));
-            insim->send_packet(&pack_btn);
+        byte PlFlag = 3+16+8;   // BStyle активных кнопок
 
-            pack_btn.TypeIn = 63;
-            pack_btn.T += 4;
-            pack_btn.ClickID = 37;
-            strcpy(pack_btn.Text, msg->_( pack_btc->UCID, "1001" ));
-            insim->send_packet(&pack_btn);
+        if (pack_btc->ReqI == UCID)
+            PlFlag = 7 + 16; // игрок не может взаимодействовать сам с собой
 
-#ifdef _RC_POLICE_H
-            // cop buttons
-            if ( police->IsCop(pack_btc->UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != pack_btc->UCID)
-            {
-                pack_btn.TypeIn = 0;
-                pack_btn.BStyle = 32 + 8 + 3;
+        insim->SendButton(pack_btc->ReqI, UCID, 71, L, T+4, 24, 4, PlFlag, msg->_( pack_btc->UCID, "1000" ), 7);   // передать деньги
+        insim->SendButton(pack_btc->ReqI, UCID, 72, L, T+8, 24, 4, PlFlag, msg->_( pack_btc->UCID, "1001" ), 95);  // передать мсг
 
-                pack_btn.T += 4;
-                pack_btn.ClickID = 38;
-                strcpy(pack_btn.Text, msg->_( pack_btc->UCID, "FinesButton" ));
-                insim->send_packet(&pack_btn);
+        #ifdef _RC_POLICE_H
+        if ( police->IsCop(UCID) and !police-> IsCop(pack_btc->ReqI) and pack_btc->ReqI != UCID)
+        {
+            PlFlag = 32 + 8 + 3;
+            insim->SendButton(pack_btc->ReqI, UCID, 73, L, T+12, 24, 4, PlFlag, msg->_( UCID, "FinesButton" ));   //штраф
 
-                if (police->GetCopRank(pack_btc->UCID) == 1)
-                    pack_btn.BStyle = 32 + 7;
+            if (police->GetCopRank(UCID) <= 2)
+                PlFlag = 32 + 7;
 
-                if (police->GetCopRank(pack_btc->UCID) == 2)
-                    pack_btn.BStyle = 32 + 7;
+            insim->SendButton(pack_btc->ReqI, UCID, 74, L, T+16, 24, 4, PlFlag, msg->_( UCID, "1004" ));          //погоня вкл
 
-                pack_btn.ReqI = pack_btc->ReqI;
-                pack_btn.T += 4;
-                pack_btn.ClickID = 40;
-                strcpy(pack_btn.Text, msg->_( pack_btc->UCID, "1004" ));
-                insim->send_packet(&pack_btn);
+            if (police->GetCopRank(UCID) == 2)
+                PlFlag = 32 + 8 + 3;
 
-                if (police->GetCopRank(pack_btc->UCID) == 2)
-                    pack_btn.BStyle = 32 + 8 + 3;
-
-                pack_btn.T += 4;
-                pack_btn.ClickID = 41;
-                strcpy(pack_btn.Text, msg->_( pack_btc->UCID, "1005" ));
-                insim->send_packet(&pack_btn);
-            }
-            else
-            {
-                insim->SendBFN(pack_btc->UCID, 38);
-                insim->SendBFN(pack_btc->UCID, 39);
-                insim->SendBFN(pack_btc->UCID, 40);
-                insim->SendBFN(pack_btc->UCID, 41);
-            }
-#endif
+            insim->SendButton(pack_btc->ReqI, UCID, 75, L, T+20, 24, 4, PlFlag, msg->_( UCID, "1005" ));          //погоня выкл
+        }
+        else
+        {
+            insim->SendBFN(UCID, 73);
+            insim->SendBFN(UCID, 74);
+            insim->SendBFN(UCID, 75);
+        }
+        #endif
     }
 
     /** Скрыть кнопки с пользователями **/
-    if (pack_btc->ClickID==48)
+    if (pack_btc->ClickID==69)
     {
-        for (int j=0; j<50; j++)
+        for (int j=21; j<80; j++)
             insim->SendBFN(pack_btc->UCID, j);
     }
 
-    /**
-    Информационные кнопки
-    **/
-    /*if (pack_btc->ClickID == 149)
+    if (pack_btc->ReqI==255)
     {
-        players[i].bfn=0;
-        for (int j=159; j>0; j--)
-            insim->SendBFN(pack_btc->UCID, j);
-    }*/
-
-    if (pack_btc->ReqI==254)
-    {
-        if (pack_btc->ClickID == 131)
+        if (pack_btc->ClickID == 180)
             btn_info(pack_btc->UCID, 1);
-        if (pack_btc->ClickID == 132)
+        if (pack_btc->ClickID == 181)
             btn_info(pack_btc->UCID, 2);
-        if (pack_btc->ClickID == 133)
+        if (pack_btc->ClickID == 182)
             btn_info(pack_btc->UCID, 3);
     }
-
-
-    /**
-    Не помню. Возможно на удаление
-    */
-    if (pack_btc->ClickID == 200)
-    {
-        for (int j=0; j<5; j++)
-            insim->SendBFN(pack_btc->UCID, 200+j);
-    }
-
 }
 
 void case_btt ()
 {
-
     struct IS_BTT *pack_btt = (struct IS_BTT*)insim->get_packet();
 
     SYSTEMTIME sm;
@@ -727,10 +663,8 @@ void case_btt ()
     char fine_c[255];
     sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
-    /**
-    Пользователь передает деньги
-    */
-    if (pack_btt->ClickID==36)
+    /**  Пользователь передает деньги   */
+    if (pack_btt->ClickID==71)
     {
         if (atoi(pack_btt->Text) > 0)
         {
@@ -758,10 +692,8 @@ void case_btt ()
 
     }
 
-    /**
-    Пользователь передает сообщение
-    */
-    if (pack_btt->ClickID == 37)
+    /**  Пользователь передает сообщение  */
+    if (pack_btt->ClickID == 72)
     {
         if (strlen(pack_btt->Text) > 0)
         {
@@ -929,10 +861,9 @@ void case_mso ()
     //!help
     if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
     {
-        for (int j=159; j>0; j--)
-        {
+        for (int j=176; j<239; j++)
             insim->SendBFN(pack_mso->UCID, j);
-        }
+
         btn_info(pack_mso->UCID, 1);
         return;
     }
@@ -1508,7 +1439,7 @@ void case_mso ()
         ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and
         (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
-        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7^CПодана команда на выключение, сохранение данных");
+        insim->SendMTC(255, "^1| ^3Russian Cruise: ^7^CВыключение, сохранение данных");
 
 		SaveAll(true);
 
@@ -1518,7 +1449,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
-        insim->SendMST("/msg ^1| ^3Russian Cruise: ^7Config reload");
+        insim->SendMTC(255, "^1| ^3Russian Cruise: ^7Конфиг перезагружен");
         RCBaseClass::CCText("^7Config reload");
 
         insim->SendTiny(TINY_RST,255);
@@ -1908,7 +1839,7 @@ void case_vtn ()
 
 void ShowUsersList(byte UCID)
 {
-    for (int i=0; i<50; i++)
+    for (int i=21; i<80; i++)
         insim->SendBFN(UCID, i);
 
     byte count = 0, L = 0, T = 0;
@@ -1924,9 +1855,9 @@ void ShowUsersList(byte UCID)
             T = 0;
         }
 
-        insim->SendButton(plr.first, UCID, count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[plr.first].PName);
+        insim->SendButton(plr.first, UCID, 21+count++, 1 + L, 191 - 4*T++, 22, 4, 16 + 8, players[plr.first].PName);
     }
-    insim->SendButton(255, UCID, 48, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
+    insim->SendButton(255, UCID, 69, 1, 195, count > 24 ? 44 : 22, 4, 16 + 8, msg->_( UCID, "604" ));
 }
 
 int core_connect(void *pack_ver)
@@ -2052,33 +1983,6 @@ void read_track()
                     Y = strtok (NULL, ";");
                     ginfo->TrackInf.XShop[i] = atoi(X);
                     ginfo->TrackInf.YShop[i] = atoi(Y);
-                }
-            }
-
-            if (strncmp(str, "/cafe", 5)==0)
-            {
-                readf.getline(str, 128);
-                int count = atoi(str);
-                ginfo->TrackInf.CafeCount = count;
-
-                if ( ginfo->TrackInf.XCafe != NULL )
-                    delete[] ginfo->TrackInf.XCafe;
-
-                if ( ginfo->TrackInf.YCafe != NULL )
-                    delete[] ginfo->TrackInf.YCafe;
-
-                ginfo->TrackInf.XCafe = new int[count];
-                ginfo->TrackInf.YCafe = new int[count];
-
-                for (int i=0 ; i<count; i++)
-                {
-                    readf.getline(str, 128);
-                    char * X;
-                    char * Y;
-                    X = strtok (str, ";");
-                    Y = strtok (NULL, ";");
-                    ginfo->TrackInf.XCafe[i] = atoi(X);
-                    ginfo->TrackInf.YCafe[i] = atoi(Y);
                 }
             }
         } // if strlen > 0
@@ -2221,7 +2125,8 @@ void ReadBonuses()
         players[UCID].Bonus_count = b["count"].asInt();
         players[UCID].Bonus_dist = b["dist"].asFloat();
 
-        insim->SendMTC(UCID, msg->_(UCID, "> ^1BONUS RESTORED"));
+        if (players[UCID].Bonus_count > 0)
+            insim->SendMTC(UCID, msg->_(UCID, "> ^1BONUS RESTORED"));
     }
 
     remove(filename.c_str());
@@ -2288,7 +2193,7 @@ void *ThreadSave (void *params)
 
 void *ThreadWork (void *params)
 {
-    Sleep(10000);
+    Sleep(5000);
     ReadBonuses();
 
     while (ok > 0)

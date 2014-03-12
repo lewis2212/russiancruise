@@ -348,7 +348,7 @@ void RCDL::Event()
         float nextlvl = ( pow( players[ play.first ].LVL, 2) * 0.5 + 100 ) * 1000;
         float skl = ( players[ play.first ].Skill / nextlvl ) * 100;
 
-        insim->SendButton(255, play.first, 230, 100, 5, 30, 4, 32 + 64,
+        insim->SendButton(255, play.first, 1, 100, 5, 30, 4, 32 + 64,
                         StringFormat(msg->_(play.first, "LvlAndSkill"), players[ play.first ].LVL, skl));
     }
 }

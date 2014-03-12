@@ -203,9 +203,9 @@ void RCStreet::BtnStreet (byte UCID)
     if (players[ UCID ].StreetNum > StreetCount())
         return;
 
-    insim->SendButton(255, UCID, 50, 170, 8, 29, 6, 32, GetStreetName(UCID, players[UCID].StreetNum));
-    insim->SendButton(255, UCID, 51, 156, 2, 21, 19, 0, "^1^S¡ð");
-    insim->SendButton(255, UCID, 52, 156, 7, 21, 8, 3, ToString(Street[ players[ UCID ].StreetNum ].SpeedLimit));
+    insim->SendButton(255, UCID, 171, 170, 8, 29, 6, 32, GetStreetName(UCID, players[UCID].StreetNum));
+    insim->SendButton(255, UCID, 172, 156, 2, 21, 19, 0, "^1^S¡ð");
+    insim->SendButton(255, UCID, 173, 156, 7, 21, 8, 3, ToString(Street[ players[ UCID ].StreetNum ].SpeedLimit));
 }
 
 int RCStreet::CurentStreetNum(byte UCID)

@@ -360,7 +360,7 @@ void RCEnergy::Event()
         if (players[play.first].Zone == 3)
             sprintf(str, msg->_(play.first , "EnergyArrow"), str);
 
-        insim->SendButton(255, play.first, CLICKID::CLICK_ID_208, 100, 1, 30, 4, 32+64, str);
+        insim->SendButton(255, play.first, 2, 100, 1, 30, 4, 32+64, str);
     }
 }
 

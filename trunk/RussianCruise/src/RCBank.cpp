@@ -650,7 +650,7 @@ void RCBank::Event()
 {
     // баланс игрока
     for ( auto& play: players )
-        insim->SendButton(255, play.first, 66, 70, 1, 15, 4, 32,
+        insim->SendButton(255, play.first, 0, 70, 1, 15, 4, 32,
                         (players[play.first].Cash > 0 ? "^2" : "^1") +
                         StringFormat(msg->_(play.first, "Cash"), (int)players[play.first].Cash));
 }
