@@ -167,7 +167,8 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
         players[UCID].Pogonya = 2;
 
     players[UCID].Sirena = false;
-    players[UCID].Radar.On = false;
+    if (players[UCID].Radar.On)
+        RadarOff(UCID);
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
@@ -187,7 +188,8 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
         players[UCID].Pogonya = 2;
 
     players[UCID].Sirena = false;
-    players[UCID].Radar.On = false;
+    if (players[UCID].Radar.On)
+        RadarOff(UCID);
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
@@ -551,13 +553,13 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
                     int X, Y, H, Z;
                     H = players[UCID].Info.Heading / 182;
-                    X = players[UCID].Info.X / 4096 - cos((H - 58) * M_PI / 180) * 40;
-                    Y = players[UCID].Info.Y / 4096 - sin((H - 58) * M_PI / 180) * 40;
-                    Z = players[UCID].Info.Z / 4096;
+                    X = players[UCID].Info.X / 4096 - cos((H - 60) * M_PI / 180) * 40;
+                    Y = players[UCID].Info.Y / 4096 - sin((H - 60) * M_PI / 180) * 40;
+                    Z = players[UCID].Info.Z / 16452;
 
                     ObjectInfo *obj = new ObjectInfo;
                     obj->Index = 22;
-                    obj->Heading = H;
+                    obj->Heading = H/360*256;
                     obj->X = X;
                     obj->Y = Y;
                     obj->Zchar = Z;
@@ -573,7 +575,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     players[UCID].Radar.Z = Z;
                     players[UCID].Radar.On = true;
 
-                    CCText(ToString(players[UCID].Radar.X) + " " + ToString(players[UCID].Radar.Y) + " " + ToString(players[UCID].Radar.Z));
+                    //CCText(ToString(players[UCID].Radar.X) + " " + ToString(players[UCID].Radar.Y) + " " + ToString(players[UCID].Radar.Z));
 
                     insim->SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOn"));
                 }
@@ -669,7 +671,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             char param[24];
             strcpy(param, Msg + 10);
 
-            CCText((string)param);
+            //CCText((string)param);
 
             if (param!=NULL)
             for (auto& p: players)
@@ -1295,7 +1297,7 @@ void RCPolice::InsimOBH( struct IS_OBH* packet )
 
             if (players[UCID].Radar.On && players[UCID].Radar.X == packet->X && players[UCID].Radar.Y == packet->Y)
             {
-                CCText("^2 !!!! " + ToString(packet->X) + " - " + ToString(packet->Y));
+                //CCText("^2 !!!! " + ToString(packet->X) + " - " + ToString(packet->Y));
 
                 insim->SendMTC(UCID, "^2| ^C^7–адар ^1сломан");
                 RadarOff(UCID);
@@ -1358,7 +1360,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         }
 
         /** автоотключение радара **/
-        if (players[UCID].Radar.On && Distance(players[UCID].Radar.X, players[UCID].Radar.Y, players[UCID].Info.X/4096, players[UCID].Info.Y/4096) > 100)
+        if (players[UCID].Radar.On && Distance(players[UCID].Radar.X, players[UCID].Radar.Y, players[UCID].Info.X/4096, players[UCID].Info.Y/4096) > 150)
         {
             RadarOff(UCID);
             insim->SendMTC(UCID, msg->_(UCID, "RadarOff"));
@@ -1420,38 +1422,44 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             }
 
             /** радар **/
-            if (!players[UCID].cop and players[UCID].Pogonya == 0 and players[play.first].cop and players[play.first].Radar.On and Dist < 50)
+            if (!players[UCID].cop and players[UCID].Pogonya == 0 and players[play.first].cop and players[play.first].Radar.On)
             {
-                if (Dist < 25)
+                Dist = Distance(X1, Y1, players[play.first].Radar.X/16, players[play.first].Radar.Y/16);
+                if (Dist < 50)
                 {
-                    int Speed = players[UCID].Info.Speed * 360 / 32768;
-                    struct streets StreetInfo;
-                    street->CurentStreetInfo(&StreetInfo, UCID);
-
-                    if (Speed > StreetInfo.SpeedLimit + 10 and Speed > players[UCID].speed_over)
-                        players[UCID].speed_over=Speed;
-                }
-                else if (players[UCID].speed_over > 0)
-                {
-                    struct streets StreetInfo;
-                    street->CurentStreetInfo(&StreetInfo, UCID);
-
-                    char text[128];
-                    int Speed2 = abs(players[UCID].speed_over - StreetInfo.SpeedLimit);
-                    sprintf(text, msg->_(UCID, "Speeding"), players[UCID].PName.c_str(), Speed2, street->GetStreetName(UCID, StreetInfo.StreetID), players[play.first].PName.c_str());
-                    insim->SendMTC(255, text);
-
-                    if (players[UCID].Pogonya == 0)
+                    if (Dist < 25)
                     {
-                        players[UCID].Pogonya = 1;
-                        int worktime = time(NULL);
-                        players[UCID].WorkTime = worktime + 60 * 5;
-                        sprintf(text, msg->_(UCID, "PogonyaOn" ), players[UCID].PName.c_str(), players[play.first].PName.c_str() );
-                        insim->SendMTC(255, text);
-                        nrg->Lock( UCID );
+                        int Speed = players[UCID].Info.Speed * 360 / 32768;
+                        struct streets StreetInfo;
+                        street->CurentStreetInfo(&StreetInfo, UCID);
+
+                        if (Speed > StreetInfo.SpeedLimit + 10 and Speed > players[UCID].speed_over)
+                            players[UCID].speed_over=Speed;
                     }
-                    players[UCID].speed_over=0;
+                    else if (players[UCID].speed_over > 0)
+                    {
+                        struct streets StreetInfo;
+                        street->CurentStreetInfo(&StreetInfo, UCID);
+
+                        char text[128];
+                        int Speed2 = abs(players[UCID].speed_over - StreetInfo.SpeedLimit);
+                        sprintf(text, msg->_(UCID, "Speeding"), players[UCID].PName.c_str(), Speed2, street->GetStreetName(UCID, StreetInfo.StreetID), players[play.first].PName.c_str());
+                        insim->SendMTC(255, text);
+
+                        if (players[UCID].Pogonya == 0)
+                        {
+                            players[UCID].Pogonya = 1;
+                            int worktime = time(NULL);
+                            players[UCID].WorkTime = worktime + 60 * 5;
+                            sprintf(text, msg->_(UCID, "PogonyaOn" ), players[UCID].PName.c_str(), players[play.first].PName.c_str() );
+                            insim->SendMTC(255, text);
+                            nrg->Lock( UCID );
+                        }
+                        players[UCID].speed_over=0;
+                    }
                 }
+                else if (players[UCID].speed_over>0)
+                    players[UCID].speed_over=0;
             }
         }
 
@@ -1850,7 +1858,7 @@ void RCPolice::Event()
             int nowtime = time( NULL );
             if (playr.WorkTime <= nowtime)
             {
-                insim->SendBFN( UCID , 85);
+                insim->SendBFN(UCID, 85);
 
                 char Text[64];
                 sprintf( Text , "/msg ^2| %s %s" , playr.PName.c_str(), msg->_(  UCID , "1706" ) );
@@ -1861,7 +1869,7 @@ void RCPolice::Event()
                 dl->AddSkill( UCID );
 
                 //очистка кнопок
-                for (byte i = 60; i < 92; i++)
+                for (byte i = 101; i < 110; i++)
                     insim->SendBFN(255, i);
             }
         }
@@ -1991,7 +1999,7 @@ void RCPolice::Event()
             /** список погонь **/
 
             id = 101;
-            byte T = 191;
+            byte T = 194;
             for ( auto& play2: players)
             {
                 byte UCID2 = play2.first;
