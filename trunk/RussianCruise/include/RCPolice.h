@@ -27,6 +27,14 @@ struct user_fine
     string	CopPName;
 };
 
+struct RadarObj
+{
+    short   X;
+    short   Y;
+    short   Z;
+    bool    On = false;
+};
+
 struct PoliceStat
 {
     int DateActive;
@@ -56,8 +64,8 @@ struct PolicePlayer: public GlobalPlayer
     bool    cop = false;
     time_t	StartWork; 	//время заступления на вахту
     bool    Sirena;
-    bool    Radar;
     struct  PoliceStat  PStat;
+    RadarObj Radar;
 
     /** ДТП **/
     int		DTP;
@@ -113,6 +121,7 @@ private:
     void InsimBTT( struct IS_BTT* packet );
     void InsimPEN( struct IS_PEN* packet );
     void InsimPLA( struct IS_PLA* packet );
+    void InsimOBH( struct IS_OBH* packet );
 
     void ReadUserFines( byte UCID );
     void BtnPogonya( byte UCID );
@@ -120,6 +129,8 @@ private:
     void ShowFinesPanel( byte UCID, byte UCID2 );
     void CopPayRoll(byte UCID, bool FullWork);
     void ReadFines();
+
+    void RadarOff(byte UCID);
 
     //Stat
     bool LoadCopStat(byte UCID);

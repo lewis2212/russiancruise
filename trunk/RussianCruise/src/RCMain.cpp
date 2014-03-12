@@ -1449,7 +1449,7 @@ void case_mso ()
 
     if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
-        insim->SendMTC(255, "^1| ^3Russian Cruise: ^7Конфиг перезагружен");
+        insim->SendMTC(255, "^1| ^3Russian Cruise: ^C^7Конфиг перезагружен");
         RCBaseClass::CCText("^7Config reload");
 
         insim->SendTiny(TINY_RST,255);

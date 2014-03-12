@@ -224,12 +224,12 @@ const char* RCBaseClass::GetReason(byte Reason)
 
 void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
-    return insim->SendButton(1, UCID, CLICKID::CLICK_ID_BTN_INFO, 70, 9, 60, 4, ISB_DARK, Message);
+    return insim->SendButton(1, UCID, 20, 70, 9, 60, 4, ISB_DARK, Message);
 }
 
 void RCBaseClass::ClearButtonInfo(byte UCID)
 {
-    insim->SendBFN( UCID, CLICKID::CLICK_ID_BTN_INFO);
+    insim->SendBFN( UCID, 20);
 }
 
 string RCBaseClass::ToString (int i)
