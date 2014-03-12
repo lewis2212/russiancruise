@@ -166,11 +166,8 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
     if (players[UCID].Pogonya != 0)
         players[UCID].Pogonya = 2;
 
-    if (players[UCID].Sirena)
-        players[UCID].Sirena = false;
-
-    if (players[UCID].Radar)
-        players[UCID].Radar = false;
+    players[UCID].Sirena = false;
+    players[UCID].Radar.On = false;
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
@@ -189,11 +186,8 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
     if (players[UCID].Pogonya != 0)
         players[UCID].Pogonya = 2;
 
-    if (players[UCID].Sirena)
-        players[UCID].Sirena = false;
-
-    if (players[UCID].Radar)
-        players[UCID].Radar = false;
+    players[UCID].Sirena = false;
+    players[UCID].Radar.On = false;
 
     lgh->SetLight3(UCID, false);
     dl->Unlock(UCID);
@@ -414,8 +408,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     if (strncmp(Msg, "!pay", strlen("!pay")) == 0 or strncmp(Msg, "!^Cоплатить", strlen("!^Cоплатить")) == 0)
     {
-        //CCText(players[ packet->UCID ].UName + " send " + (string)Msg);
-
         char _2[128];
         strcpy(_2, Msg);
 
@@ -528,29 +520,63 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 return;
             }
 
-
-            struct streets StreetInfo;
-            street->CurentStreetInfo(&StreetInfo, packet->UCID);
-
-            if (StreetInfo.SpeedLimit == 0)
-            {
-                insim->SendMTC(UCID, "^2| ^7Вы не можете поставить радар в этом месте");
-                return;
-            }
-
             if (players[UCID].DTPstatus <= 0)
             {
-                if (players[packet->UCID].Radar)
+                if (players[UCID].Radar.On)
                 {
-                    insim->SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOff"));
-                    players[packet->UCID].Radar = false;
+                    RadarOff(packet->UCID);
+                    insim->SendMTC(UCID, msg->_(UCID, "RadarOff"));
                 }
                 else
                 {
-                    insim->SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOn"));
-                    players[packet->UCID].Radar = true;
-                }
+                    struct streets StreetInfo;
+                    street->CurentStreetInfo(&StreetInfo, packet->UCID);
 
+                    int count = 0;
+                    for (auto& play: players)
+                        if (players[play.first].Radar.On)
+                            count++;
+
+                    if (count>=3)
+                    {
+                        insim->SendMTC(packet->UCID, msg->_(packet->UCID, "EndOfRadar"));
+                        return;
+                    }
+
+                    if (StreetInfo.SpeedLimit == 0)
+                    {
+                        insim->SendMTC(UCID, "^2| ^7Вы не можете поставить радар в этом месте");
+                        return;
+                    }
+
+                    int X, Y, H, Z;
+                    H = players[UCID].Info.Heading / 182;
+                    X = players[UCID].Info.X / 4096 - cos((H - 58) * M_PI / 180) * 40;
+                    Y = players[UCID].Info.Y / 4096 - sin((H - 58) * M_PI / 180) * 40;
+                    Z = players[UCID].Info.Z / 4096;
+
+                    ObjectInfo *obj = new ObjectInfo;
+                    obj->Index = 22;
+                    obj->Heading = H;
+                    obj->X = X;
+                    obj->Y = Y;
+                    obj->Zchar = Z;
+                    obj->Flags = 0;
+                    AddObject(obj);
+
+                    obj->Index = 138;
+                    AddObject(obj);
+                    delete obj;
+
+                    players[UCID].Radar.X = X;
+                    players[UCID].Radar.Y = Y;
+                    players[UCID].Radar.Z = Z;
+                    players[UCID].Radar.On = true;
+
+                    CCText(ToString(players[UCID].Radar.X) + " " + ToString(players[UCID].Radar.Y) + " " + ToString(players[UCID].Radar.Z));
+
+                    insim->SendMTC(packet->UCID, msg->_(packet->UCID, "RadarOn"));
+                }
             }
             else insim->SendMTC(UCID, msg->_(UCID, "2112"));
         }
@@ -663,6 +689,22 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
         }
     }
+}
+
+void RCPolice::RadarOff(byte UCID)
+{
+    ObjectInfo *obj = new ObjectInfo;
+    obj->X = players[UCID].Radar.X;
+    obj->Y = players[UCID].Radar.Y;
+    obj->Zchar = players[UCID].Radar.Z;
+    obj->Flags = 0;
+    obj->Heading = 0;
+    obj->Index = 22;
+    DelObject(obj);
+    obj->Index = 138;
+    DelObject(obj);
+    delete obj;
+    players[UCID].Radar.On = false;
 }
 
 void RCPolice::CopPayRoll(byte UCID, bool FullWork = true)
@@ -892,7 +934,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     }
 
     if ( packet->ClickID == 179 and packet->ReqI == 254 ) //погоня офф
-        for(int i=21; i < 239; i++)
+        for(int i=80; i < 239; i++)
             insim->SendBFN(packet->UCID, i);
 
     if ( packet->ClickID > 180 and packet->ClickID <= 205 and packet->ReqI != 255) //выписка штрафа
@@ -1243,6 +1285,25 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
     }
 }
 
+void RCPolice::InsimOBH( struct IS_OBH* packet )
+{
+    if (packet->Index == 22 || packet->Index == 138)
+    {
+        for (auto& play: players)
+        {
+            byte UCID = play.first;
+
+            if (players[UCID].Radar.On && players[UCID].Radar.X == packet->X && players[UCID].Radar.Y == packet->Y)
+            {
+                CCText("^2 !!!! " + ToString(packet->X) + " - " + ToString(packet->Y));
+
+                insim->SendMTC(UCID, "^2| ^C^7Радар ^1сломан");
+                RadarOff(UCID);
+            }
+        }
+    }
+}
+
 void RCPolice::InsimPLA( struct IS_PLA* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
@@ -1297,10 +1358,10 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
         }
 
         /** автоотключение радара **/
-        if (S > 5 and players[UCID].Radar)
+        if (players[UCID].Radar.On && Distance(players[UCID].Radar.X, players[UCID].Radar.Y, players[UCID].Info.X/4096, players[UCID].Info.Y/4096) > 100)
         {
+            RadarOff(UCID);
             insim->SendMTC(UCID, msg->_(UCID, "RadarOff"));
-            players[UCID].Radar = false;
         }
 
         /** сирена копа **/
@@ -1359,7 +1420,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             }
 
             /** радар **/
-            if (players[play.first].Radar and !players[UCID].cop and players[UCID].Pogonya == 0 and Dist < 50)
+            if (!players[UCID].cop and players[UCID].Pogonya == 0 and players[play.first].cop and players[play.first].Radar.On and Dist < 50)
             {
                 if (Dist < 25)
                 {

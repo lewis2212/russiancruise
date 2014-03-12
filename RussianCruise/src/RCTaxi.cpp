@@ -635,7 +635,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     }
                 }
 
-                if (Dist < 5 and Speed < 5 and players[UCID].WorkAccept == 1)
+                if (Dist < 5 and Speed == 0 and players[UCID].WorkAccept == 1)
                     PassAccept2( UCID ); // посадили
             }
             else
