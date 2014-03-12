@@ -11,8 +11,6 @@ RCRoadSign::~RCRoadSign()
 
 int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
 {
-
-
     dbconn = conn;
     if (!dbconn)
     {
@@ -111,9 +109,7 @@ void RCRoadSign::ReadConfig(const char *Track)
 void RCRoadSign::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
-    {
         return;
-    }
 
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
@@ -149,19 +145,13 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
     byte UCID = packet->UCID;
 
     if ( UCID == 0 )
-    {
         return;
-    }
 
     if ( packet->UserType != MSO_PREFIX )
-    {
         return;
-    }
 
     char Msg[128];
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
-
-
 
     if ( strncmp(Msg, "!s_add", 6) == 0 and (strcmp(players[UCID].UName, "Lexanom") == 0 or strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Max1548") == 0))
     {
@@ -202,7 +192,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 
 void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
 {
-    byte ClickID = 90, Left = 145, Top = 0+27 * Count, Width = 46, Height = 0;
+    byte ClickID = 151, Left = 145, Top = 0+27 * Count, Width = 46, Height = 0;
     if (lgh->GetOnLight(UCID))
     {
         Top+=44;
@@ -212,7 +202,7 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
     insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
     insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
     insim->SendButton(255, UCID, ClickID++, Left, 0+Height, 1, 15+27 * Count, 32, "");
-    ClickID = 93+10 * Count;
+    ClickID = 154+10 * Count;
 
     /** главная дорога 2.1 **/
     if (ID == 1)
@@ -339,7 +329,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         if (SignCount == 0 and players[UCID].OnSign)
         {
-            for (int f = 90; f < 110; f++)
+            for (int f = 151; f < 170; f++)
                 insim->SendBFN(UCID, f);
 
             players[UCID].SignCount = 0;
@@ -348,7 +338,7 @@ void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 
         if (SignCount != players[UCID].SignCount and players[UCID].OnSign)
         {
-            for (int f = 90 + 10 * SignCount; f < 110; f++)
+            for (int f = 151 + 10 * SignCount; f < 170; f++)
                 insim->SendBFN(UCID, f);
             players[UCID].SignCount = SignCount;
         }
