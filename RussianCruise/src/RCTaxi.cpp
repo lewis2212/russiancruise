@@ -269,7 +269,7 @@ void RCTaxi::Event()
                 if (time2>=0)
                 {
                     sprintf(str, "^1%02d:%02d", time2 / 60, time2%60);
-                    insim->SendButton(255, UCID, 212, 130, 1, 10, 8, 32, str);
+                    insim->SendButton(255, UCID, 212, 62, 1, 10, 8, 32, str);
                 }
 			}
 		}
