@@ -630,6 +630,33 @@ CInsim::SendBFN (byte UCID, byte ClickID)
 }
 
 void
+CInsim::SendBFN(byte UCID, byte ClickIdFrom, byte ClickIdTo)
+{
+	if( ClickIdFrom > ClickIdTo)
+	{
+		for(int i = ClickIdFrom; i >= ClickIdTo; i--)
+			SendBFN(UCID, i);
+	}
+	else
+	{
+		for(int i = ClickIdFrom; i < ClickIdTo; i++)
+			SendBFN(UCID, i);
+	}
+}
+
+void
+CInsim::SendBFN(byte UCID, ...)
+{
+	va_list ap;
+	va_start(ap, UCID);
+	while(int ClickID = va_arg(ap, int))
+	{
+		SendBFN(UCID, ClickID);
+	}
+	va_end(ap);
+}
+
+void
 CInsim::SendBFNAll ( byte UCID )
 {
     IS_BFN *pack = new IS_BFN;

@@ -443,17 +443,18 @@ void help_cmds (byte UCID, int h_type)
 
 void btn_info (byte UCID, int b_type)
 {
-    char abcout_text[10][100];
-    sprintf(abcout_text[0], "^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME);
-    strncpy(abcout_text[1], "^C^7Developers: Denis Kostin, Aleksandr Mochalov", 99);
-    strncpy(abcout_text[2], "^C^7Jabber: denis-kostin@jabber.ru", 99);
-    strncpy(abcout_text[3], "^C^7Jabber conference: lfs@conference.jabber.ru", 99);
-    strncpy(abcout_text[4], "^7", 99);
-    strncpy(abcout_text[5], "^C^7More information", 99);
-    strncpy(abcout_text[6], "^C^7http://vk.com/russiancruise", 99);
-    strncpy(abcout_text[7], "^7", 99);
-    strncpy(abcout_text[8], "^C^7Thanks:", 99);
-    strncpy(abcout_text[9], "^C^3repeat, nose, R.Ratzinger", 99);
+    list<string> about_text = {
+		RCBaseClass::StringFormat("^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME),
+		"^C^7Developers: Denis Kostin, Aleksandr Mochalov",
+		"^C^7Jabber: denis-kostin@jabber.ru",
+		"^C^7Jabber conference: lfs@conference.jabber.ru",
+		"^7",
+		"^C^7More information",
+		"^C^7http://vk.com/russiancruise",
+		"^7",
+		"^C^7Thanks:",
+		"^C^3repeat, nose, R.Ratzinger"
+    };
 
     char Text[128];
 
@@ -462,7 +463,7 @@ void btn_info (byte UCID, int b_type)
     #ifdef _RC_POLICE_H
     if (b_type == 2) c=police->GetFineCount();	//количество строк для 2 вкладки
     #endif
-    if (b_type == 3) c=sizeof(abcout_text)/100;	//да, да, ты угадал
+    if (b_type == 3) c=about_text.size();	//да, да, ты угадал
     byte
     id=183, 			//стартовый ид кнопок
     l=100, t=90,		//центр поля
@@ -485,6 +486,12 @@ void btn_info (byte UCID, int b_type)
     id++;
     insim->SendButton(255, UCID, 182, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
     id++;
+
+    map<byte, string>tabs = {
+    	pair<byte, string>{131,msg->_(UCID, "200")},
+    	pair<byte, string>{132,msg->_(UCID, "201")},
+		pair<byte, string>{133, msg->_(UCID, "202")}
+	};
 
     if (b_type == 1)
         for (int i=0; i<MAX_CARS; i++)
@@ -518,8 +525,14 @@ void btn_info (byte UCID, int b_type)
 #endif
 
     if (b_type == 3)
-        for (int i=0; i<c; i++)
-            insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i, w-2, hButton, 0, abcout_text[i]);
+	{
+		byte i = 0;
+        for (auto& txt: about_text)
+		{
+			insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i++, w-2, hButton, 0, txt);
+		}
+
+	}
 
     for (int i=id; i<239; i++)
         insim->SendBFN(UCID, i);
