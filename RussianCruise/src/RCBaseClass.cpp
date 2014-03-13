@@ -182,6 +182,12 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
     return (int)sqrt((pow(X-X1, 2))+(pow(Y-Y1, 2)));
 }
 
+/** @brief Получение причины отключения пользователя с сервера
+ *
+ * @param  byte Reason - Числовой индетификатор кода
+ * @return static const char* - Буквенное значение кода
+ *
+ */
 const char* RCBaseClass::GetReason(byte Reason)
 {
     switch(Reason)
@@ -302,6 +308,12 @@ RCBaseClass::dbPing( string query )
     return true;
 }
 
+/** @brief Выборка данных из базы данных
+ *
+ * @param string query - стандартная SQL команда
+ * @return DB_ROWS - массив элементов DB_ROW
+ *
+ */
 DB_ROWS
 RCBaseClass::dbSelect( string query )
 {
@@ -445,6 +457,12 @@ RCBaseClass::dbSelect( string query )
     return out;
 }
 
+/** @brief Выполнение SQL запроса, который не возвращает данные (обновление строк, служебные запросы)
+ *
+ * @param string query - стандартная SQL команда
+ * @return bool - результат функции mysql_query()
+ *
+ */
 bool
 RCBaseClass::dbExec( string query )
 {
@@ -466,7 +484,14 @@ RCBaseClass::dbExec( const char *query )
 	return true;
 }
 
-
+/** @brief Обновления данных в базе
+ *
+ * @param string table - обновляемая таблица
+ * @param DB_ROW fields - ассоциативный массив с обновляемыми данными
+ * @param pair<string, string> where - пара {"ключ","значение"} фильтр по которому будет происходить обновление
+ * @return bool - результат работы mysql_exec
+ *
+ */
 bool
 RCBaseClass::dbUpdate( string table, DB_ROW fields, pair<string, string> where )
 {
@@ -496,6 +521,13 @@ RCBaseClass::Trim(const string &s)
    return (wsback<=wsfront ? string() : string(wsfront,wsback));
 }
 
+ /** @brief Добавление объектов на карту.
+ *			Перед вызовом метода, добавляемые объекты необходимо добавить в очередь addObjects,
+ *			используя метод addObjects.push( ObjectInfo object )
+ *
+ * @return void - ничего
+ *
+ */
 void
 RCBaseClass::AddObjects()
 {
@@ -527,6 +559,13 @@ RCBaseClass::AddObjects()
     delete packAXM;
 }
 
+/** @brief Удаление объектов на карте.
+ *			Перед вызовом метода, удаляемые объекты необходимо добавить в очередь delObjects,
+ *			используя метод delObjects.push( ObjectInfo object )
+ *
+ * @return void - ничего
+ *
+ */
 void
 RCBaseClass::DelObjects()
 {
@@ -557,6 +596,13 @@ RCBaseClass::DelObjects()
     delete packAXM;
 }
 
+/** @brief Добавление объекта на карту.
+ *
+ * @param  ObjectInfo *object - указатель на структуру объекта
+ *
+ * @return void - ничего
+ *
+ */
 void
 RCBaseClass::AddObject( ObjectInfo *object )
 {
@@ -574,6 +620,13 @@ RCBaseClass::AddObject( ObjectInfo *object )
     delete packAXM;
 }
 
+/** @brief Удаление объекта с карты
+ *
+ * @param  ObjectInfo *object - указатель на структуру объекта
+ *
+ * @return void - ничего
+ *
+ */
 void
 RCBaseClass::DelObject( ObjectInfo *object )
 {
@@ -589,35 +642,6 @@ RCBaseClass::DelObject( ObjectInfo *object )
 
     insim->send_packet(packAXM);
     delete packAXM;
-}
-
-// split: receives a char delimiter; returns a vector of strings
-// By default ignores repeated delimiters, unless argument rep == 1.
-vector<string>& SplitString::split( const char delim, int rep)
-{
-    if (!flds.empty()) flds.clear();  // empty vector if necessary
-    string work = data();
-    string buf = "";
-    unsigned int i = 0;
-    while (i < work.length())
-    {
-        if (work[i] != delim)
-            buf += work[i];
-        else if (rep == 1)
-        {
-            flds.push_back(buf);
-            buf = "";
-        }
-        else if (buf.length() > 0)
-        {
-            flds.push_back(buf);
-            buf = "";
-        }
-        i++;
-    }
-    if (!buf.empty())
-        flds.push_back(buf);
-    return flds;
 }
 
 void RCBaseClass::CCText(string Text)
@@ -680,4 +704,64 @@ RCBaseClass::StringFormat(const string fmt_str, ...)
             break;
     }
     return string(formatted.get());
+}
+
+void
+RCBaseClass::ShowPanel(byte UCID, string Caption, list<string>Text)
+{
+    byte Left = 100;
+    byte Top = 90;								//центр поля
+    byte hButton = 5;							//высота одной строки
+    byte Width = 100;							//ширина поля
+    byte Height = 16 + Text.size() * hButton;	//высота поля
+
+
+	insim->SendButton(255, UCID, 176, Left - Width/2, Top - Height/2, Width, Height + 8, ISB_DARK, "");		//фон
+    insim->SendButton(255, UCID, 177, Left - Width/2, Top - Height/2, Width, Height + 8, ISB_DARK, "");
+
+    if(Caption.size() > 0)
+    insim->SendButton(255, UCID, 179, Left - Width/2, Top - Height/2, Width, 10, ISB_LEFT, Caption); 		//заголовок
+
+    insim->SendButton(254, UCID, 178, Left-7, Top-Height/2+Height+1, 14, 6, ISB_CLICK + ISB_LIGHT, "^2OK");	//закрывашка
+
+    if(!Text.empty())
+	{
+		byte ClickId = 180;
+		byte cnt = 0;
+		for(auto& text: Text)
+		{
+			insim->SendButton(254, UCID, ClickId++, Left - Width/2 + 1, Top - Height/2 + 10 + hButton * cnt++, Width - 1, hButton, ISB_LIGHT + ISB_LEFT, text);
+			if(cnt > 30)
+				break;
+		}
+	}
+}
+
+// split: receives a char delimiter; returns a vector of strings
+// By default ignores repeated delimiters, unless argument rep == 1.
+vector<string>& SplitString::split( const char delim, int rep)
+{
+    if (!flds.empty()) flds.clear();  // empty vector if necessary
+    string work = data();
+    string buf = "";
+    unsigned int i = 0;
+    while (i < work.length())
+    {
+        if (work[i] != delim)
+            buf += work[i];
+        else if (rep == 1)
+        {
+            flds.push_back(buf);
+            buf = "";
+        }
+        else if (buf.length() > 0)
+        {
+            flds.push_back(buf);
+            buf = "";
+        }
+        i++;
+    }
+    if (!buf.empty())
+        flds.push_back(buf);
+    return flds;
 }

@@ -61,62 +61,25 @@ public:
 
     string ClassName = "RCBaseClass";
 
-    void         next_packet();   						// Функция переборки типа пакета
+    void		 next_packet();   						// Функция переборки типа пакета
     virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
-
-    virtual void Save(byte UCID){};
+	virtual void Save(byte UCID){};
     virtual void Event(){};
 
     void ButtonInfo (byte UCID, const char* Message);
     void ClearButtonInfo (byte UCID);
+    void ShowPanel(byte UCID, string Caption, list<string>Text);
 
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
-
     static void CCText(string Text);
 
-    /** @brief Получение причины отключения пользователя с сервера
-     *
-     * @param  byte Reason - Числовой индетификатор кода
-     * @return static const char* - Буквенное значение кода
-     *
-     */
     static const char* GetReason(byte Reason);
 
-    /** @brief Добавление объектов на карту.
-     *			Перед вызовом метода, добавляемые объекты необходимо добавить в очередь addObjects,
-     *			используя метод addObjects.push( ObjectInfo object )
-     *
-     * @return void - ничего
-     *
-     */
+
     void AddObjects();
-
-    /** @brief Удаление объектов на карте.
-     *			Перед вызовом метода, удаляемые объекты необходимо добавить в очередь delObjects,
-     *			используя метод delObjects.push( ObjectInfo object )
-     *
-     * @return void - ничего
-     *
-     */
 	void DelObjects();
-
-	/** @brief Добавление объекта на карту.
-	 *
-     * @param  ObjectInfo *object - указатель на структуру объекта
-     *
-     * @return void - ничего
-     *
-     */
 	void AddObject( ObjectInfo *object );
-
-	/** @brief Удаление объекта с карты
-	 *
-     * @param  ObjectInfo *object - указатель на структуру объекта
-     *
-     * @return void - ничего
-     *
-     */
 	void DelObject( ObjectInfo *object );
 
 	static string ToString (int i);
@@ -137,10 +100,9 @@ public:
 	}
 
 protected:
-    CInsim      *insim;         	// Переменная-указатель на класс CInsim
-    char        RootDir[MAX_PATH]; 	// Полный путь до папки с программой
+    CInsim      *insim;				// Переменная-указатель на класс CInsim
+    char        RootDir[MAX_PATH];	// Полный путь до папки с программой
     map< byte, byte >PLIDtoUCID;
-
 
     ObjectsInfo addObjects;
     /**< очередь объектов для их добавления на карту */
@@ -184,27 +146,14 @@ protected:
 
     virtual void ReadConfig(const char *Track){};
 
+
     //MYSQL
     MYSQL       *dbconn;
     MYSQL_RES   *dbres;
     MYSQL_ROW   dbrow;
 
     bool dbPing(string query);
-
-    /** @brief Выборка данных из базы данных
-	 *
-	 * @param string query - стандартная SQL команда
-	 * @return DB_ROWS - массив элементов DB_ROW
-	 *
-	 */
 	DB_ROWS dbSelect( string query );
-
-	/** @brief Выполнение SQL запроса, который не возвращает данные (обновление строк, служебные запросы)
-	 *
-	 * @param string query - стандартная SQL команда
-	 * @return bool - результат функции mysql_query()
-	 *
-	 */
 	bool dbExec( string query );
 	bool dbExec( const char *query );
 
@@ -216,15 +165,6 @@ protected:
 	 */
 	unsigned int dbInsert( string query );
 	unsigned int dbInsert( const char *query );
-
-	/** @brief Обновления данных в базе
-	 *
-	 * @param string table - обновляемая таблица
-	 * @param DB_ROW fields - ассоциативный массив с обновляемыми данными
-	 * @param pair<string, string> where - пара {"ключ","значение"} фильтр по которому будет происходить обновление
-	 * @return bool - результат работы mysql_exec
-	 *
-	 */
 	bool dbUpdate( string table, DB_ROW fields, pair<string, string> where );
 
 	Json::Value 		config;
