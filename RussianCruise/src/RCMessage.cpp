@@ -91,7 +91,7 @@ RCMessage::ReadLangDir(const char *path)
 void
 RCMessage::ReadLangFile(const char *file)
 {
-	SplitString File = file;
+	xString File = file;
 	vector<string> arFiles = File.split('\\', 1);
 
 	string lang = arFiles.back().substr( 0 , arFiles.back().find(".txt") );
@@ -180,48 +180,40 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
     if (packet->UCID == 0)
         return;
 
-    char Msg[128];
-    strcpy(Msg, packet->Msg + ((unsigned char)packet->TextStart));
+    xString Msg = packet->Msg + packet->TextStart;
 
-    if ((strncmp(Msg, "!lang", 5) == 0 ) or (strncmp(Msg, "!^Cязык", 7) == 0 ))
+    if (Msg.find("!lang") == 0 or Msg.find("!^Cязык")== 0 )
     {
         cout << players[ packet->UCID ].UName << " send !lang" << endl;
 
-        char message2[96], str[64];
-        strcpy(message2, Msg);
-
-        if (strlen(message2) < 8)
+        if ( Msg.size() < 8)
         {
             insim->SendMTC( packet->UCID, _( packet->UCID , "2104"));
             return;
         }
 
-        char * comand;
-        char * id;
+        vector<string> args = Msg.split(' ');
 
-        comand = strtok (message2, " ");
-        id = strtok (NULL, " ");
-
-        if (!id)
+		if(args.size() < 2)
         {
             insim->SendMTC(packet->UCID, _( packet->UCID , "2105"));
             return;
         }
 
+        string id = args[1];
+
 		for( auto& l: MsgArray )
 		{
 			if( l.first == id )
 			{
-                players[ packet->UCID ].Lang = string(id);
+                players[ packet->UCID ].Lang = id;
 
-				sprintf(str, _(packet->UCID, "^1| ^7Language: %s"), id);
-				insim->SendMTC(packet->UCID, str);
+				insim->SendMTC(packet->UCID, _(packet->UCID, "^1| ^7Language: ") + id);
 				return;
 			}
 		}
 
-		sprintf(str, _(packet->UCID, "^1| ^7Language %s not found"), id);
-		insim->SendMTC(packet->UCID, str);
+		insim->SendMTC(packet->UCID, StringFormat(_(packet->UCID, "^1| ^7Language %s not found"), id.c_str()));
 		return;
     }
 

@@ -867,12 +867,11 @@ void case_mso ()
         return;
 
 
-    char Msg[128];
-    strcpy(Msg, pack_mso->Msg + ((unsigned char)pack_mso->TextStart));
-
+    xString Message = pack_mso->Msg + pack_mso->TextStart;
+	vector<string> args = Message.split(' ',1);
 
     //!help
-    if ((strncmp(Msg, "!info", 5) == 0) or (strncmp(Msg, "!^Cинфо", 7) == 0))
+    if (Message == "!info" or Message == "!^Cинфо")
     {
         for (int j=176; j<239; j++)
             insim->SendBFN(pack_mso->UCID, j);
@@ -881,13 +880,13 @@ void case_mso ()
         return;
     }
 
-    if ((strncmp(Msg, "!help", 5) == 0) or (strncmp(Msg, "!^Cпомощь", 9) == 0))
+    if (Message == "!help" or Message == "!^Cпомощь")
     {
         cout << players[pack_mso->UCID].UName << " send !help" << endl;
         help_cmds(pack_mso->UCID, 1);
         return;
     }
-    if ((strncmp(Msg, "!cars", 5) == 0) or (strncmp(Msg, "!^Cмашины", 9) == 0))
+    if (Message == "!cars" or Message == "!^Cмашины")
     {
         cout << players[pack_mso->UCID].UName << " send !cars" << endl;
         help_cmds(pack_mso->UCID, 2);
@@ -895,7 +894,7 @@ void case_mso ()
     }
 
     //!save
-    if (strncmp(Msg, "!save", 5) == 0)
+    if (Message == "!save")
     {
         time_t now;
         time(&now);
@@ -913,10 +912,8 @@ void case_mso ()
         return;
     }
 
-    if ((strncmp(Msg, "!trans", 6) == 0 ) or (strncmp(Msg, "!^Cпередачи", 11) == 0))
+    if (Message.find("!trans") == 0 or Message.find("!^Cпередачи") == 0 )
     {
-        char _[128];
-        strcpy(_, Msg);
 
         char file[255];
         strcpy(file, RootDir);
@@ -932,12 +929,7 @@ void case_mso ()
 
         ifstream readf (file, ios::in);
 
-        char * comand;
-        char * user;
-        comand = strtok(_, " ");
-        user = strtok(NULL, " ");
-
-        if (user and strlen(user) > 0)
+        if (args.size() > 1 )
         {
             while (readf.good())
             {
@@ -945,7 +937,7 @@ void case_mso ()
                 readf.getline(str, 128);
                 if (strlen(str) > 0)
                 {
-                    if ((strstr(str, players[pack_mso->UCID].UName)) and (strstr(str, user)))
+                    if ((strstr(str, players[pack_mso->UCID].UName)) and (strstr(str, args[1].c_str())))
                     {
                         char Text[64];
                         strcpy(Text, "^1| ^C^7");
@@ -991,7 +983,7 @@ void case_mso ()
     }
 
     //!show
-    if (strncmp(Msg, "!show", 5) == 0)
+    if (Message == "!show")
     {
         char Text[64];
 
@@ -1067,27 +1059,23 @@ void case_mso ()
     }
     //!tunning
 
-    if (strncmp(Msg, "!tun", 4) == 0)
+    if (Message.find("!tun")==0)
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
             insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
-        char * comand;
-        char * id;
 
-        comand = strtok (Msg, " ");
-        id = strtok (NULL, " ");
-
-        if ((!id) or (strlen(id) != 3))
+        if ( args.size() < 2)
         {
             insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
+        string tun = args[1];
 
-        if (strcmp(id, "ECU")==0)
+        if (tun == "ECU")
         {
             int needcash = 5000 + (GetCarID(players[pack_mso->UCID].CName)-1)*1000;
 #ifdef _RC_LEVEL_H
@@ -1124,7 +1112,7 @@ void case_mso ()
                 insim->SendMTC(pack_mso->UCID, msg);
             }
         }
-        else if (strcmp(id, "TRB")==0)
+        else if (tun == "TRB")
         {
             int needcash = 10000 + (GetCarID(players[pack_mso->UCID].CName)-1)*10000;
 #ifdef _RC_LEVEL_H
@@ -1162,7 +1150,7 @@ void case_mso ()
             }
 
         }
-        else if (strcmp(id, "WHT")==0)
+        else if (tun == "WHT")
         {
             int needcash = 3000 + (GetCarID(players[pack_mso->UCID].CName)-1)*1000;
 #ifdef _RC_LEVEL_H
@@ -1204,26 +1192,24 @@ void case_mso ()
     }
 
 
-    if (strncmp(Msg, "!untun", 6) == 0)
+    if (Message.find("!untun")==0)
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
             insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
-        char * comand;
-        char * id;
 
-        comand = strtok (Msg, " ");
-        id = strtok (NULL, " ");
 
-        if ((!id) or (strlen(id) != 3))
+        if ( args.size() < 2)
         {
             insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
-        if (strcmp(id, "ECU")==0)
+        string tun = args[1];
+
+        if (tun == "ECU")
         {
             int sellcash = (5000 + (GetCarID(players[pack_mso->UCID].CName)-1)*1000)*8/10;
 
@@ -1237,8 +1223,7 @@ void case_mso ()
                 bank->RemFrBank(sellcash);
             }
         }
-
-        else if (strcmp(id, "TRB")==0)
+        else if (tun == "TRB")
         {
             int sellcash = (10000 + (GetCarID(players[pack_mso->UCID].CName)-1)*10000)*8/10;
 
@@ -1252,8 +1237,7 @@ void case_mso ()
                 bank->RemFrBank(sellcash);
             }
         }
-
-        else if (strcmp(id, "WHT")==0)
+        else if (tun == "WHT")
         {
             int sellcash = (3000 + (GetCarID(players[pack_mso->UCID].CName)-1)*1000)*8/10;
 
@@ -1270,25 +1254,22 @@ void case_mso ()
     }
     //!buy
 
-    if (strncmp(Msg, "!buy", 4) == 0)
+    if (Message.find("!buy")==0)
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
             insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
-        char * comand;
-        char * id;
 
-        comand = strtok (Msg, " ");
-        id = strtok (NULL, " ");
 
-        if ((!id) or (strlen(id) != 3))
+        if ( args.size() < 2)
         {
             insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
 
+		const char* id = args[1].c_str();
         int CarID;
 
         for (CarID = 0; CarID < MAX_CARS; CarID ++)
@@ -1374,24 +1355,21 @@ void case_mso ()
 
     }
 
-    if (strncmp(Msg, "!sell", 4) == 0)
+    if (Message.find("!sell") == 0)
     {
         if (players[pack_mso->UCID].Zone != 2)
         {
             insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "2000" ));
             return;
         }
-        char * comand;
-        char * id;
 
-        comand = strtok (Msg, " ");
-        id = strtok (NULL, " ");
-        // test if "id" NULL or != 3
-        if ( ( !id ) or ( strlen( id ) != 3 ) )
+        if ( args.size() < 2)
         {
             insim->SendMTC(pack_mso->UCID, "Error");
             return;
         }
+
+		const char* id = args[1].c_str();
 
         if (strcmp(id, "UF1")==0)
             return;
@@ -1449,7 +1427,7 @@ void case_mso ()
 
     //!EXIT
     if (
-        ( strncmp(Msg, "!exit", 5) == 0 or ( strncmp(Msg, "!^Cвыход", 8) == 0) ) and
+        ( Message == "!exit" or Message == "!^Cвыход" ) and
         (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
         insim->SendMTC(255, "^1| ^3Russian Cruise: ^7^CВыключение, сохранение данных");
@@ -1460,7 +1438,7 @@ void case_mso ()
         return;
     }
 
-    if (strncmp(Msg, "!reload", 7) == 0 and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
+    if (Message == "!reload" and (strcmp(players[pack_mso->UCID].UName, "denis-takumi") == 0 or strcmp(players[pack_mso->UCID].UName, "Lexanom") == 0 or pack_mso->UCID == 0))
     {
         insim->SendMTC(255, "^1| ^3Russian Cruise: ^C^7Конфиг перезагружен");
         RCBaseClass::CCText("^7Config reload");
@@ -1470,7 +1448,7 @@ void case_mso ()
         return;
     }
 
-    if (strncmp(Msg, "!debug", 7) == 0)
+    if (Message == "!debug")
     {
         if (players[pack_mso->UCID].Svetofor == 0)
             players[pack_mso->UCID].Svetofor = 1;
@@ -1485,7 +1463,7 @@ void case_mso ()
         return;
     }
 
-    if ((strncmp(Msg, "!pit", 4) == 0) or (strncmp(Msg, "!^Cпит", 6) == 0 ))
+    if (Message == "!pit" or Message == "!^Cпит")
     {
     	if (bank->GetCash(pack_mso->UCID)<=250)
 		{
@@ -1525,13 +1503,9 @@ void case_mso ()
 
         return;
     }
-    if ((strncmp(Msg, "!test", 5) == 0))
-    {
-    	return;
-    }
 
     //!users
-    if ((strncmp(Msg, "!users", 6) == 0) or (strncmp(Msg, "!^Cнарод", 8) == 0 ))
+    if (Message == "!users" or Message == "!^Cнарод")
 	{
 		ShowUsersList(pack_mso->UCID);
 		return;
@@ -1698,7 +1672,7 @@ void case_npl ()
                 insim->SendMTC(pack_npl->UCID, Text2);
                 return;
             }
-            else if ((pack_npl->H_TRes < tune))
+            else if (pack_npl->H_TRes < tune)
             {
                 players[pack_npl->UCID].Zone = 1;
                 insim->SendMST( specText );

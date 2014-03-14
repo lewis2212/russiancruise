@@ -415,7 +415,7 @@ RCBaseClass::dbSelect( string query )
 		   return out;
 		}
 
-    	SplitString fields = query.substr( strlen("select ") , pos  - strlen("select ") );
+    	xString fields = query.substr( strlen("select ") , pos  - strlen("select ") );
 
     	vector<string> arFields = fields.split(',', 1);
 
@@ -739,7 +739,8 @@ RCBaseClass::ShowPanel(byte UCID, string Caption, list<string>Text)
 
 // split: receives a char delimiter; returns a vector of strings
 // By default ignores repeated delimiters, unless argument rep == 1.
-vector<string>& SplitString::split( const char delim, int rep)
+vector<string>&
+xString::split( const char delim, int rep)
 {
     if (!flds.empty()) flds.clear();  // empty vector if necessary
     string work = data();

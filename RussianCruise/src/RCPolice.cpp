@@ -305,10 +305,10 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     byte UCID = packet->UCID;
 
-    char Msg[128];
-    strcpy(Msg, packet->Msg + ((unsigned char)packet->TextStart));
+    xString Message = packet->Msg + packet->TextStart;
+	vector<string> args = Message.split(' ',1);
 
-    if (!strcmp(Msg, "!911") or !strcmp(Msg, "!dtp") or !strcmp(Msg, "!^Cдтп"))
+    if (Message == "!911" or Message == "!dtp" or Message == "!^Cдтп")
     {
         if (players[UCID].cop)
             return;
@@ -369,7 +369,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     }
 
 
-    if (!strcmp(Msg, "!fines") or !strcmp(Msg, "!^Cштрафы"))
+    if (Message == "!fines" or Message == "!^Cштрафы")
     {
         int j=0;
         for (int i=0; i < MAX_FINES; i++)
@@ -408,20 +408,20 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Msg, "!pay", strlen("!pay")) == 0 or strncmp(Msg, "!^Cоплатить", strlen("!^Cоплатить")) == 0)
+    if (Message.find("!pay") == 0 or Message.find("!^Cоплатить") == 0)
     {
-        char _2[128];
-        strcpy(_2, Msg);
 
-        char * comand;
-        char * id;
 
-        comand = strtok (_2, " ");
-        id = strtok (NULL, " ");
 
-        int id_i = atoi(id);
+        if ( args.size() < 2)
+        {
+            insim->SendMTC( packet->UCID , msg->_(  packet->UCID , "2105" ));
+            return;
+        }
 
-        if ((!id) or (id_i < 1))
+        int id_i = atoi(args[1].c_str());
+
+        if ( id_i < 1)
         {
             insim->SendMTC( packet->UCID , msg->_(  packet->UCID , "2105" ));
             return;
@@ -495,7 +495,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if ((strncmp(Msg, "!sirena", 7) == 0 ) or (strncmp(Msg, "!^Cсирена", 9) == 0 ))
+    if (Message == "!sirena" or Message == "!^Cсирена")
     {
         if (players[packet->UCID].cop)
         {
@@ -512,7 +512,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if ((strncmp(Msg, "!radar", 6) == 0 ) or (strncmp(Msg, "!^Cрадар", 8) == 0 ))
+    if (Message == "!radar" or Message == "!^Cрадар")
     {
         if (players[packet->UCID].cop)
         {
@@ -584,44 +584,45 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Msg, "!kick", 4) == 0 )
+    if (Message.find("!kick") == 0 )
     {
         if (players[packet->UCID].Rank < 3)
             return;
 
-        char user[16];
-        strcpy(user, Msg + 5);
+		if(args.size() < 2)
+			return;
 
-        if (strlen(user) > 0)
-        {
-            if (players[ packet->UCID ].cop )
-            {
-                char str[96];
-                sprintf(str, "/kick %s", user);
-                insim->SendMST(str);
+        string user = args[1];
+
+		if (players[ packet->UCID ].cop )
+		{
+			char str[96];
+
+			insim->SendMST("/kick " + user);
 
 
-                SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                sprintf(str, "%02d:%02d:%02d %s kicked %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), user);
+			SYSTEMTIME sm;
+			GetLocalTime(&sm);
+			sprintf(str, "%02d:%02d:%02d %s kicked %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), user.c_str());
 
-                char log[MAX_PATH];
-                sprintf(log, "%slogs\\cop\\kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-                ofstream readf (log, ios::app);
-                readf << str << endl;
-                readf.close();
-            }
-        }
+			char log[MAX_PATH];
+			sprintf(log, "%slogs\\cop\\kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+			ofstream readf (log, ios::app);
+			readf << str << endl;
+			readf.close();
+		}
+
     }
 
     if ( players[ packet->UCID ].UName == "denis-takumi" or players[ packet->UCID ].UName == "Lexanom" )
     {
+		if(args.size() < 2)
+			return;
 
-        if (strncmp(Msg, "!cop_add", 8) == 0 )
+		const char* param = args[1].c_str();
+
+        if (Message.find("!cop_add", 8) == 0 )
         {
-            char param[24];
-            strcpy(param, Msg + 9);
-
             if (strlen(param) > 0)
             {
                 char query[MAX_PATH];
@@ -630,11 +631,8 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             }
         }
 
-        if (strncmp(Msg, "!cop_del", 8) == 0 )
+        if (Message.find("!cop_del") == 0 )
         {
-            char param[24];
-            strcpy(param, Msg + 9);
-
             if (strlen(param) > 0)
             {
                 char query[MAX_PATH];
@@ -643,13 +641,11 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             }
         }
 
-        if (strncmp(Msg, "!cop_up", 7) == 0 )
+        if (Message.find("!cop_up") == 0 )
         {
-            char param[24];
-            strcpy(param, Msg + 8);
-
             if (param!=NULL)
             for (auto& p: players)
+			{
                 if (string(players[p.first].UName) == string(param))
                 {
                     if (players[p.first].Rank < 4)
@@ -663,18 +659,14 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
                     return;
                 }
+			}
             insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
         }
 
-        if (strncmp(Msg, "!cop_down", 9) == 0 )
+        if (Message.find("!cop_down") == 0 )
         {
-            char param[24];
-            strcpy(param, Msg + 10);
-
-            //CCText((string)param);
-
-            if (param!=NULL)
             for (auto& p: players)
+			{
                 if (string(players[p.first].UName) == string(param))
                 {
                     if (players[p.first].Rank > 0)
@@ -688,6 +680,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
                     return;
                 }
+            }
             insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
         }
     }
