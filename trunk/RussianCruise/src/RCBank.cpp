@@ -267,7 +267,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Credit */
-    sprintf(query, "UPDATE bank_credits SET cash = '%d', date_create = '%d' WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank_credits SET cash = '%d', date_create = '%ld' WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
@@ -275,7 +275,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Deposit */
-    sprintf(query, "UPDATE bank_deposits SET cash = '%d', date_create = '%d' WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank_deposits SET cash = '%d', date_create = '%ld' WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {

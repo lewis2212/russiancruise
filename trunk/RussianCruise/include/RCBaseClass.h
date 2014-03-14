@@ -175,14 +175,14 @@ private:
 
 };
 
-class SplitString : public string
+class xString : public string
 {
     vector<string> flds;
 public:
-    SplitString(char *s) : string(s) { };
-    SplitString(const char *s) : string(s) { };
-    SplitString(string s) : string(s) { };
-    SplitString() : string() { };
+    xString(char *s) : string(s) { };
+    xString(const char *s) : string(s) { };
+    xString(string s) : string(s) { };
+    xString() : string() { };
     vector<string>& split( const char delim, int rep=0);
 };
 
