@@ -456,8 +456,6 @@ void RCTaxi::InsimCPR( struct IS_CPR* packet )
 
 void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 {
-    float Dist;
-
     for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
     {
         byte UCID = PLIDtoUCID[ pack_mci->Info[i].PLID ];
@@ -527,7 +525,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                 int des_X = ClientPoints[players[UCID].WorkPointDestinaion].X / 65536;
                 int des_Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 65536;
                 /** вычисляем растояние до точки остановки **/
-                Dist = Distance(X , Y , des_X , des_Y);
+                float Dist = Distance(X , Y , des_X , des_Y);
 
                 if (players[UCID].OnStreet == false and players[UCID].PassStress < MAX_PASS_STRESS)
                 {
@@ -536,6 +534,12 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     sprintf(MSG, msg->_(UCID, "TaxiOnStreet"), (Dist-(int)Dist%10));
                     insim->SendMTC(UCID, MSG);
                 }
+
+                char d[128];
+                sprintf(d, "^7%0.0f ^Cм ", (Dist-(int)Dist%5));
+
+                if (players[UCID].PassStress < MAX_PASS_STRESS)
+                    insim->SendButton(255, UCID, 206, 45, 125, 8, 4, ISB_DARK + ISB_RIGHT, d);
 
                 if (Dist <= 30)
                 {
@@ -740,11 +744,6 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     players[UCID].SpeedOff = 0;
 
                 BtnStress( UCID );
-                char d[128];
-                sprintf(d, "^7%0.0f ^Cм ", (Dist-(int)Dist%5));
-
-                if (players[UCID].OnStreet and players[UCID].PassStress < MAX_PASS_STRESS)
-                    insim->SendButton(255, UCID, 206, 45, 125, 8, 4, 32 + 128, d);
 
                 if (players[UCID].PassStress >= MAX_PASS_STRESS)
                 {
@@ -820,12 +819,12 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
 
     byte UCID = packet->UCID;
 
-    char Message[128];
-    strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
+    string Message;
+    Message = packet->Msg + (packet->TextStart);
 
     if (players[packet->UCID].InZone == 1)
     {
-        if (strncmp(Message, "!deal", strlen("!deal")) == 0 )
+        if ( Message == "!deal" )
         {
             if (dl->GetLVL( packet->UCID ) < 20)
             {
@@ -850,7 +849,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             players[packet->UCID].Work = 1;
         }
 
-        if (strncmp(Message, "!undeal", strlen("!undeal")) == 0 )
+        if ( Message == "!undeal" )
         {
             if (players[packet->UCID].Work ==0)
             {
@@ -870,7 +869,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             players[packet->UCID].Work = 0;
         }
 
-        if (strncmp(Message, "!workstart", strlen("!workstart")) == 0 )
+        if ( Message == "!workstart" )
         {
             if (players[packet->UCID].Work ==0)
             {
@@ -901,7 +900,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
             insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog14"));
         }
 
-        if (strncmp(Message, "!workend", strlen("!workend")) == 0 )
+        if ( Message == "!workend" )
         {
             if (players[packet->UCID].Work ==0)
             {
@@ -929,11 +928,11 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
         }
     }
 
-    if (strncmp(Message, "!tstat", strlen("!tstat")) == 0)
+    if ( Message.find("!tstat") == 0 )
     {
         string uname = players[UCID].UName;
-        if (strlen(Message)>7 and (players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom"))
-            uname = Message + 7;
+        if ( Message.size() > 7 and (players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom"))
+            uname = Message.replace(0,7,"");
 
         if (uname.length() == 0)
         {
@@ -975,7 +974,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
 		insim->SendMTC(packet->UCID, "^6| ^C^7Игрок не найден");
     }
 
-    if (strncmp(Message, "!points", strlen("!points")) == 0 and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom" ))
+    if ( Message == "!points" and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom" ))
     {
         if (StartPointsAdd == 0)
         {
