@@ -319,7 +319,7 @@ RCBaseClass::dbSelect( string query )
 {
 	dbPing(query);
 
-	list<DB_ROW> out;
+	DB_ROWS out;
     out.clear();
 
     size_t pos = string::npos;
