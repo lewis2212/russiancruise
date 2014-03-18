@@ -594,7 +594,7 @@ void case_btc ()
         ShowUsersList(pack_btc->UCID);
 
         byte L = 23, T = 187;
-        string uname = RCBaseClass::StringFormat(msg->_( pack_btc->UCID, "MsgPlFor" ), players[pack_btc->ReqI].PName);
+        string uname = RCBaseClass::StringFormat(msg->_( pack_btc->UCID, "MsgPlFor" ), players[pack_btc->ReqI].PName.c_str());
 
         if (pack_btc->ReqI == UCID)
             uname = string(msg->_(UCID, "ItsYou"));
@@ -686,9 +686,9 @@ void case_btt ()
                 cout << players[pack_btt->UCID].UName << " send " << pack_btt->Text << " to "  << players[pack_btt->ReqI].UName << endl;
 
                 char Msg[126];
-                sprintf(Msg, msg->_(pack_btt->ReqI, "GetMoney" ), players[pack_btt->UCID].PName, atoi(pack_btt->Text));
+                sprintf(Msg, msg->_(pack_btt->ReqI, "GetMoney" ), players[pack_btt->UCID].PName.c_str(), atoi(pack_btt->Text));
                 insim->SendMTC(pack_btt->ReqI, Msg);
-                sprintf(Msg, msg->_(pack_btt->UCID, "SendMoney" ), players[pack_btt->ReqI].PName, atoi(pack_btt->Text));
+                sprintf(Msg, msg->_(pack_btt->UCID, "SendMoney" ), players[pack_btt->ReqI].PName.c_str(), atoi(pack_btt->Text));
                 insim->SendMTC(pack_btt->UCID, Msg);
 
                 bank->RemCash(pack_btt->UCID, atoi(pack_btt->Text));
@@ -712,7 +712,7 @@ void case_btt ()
         {
 
             char Msg[128];
-            sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players[pack_btt->UCID].PName, pack_btt->Text );
+            sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players[pack_btt->UCID].PName.c_str(), pack_btt->Text );
             insim->SendMTC(pack_btt->ReqI, Msg);
 
             RCBaseClass::CCText("^1" + (string)players[pack_btt->UCID].UName + " ^7передал сообщение " + (string)players[pack_btt->ReqI].UName + ":");
@@ -747,7 +747,7 @@ void case_toc ()
 void case_cpr ()
 {
     struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
-	strcpy(players[pack_cpr->UCID].PName, pack_cpr->PName);
+	players[pack_cpr->UCID].PName = pack_cpr->PName;
 }
 
 void case_mci ()
@@ -990,7 +990,7 @@ void case_mso ()
         sprintf(Text, "/msg ^1------------------------------");
         insim->SendMST(Text);
 
-        sprintf(Text, "/msg ^7 %s", players[pack_mso->UCID].PName);
+        sprintf(Text, "/msg ^7 %s", players[pack_mso->UCID].PName.c_str());
         insim->SendMST(Text);
 
         sprintf(Text, "/msg ^7Cash: ^1%d", bank->GetCash(pack_mso->UCID));
@@ -1589,7 +1589,7 @@ void case_ncn ()
 
     // Copy all the player data we need into the players[] array
     strcpy(players[pack_ncn->UCID].UName, pack_ncn->UName);
-    strcpy(players[pack_ncn->UCID].PName, pack_ncn->PName);
+    players[pack_ncn->UCID].PName = pack_ncn->PName;
 
     players[pack_ncn->UCID].Zone = 1;
 
@@ -1833,7 +1833,7 @@ void ShowUsersList(byte UCID)
     for (auto& plr: players)
     {
         // Viva La Костыль
-        if(plr.first == 0 || strlen(plr.second.PName) == 0)
+        if(plr.first == 0 || plr.second.PName.empty())
             continue;
 
         if (count == 24)
