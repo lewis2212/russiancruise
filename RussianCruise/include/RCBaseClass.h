@@ -41,7 +41,7 @@ typedef queue< ObjectInfo > ObjectsInfo;
 typedef map< string, string > DB_ROW;
 
 /**< переменная - массив состоящий из элементов DB_ROW */
-typedef list<DB_ROW> DB_ROWS;
+typedef vector<DB_ROW> DB_ROWS;
 
 struct GlobalPlayer
 {
