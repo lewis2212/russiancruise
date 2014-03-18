@@ -109,11 +109,9 @@ struct player: public GlobalPlayer
 {
     struct CompCar Info;
     user_car cars[MAX_CARS];
-    //map <string, user_car> cars2;
+    //map <string, user_car> cars;
 
     char    UName[24];             // Username
-    char    PName[24];             // Player name
-    //char    CName[4];              // Car Name
     int     CTune;                 // Car Tuning
     byte    SetF;
     byte    H_TRes;
