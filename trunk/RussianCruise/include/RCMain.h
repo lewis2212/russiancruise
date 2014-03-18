@@ -79,7 +79,7 @@ pthread_t main_tid; // Thread ID
 struct cars
 {
     int             id;
-    string          car;
+    char            car[6];
     unsigned long   cash;
     unsigned long   sell;
     unsigned		PLC;
@@ -87,9 +87,9 @@ struct cars
 
 struct user_car
 {
-    string	car;
-    int		tuning;
-    float	dist;
+    char    car[6];
+    int     tuning;
+    float     dist;
 };
 
 struct track_info
@@ -107,6 +107,7 @@ struct track_info
 
 struct player: public GlobalPlayer
 {
+    struct CompCar Info;
     user_car cars[MAX_CARS];
     //map <string, user_car> cars2;
 
