@@ -727,10 +727,10 @@ void case_cnl ()
 {
     struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
 
-	RCBaseClass::CCText("<< ^9disconnected " + (string)players[pack_cnl->UCID].UName + " (" + (string)RCBaseClass::GetReason(pack_cnl->Reason) + ")");
+	RCBaseClass::CCText("<< ^9disconnected " + string(players[pack_cnl->UCID].UName) + " (" + string(RCBaseClass::GetReason(pack_cnl->Reason) ) + ")");
 
 	Save( pack_cnl->UCID );
-
+	bonuses[ players[pack_cnl->UCID].UName ] = Json::nullValue;
 	players.erase(pack_cnl->UCID);
 
 }
@@ -2108,9 +2108,13 @@ void ReadBonuses()
     {
         byte UCID = pl.first;
 
-        Json::Value b = bonuses[players[UCID].UName];
-        players[UCID].Bonus_count = b["count"].asInt();
-        players[UCID].Bonus_dist = b["dist"].asFloat();
+		Json::Value bonus = bonuses[players[UCID].UName];
+
+        if( bonus.isObject() )
+		{
+			players[UCID].Bonus_count = bonus["count"].asInt();
+			players[UCID].Bonus_dist = bonus["dist"].asFloat();
+        }
 
         if (players[UCID].Bonus_count > 0)
             insim->SendMTC(UCID, msg->_(UCID, "> ^1BONUS RESTORED"));
