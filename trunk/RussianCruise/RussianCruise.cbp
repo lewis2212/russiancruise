@@ -91,6 +91,7 @@
 		<Unit filename="include/insim.h" />
 		<Unit filename="include/pthread.h" />
 		<Unit filename="include/tools.h" />
+		<Unit filename="include/version.h" />
 		<Unit filename="src/CInsim.cpp" />
 		<Unit filename="src/CarInfo.cpp" />
 		<Unit filename="src/RCAntCheat.cpp" />
