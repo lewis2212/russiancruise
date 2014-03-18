@@ -172,25 +172,25 @@ void InitClasses()
 
 }
 
-int GetCarID(string& CarName)
+int GetCarID(string CarName)
 {
     if (CarName.size()!=3)
         return 0;
 
     for (int i=0; i< MAX_CARS; i++)
     {
-        if ( CarName == ginfo->car[i].car)
+        if (CarName == ginfo->car[i].car)
             return ginfo->car[i].id;
     }
 
     return 0;
 }
 
-cars AddCar(int id = 0, const char *car = "UF1", int cash =0, int sell = 0, unsigned PLC = 0)
+cars AddCar(int id = 0, const char* car = "UF1", int cash =0, int sell = 0, unsigned PLC = 0)
 {
     cars c;
     c.id = id;
-    c.car = car;
+    strcpy(c.car, car);
     c.cash = cash;
     c.sell = sell;
     c.PLC = PLC;
@@ -238,9 +238,9 @@ void save_user_cars (byte UCID)
 
     for (int i = 0; i < MAX_CARS; i++)
     {
-        if ( players[UCID].cars[i].car.size() > 0 )
+        if ( strlen( players[UCID].cars[i].car ) > 0 )
         {
-            sprintf(sql, "UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", players[UCID].cars[i].tuning , players[UCID].cars[i].dist , players[UCID].cars[i].car.c_str() , players[UCID].UName );
+            sprintf(sql, "UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", players[UCID].cars[i].tuning , players[UCID].cars[i].dist , players[UCID].cars[i].car , players[UCID].UName );
             if ( mysql_query( rcMaindbConn , sql) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
         }
@@ -287,7 +287,7 @@ void read_user_cars(byte UCID)
         int i = 0;
         while ( ( rcMainRow = mysql_fetch_row( rcMainRes ) ) )
         {
-            players[UCID].cars[i].car = string(rcMainRow[0]);
+            strcpy(players[UCID].cars[i].car, rcMainRow[0]);
             players[UCID].cars[i].tuning = atoi( rcMainRow[1] );
             players[UCID].cars[i].dist = atof( rcMainRow[2] );
             /** map<> **/
@@ -307,7 +307,7 @@ void read_user_cars(byte UCID)
         if ( mysql_query( rcMaindbConn , query) != 0 )
             printf("Error: MySQL Query\n");
 
-        players[UCID].cars[0].car = "UF1";
+        strcpy(players[UCID].cars[0].car, "UF1");
         players[UCID].cars[0].tuning = 0;
         players[UCID].cars[0].dist = 0;
 
@@ -324,7 +324,7 @@ void save_car (byte UCID)
 
     for (int i=0; i<MAX_CARS; i++)
     {
-        if ( players[UCID].CName == players[UCID].cars[i].car)
+        if (players[UCID].CName == players[UCID].cars[i].car)
         {
             players[UCID].cars[i].tuning = players[UCID].CTune;
             players[UCID].cars[i].dist = (int)players[UCID].Distance;
@@ -395,7 +395,7 @@ void help_cmds (byte UCID, int h_type)
         insim->SendMTC(UCID, msg->_( UCID, "3100" ));
         for ( int i=0; i<MAX_CARS; i++)
         {
-            if (players[UCID].cars[i].car.size()>0)
+            if (strlen(players[UCID].cars[i].car)>0)
             {
                 int     tune;
                 char    Text[64];
@@ -434,7 +434,7 @@ void help_cmds (byte UCID, int h_type)
                     strcat( Tun, " ^1W");
                 }
 
-                sprintf(Text, "^1| ^C^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[UCID].cars[i].car.c_str(), players[UCID].cars[i].dist/1000, Tun, tune2);
+                sprintf(Text, "^1| ^C^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[UCID].cars[i].car, players[UCID].cars[i].dist/1000, Tun, tune2);
                 insim->SendMTC(UCID, Text);
             }
         }
@@ -508,9 +508,9 @@ void btn_info (byte UCID, int b_type)
             }
 
             if (dl->GetLVL(UCID)>=(i-1)*5)
-                sprintf(Text, "^3%d lvl ^2%s ^3(^2%d^3/%d)", (i-1)*5, ginfo->car[i].car.c_str(), (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
+                sprintf(Text, "^3%d lvl ^2%s ^3(^2%d^3/%d)", (i-1)*5, ginfo->car[i].car, (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
             else
-                sprintf(Text, "%d lvl %s (%d/%d)", (i-1)*5, ginfo->car[i].car.c_str(), (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
+                sprintf(Text, "%d lvl %s (%d/%d)", (i-1)*5, ginfo->car[i].car, (int)ginfo->car[i].cash, (int)ginfo->car[i].sell);
             insim->SendButton(255, UCID, id++, l-w/2+1+plW, t-h/2+16+hButton*(i-plH), w/2-1, hButton, 16+64, Text);
         }
 
@@ -1008,7 +1008,7 @@ void case_mso ()
 #endif
         for ( int j=0; j<MAX_CARS; j++)
         {
-            if (players[pack_mso->UCID].cars[j].car.size()>0)
+            if (strlen(players[pack_mso->UCID].cars[j].car)>0)
             {
                 int     tune;
                 char    Text[64];
@@ -1048,7 +1048,7 @@ void case_mso ()
                     strcat( Tun, " ^1W");
                 }
 
-                sprintf(Text, "/msg ^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[pack_mso->UCID].cars[j].car.c_str(), players[pack_mso->UCID].cars[j].dist/1000, Tun, tune2);
+                sprintf(Text, "/msg ^2%s ^3%4.0f ^7Km (%s^7)(^3%d%%^7)", players[pack_mso->UCID].cars[j].car, players[pack_mso->UCID].cars[j].dist/1000, Tun, tune2);
                 insim->SendMST(Text);
             }
         }
@@ -1274,7 +1274,7 @@ void case_mso ()
 
         for (CarID = 0; CarID < MAX_CARS; CarID ++)
         {
-            if (id == ginfo->car[CarID].car)
+            if (strcmp(id, ginfo->car[CarID].car)== 0)
             {
                 break;
             }
@@ -1307,7 +1307,7 @@ void case_mso ()
 
         for ( int j=0; j<MAX_CARS; j++)
         {
-            if (id == players[pack_mso->UCID].cars[j].car)
+            if (strcmp(id, players[pack_mso->UCID].cars[j].car)== 0)
             {
                 char msg[64];
                 sprintf(msg, "^C^2| ^7У вас уже есть такая машина");
@@ -1319,9 +1319,9 @@ void case_mso ()
         for ( int j=0; j<MAX_CARS; j++)
         {
 
-            if (players[pack_mso->UCID].cars[j].car.size() == 0)
+            if (strlen(players[pack_mso->UCID].cars[j].car) == 0)
             {
-                players[pack_mso->UCID].cars[j].car = id;
+                strcpy(players[pack_mso->UCID].cars[j].car, id);
                 players[pack_mso->UCID].cars[j].tuning=0;
                 players[pack_mso->UCID].cars[j].dist=0;
                 char msg[64];
@@ -1344,7 +1344,7 @@ void case_mso ()
                 readf.close();
 
                 char sql[128];
-                sprintf(sql, "INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", players[pack_mso->UCID].UName , ginfo->car[CarID].car.c_str() );
+                sprintf(sql, "INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", players[pack_mso->UCID].UName , ginfo->car[CarID].car );
                 mysql_query( rcMaindbConn , sql );
 
                 break;
@@ -1376,7 +1376,7 @@ void case_mso ()
         // search car in global base
         int j = 0; // global car id
         for ( j = 1 ; j < MAX_CARS ; j++)
-            if (id == ginfo->car[j].car)
+            if (strcmp(id, ginfo->car[j].car)==0)
                 break;
 
         if ( j == MAX_CARS )
@@ -1391,13 +1391,13 @@ void case_mso ()
 
         for ( int k=0; k<MAX_CARS; k++)
         {
-            if (players[pack_mso->UCID].cars[k].car == ginfo->car[j].car)
+            if (strcmp(players[pack_mso->UCID].cars[k].car, ginfo->car[j].car) == 0)
             {
                 char msg[64];
                 sprintf(msg, "^C^2|^7 Вы продали %s", id);
                 insim->SendMTC(pack_mso->UCID, msg);
 
-                players[pack_mso->UCID].cars[k].car.clear();
+                strcpy(players[pack_mso->UCID].cars[k].car, "");
                 players[pack_mso->UCID].cars[k].tuning=0;
                 players[pack_mso->UCID].cars[k].dist=0;
 
@@ -1416,7 +1416,7 @@ void case_mso ()
                 insim->SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
 
                 char sql[128];
-                sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", players[pack_mso->UCID].UName , ginfo->car[j].car.c_str() );
+                sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", players[pack_mso->UCID].UName , ginfo->car[j].car );
                 mysql_query( rcMaindbConn , sql );
                 break;
             }
@@ -1622,7 +1622,7 @@ void case_npl ()
         int j=0;
         for (j=0; j<MAX_CARS; j++)
         {
-            if (players[pack_npl->UCID].cars[j].car == pack_npl->CName)
+            if (strcmp(players[pack_npl->UCID].cars[j].car, pack_npl->CName)==0)
                 break;
         }
 
@@ -1659,12 +1659,14 @@ void case_npl ()
                 insim->SendMTC(pack_npl->UCID, msg2);
                 insim->SendMTC(pack_npl->UCID, msg->_( pack_npl->UCID, "2404" ));
 
-                string Text2= "^1| ^2";
+                char Text2[64];
+                strcpy(Text2, "^1| ^2");
                 for (int k=0; k< MAX_CARS; k++)
                 {
-                    if (!players[pack_npl->UCID].cars[k].car.empty() and ((GetCarID(players[pack_npl->UCID].cars[k].car)-1)*5 <= dl->GetLVL(pack_npl->UCID)))
+                    if ((strlen(players[pack_npl->UCID].cars[k].car) != 0) and ((GetCarID(players[pack_npl->UCID].cars[k].car)-1)*5 <= dl->GetLVL(pack_npl->UCID)))
                     {
-                        Text2 += players[pack_npl->UCID].cars[k].car + " ";
+                        strcat(Text2, players[pack_npl->UCID].cars[k].car);
+                        strcat(Text2, " ");
                     }
                 }
                 insim->SendMTC(pack_npl->UCID, Text2);
@@ -2016,7 +2018,7 @@ void read_car()
             i = atoi(id);
             memset(&ginfo->car[i], 0, sizeof(struct cars));
             ginfo->car[i].id = i;
-            ginfo->car[i].car = car;
+            strcpy(ginfo->car[i].car, car);
             ginfo->car[i].cash =atoi(cash);
             ginfo->car[i].sell= ginfo->car[i].cash*8/10;
             ginfo->car[i].PLC =atoi(PLC);
