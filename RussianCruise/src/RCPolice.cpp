@@ -600,6 +600,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
 			insim->SendMST("/kick " + user);
 
+            CCText(string(players[ packet->UCID ].UName) + " kicked " + string(user));
 
 			SYSTEMTIME sm;
 			GetLocalTime(&sm);
@@ -669,7 +670,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 			{
                 if (string(players[p.first].UName) == string(param))
                 {
-                    if (players[p.first].Rank > 0)
+                    if (players[p.first].Rank > 1)
                     {
                         players[p.first].Rank--;
                         insim->SendMTC(255, "^2| ^8" + string(players[p.first].PName) + " ^1^Cпонижен до ^7" + ToString(players[p.first].Rank) + " ^1ранга");
@@ -829,92 +830,6 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
 
 void RCPolice::InsimBTC( struct IS_BTC* packet )
 {
-    if (packet->ReqI == 200)
-    {
-        int i = packet->ClickID - 91;
-        char str[96];
-
-        if (players[packet->UCID].DTPstatus == 2 and DTPvyzov[2][i] == packet->UCID)
-        {
-            sprintf(str, msg->_(DTPvyzov[0][i],"2114"), players[packet->UCID].PName.c_str());
-            insim->SendMTC(DTPvyzov[0][i], str);
-
-            sprintf(str, msg->_(packet->UCID,"2115"), players[DTPvyzov[0][i]].PName.c_str());
-            insim->SendMTC(packet->UCID, str);
-
-            players[DTPvyzov[0][i]].DTP = 0;
-            if (DTPvyzov[2][i] != 0)
-                players[DTPvyzov[2][i]].DTPstatus = 0;
-
-            if (players[packet->UCID].DTPfines > 0)
-			{
-                players[packet->UCID].DoneCount++;
-                players[packet->UCID].PStat.SolvedIncedentsByDay++;
-                players[packet->UCID].PStat.SolvedIncedents++;
-			}
-			players[packet->UCID].DTPfines = 0;
-
-			//выплата компенсации в виде % от штрафов
-			if (!players[DTPvyzov[0][i]].blame and players[packet->UCID].FineC>0)
-			{
-				sprintf(str, msg->_(DTPvyzov[0][i],"Compens"), (double)((double)players[packet->UCID].FineC*0.05));
-				insim->SendMTC(DTPvyzov[0][i], str);
-				sprintf(str, msg->_(packet->UCID,"CompensPl"), players[DTPvyzov[0][i]].PName.c_str(), (double)((double)players[packet->UCID].FineC*0.05));
-				insim->SendMTC(packet->UCID, str);
-				bank->RemFrBank(players[packet->UCID].FineC*0.05);
-				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
-
-				SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", sm.wHour, sm.wMinute, sm.wSecond, players[DTPvyzov[0][i]].UName.c_str(), (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName.c_str());
-
-                char log[MAX_PATH];
-                sprintf(log, "%slogs\\cop\\compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-                ofstream readf (log, ios::app);
-                readf << str << endl;
-                readf.close();
-			}
-
-			players[packet->UCID].FineC = 0;
-			players[DTPvyzov[0][i]].blame = false;
-
-            DTPvyzov[0][i] = 0;
-            DTPvyzov[1][i] = 0;
-            DTPvyzov[2][i] = 0;
-            insim->SendBFN(255, packet->ClickID);
-
-            //закрывашка штрафов
-            for (byte c = 176; c < 239; c++)
-                insim->SendBFN(packet->UCID, c);
-
-            //очистка кнопок
-            for (byte i = 91; i < 110; i++)
-                insim->SendBFN(255, i);
-        }
-        else if (DTPvyzov[2][i] <= 0)
-        {
-            if (players[packet->UCID].DTPstatus > 0)
-            {
-                insim->SendMTC(packet->UCID, msg->_(packet->UCID,"2116"));
-                return;
-            }
-
-            DTPvyzov[2][i] = packet->UCID;
-            DTPvyzov[1][i] = 0;
-
-            sprintf(str, msg->_(packet->UCID,"2117"), players[packet->UCID].PName.c_str());
-            insim->SendMTC(DTPvyzov[0][i], str);
-
-            sprintf(str, msg->_(packet->UCID,"2118"), players[packet->UCID].PName.c_str(), players[DTPvyzov[0][i]].PName.c_str());
-            SendMTCToCop(str, 1, 2, 4);
-
-            players[DTPvyzov[2][i]].DTPstatus = 1;
-            players[DTPvyzov[2][i]].DTPfines = 0;
-            players[DTPvyzov[2][i]].FineC = 0;
-            players[DTPvyzov[0][i]].DTP = packet->UCID;
-        }
-    }
-
     if ( packet->ClickID == 178 and packet->ReqI == 254 )
     {
         players[packet->UCID].ThisFineCount = 0;
@@ -1146,7 +1061,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             nrg->Unlock(packet->ReqI);
 
             //закрывашка штрафов
-            for (byte c = 21; c < 165; c++)
+            for (byte c = 80; c < 165; c++)
                 insim->SendBFN(packet->UCID, c);
 
             //очистка кнопок
@@ -1164,6 +1079,93 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 
     char fine_c[255];
     sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+
+    /** нажатие на заявку */
+    if (packet->ReqI == 200)
+    {
+        int i = packet->ClickID - 91;
+        char str[96];
+
+        if (players[packet->UCID].DTPstatus == 2 and DTPvyzov[2][i] == packet->UCID)
+        {
+            sprintf(str, msg->_(DTPvyzov[0][i],"2114"), players[packet->UCID].PName.c_str());
+            insim->SendMTC(DTPvyzov[0][i], str);
+
+            sprintf(str, msg->_(packet->UCID,"2115"), players[DTPvyzov[0][i]].PName.c_str());
+            insim->SendMTC(packet->UCID, str);
+
+            players[DTPvyzov[0][i]].DTP = 0;
+            if (DTPvyzov[2][i] != 0)
+                players[DTPvyzov[2][i]].DTPstatus = 0;
+
+            if (players[packet->UCID].DTPfines > 0)
+			{
+                players[packet->UCID].DoneCount++;
+                players[packet->UCID].PStat.SolvedIncedentsByDay++;
+                players[packet->UCID].PStat.SolvedIncedents++;
+			}
+			players[packet->UCID].DTPfines = 0;
+
+			//выплата компенсации в виде % от штрафов
+			if (!players[DTPvyzov[0][i]].blame and players[packet->UCID].FineC>0)
+			{
+				sprintf(str, msg->_(DTPvyzov[0][i],"Compens"), (double)((double)players[packet->UCID].FineC*0.05));
+				insim->SendMTC(DTPvyzov[0][i], str);
+				sprintf(str, msg->_(packet->UCID,"CompensPl"), players[DTPvyzov[0][i]].PName.c_str(), (double)((double)players[packet->UCID].FineC*0.05));
+				insim->SendMTC(packet->UCID, str);
+				bank->RemFrBank(players[packet->UCID].FineC*0.05);
+				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
+
+				SYSTEMTIME sm;
+                GetLocalTime(&sm);
+                sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", sm.wHour, sm.wMinute, sm.wSecond, players[DTPvyzov[0][i]].UName.c_str(), (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName.c_str());
+
+                char log[MAX_PATH];
+                sprintf(log, "%slogs\\cop\\compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                ofstream readf (log, ios::app);
+                readf << str << endl;
+                readf.close();
+			}
+
+			players[packet->UCID].FineC = 0;
+			players[DTPvyzov[0][i]].blame = false;
+
+            DTPvyzov[0][i] = 0;
+            DTPvyzov[1][i] = 0;
+            DTPvyzov[2][i] = 0;
+            insim->SendBFN(255, packet->ClickID);
+
+            //закрывашка штрафов
+            for (byte c = 176; c < 239; c++)
+                insim->SendBFN(packet->UCID, c);
+
+            //очистка кнопок
+            for (byte i = 91; i < 110; i++)
+                insim->SendBFN(255, i);
+        }
+        else if (DTPvyzov[2][i] <= 0)
+        {
+            if (players[packet->UCID].DTPstatus > 0)
+            {
+                insim->SendMTC(packet->UCID, msg->_(packet->UCID,"2116"));
+                return;
+            }
+
+            DTPvyzov[2][i] = packet->UCID;
+            DTPvyzov[1][i] = 0;
+
+            sprintf(str, msg->_(packet->UCID,"2117"), players[packet->UCID].PName.c_str());
+            insim->SendMTC(DTPvyzov[0][i], str);
+
+            sprintf(str, msg->_(packet->UCID,"2118"), players[packet->UCID].PName.c_str(), players[DTPvyzov[0][i]].PName.c_str());
+            SendMTCToCop(str, 1, 2, 4);
+
+            players[DTPvyzov[2][i]].DTPstatus = 1;
+            players[DTPvyzov[2][i]].DTPfines = 0;
+            players[DTPvyzov[2][i]].FineC = 0;
+            players[DTPvyzov[0][i]].DTP = packet->UCID;
+        }
+    }
 
     /** Игрок в погоне сошел с трассы **/
     if ( packet->ClickID == 79)
@@ -1892,7 +1894,7 @@ void RCPolice::Event()
 
                         char str[96];
                         sprintf(str, "^C^1Вызов на ДТП - ^8%s^7, %s, ^1%02d:%02d", players[DTPvyzov[0][i]].PName.c_str(), StreetInfo.StreetRu, (T / 60)%60, T%60);
-                        insim->SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 8, str);
+                        insim->SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 8, "\0^CПодтверди нажатие\0" + string(str), 1);
 
                         if (T <= 0)
                         {
@@ -1938,7 +1940,7 @@ void RCPolice::Event()
                         {
                             char str[96];
                             sprintf(str, msg->_(UCID,"2122"), players[DTPvyzov[0][i]].PName.c_str(), StreetInfo.StreetRu);
-                            insim->SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 8, str);
+                            insim->SendButton(200, UCID, id + i, 159, 100 + 4 * i, 40, 4, 32 + 8, "\0^CПодтверди нажатие\0" + string(str), 1);
                         }
                     }
                     else if (DTPvyzov[0][i] > 0 and DTPvyzov[2][i] > 0)

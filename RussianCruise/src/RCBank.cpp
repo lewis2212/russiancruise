@@ -259,7 +259,7 @@ void RCBank::InsimCNL(struct IS_CNL* packet)
 void RCBank::Save (byte UCID)
 {
     char query[128];
-    sprintf(query, "UPDATE bank SET cash = '%f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
+    sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
     if (!dbExec(query))
     {
@@ -283,7 +283,7 @@ void RCBank::Save (byte UCID)
     }
 
     /* Capital */
-    sprintf(query, "UPDATE bank SET cash = '%f' WHERE username='_RC_Bank_Capital_'", BankFond);
+    sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='_RC_Bank_Capital_'", BankFond);
 
     if( !dbExec(query) )
 	{
