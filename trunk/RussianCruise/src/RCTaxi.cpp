@@ -524,6 +524,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
             {
                 int des_X = ClientPoints[players[UCID].WorkPointDestinaion].X / 65536;
                 int des_Y = ClientPoints[players[UCID].WorkPointDestinaion].Y / 65536;
+
                 /** вычисляем растояние до точки остановки **/
                 float Dist = Distance(X , Y , des_X , des_Y);
 
@@ -535,11 +536,8 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                     insim->SendMTC(UCID, MSG);
                 }
 
-                char d[128];
-                sprintf(d, "^7%0.0f ^Cм ", (Dist-(int)Dist%5));
-
-                if (players[UCID].PassStress < MAX_PASS_STRESS)
-                    insim->SendButton(255, UCID, 206, 45, 125, 8, 4, ISB_DARK + ISB_RIGHT, d);
+                if (players[UCID].WorkAccept == 2 and players[UCID].PassStress < MAX_PASS_STRESS)
+                    insim->SendButton(255, UCID, 206, 45, 125, 8, 4, ISB_DARK + ISB_RIGHT, StringFormat("^7%0.0f ^Cм ", Dist-(int)Dist%5));
 
                 if (Dist <= 30)
                 {
