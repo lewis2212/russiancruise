@@ -52,7 +52,7 @@ Help14			"^1| ^C^7!help - ^3command list"
 1000 "Send Money"
 1001 "Send a message"
 
-MsgPlFor	"^7For %s ^7:"
+MsgPlFor	"^7For %s"
 ItsYou		"^7It's you"
 
 SendMoney	"^5| ^7You sent ^8%s ^7%d ^3RUR."
