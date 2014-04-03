@@ -328,14 +328,14 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
             strtok (Message, " ");
             strtok (NULL, " ");
-            char *sum;
+            char *sum = strtok (NULL, " ");
 
-            sum = strtok (NULL, " ");
+           int summ;
 
             if(!sum)
-                return;
-
-            int summ = atoi(sum);
+                summ = 0;
+            else
+                summ = atoi(sum);
 
             if (summ <= 0)
             {
@@ -396,10 +396,14 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
             strtok (Message, " ");
             char* sum = strtok (NULL, " ");
-            if(!sum)
-                return;
 
-            int summ = atoi(sum);
+            int summ;
+
+            if(!sum)
+                summ = 0;
+            else
+                summ = atoi(sum);
+
             if (summ < cr / 5 or summ > cr)
             {
                 sprintf( Text , msg->_(packet->UCID, "BankDialog27"), cr/5, cr);
@@ -470,10 +474,13 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             strtok (Message, " ");
             strtok (NULL, " ");
             char* sum = strtok (NULL, " ");
-            if(!sum)
-                return;
 
-            int summ = atoi(sum);
+            int summ;
+
+            if(!sum)
+                summ = 0;
+            else
+                summ = atoi(sum);
 
             if (summ <= 0)
             {
@@ -548,10 +555,13 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
 
             strtok (Message, " ");
             char* sum = strtok (NULL, " ");
-            if(!sum)
-                return;
 
-            int summ = atoi(sum);
+            int summ;
+
+            if(!sum)
+                summ = 0;
+            else
+                summ = atoi(sum);
 
             if (summ > dr or summ==0)
             {
