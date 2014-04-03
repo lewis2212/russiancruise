@@ -43,7 +43,8 @@ private:
     map< byte, LghPlayer > players;
 
     int     LightsCount;
-    struct  Lights Light[30];
+    // struct  Lights Light[30];
+    vector<Lights> Light;
 
     bool	LightWorks=true;
 

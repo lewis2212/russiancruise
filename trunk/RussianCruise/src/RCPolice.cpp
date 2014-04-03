@@ -68,7 +68,7 @@ int RCPolice::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *
         return -1;
     }
 
-    CCText("^3RCPolice:\t^2Connected to MySQL server");
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -130,12 +130,13 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 
 			players[UCID].PStat.DateActive = time(NULL);
 
-			SYSTEMTIME sm;
-			GetLocalTime(&sm);
 
-            if (players[UCID].PStat.CurrentDay != sm.wDay)
+            time_t t = time(NULL);
+            tm *ptm = localtime(&t);
+
+            if (players[UCID].PStat.CurrentDay != ptm->tm_wday)
             {
-                players[UCID].PStat.CurrentDay = sm.wDay;
+                players[UCID].PStat.CurrentDay = ptm->tm_wday;
                 players[UCID].PStat.ArrestWithFineByDay = 0;
                 players[UCID].PStat.ArrestWithOutFineByDay = 0;
                 players[UCID].PStat.SolvedIncedentsByDay = 0;
@@ -602,15 +603,15 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
             CCText(string(players[ packet->UCID ].UName) + " kicked " + string(user));
 
-			SYSTEMTIME sm;
+		/*	SYSTEMTIME sm;
 			GetLocalTime(&sm);
 			sprintf(str, "%02d:%02d:%02d %s kicked %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), user.c_str());
 
 			char log[MAX_PATH];
-			sprintf(log, "%slogs\\cop\\kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+			sprintf(log, "%slogs/cop/kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 			ofstream readf (log, ios::app);
 			readf << str << endl;
-			readf.close();
+			readf.close();*/
 		}
 
     }
@@ -849,10 +850,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID > 180 and packet->ClickID <= 205 and packet->ReqI != 255) //выписка штрафа
     {
-        SYSTEMTIME sm;
+        /*SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
-        sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);*/
 
         int FID = packet->ClickID-180;
 
@@ -889,11 +890,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
                 players[packet->UCID].DTPfines++;
 
-        sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
+        // sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
 
-        ofstream readf (fine_c, ios::app);
+       /* ofstream readf (fine_c, ios::app);
         readf << Msg << endl;
-        readf.close();
+        readf.close();*/
 
         if (players[packet->ReqI].ThisFineCount == 0)
             insim->SendBFNAll(packet->ReqI);
@@ -911,11 +912,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID > 205 and packet->ClickID <= 239 and packet->ReqI != 255) //отмена штрафа
     {
-        SYSTEMTIME sm;
+        /*SYSTEMTIME sm;
         GetLocalTime(&sm);
         char fine_c[255];
-        sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-
+        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+*/
         int FID = packet->ClickID-205;
         if (players[packet->UCID].DTPstatus == 2)
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
@@ -941,11 +942,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 players[ packet->ReqI ].fines[j].fine_id = 0;
                 players[ packet->ReqI].fines[j].fine_date = 0;
 
-                sprintf(Msg, "%02d:%02d:%02d %s cancel fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
+                /*sprintf(Msg, "%02d:%02d:%02d %s cancel fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
 
                 ofstream readf (fine_c, ios::app);
                 readf << Msg << endl;
-                readf.close();
+                readf.close();*/
 
                 if (players[packet->ReqI].ThisFineCount > 0)
                 {
@@ -1074,12 +1075,12 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
 void RCPolice::InsimBTT( struct IS_BTT* packet )
 {
-    SYSTEMTIME sm;
+    /*SYSTEMTIME sm;
     GetLocalTime(&sm);
 
     char fine_c[255];
-    sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-
+    sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+*/
     /** нажатие на заявку */
     if (packet->ReqI == 200)
     {
@@ -1116,15 +1117,15 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 				bank->RemFrBank(players[packet->UCID].FineC*0.05);
 				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
 
-				SYSTEMTIME sm;
+				/*SYSTEMTIME sm;
                 GetLocalTime(&sm);
                 sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", sm.wHour, sm.wMinute, sm.wSecond, players[DTPvyzov[0][i]].UName.c_str(), (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName.c_str());
 
                 char log[MAX_PATH];
-                sprintf(log, "%slogs\\cop\\compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                sprintf(log, "%slogs/cop/compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
                 ofstream readf (log, ios::app);
                 readf << str << endl;
-                readf.close();
+                readf.close();*/
 			}
 
 			players[packet->UCID].FineC = 0;
@@ -1490,31 +1491,31 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
 
 void RCPolice::ReadConfig(const char* Track)
 {
-	ReadFines();
+    ReadFines();
 
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCPolice\\FineAllow.txt", RootDir);
+    sprintf(file, "%s/data/RCPolice/FineAllow.txt", RootDir);
 
-    HANDLE hwnd;
-    WIN32_FIND_DATA fd;
-    hwnd = FindFirstFile(file, &fd);
-    if (hwnd == INVALID_HANDLE_VALUE)
+    ifstream readf (file, ios::in);
+
+    if (!readf.is_open())
     {
     	CCText("  ^7RCPolice   ^1ERROR: ^8file " + string(file) + " not found");
         return;
     }
-    FindClose(hwnd);
-    ifstream readf (file, ios::in);
 
     while (readf.good())
     {
         char line[128];
         readf.getline(line, 128);
 
+        if(strlen(line) <= 1)
+            continue;
+
         char str[128];
         sprintf(str, strtok (line, ";"));
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             int rnk = atoi(strtok(str, "="));
 
@@ -1523,7 +1524,10 @@ void RCPolice::ReadConfig(const char* Track)
 
             for (int i=0; i < MAX_FINES; i++)
             {
-                int c = atoi(strtok(NULL, ","));
+                char* cc = strtok(NULL, ",");
+                int c = 0;
+                if( cc != nullptr )
+                    c = atoi(cc);
 
                 if (c == 0)
                     break;
@@ -1606,7 +1610,7 @@ void RCPolice::Save ( byte UCID )
     //cout <<players[ UCID ].UName << " save fines_info" << endl;
 
     char file[255];
-    sprintf(file, "%s\\data\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName.c_str());
+    sprintf(file, "%s/data/RCPolice/fines/%s.txt", RootDir, players[ UCID ].UName.c_str());
 
     ofstream writef (file, ios::out);
     for (int i = 0; i < MAX_FINES; i++)
@@ -1620,26 +1624,24 @@ void RCPolice::ReadUserFines( byte UCID )
 {
 
     char file[255];
-    sprintf(file, "%s\\data\\RCPolice\\fines\\%s.txt", RootDir, players[ UCID ].UName.c_str());
+    sprintf(file, "%s/data/RCPolice/fines/%s.txt", RootDir, players[ UCID ].UName.c_str());
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    ifstream readf (file, ios::in);
+
+    if (!readf.is_open())
     {
         cout << "Can't find " << file << endl;
         Save( UCID );
     }
     else
     {
-        ifstream readf (file, ios::in);
         int i=0;
         while (readf.good())
         {
             char str[128];
             readf.getline(str, 128);
 
-            if (strlen(str) > 0)
+            if (strlen(str) > 1)
             {
                 char *id;
                 char *date;
@@ -1671,26 +1673,22 @@ void RCPolice::ReadFines()
 {
     char file[255];
     strcpy(file, RootDir);
-    sprintf(file, "%s\\data\\RCPolice\\fines.txt" , RootDir);
+    sprintf(file, "%s/data/RCPolice/fines.txt" , RootDir);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    ifstream readf (file, ios::in);
+
+    if (!readf.is_open())
     {
         cout << "Can't find " << file << endl;
         return;
     }
-    FindClose(fff);
-
-    ifstream readf (file, ios::in);
 
     int i = 0;
     while (readf.good())
     {
         char str[128];
         readf.getline(str, 128);
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             if (strstr(str, "//"))
             {

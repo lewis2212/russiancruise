@@ -507,11 +507,11 @@ void RCCore::case_btt ()
 
 	char send_c[255];
 	strcpy(send_c, RootDir);
-	strcat(send_c, "logs\\sends\\send.txt");
+	strcat(send_c, "logs/sends/send.txt");
 
 	char fine_c[255];
 	strcpy(fine_c, RootDir);
-	strcat(fine_c, "logs\\fines\\fine");
+	strcat(fine_c, "logs/fines/fine");
 	strcat(fine_c, "(");
 	strcat(fine_c, day);
 	strcat(fine_c, ".");
@@ -1451,7 +1451,7 @@ void RCCore::case_mso ()
 
 		char file[255];
 		strcpy(file, RootDir);
-		strcat(file, "logs\\sends\\send.txt");
+		strcat(file, "logs/sends/send.txt");
 
 		HANDLE fff;
 		WIN32_FIND_DATA fd;
@@ -2393,7 +2393,7 @@ void read_user (struct player *splayer)
 {
 	char file[255];
 	strcpy(file, RootDir);
-	strcat(file, "data\\users\\");
+	strcat(file, "data/users/");
 	strcat(file, splayer->UName);
 	strcat(file, ".txt");
 
@@ -2456,7 +2456,7 @@ void save_user (struct player *splayer)
 
 	char file[255];
 	strcpy(file, RootDir);
-	strcat(file, "data\\users\\");
+	strcat(file, "data/users/");
 	strcat(file, splayer->UName);
 	strcat(file, ".txt");
 

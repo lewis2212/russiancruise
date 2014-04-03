@@ -6,7 +6,7 @@ namespace tools
     {
         FILE *file;
 
-        file = fopen("C:\\cruise.log", "a");
+        file = fopen("cruise.log", "a");
         fputs(text, file);
         fputs("\n", file);
         fclose(file);
@@ -14,18 +14,15 @@ namespace tools
 
     bool read_mysql(const char *path , mysqlConf *conf)
     {
-
-        FILE *fff = fopen(path, "r");
-        if ( fff == nullptr )
-        {
-            return false;
-        }
-        fclose(fff);
-
         memset(conf, 0, sizeof( mysqlConf ) );
 
         ifstream readf;
         readf.open(path, ios::in);
+
+        if(readf.is_open() == false)
+        {
+            cout << "Can't open " << path << endl;
+        }
 
         char	str[128];
         while ( readf.good() )

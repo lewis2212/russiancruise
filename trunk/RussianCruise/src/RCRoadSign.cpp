@@ -2,6 +2,7 @@
 
 RCRoadSign::RCRoadSign(const char* Dir)
 {
+    ClassName = "RCRoadSign";
     strcpy(RootDir, Dir);
 }
 RCRoadSign::~RCRoadSign()
@@ -32,6 +33,7 @@ int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
         return -1;
     }
 
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -40,25 +42,22 @@ void RCRoadSign::ReadConfig(const char *Track)
     strcpy(TrackName, Track);
     Sign.clear();
     char file[MAX_PATH];
-    sprintf(file, "%sdata\\RCRoadSign\\tracks\\%s.txt", RootDir, Track);
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
-        return ;
-    }
-    FindClose(fff);
+    sprintf(file, "%s/data/RCRoadSign/tracks/%s.txt", RootDir, Track);
 
     ifstream readf (file, ios::in);
+
+    if (!readf.is_open())
+    {
+        CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
+        return ;
+    }
+
     int i=0;
     while (readf.good())
     {
         char str[128];
         readf.getline(str, 128);
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             int pr = atoi(strtok(str, " "));
             if (pr!=0)
@@ -75,23 +74,22 @@ void RCRoadSign::ReadConfig(const char *Track)
     }
     readf.close();
 
-    sprintf(file, "%s\\data\\RCRoadSign\\sign.txt", RootDir);
-    HANDLE ff;
-    ff = FindFirstFile(file, &fd);
-    if (ff == INVALID_HANDLE_VALUE)
-    {
-    	CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
-        return;
-    }
-    FindClose(ff);
+    sprintf(file, "%s/data/RCRoadSign/sign.txt", RootDir);
 
     ifstream read (file, ios::in);
+
+    if (read.is_open() == false)
+    {
+        CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
+        return;
+    }
+
     while (read.good())
     {
         char str[128];
         read.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             int pr = atoi(strtok(str, ";"));
             if (pr!=0)
@@ -157,7 +155,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
     {
         char file[MAX_PATH], text[96];
 
-        sprintf(file, "%s\\data\\RCRoadSign\\tracks\\%s.txt", RootDir, TrackName);
+        sprintf(file, "%s/data/RCRoadSign/tracks/%s.txt", RootDir, TrackName);
 
         int X = players[UCID].Info.X / 65536;
         int Y = players[UCID].Info.Y / 65536;

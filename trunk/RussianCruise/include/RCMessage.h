@@ -4,6 +4,8 @@
 #include "RCBaseClass.h"
 #include "tools.h"
 
+#include <dirent.h>
+
 struct MPlayer: public GlobalPlayer
 {
     string Lang;

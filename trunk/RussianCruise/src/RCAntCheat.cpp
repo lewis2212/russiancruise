@@ -39,6 +39,7 @@ int RCAntCheat::init(MYSQL *conn, CInsim *InSim, void *Message)
         return -1;
     }
 
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 

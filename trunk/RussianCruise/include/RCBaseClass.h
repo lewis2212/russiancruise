@@ -25,7 +25,7 @@ using namespace std;
 #include <queue>
 #include <vector>
 
-#include <direct.h>
+#include <sys/stat.h>
 
 #include <mysql/mysql.h>
 
@@ -96,7 +96,8 @@ public:
 
 	static inline bool FileExists (const std::string& name)
 	{
-		return ( access( name.c_str(), F_OK ) != -1 );
+		struct stat status;
+        return ( stat(name.c_str(),&status)==0 );
 	}
 
 protected:

@@ -1,21 +1,23 @@
-// *** ADDED BY HEADER FIXUP ***
-#include <ctime>
-// *** END ***
- #include<clocale>
 
-#ifndef _CRUISE_H_
-#define _CRUISE_H_
 /**
 
 Russian Cruise by TurboSnail
 
 **/
 
+#ifndef _CRUISE_H_
+#define _CRUISE_H_
 
 
+#include <ctime>
+#include <clocale>
 
+#include <signal.h>
 
+#ifndef __linux__
 #include <windows.h>
+#endif
+
 #include <mysql/mysql.h>
 
 #include <json/json.h>
@@ -39,7 +41,7 @@ Russian Cruise by TurboSnail
 #include "RCTaxi.h"
 #include "RCRoadSign.h"
 
-#include "RCQuest.h"
+// #include "RCQuest.h"
 // #include "RCAutoschool.h"
 
 #define MAX_CARS 30
@@ -51,7 +53,7 @@ using namespace std;
 char IS_PRODUCT_NAME[16];
 
 // Дескриптор соединения
-MYSQL rcMaindb, *rcMaindbConn;
+MYSQL rcMaindb;
 // Дескриптор результирующей таблицы
 MYSQL_RES *rcMainRes;
 // Массив полей текущей строки

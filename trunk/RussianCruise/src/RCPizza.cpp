@@ -69,6 +69,7 @@ int RCPizza::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass, void *Bank, 
 
     ginfo_time = time(&ptime)+60;
 
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -162,6 +163,7 @@ void RCPizza::Take(byte UCID)
         else if (players[UCID].WorkPlayerAccept != 0) // заказал игрок
         {
             int worktime = time(&ptime);
+
             players[UCID].WorkTime = worktime + PIZZA_WORK_TIME;
             players[UCID].WorkDestinaion = players[UCID].WorkPlayerAccept;
             players[UCID].WorkAccept = 2;
@@ -209,32 +211,29 @@ void RCPizza::Done(byte UCID)
 void RCPizza::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCPizza\\%s", RootDir, Track);
+    sprintf(file, "%s/data/RCPizza/%s", RootDir, Track);
 
 	msg->ReadLangDir(file);
 
-    sprintf(file, "%s\\data\\RCPizza\\%s\\points.txt", RootDir, Track);
+    sprintf(file, "%s/data/RCPizza/%s/points.txt", RootDir, Track);
 
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    ifstream readf;
+    readf.open(file, ios::in);
+
+    if(!readf.is_open())
     {
-    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
+        CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
-    FindClose(fff);
-    ifstream readf (file, ios::in);
-
     int point = 0;
     while (readf.good())
     {
         char str[128];
         readf.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
-            if (strncmp(str, "/dealer", 7)==0)
+            if (strstr(str, "/dealer") != NULL)
             {
                 for (int i=0; i<4; i++)
                 {
@@ -248,7 +247,7 @@ void RCPizza::ReadConfig(const char *Track)
                 }
             }
 
-            if (strncmp(str, "/shop", 5)==0)
+            if (strstr(str, "/shop") != NULL)
             {
                 readf.getline(str, 128);
                 int count = atoi(str);
@@ -266,7 +265,7 @@ void RCPizza::ReadConfig(const char *Track)
                 }
             }
 
-            if (strncmp(str, "point", 5)==0)
+            if (strstr(str, "point") != NULL)
             {
                 readf.getline(str, 64);
                 strncpy(zone.point[point].PlaceName, str, strlen(str));
@@ -289,59 +288,59 @@ void RCPizza::ReadConfig(const char *Track)
     readf.close();
 
     /*** READ STORE DATA ***/
-    sprintf(file, "%s\\data\\RCPizza\\_Store.txt", RootDir);
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    sprintf(file, "%s/data/RCPizza/_Store.txt", RootDir);
+
+    ifstream ReadStore(file, ios::in);
+
+    if(!ReadStore.is_open())
     {
-    	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
+        CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
-    FindClose(fff);
 
-    ifstream ReadStore (file, ios::in);
     while (ReadStore.good())
     {
         char str[128];
         ReadStore.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
-            if (strncmp(str, "Muka=", strlen("Muka="))==0)
+            if (strstr(str, "Muka=") != NULL)
                 PStore.Muka = atof(str+strlen("Muka="));
 
-            if (strncmp(str, "Voda=", strlen("Voda="))==0)
+            if (strstr(str, "Voda=") != NULL)
                 PStore.Voda = atof(str+strlen("Voda="));
 
-            if (strncmp(str, "Ovoshi=", strlen("Ovoshi="))==0)
+            if (strstr(str, "Ovoshi=") != NULL)
                 PStore.Ovoshi = atof(str+strlen("Ovoshi="));
 
-            if (strncmp(str, "Cheese=", strlen("Cheese="))==0)
+            if (strstr(str, "Cheese=") != NULL)
                 PStore.Cheese = atof(str+strlen("Cheese="));
         }
     }
     ReadStore.close();
 
-    sprintf(file, "%s\\data\\RCPizza\\_Pizza.txt", RootDir);
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
+    sprintf(file, "%s/data/RCPizza/_Pizza.txt", RootDir);
+
+    ifstream ReadInfo (file, ios::in);
+
+    if (!ReadInfo.is_open())
     {
     	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
 
-    FindClose(fff);
-    ifstream ReadInfo (file, ios::in);
     while (ReadInfo.good())
     {
         char str[128];
         ReadInfo.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
-            if (strncmp(str, "Capital=", strlen("Capital="))==0)
+            if (strstr(str, "Capital=") != NULL)
                 Capital = atoi(str+strlen("Capital="));
 
-            if (strncmp(str, "NumCars=", strlen("NumCars="))==0)
+            if (strstr(str, "NumCars=") != NULL)
                 NumCars = atoi(str+strlen("NumCars="));
         }
     }
@@ -383,14 +382,14 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
 
     /** Save Pizza Info **/
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCPizza\\_Store.txt", RootDir);
+    sprintf(file, "%s/data/RCPizza/_Store.txt", RootDir);
     ofstream writef (file, ios::out);
     writef << "Muka=" << PStore.Muka << endl;
     writef << "Voda=" << PStore.Voda << endl;
     writef << "Ovoshi=" << PStore.Ovoshi << endl;
     writef << "Cheese=" << PStore.Cheese << endl;
     writef.close();
-    sprintf(file, "%s\\data\\RCPizza\\_Pizza.txt", RootDir);
+    sprintf(file, "%s/data/RCPizza/_Pizza.txt", RootDir);
     ofstream WriteInfo (file, ios::out);
     WriteInfo << "Capital=" << Capital << endl;
     WriteInfo << "NumCars=" << NumCars << endl;

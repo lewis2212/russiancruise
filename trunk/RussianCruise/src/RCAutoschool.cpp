@@ -19,13 +19,15 @@ RCAutoschool::init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg)
 
 	this->insim = insim;
 	this->msg = msg;
+
+    CCText("^3R"+ClassName+":\t^2inited");
 }
 
 void
 RCAutoschool::ReadConfig(const char* Track)
 {
 	char confFile[MAX_PATH];
-	sprintf(confFile, "%s\\data\\RCAutoschool\\%s\\config.json", RootDir, Track);
+	sprintf(confFile, "%s/data/RCAutoschool/%s/config.json", RootDir, Track);
 
 
 
@@ -113,7 +115,7 @@ RCAutoschool::InsimMSO( struct IS_MSO* packet )
     if( msg == "!saveConf" )
 	{
 		char confFile[MAX_PATH];
-		sprintf(confFile, "%s\\data\\RCAutoschool\\SO4X\\config.temp.json", RootDir);
+		sprintf(confFile, "%s/data/RCAutoschool/SO4X/config.temp.json", RootDir);
 
 		ofstream f;
 		f.open(confFile, ios::out);

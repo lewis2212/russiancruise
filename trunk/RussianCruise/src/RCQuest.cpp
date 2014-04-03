@@ -2,6 +2,7 @@
 
 RCQuest::RCQuest(const char* Dir)
 {
+    ClassName = "RCQuest";
     strcpy(RootDir,Dir);
 }
 
@@ -25,12 +26,14 @@ void RCQuest::init(MYSQL *conn, CInsim *InSim)
         printf ("Can't struct CInsim class");
         return ;
     }
+
+    CCText("^3R"+ClassName+":\t^2inited");
 }
 
 void RCQuest::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCQuest\\%s.txt", RootDir, Track);
+    sprintf(file, "%s/data/RCQuest/%s.txt", RootDir, Track);
 
     CCText("  ^7RCQuest\t^2OK");
 }
