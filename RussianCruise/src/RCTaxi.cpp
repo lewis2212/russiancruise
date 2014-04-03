@@ -70,34 +70,31 @@ int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RC
         return -1;
     }
 
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
 void RCTaxi::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCTaxi\\tracks\\%s.txt", RootDir, Track);
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
-        return;
-    }
-    FindClose(fff);
+    sprintf(file, "%s/data/RCTaxi/tracks/%s.txt", RootDir, Track);
 
     ifstream readf (file, ios::in);
+
+     if (readf.is_open() == false)
+    {
+        CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
+        return;
+    }
 
     while (readf.good())
     {
         char str[128];
         readf.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
-            if (strncmp(str, "/dealer", 7)==0)
+            if (strstr(str, "/dealer") != NULL)
             {
                 readf.getline(str, 128);
                 int count = atoi(str);
@@ -115,7 +112,7 @@ void RCTaxi::ReadConfig(const char *Track)
                 }
             }
 
-            if (strncmp(str, "/shop", 5)==0)
+            if (strstr(str, "/shop") != NULL)
             {
                 readf.getline(str, 128);
                 int count = atoi(str);
@@ -133,7 +130,7 @@ void RCTaxi::ReadConfig(const char *Track)
                 }
             }
 
-            if (strncmp(str, "/points", 5)==0)
+            if (strstr(str, "/points") != 0)
             {
                 readf.getline(str, 128);
                 int count = atoi(str);
@@ -159,34 +156,40 @@ void RCTaxi::ReadConfig(const char *Track)
     }
     readf.close();
 
-    sprintf(file, "%s\\data\\RCTaxi\\dialog.txt", RootDir);
+    sprintf(file, "%s/data/RCTaxi/dialog.txt", RootDir);
     TaxiDialogs.empty();
-    // TODO: refactoring
-    HANDLE ff;
-    // WIN32_FIND_DATA fd;
-    ff = FindFirstFile(file, &fd);
-    if (ff == INVALID_HANDLE_VALUE)
-    {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
-        return;
-    }
-    FindClose(ff);
 
     ifstream read (file, ios::in);
+
+    if (read.is_open() == false)
+    {
+        CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
+        return;
+    }
 
     while (read.good())
     {
         char key[128];
-        char message[128];
+
         read.getline(key, 128);
 
-        if (strncmp(key, "#", 1) == 0 )
+        if (strstr(key, "#") != NULL )
         {
+            string keyword = key + 1;
+
+            // вот так вот мы избавляемся от управляющих символов
+            if (!keyword.empty() && keyword[keyword.length()-1] == '\r') {
+                keyword.erase(keyword.length()-1);
+            }
+
             int i = 0;
+            char message[128];
+
             read.getline(message, 128);
-            while ( strncmp(message, "=", 1) != 0 )
+
+            while ( strstr(message, "=") == NULL )
             {
-                TaxiDialogs[key + 1][i++] = message;
+                TaxiDialogs[ keyword ][i++] = message;
                 read.getline(message, 128);
             }
         }
@@ -194,17 +197,15 @@ void RCTaxi::ReadConfig(const char *Track)
     read.close();
 
     /**клиенты-маршалы**/
-    sprintf(file, "%s\\data\\RCTaxi\\tracks\\%sclient.txt", RootDir, Track);
-    // TODO: refactoring
-    HANDLE tt;
-    tt = FindFirstFile(file, &fd);
-    if (tt == INVALID_HANDLE_VALUE)
+    sprintf(file, "%s/data/RCTaxi/tracks/%sclient.txt", RootDir, Track);
+
+    ifstream readt (file, ios::in);
+
+    if (readt.is_open() == false)
     {
-    	CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
+        CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
         return;
     }
-    FindClose(tt);
-    ifstream readt (file, ios::in);
 
     int i = 0;
     while (readt.good())
@@ -306,7 +307,7 @@ void RCTaxi::PassAccept( byte UCID )
 			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
 				ok = false;
 
-			Sleep(100);
+			usleep(100 * 1000);
 		}
 
 		players[UCID].IsPursuit = false;
@@ -369,7 +370,7 @@ void RCTaxi::PassAccept2(byte UCID)
         if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID ) and Distance(X1, Y1, X2, Y2)>MINDIST)
             ok = false;
 
-        Sleep(100);
+        usleep(100 * 1000);
     }
 
     int DestStreet = ClientPoints[DestPoint].StreetId; //улица назначения
@@ -630,6 +631,7 @@ void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                         if (players[UCID].InPasZone == 1)
                         {
                             players[UCID].InPasZone = 0;
+
                             players[UCID].PassStress += 10;
                             srand ( time(NULL) );
                             insim->SendMTC(UCID, TaxiDialogs["past"][ rand()%TaxiDialogs["past"].size() ].c_str() ); // проехал мимо

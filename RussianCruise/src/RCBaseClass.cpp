@@ -285,7 +285,7 @@ RCBaseClass::dbPing( string query )
         mysqlConf conf;
         char path[MAX_PATH];
         memset(&path,0,MAX_PATH);
-        sprintf(path, "%smisc\\mysql.cfg", RootDir);
+        sprintf(path, "%smisc/mysql.cfg", RootDir);
         CCText( "^3" + ClassName + string( path ) );
 
         while (!tools::read_mysql(path, &conf) || !mysql_real_connect( dbconn , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0) )
@@ -293,10 +293,10 @@ RCBaseClass::dbPing( string query )
             CCText("^3" + ClassName + ": ^1Can't connect to MySQL server");
             CCText( mysql_error(dbconn) );
 
-            Sleep(1000);
+            sleep(1);
 
             memset(&path,0,MAX_PATH);
-            sprintf(path, "%smisc\\mysql.cfg", RootDir);
+            sprintf(path, "%smisc/mysql.cfg", RootDir);
         }*/
 
         //CCText("^3" + ClassName + "::\t\t^2Connected to MySQL server");
@@ -646,6 +646,7 @@ RCBaseClass::DelObject( ObjectInfo *object )
 
 void RCBaseClass::CCText(string Text)
 {
+    // cout << Text << endl;
 	char str[256];
 	sprintf(str,"f^8%s",Text.c_str());
 	strtok(str, "^");
@@ -664,24 +665,23 @@ void RCBaseClass::CCText(string Text)
 
         switch(COLOR)
         {
-        	case 1: COLOR = 12; break;
-        	case 2: COLOR = 10; break;
-        	case 3: COLOR = 14; break;
-        	case 4: COLOR = 9;  break;
-        	case 5: COLOR = 13; break;
-        	case 6: COLOR = 11; break;
-        	case 7: COLOR = 15; break;
-        	case 8: COLOR = 7;  break;
-        	case 9: COLOR = 8;  break;
+            case 0: COLOR = 30; break;
+        	case 1: COLOR = 31; break;
+        	case 2: COLOR = 32; break;
+        	case 3: COLOR = 33; break;
+        	case 4: COLOR = 34;  break;
+        	case 5: COLOR = 35; break;
+        	case 6: COLOR = 36; break;
+        	case 7: COLOR = 37; break;
+        	case 8: COLOR = 0;  break;
+        	case 9: COLOR = 0;  break;
         }
 
         strncpy(text, NonFormatText+1, strlen((NonFormatText)));
 
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | COLOR));
-        printf("%s", text);
+        printf("\033[1;%dm%s", COLOR, text);
     }
-    printf("\n");
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | 7));
+    printf("\033[0m\n");
 }
 
 

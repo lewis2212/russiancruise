@@ -34,7 +34,7 @@
 
 //using namespace std;
 
-#include "cinsim.h"
+#include <CInsim.h>
 
 #ifdef CIS_LINUX
 #define INVALID_SOCKET -1

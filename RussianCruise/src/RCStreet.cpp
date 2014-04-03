@@ -4,6 +4,7 @@ using namespace std;
 
 RCStreet::RCStreet(const char* Dir)
 {
+    ClassName = "RCStreet";
     strcpy(RootDir,Dir);
     memset(&Street, 0, sizeof( struct streets ) * MAX_STREETS );
 }
@@ -38,6 +39,8 @@ int RCStreet::init(MYSQL *conn, CInsim *InSim, void *Message)
     }
 
     IfInited = true;
+
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -56,19 +59,15 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
 void RCStreet::ReadConfig(const char *Track)
 {
     char file[255];
-    sprintf(file, "%s\\data\\RCStreet\\tracks\\%s.txt", RootDir, Track);
-    // TODO: refactoring
-    HANDLE fff;
-    WIN32_FIND_DATA fd;
-    fff = FindFirstFile(file, &fd);
-    if (fff == INVALID_HANDLE_VALUE)
-    {
-    	CCText("  ^7RCStreet   ^1ERROR: ^8file " + (string)file + " not found");
-        return;
-    }
-    FindClose(fff);
+    sprintf(file, "%s/data/RCStreet/tracks/%s.txt", RootDir, Track);
 
     ifstream readf (file, ios::in);
+
+    if (readf.is_open() == false)
+    {
+        CCText("  ^7RCStreet   ^1ERROR: ^8file " + (string)file + " not found");
+        return;
+    }
 
     int i = 0;
     while (readf.good())
@@ -76,9 +75,10 @@ void RCStreet::ReadConfig(const char *Track)
         char str[128];
         readf.getline(str, 128);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
-            if (strcmp(str, "#Street") == 0)
+
+            if (strstr(str, "#Street") != NULL)
             {
                 /**
                 название (рус)

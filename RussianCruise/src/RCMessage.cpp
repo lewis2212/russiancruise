@@ -47,13 +47,15 @@ int RCMessage::init(MYSQL *conn, CInsim *InSim)
         printf ("RCMessage: Can't struct CInsim class");
         return -1;
     }
+
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
 void RCMessage::ReadConfig(const char *Track)
 {
     char dir[ MAX_PATH ];
-    sprintf(dir, "%s\\data\\RCMessages", RootDir);
+    sprintf(dir, "%s/data/RCMessages", RootDir);
 
 	ReadLangDir(dir);
 
@@ -63,28 +65,30 @@ void RCMessage::ReadConfig(const char *Track)
 void
 RCMessage::ReadLangDir(const char *path)
 {
-	HANDLE hFind;
-	WIN32_FIND_DATA FindFileData;
 	char findPath[MAX_PATH];
 
-	sprintf(findPath,"%s\\*.txt",path);
+	sprintf(findPath,"%s",path);
 
-	if((hFind = FindFirstFile(findPath, &FindFileData)) != INVALID_HANDLE_VALUE)
-	{
-		do
-		{
-			if( strlen( FindFileData.cFileName ) == 7 )
-			{
-				char fileName[MAX_PATH];
-				sprintf(fileName,"%s\\%s", path, FindFileData.cFileName );
+    DIR *dp;
+    struct dirent *dent;
 
-				ReadLangFile( fileName );
-			}
-		}
-		while(FindNextFile(hFind, &FindFileData));
+    if( (dp = opendir(findPath)) == NULL) {
+        printf("opendir: %s: %s\n", findPath, strerror(errno));
+        return;
+    }
 
-		FindClose(hFind);
-	}
+    while(dent = readdir(dp))
+    {
+        if( strlen( dent->d_name ) == 7 )
+        {
+            char fileName[MAX_PATH];
+            sprintf(fileName,"%s/%s", path, dent->d_name );
+
+            ReadLangFile( fileName );
+        }
+    }
+
+    closedir(dp);
 	return;
 }
 
@@ -92,17 +96,27 @@ void
 RCMessage::ReadLangFile(const char *file)
 {
 	xString File = file;
-	vector<string> arFiles = File.split('\\', 1);
+	vector<string> arFiles = File.split('/', 1);
 
-	string lang = arFiles.back().substr( 0 , arFiles.back().find(".txt") );
+    string lang = arFiles.back().substr( 0 , arFiles.back().find(".txt") );
 
-	ifstream readf (file, ios::in);
+    ifstream readf (file, ios::in);
+
+    if(readf.is_open() == false)
+    {
+        CCText("^1 Can't open " + string(file));
+        return;
+    }
+
     while (readf.good())
     {
         char str[128];
+
         readf.getline(str, 128);
-        if (strlen(str) > 0)
+
+        if (strlen(str) > 1)
         {
+
 			if (!strncmp(str, "#", 1) or !strncmp(str, "//", 2) or !strncmp(str, "::", 2))
 				continue;
 
@@ -141,11 +155,13 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     if (packet->UCID == 0)
         return;
 
+
     players[ packet->UCID ].UName = packet->UName;
 
     string query = "SELECT lang FROM message WHERE username = '";
-	query += packet->UName;
+    query += packet->UName;
     query += "';";
+
     DB_ROWS result = dbSelect( query );
 
     if( result.size() > 0 )

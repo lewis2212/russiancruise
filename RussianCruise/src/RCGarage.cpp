@@ -5,7 +5,7 @@ void save_user_cars (struct player *splayer)
 
 	char file[255];
 	strcpy(file, RootDir);
-	strcat(file, "data\\RCGarage\\");
+	strcat(file, "data/RCGarage/");
 	strcat(file, splayer->UName);
 	strcat(file, ".txt");
 
@@ -25,7 +25,7 @@ void read_user_cars(struct player *splayer)
 {
 	char file[255];
 	strcpy(file, RootDir);
-	strcat(file, "data\\RCGarage\\");
+	strcat(file, "data/RCGarage/");
 	strcat(file, splayer->UName);
 	strcat(file, ".txt");
 
@@ -98,8 +98,8 @@ void read_car()
 
 	char file[255];
 	strcpy(file, RootDir);
-	//strcat(file, "misc\\mysql.cfg");
-	strcat(file, "misc\\cars.txt");
+	//strcat(file, "misc/mysql.cfg");
+	strcat(file, "misc/cars.txt");
 
 	HANDLE fff;
 	WIN32_FIND_DATA fd;
@@ -451,7 +451,7 @@ void RCCore::case_btc ()
 			itoa(sm.wYear, year, 10);
 			char log[255];
 			strcpy(log, RootDir);
-			strcat(log, "logs\\shop\\shop");
+			strcat(log, "logs/shop/shop");
 			strcat(log, "(");
 			strcat(log, day);
 			strcat(log, ".");

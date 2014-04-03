@@ -179,7 +179,7 @@ int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
 
     inited = 1;
 
-    CCText("^3RCDL:\t\t^2Connected to MySQL server");
+    CCText("^3R"+ClassName+":\t^2inited");
 
     return 0;
 }

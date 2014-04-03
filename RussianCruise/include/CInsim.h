@@ -63,11 +63,16 @@ typedef struct
 /* Defines whether the Windows or Linux part of the source will be compiled.
  * Options are CIS_WINDOWS or CIS_LINUX
  */
+#ifdef __linux__
+#define CIS_LINUX
+#elif _WIN32
 #define CIS_WINDOWS
+#endif
 
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include <cstdarg>
 
 // Includes for Windows (uses winsock2)
 #ifdef CIS_WINDOWS
@@ -119,6 +124,7 @@ class CInsim
     #ifdef CIS_WINDOWS
     struct timeval select_timeout;          // timeval struct for the select() call
     #elif defined CIS_LINUX
+
     struct timespec select_timeout;        // timeval struct for the pselect() call
     #endif
     struct packBuffer udp_lbuf;                 // (for NLP and MCI packets via UDP) Our local buffer (no global buffer needed for UDP)

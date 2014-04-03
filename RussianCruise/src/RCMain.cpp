@@ -120,54 +120,54 @@ void CreateClasses()
 
 void InitClasses()
 {
-    msg->init(rcMaindbConn, insim);
+    msg->init(&rcMaindb, insim);
 
 #ifdef _RC_BANK_H
-    bank->init(rcMaindbConn, insim, msg, dl);
+    bank->init(&rcMaindb, insim, msg, dl);
 #endif // _RC_BANK_H
 
 #ifdef _RC_ENERGY_H
-    nrg->init(rcMaindbConn, insim, msg, bank);
+    nrg->init(&rcMaindb, insim, msg, bank);
 #endif
 
 #ifdef _RC_LEVEL_H
-    dl->init(rcMaindbConn, insim, msg);
+    dl->init(&rcMaindb, insim, msg);
 #endif
 
 #ifdef _RC_CHEAT_H
-    antcht->init(rcMaindbConn, insim, msg);
+    antcht->init(&rcMaindb, insim, msg);
 #endif
 
 #ifdef _RC_STREET_H
-    street->init(rcMaindbConn, insim, msg);
+    street->init(&rcMaindb, insim, msg);
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh->init(rcMaindbConn, insim, msg, dl);
+    lgh->init(&rcMaindb, insim, msg, dl);
 #endif
 
 #ifdef _RC_POLICE_H
-    police->init(rcMaindbConn, insim, msg, bank, dl, street, nrg, lgh);
+    police->init(&rcMaindb, insim, msg, bank, dl, street, nrg, lgh);
 #endif // _RC_POLICE_H
 
 #ifdef _RC_PIZZA_H
-    pizza->init(rcMaindbConn, insim, msg, bank, nrg, dl, street);
+    pizza->init(&rcMaindb, insim, msg, bank, nrg, dl, street);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi->init(rcMaindbConn, insim, msg, bank, dl, street, police, lgh);
+    taxi->init(&rcMaindb, insim, msg, bank, dl, street, police, lgh);
 #endif
 
 #ifdef _RC_ROADSIGN
-    RoadSign->Init(rcMaindbConn, insim, msg, lgh);
+    RoadSign->Init(&rcMaindb, insim, msg, lgh);
 #endif // _RC_ROADSIGN
 
 #ifdef _RC_QUEST_H
-    quest->init(rcMaindbConn, insim);
+    quest->init(&rcMaindb, insim);
 #endif // _RC_QUEST_H
 
 #ifdef _RC_AUTOSCHOOL_H
-	school->init(rcMaindbConn, insim, msg);
+	school->init(&rcMaindb, insim, msg);
 #endif // _RC_AUTOSCHOOL_H
 
 }
@@ -202,7 +202,7 @@ cars AddCar(int id = 0, const char* car = "UF1", int cash =0, int sell = 0, unsi
 void read_words()
 {
     char file[255];
-    sprintf(file, "%smisc\\words.txt", RootDir);
+    sprintf(file, "%s/misc/words.txt", RootDir);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -219,7 +219,7 @@ void read_words()
         char str[32];
         readf.getline(str, 32);
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             strncpy(ginfo->Words[i], str, strlen(str));
             i++;
@@ -233,7 +233,7 @@ void save_user_cars (byte UCID)
 {
     char sql[128];
 
-    if ( mysql_ping( rcMaindbConn ) != 0 )
+    if ( mysql_ping( &rcMaindb ) != 0 )
         printf("Bank Error: connection with MySQL server was lost\n");
 
     for (int i = 0; i < MAX_CARS; i++)
@@ -241,7 +241,7 @@ void save_user_cars (byte UCID)
         if ( strlen( players[UCID].cars[i].car ) > 0 )
         {
             sprintf(sql, "UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", players[UCID].cars[i].tuning , players[UCID].cars[i].dist , players[UCID].cars[i].car , players[UCID].UName );
-            if ( mysql_query( rcMaindbConn , sql) != 0 )
+            if ( mysql_query( &rcMaindb , sql) != 0 )
                 printf("Bank Error: MySQL Query Save\n");
         }
     }
@@ -257,7 +257,7 @@ void read_user_cars(byte UCID)
     char query[128];
     sprintf(query, "SELECT car, tuning, dist FROM garage WHERE username='%s';", players[UCID].UName);
 
-    if ( mysql_ping( rcMaindbConn ) != 0 )
+    if ( mysql_ping( &rcMaindb ) != 0 )
     {
         printf("Error: connection with MySQL server was lost\n");
         insim->SendMST(msg);
@@ -265,7 +265,7 @@ void read_user_cars(byte UCID)
         return;
     }
 
-    if ( mysql_query( rcMaindbConn , query) != 0 )
+    if ( mysql_query( &rcMaindb , query) != 0 )
     {
         printf("Error: MySQL Query\n");
         insim->SendMST(msg);
@@ -273,7 +273,7 @@ void read_user_cars(byte UCID)
         return;
     }
 
-    rcMainRes = mysql_store_result(rcMaindbConn);
+    rcMainRes = mysql_store_result(&rcMaindb);
     if (rcMainRes == NULL)
     {
         printf("Error: can't get the result description\n");
@@ -301,10 +301,10 @@ void read_user_cars(byte UCID)
 
         sprintf(query, "INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');", players[UCID].UName);
 
-        if ( mysql_ping( rcMaindbConn ) != 0 )
+        if ( mysql_ping( &rcMaindb ) != 0 )
             printf("Error: connection with MySQL server was lost\n");
 
-        if ( mysql_query( rcMaindbConn , query) != 0 )
+        if ( mysql_query( &rcMaindb , query) != 0 )
             printf("Error: MySQL Query\n");
 
         strcpy(players[UCID].cars[0].car, "UF1");
@@ -352,6 +352,9 @@ void Save(byte UCID)
 
 void SaveAll(bool SaveBonus)
 {
+    if(players.size() <= 0)
+        return;
+
 	for(auto& pl: players)
 	{
 	    byte UCID = pl.first;
@@ -583,10 +586,10 @@ void case_btc ()
     struct IS_BTC *pack_btc = (struct IS_BTC*)insim->get_packet();
     byte UCID = pack_btc->UCID;
 
-    SYSTEMTIME sm;
-    GetLocalTime(&sm);
-    char log[255];
-    sprintf(log, "%slogs\\shop\\shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+    // SYSTEMTIME sm;
+    // GetLocalTime(&sm);
+    // char log[255];
+    // sprintf(log, "%slogs/shop/shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
     /** Пользователь кликнул по другому пользователю **/
     if (pack_btc->ClickID<69)
@@ -668,13 +671,13 @@ void case_btt ()
 {
     struct IS_BTT *pack_btt = (struct IS_BTT*)insim->get_packet();
 
-    SYSTEMTIME sm;
-    GetLocalTime(&sm);
+    // SYSTEMTIME sm;
+    // GetLocalTime(&sm);
 
-    char send_c[255];
-    sprintf(send_c, "%slogs\\sends\\send.txt", RootDir);
-    char fine_c[255];
-    sprintf(fine_c, "%slogs\\fines\\fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+    // char send_c[255];
+    // sprintf(send_c, "%slogs/sends/send.txt", RootDir);
+    // char fine_c[255];
+    // sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
     /**  Пользователь передает деньги   */
     if (pack_btt->ClickID==71)
@@ -694,10 +697,10 @@ void case_btt ()
                 bank->RemCash(pack_btt->UCID, atoi(pack_btt->Text));
                 bank->AddCash(pack_btt->ReqI, atoi(pack_btt->Text), false);
 
-                sprintf(Msg, "[%02d.%02d.%d, %02d:%02d] %s => %s (%s RUR)", sm.wDay, sm.wMonth, sm.wYear, sm.wHour, sm.wMinute, players[pack_btt->UCID].UName, players[pack_btt->ReqI].UName, pack_btt->Text);
-                ofstream readf (send_c, ios::app);
-                readf << Msg << endl;
-                readf.close();
+                // sprintf(Msg, "[%02d.%02d.%d, %02d:%02d] %s => %s (%s RUR)", sm.wDay, sm.wMonth, sm.wYear, sm.wHour, sm.wMinute, players[pack_btt->UCID].UName, players[pack_btt->ReqI].UName, pack_btt->Text);
+                // ofstream readf (send_c, ios::app);
+                // readf << Msg << endl;
+                // readf.close();
             }
             else
                 insim->SendMTC(pack_btt->UCID, msg->_( pack_btt->UCID, "1101" ));
@@ -917,7 +920,7 @@ void case_mso ()
 
         char file[255];
         strcpy(file, RootDir);
-        strcat(file, "logs\\sends\\send.txt");
+        strcat(file, "logs/sends/send.txt");
 
         FILE *fff = fopen(file, "r");
         if (fff == nullptr)
@@ -935,7 +938,7 @@ void case_mso ()
             {
                 char str[128];
                 readf.getline(str, 128);
-                if (strlen(str) > 0)
+                if (strlen(str) > 1)
                 {
                     if ((strstr(str, players[pack_mso->UCID].UName)) and (strstr(str, args[1].c_str())))
                     {
@@ -954,7 +957,7 @@ void case_mso ()
             {
                 char str[128];
                 readf.getline(str, 128);
-                if (strlen(str) > 0 and strstr(str, players[pack_mso->UCID].UName))
+                if (strlen(str) > 1 and strstr(str, players[pack_mso->UCID].UName))
                     PreCount++;
             }
             readf.close();
@@ -965,7 +968,7 @@ void case_mso ()
             {
                 char str[128];
                 readf.getline(str, 128);
-                if (strlen(str) > 0 and strstr(str, players[pack_mso->UCID].UName))
+                if (strlen(str) > 1 and strstr(str, players[pack_mso->UCID].UName))
                 {
                     if (PostCount >= PreCount-15)
                     {
@@ -1334,18 +1337,18 @@ void case_mso ()
                 players[pack_mso->UCID].PLC += ginfo->car[CarID].PLC;
                 insim->SendPLC(pack_mso->UCID, players[pack_mso->UCID].PLC);
 
-                SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                char log[MAX_PATH];
-                sprintf(log, "%slogs\\shop\\shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                // SYSTEMTIME sm;
+                // GetLocalTime(&sm);
+                // char log[MAX_PATH];
+                // sprintf(log, "%slogs/shop/shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
 
-                ofstream readf (log, ios::app);
-                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[pack_mso->UCID].UName << " buy car " << id << endl;
-                readf.close();
+                // ofstream readf (log, ios::app);
+                // readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << " " <<  players[pack_mso->UCID].UName << " buy car " << id << endl;
+                // readf.close();
 
                 char sql[128];
                 sprintf(sql, "INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", players[pack_mso->UCID].UName , ginfo->car[CarID].car );
-                mysql_query( rcMaindbConn , sql );
+                mysql_query( &rcMaindb , sql );
 
                 break;
             }
@@ -1401,13 +1404,13 @@ void case_mso ()
                 players[pack_mso->UCID].cars[k].tuning=0;
                 players[pack_mso->UCID].cars[k].dist=0;
 
-                SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                char log[MAX_PATH];
-                sprintf(log, "%slogs\\shop\\shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-                ofstream readf (log, ios::app);
-                readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[pack_mso->UCID].UName << " sell car " << id << endl;
-                readf.close();
+                // SYSTEMTIME sm;
+                // GetLocalTime(&sm);
+                // char log[MAX_PATH];
+                // sprintf(log, "%slogs/shop/shop(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                // ofstream readf (log, ios::app);
+                // readf << sm.wHour << ":" << sm.wMinute << ":" << sm.wSecond << ":" << sm.wMilliseconds << " " <<  players[pack_mso->UCID].UName << " sell car " << id << endl;
+                // readf.close();
 
                 bank->AddCash(pack_mso->UCID, ginfo->car[j].sell, true);
                 bank->RemFrBank(ginfo->car[j].sell);
@@ -1417,7 +1420,7 @@ void case_mso ()
 
                 char sql[128];
                 sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", players[pack_mso->UCID].UName , ginfo->car[j].car );
-                mysql_query( rcMaindbConn , sql );
+                mysql_query( &rcMaindb , sql );
                 break;
             }
 
@@ -1873,7 +1876,7 @@ int core_reconnect(void *pack_ver)
 
     cout << "wait 1 minute and reconnect \n";
 
-    Sleep(60000);
+    sleep(60);
 
     memset(pack_ver, 0, sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
@@ -1896,7 +1899,7 @@ int core_reconnect(void *pack_ver)
 void read_track()
 {
     char file[255];
-    sprintf(file, "%s\\data\\RCCore\\tracks\\%s.txt" , RootDir , ginfo->Track);
+    sprintf(file, "%s/data/RCCore/tracks/%s.txt" , RootDir , ginfo->Track);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -1916,7 +1919,7 @@ void read_track()
         readf.getline(str, 128);
 
         if (strstr(str, "//")) {}
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             if (strncmp(str, "/pitzone", 8)==0)
             {
@@ -1982,7 +1985,7 @@ void read_track()
 void read_car()
 {
     char file[255];
-    sprintf(file, "%smisc\\cars.txt" , RootDir);
+    sprintf(file, "%s/misc/cars.txt" , RootDir);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -2000,7 +2003,7 @@ void read_car()
     {
         char str[128];
         readf.getline(str, 128);
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
 
             if (strstr(str, "//"))
@@ -2034,7 +2037,7 @@ void read_car()
 void read_cfg()
 {
     char file[255];
-    sprintf(file, "%smisc\\%s.cfg", RootDir, ServiceName);
+    sprintf(file, "%s/misc/%s.cfg", RootDir, ServiceName);
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -2050,7 +2053,7 @@ void read_cfg()
     while (readf.good())
     {
         readf.getline(str, 128);
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             // GET IP
             if (strncmp("Ip=", str, 3)==0)
@@ -2075,7 +2078,7 @@ void ReadBonuses()
 {
     RCBaseClass::CCText("^3Restore bonus");
 
-    string filename = string(RootDir) + "\\bonuses.json";
+    string filename = string(RootDir) + "/bonuses.json";
 
     if(!RCBaseClass::FileExists(filename))
     {
@@ -2127,7 +2130,7 @@ void ReadBonuses()
 
 void SaveBonuses()
 {
-    string filename = string(RootDir) + "\\bonuses.json";
+    string filename = string(RootDir) + "/bonuses.json";
 
     ofstream f;
     f.open(filename, ios::out);
@@ -2156,22 +2159,22 @@ void *ThreadMci (void *params)
 
 void *ThreadSave (void *params)
 {
-    SYSTEMTIME sm; //time_t seconds;
+    time_t seconds;
     while (ok > 0)
     {
-        GetLocalTime(&sm); //seconds = time (NULL);
-        if ((sm.wMinute*60+sm.wSecond) % 600 == 0) //every 30 minute
+        seconds = time (NULL);
+        if (seconds % 600 == 0) //every 30 minute
         {
 			SaveAll(true);
         }
 
-        Sleep(500);
+        usleep(500 * 1000);
 
 #ifdef _RC_POLICE_H
         police->SetSirenLight("^4||||||||||^7|^1||||||||||");
 #endif
 
-        Sleep(500);
+        usleep(500 * 1000);
 
 
 #ifdef _RC_POLICE_H
@@ -2182,9 +2185,9 @@ void *ThreadSave (void *params)
     return 0;
 };
 
-void *ThreadWork (void *params)
+void *ThreadEvent (void *params)
 {
-    Sleep(5000);
+    sleep(5);
     ReadBonuses();
 
     while (ok > 0)
@@ -2194,27 +2197,53 @@ void *ThreadWork (void *params)
 
         Event();
 
-        Sleep(500);
+        /* Выводим список пользователей и машину на которой они катаюься */
+        printf("\033[s");
+        printf("\033[0;0H");
+        for(auto pl:players)
+        {
+            RCBaseClass::CCText( players[pl.first].PName + " (" + players[pl.first].UName + ") - " players[pl.first].CName + "\033[K" );
+        }
+        printf("\033[u");
+        usleep(500 * 1000);
     }
     return 0;
 };
 
+void signal_handler(int sig)
+{
+    RCBaseClass::CCText("^1| ^3Russian Cruise: ^7Exit with code: " + RCBaseClass::ToString(sig));
+    insim->SendMTC(255, "^1| ^3Russian Cruise: ^7^CВыключение, сохранение данных");
+
+    SaveAll(true);
+    ok=0;
+
+    exit(sig);
+}
+
 int main(int argc, char* argv[])
 {
+   signal(SIGINT,signal_handler); // ctrl+c
+   signal(SIGKILL,signal_handler); // kill
+   signal(SIGQUIT,signal_handler); // ctrl + \
+   signal(SIGTERM,signal_handler); // kill
+   signal(SIGTSTP,signal_handler); // ctrl + z
+
+    if( argc < 2 )
+    {
+        cout << "ERROR!!! Need params" << endl;
+        cout << "Use like RCMod CruiseS2" << endl;
+        return -1;
+    }
 
     isf_flag = ISF_MCI + ISF_CON + ISF_OBH + ISF_HLV + ISF_AXM_EDIT + ISF_AXM_LOAD;
 
-    int need = 92;
-    int d;
+    string p = argv[0];
+    size_t pos = p.rfind('/');
 
-    for (d = strlen(argv[0]); d > 0; d--)
-    {
-        if ( int(argv[0][d]) == need )
-            break;
-    }
-
-    strncpy(RootDir, argv[0], d+1);
+    strcpy(RootDir, p.substr(0,pos).c_str());
     strcpy(ServiceName, argv[1]);
+
 
     //tools::rootDir = RootDir;
 
@@ -2235,15 +2264,16 @@ int main(int argc, char* argv[])
     mysqlConf conf;
     char path[MAX_PATH];
     memset(&path,0,MAX_PATH);
-    sprintf(path, "%smisc\\mysql.cfg", RootDir);
+    sprintf(path, "%s/misc/mysql.cfg", RootDir);
     tools::read_mysql(path, &conf);
 
-    while ( (rcMaindbConn = mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+    while ( (mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
-        Sleep(60000);
+        RCBaseClass::CCText( mysql_error(&rcMaindb) );
+        sleep(60);
     }
-    RCBaseClass::CCText("^3RCMain:\t\t^2Connected to MySQL server");
+    RCBaseClass::CCText("^3RCMain:\t^2Connected to MySQL server");
 
     sprintf(IS_PRODUCT_NAME, "RC-%.15s", AutoVersion::RC_UBUNTU_VERSION_STYLE);
 
@@ -2269,16 +2299,16 @@ int main(int argc, char* argv[])
     InitClasses();
 
     pthread_t mci_tid; // Thread ID
-    pthread_t work_tid; // Thread ID
+    pthread_t event_tid; // Thread ID
     pthread_t save_tid; // Thread ID
 
-    if (pthread_create(&work_tid, NULL, ThreadWork, NULL) < 0)
+    if (pthread_create(&event_tid, NULL, ThreadEvent, NULL) < 0)
     {
         printf("^3RCMain:\t\tCan't start `thread_work` Thread\n");
         return 0;
     }
 
-    Sleep(100);
+    // sleep(1);
 
     if (pthread_create(&save_tid, NULL, ThreadSave, NULL) < 0)
     {
@@ -2286,7 +2316,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    Sleep(100);
+    // sleep(1);
 
     if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
     {
@@ -2294,7 +2324,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    Sleep(100);
+    // sleep(1);
 
     RCBaseClass::CCText("^7Cruise started");
 

@@ -60,32 +60,32 @@ int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL
     dbconn = conn;
     if (!dbconn)
     {
-        CCText("^3RCBank:\t\t^1Can't sctruct MySQL Connector");
+        CCText("^3RCBank:\t^1Can't sctruct MySQL Connector");
         return -1;
     }
 
     insim = InSim;
     if (!insim)
     {
-        CCText("^3RCBank:\t\t^1Can't struct CInsim class");
+        CCText("^3RCBank:\t^1Can't struct CInsim class");
         return -1;
     }
 
     msg = RCMessageClass;
     if (!msg)
     {
-        CCText("^3RCBank:\t\t^1Can't struct RCMessage class");
+        CCText("^3RCBank:\t^1Can't struct RCMessage class");
         return -1;
     }
 
     dl = DL;
     if (!dl)
     {
-        CCText("RCBank:\t\t^1Can't struct RCDL class");
+        CCText("RCBank:\t^1Can't struct RCDL class");
         return -1;
     }
 
-    CCText("^3RCBank:\t\t^2Connected to MySQL server");
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -311,6 +311,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
     {
         /** Кредиты **/
         //Доступная сумма кредита:
+  // дита:
         int cr = dl->GetLVL(packet->UCID) * 10000;
 
         if (cr>500000)
@@ -327,7 +328,15 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
             strtok (Message, " ");
             strtok (NULL, " ");
-            int summ = atoi(strtok (NULL, " "));
+            char *sum;
+
+            sum = strtok (NULL, " ");
+
+            if(!sum)
+                return;
+
+            int summ = atoi(sum);
+
             if (summ <= 0)
             {
                 summ = cr;
@@ -386,7 +395,11 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
                 return;
             }
             strtok (Message, " ");
-            int summ = atoi(strtok (NULL, " "));
+            char* sum = strtok (NULL, " ");
+            if(!sum)
+                return;
+
+            int summ = atoi(sum);
             if (summ < cr / 5 or summ > cr)
             {
                 sprintf( Text , msg->_(packet->UCID, "BankDialog27"), cr/5, cr);
@@ -456,7 +469,11 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
 
             strtok (Message, " ");
             strtok (NULL, " ");
-            int summ = atoi(strtok (NULL, " "));
+            char* sum = strtok (NULL, " ");
+            if(!sum)
+                return;
+
+            int summ = atoi(sum);
 
             if (summ <= 0)
             {
@@ -530,7 +547,11 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
             }
 
             strtok (Message, " ");
-            int summ = atoi(strtok (NULL, " "));
+            char* sum = strtok (NULL, " ");
+            if(!sum)
+                return;
+
+            int summ = atoi(sum);
 
             if (summ > dr or summ==0)
             {
@@ -658,7 +679,7 @@ void RCBank::Event()
 void RCBank::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s\\data\\RCBank\\tracks\\%s.txt", RootDir, Track);
+    sprintf(file, "%s/data/RCBank/tracks/%s.txt", RootDir, Track);
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
     {

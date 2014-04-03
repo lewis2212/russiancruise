@@ -42,7 +42,7 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
         return -1;
     }
 
-    CCText("^3RCEnergy:\t^2Connected to MySQL server");
+    CCText("^3R"+ClassName+":\t^2inited");
     return 0;
 }
 
@@ -50,7 +50,7 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
 void RCEnergy::ReadConfig(const char *Track)
 {
     char file[255];
-    sprintf(file, "%s\\data\\RCEnergy\\maps\\%s.txt", RootDir, Track );
+    sprintf(file, "%s/data/RCEnergy/maps/%s.txt", RootDir, Track );
 
     FILE *fff = fopen(file, "r");
     if (fff == nullptr)
@@ -66,7 +66,7 @@ void RCEnergy::ReadConfig(const char *Track)
         if (strstr(str, "//"))
             continue;
 
-        if (strlen(str) > 0)
+        if (strlen(str) > 1)
         {
             if (strncmp(str, "/cafe", 5) == 0)
             {
