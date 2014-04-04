@@ -447,7 +447,7 @@ void RCTaxi::InsimCNL( struct IS_CNL* packet )
     DeleteMarshal( packet->UCID );
     Save( packet->UCID );
     players.erase( packet->UCID );
-    NumP --;
+    NumP = packet->Total;
 }
 
 void RCTaxi::InsimCPR( struct IS_CPR* packet )
@@ -1005,7 +1005,7 @@ void RCTaxi::InsimNCN( struct IS_NCN* packet )
     players[packet->UCID].PName = packet->PName;
 
     ReadUser( packet->UCID );
-    NumP ++;
+    NumP = packet->Total;
 }
 
 void RCTaxi::InsimNPL( struct IS_NPL* packet )
