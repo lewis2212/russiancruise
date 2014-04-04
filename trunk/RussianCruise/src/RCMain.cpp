@@ -2197,14 +2197,33 @@ void *ThreadEvent (void *params)
 
         Event();
 
-        /* ¬ыводим список пользователей и машину на которой они катаюьс€ */
-        printf("\033[s");
-        printf("\033[0;0H");
+        /* ¬ыводим список пользователей и машину на которой они катаютс€ */
+        printf("\e[s\e[0;0H");
+
+        RCBaseClass::CCText("^1Players: " + RCBaseClass::ToString( players.size() ) + "\e[K");
+
+        int line = 0;
+
         for(auto pl:players)
         {
-            RCBaseClass::CCText( players[pl.first].PName + " (" + players[pl.first].UName + ") - " players[pl.first].CName + "\033[K" );
+            if( ++line > 24)
+            {
+                printf("\e[%d;32H",line-24);
+            }
+            RCBaseClass::CCText( string(players[pl.first].UName) + " (" + string(players[pl.first].CName) + ")\e[K" );
         }
-        printf("\033[u");
+
+        /*for (int i = line; i <= 48; ++i)
+        {
+            printf("\e[%d;1H\e[K",i-1);
+
+            if( i > 24)
+            {
+                printf("\e[%d;32H\e[K",i-23);
+            }
+
+        }*/
+        printf("\e[u");
         usleep(500 * 1000);
     }
     return 0;
