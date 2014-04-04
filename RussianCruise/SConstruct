@@ -1,0 +1,50 @@
+import os
+import os.path
+import sys
+import re
+from xml.dom import minidom
+
+_dir = os.getcwd()
+
+xmldoc = minidom.parse( _dir + '/RussianCruise.cbp')
+targets = xmldoc.getElementsByTagName('Target')
+buids = []
+
+# if(len(targets)):
+# 	for target in targets:
+# 		buids.append( target.attributes['title'].value )
+
+# # print(buids)
+
+# try:
+#     platform = ARGUMENTS['platform']
+#     if platform not in buids:
+#     	print 'You must specify a "platform"'
+#     	sys.exit(2)
+
+#     print "Using platform '%s'" %platform
+# except KeyError:
+#     print 'You must specify a "platform"'
+#     sys.exit(2)
+
+
+
+units = xmldoc.getElementsByTagName('Unit')
+
+sourse = []
+
+if(len(units)):
+	for unit in units:
+		if( re.match('^.*\.cpp$', unit.attributes['filename'].value ) ):
+			sourse.append( unit.attributes['filename'].value )
+			# print 'g++ '
+
+# print (sourse)
+# sys.exit(2)
+env = Environment()
+env.Program(target='RCMod', source=sourse)
+env.VariantDir('build', 'src', duplicate = 0)
+env.Append(CPPPATH = ['include'])
+env.Append(LIBPATH = ['lib'])
+env.Append(CCFLAGS=['-g','-std=c++11','-march=i686'])
+env.Append(LIBS = ['pthread','mysqlclient','libjsoncpp'])
