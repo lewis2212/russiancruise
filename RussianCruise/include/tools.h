@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <math.h>
+#include <ctime>
 //#include <windows.h>
 #include <iostream>
 #include <fstream>
@@ -12,6 +13,8 @@ using namespace std;
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <iconv.h>
+#include <stdexcept>
 
 typedef unsigned char byte;
 
@@ -42,7 +45,9 @@ struct mysqlConf
 namespace tools
 {
     void log(const char *text);
-    bool read_mysql(const char *path ,mysqlConf *conf);
+    bool read_mysql(const char *path ,mysqlConf& conf);
+    string convert_encoding(const string& data, const string& from, const string& to);
+    struct tm * GetLocalTime();
 };
 
 #endif

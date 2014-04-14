@@ -25,6 +25,7 @@ Russian Cruise by TurboSnail
 #include <math.h>
 #include <map>
 #include <thread>
+#include <stdexcept>
 
 #include "CInsim.h"
 #include "RCButtonClickID.h"
@@ -58,6 +59,8 @@ MYSQL rcMaindb;
 MYSQL_RES *rcMainRes;
 // Массив полей текущей строки
 MYSQL_ROW rcMainRow;
+
+mysqlConf conf;
 
 
 time_t  s_time;
@@ -119,7 +122,6 @@ struct player: public GlobalPlayer
     byte    H_TRes;
     float   Distance;
     byte    Zone;
-    //bool    Pitlane;
     byte    Shop; // NO DELETE!!!!
     int     Action;
     /*** bonus ***/

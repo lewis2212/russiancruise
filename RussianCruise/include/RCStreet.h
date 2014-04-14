@@ -66,6 +66,7 @@ public:
 
     byte    StreetNums;                          // Count of streets
     struct  streets Street[ MAX_STREETS ];       // Array of streets
+    Json::Value lang;
 
     bool IfInited;
     int CurentStreetNum(byte UCID);

@@ -270,6 +270,7 @@ string RCBaseClass::ToString (bool b)
 bool
 RCBaseClass::dbPing( string query )
 {
+    return true;
     //CCText( "^3Ping From " + ClassName );
 
     int cnt = 0;

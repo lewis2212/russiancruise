@@ -109,6 +109,9 @@ void RCTaxi::ReadConfig(const char *Track)
                     Y = strtok (NULL, ", ");
                     zone.dealX[i] = atoi(X);
                     zone.dealY[i] = atoi(Y);
+
+                    config["dealer"]["X"].append(atoi(X));
+                    config["dealer"]["Y"].append(atoi(Y));
                 }
             }
 
@@ -127,6 +130,9 @@ void RCTaxi::ReadConfig(const char *Track)
                     Y = strtok (NULL, ";");
                     TrackInf.XShop[i] = atoi(X);
                     TrackInf.YShop[i] = atoi(Y);
+
+                    config["shop"]["X"].append(atoi(X));
+                    config["shop"]["Y"].append(atoi(Y));
                 }
             }
 
@@ -191,6 +197,7 @@ void RCTaxi::ReadConfig(const char *Track)
             {
                 TaxiDialogs[ keyword ][i++] = message;
                 read.getline(message, 128);
+                dialogs["rus"][keyword].append( message );
             }
         }
     }
@@ -221,6 +228,15 @@ void RCTaxi::ReadConfig(const char *Track)
             ClientPoints[i].Z = atoi(strtok (NULL, ", "));
             ClientPoints[i].Dir = atoi(strtok (NULL, ", "));
             ClientPoints[i].StreetId = atoi(strtok (NULL, ", "));
+
+            Json::Value client;
+            client["X"] = ClientPoints[i].X;
+            client["Y"] = ClientPoints[i].Y;
+            client["Z"] = ClientPoints[i].Z;
+            client["Dir"] = ClientPoints[i].Dir;
+            client["StreetId"] = ClientPoints[i].StreetId;
+
+            config["clients"].append(client);
             i++;
         }
         ClientCount=i;
@@ -242,6 +258,18 @@ void RCTaxi::ReadConfig(const char *Track)
     }
 
     DelObjects();
+
+   /* sprintf(file, "%s/data/RCTaxi/tracks/%s.json", RootDir, Track);
+    ofstream f;
+    f.open(file, ios::out);
+    f << configWriter.write( config );
+    f.close();*/
+
+   /* sprintf(file, "%s/data/RCTaxi/dialogs.json", RootDir);
+
+    f.open(file, ios::out);
+    f << configWriter.write( dialogs );
+    f.close();*/
 
     CCText("  ^7RCTaxi\t^2OK");
 }

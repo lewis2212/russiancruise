@@ -58,6 +58,7 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
 
 void RCStreet::ReadConfig(const char *Track)
 {
+    // Json::Value lang;
     char file[255];
     sprintf(file, "%s/data/RCStreet/tracks/%s.txt", RootDir, Track);
 
@@ -87,19 +88,24 @@ void RCStreet::ReadConfig(const char *Track)
                 кол. точек
                 ...точки....
                 */
+                Json::Value jstreet;
                 //онуляем позицию
                 memset(&Street[i], 0, sizeof(streets));
                 Street[i].StreetID = i;
                 // читаем название улицы
                 readf.getline(str, 128);
                 sprintf(Street[i].StreetRu, "^C^7%s", str);
+                jstreet["Name"] = Street[i].StreetRu;
                 // читаем название улицы
                 readf.getline(str, 128);
                 sprintf(Street[i].StreetEn, "^C^7%s", str);
 
+                lang["rus"][ string("street_") + Street[i].StreetRu ] = Street[i].StreetRu;
+                lang["eng"][ string("street_") + Street[i].StreetRu ] = Street[i].StreetEn;
+
                 readf.getline(str, 128);
                 Street[i].SpeedLimit = atoi(str);
-
+                jstreet["SpeedLimit"] = atoi(str);
                 // читаем количество точек
                 readf.getline(str, 128);
                 Street[i].PointCount = atoi(str);
@@ -119,7 +125,12 @@ void RCStreet::ReadConfig(const char *Track)
 
                     Street[i].StreetX[k] = atoi(strtok (str, ";"));
                     Street[i].StreetY[k] = atoi(strtok (NULL, ";"));
+
+                    jstreet["X"].append(Street[i].StreetX[k]);
+                    jstreet["Y"].append(Street[i].StreetY[k]);
                 }
+
+                config["streets"].append(jstreet);
 
                 i++;
             }
@@ -127,6 +138,22 @@ void RCStreet::ReadConfig(const char *Track)
     }
     StreetNums = i;
 
+    /*sprintf(file, "%s/data/RCStreet/tracks/%s.json", RootDir, Track);
+    ofstream f;
+    f.open(file, ios::out);
+    f << configWriter.write( config );
+    f.close();
+
+    sprintf(file, "%s/data/RCStreet/tracks/%s/rus.txt", RootDir, Track);
+    f.open(file, ios::out);
+    f << configWriter.write( lang["rus"] );
+    f.close();
+
+    sprintf(file, "%s/data/RCStreet/tracks/%s/eng.txt", RootDir, Track);
+    f.open(file, ios::out);
+    f << configWriter.write( lang["eng"] );
+    f.close();
+*/
     readf.close();
 
     CCText("  ^7RCStreet\t^2OK");

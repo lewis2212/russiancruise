@@ -58,6 +58,8 @@ int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
 
 void RCLight::ReadConfig(const char *Track)
 {
+	config.clear();
+	Light.clear();
 
 	strcpy(TrackName, Track);
 	char file[255];
@@ -228,8 +230,8 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 						SvetKey = lgh.ID;
 					}
 				}
-
-				break;
+				// Нельзя, так как может быть несколько светофоров
+				// break;
 			}
 		}
 
