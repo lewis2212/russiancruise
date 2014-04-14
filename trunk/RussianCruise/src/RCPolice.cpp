@@ -131,12 +131,11 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
 			players[UCID].PStat.DateActive = time(NULL);
 
 
-            time_t t = time(NULL);
-            tm *ptm = localtime(&t);
+            tm *timeStruct = tools::GetLocalTime();
 
-            if (players[UCID].PStat.CurrentDay != ptm->tm_wday)
+            if (players[UCID].PStat.CurrentDay != timeStruct->tm_mday)
             {
-                players[UCID].PStat.CurrentDay = ptm->tm_wday;
+                players[UCID].PStat.CurrentDay = timeStruct->tm_mday;
                 players[UCID].PStat.ArrestWithFineByDay = 0;
                 players[UCID].PStat.ArrestWithOutFineByDay = 0;
                 players[UCID].PStat.SolvedIncedentsByDay = 0;
@@ -603,15 +602,15 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
             CCText(string(players[ packet->UCID ].UName) + " kicked " + string(user));
 
-		/*	SYSTEMTIME sm;
-			GetLocalTime(&sm);
-			sprintf(str, "%02d:%02d:%02d %s kicked %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), user.c_str());
+			tm *timeStruct = tools::GetLocalTime();
+
+			sprintf(str, "%02d:%02d:%02d %s kicked %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[ packet->UCID ].UName.c_str(), user.c_str());
 
 			char log[MAX_PATH];
-			sprintf(log, "%slogs/cop/kick(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+			sprintf(log, "%slogs/cop/kick(%d.%d.%d).txt", RootDir, timeStruct->tm_year, timeStruct->tm_mon, timeStruct->tm_mday);
 			ofstream readf (log, ios::app);
 			readf << str << endl;
-			readf.close();*/
+			readf.close();
 		}
 
     }
@@ -850,10 +849,10 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID > 180 and packet->ClickID <= 205 and packet->ReqI != 255) //выписка штрафа
     {
-        /*SYSTEMTIME sm;
-        GetLocalTime(&sm);
+        tm *timeStruct = tools::GetLocalTime();
+
         char fine_c[255];
-        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);*/
+        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, timeStruct->tm_year, timeStruct->tm_mon, timeStruct->tm_mday);
 
         int FID = packet->ClickID-180;
 
@@ -890,7 +889,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
                 players[packet->UCID].DTPfines++;
 
-        // sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
+        // sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
 
        /* ofstream readf (fine_c, ios::app);
         readf << Msg << endl;
@@ -912,11 +911,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
     if ( packet->ClickID > 205 and packet->ClickID <= 239 and packet->ReqI != 255) //отмена штрафа
     {
-        /*SYSTEMTIME sm;
-        GetLocalTime(&sm);
+        tm *timeStruct = tools::GetLocalTime();
+
         char fine_c[255];
-        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-*/
+        sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, timeStruct->tm_year, timeStruct->tm_mon, timeStruct->tm_mday);
+
         int FID = packet->ClickID-205;
         if (players[packet->UCID].DTPstatus == 2)
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
@@ -942,11 +941,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
                 players[ packet->ReqI ].fines[j].fine_id = 0;
                 players[ packet->ReqI].fines[j].fine_date = 0;
 
-                /*sprintf(Msg, "%02d:%02d:%02d %s cancel fine ID = %d for %s", sm.wHour, sm.wMinute, sm.wSecond, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
+                sprintf(Msg, "%02d:%02d:%02d %s cancel fine ID = %d for %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
 
                 ofstream readf (fine_c, ios::app);
                 readf << Msg << endl;
-                readf.close();*/
+                readf.close();
 
                 if (players[packet->ReqI].ThisFineCount > 0)
                 {
@@ -1075,12 +1074,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
 
 void RCPolice::InsimBTT( struct IS_BTT* packet )
 {
-    /*SYSTEMTIME sm;
-    GetLocalTime(&sm);
+    tm *timeStruct = tools::GetLocalTime();
 
     char fine_c[255];
-    sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
-*/
+    sprintf(fine_c, "%slogs/fines/fine(%d.%d.%d).txt", RootDir, timeStruct->tm_year, timeStruct->tm_mon, timeStruct->tm_mday);
+
     /** нажатие на заявку */
     if (packet->ReqI == 200)
     {
@@ -1117,15 +1115,15 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
 				bank->RemFrBank(players[packet->UCID].FineC*0.05);
 				bank->AddCash(DTPvyzov[0][i], (players[packet->UCID].FineC*0.05), true);
 
-				/*SYSTEMTIME sm;
-                GetLocalTime(&sm);
-                sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", sm.wHour, sm.wMinute, sm.wSecond, players[DTPvyzov[0][i]].UName.c_str(), (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName.c_str());
+				tm *timeStruct = tools::GetLocalTime();
+
+                sprintf(str, "%02d:%02d:%02d %s get compensation %0.0f from %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[DTPvyzov[0][i]].UName.c_str(), (double)((double)players[packet->UCID].FineC*0.05), players[packet->UCID].UName.c_str());
 
                 char log[MAX_PATH];
-                sprintf(log, "%slogs/cop/compens(%d.%d.%d).txt", RootDir, sm.wYear, sm.wMonth, sm.wDay);
+                sprintf(log, "%slogs/cop/compens(%d.%d.%d).txt", RootDir, timeStruct->tm_year, timeStruct->tm_mon, timeStruct->tm_mday);
                 ofstream readf (log, ios::app);
                 readf << str << endl;
-                readf.close();*/
+                readf.close();
 			}
 
 			players[packet->UCID].FineC = 0;

@@ -110,6 +110,7 @@ private:
 
     map<string, map<int,string> >TaxiDialogs;
     map<byte, TaxiPlayer>players;     // Структура игроков
+    Json::Value dialogs;
 
     void PassAccept( byte UCID );
     void PassAccept2( byte UCID );
