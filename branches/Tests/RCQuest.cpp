@@ -2,12 +2,11 @@
 #include "RCQuest.h"
 #include "RCBaseClass.h"
 #include <iostream>
-
-
+#include <map>
 RCQuest::RCQuest() {}
 
 RCQuest::~RCQuest() {}
-
+std::map <std::string,int> Qplayer;
 void RCQuest::init(const char* RootDir, void *insim)
 {
     strcpy(RCQuest::RootDir, RootDir);
@@ -51,16 +50,17 @@ void RCQuest::insim_ncn( struct IS_NCN *packet )
         return;
 
     printf("UCID = %d UName = %s\n", packet->UCID, packet->UName);
-
     players[i].UCID = packet->UCID;
     strcpy(players[i].UName, packet->UName);
     strcpy(players[i].PName, packet->PName);
+
 }
 
 void RCQuest::insim_npl( struct IS_NPL *packet )
 {
     struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
-    for (int i=0; i < MAX_PLAYERS; i++)
+    int i;
+    for ( i=0; i < MAX_PLAYERS; i++)
     {
         if (players[i].UCID == pack_npl->UCID)
         {
@@ -68,6 +68,10 @@ void RCQuest::insim_npl( struct IS_NPL *packet )
             break;
         }
     }
+    char player_key[24];
+    strcpy(player_key, players[i].UName);
+    Qplayer[player_key] = players[i].LvL;
+    std::cout << players[i].UName << " Quest lvl: " << Qplayer[player_key] << std::endl;
 }
 
 void RCQuest::insim_plp( struct IS_PLP *packet )
@@ -176,11 +180,7 @@ void RCQuest::insim_mci(struct IS_MCI *packet)
 
 void RCQuest::insim_hlv( struct IS_HLV* packet )
 {
+
 	std::cout << (int)(packet->HLVC) << std::endl;
 }
-
-
-
-
-
 

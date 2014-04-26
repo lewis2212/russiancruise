@@ -2,10 +2,9 @@
 #define _RC_QUEST_H
 
 #include "RCBaseClass.h"
-
+#include <map>
+#include <string>
 // Задаем структуру игрока
-
-
 
 typedef struct QuestPlayer
 {
@@ -15,6 +14,7 @@ typedef struct QuestPlayer
     byte    UCID;                  // Connection ID
     byte    PLID;                  // PLayer ID
     char    CName[4];              // Car Name
+    int     LvL;
 } _QuestPlayer;
 
 

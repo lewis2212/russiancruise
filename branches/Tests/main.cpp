@@ -288,6 +288,7 @@ DWORD WINAPI ThreadMain(void *CmdLine)
 
 int  nCount;     // счетчик
 
+
 // главная функция приложения
 int main(int argc, char* argv[])
 {
