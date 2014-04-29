@@ -2,11 +2,8 @@
 #include "RCQuest.h"
 #include "RCBaseClass.h"
 #include <iostream>
-#include <map>
 RCQuest::RCQuest() {}
-
 RCQuest::~RCQuest() {}
-std::map <std::string,int> Qplayer;
 void RCQuest::init(const char* RootDir, void *insim)
 {
     strcpy(RCQuest::RootDir, RootDir);
@@ -35,145 +32,64 @@ void RCQuest::send_mst (const char* Text)
 // обработчик события когда на сервер заходит новый пользователь
 void RCQuest::insim_ncn( struct IS_NCN *packet )
 {
-
     if( packet->UCID == 0 )
         return;
-
-    int i;
-    for( i = 0; i < MAX_PLAYERS; i++)
-    {
-        if( players[i].UCID == 0 )
-            break;
-    }
-
-    if( i == MAX_PLAYERS )
-        return;
-
-    printf("UCID = %d UName = %s\n", packet->UCID, packet->UName);
-    players[i].UCID = packet->UCID;
-    strcpy(players[i].UName, packet->UName);
-    strcpy(players[i].PName, packet->PName);
-
+    strcpy(players[ packet->UCID ].UName, packet->UName);
+    strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
 void RCQuest::insim_npl( struct IS_NPL *packet )
 {
-    struct IS_NPL *pack_npl = (struct IS_NPL*)insim->get_packet();
-    int i;
-    for ( i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].UCID == pack_npl->UCID)
-        {
-            players[i].PLID = pack_npl->PLID;
-            break;
-        }
-    }
-    char player_key[24];
-    strcpy(player_key, players[i].UName);
-    Qplayer[player_key] = players[i].LvL;
-    std::cout << players[i].UName << " Quest lvl: " << Qplayer[player_key] << std::endl;
+    PtoU[packet->PLID] = packet->UCID;
 }
 
 void RCQuest::insim_plp( struct IS_PLP *packet )
 {
-    struct IS_PLP *pack_plp = (struct IS_PLP*)insim->get_packet();
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == pack_plp->PLID)
-        {
-            players[i].PLID = 0;
-            break;
-        }
-    }
+   PtoU.erase( packet->PLID );
 }
 
 void RCQuest::insim_pll( struct IS_PLL *packet )
 {
-    struct IS_PLL *pack_pll = (struct IS_PLL*)insim->get_packet();
-    for (int i=0; i < MAX_PLAYERS; i++)
-    {
-        if (players[i].PLID == pack_pll->PLID)
-        {
-            players[i].PLID = 0;
-            break;
-        }
-    }
+   PtoU.erase( packet->PLID );
 }
 
 void RCQuest::insim_cnl( struct IS_CNL *packet )
 {
-    for(int i = 0; i < MAX_PLAYERS; i++)
-    {
-        if( players[i].UCID == packet->UCID )
-        {
-            memset(&players[i], 0, sizeof( struct QuestPlayer ) );
-        }
-    }
+   players.erase(packet->UCID);
 }
 
 void RCQuest::insim_cpr( struct IS_CPR *packet )
 {
-    struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
-    for (int i=0; i < MAX_PLAYERS; i++)
-
-    {
-        if (players[i].UCID == pack_cpr->UCID)
-        {
-            strcpy(players[i].PName, pack_cpr->PName);
-            break;
-        }
-    }
-
+         strcpy( players[ packet->UCID ].PName, packet->PName );
 }
 
-void RCQuest::insim_mso( struct IS_MSO *packet )
+ void RCQuest::insim_mso( struct IS_MSO *packet )     // TyT ya ne ponyal chto tu delal , po etomy prosto ctrl+c -> ctrl+v
 {
-    int i;
-    struct IS_MSO *pack_mso = (struct IS_MSO*)insim->get_packet();
+     byte UCID = packet->UCID;
 
-    if (pack_mso->UCID == 0)
+    if ( UCID == 0 )
         return;
 
-    for (i=0; i < MAX_PLAYERS; i++)
-        if (players[i].UCID == pack_mso->UCID)
-            break;
+    if ( packet->UserType != MSO_PREFIX )
+        return;
+
+    char Msg[128];
+    strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 }
 
 
 void RCQuest::insim_mci(struct IS_MCI *packet)
 {
 
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
-
-    for (int i = 0; i < packet->NumC; i++)
-    {
-        for (int j =0; j < MAX_PLAYERS; j++)
-        {
-            if( players[j].PLID == packet->Info[i].PLID )
-            {
-                break; // may bad work
-            }
-        }
-    }
-
 }
-
-
 
  void RCQuest::insim_obh( struct IS_OBH* packet )
  {
-    char Text[64];
-     for(int i = 0; i < MAX_PLAYERS; i++)
-    {
-        if( players[i].PLID == packet->PLID )
-        {
-             players[i].PLID = packet->PLID;
-             strcpy(Text, players[i].PName);
-             send_mst(Text);
 
-        }
-    }
-
+   std::cout << players[PtoU[packet->PLID]].UName;
+   char str[24];
+   strcpy(str , players[PtoU[packet->PLID]].PName);
+   send_mst(str);
  }
 
 

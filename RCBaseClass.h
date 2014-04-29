@@ -12,6 +12,7 @@
 #include <time.h>       // для работы с временем и рандомом
 #include <windows.h>    // не помню для чего но ингда нужно
 #include <exception>
+#include <map>
 
 #include "mysql/include/mysql.h"
 
@@ -36,7 +37,6 @@ public:
     int Distance (int X, int Y, int X1, int Y1);
 
 protected:
-
     CInsim      *insim;         // Переменная-указатель на класс CInsim
     char        RootDir[MAX_PATH]; // Полный путь до папки с программой
 
