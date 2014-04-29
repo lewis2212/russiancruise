@@ -2,7 +2,6 @@
 #define _RC_QUEST_H
 
 #include "RCBaseClass.h"
-#include <map>
 #include <string>
 // Задаем структуру игрока
 
@@ -29,8 +28,8 @@ public:
     void    send_mst ( const char* Text );
 
 private:
-
-    QuestPlayer players[MAX_PLAYERS];
+    std::map <byte , QuestPlayer> players;
+    std::map <byte , byte> PtoU;
     void    insim_ncn( struct IS_NCN* packet );		// Новый игрок зашел на сервер
     void    insim_npl( struct IS_NPL* packet );		// Игрок вышел из боксов
     void    insim_plp( struct IS_PLP* packet );		// Игрок ушел в боксы
