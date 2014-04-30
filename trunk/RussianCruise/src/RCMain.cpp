@@ -731,7 +731,7 @@ void case_cnl ()
 {
     struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
 
-	RCBaseClass::CCText("<< ^9disconnected " + string(players.at(pack_cnl->UCID).UName) + " (" + string(RCBaseClass::GetReason(pack_cnl->Reason) ) + ")");
+	RCBaseClass::CCText("^1<< disconnected " + string(players.at(pack_cnl->UCID).UName) + " (" + string(RCBaseClass::GetReason(pack_cnl->Reason) ) + ")");
 
 	Save( pack_cnl->UCID );
 	bonuses[ players.at(pack_cnl->UCID).UName ] = Json::nullValue;
@@ -1588,7 +1588,7 @@ void case_ncn ()
         return;
 
     if (pack_ncn->ReqI == 0)
-        RCBaseClass::CCText(">> connected " + (string)pack_ncn->UName);
+        RCBaseClass::CCText("^4>> connected " + (string)pack_ncn->UName);
 
     // Copy all the player data we need into the players.at(] array
     strcpy(players[pack_ncn->UCID].UName, pack_ncn->UName);
@@ -2138,19 +2138,21 @@ void *ThreadMci (void *params)
     {
         if (insim->udp_next_packet() < 0)
             continue;
+
         try
         {
             case_mci ();
+
+            for( cl = classes.begin(); cl != classes.end(); ++cl )
+    		{
+    			(*cl)->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
+    		}
         }
         catch(const logic_error& lerror)
         {
             RCBaseClass::CCText(string("^1MCI ERROR: ") + lerror.what() );
         }
 
-		for( cl = classes.begin(); cl != classes.end(); ++cl )
-		{
-			(*cl)->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
-		}
 
     }
     return 0;
@@ -2167,7 +2169,14 @@ void *ThreadSave (void *params)
         seconds = time (NULL);
         if (seconds % 600 == 0) //every 10 minute
         {
-			SaveAll(true);
+            try
+            {
+                SaveAll(true);
+            }
+            catch(const logic_error& lerror)
+            {
+                RCBaseClass::CCText(string("^1SAVE ERROR: ") + lerror.what() );
+            }
 
             //mysql_ping
             int my_ping = 0;
@@ -2218,22 +2227,29 @@ void *ThreadEvent (void *params)
 
     while (ok > 0)
     {
-        for( cl = classes.begin(); cl != classes.end(); ++cl )
-            (*cl)->Event();
+         try
+        {
+            for( cl = classes.begin(); cl != classes.end(); ++cl )
+                (*cl)->Event();
 
-        Event();
+            Event();
+        }
+        catch(const logic_error& lerror)
+        {
+            RCBaseClass::CCText(string("^1EVENT ERROR: ") + lerror.what() );
+        }
 
         /* Выводим список пользователей и машину на которой они катаются */
         printf("\e[s\e[0;0H");
-        RCBaseClass::CCText(IS_PRODUCT_NAME + string("\e[K"));
-        RCBaseClass::CCText("^1Players: " + RCBaseClass::ToString( players.size() ) + "\e[K");
+        RCBaseClass::CCText(string("^6") + IS_PRODUCT_NAME + string("\e[K"));
+        RCBaseClass::CCText("^1Players: " + RCBaseClass::ToString( players.size() ) + "\e[K",false);
 
-        RCBaseClass::CCText("|================================|================================|\e[K");
+        RCBaseClass::CCText("|================================|================================|\e[K",false);
         for (int i = 0; i <= 24; ++i)
         {
-            RCBaseClass::CCText("|                                |                                |\e[K");
+            RCBaseClass::CCText("|                                |                                |\e[K",false);
         }
-        RCBaseClass::CCText("|================================|================================|\e[K");
+        RCBaseClass::CCText("|================================|================================|\e[K",false);
 
         int start_line = 3;
         int line = 0;
@@ -2249,7 +2265,7 @@ void *ThreadEvent (void *params)
             {
                 printf("\e[%d;2H",start_line + line);
             }
-            RCBaseClass::CCText( string(players.at(pl.first).UName) + " (" + string(players.at(pl.first).CName) + ")");
+            RCBaseClass::CCText( string(players.at(pl.first).UName) + " (" + string(players.at(pl.first).CName) + ")",false);
                 // ") Zone: " + RCBaseClass::ToString(players.at(pl.first).Zone) +
                 // " X: " + RCBaseClass::ToString(players.at(pl.first).Info.X/65536) +
                 // " Y: " + RCBaseClass::ToString(players.at(pl.first).Info.Y/65536));
@@ -2269,6 +2285,8 @@ void signal_handler(int sig)
     SaveAll(true);
     ok=0;
 
+    string extMsg = "curl -d 'text=Russian Cruise: Exit with code - " + RCBaseClass::ToString(sig) + "' http://sms.ru/sms/send\\?api_id=284979d3-59e5-2a24-a934-1955fdd046a9\\&to=79035530332";
+    system( extMsg.c_str() );
     exit(sig);
 }
 
