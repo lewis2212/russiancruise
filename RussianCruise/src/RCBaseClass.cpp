@@ -645,9 +645,21 @@ RCBaseClass::DelObject( ObjectInfo *object )
     delete packAXM;
 }
 
-void RCBaseClass::CCText(string Text)
+void RCBaseClass::CCText(string Text, bool useTime)
 {
-    // cout << Text << endl;
+    tm *timeStruct = tools::GetLocalTime();
+
+    if(useTime)
+    {
+        printf("\e[1;35m[%d-%02d-%02d %02d:%02d:%02d]:\e[0m ",
+            timeStruct->tm_year,
+            timeStruct->tm_mon,
+            timeStruct->tm_mday,
+            timeStruct->tm_hour,
+            timeStruct->tm_min,
+            timeStruct->tm_sec);
+    }
+
 	char str[256];
 	sprintf(str,"f^8%s",Text.c_str());
 	strtok(str, "^");
@@ -680,9 +692,9 @@ void RCBaseClass::CCText(string Text)
 
         strncpy(text, NonFormatText+1, strlen((NonFormatText)));
 
-        printf("\033[1;%dm%s", COLOR, text);
+        printf("\e[1;%dm%s", COLOR, text);
     }
-    printf("\033[0m\n");
+    printf("\e[0m\n");
 }
 
 

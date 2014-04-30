@@ -101,13 +101,6 @@ namespace tools
 		timeStruct->tm_wday += 1;
 		timeStruct->tm_yday += 1;
 
-		cout << timeStruct->tm_year << "/";
-		cout << timeStruct->tm_mon << "/";
-		cout << timeStruct->tm_mday << " ";
-		cout << timeStruct->tm_hour << ":";
-		cout << timeStruct->tm_min << ":";
-		cout << timeStruct->tm_sec << endl;
-
 		return timeStruct;
 	}
 

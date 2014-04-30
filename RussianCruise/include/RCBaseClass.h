@@ -72,7 +72,7 @@ public:
 
     static bool Check_Pos(int polySides,int polyX[],int polyY[],float x,float y);
     static int Distance (int X, int Y, int X1, int Y1);
-    static void CCText(string Text);
+    static void CCText(string Text, bool useTime = true);
 
     static const char* GetReason(byte Reason);
 
