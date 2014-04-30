@@ -32,27 +32,36 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
+			<Add directory="include" />
+			<Add directory="include/pthread" />
 		</Compiler>
+		<ResourceCompiler>
+			<Add directory="include" />
+		</ResourceCompiler>
 		<Linker>
 			<Add option="-l wsock32" />
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
-			<Add library=".\libs\libpthreadGC2.a" />
-			<Add library=".\mysql\lib\debug\libmysql.lib" />
+			<Add library="libs\mysql\debug\libmysql.lib" />
+			<Add library="libs\pthread\x86\libpthreadGC2.a" />
+			<Add library="libs\jsoncpp\libjson.a" />
+			<Add directory="include" />
+			<Add directory="libs" />
 		</Linker>
-		<Unit filename="CInsim.cpp" />
-		<Unit filename="CInsim.h" />
-		<Unit filename="RCBaseClass.cpp" />
-		<Unit filename="RCBaseClass.h" />
-		<Unit filename="RCQuest.cpp" />
-		<Unit filename="RCQuest.h" />
-		<Unit filename="insim.h" />
-		<Unit filename="main.cpp" />
-		<Unit filename="main.h" />
-		<Unit filename="pthread.h" />
-		<Unit filename="tools.cpp" />
-		<Unit filename="tools.h" />
+		<Unit filename="include/CInsim.h" />
+		<Unit filename="include/CarInfo.h" />
+		<Unit filename="include/RCBaseClass.h" />
+		<Unit filename="include/RCQuest.h" />
+		<Unit filename="include/insim.h" />
+		<Unit filename="include/main.h" />
+		<Unit filename="include/tools.h" />
+		<Unit filename="src/CInsim.cpp" />
+		<Unit filename="src/RCBaseClass.cpp" />
+		<Unit filename="src/RCQuest.cpp" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/tools.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
