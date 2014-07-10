@@ -74,7 +74,7 @@ int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RC
     return 0;
 }
 
-bool RCTaxi::ReadConfig(const char *Track)
+void RCTaxi::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s/data/RCTaxi/tracks/%s.txt", RootDir, Track);
@@ -84,7 +84,7 @@ bool RCTaxi::ReadConfig(const char *Track)
      if (readf.is_open() == false)
     {
         CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+        return;
     }
 
     while (readf.good())
@@ -170,7 +170,7 @@ bool RCTaxi::ReadConfig(const char *Track)
     if (read.is_open() == false)
     {
         CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+        return;
     }
 
     while (read.good())
@@ -211,7 +211,7 @@ bool RCTaxi::ReadConfig(const char *Track)
     if (readt.is_open() == false)
     {
         CCText("  ^7RCTaxi     ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+        return;
     }
 
     int i = 0;
@@ -219,13 +219,11 @@ bool RCTaxi::ReadConfig(const char *Track)
     {
         char str[128];
         readt.getline(str, 128);
-
         char * cc = strtok (str, ", ");
-        if( cc == NULL )
+        if(cc == NULL)
             continue;
 
         int c = atoi(cc);
-
         if (c!=0)
         {
             ClientPoints[i].X = c;
@@ -277,10 +275,9 @@ bool RCTaxi::ReadConfig(const char *Track)
     f.close();*/
 
     CCText("  ^7RCTaxi\t^2OK");
-    return true;
 }
 
-bool RCTaxi::Event()
+void RCTaxi::Event()
 {
 	for ( auto& play: players )
     {
@@ -309,7 +306,6 @@ bool RCTaxi::Event()
 			}
 		}
     }
-    return true;
 }
 
 void RCTaxi::PassAccept( byte UCID )
@@ -442,7 +438,7 @@ void RCTaxi::PassAccept2(byte UCID)
     if (players[UCID].ClientType == 2)
 	{
 		sprintf(Msg, TaxiDialogs["client_2"][rand()%TaxiDialogs["client_2"].size()].c_str(), street->GetStreetName(UCID, StreetInfo.StreetID));
-		players[UCID].WorkTime = time(NULL) + 60 + (int)rand()%60;
+		players[UCID].WorkTime = time(NULL) + 50 + (int)rand()%30;
 	}
 
     if (players[UCID].ClientType == 3)
@@ -476,23 +472,21 @@ void RCTaxi::PassAccept2(byte UCID)
     ButtonInfo(UCID, Btn);
 }
 
-bool RCTaxi::InsimCNL( struct IS_CNL* packet )
+void RCTaxi::InsimCNL( struct IS_CNL* packet )
 {
     //удал€ю маршалов
     DeleteMarshal( packet->UCID );
     Save( packet->UCID );
     players.erase( packet->UCID );
     NumP = packet->Total;
-    return true;
 }
 
-bool RCTaxi::InsimCPR( struct IS_CPR* packet )
+void RCTaxi::InsimCPR( struct IS_CPR* packet )
 {
     players[packet->UCID].PName = packet->PName;
-    return true;
 }
 
-bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
+void RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++) // прогон по всему массиву pack_mci->Info[i]
     {
@@ -575,7 +569,7 @@ bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                 }
 
                 if (players[UCID].WorkAccept == 2 and players[UCID].PassStress < MAX_PASS_STRESS)
-                    insim->SendButton(255, UCID, 216, 45, 125, 8, 4, ISB_DARK + ISB_RIGHT, StringFormat("^7%0.0f ^Cм ", Dist-(int)Dist%5));
+                    insim->SendButton(255, UCID, 206, 45, 125, 8, 4, ISB_DARK + ISB_RIGHT, StringFormat("^7%0.0f ^Cм ", Dist-(int)Dist%5));
 
                 if (Dist <= 30)
                 {
@@ -625,7 +619,7 @@ bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
                             players[UCID].ClientType = 1;
                             players[UCID].cf = 4;
                             PassAccept2(UCID);
-                            return true;
+                            return;
                         }
 
                         if (players[UCID].InPasZone != 1)
@@ -682,7 +676,7 @@ bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
             else
             {
                 if (players[UCID].OnStreet = true)
-                    insim->SendBFN(UCID, 216);
+                    insim->SendBFN(UCID, 206);
 
                 players[UCID].OnStreet = false;
             }
@@ -784,7 +778,7 @@ bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
 
                 if (players[UCID].PassStress >= MAX_PASS_STRESS)
                 {
-                    insim->SendBFN(UCID, 216);
+                    insim->SendBFN(UCID, 206);
                     if (players[UCID].StressOverCount == 0)
                     {
                         srand ( time(NULL) );
@@ -827,7 +821,6 @@ bool RCTaxi::InsimMCI ( struct IS_MCI* pack_mci )
         PassAccept( UCID );
         /** thread **/
     }
-    return true;
 }
 
 void RCTaxi::PassDead(byte UCID)
@@ -848,11 +841,11 @@ void RCTaxi::PassDead(byte UCID)
     }
 }
 
-bool RCTaxi::InsimMSO( struct IS_MSO* packet )
+void RCTaxi::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 
     byte UCID = packet->UCID;
@@ -867,20 +860,20 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
             if (dl->GetLVL( packet->UCID ) < 20)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog6"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Work != 0)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog7"));
-                return true;
+                return;
             }
 
             if (players[UCID].FiredPenalty > time(NULL))
 			{
 				int PenaltyTime = ( players[UCID].FiredPenalty - time(NULL) ) / 60;
 				insim->SendMTC(packet->UCID, StringFormat( msg->_(UCID, "TaxiFiredPenalty" ), PenaltyTime) );
-                return true;
+                return;
 			}
 
             insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog8"));
@@ -892,7 +885,7 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
             if (players[packet->UCID].Work ==0)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog9"));
-                return true;
+                return;
             }
             insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog10"));
             //удал€ю маршалов
@@ -912,25 +905,25 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
             if (players[packet->UCID].Work ==0)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog11"));
-                return true;
+                return;
             }
 
             if (police->IsCop(packet->UCID))
             {
                 insim->SendMTC(packet->UCID, msg->_(packet->UCID, "1303" ));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].WorkNow ==1)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog12"));
-                return true;
+                return;
             }
 
             if (!players[packet->UCID].CanWork)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog13"));
-                return true;
+                return;
             }
 
             players[packet->UCID].AcceptTime = time(NULL) + PASSANGER_INTERVAL / (NumP + 1);
@@ -943,13 +936,13 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
             if (players[packet->UCID].Work ==0)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog11"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].WorkNow ==0)
             {
                 insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog15"));
-                return true;
+                return;
             }
 
             insim->SendMTC(packet->UCID, msg->_(UCID, "TaxiDialog16"));
@@ -975,7 +968,7 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
         if (uname.length() == 0)
         {
             insim->SendMTC(UCID, msg->_(packet->UCID, "TaxiDialog17"));
-            return true;
+            return;
         }
 
         for ( auto& p: players )
@@ -1007,7 +1000,7 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
 				insim->SendMTC(packet->UCID, str);
 				str = StringFormat("^6| ^C^7¬сего убил пассажиров: %d", players[p.first].PenaltyCount);
 				insim->SendMTC(packet->UCID, str);
-				return true;
+				return;
 			}
 		insim->SendMTC(packet->UCID, "^6| ^C^7»грок не найден");
     }
@@ -1032,23 +1025,21 @@ bool RCTaxi::InsimMSO( struct IS_MSO* packet )
     }
 }
 
-bool RCTaxi::InsimNCN( struct IS_NCN* packet )
+void RCTaxi::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
-    NumP = packet->Total;
 
     ReadUser( packet->UCID );
-    players[packet->UCID].Loaded = true;
-    return true;
+    NumP = packet->Total;
 }
 
-bool RCTaxi::InsimNPL( struct IS_NPL* packet )
+void RCTaxi::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
     players[packet->UCID].CName = packet->CName;
@@ -1077,7 +1068,6 @@ bool RCTaxi::InsimNPL( struct IS_NPL* packet )
         players[packet->UCID].StressOverCount = 0;
         players[packet->UCID].PassStress = 0;
     }
-    return true;
 }
 
 void RCTaxi::PassLoss(byte UCID)
@@ -1085,8 +1075,8 @@ void RCTaxi::PassLoss(byte UCID)
     if (players[UCID].WorkAccept == 2 or players[UCID].cf)
     {
     	insim->SendMTC(UCID,msg->_(UCID,"TaxiPll"));
-        insim->SendBFN(UCID, 216);
-        insim->SendBFN(UCID, 217);
+        insim->SendBFN(UCID, 206);
+        insim->SendBFN(UCID, 207);
         insim->SendBFN(UCID, 212);
         ClearButtonInfo(UCID);
         players[UCID].cf = 0;
@@ -1101,21 +1091,19 @@ void RCTaxi::PassLoss(byte UCID)
     }
 }
 
-bool RCTaxi::InsimPLP( struct IS_PLP* packet)
+void RCTaxi::InsimPLP( struct IS_PLP* packet)
 {
     byte UCID = PLIDtoUCID[packet->PLID];
     PassLoss(UCID);
-    return true;
 }
 
-bool RCTaxi::InsimPLL( struct IS_PLL* packet )
+void RCTaxi::InsimPLL( struct IS_PLL* packet )
 {
 
     byte UCID = PLIDtoUCID[packet->PLID];
     PassLoss(UCID);
 
     PLIDtoUCID.erase( packet->PLID );
-    return true;
 }
 
 void RCTaxi::ReadUser( byte UCID )
@@ -1139,7 +1127,6 @@ void RCTaxi::ReadUser( byte UCID )
 		players[UCID].FiredPenalty= 0;
 		players[UCID].PenaltyCount = 0;
 		players[UCID].PassCount = 0;
-        players[UCID].Loaded = true;
 		Save( UCID );
 	}
 
@@ -1165,12 +1152,8 @@ void RCTaxi::DeleteMarshal(byte UCID)
 	delete obj;
 }
 
-bool RCTaxi::Save( byte UCID )
+void RCTaxi::Save( byte UCID )
 {
-    if (!players[UCID].Loaded)
-    {
-        return true;
-    }
 	string query = StringFormat("REPLACE INTO taxi (username, Work, FiredPenalty, PenaltyCount, PassCount) VALUES ('%s',%d,%d,%d,%d)",
 								players[UCID].UName.c_str(),
 								players[UCID].Work,
@@ -1184,8 +1167,8 @@ bool RCTaxi::Save( byte UCID )
 
 void RCTaxi::PassDone( byte UCID )
 {
-    insim->SendBFN(UCID, 216);
-    insim->SendBFN(UCID, 217);
+    insim->SendBFN(UCID, 206);
+    insim->SendBFN(UCID, 207);
     insim->SendBFN(UCID, 212);
     if (players[UCID].PassStress < MAX_PASS_STRESS)
     {
@@ -1249,7 +1232,7 @@ void RCTaxi::PassDone( byte UCID )
     players[UCID].InPasZone = 0;
 }
 
-bool RCTaxi::InsimCON( struct IS_CON* packet )
+void RCTaxi::InsimCON( struct IS_CON* packet )
 {
 
     byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
@@ -1278,10 +1261,9 @@ bool RCTaxi::InsimCON( struct IS_CON* packet )
         srand ( time(NULL) );
         insim->SendMTC( UCIDB ,  TaxiDialogs["con"][ rand()%TaxiDialogs["con"].size() ].c_str() ); // send random dialog phrase
     }
-    return true;
 }
 
-bool RCTaxi::InsimOBH( struct IS_OBH* packet )
+void RCTaxi::InsimOBH( struct IS_OBH* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 
@@ -1289,7 +1271,7 @@ bool RCTaxi::InsimOBH( struct IS_OBH* packet )
 
     if ((now - players[UCID].LastT) <= 1)
     {
-        return true;
+        return;
     }
 
     players[UCID].LastT = now;
@@ -1317,10 +1299,9 @@ bool RCTaxi::InsimOBH( struct IS_OBH* packet )
             players[UCID].PassStress +=  packet->SpClose / 10;
         }
     }
-    return true;
 }
 
-bool RCTaxi::InsimAXM( struct IS_AXM* packet )
+void RCTaxi::InsimAXM( struct IS_AXM* packet )
 {
 
 	if( packet->UCID == 0)
@@ -1331,7 +1312,7 @@ bool RCTaxi::InsimAXM( struct IS_AXM* packet )
 
     if (StartPointsAdd == 0 or packet->UCID == 0 or packet->PMOAction != PMO_ADD_OBJECTS)
     {
-        return true;
+        return;
     }
 
     char text[96];
@@ -1370,10 +1351,9 @@ bool RCTaxi::InsimAXM( struct IS_AXM* packet )
             readf.close();
         }
     }
-    return true;
 }
 
-bool RCTaxi::InsimHLV( struct IS_HLV* packet )
+void RCTaxi::InsimHLV( struct IS_HLV* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 
@@ -1383,7 +1363,7 @@ bool RCTaxi::InsimHLV( struct IS_HLV* packet )
         time_t now = time(NULL);
 
         if ((now - players[UCID].LastT) < 1)
-            return true;
+            return;
 
         players[UCID].LastT = now;
 
@@ -1398,7 +1378,6 @@ bool RCTaxi::InsimHLV( struct IS_HLV* packet )
             insim->SendMTC(UCID, TaxiDialogs["obh"][ rand()%TaxiDialogs["obh"].size() ].c_str() ); // send random dialog phrase
         }
     }
-    return true;
 }
 
 void RCTaxi::BtnStress( byte UCID )
@@ -1435,7 +1414,7 @@ void RCTaxi::BtnStress( byte UCID )
     for (int i = 0; i < (100 - players[UCID].PassStress / 10); i++)
         str += "I";
 
-    insim->SendButton(255, UCID, 217, 1, 125, 44, 4, 32+2, str);
+    insim->SendButton(255, UCID, 207, 1, 125, 44, 4, 32+2, str);
 }
 
 bool RCTaxi::IfWork (byte UCID)

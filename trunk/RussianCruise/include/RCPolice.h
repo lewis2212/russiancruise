@@ -110,20 +110,20 @@ private:
     int DTPvyzov[3][32];	// 1 - UCID player, 2 - time, 3 - UCID cop
     int FineAllow[5][MAX_FINES];
 
-    bool InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
-    bool InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
-    bool InsimPLP( struct IS_PLP* packet );   	// Игрок ушел в боксы
-    bool InsimPLL( struct IS_PLL* packet );   	// Игрок ушел в зрители
-    bool InsimCNL( struct IS_CNL* packet );   	// Игрок ушел с сервера
-    bool InsimCPR( struct IS_CPR* packet );   	// Игрок переименовался
-    bool InsimMSO( struct IS_MSO* packet );   	// Игрок отправил сообщение
-    bool InsimBTC( struct IS_BTC* packet );
-    bool InsimBTT( struct IS_BTT* packet );
-    bool InsimPEN( struct IS_PEN* packet );
-    bool InsimPLA( struct IS_PLA* packet );
-    bool InsimOBH( struct IS_OBH* packet );
+    void InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
+    void InsimPLP( struct IS_PLP* packet );   	// Игрок ушел в боксы
+    void InsimPLL( struct IS_PLL* packet );   	// Игрок ушел в зрители
+    void InsimCNL( struct IS_CNL* packet );   	// Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );   	// Игрок переименовался
+    void InsimMSO( struct IS_MSO* packet );   	// Игрок отправил сообщение
+    void InsimBTC( struct IS_BTC* packet );
+    void InsimBTT( struct IS_BTT* packet );
+    void InsimPEN( struct IS_PEN* packet );
+    void InsimPLA( struct IS_PLA* packet );
+    void InsimOBH( struct IS_OBH* packet );
 
-    bool ReadUserFines( byte UCID );
+    void ReadUserFines( byte UCID );
     void BtnPogonya( byte UCID );
     void ButtonClock( byte UCID );
     void ShowFinesPanel( byte UCID, byte UCID2 );
@@ -134,18 +134,18 @@ private:
 
     //Stat
     bool LoadCopStat(byte UCID);
-    bool SaveCopStat(byte UCID);
+    void SaveCopStat(byte UCID);
 
 public:
     RCPolice(const char* Dir);
     ~RCPolice();
-	bool ReadConfig(const char* Track);
+	void ReadConfig(const char* Track);
 
     struct fine fines[MAX_FINES];
 
     int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
-    bool Save( byte UCID );
+    void Save( byte UCID );
     void SendMTCToCop(const char* Msg, int Rank, ...);
 
     void SetSirenLight( string sirenWord );
@@ -158,9 +158,9 @@ public:
     char* GetFineName(byte UCID, int FineID);
     bool IsPursuit(byte UCID);
 
-    bool Event();
+    void Event();
 
-    bool InsimMCI( struct IS_MCI* packet );
+    void InsimMCI( struct IS_MCI* packet );
 };
 
 #endif

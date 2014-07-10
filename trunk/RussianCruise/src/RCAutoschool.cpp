@@ -23,7 +23,7 @@ RCAutoschool::init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg)
     CCText("^3R"+ClassName+":\t^2inited");
 }
 
-bool
+void
 RCAutoschool::ReadConfig(const char* Track)
 {
 	char confFile[MAX_PATH];
@@ -38,7 +38,7 @@ RCAutoschool::ReadConfig(const char* Track)
 	if( !file.is_open() )
 	{
 		cout  << "Failed to open configuration file\n";
-		return true;
+		return;
 	}
 
 	bool readed = configReader.parse( file, config, false );
@@ -49,70 +49,63 @@ RCAutoschool::ReadConfig(const char* Track)
 		// report to the user the failure and their locations in the document.
 		cout  << "Failed to parse configuration\n"
 				   << configReader.getFormattedErrorMessages();
-		return true;
+		return;
 	}
 	file.close();
 
 	//cout << config["encoding"] << endl;
 
 	CCText("  ^7RCSchool\t^2OK");
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimNCN( struct IS_NCN* packet )
 {
 	 if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
-    return true;
 }
 
-bool
+void
 RCAutoschool::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID;
     players[packet->UCID].CName = packet->CName;
-    return true;
 }
 
-bool
+void
 RCAutoschool::InsimPLP( struct IS_PLP* packet )
 {
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimPLL( struct IS_PLL* packet )
 {
 	PLIDtoUCID.erase( packet->PLID );
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimCNL( struct IS_CNL* packet )
 {
 	players.erase( packet->UCID );
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimCPR( struct IS_CPR* packet )
 {
 	players[packet->UCID].PName = packet->PName;
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimMSO( struct IS_MSO* packet )
 {
 	if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 
     //byte UCID = packet->UCID;
@@ -198,25 +191,22 @@ RCAutoschool::InsimMSO( struct IS_MSO* packet )
 		}
 	}
 	*/
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimCON( struct IS_CON* packet )
 {
 	//byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
     //byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
-    return true;
 }
 
-bool
+void
 RCAutoschool::InsimOBH( struct IS_OBH* packet )
 {
 	 //byte UCID = PLIDtoUCID[ packet->PLID ];
-	return true;
 }
 
-bool
+void
 RCAutoschool::InsimHLV( struct IS_HLV* packet )
 {
 	 //byte UCID = PLIDtoUCID[ packet->PLID ];
@@ -226,23 +216,22 @@ RCAutoschool::InsimHLV( struct IS_HLV* packet )
     {
 
     }
-    return true;
 }
 
-bool
+void
 RCAutoschool::InsimAXM( struct IS_AXM* packet )
 {
 	if( packet->UCID == 0 )
-		return true;
+		return;
 
 	if( packet->PMOAction != PMO_ADD_OBJECTS )
-		return true;
+		return
 
 	CCText("^3RCAutoschool^1::^2InsimAXM");
-	return true;
+
 }
 
-bool
+void
 RCAutoschool::InsimMCI ( struct IS_MCI* packet )
 {
     for (int i = 0; i < packet->NumC; i++) // прогон по всему массиву packet->Info[i]
@@ -344,7 +333,6 @@ RCAutoschool::InsimMCI ( struct IS_MCI* packet )
         ShowPanel(UCID);
         players[UCID].Info = packet->Info[i];
     }
-    return true;
 }
 
 void

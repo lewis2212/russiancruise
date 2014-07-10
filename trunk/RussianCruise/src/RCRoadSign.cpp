@@ -37,7 +37,7 @@ int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
     return 0;
 }
 
-bool RCRoadSign::ReadConfig(const char *Track)
+void RCRoadSign::ReadConfig(const char *Track)
 {
     strcpy(TrackName, Track);
     Sign.clear();
@@ -49,7 +49,7 @@ bool RCRoadSign::ReadConfig(const char *Track)
     if (!readf.is_open())
     {
         CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+        return ;
     }
 
     int i=0;
@@ -81,7 +81,7 @@ bool RCRoadSign::ReadConfig(const char *Track)
     if (read.is_open() == false)
     {
         CCText("  ^7RCRoadSign ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+        return;
     }
 
     while (read.good())
@@ -102,58 +102,51 @@ bool RCRoadSign::ReadConfig(const char *Track)
     read.close();
 
     CCText("  ^7RCRoadSign\t^2OK");
-    return true;
 }
 
-bool RCRoadSign::InsimNCN( struct IS_NCN* packet )
+void RCRoadSign::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
-        return true;
+        return;
 
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
-    return true;
 }
 
-bool RCRoadSign::InsimNPL( struct IS_NPL* packet )
+void RCRoadSign::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
-    return true;
 }
 
-bool RCRoadSign::InsimPLP( struct IS_PLP* packet )
+void RCRoadSign::InsimPLP( struct IS_PLP* packet )
 {
     PLIDtoUCID.erase( packet->PLID );
-    return true;
 }
 
-bool RCRoadSign::InsimPLL( struct IS_PLL* packet )
+void RCRoadSign::InsimPLL( struct IS_PLL* packet )
 {
     PLIDtoUCID.erase( packet->PLID );
-    return true;
 }
 
-bool RCRoadSign::InsimCNL( struct IS_CNL* packet )
+void RCRoadSign::InsimCNL( struct IS_CNL* packet )
 {
     players.erase( packet->UCID );
-    return true;
 }
 
-bool RCRoadSign::InsimCPR( struct IS_CPR* packet )
+void RCRoadSign::InsimCPR( struct IS_CPR* packet )
 {
     strcpy( players[ packet->UCID ].PName, packet->PName );
-    return true;
 }
 
-bool RCRoadSign::InsimMSO(struct IS_MSO* packet)
+void RCRoadSign::InsimMSO(struct IS_MSO* packet)
 {
     byte UCID = packet->UCID;
 
     if ( UCID == 0 )
-        return true;
+        return;
 
     if ( packet->UserType != MSO_PREFIX )
-        return true;
+        return;
 
     char Msg[128];
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
@@ -177,7 +170,7 @@ bool RCRoadSign::InsimMSO(struct IS_MSO* packet)
         {
             sprintf(text, "^1Error: ^Cукажи ID");
             insim->SendMTC(UCID, text);
-            return true;
+            return;
         }
         else
         {
@@ -311,7 +304,7 @@ void RCRoadSign::ShowSign(byte UCID, byte ID, byte Count)
     }
 }
 
-bool RCRoadSign::InsimMCI ( struct IS_MCI* packet )
+void RCRoadSign::InsimMCI ( struct IS_MCI* packet )
 {
     for (int i = 0; i < packet->NumC; i++)
     {
@@ -351,5 +344,4 @@ bool RCRoadSign::InsimMCI ( struct IS_MCI* packet )
         if (S > 1)
             players[UCID].Info = packet->Info[i];
     }
-    return true;
 }
