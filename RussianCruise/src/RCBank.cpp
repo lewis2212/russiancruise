@@ -90,10 +90,10 @@ int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL
 }
 
 
-bool RCBank::InsimNCN(struct IS_NCN* packet)
+void RCBank::InsimNCN(struct IS_NCN* packet)
 {
     if (packet->UCID == 0)
-        return true;
+        return;
 
     char kickCmd[64], msg[96];
     sprintf(kickCmd, "/kick %s",packet->UName);
@@ -122,7 +122,6 @@ bool RCBank::InsimNCN(struct IS_NCN* packet)
             printf("Error credits: MySQL Query\n");
 
         players[packet->UCID].Cash = 1000;
-        players[packet->UCID].Loaded = true;
         Save(packet->UCID);
     }
 
@@ -203,10 +202,10 @@ bool RCBank::InsimNCN(struct IS_NCN* packet)
         }
     }
 
-    players[packet->UCID].Loaded = true;
+    players[packet->UCID].ReadTrue = true;
 
     /** credit **/
-    return true;
+    return ;
 }
 
 void RCBank::credit_penalty (byte UCID)
@@ -232,40 +231,33 @@ void RCBank::credit_penalty (byte UCID)
     Save(UCID); //сохраняемся
 }
 
-bool RCBank::InsimNPL(struct IS_NPL* packet)
+void RCBank::InsimNPL(struct IS_NPL* packet)
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
 
     //if (players[packet->UCID].Cash > 5000000)
         //players[packet->UCID].Cash = 5000000;
-    return true;
 }
 
-bool RCBank::InsimPLP(struct IS_PLP* packet)
+void RCBank::InsimPLP(struct IS_PLP* packet)
 {
     PLIDtoUCID.erase(packet->PLID);
-    return true;
 }
 
-bool RCBank::InsimPLL(struct IS_PLL* packet)
+void RCBank::InsimPLL(struct IS_PLL* packet)
 {
     PLIDtoUCID.erase(packet->PLID);
-    return true;
 }
 
-bool RCBank::InsimCNL(struct IS_CNL* packet)
+void RCBank::InsimCNL(struct IS_CNL* packet)
 {
     if (players[packet->UCID].ReadTrue)
         Save(packet->UCID);
     players.erase(packet->UCID);
-    return true;
 }
 
-bool RCBank::Save (byte UCID)
+void RCBank::Save (byte UCID)
 {
-    if(!players[UCID].Loaded)
-        return false;
-
     char query[128];
     sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
@@ -297,16 +289,14 @@ bool RCBank::Save (byte UCID)
 	{
 		printf("Bank Error: Can't save Capital\n");
 	}
-    return true;
 }
 
-bool RCBank::InsimCPR(struct IS_CPR* packet)
+void RCBank::InsimCPR(struct IS_CPR* packet)
 {
     players[packet->UCID].PName = packet->PName;
-    return true;
 }
 
-bool RCBank::InsimMSO(struct IS_MSO* packet)
+void RCBank::InsimMSO(struct IS_MSO* packet)
 {
     char Message[128], Text[128];
     strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
@@ -334,7 +324,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             if (dl->GetLVL(packet->UCID) < 5)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog13"));
-                return true;
+                return;
             }
             strtok (Message, " ");
             strtok (NULL, " ");
@@ -355,7 +345,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 sprintf(Text, msg->_(packet->UCID, "BankDialog14"), cr/5, cr);
                 insim->SendMTC(packet->UCID, string(Text));
-                return true;
+                return;
             }
             insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog15"));
             if (players[ packet->UCID ].Date_create!=0)
@@ -373,7 +363,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
                 insim->SendMTC( packet->UCID , Text);
                 sprintf(Text, msg->_(packet->UCID, "BankDialog18"), razn);
                 insim->SendMTC(packet->UCID, Text);
-                return true;
+                return;
             }
             sprintf(Text, msg->_(packet->UCID, "BankDialog19"), cr/5, cr);
             insim->SendMTC( packet->UCID , Text);
@@ -383,26 +373,26 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             insim->SendMTC( packet->UCID , Text);
             sprintf( Text, msg->_(packet->UCID, "BankDialog23"), summ * 13 / 10 );
             insim->SendMTC( packet->UCID , Text);
-            return true;
+            return;
         }
         if (strncmp(Message, "!credit", strlen("!credit")) == 0)
         {
             if (players[packet->UCID].Dep_Date_create!=0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog24"));
-                return true;
+                return;
             }
 
             if (dl->GetLVL(packet->UCID) < 5)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog25"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Date_create != 0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog26"));
-                return true;
+                return;
             }
             strtok (Message, " ");
             char* sum = strtok (NULL, " ");
@@ -418,21 +408,21 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 sprintf( Text , msg->_(packet->UCID, "BankDialog27"), cr/5, cr);
                 insim->SendMTC( packet->UCID , Text);
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Cash>(summ*3/2))
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog28"));
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog29"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Cash <= -50000)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog30"));
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog31"));
-                return true;
+                return;
             }
             //выдаем кредит
             sprintf(Text, msg->_(packet->UCID, "BankDialog32"), summ );
@@ -448,13 +438,13 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             if (players[packet->UCID].Date_create == 0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog33"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Cash<players[packet->UCID].Credit*13/10)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog34"));
-                return true;
+                return;
             }
 
             insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog35"));
@@ -478,7 +468,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             if (dl->GetLVL(packet->UCID) < 20)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog36"));
-                return true;
+                return;
             }
 
             strtok (Message, " ");
@@ -500,7 +490,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 sprintf(Text, msg->_(packet->UCID, "BankDialog37"), dr);
                 insim->SendMTC(packet->UCID, Text);
-                return true;
+                return;
             }
 
             insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog38"));
@@ -522,14 +512,14 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
                     insim->SendMTC( packet->UCID , Text);
                     sprintf(Text, msg->_(packet->UCID, "BankDialog41"));
                     insim->SendMTC(packet->UCID, Text);
-                    return true;
+                    return;
                 }
 
                 sprintf( Text, msg->_(packet->UCID, "BankDialog42"), players[ packet->UCID ].Deposit + players[ packet->UCID ].Deposit * 5/1000 * (int)(30-razn), players[ packet->UCID ].Deposit * 5/1000 );
                 insim->SendMTC( packet->UCID , Text);
                 sprintf(Text, msg->_(packet->UCID, "BankDialog43"), razn);
                 insim->SendMTC(packet->UCID, Text);
-                return true;
+                return;
             }
 
             sprintf(Text, msg->_(packet->UCID, "BankDialog44"), dr);
@@ -541,26 +531,26 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             insim->SendMTC( packet->UCID , Text);
             sprintf( Text, msg->_(packet->UCID, "BankDialog48"), summ );
             insim->SendMTC( packet->UCID , Text);
-            return true;
+            return;
         }
         if (strncmp(Message, "!deposit", strlen("!deposit")) == 0)
         {
             if (players[packet->UCID].Date_create!=0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog49"));
-                return true;
+                return;
             }
 
             if (dl->GetLVL(packet->UCID) < 5)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog50"));
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Dep_Date_create != 0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog51"));
-                return true;
+                return;
             }
 
             strtok (Message, " ");
@@ -577,13 +567,13 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 sprintf(Text, msg->_(packet->UCID, "BankDialog52"), dr);
                 insim->SendMTC(packet->UCID, Text);
-                return true;
+                return;
             }
 
             if (players[packet->UCID].Cash<=(summ))
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog53"));
-                return true;
+                return;
             }
 
             //создаем вклад
@@ -600,7 +590,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             if (players[packet->UCID].Dep_Date_create==0)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog55"));
-                return true;
+                return;
             }
 
             strtok (Message, " ");
@@ -624,7 +614,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
                     players[packet->UCID].Deposit = 0;
                     players[packet->UCID].Dep_Date_create = 0;
                     Save(packet->UCID); //сохраняемся
-                    return true;
+                    return;
                 }
             }
 
@@ -632,7 +622,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
             {
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog58"));
                 insim->SendMTC( packet->UCID , msg->_(packet->UCID, "BankDialog59"));
-                return true;
+                return;
             }
 
             sprintf(Text, msg->_(packet->UCID, "BankDialog60"));
@@ -657,7 +647,7 @@ bool RCBank::InsimMSO(struct IS_MSO* packet)
     }
 }
 
-bool RCBank::InsimMCI(struct IS_MCI* pack_mci)
+void RCBank::InsimMCI(struct IS_MCI* pack_mci)
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -685,33 +675,30 @@ bool RCBank::InsimMCI(struct IS_MCI* pack_mci)
         else if (players[UCID].InZone)
             players[UCID].InZone = false;
     }
-    return true;
 }
 
-bool RCBank::Event()
+void RCBank::Event()
 {
     // баланс игрока
     for ( auto& play: players )
         insim->SendButton(255, play.first, 0, 70, 1, 15, 4, 32,
                         (players[play.first].Cash > 0 ? "^2" : "^1") +
                         StringFormat(msg->_(play.first, "Cash"), (int)players[play.first].Cash));
-
-    return true;
 }
 
-bool RCBank::ReadConfig(const char *Track)
+void RCBank::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s/data/RCBank/tracks/%s.txt", RootDir, Track);
-
-
-    ifstream readf (file, ios::in);
-
-    if(readf.is_open() == false)
+    FILE *fff = fopen(file, "r");
+    if (fff == nullptr)
     {
-        CCText("  ^7RCBank     ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
+    	CCText("  ^7RCBank     ^1ERROR: ^8file " + (string)file + " not found");
+        return;
     }
+
+    fclose(fff);
+    ifstream readf (file, ios::in);
 
     while (readf.good())
     {
@@ -746,5 +733,4 @@ bool RCBank::ReadConfig(const char *Track)
         BankFond = 0;
 
     CCText("  ^7RCBank\t^2OK");
-    return true;
 }

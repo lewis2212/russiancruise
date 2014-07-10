@@ -47,20 +47,17 @@ int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
 }
 
 
-bool RCEnergy::ReadConfig(const char *Track)
+void RCEnergy::ReadConfig(const char *Track)
 {
     char file[255];
     sprintf(file, "%s/data/RCEnergy/maps/%s.txt", RootDir, Track );
 
+    FILE *fff = fopen(file, "r");
+    if (fff == nullptr)
+        return;
 
+    fclose(fff);
     ifstream readf (file, ios::in);
-
-    if(readf.is_open() == false)
-    {
-        CCText("  ^7RCEnergy     ^1ERROR: ^8file " + (string)file + " not found");
-        return true;
-    }
-
     while (readf.good())
     {
         char str[128];
@@ -93,10 +90,9 @@ bool RCEnergy::ReadConfig(const char *Track)
     readf.close();
 
     CCText("  ^7RCEnergy\t^2OK");
-    return true;
 }
 
-bool RCEnergy::InsimNCN( struct IS_NCN* packet )
+void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
@@ -123,14 +119,11 @@ bool RCEnergy::InsimNCN( struct IS_NCN* packet )
         dbExec(query);
 
         players[ packet->UCID ].Energy = 10000;
-        players[ packet->UCID ].Loaded = true;
         Save( packet->UCID );
     }
-    players[packet->UCID].Loaded = true;
-    return true;
 }
 
-bool RCEnergy::InsimNPL( struct IS_NPL* packet )
+void RCEnergy::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
 
@@ -143,57 +136,51 @@ bool RCEnergy::InsimNPL( struct IS_NPL* packet )
         sprintf(Text, "/spec %s", players[ packet->UCID ].UName.c_str());
         insim->SendMST(Text);
         players[ packet->UCID ].Zone = 1;
-        return true;
+        return;
     }
     players[packet->UCID].EnergyTime = time(&nrgtime);
-    return true;
 }
 
-bool RCEnergy::InsimPLP( struct IS_PLP* packet)
+void RCEnergy::InsimPLP( struct IS_PLP* packet)
 {
     players[PLIDtoUCID[packet->PLID]].Zone = 1;
     //PLIDtoUCID.erase(packet->PLID);
-    return true;
 }
 
-bool RCEnergy::InsimPLL( struct IS_PLL* packet )
+void RCEnergy::InsimPLL( struct IS_PLL* packet )
 {
     players[PLIDtoUCID[packet->PLID]].Zone = 1;
     PLIDtoUCID.erase(packet->PLID);
-    return true;
 }
 
-bool RCEnergy::InsimCNL( struct IS_CNL* packet )
+void RCEnergy::InsimCNL( struct IS_CNL* packet )
 {
     Save(packet->UCID);
     players.erase(packet->UCID);
-    return true;
 }
 
-bool RCEnergy::Save (byte UCID)
+void RCEnergy::Save (byte UCID)
 {
-    if(!players[UCID].Loaded)
-        return true;
-
     char query[128];
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName.c_str());
 
     dbExec(query);
-    return true;
 }
 
-bool RCEnergy::InsimCPR( struct IS_CPR* packet )
+void RCEnergy::InsimCPR( struct IS_CPR* packet )
 {
     players[packet->UCID].PName = packet->PName;
-    return true;
 }
 
-bool RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
+void RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
         byte UCID = PLIDtoUCID[pack_mci->Info[i].PLID];
-
+        if (UCID == 0)
+        {
+            return;
+        }
 
         int X = pack_mci->Info[i].X / 65536;
         int Y = pack_mci->Info[i].Y / 65536;
@@ -281,33 +268,32 @@ bool RCEnergy::InsimMCI ( struct IS_MCI* pack_mci )
 
         memcpy( &players[UCID].Info , &pack_mci->Info[i] , sizeof(struct CompCar) );
     }
-    return true;
 }
 
 
-bool RCEnergy::InsimMSO( struct IS_MSO* packet )
+void RCEnergy::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-        return true;
+        return;
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!coffee", 7) == 0)
     {
         if (bank->GetCash( packet->UCID ) < 50)
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
-            return true;
+            return;
         }
 
         if ( !( players[ packet->UCID ].Zone == 1 and players[ packet->UCID ].Energy < 500 ) and ( players[ packet->UCID ].Zone != 3 ) )
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
-            return true;
+            return;
         }
 
         if ( players[ packet->UCID ].Energy > 9900 )
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
-            return true;
+            return;
         }
 
         players[ packet->UCID ].Energy += 500;
@@ -321,30 +307,30 @@ bool RCEnergy::InsimMSO( struct IS_MSO* packet )
         if (bank->GetCash( packet->UCID ) < 100)
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2001" ));
-            return true;
+            return;
         }
 
         if ( !(players[packet->UCID].Zone == 1 and players[packet->UCID].Energy < 500) and (players[packet->UCID].Zone != 3 ) )
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "2002" ));
-            return true;
+            return;
         }
 
         if ( players[ packet->UCID ].Energy > 9900 )
         {
             insim->SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyFull" ));
-            return true;
+            return;
         }
 
         players[ packet->UCID ].Energy += 1000;
         bank->RemCash(packet->UCID, 100);
         bank->AddToBank(100);
     }
-    return true;
+
 }
 
 
-bool RCEnergy::Event()
+void RCEnergy::Event()
 {
     // энергия игрока
     for ( auto& play: players )
@@ -376,7 +362,6 @@ bool RCEnergy::Event()
 
         insim->SendButton(255, play.first, 2, 100, 1, 30, 4, 32+64, str);
     }
-    return true;
 }
 
 bool RCEnergy::InCafe( byte UCID )
@@ -392,7 +377,7 @@ int RCEnergy::GetEnergy(byte UCID)
     return (players[UCID].Energy * 100 / 10000);
 }
 
-bool RCEnergy::InsimCON( struct IS_CON* packet )
+void RCEnergy::InsimCON( struct IS_CON* packet )
 {
     byte UCIDA = PLIDtoUCID[ packet->A.PLID ];
     byte UCIDB = PLIDtoUCID[ packet->B.PLID ];
@@ -406,10 +391,9 @@ bool RCEnergy::InsimCON( struct IS_CON* packet )
     {
         players[ UCIDB ].Energy -= 10 * packet->SpClose;
     }
-    return true;
 }
 
-bool RCEnergy::InsimOBH( struct IS_OBH* packet )
+void RCEnergy::InsimOBH( struct IS_OBH* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
     if ((packet->Index > 45 and packet->Index < 125 and packet->Index != 120 and packet->Index != 121) or (packet->Index > 140))
@@ -417,7 +401,7 @@ bool RCEnergy::InsimOBH( struct IS_OBH* packet )
         time_t now = time(NULL);
         if ((now - players[UCID].LastT) < 1)
         {
-            return true;
+            return;
         }
         players[UCID].LastT = now;
 
@@ -426,10 +410,9 @@ bool RCEnergy::InsimOBH( struct IS_OBH* packet )
             players[UCID].Energy -=  packet->SpClose;
         }
     }
-    return true;
 }
 
-bool RCEnergy::InsimHLV( struct IS_HLV* packet )
+void RCEnergy::InsimHLV( struct IS_HLV* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
     if (packet->HLVC == 1)
@@ -437,7 +420,7 @@ bool RCEnergy::InsimHLV( struct IS_HLV* packet )
         time_t now = time(NULL);
         if ((now - players[UCID].LastT) < 1)
         {
-            return true;
+            return;
         }
         players[UCID].LastT = now;
 
@@ -446,7 +429,6 @@ bool RCEnergy::InsimHLV( struct IS_HLV* packet )
             players[UCID].Energy -=  5 * packet->C.Speed;
         }
     }
-    return true;
 }
 
 bool RCEnergy::Lock(byte UCID)

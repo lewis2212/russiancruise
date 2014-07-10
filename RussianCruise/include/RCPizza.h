@@ -96,13 +96,13 @@ private:
     void Done ( byte UCID );
     void btn_work ( byte UCID );
 
-    bool InsimNCN( struct IS_NCN* packet );
-    bool InsimNPL( struct IS_NPL* packet );
-    bool InsimPLP( struct IS_PLP* packet );
-    bool InsimPLL( struct IS_PLL* packet );
-    bool InsimCNL( struct IS_CNL* packet );
-    bool InsimCPR( struct IS_CPR* packet );
-    bool InsimMSO( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLP( struct IS_PLP* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimMSO( struct IS_MSO* packet );
 
     // Функции-утилиты
     int check_pos ( byte UCID );
@@ -113,13 +113,13 @@ public:
 
     // Основные функции класса
     int init(MYSQL *conn, CInsim *InSim, void *Message,void *Bank,void *Energy,void *DrLic, void * STreet);
-    bool ReadConfig(const char *Track);
+    void ReadConfig(const char *Track);
 
 
-    bool InsimMCI( struct IS_MCI* packet );
+    void InsimMCI( struct IS_MCI* packet );
 
     bool IfWork(byte UCID);
-    bool Event();
+    void Event();
 };
 
 #endif

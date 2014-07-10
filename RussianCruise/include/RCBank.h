@@ -42,13 +42,13 @@ private:
     RCMessage   *msg;
     RCDL        *dl;
 
-    bool InsimNCN( struct IS_NCN* packet );
-    bool InsimNPL( struct IS_NPL* packet );
-    bool InsimPLP( struct IS_PLP* packet);
-    bool InsimPLL( struct IS_PLL* packet );
-    bool InsimCNL( struct IS_CNL* packet );
-    bool InsimCPR( struct IS_CPR* packet );
-    bool InsimMSO( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLP( struct IS_PLP* packet);
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimMSO( struct IS_MSO* packet );
 
 public:
     RCBank(const char* Dir);
@@ -65,14 +65,14 @@ public:
 
     // Основные функции класса
     int init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL);
-    bool ReadConfig(const char *Track);
-    bool Save(byte UCID);
+    void ReadConfig(const char *Track);
+    void Save(byte UCID);
 
     void credit_penalty(byte UCID);
 
-    bool Event();
+    void Event();
 
-    bool InsimMCI( struct IS_MCI* packet );
+    void InsimMCI( struct IS_MCI* packet );
 };
 
 #endif

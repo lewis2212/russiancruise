@@ -8,148 +8,148 @@ RCBaseClass::~RCBaseClass()
 {
 }
 
-bool RCBaseClass::next_packet()
+void RCBaseClass::next_packet()
 {
     if (!insim)
-        return true;
+        return;
 
     switch (insim->peek_packet())
     {
     case ISP_VER:
-        return InsimVER( (struct IS_VER*)insim->get_packet() );
+        InsimVER( (struct IS_VER*)insim->get_packet() );
         break;
 
     case ISP_TINY:
-        return InsimTINY( (struct IS_TINY*)insim->get_packet() );
+        InsimTINY( (struct IS_TINY*)insim->get_packet() );
         break;
 
     case ISP_SMALL:
-        return InsimSMALL( (struct IS_SMALL*)insim->get_packet() );
+        InsimSMALL( (struct IS_SMALL*)insim->get_packet() );
         break;
 
     case ISP_STA:
-        return InsimSTA( (struct IS_STA*)insim->get_packet() );
+        InsimSTA( (struct IS_STA*)insim->get_packet() );
         break;
 
     case ISP_ISM:
-        return InsimISM( (struct IS_ISM*)insim->get_packet() );
+        InsimISM( (struct IS_ISM*)insim->get_packet() );
         break;
 
     case ISP_MSO:
-        return InsimMSO( (struct IS_MSO*)insim->get_packet() );
+        InsimMSO( (struct IS_MSO*)insim->get_packet() );
         break;
 
     case ISP_III:
-        return InsimIII( (struct IS_III*)insim->get_packet() );
+        InsimIII( (struct IS_III*)insim->get_packet() );
         break;
 
     case ISP_VTN:
-        return InsimVTN( (struct IS_VTN*)insim->get_packet() );
+        InsimVTN( (struct IS_VTN*)insim->get_packet() );
         break;
 
     case ISP_RST:
-        return InsimRST( (struct IS_RST*)insim->get_packet() );
+        InsimRST( (struct IS_RST*)insim->get_packet() );
         break;
 
     case ISP_NCN:
-        return InsimNCN(  (struct IS_NCN*)insim->get_packet()  );
+        InsimNCN(  (struct IS_NCN*)insim->get_packet()  );
         break;
 
     case ISP_CNL:
-        return InsimCNL( (struct IS_CNL*)insim->get_packet() );
+        InsimCNL( (struct IS_CNL*)insim->get_packet() );
         break;
 
     case ISP_CPR:
-        return InsimCPR( (struct IS_CPR*)insim->get_packet() );
+        InsimCPR( (struct IS_CPR*)insim->get_packet() );
         break;
 
     case ISP_NPL:
-        return InsimNPL( (struct IS_NPL*)insim->get_packet() );
+        InsimNPL( (struct IS_NPL*)insim->get_packet() );
         break;
 
     case ISP_PLP:
-        return InsimPLP( (struct IS_PLP*)insim->get_packet() );
+        InsimPLP( (struct IS_PLP*)insim->get_packet() );
         break;
 
     case ISP_PLL:
-        return InsimPLL( (struct IS_PLL*)insim->get_packet() );
+        InsimPLL( (struct IS_PLL*)insim->get_packet() );
         break;
 
     case ISP_LAP:
-        return InsimLAP( (struct IS_LAP*)insim->get_packet() );
+        InsimLAP( (struct IS_LAP*)insim->get_packet() );
         break;
 
     case ISP_SPX:
-        return InsimSPX( (struct IS_SPX*)insim->get_packet() );
+        InsimSPX( (struct IS_SPX*)insim->get_packet() );
         break;
 
     case ISP_PIT:
-        return InsimPIT( (struct IS_PIT*)insim->get_packet() );
+        InsimPIT( (struct IS_PIT*)insim->get_packet() );
         break;
 
     case ISP_PSF:
-        return InsimPSF( (struct IS_PSF*)insim->get_packet() );
+        InsimPSF( (struct IS_PSF*)insim->get_packet() );
         break;
 
     case ISP_PLA:
-        return InsimPLA( (struct IS_PLA*)insim->get_packet() );
+        InsimPLA( (struct IS_PLA*)insim->get_packet() );
         break;
 
     case ISP_PEN:
-        return InsimPEN( (struct IS_PEN*)insim->get_packet() );
+        InsimPEN( (struct IS_PEN*)insim->get_packet() );
         break;
 
     case ISP_TOC:
-        return InsimTOC( (struct IS_TOC*)insim->get_packet() );
+        InsimTOC( (struct IS_TOC*)insim->get_packet() );
         break;
 
     case ISP_FLG:
-        return InsimFLG( (struct IS_FLG*)insim->get_packet() );
+        InsimFLG( (struct IS_FLG*)insim->get_packet() );
         break;
 
     case ISP_CRS:
-        return InsimCRS( (struct IS_CRS*)insim->get_packet() );
+        InsimCRS( (struct IS_CRS*)insim->get_packet() );
         break;
 
     case ISP_BFN:
-        return InsimBFN( (struct IS_BFN*)insim->get_packet() );
+        InsimBFN( (struct IS_BFN*)insim->get_packet() );
         break;
 
     case ISP_BTC:
-        return InsimBTC( (struct IS_BTC*)insim->get_packet() );
+        InsimBTC( (struct IS_BTC*)insim->get_packet() );
         break;
 
     case ISP_BTT:
-        return InsimBTT( (struct IS_BTT*)insim->get_packet() );
+        InsimBTT( (struct IS_BTT*)insim->get_packet() );
         break;
 
     case ISP_CON:
-        return InsimCON( (struct IS_CON*)insim->get_packet() );
+        InsimCON( (struct IS_CON*)insim->get_packet() );
         break;
 
     case ISP_OBH:
-        return InsimOBH( (struct IS_OBH*)insim->get_packet() );
+        InsimOBH( (struct IS_OBH*)insim->get_packet() );
         break;
 
     case ISP_AXM:
-        return InsimAXM( (struct IS_AXM*)insim->get_packet() );
+        InsimAXM( (struct IS_AXM*)insim->get_packet() );
         break;
 
     case ISP_ACR:
-        return InsimACR( (struct IS_ACR*)insim->get_packet() );
+        InsimACR( (struct IS_ACR*)insim->get_packet() );
         break;
 
     case ISP_HLV:
-        return InsimHLV( (struct IS_HLV*)insim->get_packet() );
+        InsimHLV( (struct IS_HLV*)insim->get_packet() );
         break;
     }
 }
 
-bool
+void
 RCBaseClass::InsimMCI( struct IS_MCI* packet )
 {
     if (!insim)
-        return false;
+        return;
 }
 
 bool RCBaseClass::Check_Pos(int polySides, int polyX[], int polyY[], float x, float y)
@@ -225,6 +225,140 @@ const char* RCBaseClass::GetReason(byte Reason)
     default:
         return "N/A";
         break;
+    }
+}
+
+string RCBaseClass::packetType(byte type)
+{
+    switch(type)
+    {
+        case ISP_VER:
+            return "ISP_VER";
+            break;
+
+        case ISP_TINY:
+            return "ISP_TINY";
+            break;
+
+        case ISP_SMALL:
+            return "ISP_SMALL";
+            break;
+
+        case ISP_STA:
+            return "ISP_STA";
+            break;
+
+        case ISP_ISM:
+            return "ISP_ISM";
+            break;
+
+        case ISP_MSO:
+            return "ISP_MSO";
+            break;
+
+        case ISP_III:
+            return "ISP_III";
+            break;
+
+        case ISP_VTN:
+            return "ISP_VTN";
+            break;
+
+        case ISP_RST:
+            return "ISP_RST";
+            break;
+
+        case ISP_NCN:
+            return "ISP_NCN";
+            break;
+
+        case ISP_CNL:
+            return "ISP_CNL";
+            break;
+
+        case ISP_CPR:
+            return "ISP_CPR";
+            break;
+
+        case ISP_NPL:
+            return "ISP_NPL";
+            break;
+
+        case ISP_PLP:
+            return "ISP_PLP";
+            break;
+
+        case ISP_PLL:
+            return "ISP_PLL";
+            break;
+
+        case ISP_LAP:
+            return "ISP_LAP";
+            break;
+
+        case ISP_SPX:
+            return "ISP_SPX";
+            break;
+
+        case ISP_PIT:
+            return "ISP_PIT";
+            break;
+
+        case ISP_PSF:
+            return "ISP_PSF";
+            break;
+
+        case ISP_PLA:
+            return "ISP_PLA";
+            break;
+
+        case ISP_PEN:
+            return "ISP_PEN";
+            break;
+
+        case ISP_TOC:
+            return "ISP_TOC";
+            break;
+
+        case ISP_FLG:
+            return "ISP_FLG";
+            break;
+
+        case ISP_CRS:
+            return "ISP_CRS";
+            break;
+
+        case ISP_BFN:
+            return "ISP_BFN";
+            break;
+
+        case ISP_BTC:
+            return "ISP_BTC";
+            break;
+
+        case ISP_BTT:
+            return "ISP_BTT";
+            break;
+
+        case ISP_CON:
+            return "ISP_CON";
+            break;
+
+        case ISP_OBH:
+            return "ISP_OBH";
+            break;
+
+        case ISP_AXM:
+            return "ISP_AXM";
+            break;
+
+        case ISP_ACR:
+            return "ISP_ACR";
+            break;
+
+        case ISP_HLV:
+            return "ISP_HLV";
+            break;
     }
 }
 

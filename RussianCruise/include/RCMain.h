@@ -22,7 +22,7 @@ Russian Cruise by TurboSnail
 
 #include <json/json.h>
 
-#include <cmath>
+#include <math.h>
 #include <map>
 #include <thread>
 #include <stdexcept>
@@ -48,6 +48,7 @@ Russian Cruise by TurboSnail
 #define MAX_CARS 30
 
 using namespace std;
+
 
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];

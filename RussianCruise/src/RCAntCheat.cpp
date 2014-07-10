@@ -43,46 +43,43 @@ int RCAntCheat::init(MYSQL *conn, CInsim *InSim, void *Message)
     return 0;
 }
 
-bool RCAntCheat::InsimCNL( struct IS_CNL* packet )
+void RCAntCheat::InsimCNL( struct IS_CNL* packet )
 {
     players.erase( packet->UCID );
-    return true;
 }
 
-bool RCAntCheat::InsimCPR( struct IS_CPR* packet )
+void RCAntCheat::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[ packet->UCID ].PName, packet->PName);
-    return true;
 }
 
-bool RCAntCheat::InsimMCI ( struct IS_MCI* pack_mci )
+void RCAntCheat::InsimMCI ( struct IS_MCI* pack_mci )
 {
-    return true;
+    return;
 }
 
-bool RCAntCheat::InsimMSO( struct IS_MSO* packet )
+void RCAntCheat::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 }
 
 
-bool RCAntCheat::InsimNCN( struct IS_NCN* packet )
+void RCAntCheat::InsimNCN( struct IS_NCN* packet )
 {
 
     if (packet->UCID == 0)
     {
-        return true;
+        return;
     }
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
-    return true;
 }
 
-bool RCAntCheat::InsimNPL( struct IS_NPL* packet )
+void RCAntCheat::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
     players[ packet->UCID ].NPL = 1;
@@ -117,7 +114,7 @@ bool RCAntCheat::InsimNPL( struct IS_NPL* packet )
         sprintf(Text, "/kick %s", players[ packet->UCID ].UName);
         insim->SendMTC( packet->UCID , "^1Hack detect");
         insim->SendMST(Text);
-        return false;
+        return;
 
     }
 
@@ -126,13 +123,13 @@ bool RCAntCheat::InsimNPL( struct IS_NPL* packet )
         sprintf(Text, "/spec %s", players[ packet->UCID ].UName);
         insim->SendMST("/msg ^1Hack detect");
         insim->SendMST(Text);
-        return false;
+        return;
     }
 
     players[ packet->UCID ].ReadyForMCI = true;
 }
 
-bool RCAntCheat::InsimPLP( struct IS_PLP* packet)
+void RCAntCheat::InsimPLP( struct IS_PLP* packet)
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
     PLIDtoUCID.erase( packet->PLID );
@@ -140,10 +137,9 @@ bool RCAntCheat::InsimPLP( struct IS_PLP* packet)
     memset(&players[ UCID ].Info, 0, sizeof(CompCar));
     players[ UCID ].InPit = true;
     players[ UCID ].ReadyForMCI = false;
-    return true;
 }
 
-bool RCAntCheat::InsimPLL( struct IS_PLL* packet )
+void RCAntCheat::InsimPLL( struct IS_PLL* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
     PLIDtoUCID.erase( packet->PLID );
@@ -151,16 +147,14 @@ bool RCAntCheat::InsimPLL( struct IS_PLL* packet )
     memset(&players[ UCID ].Info, 0, sizeof(CompCar));
     players[ UCID ].InPit = true;
     players[ UCID ].ReadyForMCI = false;
-    return true;
 }
 
-bool RCAntCheat::InsimPLA( struct IS_PLA* packet )
+void RCAntCheat::InsimPLA( struct IS_PLA* packet )
 {
     insim->SendTiny(TINY_REO,255);
-    return true;
 }
 
-/*bool RCAntCheat::InsimREO( struct IS_REO* packet )
+/*void RCAntCheat::InsimREO( struct IS_REO* packet )
 {
 
 

@@ -37,16 +37,16 @@ private:
 
     map<byte, EnergyPlayer>players;     // Array of players
 
-    bool InsimNCN( struct IS_NCN* packet );
-    bool InsimNPL( struct IS_NPL* packet );
-    bool InsimPLP( struct IS_PLP* packet );
-    bool InsimPLL( struct IS_PLL* packet );
-    bool InsimCNL( struct IS_CNL* packet );
-    bool InsimCPR( struct IS_CPR* packet );
-    bool InsimMSO( struct IS_MSO* packet );
-    bool InsimCON( struct IS_CON* packet );
-    bool InsimOBH( struct IS_OBH* packet );
-    bool InsimHLV( struct IS_HLV* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLP( struct IS_PLP* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimMSO( struct IS_MSO* packet );
+    void InsimCON( struct IS_CON* packet );
+    void InsimOBH( struct IS_OBH* packet );
+    void InsimHLV( struct IS_HLV* packet );
 
 public:
     RCEnergy(const char* Dir);
@@ -58,24 +58,24 @@ public:
     struct  place zone;
 
     // Основные функции класса
-    int init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
-    bool ReadConfig(const char *Track);
+    int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
+    void    ReadConfig(const char *Track);
 
-    bool InsimMCI( struct IS_MCI* packet );
+    void    InsimMCI( struct IS_MCI* packet );
 
-    bool Save(byte UCID);
+    void    Save(byte UCID);
 
-    int  GetEnergy(byte UCID);
-    bool Lock(byte UCID);
-    bool Unlock(byte UCID);
-    bool Islocked(byte UCID);
+    int     GetEnergy(byte UCID);
+    bool    Lock(byte UCID);
+    bool    Unlock(byte UCID);
+    bool    Islocked(byte UCID);
 
-    bool AddEnergy( byte UCID, int Energy);
-    bool RemoveEnergy( byte UCID, int Energy);
+    bool	AddEnergy( byte UCID, int Energy);
+    bool	RemoveEnergy( byte UCID, int Energy);
 
-    bool InCafe ( byte UCID );
+    bool    InCafe ( byte UCID );
 
-    bool Event();
+    void    Event();
 };
 
 #endif

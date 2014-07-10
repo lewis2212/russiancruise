@@ -793,9 +793,9 @@ void case_mci ()
             players.at(UCID).Bonus_dist += Dist;
         }
 
-        if ( S > 20 and dl->GetLVL(UCID) < 20 )
+        if ( S > 30 and dl->GetLVL(UCID) < 20 )
         {
-            if (S <= StreetInfo.SpeedLimit + 5)
+            if (S <= StreetInfo.SpeedLimit)
             {
                 if ( dl->Islocked( UCID ) )
                     dl->Unlock( UCID );
@@ -851,9 +851,10 @@ void case_mci ()
         if (players.at(UCID).Svetofor == 1)
         {
             char TEST[64];
-            sprintf(TEST, "X: %d, Y: %d, H: %d", X, Y, pack_mci->Info[i].Heading/182);
-			//RCBaseClass::ButtonInfo(UCID, TEST);
-			pizza->ButtonInfo(UCID, TEST);
+            sprintf(TEST, "X=%d Y=%d H=%d", X, Y, pack_mci->Info[i].Heading/182);
+#ifdef _RC_PIZZA_H
+            pizza->ButtonInfo(UCID, TEST);
+#endif
         }
         memcpy(&players.at(UCID).Info, &pack_mci->Info[i], sizeof(CompCar));
     }
@@ -868,6 +869,7 @@ void case_mso ()
 
     if ( pack_mso->UserType != MSO_PREFIX )
         return;
+
 
     xString Message = pack_mso->Msg + pack_mso->TextStart;
 	vector<string> args = Message.split(' ',1);
@@ -1645,10 +1647,7 @@ void case_npl ()
             }
 
 #ifdef _RC_LEVEL_H
-            //int needlvl = (GetCarID(players.at(pack_npl->UCID).CName)-1)*5;
-
-			/** убрал временно, чтоб пацаны могли на ГТРах с ограном погонять **/
-			int needlvl = 1;
+            int needlvl = (GetCarID(players.at(pack_npl->UCID).CName)-1)*5;
 
             if (dl->GetLVL(pack_npl->UCID) < needlvl)
             {
@@ -2293,12 +2292,11 @@ void signal_handler(int sig)
 
 int main(int argc, char* argv[])
 {
-
-    signal(SIGINT,signal_handler); // ctrl+c
-    signal(SIGKILL,signal_handler); // kill
-    signal(SIGQUIT,signal_handler); // ctrl + \
-    signal(SIGTERM,signal_handler); // kill
-    signal(SIGTSTP,signal_handler); // ctrl + z
+   signal(SIGINT,signal_handler); // ctrl+c
+   signal(SIGKILL,signal_handler); // kill
+   signal(SIGQUIT,signal_handler); // ctrl + \
+   signal(SIGTERM,signal_handler); // kill
+   signal(SIGTSTP,signal_handler); // ctrl + z
 
     if( argc < 2 )
     {
@@ -2311,6 +2309,7 @@ int main(int argc, char* argv[])
 
     string p = argv[0];
     size_t pos = p.rfind('/');
+
     strcpy(RootDir, p.substr(0,pos).c_str());
     strcpy(ServiceName, argv[1]);
 
@@ -2414,31 +2413,31 @@ int main(int argc, char* argv[])
                 break;
 
             case ISP_NPL:
-                case_npl();
+                case_npl ();
                 break;
 
             case ISP_NCN:
-                case_ncn();
+                case_ncn ();
                 break;
 
             case ISP_CNL:
-                case_cnl();
+                case_cnl ();
                 break;
 
             case ISP_PLL:
-                case_pll();
+                case_pll ();
                 break;
 
             case ISP_PLP:
-                case_plp();
+                case_plp ();
                 break;
 
             case ISP_BTC:
-                case_btc();
+                case_btc ();
                 break;
 
             case ISP_BTT:
-                case_btt();
+                case_btt ();
                 break;
 
             case ISP_BFN:
@@ -2446,15 +2445,21 @@ int main(int argc, char* argv[])
                 break;
 
             case ISP_CPR:
-                case_cpr();
+                case_cpr ();
                 break;
 
             case ISP_RST:
-                case_rst();
+                case_rst ();
+                break;
+
+            case ISP_REO:
+                break;
+
+            case ISP_NLP:
                 break;
 
            case ISP_PEN:
-                case_pen();
+                case_pen ();
                 break;
 
             case ISP_VTN:
@@ -2468,8 +2473,7 @@ int main(int argc, char* argv[])
 
     	   for( cl = classes.begin(); cl != classes.end(); ++cl )
     	   {
-    			if(!(*cl)->next_packet());
-                    break;
+    			(*cl)->next_packet();
     	   }
         }
         catch(const logic_error& lerror)
