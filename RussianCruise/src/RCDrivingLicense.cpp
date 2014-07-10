@@ -184,11 +184,11 @@ int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
     return 0;
 }
 
-void RCDL::InsimNCN( struct IS_NCN* packet )
+bool RCDL::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
     {
-        return;
+        return true;
     }
 
     // Copy all the player data we need into the players[] array
@@ -201,10 +201,6 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     DB_ROWS result = dbSelect(query);
     DB_ROW row;
 
-    if (dbres == NULL)
-    {
-        printf("Error: can't get the result description\n");
-    }
 
     if( result.size() != 0 )
     {
@@ -220,54 +216,65 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
         dbExec(query);
 
         players[ packet->UCID ].LVL = 0;
+        players[ packet->UCID ].Loaded = true;
         Save( packet->UCID );
-
     }
+    players[ packet->UCID ].Loaded = true;
+    return true;
 }
 
-void RCDL::InsimNPL( struct IS_NPL* packet )
+bool RCDL::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
+    return true;
 }
 
-void RCDL::InsimPLP( struct IS_PLP* packet)
+bool RCDL::InsimPLP( struct IS_PLP* packet)
 {
     memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
-void RCDL::InsimPLL( struct IS_PLL* packet )
+bool RCDL::InsimPLL( struct IS_PLL* packet )
 {
     memset(&players[PLIDtoUCID[ packet->PLID ]  ].Info, 0, sizeof( CompCar ) );
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
-void RCDL::InsimCNL( struct IS_CNL* packet )
+bool RCDL::InsimCNL( struct IS_CNL* packet )
 {
     Save( packet->UCID );
     players.erase( packet->UCID );
+    return true;
 }
 
-void RCDL::InsimCPR( struct IS_CPR* packet )
+bool RCDL::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[ packet->UCID ].PName, packet->PName);
+    return true;
 }
 
-void RCDL::InsimMSO( struct IS_MSO* packet )
+bool RCDL::InsimMSO( struct IS_MSO* packet )
 {
-
+    return true;
 }
 
-void RCDL::Save (byte UCID)
+bool RCDL::Save (byte UCID)
 {
+    if(!players[UCID].Loaded)
+        return true;
+
     DB_ROW query;
     query["lvl"] = ToString(players[ UCID ].LVL);
     query["skill"] = ToString(players[ UCID ].Skill);
     dbUpdate("dl",query,{"username",players[ UCID ].UName});
 
+    return true;
 }
 
-void RCDL::InsimCON( struct IS_CON* packet )
+bool RCDL::InsimCON( struct IS_CON* packet )
 {
     //struct IS_CON *pack_con = (struct IS_CON*)insim->get_packet();
     /*
@@ -292,11 +299,11 @@ void RCDL::InsimCON( struct IS_CON* packet )
     	}
 
     */
-
+    return true;
 }
 
 
-void RCDL::InsimMCI( struct IS_MCI* pack_mci )
+bool RCDL::InsimMCI( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -338,9 +345,10 @@ void RCDL::InsimMCI( struct IS_MCI* pack_mci )
                 insim->SendMTC(255, Msg);
         }
     }
+    return true;
 }
 
-void RCDL::Event()
+bool RCDL::Event()
 {
     // левел и скилл игрока
     for ( auto& play: players )
@@ -351,4 +359,5 @@ void RCDL::Event()
         insim->SendButton(255, play.first, 1, 100, 5, 30, 4, 32 + 64,
                         StringFormat(msg->_(play.first, "LvlAndSkill"), players[ play.first ].LVL, skl));
     }
+    return true;
 }

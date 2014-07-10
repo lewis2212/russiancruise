@@ -21,20 +21,20 @@ private:
 
     map<byte, MPlayer>players;
 
-    void InsimNCN( struct IS_NCN* packet );
-    void InsimCNL( struct IS_CNL* packet );
-    void InsimMSO( struct IS_MSO* packet );
+    bool InsimNCN( struct IS_NCN* packet );
+    bool InsimCNL( struct IS_CNL* packet );
+    bool InsimMSO( struct IS_MSO* packet );
 
 public:
     RCMessage(const char* Dir);
     ~RCMessage();
 
     int init(MYSQL *conn, CInsim *InSim);
-    void ReadConfig(const char *Track);
+    bool ReadConfig(const char *Track);
 
     string GetLang(byte UCID);
 
-    void Save(byte UCID);
+    bool Save(byte UCID);
 
     const char* _( byte UCID, string CODE );
 

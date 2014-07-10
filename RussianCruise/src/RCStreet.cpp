@@ -56,7 +56,7 @@ const char* RCStreet::GetStreetName(byte UCID, int StreetID)
     else return "NULL";
 }
 
-void RCStreet::ReadConfig(const char *Track)
+bool RCStreet::ReadConfig(const char *Track)
 {
     // Json::Value lang;
     char file[255];
@@ -67,7 +67,7 @@ void RCStreet::ReadConfig(const char *Track)
     if (readf.is_open() == false)
     {
         CCText("  ^7RCStreet   ^1ERROR: ^8file " + (string)file + " not found");
-        return;
+        return true;
     }
 
     int i = 0;
@@ -157,19 +157,22 @@ void RCStreet::ReadConfig(const char *Track)
     readf.close();
 
     CCText("  ^7RCStreet\t^2OK");
+    return true;
 }
 
-void RCStreet::InsimCNL( struct IS_CNL* packet )
+bool RCStreet::InsimCNL( struct IS_CNL* packet )
 {
     players.erase(packet->UCID);
+    return true;
 }
 
-void RCStreet::InsimCPR( struct IS_CPR* packet )
+bool RCStreet::InsimCPR( struct IS_CPR* packet )
 {
     strcpy(players[ packet->UCID ].PName, packet->PName);
+    return true;
 }
 
-void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
+bool RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -191,38 +194,42 @@ void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
         }
         BtnStreet( UCID );
     }
+    return true;
 }
 
-void RCStreet::InsimMSO( struct IS_MSO* packet )
+bool RCStreet::InsimMSO( struct IS_MSO* packet )
 {
-    if (packet->UCID == 0)
-        return;
+    return true;
 }
 
 
-void RCStreet::InsimNCN( struct IS_NCN* packet )
+bool RCStreet::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
-        return;
+        return true;
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
+    return true;
 }
 
-void RCStreet::InsimNPL( struct IS_NPL* packet )
+bool RCStreet::InsimNPL( struct IS_NPL* packet )
 {
     PLIDtoUCID[ packet->PLID ] = packet->UCID;
     players[ packet->UCID ].StreetNum = DEFAULT_STREET_NUM;
+    return true;
 }
 
-void RCStreet::InsimPLP( struct IS_PLP* packet)
+bool RCStreet::InsimPLP( struct IS_PLP* packet)
 {
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
-void RCStreet::InsimPLL( struct IS_PLL* packet )
+bool RCStreet::InsimPLL( struct IS_PLL* packet )
 {
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
 void RCStreet::BtnStreet (byte UCID)

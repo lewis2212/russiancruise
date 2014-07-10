@@ -56,7 +56,7 @@ int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
 	return 0;
 }
 
-void RCLight::ReadConfig(const char *Track)
+bool RCLight::ReadConfig(const char *Track)
 {
 	config.clear();
 	Light.clear();
@@ -70,7 +70,7 @@ void RCLight::ReadConfig(const char *Track)
 	if(!readf.is_open())
 	{
 		CCText("  ^7RCLight    ^1ERROR: ^8file " + (string)file + " not found");
-		return ;
+		return true;
 	}
 
 	bool readed = configReader.parse( readf, config, false );
@@ -81,7 +81,7 @@ void RCLight::ReadConfig(const char *Track)
 		// report to the user the failure and their locations in the document.
 		cout  << "Failed to parse configuration\n"
 				   << configReader.getFormattedErrorMessages();
-		return;
+		return true;
 	}
 	readf.close();
 
@@ -169,19 +169,22 @@ void RCLight::ReadConfig(const char *Track)
 	f.close();*/
 
 	CCText("  ^7RCLight\t^2OK");
+	return true;
 }
 
-void RCLight::InsimCNL( struct IS_CNL* packet )
+bool RCLight::InsimCNL( struct IS_CNL* packet )
 {
 	players.erase( packet->UCID );
+	return true;
 }
 
-void RCLight::InsimCPR( struct IS_CPR* packet )
+bool RCLight::InsimCPR( struct IS_CPR* packet )
 {
 	strcpy(players[ packet->UCID ].PName, packet->PName);
+	return true;
 }
 
-void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
+bool RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 {
 	for (int i = 0; i < pack_mci->NumC; i++)
 	{
@@ -274,67 +277,62 @@ void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
 		/** pit wrong route **/
 		if (strstr(TrackName, "SO4X"))
 		{
+			int num1=4;
 			int pit1x[10] = {210, 200, 190, 200};
 			int pit1y[10] = {233, 230, 277, 281};
 
+			int num2=4;
 			int pit2x[10] = {229, 236, 247, 239};
 			int pit2y[10] = {-97, -39, -40, -100};
 
-			if ( Check_Pos( 4, pit1x, pit1y, X, Y ) )
+			int Head = 190;
+
+
+			if ( Check_Pos( num1, pit1x, pit1y, X, Y ) )
 			{
-				if ( (D < 190 + 90) and (D > 190 - 90) )
+				if ( (D < Head + 90) and (D > Head - 90) )
 				{
 					if (players[UCID].WrongWay == 1)
-					{
 						players[UCID].WrongWay = 0;
-						insim->SendBFN( UCID, 140);
-						insim->SendBFN( UCID, 141);
-					}
+
 				}
 				else
 				{
 					if (players[UCID].WrongWay == 0)
 						players[UCID].WrongWay =1;
 
-					WrongWay( UCID );
+					//WrongWay( UCID );
 
-					if (S > 10)
+					if (S > 5)
 						dl->RemSkill( UCID );
 				}
 			}
-			else if ( Check_Pos( 4, pit2x, pit2y, X, Y ) )
+			else if ( Check_Pos( num2, pit2x, pit2y, X, Y ) )
 			{
-				if ( (D < 190 + 90) and (D > 190 - 90) )
+				if ( (D < Head + 90) and (D > Head - 90) )
 				{
 					if (players[UCID].WrongWay == 1)
-					{
 						players[UCID].WrongWay =0;
-						insim->SendBFN( UCID, 140);
-						insim->SendBFN( UCID, 141);
-					}
 				}
 				else
 				{
 					if (players[UCID].WrongWay == 0)
 						players[UCID].WrongWay =1;
 
-					WrongWay( UCID );
+					//WrongWay( UCID );
 
-					if (S > 10)
+					if (S > 5)
 						dl->RemSkill( UCID );
 				}
 			}
 			else
 			{
 				if (players[UCID].WrongWay == 1)
-				{
 					players[UCID].WrongWay =0;
-						insim->SendBFN( UCID, 140);
-						insim->SendBFN( UCID, 141);
-				}
 			}
 		}
 	}
+	return true;
 }
 
 int RCLight::CheckLight(byte UCID)
@@ -357,7 +355,7 @@ void RCLight::OnRedFalse(byte UCID)
 	players[UCID].OnRed = false;
 }
 
-void RCLight::InsimMSO( struct IS_MSO* packet )
+bool RCLight::InsimMSO( struct IS_MSO* packet )
 {
 	char Message[128];
 	strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
@@ -377,29 +375,33 @@ void RCLight::InsimMSO( struct IS_MSO* packet )
 	}
 }
 
-void RCLight::InsimNCN( struct IS_NCN* packet )
+bool RCLight::InsimNCN( struct IS_NCN* packet )
 {
 	if (packet->UCID == 0)
 	{
-		return;
+		return true;
 	}
 	strcpy( players[ packet->UCID ].UName, packet->UName);
 	strcpy( players[ packet->UCID ].PName, packet->PName);
+	return true;
 }
 
-void RCLight::InsimNPL( struct IS_NPL* packet )
+bool RCLight::InsimNPL( struct IS_NPL* packet )
 {
 	PLIDtoUCID[ packet->PLID ] = packet->UCID ;
+	return true;
 }
 
-void RCLight::InsimPLP( struct IS_PLP* packet)
+bool RCLight::InsimPLP( struct IS_PLP* packet)
 {
 	//PLIDtoUCID.erase( packet->PLID );
+	return true;
 }
 
-void RCLight::InsimPLL( struct IS_PLL* packet )
+bool RCLight::InsimPLL( struct IS_PLL* packet )
 {
 	PLIDtoUCID.erase( packet->PLID );
+	return true;
 }
 
 bool RCLight::GetOnLight(byte UCID)
@@ -589,7 +591,7 @@ void RCLight::WrongWay(byte UCID)
 	insim->SendButton(255, UCID, 141, 25, 26, 150, 150, 3, "-");
 }
 
-void RCLight::Event()
+bool RCLight::Event()
 {
 	if (!LightWorks)
 	{
@@ -613,7 +615,7 @@ void RCLight::Event()
 			green2 = 0;
 			gff = true;
 		}
-		return;
+		return true;
 	}
 
 	float svtime = time(&sstime)%40;
@@ -690,5 +692,6 @@ void RCLight::Event()
 		green1 = 0;
 		green2 = 0;
 	}
+	return true;
 }
 

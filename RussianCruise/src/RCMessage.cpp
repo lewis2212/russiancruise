@@ -52,7 +52,7 @@ int RCMessage::init(MYSQL *conn, CInsim *InSim)
     return 0;
 }
 
-void RCMessage::ReadConfig(const char *Track)
+bool RCMessage::ReadConfig(const char *Track)
 {
     char dir[ MAX_PATH ];
     sprintf(dir, "%s/data/RCMessages", RootDir);
@@ -150,10 +150,10 @@ RCMessage::ReadLangFile(const char *file)
     readf.close();
 }
 
-void RCMessage::InsimNCN( struct IS_NCN* packet )
+bool RCMessage::InsimNCN( struct IS_NCN* packet )
 {
     if (packet->UCID == 0)
-        return;
+        return true;
 
 
     players[ packet->UCID ].UName = packet->UName;
@@ -173,14 +173,19 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
 	{
 		printf("Can't find %s\n Create user\n", packet->UName);
         players[ packet->UCID ].Lang = "rus";
+        players[packet->UCID].Loaded = true;
         Save( packet->UCID );
-	}
+    }
+
+    players[packet->UCID].Loaded = true;
+    return true;
 }
 
-void RCMessage::InsimCNL( struct IS_CNL* packet )
+bool RCMessage::InsimCNL( struct IS_CNL* packet )
 {
     Save(packet->UCID);
     players.erase( packet->UCID );
+    return true;
 }
 
 string RCMessage::GetLangList()
@@ -191,10 +196,10 @@ string RCMessage::GetLangList()
     return lang.substr(2);
 }
 
-void RCMessage::InsimMSO( struct IS_MSO* packet )
+bool RCMessage::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-        return;
+       return true;
 
     xString Msg = packet->Msg + packet->TextStart;
 
@@ -205,7 +210,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
         if ( Msg.size() < 8)
         {
             insim->SendMTC( packet->UCID, _( packet->UCID , "2104"));
-            return;
+            return true;
         }
 
         vector<string> args = Msg.split(' ');
@@ -213,7 +218,7 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 		if(args.size() < 2)
         {
             insim->SendMTC(packet->UCID, _( packet->UCID , "2105"));
-            return;
+            return true;
         }
 
         string id = args[1];
@@ -225,20 +230,24 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
                 players[ packet->UCID ].Lang = id;
 
 				insim->SendMTC(packet->UCID, _(packet->UCID, "^1| ^7Language: ") + id);
-				return;
+				return true;
 			}
 		}
 
 		insim->SendMTC(packet->UCID, StringFormat(_(packet->UCID, "^1| ^7Language %s not found"), id.c_str()));
-		return;
+		return true;
     }
-
+    return true;
 }
 
-void RCMessage::Save (byte UCID)
+bool RCMessage::Save (byte UCID)
 {
+    if (!players[UCID].Loaded)
+        return true;
+
     char query[MAX_PATH];
     sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName.c_str(), players[ UCID ].Lang.c_str());
 
     dbExec( query );
+    return true;
 }

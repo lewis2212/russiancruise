@@ -72,21 +72,21 @@ int RCPolice::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *
     return 0;
 }
 
-void RCPolice::InsimNCN( struct IS_NCN* packet )
+bool RCPolice::InsimNCN( struct IS_NCN* packet )
 {
     if ( packet->UCID == 0 )
     {
-        return;
+        return true;
     }
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
 
     //читаем штрафы
-    ReadUserFines(packet->UCID);
+    return ReadUserFines(packet->UCID);
 }
 
-void RCPolice::InsimNPL( struct IS_NPL* packet )
+bool RCPolice::InsimNPL( struct IS_NPL* packet )
 {
 	byte UCID = packet->UCID;
     PLIDtoUCID[packet->PLID] = packet->UCID;
@@ -157,9 +157,10 @@ void RCPolice::InsimNPL( struct IS_NPL* packet )
         nrg->Lock(packet->UCID);
         lgh->SetLight3(packet->UCID, true);
     }
+    return true;
 }
 
-void RCPolice::InsimPLP( struct IS_PLP* packet )
+bool RCPolice::InsimPLP( struct IS_PLP* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
 
@@ -178,9 +179,10 @@ void RCPolice::InsimPLP( struct IS_PLP* packet )
         SaveCopStat(UCID);
 
     //PLIDtoUCID.erase(packet->PLID);
+    return true;
 }
 
-void RCPolice::InsimPLL( struct IS_PLL* packet )
+bool RCPolice::InsimPLL( struct IS_PLL* packet )
 {
     byte UCID = PLIDtoUCID[packet->PLID];
 
@@ -199,9 +201,10 @@ void RCPolice::InsimPLL( struct IS_PLL* packet )
         SaveCopStat(UCID);
 
     PLIDtoUCID.erase(packet->PLID);
+    return true;
 }
 
-void RCPolice::InsimCNL( struct IS_CNL* packet )
+bool RCPolice::InsimCNL( struct IS_CNL* packet )
 {
     for (int i = 0; i < 32; i++)
     {
@@ -236,9 +239,10 @@ void RCPolice::InsimCNL( struct IS_CNL* packet )
 
     Save(packet->UCID);
     players.erase(packet->UCID);
+    return true;
 }
 
-void RCPolice::InsimCPR( struct IS_CPR* packet )
+bool RCPolice::InsimCPR( struct IS_CPR* packet )
 {
     players[packet->UCID].PName = packet->PName;
 
@@ -288,6 +292,7 @@ void RCPolice::InsimCPR( struct IS_CPR* packet )
         for (int i=214; i <= 222; i++)
             insim->SendBFN(packet->UCID, i);
     }
+    return true;
 }
 
 bool RCPolice::IsPursuit(byte UCID)
@@ -295,13 +300,13 @@ bool RCPolice::IsPursuit(byte UCID)
     return players[UCID].Pogonya > 0;
 }
 
-void RCPolice::InsimMSO( struct IS_MSO* packet )
+bool RCPolice::InsimMSO( struct IS_MSO* packet )
 {
     if (packet->UCID == 0)
-        return;
+        return true;
 
     if ( packet->UserType != MSO_PREFIX )
-        return;
+        return true;
 
     byte UCID = packet->UCID;
 
@@ -311,36 +316,36 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if (Message == "!911" or Message == "!dtp" or Message == "!^Cдтп")
     {
         if (players[UCID].cop)
-            return;
+            return true;
 
         if (GetCopCount() <= 0)
         {
             insim->SendMTC(UCID, msg->_(UCID, "2102"));
-            return;
+            return true;
         }
 
         if (players[UCID].Pogonya > 0)
         {
             insim->SendMTC(UCID, msg->_(UCID, "WherePog"));
-            return;
+            return true;
         }
 
         if (players[UCID].DTP != 0)
         {
             insim->SendMTC(UCID, msg->_(UCID, "WhereDtp"));
-            return;
+            return true;
         }
 
         if (players[UCID].Info.Speed * 360 / 32768 > 0)
         {
             insim->SendMTC(UCID, msg->_(UCID, "NoDtpWhenSp"));
-            return;
+            return true;
         }
 
         if (time(NULL)-players[UCID].LastDtpTime < 60*5)
         {
             insim->SendMTC(UCID, msg->_(UCID, "2106"));
-            return;
+            return true;
         }
 
 		players[UCID].blame = false;
@@ -361,7 +366,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 char str[96];
                 sprintf(str, msg->_(UCID, "2109"), players[UCID].PName.c_str());
                 SendMTCToCop(str, 1, 2, 4);
-                return;
+                return true;
             }
         }
 
@@ -416,7 +421,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         if ( args.size() < 2)
         {
             insim->SendMTC( packet->UCID , msg->_(  packet->UCID , "2105" ));
-            return;
+            return true;
         }
 
         int id_i = atoi(args[1].c_str());
@@ -424,7 +429,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         if ( id_i < 1)
         {
             insim->SendMTC( packet->UCID , msg->_(  packet->UCID , "2105" ));
-            return;
+            return true;
         }
 
         if (bank->InBank( packet->UCID ))
@@ -519,7 +524,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             if (players[packet->UCID].Rank == 1 || players[packet->UCID].Rank == 3)
             {
                 insim->SendMTC(UCID, msg->_(UCID, "2111"));
-                return;
+                return true;
             }
 
             if (players[UCID].DTPstatus <= 0)
@@ -542,13 +547,13 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     if (count>=3)
                     {
                         insim->SendMTC(packet->UCID, msg->_(packet->UCID, "EndOfRadar"));
-                        return;
+                        return true;
                     }
 
                     if (StreetInfo.SpeedLimit == 0)
                     {
                         insim->SendMTC(UCID, "^2| ^7Вы не можете поставить радар в этом месте");
-                        return;
+                        return true;
                     }
 
                     int X, Y, H, Z;
@@ -587,10 +592,10 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
     if (Message.find("!kick") == 0 )
     {
         if (players[packet->UCID].Rank < 3)
-            return;
+            return true;
 
 		if(args.size() < 2)
-			return;
+			return true;
 
         string user = args[1];
 
@@ -615,10 +620,10 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     }
 
-    if ( players[ packet->UCID ].UName == "denis-takumi" or players[ packet->UCID ].UName == "Lexanom" )
+    if ( players[ packet->UCID ].UName == "denis-takumi" or players[ packet->UCID ].UName == "Lexanom" or players[ packet->UCID ].UName == "2brabus")
     {
 		if(args.size() < 2)
-			return;
+			return true;
 
 		const char* param = args[1].c_str();
 
@@ -644,7 +649,6 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
         if (Message.find("!cop_up") == 0 )
         {
-            if (param!=NULL)
             for (auto& p: players)
 			{
                 if (string(players[p.first].UName) == string(param))
@@ -658,7 +662,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     else
                         insim->SendMTC(UCID, "^2| ^8" + string(players[p.first].PName) + " ^7^Cдостиг максимального ранга");
 
-                    return;
+                    return true;
                 }
 			}
             insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
@@ -679,12 +683,13 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     else
                         insim->SendMTC(UCID, "^2| ^8" + string(players[p.first].PName) + " ^7^Cдостиг минимального ранга");
 
-                    return;
+                    return true;
                 }
             }
             insim->SendMTC(UCID, "^2| ^7^CИгрок не найден");
         }
     }
+    return true;
 }
 
 void RCPolice::RadarOff(byte UCID)
@@ -828,7 +833,7 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
     }
 }
 
-void RCPolice::InsimBTC( struct IS_BTC* packet )
+bool RCPolice::InsimBTC( struct IS_BTC* packet )
 {
     if ( packet->ClickID == 178 and packet->ReqI == 254 )
     {
@@ -972,7 +977,7 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
     if (packet->ClickID == 74)
     {
         if ( players[packet->ReqI].UName.length() == 0 )
-            return;
+            return true;
 
         if (players[packet->UCID].DTPstatus <= 0)
         {
@@ -995,14 +1000,14 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             insim->SendMTC(packet->UCID, msg->_(packet->UCID,"2119"));
         }
 
-        return;
+        return true;
     }
 
     /** Выключаем погоню **/
     if (packet->ClickID == 75)
     {
         if ( players[packet->ReqI].UName.length() == 0)
-            return;
+            return true;
 
         if (players[packet->ReqI].Pogonya != 0)
         {
@@ -1068,11 +1073,12 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             for (byte i = 101; i < 110; i++)
                 insim->SendBFN(255, i);
         }
-        return;
+        return true;
     }
+    return true;
 }
 
-void RCPolice::InsimBTT( struct IS_BTT* packet )
+bool RCPolice::InsimBTT( struct IS_BTT* packet )
 {
     tm *timeStruct = tools::GetLocalTime();
 
@@ -1147,7 +1153,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
             if (players[packet->UCID].DTPstatus > 0)
             {
                 insim->SendMTC(packet->UCID, msg->_(packet->UCID,"2116"));
-                return;
+                return true;
             }
 
             DTPvyzov[2][i] = packet->UCID;
@@ -1185,7 +1191,7 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
     if ( packet->ClickID == 80)
     {
         if (strlen(packet->Text) == 0)
-            return;
+            return true;
 
         players[packet->ReqI].Pogonya = 0;
         nrg->Unlock(packet->ReqI);
@@ -1234,9 +1240,10 @@ void RCPolice::InsimBTT( struct IS_BTT* packet )
             insim->SendBFN(packet->ReqI, 86);
         }
     }
+    return true;
 }
 
-void RCPolice::InsimPEN( struct IS_PEN* packet )
+bool RCPolice::InsimPEN( struct IS_PEN* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 
@@ -1279,9 +1286,10 @@ void RCPolice::InsimPEN( struct IS_PEN* packet )
             }
         }
     }
+    return true;
 }
 
-void RCPolice::InsimOBH( struct IS_OBH* packet )
+bool RCPolice::InsimOBH( struct IS_OBH* packet )
 {
     if (packet->Index == 22 || packet->Index == 138)
     {
@@ -1298,9 +1306,10 @@ void RCPolice::InsimOBH( struct IS_OBH* packet )
             }
         }
     }
+    return true;
 }
 
-void RCPolice::InsimPLA( struct IS_PLA* packet )
+bool RCPolice::InsimPLA( struct IS_PLA* packet )
 {
     byte UCID = PLIDtoUCID[ packet->PLID ];
 
@@ -1324,16 +1333,14 @@ void RCPolice::InsimPLA( struct IS_PLA* packet )
             insim->SendMST("/pitlane " + players[ UCID ].UName);
         }
     }
+    return true;
 }
 
-void RCPolice::InsimMCI( struct IS_MCI* packet )
+bool RCPolice::InsimMCI( struct IS_MCI* packet )
 {
     for (int i = 0; i < packet->NumC; i++)
     {
         byte UCID = PLIDtoUCID[packet->Info[i].PLID];
-
-        if (UCID == 0)
-            return;
 
         int SirenaCount = 0;
         int SDtemp=0;
@@ -1487,7 +1494,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
     }
 }
 
-void RCPolice::ReadConfig(const char* Track)
+bool RCPolice::ReadConfig(const char* Track)
 {
     ReadFines();
 
@@ -1499,7 +1506,7 @@ void RCPolice::ReadConfig(const char* Track)
     if (!readf.is_open())
     {
     	CCText("  ^7RCPolice   ^1ERROR: ^8file " + string(file) + " not found");
-        return;
+        return true;
     }
 
     while (readf.good())
@@ -1537,6 +1544,7 @@ void RCPolice::ReadConfig(const char* Track)
     readf.close();
 
     CCText("  ^7RCPolice\t^2OK");
+    return true;
 }
 
 void RCPolice::SetSirenLight( string sirenWord )
@@ -1600,8 +1608,11 @@ void RCPolice::BtnPogonya(byte UCID)
     }
 }
 
-void RCPolice::Save ( byte UCID )
+bool RCPolice::Save ( byte UCID )
 {
+    if(!players[ UCID ].Loaded)
+        return true;
+
     if (players[UCID].cop)
         SaveCopStat(UCID);
 
@@ -1616,9 +1627,10 @@ void RCPolice::Save ( byte UCID )
             writef << players[ UCID ].fines[i].fine_id << ";" << players[ UCID ].fines[i].fine_date << ";" << players[ UCID ].fines[i].CopName << ";" << players[ UCID ].fines[i].CopPName <<  endl;
 
     writef.close();
+    return true;
 }
 
-void RCPolice::ReadUserFines( byte UCID )
+bool RCPolice::ReadUserFines( byte UCID )
 {
 
     char file[255];
@@ -1629,42 +1641,42 @@ void RCPolice::ReadUserFines( byte UCID )
     if (!readf.is_open())
     {
         cout << "Can't find " << file << endl;
-        Save( UCID );
+        players[ UCID ].Loaded = true;
+        return Save( UCID );
     }
-    else
+
+    int i=0;
+    while (readf.good())
     {
-        int i=0;
-        while (readf.good())
+        char str[128];
+        readf.getline(str, 128);
+
+        if (strlen(str) > 1)
         {
-            char str[128];
-            readf.getline(str, 128);
+            char *id;
+            char *date;
+            char *CopName;
+            char *CopPName;
 
-            if (strlen(str) > 1)
-            {
-                char *id;
-                char *date;
-                char *CopName;
-                char *CopPName;
+            id = strtok(str, ";");
+            date = strtok(NULL, ";");
+            CopName = strtok(NULL, ";");
+            CopPName = strtok(NULL, ";");
 
-                id = strtok(str, ";");
-                date = strtok(NULL, ";");
-                CopName = strtok(NULL, ";");
-                CopPName = strtok(NULL, ";");
+            players[ UCID ].fines[i].fine_id = atoi(id);
+            if ( date )
+                players[ UCID ].fines[i].fine_date = atoi(date);
 
-                players[ UCID ].fines[i].fine_id = atoi(id);
-                if ( date )
-                    players[ UCID ].fines[i].fine_date = atoi(date);
+            if ( CopName )
+                players[ UCID ].fines[i].CopName = CopName;
 
-                if ( CopName )
-                    players[ UCID ].fines[i].CopName = CopName;
+            if ( CopPName )
+                players[ UCID ].fines[i].CopPName = CopPName;
 
-                if ( CopPName )
-                    players[ UCID ].fines[i].CopPName = CopPName;
-
-                i++;
-            }
+            i++;
         }
     }
+    return true;
 }
 
 void RCPolice::ReadFines()
@@ -1784,7 +1796,7 @@ RCPolice::LoadCopStat(byte UCID)
     return true;
 }
 
-void RCPolice::SaveCopStat(byte UCID)
+bool RCPolice::SaveCopStat(byte UCID)
 {
 
     DB_ROW arFields;
@@ -1809,11 +1821,12 @@ void RCPolice::SaveCopStat(byte UCID)
     {
         CCText("^1RCPolice: " + (string)players[UCID].UName + " SaveStat error");
         insim->SendMTC(255, "^1RCPolice: " + (string)players[UCID].UName + " SaveStat error");
-        return;
+        return true;
     }
+    return true;
 }
 
-void RCPolice::Event()
+bool RCPolice::Event()
 {
     for ( auto& play: players )
     {

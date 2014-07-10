@@ -31,17 +31,17 @@ class RCAutoschool : public RCBaseClass
 
 		RCMessage * msg;
 
-		void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-		void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
-		void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
-		void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
-		void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
-		void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
-		void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
-		void InsimCON( struct IS_CON* packet );
-		void InsimOBH( struct IS_OBH* packet );
-		void InsimHLV( struct IS_HLV* packet );
-		void InsimAXM( struct IS_AXM* packet );
+		bool InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+		bool InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+		bool InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
+		bool InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+		bool InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
+		bool InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+		bool InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
+		bool InsimCON( struct IS_CON* packet );
+		bool InsimOBH( struct IS_OBH* packet );
+		bool InsimHLV( struct IS_HLV* packet );
+		bool InsimAXM( struct IS_AXM* packet );
 
 		void ShowPanel(byte UCID);
 
@@ -50,9 +50,9 @@ class RCAutoschool : public RCBaseClass
 		~RCAutoschool();
 
 		void init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg);
-		void ReadConfig(const char* Track);
+		bool ReadConfig(const char* Track);
 
-		void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
+		bool InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 
 #endif // RCAUTOSCHOOL_H

@@ -9,9 +9,8 @@
 
 
 
-struct DLPlayer
+struct DLPlayer: public GlobalPlayer
 {
-    struct  CompCar Info;
     char    UName[32];             // Username
     char    PName[32];             // Player name
     u_int   LVL;
@@ -28,36 +27,36 @@ private:
     map<byte, DLPlayer>players;     // Array of players
 
     // функции-повторители основных фунцкий ядра
-    void InsimNCN( struct IS_NCN* packet );
-    void InsimNPL( struct IS_NPL* packet );
-    void InsimPLP( struct IS_PLP* packet );
-    void InsimPLL( struct IS_PLL* packet );
-    void InsimCNL( struct IS_CNL* packet );
-    void InsimCPR( struct IS_CPR* packet );
-    void InsimMSO( struct IS_MSO* packet );
-    void InsimCON( struct IS_CON* packet );
+    bool InsimNCN( struct IS_NCN* packet );
+    bool InsimNPL( struct IS_NPL* packet );
+    bool InsimPLP( struct IS_PLP* packet );
+    bool InsimPLL( struct IS_PLL* packet );
+    bool InsimCNL( struct IS_CNL* packet );
+    bool InsimCPR( struct IS_CPR* packet );
+    bool InsimMSO( struct IS_MSO* packet );
+    bool InsimCON( struct IS_CON* packet );
 
 public:
     RCDL(const char* Dir);
     ~RCDL();
 
     //
-    void    Save(byte UCID);
+    bool Save(byte UCID);
 
-    int     GetLVL(byte UCID);
-    int     GetSkill(byte UCID);
-    bool    AddSkill(byte UCID);
-    bool    AddSkill(byte UCID, float coef);
-    bool    RemSkill(byte UCID);
-    bool    RemSkill(byte UCID, float coef);
-    bool    Lock(byte UCID);
-    bool    Unlock(byte UCID);
-    bool    Islocked(byte UCID);
+    int  GetLVL(byte UCID);
+    int  GetSkill(byte UCID);
+    bool AddSkill(byte UCID);
+    bool AddSkill(byte UCID, float coef);
+    bool RemSkill(byte UCID);
+    bool RemSkill(byte UCID, float coef);
+    bool Lock(byte UCID);
+    bool Unlock(byte UCID);
+    bool Islocked(byte UCID);
 
-    byte    inited;
+    byte inited;
 
-    void    InsimMCI( struct IS_MCI* packet );
-    void    Event();
+    bool InsimMCI( struct IS_MCI* packet );
+    bool Event();
 
     // Основные функции класса
     int init(MYSQL *conn,CInsim *InSim, void *RCMessageClass);

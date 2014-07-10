@@ -50,7 +50,7 @@ struct GlobalPlayer
     string	PName;              // Player name
     string	CName;             // Car Name
 
-    bool DontSave;
+    bool Loaded = false;
 };
 
 class RCBaseClass
@@ -61,10 +61,10 @@ public:
 
     string ClassName = "RCBaseClass";
 
-    void		 next_packet();   						// Функция переборки типа пакета
-    virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
-	virtual void Save(byte UCID){};
-    virtual void Event(){};
+    bool		 next_packet();   						// Функция переборки типа пакета
+    virtual bool InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
+	virtual bool Save(byte UCID){return true;};
+    virtual bool Event(){return true;};
 
     void ButtonInfo (byte UCID, const char* Message);
     void ClearButtonInfo (byte UCID);
@@ -111,41 +111,41 @@ protected:
     ObjectsInfo delObjects;
     /**< очередь объектов для их удаления с карты */
 
-    virtual void InsimACR( struct IS_ACR* packet ){}
-    virtual void InsimAXM( struct IS_AXM* packet ){}
-    virtual void InsimBFN( struct IS_BFN* packet ){}
-    virtual void InsimBTC( struct IS_BTC* packet ){}
-    virtual void InsimBTT( struct IS_BTT* packet ){}
-    virtual void InsimCNL( struct IS_CNL* packet ){}
-    virtual void InsimCON( struct IS_CON* packet ){}
-    virtual void InsimCPR( struct IS_CPR* packet ){}
-    virtual void InsimCRS( struct IS_CRS* packet ){}
-    virtual void InsimFLG( struct IS_FLG* packet ){}
-    virtual void InsimHLV( struct IS_HLV* packet ){}
-    virtual void InsimIII( struct IS_III* packet ){}
-    virtual void InsimISM( struct IS_ISM* packet ){}
-    virtual void InsimLAP( struct IS_LAP* packet ){}
-    virtual void InsimMSO( struct IS_MSO* packet ){}
-    virtual void InsimNCN( struct IS_NCN* packet ){}
-    virtual void InsimNPL( struct IS_NPL* packet ){}
-    virtual void InsimOBH( struct IS_OBH* packet ){}
-    virtual void InsimPEN( struct IS_PEN* packet ){}
-    virtual void InsimPIT( struct IS_PIT* packet ){}
-    virtual void InsimPLA( struct IS_PLA* packet ){}
-    virtual void InsimPLL( struct IS_PLL* packet ){}
-    virtual void InsimPLP( struct IS_PLP* packet ){}
-    virtual void InsimPSF( struct IS_PSF* packet ){}
-    virtual void InsimREO( struct IS_REO* packet ){}
-    virtual void InsimRST( struct IS_RST* packet ){ ReadConfig( packet->Track ); }
-    virtual void InsimSMALL( struct IS_SMALL* packet ){}
-    virtual void InsimSPX( struct IS_SPX* packet ){}
-    virtual void InsimSTA( struct IS_STA* packet ){}
-    virtual void InsimTINY( struct IS_TINY* packet ){}
-    virtual void InsimTOC( struct IS_TOC* packet ){}
-    virtual void InsimVER( struct IS_VER* packet ){}
-    virtual void InsimVTN( struct IS_VTN* packet ){}
+    virtual bool InsimACR( struct IS_ACR* packet ){return true;}
+    virtual bool InsimAXM( struct IS_AXM* packet ){return true;}
+    virtual bool InsimBFN( struct IS_BFN* packet ){return true;}
+    virtual bool InsimBTC( struct IS_BTC* packet ){return true;}
+    virtual bool InsimBTT( struct IS_BTT* packet ){return true;}
+    virtual bool InsimCNL( struct IS_CNL* packet ){return true;}
+    virtual bool InsimCON( struct IS_CON* packet ){return true;}
+    virtual bool InsimCPR( struct IS_CPR* packet ){return true;}
+    virtual bool InsimCRS( struct IS_CRS* packet ){return true;}
+    virtual bool InsimFLG( struct IS_FLG* packet ){return true;}
+    virtual bool InsimHLV( struct IS_HLV* packet ){return true;}
+    virtual bool InsimIII( struct IS_III* packet ){return true;}
+    virtual bool InsimISM( struct IS_ISM* packet ){return true;}
+    virtual bool InsimLAP( struct IS_LAP* packet ){return true;}
+    virtual bool InsimMSO( struct IS_MSO* packet ){return true;}
+    virtual bool InsimNCN( struct IS_NCN* packet ){return true;}
+    virtual bool InsimNPL( struct IS_NPL* packet ){return true;}
+    virtual bool InsimOBH( struct IS_OBH* packet ){return true;}
+    virtual bool InsimPEN( struct IS_PEN* packet ){return true;}
+    virtual bool InsimPIT( struct IS_PIT* packet ){return true;}
+    virtual bool InsimPLA( struct IS_PLA* packet ){return true;}
+    virtual bool InsimPLL( struct IS_PLL* packet ){return true;}
+    virtual bool InsimPLP( struct IS_PLP* packet ){return true;}
+    virtual bool InsimPSF( struct IS_PSF* packet ){return true;}
+    virtual bool InsimREO( struct IS_REO* packet ){return true;}
+    virtual bool InsimRST( struct IS_RST* packet ){ return ReadConfig( packet->Track ); }
+    virtual bool InsimSMALL( struct IS_SMALL* packet ){return true;}
+    virtual bool InsimSPX( struct IS_SPX* packet ){return true;}
+    virtual bool InsimSTA( struct IS_STA* packet ){return true;}
+    virtual bool InsimTINY( struct IS_TINY* packet ){return true;}
+    virtual bool InsimTOC( struct IS_TOC* packet ){return true;}
+    virtual bool InsimVER( struct IS_VER* packet ){return true;}
+    virtual bool InsimVTN( struct IS_VTN* packet ){return true;}
 
-    virtual void ReadConfig(const char *Track){};
+    virtual bool ReadConfig(const char *Track){return true;};
 
 
     //MYSQL
