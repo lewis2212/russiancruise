@@ -200,15 +200,15 @@ void RCPizza::Done(byte UCID)
         }
 
         int cash = 50 * abs(1 - (players[UCID].WorkTime - time(&ptime)) / PIZZA_WORK_TIME);
-        bank->AddCash(UCID, 248 + cash, true);
-        Capital += 420 - cash;
+        bank->AddCash(UCID, 500 + cash, true);
+        Capital += 300 - cash;
 
         dl->AddSkill(UCID);
         insim->SendBFN(UCID, 212);
     }
 }
 
-void RCPizza::ReadConfig(const char *Track)
+bool RCPizza::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s/data/RCPizza/%s", RootDir, Track);
@@ -223,7 +223,7 @@ void RCPizza::ReadConfig(const char *Track)
     if(!readf.is_open())
     {
         CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
-        return;
+        return true;
     }
     int point = 0;
     while (readf.good())
@@ -295,7 +295,7 @@ void RCPizza::ReadConfig(const char *Track)
     if(!ReadStore.is_open())
     {
         CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
-        return;
+        return true;
     }
 
     while (ReadStore.good())
@@ -327,7 +327,7 @@ void RCPizza::ReadConfig(const char *Track)
     if (!ReadInfo.is_open())
     {
     	CCText("  ^7RCPizza    ^1ERROR: ^8file " + (string)file + " not found");
-        return;
+        return true;
     }
 
     while (ReadInfo.good())
@@ -347,17 +347,19 @@ void RCPizza::ReadConfig(const char *Track)
     ReadInfo.close();
 
     CCText("  ^7RCPizza\t^2OK");
+    return true;
 }
 
 
-void RCPizza::InsimNCN(struct IS_NCN* packet)
+bool RCPizza::InsimNCN(struct IS_NCN* packet)
 {
     NumP = packet->Total;
     strcpy(players[packet->UCID].UName, packet->UName);
     strcpy(players[packet->UCID].PName, packet->PName);
+    return true;
 }
 
-void RCPizza::InsimCNL(struct IS_CNL* packet)
+bool RCPizza::InsimCNL(struct IS_CNL* packet)
 {
     if (players[packet->UCID].WorkAccept == 3)
         ShopAccepted = false;
@@ -394,29 +396,34 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
     WriteInfo << "Capital=" << Capital << endl;
     WriteInfo << "NumCars=" << NumCars << endl;
     WriteInfo.close();
+    return true;
 }
 
-void RCPizza::InsimNPL(struct IS_NPL* packet)
+bool RCPizza::InsimNPL(struct IS_NPL* packet)
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
     strcpy(players[packet->UCID].CName, packet->CName);
+    return true;
 }
 
-void RCPizza::InsimPLP(struct IS_PLP* packet)
+bool RCPizza::InsimPLP(struct IS_PLP* packet)
 {
+    return true;
 }
 
-void RCPizza::InsimPLL(struct IS_PLL* packet)
+bool RCPizza::InsimPLL(struct IS_PLL* packet)
 {
     PLIDtoUCID.erase(packet->PLID);
+    return true;
 }
 
-void RCPizza::InsimCPR(struct IS_CPR* packet)
+bool RCPizza::InsimCPR(struct IS_CPR* packet)
 {
     strcpy(players[packet->UCID].PName, packet->PName);
+    return true;
 }
 
-void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
+bool RCPizza::InsimMCI (struct IS_MCI* pack_mci)
 {
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -518,12 +525,13 @@ void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
 
         players[UCID].Info = pack_mci->Info[i];
     }
+    return true;
 }
 
-void RCPizza::InsimMSO(struct IS_MSO* packet)
+bool RCPizza::InsimMSO(struct IS_MSO* packet)
 {
     if (packet->UCID == 0)
-        return;
+       return true;
 
     if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
     {
@@ -542,16 +550,29 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             sprintf(Text, msg->_(packet->UCID, "4209"), CarsInWork, NumCars);
             insim->SendMTC(packet->UCID, Text);
 
-            int jjjk=0;
-
             for (auto& p: players)
 			{
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
-                    if (jjjk>6) return;
-                    sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
+					sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName,
+						(players[p.first].WorkAccept == 0
+						?
+							msg->_(packet->UCID, "TofuNone")
+						:
+							(players[p.first].WorkAccept == 1
+							?
+								msg->_(packet->UCID, "TofuWait")
+							:
+								(players[p.first].WorkPlayerAccept != 0
+								?
+									players[players[p.first].WorkPlayerAccept].PName
+								:
+									msg->_(packet->UCID, zone.point[players[p.first].WorkDestinaion].PlaceName)
+								)
+							)
+						)
+						, players[p.first].WorkCountDone);
                     insim->SendMTC(packet->UCID, Text);
-                    jjjk++;
                 }
 			}
         }
@@ -577,7 +598,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             if (dl->GetLVL(packet->UCID) > 19)
             {
                 insim->SendMTC(packet->UCID, msg->_(packet->UCID, "4103"));
-                return;
+                return true;
             }
 
             if (strcmp(players[packet->UCID].CName, "UF1") == 0)
@@ -616,13 +637,13 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         if (nrg->GetEnergy(packet->UCID) > 80)
         {
             insim->SendMTC(packet->UCID, msg->_(packet->UCID, "NotLesEn"));
-            return;
+            return true;
         }
 
         if (players[packet->UCID].WorkType == WK_PIZZA)
         {
             insim->SendMTC(packet->UCID, msg->_(packet->UCID, "NoTofuWhWork"));
-            return;
+            return true;
         }
 
         if (players[packet->UCID].Pizza == 0)
@@ -655,6 +676,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             insim->SendMTC(packet->UCID, "^3| " +  (string)str);
         }
     }
+    return true;
 }
 
 void RCPizza::btn_work (byte UCID)
@@ -687,7 +709,7 @@ bool RCPizza::IfWork (byte UCID)
     return false;
 }
 
-void RCPizza::Event()
+bool RCPizza::Event()
 {
     /** вывод кнопки с часиками и скрытие ее если таймер пришел в ноль **/
     for (auto& plit: players)
@@ -810,4 +832,5 @@ void RCPizza::Event()
             }
         }
     }
+    return true;
 }

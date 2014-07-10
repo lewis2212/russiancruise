@@ -30,68 +30,76 @@ void RCQuest::init(MYSQL *conn, CInsim *InSim)
     CCText("^3R"+ClassName+":\t^2inited");
 }
 
-void RCQuest::ReadConfig(const char *Track)
+bool RCQuest::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
     sprintf(file, "%s/data/RCQuest/%s.txt", RootDir, Track);
 
     CCText("  ^7RCQuest\t^2OK");
+    return true;
 }
 
 
 // обработчик события когда на сервер заходит новый пользователь
-void RCQuest::insim_ncn( struct IS_NCN *packet )
+bool RCQuest::InsimNCN( struct IS_NCN *packet )
 {
     if ( packet->UCID == 0 )
-        return;
+        return true;
 
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
+    return true;
 }
 
-void RCQuest::insim_npl( struct IS_NPL *packet )
+bool RCQuest::InsimNPL( struct IS_NPL *packet )
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
+    return true;
 }
 
-void RCQuest::insim_plp( struct IS_PLP *packet )
+bool RCQuest::InsimPLP( struct IS_PLP *packet )
 {
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
-void RCQuest::insim_pll( struct IS_PLL *packet )
+bool RCQuest::InsimPLL( struct IS_PLL *packet )
 {
     PLIDtoUCID.erase( packet->PLID );
+    return true;
 }
 
-void RCQuest::insim_cnl( struct IS_CNL *packet )
+bool RCQuest::InsimCNL( struct IS_CNL *packet )
 {
     players.erase( packet->UCID );
+    return true;
 }
 
-void RCQuest::insim_cpr( struct IS_CPR *packet )
+bool RCQuest::InsimCPR( struct IS_CPR *packet )
 {
     strcpy( players[ packet->UCID ].PName, packet->PName );
+    return true;
 }
 
-void RCQuest::insim_mso( struct IS_MSO *packet )
+bool RCQuest::InsimMSO( struct IS_MSO *packet )
 {
     byte UCID = packet->UCID;
 
     if ( UCID == 0 )
-        return;
+        return true;
 
     if ( packet->UserType != MSO_PREFIX )
-        return;
+        return true;
 
     char Msg[128];
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 }
 
-void RCQuest::insim_mci(struct IS_MCI *packet)
+bool RCQuest::InsimMCI(struct IS_MCI *packet)
 {
     for (int i = 0; i < packet->NumC; i++)
     {
         //byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
     }
+    return true;
 }
