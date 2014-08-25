@@ -4,11 +4,8 @@
 #include "RCBaseClass.h"
 #include "RCLight.h"
 
-struct RoadPlayer
+struct RoadPlayer: GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
     int 	OnSign;
     byte 	SignCount;
 };

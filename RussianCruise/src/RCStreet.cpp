@@ -166,7 +166,7 @@ void RCStreet::InsimCNL( struct IS_CNL* packet )
 
 void RCStreet::InsimCPR( struct IS_CPR* packet )
 {
-    strcpy(players[ packet->UCID ].PName, packet->PName);
+    players[ packet->UCID ].PName = packet->PName;
 }
 
 void RCStreet::InsimMCI ( struct IS_MCI* pack_mci )
@@ -205,8 +205,9 @@ void RCStreet::InsimNCN( struct IS_NCN* packet )
     if (packet->UCID == 0)
         return;
 
-    strcpy(players[ packet->UCID ].UName, packet->UName);
-    strcpy(players[ packet->UCID ].PName, packet->PName);
+    players[ packet->UCID ].UName = packet->UName;
+    players[ packet->UCID ].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 }
 
 void RCStreet::InsimNPL( struct IS_NPL* packet )

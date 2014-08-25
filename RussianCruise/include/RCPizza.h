@@ -20,12 +20,8 @@ struct pizza_info
     int     YShop[10];
 };
 
-struct PizzaPlayer
+struct PizzaPlayer: GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    char    CName[4];              // Car Name
     byte    Zone;
     byte    Pizza;                  // Если игрок заказал пиццу, то его ставят в очередь
     /** Work **/
@@ -96,13 +92,14 @@ private:
     void Done ( byte UCID );
     void btn_work ( byte UCID );
 
-    void InsimNCN( struct IS_NCN* packet );
-    void InsimNPL( struct IS_NPL* packet );
-    void InsimPLP( struct IS_PLP* packet );
-    void InsimPLL( struct IS_PLL* packet );
     void InsimCNL( struct IS_CNL* packet );
     void InsimCPR( struct IS_CPR* packet );
+    void InsimMCI( struct IS_MCI* packet );
     void InsimMSO( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimPLP( struct IS_PLP* packet );
 
     // Функции-утилиты
     int check_pos ( byte UCID );
@@ -116,7 +113,6 @@ public:
     void ReadConfig(const char *Track);
 
 
-    void InsimMCI( struct IS_MCI* packet );
 
     bool IfWork(byte UCID);
     void Event();

@@ -110,7 +110,7 @@ void RCPizza::Take(byte UCID)
         return;
     }
 
-    if (strcmp(players[UCID].CName, "UF1")!=0)
+    if (players[UCID].CName != "UF1")
     {
         insim->SendMTC(UCID, msg->_(UCID, "4102"));
         return;
@@ -168,7 +168,7 @@ void RCPizza::Take(byte UCID)
             players[UCID].WorkDestinaion = players[UCID].WorkPlayerAccept;
             players[UCID].WorkAccept = 2;
             char text[128];
-            sprintf(text, msg->_(UCID, "4201"), players[players[UCID].WorkPlayerAccept].PName);
+            sprintf(text, msg->_(UCID, "4201"), players[players[UCID].WorkPlayerAccept].PName.c_str());
             strcpy(players[UCID].WorkDest, text+4);
             insim->SendMTC(UCID, text);
         }
@@ -353,8 +353,9 @@ void RCPizza::ReadConfig(const char *Track)
 void RCPizza::InsimNCN(struct IS_NCN* packet)
 {
     NumP = packet->Total;
-    strcpy(players[packet->UCID].UName, packet->UName);
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 }
 
 void RCPizza::InsimCNL(struct IS_CNL* packet)
@@ -399,7 +400,7 @@ void RCPizza::InsimCNL(struct IS_CNL* packet)
 void RCPizza::InsimNPL(struct IS_NPL* packet)
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
-    strcpy(players[packet->UCID].CName, packet->CName);
+    players[packet->UCID].CName = packet->CName;
 }
 
 void RCPizza::InsimPLP(struct IS_PLP* packet)
@@ -413,7 +414,7 @@ void RCPizza::InsimPLL(struct IS_PLL* packet)
 
 void RCPizza::InsimCPR(struct IS_CPR* packet)
 {
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].PName = packet->PName;
 }
 
 void RCPizza::InsimMCI (struct IS_MCI* pack_mci)
@@ -525,7 +526,10 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     if (packet->UCID == 0)
         return;
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!pstat", 6) == 0)
+    char Message[128];
+    strcpy(Message,packet->Msg + packet->TextStart);
+
+    if (strncmp(Message, "!pstat", 6) == 0)
     {
         char Text[96];
         sprintf(Text, msg->_(packet->UCID, "4206"), Capital);
@@ -542,22 +546,18 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             sprintf(Text, msg->_(packet->UCID, "4209"), CarsInWork, NumCars);
             insim->SendMTC(packet->UCID, Text);
 
-            int jjjk=0;
-
             for (auto& p: players)
 			{
                 if (players[p.first].WorkType == WK_PIZZA)
                 {
-                    if (jjjk>6) return;
-                    sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName, players[p.first].WorkAccept, players[p.first].WorkCountDone);
+                    sprintf(Text, msg->_(packet->UCID, "4210"), players[p.first].PName.c_str(), players[p.first].WorkDest, players[p.first].WorkCountDone);
                     insim->SendMTC(packet->UCID, Text);
-                    jjjk++;
                 }
 			}
         }
     }
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!eat", 4) == 0
+    if (strncmp(Message, "!eat", 4) == 0
     and check_pos(packet->UCID) == 1 and players[packet->UCID].WorkType == WK_PIZZA)
     {
         if (players[packet->UCID].FreeEat)
@@ -570,7 +570,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
             insim->SendMTC(packet->UCID, msg->_(packet->UCID, "4212"));
     }
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!deal", 5) == 0)
+    if (strncmp(Message, "!deal", 5) == 0)
 	{
         if ((check_pos(packet->UCID) == 1) and (players[packet->UCID].WorkType == 0))
         {
@@ -580,7 +580,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
                 return;
             }
 
-            if (strcmp(players[packet->UCID].CName, "UF1") == 0)
+            if (players[packet->UCID].CName == "UF1")
             {
                 Deal(packet->UCID);
             }
@@ -591,7 +591,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
         }
 	}
 
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!undeal", 7) == 0)
+    if (strncmp(Message, "!undeal", 7) == 0)
     {
         if (check_pos(packet->UCID) == 1 and players[packet->UCID].WorkType == WK_PIZZA)
         {
@@ -611,7 +611,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     }
 
     //!pizza
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!tofu", 5) == 0)
+    if (strncmp(Message, "!tofu", 5) == 0)
     {
         if (nrg->GetEnergy(packet->UCID) > 80)
         {
@@ -635,7 +635,7 @@ void RCPizza::InsimMSO(struct IS_MSO* packet)
     }
 
     //!test
-    if (strncmp(packet->Msg + ((unsigned char)packet->TextStart), "!test", 5) == 0)
+    if (strncmp(Message, "!test", 5) == 0)
     {
         for (int i=0;i<zone.NumPoints;i++)
         {
@@ -793,8 +793,6 @@ void RCPizza::Event()
         {
             if (plit.first !=0 and players[plit.first].WorkType != 0 and players[plit.first].WorkAccept == 0)
             {
-                //cout << players[plit.first].UName << " accepted for shop\n";
-
                 char str[96];
                 strcpy(players[plit.first].WorkDest, msg->_(plit.first, "4204"));
                 sprintf(str, "^3| %s", msg->_(plit.first, "4204"));

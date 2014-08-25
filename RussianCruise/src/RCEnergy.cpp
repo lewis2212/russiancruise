@@ -96,6 +96,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
     players[packet->UCID].Zone = 1;
 
     char query[128];

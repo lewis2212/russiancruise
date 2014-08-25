@@ -101,6 +101,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username = '%s' LIMIT 1;", packet->UName);
@@ -202,7 +203,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         }
     }
 
-    players[packet->UCID].ReadTrue = true;
+    players[ packet->UCID ].Loaded = true;
 
     /** credit **/
     return ;
@@ -234,9 +235,6 @@ void RCBank::credit_penalty (byte UCID)
 void RCBank::InsimNPL(struct IS_NPL* packet)
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
-
-    //if (players[packet->UCID].Cash > 5000000)
-        //players[packet->UCID].Cash = 5000000;
 }
 
 void RCBank::InsimPLP(struct IS_PLP* packet)
@@ -251,13 +249,15 @@ void RCBank::InsimPLL(struct IS_PLL* packet)
 
 void RCBank::InsimCNL(struct IS_CNL* packet)
 {
-    if (players[packet->UCID].ReadTrue)
-        Save(packet->UCID);
+    Save(packet->UCID);
     players.erase(packet->UCID);
 }
 
 void RCBank::Save (byte UCID)
 {
+    if(!players[UCID].Loaded)
+        return;
+
     char query[128];
     sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
@@ -301,7 +301,7 @@ void RCBank::InsimMSO(struct IS_MSO* packet)
     char Message[128], Text[128];
     strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if (strncmp(Message, "!bnk", strlen("!bnk")) == 0 and ( players[packet->UCID].UName == "denis-takumi" || players[packet->UCID].UName == "Lexanom" ))
+    if (strncmp(Message, "!bnk", strlen("!bnk")) == 0 and players[packet->UCID].Admin)
     {
         sprintf(Text, "^5| ^7^CБаланс банка: %0.0f ^3RUR", BankFond);
         insim->SendMTC(packet->UCID, string(Text));

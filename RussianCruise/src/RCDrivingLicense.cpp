@@ -194,6 +194,7 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     // Copy all the player data we need into the players[] array
     strcpy(players[ packet->UCID ].UName, packet->UName);
     strcpy(players[ packet->UCID ].PName, packet->PName);
+    players[packet->UCID].Admin = packet->Admin;
 
     char query[128];
     sprintf(query, "SELECT lvl, skill FROM dl WHERE username='%s' LIMIT 1;", packet->UName);
@@ -220,9 +221,12 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
         dbExec(query);
 
         players[ packet->UCID ].LVL = 0;
+        players[ packet->UCID ].Skill = 0;
+        players[ packet->UCID ].Loaded = true;
         Save( packet->UCID );
 
     }
+    players[ packet->UCID ].Loaded = true;
 }
 
 void RCDL::InsimNPL( struct IS_NPL* packet )
@@ -260,6 +264,9 @@ void RCDL::InsimMSO( struct IS_MSO* packet )
 
 void RCDL::Save (byte UCID)
 {
+    if(!players[UCID].Loaded)
+        return;
+
     DB_ROW query;
     query["lvl"] = ToString(players[ UCID ].LVL);
     query["skill"] = ToString(players[ UCID ].Skill);

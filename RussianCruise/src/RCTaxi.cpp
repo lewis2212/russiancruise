@@ -962,7 +962,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
     if ( Message.find("!tstat") == 0 )
     {
         string uname = players[UCID].UName;
-        if ( Message.size() > 7 and (players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom"))
+        if ( Message.size() > 7 and players[UCID].Admin)
             uname = Message.replace(0,7,"");
 
         if (uname.length() == 0)
@@ -1005,7 +1005,7 @@ void RCTaxi::InsimMSO( struct IS_MSO* packet )
 		insim->SendMTC(packet->UCID, "^6| ^C^7Игрок не найден");
     }
 
-    if ( Message == "!points" and ( players[UCID].UName == "denis-takumi" or players[UCID].UName == "Lexanom" ))
+    if ( Message == "!points" and players[UCID].Admin)
     {
         if (StartPointsAdd == 0)
         {
@@ -1034,6 +1034,7 @@ void RCTaxi::InsimNCN( struct IS_NCN* packet )
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 
     ReadUser( packet->UCID );
     NumP = packet->Total;

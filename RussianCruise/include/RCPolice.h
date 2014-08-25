@@ -110,18 +110,19 @@ private:
     int DTPvyzov[3][32];	// 1 - UCID player, 2 - time, 3 - UCID cop
     int FineAllow[5][MAX_FINES];
 
-    void InsimNCN( struct IS_NCN* packet );   	// Новый игрок зашел на сервер
-    void InsimNPL( struct IS_NPL* packet );   	// Игрок вышел из боксов
-    void InsimPLP( struct IS_PLP* packet );   	// Игрок ушел в боксы
-    void InsimPLL( struct IS_PLL* packet );   	// Игрок ушел в зрители
-    void InsimCNL( struct IS_CNL* packet );   	// Игрок ушел с сервера
-    void InsimCPR( struct IS_CPR* packet );   	// Игрок переименовался
-    void InsimMSO( struct IS_MSO* packet );   	// Игрок отправил сообщение
     void InsimBTC( struct IS_BTC* packet );
     void InsimBTT( struct IS_BTT* packet );
+    void InsimCNL( struct IS_CNL* packet );     // Игрок ушел с сервера
+    void InsimCPR( struct IS_CPR* packet );     // Игрок переименовался
+    void InsimMCI( struct IS_MCI* packet );
+    void InsimMSO( struct IS_MSO* packet );     // Игрок отправил сообщение
+    void InsimNCN( struct IS_NCN* packet );     // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );     // Игрок вышел из боксов
+    void InsimOBH( struct IS_OBH* packet );
     void InsimPEN( struct IS_PEN* packet );
     void InsimPLA( struct IS_PLA* packet );
-    void InsimOBH( struct IS_OBH* packet );
+    void InsimPLL( struct IS_PLL* packet );     // Игрок ушел в зрители
+    void InsimPLP( struct IS_PLP* packet );     // Игрок ушел в боксы
 
     void ReadUserFines( byte UCID );
     void BtnPogonya( byte UCID );
@@ -139,7 +140,7 @@ private:
 public:
     RCPolice(const char* Dir);
     ~RCPolice();
-	void ReadConfig(const char* Track);
+    void ReadConfig(const char* Track);
 
     struct fine fines[MAX_FINES];
 
@@ -160,7 +161,6 @@ public:
 
     void Event();
 
-    void InsimMCI( struct IS_MCI* packet );
 };
 
 #endif

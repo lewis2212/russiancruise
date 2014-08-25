@@ -48,18 +48,15 @@ private:
 
     map<byte, Player>players;
 
-    // Переменные и функции, доступные только самому классу
-    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
-    //void InsimREO( struct IS_REO* packet );
-    void InsimPLA( struct IS_PLA* packet );
-    // функции-повторители основных фунцкий ядра
-    //void next_packet(); // Функция переборки типа пакета
-    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
-    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
     void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
+    void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLA( struct IS_PLA* packet );
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
 
     void pitlane(const char *UName);
     void cheat(struct  Player *splayer);
@@ -73,7 +70,6 @@ public:
     struct  track_inf TrackInf;             // Where PitBox and Shop
     // Основные функции класса
     int init(MYSQL *conn,CInsim *InSim, void *Message);    // classname - указатель на класс RCAntCheat.
-    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 
 };
 #endif // #define _RC_TAXI_H
