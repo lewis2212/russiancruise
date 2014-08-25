@@ -178,7 +178,7 @@ void RCLight::InsimCNL( struct IS_CNL* packet )
 
 void RCLight::InsimCPR( struct IS_CPR* packet )
 {
-	strcpy(players[ packet->UCID ].PName, packet->PName);
+	players[ packet->UCID ].PName = packet->PName;
 }
 
 void RCLight::InsimMCI ( struct IS_MCI* pack_mci )
@@ -359,10 +359,9 @@ void RCLight::OnRedFalse(byte UCID)
 
 void RCLight::InsimMSO( struct IS_MSO* packet )
 {
-	char Message[128];
-	strcpy(Message, packet->Msg + ((unsigned char)packet->TextStart));
+	string Message = packet->Msg + packet->TextStart;
 
-	if (strncmp(Message, "!light", strlen("!light")) == 0 and (strcmp(players[packet->UCID].UName, "denis-takumi") == 0 or strcmp(players[packet->UCID].UName, "Lexanom") == 0))
+	if (Message == "!light" and players[packet->UCID].Admin)
 	{
 		if (LightWorks == true)
 		{
@@ -383,8 +382,9 @@ void RCLight::InsimNCN( struct IS_NCN* packet )
 	{
 		return;
 	}
-	strcpy( players[ packet->UCID ].UName, packet->UName);
-	strcpy( players[ packet->UCID ].PName, packet->PName);
+	players[ packet->UCID ].UName = packet->UName;
+	players[ packet->UCID ].PName = packet->PName;
+	players[packet->UCID].Admin = packet->Admin;
 }
 
 void RCLight::InsimNPL( struct IS_NPL* packet )

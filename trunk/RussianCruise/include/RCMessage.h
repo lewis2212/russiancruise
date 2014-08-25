@@ -9,12 +9,13 @@
 struct MPlayer: public GlobalPlayer
 {
     string Lang;
+    queue<string> notifications;
 };
 
 class RCMessage:public RCBaseClass
 {
 private:
-
+    string color = "1";
     char RootDir[MAX_PATH];
 
     map< string , map< string ,string> >MsgArray;
@@ -24,6 +25,7 @@ private:
     void InsimNCN( struct IS_NCN* packet );
     void InsimCNL( struct IS_CNL* packet );
     void InsimMSO( struct IS_MSO* packet );
+    void InsimBTC( struct IS_BTC* packet );
 
 public:
     RCMessage(const char* Dir);
@@ -42,7 +44,11 @@ public:
     void ReadLangFile(const char *file);
     string GetLangList();
 
-}; // this method is not good but better when old method.
+    void AddNotify(byte UCID, string Notify);
+    void ShowNotify(byte UCID);
 
+    void Event();
+
+};
 
 #endif

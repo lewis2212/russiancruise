@@ -109,8 +109,9 @@ void RCRoadSign::InsimNCN( struct IS_NCN* packet )
     if (packet->UCID == 0)
         return;
 
-    strcpy(players[packet->UCID].UName, packet->UName);
-    strcpy(players[packet->UCID].PName, packet->PName);
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 }
 
 void RCRoadSign::InsimNPL( struct IS_NPL* packet )
@@ -135,7 +136,7 @@ void RCRoadSign::InsimCNL( struct IS_CNL* packet )
 
 void RCRoadSign::InsimCPR( struct IS_CPR* packet )
 {
-    strcpy( players[ packet->UCID ].PName, packet->PName );
+    players[ packet->UCID ].PName = packet->PName;
 }
 
 void RCRoadSign::InsimMSO(struct IS_MSO* packet)
@@ -151,7 +152,7 @@ void RCRoadSign::InsimMSO(struct IS_MSO* packet)
     char Msg[128];
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 
-    if ( strncmp(Msg, "!s_add", 6) == 0 and (strcmp(players[UCID].UName, "Lexanom") == 0 or strcmp(players[UCID].UName, "denis-takumi") == 0 or strcmp(players[UCID].UName, "Max1548") == 0))
+    if ( strncmp(Msg, "!s_add", 6) == 0 and players[UCID].Admin)
     {
         char file[MAX_PATH], text[96];
 

@@ -11,11 +11,8 @@
 #define DEFAULT_STREET_NUM 250
 // Задаем структуру игрока
 
-struct StrPlayer
+struct StrPlayer: GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
     int     StreetNum;
 };
 
@@ -48,13 +45,14 @@ private:
     // struct  streets2 Street2[30];             // Array of streets
 
     // функции-повторители основных фунцкий ядра
-    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
-    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
     void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
 
     void BtnStreet( byte UCID );
 
@@ -77,8 +75,7 @@ public:
     const char* GetStreetName(byte UCID, int StreetID);
 
     int init(MYSQL *conn,CInsim *InSim, void *Message);
-    void ReadConfig(const char *Track); 	// Чтение данных о точках "Пункт назначения"
+    void ReadConfig(const char *Track);     // Чтение данных о точках "Пункт назначения"
 
-    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H

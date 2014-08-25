@@ -49,8 +49,9 @@ struct GlobalPlayer
     string	UName;              // Username
     string	PName;              // Player name
     string	CName;             // Car Name
+    byte    Admin;             // is Admin?
 
-    bool DontSave;
+    bool Loaded = false;
 };
 
 class RCBaseClass
@@ -62,7 +63,7 @@ public:
     string ClassName = "RCBaseClass";
 
     void		 next_packet();   						// Функция переборки типа пакета
-    virtual void InsimMCI( struct IS_MCI* packet );     	// Пакет с данными о координатах и т.д.
+    void         upd_next_packet();
 	virtual void Save(byte UCID){};
     virtual void Event(){};
 
@@ -126,6 +127,7 @@ protected:
     virtual void InsimIII( struct IS_III* packet ){}
     virtual void InsimISM( struct IS_ISM* packet ){}
     virtual void InsimLAP( struct IS_LAP* packet ){}
+    virtual void InsimMCI( struct IS_MCI* packet ){if (!insim) return;}
     virtual void InsimMSO( struct IS_MSO* packet ){}
     virtual void InsimNCN( struct IS_NCN* packet ){}
     virtual void InsimNPL( struct IS_NPL* packet ){}

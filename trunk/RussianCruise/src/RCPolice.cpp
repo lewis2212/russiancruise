@@ -81,6 +81,7 @@ void RCPolice::InsimNCN( struct IS_NCN* packet )
 
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
+    players[packet->UCID].Admin = packet->Admin;
 
     //читаем штрафы
     ReadUserFines(packet->UCID);
@@ -421,7 +422,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
         int id_i = atoi(args[1].c_str());
 
-        if ( id_i < 1)
+        if ( id_i < 1 || id_i > MAX_FINES || fines[id_i].cash <= 0)
         {
             insim->SendMTC( packet->UCID , msg->_(  packet->UCID , "2105" ));
             return;
@@ -536,13 +537,12 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
                     int count = 0;
                     for (auto& play: players)
-                        if (players[play.first].Radar.On)
-                            count++;
-
-                    if (count>=3)
                     {
-                        insim->SendMTC(packet->UCID, msg->_(packet->UCID, "EndOfRadar"));
-                        return;
+                        if (players[play.first].Radar.On && ++count > 2)
+                        {
+                            insim->SendMTC(packet->UCID, msg->_(packet->UCID, "EndOfRadar"));
+                       		return;
+                        }
                     }
 
                     if (StreetInfo.SpeedLimit == 0)
@@ -556,6 +556,11 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                     X = players[UCID].Info.X / 4096 - cos((H - 60) * M_PI / 180) * 40;
                     Y = players[UCID].Info.Y / 4096 - sin((H - 60) * M_PI / 180) * 40;
                     Z = players[UCID].Info.Z / 16452;
+
+                    cout << " X: " << X;
+                    cout << " Y: " << Y;
+                    cout << " Z: " << Z;
+                    cout << endl;
 
                     ObjectInfo *obj = new ObjectInfo;
                     obj->Index = 22;
@@ -615,7 +620,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
     }
 
-    if ( players[ packet->UCID ].UName == "denis-takumi" or players[ packet->UCID ].UName == "Lexanom" )
+    if ( players[ packet->UCID ].Admin)
     {
 		if(args.size() < 2)
 			return;
@@ -626,9 +631,24 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (strlen(param) > 0)
             {
-                char query[MAX_PATH];
-                sprintf(query,"INSERT INTO police (username) VALUES ('%s')",param);
-                dbExec(query);
+                string query = string("SELECT * FROM police WHERE username = '") + param + string("';");
+
+                DB_ROWS res = dbSelect(query);
+
+                if ( res.size() > 0)
+                {
+                    DB_ROW arFields;
+                    arFields["active"] = "Y";
+
+                    dbUpdate("police", arFields, {"username",param});
+                }
+                else
+                {
+                    char query[MAX_PATH];
+                    sprintf(query,"INSERT INTO police (username) VALUES ('%s')",param);
+                    dbExec(query);
+
+                }
             }
         }
 
@@ -636,15 +656,16 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (strlen(param) > 0)
             {
-                char query[MAX_PATH];
-                sprintf(query,"UPDATE police SET active = 'N' WHERE username = '%s'",param);
-                dbExec(query);
+                DB_ROW arFields;
+                arFields["active"] = "N";
+
+                dbUpdate("police", arFields, {"username",param});
             }
         }
 
         if (Message.find("!cop_up") == 0 )
         {
-            if (param!=NULL)
+
             for (auto& p: players)
 			{
                 if (string(players[p.first].UName) == string(param))
@@ -790,7 +811,7 @@ void RCPolice::ShowFinesPanel( byte UCID, byte UCID2 )
     insim->SendButton(255, UCID, 178, l - w / 2, t - h / 2, w, 10, 64, Text); 				    //заголовок
     insim->SendButton(254, UCID, 179, l - 7, t - h / 2 + h + 1, 14, 6, 16 + ISB_CLICK, "^2OK"); //закрывашка
 
-    if ( players[UCID].UName == "Lexanom" or (players[UCID].Rank > 2 and players[UCID2].Pogonya == 2))
+    if ( players[UCID].Admin or (players[UCID].Rank > 2 and players[UCID2].Pogonya == 2))
         insim->SendButton(UCID2, UCID, 80, l + w / 2 - 15, t - h / 2 + h + 1, 14, 6, 16 + 8 + 5, "^CАрестовать", 2);
 
 	if (players[UCID].Rank > 1 and players[UCID2].Pogonya == 1 and players[UCID2].Info.Speed * 360 / 32768 == 0)
@@ -1421,23 +1442,23 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
                 Dist = Distance(X1, Y1, players[play.first].Radar.X/16, players[play.first].Radar.Y/16);
                 if (Dist < 50)
                 {
+                    struct streets StreetInfo;
+                    street->CurentStreetInfo(&StreetInfo, UCID);
+
                     if (Dist < 25)
                     {
                         int Speed = players[UCID].Info.Speed * 360 / 32768;
-                        struct streets StreetInfo;
-                        street->CurentStreetInfo(&StreetInfo, UCID);
+
 
                         if (Speed > StreetInfo.SpeedLimit + 10 and Speed > players[UCID].speed_over)
-                            players[UCID].speed_over=Speed;
+                            players[UCID].speed_over = Speed - StreetInfo.SpeedLimit;
+
                     }
                     else if (players[UCID].speed_over > 0)
                     {
-                        struct streets StreetInfo;
-                        street->CurentStreetInfo(&StreetInfo, UCID);
-
                         char text[128];
-                        int Speed2 = abs(players[UCID].speed_over - StreetInfo.SpeedLimit);
-                        sprintf(text, msg->_(UCID, "Speeding"), players[UCID].PName.c_str(), Speed2, street->GetStreetName(UCID, StreetInfo.StreetID), players[play.first].PName.c_str());
+
+                        sprintf(text, msg->_(UCID, "Speeding"), players[UCID].PName.c_str(), players[UCID].speed_over, street->GetStreetName(UCID, StreetInfo.StreetID), players[play.first].PName.c_str());
                         insim->SendMTC(255, text);
 
                         if (players[UCID].Pogonya == 0)
@@ -1788,6 +1809,7 @@ void RCPolice::SaveCopStat(byte UCID)
 {
 
     DB_ROW arFields;
+    arFields["rank"] = ToString(players[UCID].Rank);
     arFields["date_active"] = ToString(players[UCID].PStat.DateActive);
     arFields["current_day"] = ToString(players[UCID].PStat.CurrentDay);
     arFields["arrests_with_fine_by_day"] = ToString(players[UCID].PStat.ArrestWithFineByDay);

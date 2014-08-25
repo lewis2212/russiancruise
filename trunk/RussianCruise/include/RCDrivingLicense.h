@@ -9,7 +9,7 @@
 
 
 
-struct DLPlayer
+struct DLPlayer : GlobalPlayer
 {
     struct  CompCar Info;
     char    UName[32];             // Username
@@ -28,14 +28,15 @@ private:
     map<byte, DLPlayer>players;     // Array of players
 
     // функции-повторители основных фунцкий ядра
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCON( struct IS_CON* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimMCI( struct IS_MCI* packet );
+    void InsimMSO( struct IS_MSO* packet );
     void InsimNCN( struct IS_NCN* packet );
     void InsimNPL( struct IS_NPL* packet );
-    void InsimPLP( struct IS_PLP* packet );
     void InsimPLL( struct IS_PLL* packet );
-    void InsimCNL( struct IS_CNL* packet );
-    void InsimCPR( struct IS_CPR* packet );
-    void InsimMSO( struct IS_MSO* packet );
-    void InsimCON( struct IS_CON* packet );
+    void InsimPLP( struct IS_PLP* packet );
 
 public:
     RCDL(const char* Dir);
@@ -56,7 +57,6 @@ public:
 
     byte    inited;
 
-    void    InsimMCI( struct IS_MCI* packet );
     void    Event();
 
     // Основные функции класса

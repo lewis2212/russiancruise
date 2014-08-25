@@ -8,7 +8,8 @@ RCBaseClass::~RCBaseClass()
 {
 }
 
-void RCBaseClass::next_packet()
+void
+RCBaseClass::next_packet()
 {
     if (!insim)
         return;
@@ -34,6 +35,9 @@ void RCBaseClass::next_packet()
     case ISP_ISM:
         InsimISM( (struct IS_ISM*)insim->get_packet() );
         break;
+
+    case ISP_MCI:
+        InsimMCI( (struct IS_MCI*)insim->get_packet() );
 
     case ISP_MSO:
         InsimMSO( (struct IS_MSO*)insim->get_packet() );
@@ -146,38 +150,37 @@ void RCBaseClass::next_packet()
 }
 
 void
-RCBaseClass::InsimMCI( struct IS_MCI* packet )
+RCBaseClass::upd_next_packet()
 {
     if (!insim)
         return;
+
+    InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
 }
 
-bool RCBaseClass::Check_Pos(int polySides, int polyX[], int polyY[], float x, float y)
+bool
+RCBaseClass::Check_Pos(int polySides, int polyX[], int polyY[], float x, float y)
 {
     int		i, j = polySides - 1;
     bool	oddNodes = false;
-    try
+
+    for (i=0; i<polySides; i++)
     {
-        for (i=0; i<polySides; i++)
+        if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
         {
-            if (polyY[i]<y && polyY[j]>=y ||  polyY[j]<y && polyY[i]>=y)
+            if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
             {
-                if (polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x)
-                {
-                    oddNodes=!oddNodes;
-                }
+                oddNodes=!oddNodes;
             }
-            j=i;
         }
+        j=i;
     }
-    catch(...)
-    {
-        //tools::log("Check_Pos Exeption\n");
-    }
+
     return oddNodes;
 }
 
-int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
+int
+RCBaseClass::Distance (int X, int Y, int X1, int Y1)
 {
     return (int)sqrt((pow(X-X1, 2))+(pow(Y-Y1, 2)));
 }
@@ -188,7 +191,8 @@ int RCBaseClass::Distance (int X, int Y, int X1, int Y1)
  * @return static const char* - Буквенное значение кода
  *
  */
-const char* RCBaseClass::GetReason(byte Reason)
+const char*
+RCBaseClass::GetReason(byte Reason)
 {
     switch(Reason)
     {
@@ -228,7 +232,8 @@ const char* RCBaseClass::GetReason(byte Reason)
     }
 }
 
-string RCBaseClass::packetType(byte type)
+string
+RCBaseClass::packetType(byte type)
 {
     switch(type)
     {
@@ -362,38 +367,44 @@ string RCBaseClass::packetType(byte type)
     }
 }
 
-void RCBaseClass::ButtonInfo(byte UCID, const char* Message)
+void
+RCBaseClass::ButtonInfo(byte UCID, const char* Message)
 {
     return insim->SendButton(1, UCID, 20, 70, 9, 60, 4, ISB_DARK, Message);
 }
 
-void RCBaseClass::ClearButtonInfo(byte UCID)
+void
+RCBaseClass::ClearButtonInfo(byte UCID)
 {
     insim->SendBFN( UCID, 20);
 }
 
-string RCBaseClass::ToString (int i)
+string
+RCBaseClass::ToString (int i)
 {
 	char s[24];
 	sprintf(s,"%d",i);
 	return string(s);
 }
 
-string RCBaseClass::ToString (unsigned int i)
+string
+RCBaseClass::ToString (unsigned int i)
 {
 	char s[24];
 	sprintf(s,"%d",i);
 	return string(s);
 }
 
-string RCBaseClass::ToString (byte b)
+string
+RCBaseClass::ToString (byte b)
 {
 	char s[4];
 	sprintf(s,"%d",b);
 	return string(s);
 }
 
-string RCBaseClass::ToString (bool b)
+string
+RCBaseClass::ToString (bool b)
 {
 	if(b)
 		return "true";

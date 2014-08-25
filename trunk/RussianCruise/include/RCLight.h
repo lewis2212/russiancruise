@@ -7,11 +7,8 @@
 
 #include "tools.h"      // Check_Pos  etc.
 
-struct LghPlayer
+struct LghPlayer: GlobalPlayer
 {
-    struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
     byte    Light;
     bool    Light3;
     /** misc **/
@@ -53,13 +50,14 @@ private:
 
     time_t sstime;
 
-    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
-    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
-    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
-    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
     void InsimCNL( struct IS_CNL* packet );   // Игрок ушел с сервера
     void InsimCPR( struct IS_CPR* packet );   // Игрок переименовался
+    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
     void InsimMSO( struct IS_MSO* packet );   // Игрок отправил сообщение
+    void InsimNCN( struct IS_NCN* packet );   // Новый игрок зашел на сервер
+    void InsimNPL( struct IS_NPL* packet );   // Игрок вышел из боксов
+    void InsimPLL( struct IS_PLL* packet );   // Игрок ушел в зрители
+    void InsimPLP( struct IS_PLP* packet );   // Игрок ушел в боксы
 
 
     void Svetofor1 ( byte UCID );
@@ -82,6 +80,5 @@ public:
 
     int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void ReadConfig(const char *Track); // Чтение данных о точках "Пункт назначения"
-    void InsimMCI( struct IS_MCI* packet );   // Пакет с данными о координатах и т.д.
 };
 #endif // #define _RC_STREET_H

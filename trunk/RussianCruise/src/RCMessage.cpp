@@ -156,7 +156,8 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
         return;
 
 
-    players[ packet->UCID ].UName = packet->UName;
+    players[packet->UCID].UName = packet->UName;
+    players[packet->UCID].Admin = packet->Admin;
 
     string query = "SELECT lang FROM message WHERE username = '";
     query += packet->UName;
@@ -198,10 +199,8 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 
     xString Msg = packet->Msg + packet->TextStart;
 
-    if (Msg.find("!lang") == 0 or Msg.find("!^Cÿçûê")== 0 )
+    if (Msg.find("!lang") == 0 )
     {
-        cout << players[ packet->UCID ].UName << " send !lang" << endl;
-
         if ( Msg.size() < 8)
         {
             insim->SendMTC( packet->UCID, _( packet->UCID , "2104"));
@@ -232,7 +231,19 @@ void RCMessage::InsimMSO( struct IS_MSO* packet )
 		insim->SendMTC(packet->UCID, StringFormat(_(packet->UCID, "^1| ^7Language %s not found"), id.c_str()));
 		return;
     }
+}
 
+void
+RCMessage::InsimBTC( struct IS_BTC* packet )
+{
+    if (packet->ClickID == 230)
+    {
+        ShowNotify(packet->UCID);
+        if(players[packet->UCID].notifications.empty())
+        {
+            insim->SendBFN(packet->UCID, 230);
+        }
+    }
 }
 
 void RCMessage::Save (byte UCID)
@@ -241,4 +252,45 @@ void RCMessage::Save (byte UCID)
     sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName.c_str(), players[ UCID ].Lang.c_str());
 
     dbExec( query );
+}
+
+void
+RCMessage::AddNotify(byte UCID, string Notify)
+{
+    players[UCID].notifications.push(Notify);
+}
+
+void
+RCMessage::ShowNotify(byte UCID)
+{
+    byte
+    l=100, t=90,
+    hButton=5,
+    w=100,
+    h=16+hButton;
+
+    insim->SendButton(255, UCID, 176, l - w / 2, t - h / 2, w, h, ISB_DARK, "");
+    insim->SendButton(255, UCID, 177, l - w / 2, t - h / 2, w, h, ISB_DARK, "");
+    insim->SendButton(255, UCID, 178, l - w / 2, t - h / 2 + 2, w, 10, 0, players[UCID].notifications.front());
+    insim->SendButton(254, UCID, 179, l - 7, t - h / 2 + 14, 14, 6, ISB_LIGHT + ISB_CLICK, "^2OK");
+
+    players[UCID].notifications.pop();
+}
+
+void
+RCMessage::Event()
+{
+    if(color != "1")
+        color = "1";
+    else
+        color = "2";
+
+    for(auto pl: players)
+    {
+        byte UCID = pl.first;
+        if(!players[UCID].notifications.empty())
+        {
+            insim->SendButton(255, UCID, 230, 96, 180, 8, 8, ISB_CLICK + ISB_LIGHT, "^"+color+"^K¢Ï");
+        }
+    }
 }

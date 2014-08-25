@@ -162,10 +162,10 @@ public:
     char    Track[6];                          // Current track (for streets)
     char    Product[6];                        // DEMO or S1 or S2
     /** insim **/
-    char    IP[16];                            // IP port for connect (for InSim IS_III)
-    word    TCPPORT;                           // TCP port (for InSim IS_III)
-    word    UDPPORT;                           // UDP port for mci packets (for InSim IS_III)
-    char    ADMIN[10];                         // Admin pass (for InSim IS_III)
+    char    IP[16];                            // IP port for connect
+    word    TCPPORT = 0;                       // TCP port
+    word    UDPPORT = 0;                       // UDP port for mci packets
+    char    ADMIN[10];                         // Admin pass
 };
 
 void read_track();

@@ -687,11 +687,11 @@ void case_btt ()
         {
             if (bank->GetCash(pack_btt->UCID) > atoi(pack_btt->Text))
             {
-                cout << players.at(pack_btt->UCID).UName << " send " << pack_btt->Text << " to "  << players.at(pack_btt->ReqI).UName << endl;
-
                 char Msg[126];
                 sprintf(Msg, msg->_(pack_btt->ReqI, "GetMoney" ), players.at(pack_btt->UCID).PName.c_str(), atoi(pack_btt->Text));
                 insim->SendMTC(pack_btt->ReqI, Msg);
+                msg->AddNotify(pack_btt->ReqI, Msg);
+
                 sprintf(Msg, msg->_(pack_btt->UCID, "SendMoney" ), players.at(pack_btt->ReqI).PName.c_str(), atoi(pack_btt->Text));
                 insim->SendMTC(pack_btt->UCID, Msg);
 
@@ -718,6 +718,7 @@ void case_btt ()
             char Msg[128];
             sprintf(Msg, msg->_( pack_btt->ReqI, "MsgFrom" ), players.at(pack_btt->UCID).PName.c_str(), pack_btt->Text );
             insim->SendMTC(pack_btt->ReqI, Msg);
+            msg->AddNotify(pack_btt->ReqI, Msg);
 
             RCBaseClass::CCText("^1" + (string)players.at(pack_btt->UCID).UName + " ^7передал сообщение " + (string)players.at(pack_btt->ReqI).UName + ":");
             printf("%s\n", pack_btt->Text);
@@ -756,7 +757,12 @@ void case_cpr ()
 
 void case_mci ()
 {
-    struct IS_MCI *pack_mci = (struct IS_MCI*)insim->udp_get_packet();
+    IS_MCI *pack_mci;
+
+    if(ginfo->UDPPORT > 0)
+        pack_mci = (struct IS_MCI*)insim->udp_get_packet();
+    else
+        pack_mci = (struct IS_MCI*)insim->get_packet();
 
     for (int i = 0; i < pack_mci->NumC; i++)
     {
@@ -909,8 +915,6 @@ void case_mso ()
             return;
         }
         players.at(pack_mso->UCID).LastSave = now;
-
-        cout << players.at(pack_mso->UCID).UName << " send !save" << endl;
 
         Save(pack_mso->UCID);
         return;
@@ -2145,7 +2149,7 @@ void *ThreadMci (void *params)
 
             for( cl = classes.begin(); cl != classes.end(); ++cl )
     		{
-    			(*cl)->InsimMCI( (struct IS_MCI*)insim->udp_get_packet() );
+    			(*cl)->upd_next_packet();
     		}
         }
         catch(const logic_error& lerror)
@@ -2227,8 +2231,10 @@ void *ThreadEvent (void *params)
 
     while (ok > 0)
     {
-         try
+        try
         {
+            msg->Event();
+            
             for( cl = classes.begin(); cl != classes.end(); ++cl )
                 (*cl)->Event();
 
@@ -2330,7 +2336,7 @@ int main(int argc, char* argv[])
 
     char path[MAX_PATH];
     memset(&path,0,MAX_PATH);
-    sprintf(path, "%s/misc/mysql.cfg", RootDir);
+    sprintf(path, "%s/misc/%s_mysql.cfg", RootDir, ServiceName);
     tools::read_mysql(path, conf);
 
     while ( (mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
@@ -2374,23 +2380,20 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    // sleep(1);
-
     if (pthread_create(&save_tid, NULL, ThreadSave, NULL) < 0)
     {
         RCBaseClass::CCText("^3RCMain:\t\t^1Can't start `thread_save` Thread\n");
         return 0;
     }
 
-    // sleep(1);
-
-    if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
+    if(ginfo->UDPPORT > 0)
     {
-        RCBaseClass::CCText("^3RCMain:\t\t^1Can't start `thread_mci` Thread\n");
-        return 0;
+        if (pthread_create(&mci_tid, NULL, ThreadMci, NULL) < 0)
+        {
+            RCBaseClass::CCText("^3RCMain:\t\t^1Can't start `thread_mci` Thread\n");
+            return 0;
+        }
     }
-
-    // sleep(1);
 
     RCBaseClass::CCText("^7Cruise started");
 
@@ -2468,6 +2471,10 @@ int main(int argc, char* argv[])
 
             case ISP_TOC:
                 case_toc();
+                break;
+
+            case ISP_MCI:
+                case_mci();
                 break;
             }
 

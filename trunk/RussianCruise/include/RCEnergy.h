@@ -37,16 +37,17 @@ private:
 
     map<byte, EnergyPlayer>players;     // Array of players
 
+    void InsimCNL( struct IS_CNL* packet );
+    void InsimCON( struct IS_CON* packet );
+    void InsimCPR( struct IS_CPR* packet );
+    void InsimHLV( struct IS_HLV* packet );
+    void InsimMCI( struct IS_MCI* packet );
+    void InsimMSO( struct IS_MSO* packet );
     void InsimNCN( struct IS_NCN* packet );
     void InsimNPL( struct IS_NPL* packet );
-    void InsimPLP( struct IS_PLP* packet );
-    void InsimPLL( struct IS_PLL* packet );
-    void InsimCNL( struct IS_CNL* packet );
-    void InsimCPR( struct IS_CPR* packet );
-    void InsimMSO( struct IS_MSO* packet );
-    void InsimCON( struct IS_CON* packet );
     void InsimOBH( struct IS_OBH* packet );
-    void InsimHLV( struct IS_HLV* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimPLP( struct IS_PLP* packet );
 
 public:
     RCEnergy(const char* Dir);
@@ -61,7 +62,6 @@ public:
     int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
     void    ReadConfig(const char *Track);
 
-    void    InsimMCI( struct IS_MCI* packet );
 
     void    Save(byte UCID);
 

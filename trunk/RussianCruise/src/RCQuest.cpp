@@ -40,7 +40,7 @@ void RCQuest::ReadConfig(const char *Track)
 
 
 // обработчик события когда на сервер заходит новый пользователь
-void RCQuest::insim_ncn( struct IS_NCN *packet )
+void RCQuest::InsimNCN( struct IS_NCN *packet )
 {
     if ( packet->UCID == 0 )
         return;
@@ -49,32 +49,32 @@ void RCQuest::insim_ncn( struct IS_NCN *packet )
     strcpy(players[ packet->UCID ].PName, packet->PName);
 }
 
-void RCQuest::insim_npl( struct IS_NPL *packet )
+void RCQuest::InsimNPL( struct IS_NPL *packet )
 {
     PLIDtoUCID[packet->PLID] = packet->UCID;
 }
 
-void RCQuest::insim_plp( struct IS_PLP *packet )
+void RCQuest::InsimPLP( struct IS_PLP *packet )
 {
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCQuest::insim_pll( struct IS_PLL *packet )
+void RCQuest::InsimPLL( struct IS_PLL *packet )
 {
     PLIDtoUCID.erase( packet->PLID );
 }
 
-void RCQuest::insim_cnl( struct IS_CNL *packet )
+void RCQuest::InsimCNL( struct IS_CNL *packet )
 {
     players.erase( packet->UCID );
 }
 
-void RCQuest::insim_cpr( struct IS_CPR *packet )
+void RCQuest::InsimCPR( struct IS_CPR *packet )
 {
     strcpy( players[ packet->UCID ].PName, packet->PName );
 }
 
-void RCQuest::insim_mso( struct IS_MSO *packet )
+void RCQuest::InsimMSO( struct IS_MSO *packet )
 {
     byte UCID = packet->UCID;
 
@@ -88,7 +88,7 @@ void RCQuest::insim_mso( struct IS_MSO *packet )
     strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
 }
 
-void RCQuest::insim_mci(struct IS_MCI *packet)
+void RCQuest::InsimMCI(struct IS_MCI *packet)
 {
     for (int i = 0; i < packet->NumC; i++)
     {

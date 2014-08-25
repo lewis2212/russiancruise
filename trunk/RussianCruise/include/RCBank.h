@@ -18,7 +18,6 @@ struct BankPlayer: public GlobalPlayer
 
     u_int   	Deposit;
     time_t   	Dep_Date_create;
-    bool        ReadTrue = false;
 };
 
 struct Bank_info
@@ -42,13 +41,14 @@ private:
     RCMessage   *msg;
     RCDL        *dl;
 
-    void InsimNCN( struct IS_NCN* packet );
-    void InsimNPL( struct IS_NPL* packet );
-    void InsimPLP( struct IS_PLP* packet);
-    void InsimPLL( struct IS_PLL* packet );
     void InsimCNL( struct IS_CNL* packet );
     void InsimCPR( struct IS_CPR* packet );
+    void InsimMCI( struct IS_MCI* packet );
     void InsimMSO( struct IS_MSO* packet );
+    void InsimNCN( struct IS_NCN* packet );
+    void InsimNPL( struct IS_NPL* packet );
+    void InsimPLL( struct IS_PLL* packet );
+    void InsimPLP( struct IS_PLP* packet);
 
 public:
     RCBank(const char* Dir);
@@ -72,7 +72,6 @@ public:
 
     void Event();
 
-    void InsimMCI( struct IS_MCI* packet );
 };
 
 #endif
