@@ -337,8 +337,11 @@ void RCTaxi::PassAccept( byte UCID )
 			DestPoint = rand()%ClientCount;
 			if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum(UCID))
 				ok = false;
-
+            #ifdef CIS_LINUX
 			usleep(100 * 1000);
+			#else
+			Sleep(100);
+			#endif
 		}
 
 		players[UCID].IsPursuit = false;
@@ -401,7 +404,11 @@ void RCTaxi::PassAccept2(byte UCID)
         if (ClientPoints[DestPoint].StreetId != street->CurentStreetNum( UCID ) and Distance(X1, Y1, X2, Y2)>MINDIST)
             ok = false;
 
+        #ifdef CIS_LINUX
         usleep(100 * 1000);
+        #else
+        Sleep(100);
+        #endif
     }
 
     int DestStreet = ClientPoints[DestPoint].StreetId; //улица назначения

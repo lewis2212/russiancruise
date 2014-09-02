@@ -1877,7 +1877,7 @@ int core_reconnect(void *pack_ver)
 
     cout << "wait 1 minute and reconnect \n";
 
-    sleep(60);
+    Sleep(60);
 
     memset(pack_ver, 0, sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
@@ -2206,14 +2206,20 @@ void *ThreadSave (void *params)
             else
                 my_reconnect = 0;
         }
-
+        #ifdef CIS_LINUX
         usleep(500 * 1000); // 0.5 sec
+        #else
+        Sleep(500);
+        #endif
 
 #ifdef _RC_POLICE_H
         police->SetSirenLight("^4||||||||||^7|^1||||||||||");
 #endif
-
+        #ifdef CIS_LINUX
         usleep(500 * 1000); // 0.5 sec
+        #else
+        Sleep(500);
+        #endif
 
 
 #ifdef _RC_POLICE_H
@@ -2226,7 +2232,11 @@ void *ThreadSave (void *params)
 
 void *ThreadEvent (void *params)
 {
+    #ifdef CIS_LINUX
     sleep(5);
+    #else
+    Sleep(5000);
+    #endif
     ReadBonuses();
 
     while (ok > 0)
@@ -2234,7 +2244,7 @@ void *ThreadEvent (void *params)
         try
         {
             msg->Event();
-            
+
             for( cl = classes.begin(); cl != classes.end(); ++cl )
                 (*cl)->Event();
 
@@ -2278,7 +2288,11 @@ void *ThreadEvent (void *params)
         }
 
         printf("\e[u");
+        #ifdef CIS_LINUX
         usleep(500 * 1000); // 0.5 sec
+        #else
+        Sleep(500);
+        #endif
     }
     return 0;
 };
@@ -2298,11 +2312,13 @@ void signal_handler(int sig)
 
 int main(int argc, char* argv[])
 {
+    #ifdef CIS_LINUX
    signal(SIGINT,signal_handler); // ctrl+c
    signal(SIGKILL,signal_handler); // kill
    signal(SIGQUIT,signal_handler); // ctrl + \
    signal(SIGTERM,signal_handler); // kill
    signal(SIGTSTP,signal_handler); // ctrl + z
+   #endif // CIS_LINUX
 
     if( argc < 2 )
     {
@@ -2343,7 +2359,11 @@ int main(int argc, char* argv[])
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
         RCBaseClass::CCText( mysql_error(&rcMaindb) );
+        #ifdef CIS_LINIX
         sleep(5); // 5 sec
+        #else
+        Sleep(5000);
+        #endif
     }
     RCBaseClass::CCText("^3RCMain:\t^2Connected to MySQL server");
 

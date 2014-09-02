@@ -13,7 +13,9 @@ using namespace std;
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef __linux__
 #include <iconv.h>
+#endif // __linux__
 #include <stdexcept>
 
 typedef unsigned char byte;
