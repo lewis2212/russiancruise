@@ -60,7 +60,7 @@ namespace tools
 
 		return true;
 	}
-
+#ifdef __linux__
 	string convert_encoding(const string& data, const string& from, const string& to)
 	{
 		 if (data.empty())
@@ -87,6 +87,7 @@ namespace tools
 		 }
 		 return string(outbuf.data(), outbuf.size() - reverse_size);
 	}
+#endif // __linux__
 
 	struct tm * GetLocalTime()
 	{
