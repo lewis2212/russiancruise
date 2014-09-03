@@ -297,7 +297,13 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
             return;
         }
 
-        players[ packet->UCID ].Energy += 500;
+        if ( players[ packet->UCID ].leftToFeel > 0 )
+        {
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "EnergyIsFeeling" ));
+            return;
+        }
+
+        players[ packet->UCID ].leftToFeel = 500;
         bank->RemCash(packet->UCID, 50);
         bank->AddToBank(50);
     }
@@ -323,7 +329,13 @@ void RCEnergy::InsimMSO( struct IS_MSO* packet )
             return;
         }
 
-        players[ packet->UCID ].Energy += 1000;
+        if ( players[ packet->UCID ].leftToFeel > 0 )
+        {
+            insim->SendMTC(packet->UCID, msg->_( packet->UCID, "FillingEnergy" ));
+            return;
+        }
+
+        players[ packet->UCID ].leftToFeel = 1000;
         bank->RemCash(packet->UCID, 100);
         bank->AddToBank(100);
     }
@@ -362,6 +374,12 @@ void RCEnergy::Event()
             sprintf(str, msg->_(play.first , "EnergyArrow"), str);
 
         insim->SendButton(255, play.first, 2, 100, 1, 30, 4, 32+64, str);
+
+        if ( players[ play.first ].leftToFeel > 0 )
+        {
+            players[ play.first ].Energy += 100;
+            players[ play.first ].leftToFeel -= 100;
+        }
     }
 }
 
