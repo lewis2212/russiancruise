@@ -1876,8 +1876,11 @@ int core_reconnect(void *pack_ver)
     insim->isclose();
 
     cout << "wait 1 minute and reconnect \n";
-
-    Sleep(60);
+    #ifdef CIS_LINUX
+    sleep(60);
+    #else
+    Sleep(60000);
+    #endif
 
     memset(pack_ver, 0, sizeof(struct IS_VER));
     struct IS_VER *pack_v = (IS_VER*)pack_ver;
@@ -2359,7 +2362,7 @@ int main(int argc, char* argv[])
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
         RCBaseClass::CCText( mysql_error(&rcMaindb) );
-        #ifdef CIS_LINIX
+        #ifdef CIS_LINUX
         sleep(5); // 5 sec
         #else
         Sleep(5000);
