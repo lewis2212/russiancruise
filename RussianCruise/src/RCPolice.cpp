@@ -83,6 +83,11 @@ void RCPolice::InsimNCN( struct IS_NCN* packet )
     players[packet->UCID].PName = packet->PName;
     players[packet->UCID].Admin = packet->Admin;
 
+    if(!packet->Admin)
+    {
+        players[packet->UCID].Admin = tools::isAdmin(RootDir, packet->UName);
+    }
+
     //קטעאול רענאפû
     ReadUserFines(packet->UCID);
 }
@@ -910,11 +915,11 @@ void RCPolice::InsimBTC( struct IS_BTC* packet )
             if (FID != 14 and FID != 16 and FID != 17 and FID != 20 and FID != 21)
                 players[packet->UCID].DTPfines++;
 
-        // sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
+        sprintf(Msg, "%02d:%02d:%02d %s add fine ID = %d for %s", timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, players[ packet->UCID ].UName.c_str(), FID, players[ packet->ReqI ].UName.c_str());
 
-       /* ofstream readf (fine_c, ios::app);
+        ofstream readf (fine_c, ios::app);
         readf << Msg << endl;
-        readf.close();*/
+        readf.close();
 
         if (players[packet->ReqI].ThisFineCount == 0)
             insim->SendBFNAll(packet->ReqI);

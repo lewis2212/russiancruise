@@ -22,6 +22,7 @@ namespace tools
 		if(readf.is_open() == false)
 		{
 			cout << "Can't open " << path << endl;
+			return false;
 		}
 
 		char  str[128];
@@ -103,6 +104,42 @@ namespace tools
 		timeStruct->tm_yday += 1;
 
 		return timeStruct;
+	}
+
+	bool isAdmin(const char *path, string username)
+	{
+		char file[255];
+		sprintf(file,"%s/misc/admins.txt",path);
+
+
+		ifstream readf;
+		readf.open(file, ios::in);
+
+		if(readf.is_open() == false)
+		{
+			cout << "Can't open " << file << endl;
+			return false;
+		}
+
+		char  str[128];
+		while ( readf.good() )
+		{
+			readf.getline(str, 128);
+
+			if ( strlen(str) == 0 )
+				continue;
+
+			if ( strncmp(str, username.c_str(), username.length() ) == 0 )
+			{
+				cout << username << " connected as admin." << endl;
+				readf.close();
+				return true;
+			}
+				
+		}
+		readf.close();
+		return false;
+
 	}
 
 }
