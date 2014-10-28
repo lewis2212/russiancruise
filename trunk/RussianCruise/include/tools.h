@@ -50,6 +50,7 @@ namespace tools
     bool read_mysql(const char *path ,mysqlConf& conf);
     string convert_encoding(const string& data, const string& from, const string& to);
     struct tm * GetLocalTime();
+    bool isAdmin(const char *path, string username);
 };
 
 #endif
