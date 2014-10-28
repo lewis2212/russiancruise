@@ -632,7 +632,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
 
 		const char* param = args[1].c_str();
 
-        if (Message.find("!cop_add", 8) == 0 )
+        if (Message.find("!cop_add") == 0 )
         {
             if (strlen(param) > 0)
             {
