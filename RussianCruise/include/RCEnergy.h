@@ -15,6 +15,7 @@ struct EnergyPlayer: public GlobalPlayer
     /** Energy **/
     int     Energy; // 0-10000
     int     leftToFeel = 0;
+    int 	feelStep = 0;
     time_t  EnergyTime;
     bool	EnergyAlarm = false;
     bool	Lock;
