@@ -316,6 +316,7 @@ void read_user_cars(byte UCID)
         players.at(UCID).PLC += carMap[ "UF1" ].PLC;
 
         save_user_cars(UCID);
+        btn_info(UCID,4);
     }
     mysql_free_result( rcMainRes );
     insim->SendPLC(UCID, players.at(UCID).PLC);
@@ -461,6 +462,17 @@ void btn_info (byte UCID, int b_type)
 		"^C^3repeat, nose, R.Ratzinger"
     };
 
+    list<string> help_text = {
+        RCBaseClass::StringFormat("^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME),
+        msg->_(UCID,"info_help_1"),
+        msg->_(UCID,"info_help_2"),
+        msg->_(UCID,"info_help_3"),
+        msg->_(UCID,"info_help_4"),
+        msg->_(UCID,"info_help_5"),
+        msg->_(UCID,"info_help_6"),
+        msg->_(UCID,"info_help_7") 
+    };
+
     char Text[128];
 
     byte c;
@@ -469,6 +481,7 @@ void btn_info (byte UCID, int b_type)
     if (b_type == 2) c=police->GetFineCount();	//количество строк для 2 вкладки
     #endif
     if (b_type == 3) c=about_text.size();	//да, да, ты угадал
+    if (b_type == 4) c=help_text.size();   //да, да, ты угадал
     byte
     id=183, 			//стартовый ид кнопок
     l=100, t=90,		//центр поля
@@ -490,6 +503,8 @@ void btn_info (byte UCID, int b_type)
     insim->SendButton(255, UCID, 181, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
     id++;
     insim->SendButton(255, UCID, 182, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
+    id++;
+    insim->SendButton(255, UCID, 183, l-w/2+49, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "help_tab")); //нутыпонел
     id++;
 
     map<byte, string>tabs = {
@@ -538,6 +553,16 @@ void btn_info (byte UCID, int b_type)
 		}
 
 	}
+
+     if (b_type == 4)
+    {
+        byte i = 0;
+        for (auto& txt: help_text)
+        {
+            insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i++, w-2, hButton, 0, txt);
+        }
+
+    }
 
     for (int i=id; i<239; i++)
         insim->SendBFN(UCID, i);
@@ -666,6 +691,8 @@ void case_btc ()
             btn_info(pack_btc->UCID, 2);
         if (pack_btc->ClickID == 182)
             btn_info(pack_btc->UCID, 3);
+        if (pack_btc->ClickID == 183)
+            btn_info(pack_btc->UCID, 4);
     }
 }
 
