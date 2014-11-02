@@ -112,7 +112,6 @@ struct track_info
 
 struct player: public GlobalPlayer
 {
-    struct CompCar Info;
     user_car cars[MAX_CARS];
     //map <string, user_car> cars;
 
@@ -177,4 +176,5 @@ Json::Reader 		bonusesReader;
 Json::StyledWriter 	bonusesWriter;
 void ReadBonuses();
 void SaveBonuses();
+void btn_info (byte UCID, int b_type);
 #endif
