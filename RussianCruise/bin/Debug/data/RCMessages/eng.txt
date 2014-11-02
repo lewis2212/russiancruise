@@ -335,3 +335,15 @@ swear 			"^1| ^7Swearwords! Fine: %d ^3RUR."
 604 	"^1Close" 
 1800 	"^1| ^7You spent all the power!"
 1802 	"^1| ^7Also recommend to relax in a cafe"
+
+// ************************
+//     Панель иноф 4 вкладка
+// ************************
+help_tab	"^2First help"
+info_help_1	"^7How to set voluntary intake restriction:"
+info_help_2	"^71. Go to pits"
+info_help_3	"^72. Create new car settings (if you use default settings)",
+info_help_4	"^73. Find ^tInfo^t tab. Press",
+info_help_5	"^74. Find the right-hand column of the screen with the sliders",
+info_help_6	"^75. Find slider ^tVoluntary Intake Restriction^t",
+info_help_7	"^76. Set the slider to 45%%"
