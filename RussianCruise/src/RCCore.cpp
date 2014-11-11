@@ -21,8 +21,8 @@ int RCCore::init(char *dir, CInsim *InSim)
         return;
     }
 
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RC: Can't sctruct MySQL Connector\n");
         return;

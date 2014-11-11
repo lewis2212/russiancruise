@@ -144,7 +144,7 @@ public:
 
     struct fine fines[MAX_FINES];
 
-    int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
+    int init(DBMySQL *db,CInsim *InSim, void *Message,void *Bank,void *RCdl, void *STreet, void *Energy, void *Light);
 
     void Save( byte UCID );
     void SendMTCToCop(const char* Msg, int Rank, ...);

@@ -32,10 +32,10 @@ string RCMessage::GetLang(byte UCID)
     return players[UCID].Lang;
 }
 
-int RCMessage::init(MYSQL *conn, CInsim *InSim)
+int RCMessage::init(DBMySQL *db, CInsim *InSim)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCMessage: Can't sctruct MySQL Connector\n");
         return -1;
@@ -163,7 +163,7 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     query += packet->UName;
     query += "';";
 
-    DB_ROWS result = dbSelect( query );
+    DB_ROWS result = db->select( query );
 
     if( result.size() > 0 )
 	{
@@ -251,7 +251,7 @@ void RCMessage::Save (byte UCID)
     char query[MAX_PATH];
     sprintf(query,"REPLACE INTO message (username, lang) VALUES ('%s','%s')", players[ UCID ].UName.c_str(), players[ UCID ].Lang.c_str());
 
-    dbExec( query );
+    db->exec( query );
 }
 
 void

@@ -50,7 +50,7 @@ class RCAutoschool : public RCBaseClass
 		RCAutoschool(const char *dir);
 		~RCAutoschool();
 
-		void init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg);
+		void init(DBMySQL *db, CInsim *insim, RCMessage *msg);
 		void ReadConfig(const char* Track);
 
 };

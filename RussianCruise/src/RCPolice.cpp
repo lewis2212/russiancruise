@@ -11,10 +11,10 @@ RCPolice::~RCPolice()
 
 }
 
-int RCPolice::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void *Energy, void *Light)
+int RCPolice::init(DBMySQL *db, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void *Energy, void *Light)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         CCText("^3RCPolice:\t\t^1Can't sctruct MySQL Connector");
         return -1;
@@ -638,20 +638,20 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
             {
                 string query = string("SELECT * FROM police WHERE username = '") + param + string("';");
 
-                DB_ROWS res = dbSelect(query);
+                DB_ROWS res = db->select(query);
 
                 if ( res.size() > 0)
                 {
                     DB_ROW arFields;
                     arFields["active"] = "Y";
 
-                    dbUpdate("police", arFields, {"username",param});
+                    db->update("police", arFields, {"username",param});
                 }
                 else
                 {
                     char query[MAX_PATH];
                     sprintf(query,"INSERT INTO police (username) VALUES ('%s')",param);
-                    dbExec(query);
+                    db->exec(query);
 
                 }
             }
@@ -664,7 +664,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 DB_ROW arFields;
                 arFields["active"] = "N";
 
-                dbUpdate("police", arFields, {"username",param});
+                db->update("police", arFields, {"username",param});
             }
         }
 
@@ -1775,7 +1775,7 @@ RCPolice::LoadCopStat(byte UCID)
     query += players[UCID].UName;
     query += "';";
 
-    DB_ROWS res = dbSelect(query);
+    DB_ROWS res = db->select(query);
 
     if ( res.size() > 0)
     {
@@ -1830,7 +1830,7 @@ void RCPolice::SaveCopStat(byte UCID)
     arFields["fined"] = ToString(players[UCID].PStat.Fined);
     arFields["fines_canceled"] = ToString(players[UCID].PStat.CanceledFines);
 
-    bool up = dbUpdate("police", arFields, {"username",players[UCID].UName});
+    bool up = db->update("police", arFields, {"username",players[UCID].UName});
 
     if ( !up )
     {

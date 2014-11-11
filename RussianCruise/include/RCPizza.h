@@ -109,7 +109,7 @@ public:
     ~RCPizza();
 
     // Основные функции класса
-    int init(MYSQL *conn, CInsim *InSim, void *Message,void *Bank,void *Energy,void *DrLic, void * STreet);
+    int init(DBMySQL *db, CInsim *InSim, void *Message,void *Bank,void *Energy,void *DrLic, void * STreet);
     void ReadConfig(const char *Track);
 
 

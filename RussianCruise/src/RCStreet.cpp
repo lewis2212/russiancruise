@@ -13,12 +13,12 @@ RCStreet::~RCStreet()
 {
 }
 
-int RCStreet::init(MYSQL *conn, CInsim *InSim, void *Message)
+int RCStreet::init(DBMySQL *db, CInsim *InSim, void *Message)
 {
     IfInited = false;
 
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCStreet: Can't sctruct MySQL Connector\n");
         return -1;

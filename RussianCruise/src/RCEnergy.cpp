@@ -12,10 +12,10 @@ RCEnergy::~RCEnergy()
 
 }
 
-int RCEnergy::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank)
+int RCEnergy::init(DBMySQL *db, CInsim *InSim, void *Message, void *Bank)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("^3RCEnergy:\t^1Can't sctruct MySQL Connector\n");
         return -1;
@@ -102,7 +102,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT energy FROM energy WHERE username='%s' LIMIT 1;", packet->UName);
 
-    DB_ROWS result = dbSelect(query);
+    DB_ROWS result = db->select(query);
 
     DB_ROW row;
 
@@ -117,7 +117,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
 
         sprintf(query, "INSERT INTO energy (username) VALUES ('%s');", packet->UName);
 
-        dbExec(query);
+        db->exec(query);
 
         players[ packet->UCID ].Energy = 10000;
         Save( packet->UCID );
@@ -165,7 +165,7 @@ void RCEnergy::Save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE energy SET energy = %d WHERE username='%s'" , players[UCID].Energy, players[UCID].UName.c_str());
 
-    dbExec(query);
+    db->exec(query);
 }
 
 void RCEnergy::InsimCPR( struct IS_CPR* packet )

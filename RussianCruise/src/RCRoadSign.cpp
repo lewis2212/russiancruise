@@ -10,10 +10,10 @@ RCRoadSign::~RCRoadSign()
 
 }
 
-int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
+int RCRoadSign::init(DBMySQL *db, CInsim *InSim, RCLight * Light)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCRoadSign: Can't sctruct MySQL Connector\n");
         return -1;
@@ -26,7 +26,7 @@ int RCRoadSign::Init(MYSQL *conn, CInsim *InSim, void *Message, void * Light)
         return -1;
     }
 
-    lgh = (RCLight *)Light;
+    lgh = Light;
     if (!lgh)
     {
         printf ("Can'Top struct RCLight class");

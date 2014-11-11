@@ -145,7 +145,7 @@ public:
 
 
     // Основные функции класса
-    int init(MYSQL *conn,CInsim *InSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
+    int init(DBMySQL *db,CInsim *InSim, void *Message,void *Bank,void *RCdl, void * STreet, void * Police, void * Light);
 
 
     void ReadConfig(const char *Track); // Чтение данных о точках "Пункт назначения"
