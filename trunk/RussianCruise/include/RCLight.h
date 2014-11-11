@@ -78,7 +78,7 @@ public:
     bool CheckOnRed(byte UCID);
     int CheckLight(byte UCID);
 
-    int init(MYSQL *conn,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
+    int init(DBMySQL *db,CInsim *InSim, void *Message, void *RCDLic);    // classname - указатель на класс RCStreet.
     void ReadConfig(const char *Track); // „тение данных о точках "ѕункт назначени€"
 };
 #endif // #define _RC_STREET_H

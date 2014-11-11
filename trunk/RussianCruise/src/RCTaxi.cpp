@@ -13,10 +13,10 @@ RCTaxi::~RCTaxi()
 
 }
 
-int RCTaxi::init(MYSQL *conn, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void * Police, void * Light)
+int RCTaxi::init(DBMySQL *db, CInsim *InSim, void *Message, void *Bank, void *RCdl, void * STreet, void * Police, void * Light)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCTaxi: Can't sctruct MySQL Connector\n");
         return -1;
@@ -1118,7 +1118,7 @@ void RCTaxi::ReadUser( byte UCID )
 {
 	string query = StringFormat("SELECT * FROM taxi WHERE username = '%s'",players[UCID].UName.c_str());
 
-	DB_ROWS res = dbSelect( query );
+	DB_ROWS res = db->select( query );
 
 	if( res.size() > 0 )
 	{
@@ -1169,7 +1169,7 @@ void RCTaxi::Save( byte UCID )
 								players[UCID].PenaltyCount,
 								players[UCID].PassCount);
 
-	dbExec( query );
+	db->exec( query );
 
 }
 

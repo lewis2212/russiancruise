@@ -49,7 +49,7 @@ private:
 public:
     RCRoadSign(const char* Dir);
     ~RCRoadSign();
-    int Init(MYSQL *conn,CInsim *InSim, void *Message, void * Light);
+    int init(DBMySQL *db,CInsim *InSim, RCLight * Light);
     void ReadConfig(const char *Track);
     void InsimMCI(struct IS_MCI* packet);
 };

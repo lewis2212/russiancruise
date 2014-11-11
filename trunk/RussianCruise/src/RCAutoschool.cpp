@@ -13,9 +13,9 @@ RCAutoschool::~RCAutoschool()
 }
 
 void
-RCAutoschool::init(MYSQL *rcMaindbConn, CInsim *insim, RCMessage *msg)
+RCAutoschool::init(DBMySQL *db, CInsim *insim, RCMessage *msg)
 {
-	dbconn = rcMaindbConn;
+	this->db = db;
 
 	this->insim = insim;
 	this->msg = msg;

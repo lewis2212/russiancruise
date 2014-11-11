@@ -16,10 +16,10 @@ RCPizza::~RCPizza()
 
 }
 
-int RCPizza::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
+int RCPizza::init(DBMySQL *db, CInsim *InSim, void *RCMessageClass, void *Bank, void *Energy, void *DrLic, void * STreet)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCPizza: Can't sctruct MySQL Connector\n");
         return -1;

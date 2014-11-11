@@ -55,10 +55,10 @@ bool RCBank::InBank(byte UCID)
     return players[UCID].InZone;
 }
 
-int RCBank::init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL)
+int RCBank::init(DBMySQL *db, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         CCText("^3RCBank:\t^1Can't sctruct MySQL Connector");
         return -1;
@@ -106,7 +106,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username = '%s' LIMIT 1;", packet->UName);
 
-    DB_ROWS result = dbSelect(query);
+    DB_ROWS result = db->select(query);
     DB_ROW row;
 
     if( result.size() != 0 )
@@ -119,7 +119,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         printf("RCBank: Can't find %s, create user\n", packet->UName);
         sprintf(query, "INSERT INTO bank (username) VALUES ('%s');", packet->UName);
 
-        if (!dbExec(query))
+        if (!db->exec(query))
             printf("Error credits: MySQL Query\n");
 
         players[packet->UCID].Cash = 1000;
@@ -129,7 +129,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     /** кредиты **/
     sprintf(query, "SELECT cash, date_create FROM bank_credits WHERE username='%s' LIMIT 1;", packet->UName);
 
-	result = dbSelect(query);
+	result = db->select(query);
 
     if ( result.size() > 0)
     {
@@ -141,7 +141,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     {
         sprintf(query, "INSERT INTO bank_credits (username, cash, date_create) VALUES ('%s', 0, 0);", packet->UName);
 
-        if (!dbExec(query))
+        if (!db->exec(query))
         {
             printf("Error credits: MySQL Query\n");
         }
@@ -153,7 +153,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     /** вклады **/
     sprintf(query, "SELECT cash, date_create FROM bank_deposits WHERE username='%s' LIMIT 1;", packet->UName);
 
-    result = dbSelect(query);
+    result = db->select(query);
 
     if ( result.size() > 0)
     {
@@ -167,7 +167,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
         sprintf(query, "INSERT INTO bank_deposits (username, cash, date_create) VALUES ('%s', 0, 0);", packet->UName);
 
 
-        if ( !dbExec(query) )
+        if ( !db->exec(query) )
         {
             printf("Error deposits: MySQL Query\n");
         }
@@ -261,7 +261,7 @@ void RCBank::Save (byte UCID)
     char query[128];
     sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='%s'", players[UCID].Cash, players[UCID].UName.c_str());
 
-    if (!dbExec(query))
+    if (!db->exec(query))
     {
         printf("Bank Error: Can't save cash for %s\n",  players[UCID].UName.c_str());
     }
@@ -269,7 +269,7 @@ void RCBank::Save (byte UCID)
     /* Credit */
     sprintf(query, "UPDATE bank_credits SET cash = '%d', date_create = '%ld' WHERE username='%s'", players[UCID].Credit, players[UCID].Date_create, players[UCID].UName.c_str());
 
-    if (!dbExec(query))
+    if (!db->exec(query))
     {
         printf("Bank Error: Can't save credit for %s\n",  players[UCID].UName.c_str());
     }
@@ -277,7 +277,7 @@ void RCBank::Save (byte UCID)
     /* Deposit */
     sprintf(query, "UPDATE bank_deposits SET cash = '%d', date_create = '%ld' WHERE username='%s'", players[UCID].Deposit, players[UCID].Dep_Date_create, players[UCID].UName.c_str());
 
-    if (!dbExec(query))
+    if (!db->exec(query))
     {
         printf("Bank Error: Can't save deposit for %s\n",  players[UCID].UName.c_str());
     }
@@ -285,7 +285,7 @@ void RCBank::Save (byte UCID)
     /* Capital */
     sprintf(query, "UPDATE bank SET cash = '%0.0f' WHERE username='_RC_Bank_Capital_'", BankFond);
 
-    if( !dbExec(query) )
+    if( !db->exec(query) )
 	{
 		printf("Bank Error: Can't save Capital\n");
 	}
@@ -722,7 +722,7 @@ void RCBank::ReadConfig(const char *Track)
     char query[128];
     sprintf(query, "SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
 
-	DB_ROWS result = dbSelect(query);
+	DB_ROWS result = db->select(query);
 
     if ( result.size() > 0)
     {

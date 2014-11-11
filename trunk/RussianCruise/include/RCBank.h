@@ -64,7 +64,7 @@ public:
     int  GetCash(byte UCID);
 
     // Основные функции класса
-    int init(MYSQL *conn, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL);
+    int init(DBMySQL *db, CInsim *InSim, RCMessage *RCMessageClass, RCDL *DL);
     void ReadConfig(const char *Track);
     void Save(byte UCID);
 

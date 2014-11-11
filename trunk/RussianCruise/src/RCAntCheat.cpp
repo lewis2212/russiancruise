@@ -15,10 +15,10 @@ RCAntCheat::~RCAntCheat()
     //delete[] players;
 }
 
-int RCAntCheat::init(MYSQL *conn, CInsim *InSim, void *Message)
+int RCAntCheat::init(DBMySQL *db, CInsim *InSim, void *Message)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         printf("RCAntCheat: Can't sctruct MySQL Connector\n");
         return -1;

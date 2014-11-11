@@ -154,10 +154,10 @@ bool RCDL::Islocked(byte UCID)
     }
 }
 
-int RCDL::init(MYSQL *conn, CInsim *InSim, void *RCMessageClass)
+int RCDL::init(DBMySQL *db, CInsim *InSim, void *RCMessageClass)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
         CCText("^3RCDL:\t\t^1Can't sctruct MySQL Connector");
         return -1;
@@ -199,13 +199,8 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT lvl, skill FROM dl WHERE username='%s' LIMIT 1;", packet->UName);
 
-    DB_ROWS result = dbSelect(query);
+    DB_ROWS result = db->select(query);
     DB_ROW row;
-
-    if (dbres == NULL)
-    {
-        printf("Error: can't get the result description\n");
-    }
 
     if( result.size() != 0 )
     {
@@ -218,7 +213,7 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
         printf("RCDL: Can't find %s - Create user\n", packet->UName);
 
         sprintf(query, "INSERT INTO dl (username) VALUES ('%s');", packet->UName);
-        dbExec(query);
+        db->exec(query);
 
         players[ packet->UCID ].LVL = 0;
         players[ packet->UCID ].Skill = 0;
@@ -270,7 +265,7 @@ void RCDL::Save (byte UCID)
     DB_ROW query;
     query["lvl"] = ToString(players[ UCID ].LVL);
     query["skill"] = ToString(players[ UCID ].Skill);
-    dbUpdate("dl",query,{"username",players[ UCID ].UName});
+    db->update("dl",query,{"username",players[ UCID ].UName});
 
 }
 

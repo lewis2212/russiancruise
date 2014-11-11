@@ -61,7 +61,7 @@ public:
     struct  place zone;
 
     // Основные функции класса
-    int     init(MYSQL *conn,CInsim *InSim, void *RCMessageClass,void *Bank);
+    int     init(DBMySQL *db,CInsim *InSim, void *RCMessageClass,void *Bank);
     void    ReadConfig(const char *Track);
 
 

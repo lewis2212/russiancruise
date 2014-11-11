@@ -30,6 +30,8 @@ Russian Cruise by TurboSnail
 #include "CInsim.h"
 #include "RCButtonClickID.h"
 
+#include "DBMySQL.h"
+
 #include "RCPizza.h"
 #include "RCMessage.h"
 #include "RCEnergy.h"
@@ -42,7 +44,7 @@ Russian Cruise by TurboSnail
 #include "RCTaxi.h"
 #include "RCRoadSign.h"
 
-// #include "RCQuest.h"
+#include "RCQuest.h"
 // #include "RCAutoschool.h"
 
 #define MAX_CARS 30
@@ -53,15 +55,7 @@ using namespace std;
 /*** GLOBAL ***/
 char IS_PRODUCT_NAME[16];
 
-// Дескриптор соединения
-MYSQL rcMaindb;
-// Дескриптор результирующей таблицы
-MYSQL_RES *rcMainRes;
-// Массив полей текущей строки
-MYSQL_ROW rcMainRow;
-
 mysqlConf conf;
-
 
 time_t  s_time;
 int     chek_users =0;
@@ -70,7 +64,6 @@ CInsim *insim;
 
 int ok = 1;
 
-struct IS_VER pack_ver;
 word	isf_flag;
 
 char RootDir[MAX_PATH];

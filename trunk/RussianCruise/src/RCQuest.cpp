@@ -11,31 +11,56 @@ RCQuest::~RCQuest()
 
 }
 
-void RCQuest::init(MYSQL *conn, CInsim *InSim)
+void RCQuest::init(DBMySQL *db, CInsim *InSim)
 {
-    dbconn = conn;
-    if (!dbconn)
+    this->db = db;
+    if (!this->db)
     {
-        printf("RCDL: Can't sctruct MySQL Connector\n");
+        CCText("^3"+ClassName+": Can't sctruct MySQL Connector\n");
         return ;
     }
 
     insim = InSim;
     if (!insim)
     {
-        printf ("Can't struct CInsim class");
+        CCText ("^3"+ClassName+": Can't struct CInsim class");
         return ;
     }
 
-    CCText("^3R"+ClassName+":\t^2inited");
+    CCText("^3"+ClassName+":\t^2inited");
 }
 
 void RCQuest::ReadConfig(const char *Track)
 {
     char file[MAX_PATH];
-    sprintf(file, "%s/data/RCQuest/%s.txt", RootDir, Track);
+    sprintf(file, "%s/data/%s/%s.json", RootDir, ClassName.c_str(), Track);
 
-    CCText("  ^7RCQuest\t^2OK");
+    ifstream readf (file, ios::in);
+
+    if(!readf.is_open())
+    {
+        CCText("  ^7"+ClassName+"    ^1ERROR: ^8file " + (string)file + " not found");
+        return ;
+    }
+
+    bool readed = configReader.parse( readf, config, false );
+
+    if ( !readed )
+    {
+        readf.close();
+        // report to the user the failure and their locations in the document.
+        cout  << ClassName+": Failed to parse configuration\n"
+                   << configReader.getFormattedErrorMessages();
+        return;
+    }
+    readf.close();
+
+    if(!config.isObject ())
+    {
+        CCText("  ^7"+ClassName+"\t^1FAIL");
+    }
+
+    CCText("  ^7"+ClassName+"\t^2OK");
 }
 
 
@@ -45,8 +70,8 @@ void RCQuest::InsimNCN( struct IS_NCN *packet )
     if ( packet->UCID == 0 )
         return;
 
-    strcpy(players[ packet->UCID ].UName, packet->UName);
-    strcpy(players[ packet->UCID ].PName, packet->PName);
+    players[ packet->UCID ].UName = packet->UName;
+    players[ packet->UCID ].PName = packet->PName;
 }
 
 void RCQuest::InsimNPL( struct IS_NPL *packet )
@@ -71,7 +96,7 @@ void RCQuest::InsimCNL( struct IS_CNL *packet )
 
 void RCQuest::InsimCPR( struct IS_CPR *packet )
 {
-    strcpy( players[ packet->UCID ].PName, packet->PName );
+    players[ packet->UCID ].PName = packet->PName;
 }
 
 void RCQuest::InsimMSO( struct IS_MSO *packet )
@@ -84,14 +109,15 @@ void RCQuest::InsimMSO( struct IS_MSO *packet )
     if ( packet->UserType != MSO_PREFIX )
         return;
 
-    char Msg[128];
-    strcpy( Msg, packet->Msg + ((unsigned char)packet->TextStart));
+    string Msg = packet->Msg + packet->TextStart;
 }
 
 void RCQuest::InsimMCI(struct IS_MCI *packet)
 {
     for (int i = 0; i < packet->NumC; i++)
     {
-        //byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
+        byte UCID = PLIDtoUCID[ packet->Info[i].PLID ];
+
+        
     }
 }

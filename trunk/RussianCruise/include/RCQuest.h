@@ -3,24 +3,9 @@
 
 #include "RCBaseClass.h"
 
-// Задаем структуру игрока
-
-struct Quests
+struct QuestPlayer: GlobalPlayer
 {
-    bool current;
-    byte step;
-    bool complete;
-};
-
-struct QuestPlayer
-{
-    //struct  CompCar Info;
-    char    UName[24];             // Username
-    char    PName[24];             // Player name
-    byte    UCID;                  // Connection ID
-    byte    PLID;                  // PLayer ID
-    char    CName[4];              // Car Name
-    map<string, Quests> quest;
+    Json::Value quest;
 };
 
 
@@ -30,13 +15,12 @@ class RCQuest:public RCBaseClass
 public:
     RCQuest(const char* Dir);
     ~RCQuest();
-    void init(MYSQL *conn, CInsim *InSim);
-    void insim_mci();
-    void ReadConfig(const char *Track);
+    void init(DBMySQL *db, CInsim *InSim);
 
 private:
-
     map <byte, QuestPlayer> players;
+
+    void    ReadConfig(const char *Track);
 
     void    InsimCNL( struct IS_CNL* packet );      // Игрок ушел с сервера
     void    InsimCPR( struct IS_CPR* packet );      // Игрок переименовался

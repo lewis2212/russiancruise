@@ -4,6 +4,8 @@
 
 GlobalInfo *ginfo;
 
+DBMySQL *db;
+
 
 #ifdef _RC_PIZZA_H
 RCPizza *pizza;
@@ -48,7 +50,7 @@ RCRoadSign *RoadSign;
 #endif // _RC_ROADSIGN
 
 #ifdef _RC_QUEST_H
-RCQuest	*quest;
+RCQuest *quest;
 #endif // _RC_QUEST_H
 
 #ifdef _RC_AUTOSCHOOL_H
@@ -112,62 +114,62 @@ void CreateClasses()
 #endif // _RC_QUEST_H
 
 #ifdef _RC_AUTOSCHOOL_H
-	school = new RCAutoschool(RootDir);
-	classes.push_back( school );
+    school = new RCAutoschool(RootDir);
+    classes.push_back( school );
 #endif // _RC_AUTOSCHOOL_H
 
 }
 
 void InitClasses()
 {
-    msg->init(&rcMaindb, insim);
+    msg->init(db, insim);
 
 #ifdef _RC_BANK_H
-    bank->init(&rcMaindb, insim, msg, dl);
+    bank->init(db, insim, msg, dl);
 #endif // _RC_BANK_H
 
 #ifdef _RC_ENERGY_H
-    nrg->init(&rcMaindb, insim, msg, bank);
+    nrg->init(db, insim, msg, bank);
 #endif
 
 #ifdef _RC_LEVEL_H
-    dl->init(&rcMaindb, insim, msg);
+    dl->init(db, insim, msg);
 #endif
 
 #ifdef _RC_CHEAT_H
-    antcht->init(&rcMaindb, insim, msg);
+    antcht->init(db, insim, msg);
 #endif
 
 #ifdef _RC_STREET_H
-    street->init(&rcMaindb, insim, msg);
+    street->init(db, insim, msg);
 #endif
 
 #ifdef _RC_LIGHT_H
-    lgh->init(&rcMaindb, insim, msg, dl);
+    lgh->init(db, insim, msg, dl);
 #endif
 
 #ifdef _RC_POLICE_H
-    police->init(&rcMaindb, insim, msg, bank, dl, street, nrg, lgh);
+    police->init(db, insim, msg, bank, dl, street, nrg, lgh);
 #endif // _RC_POLICE_H
 
 #ifdef _RC_PIZZA_H
-    pizza->init(&rcMaindb, insim, msg, bank, nrg, dl, street);
+    pizza->init(db, insim, msg, bank, nrg, dl, street);
 #endif
 
 #ifdef _RC_TAXI_H
-    taxi->init(&rcMaindb, insim, msg, bank, dl, street, police, lgh);
+    taxi->init(db, insim, msg, bank, dl, street, police, lgh);
 #endif
 
 #ifdef _RC_ROADSIGN
-    RoadSign->Init(&rcMaindb, insim, msg, lgh);
+    RoadSign->init(db, insim, lgh);
 #endif // _RC_ROADSIGN
 
 #ifdef _RC_QUEST_H
-    quest->init(&rcMaindb, insim);
+    quest->init(db, insim);
 #endif // _RC_QUEST_H
 
 #ifdef _RC_AUTOSCHOOL_H
-	school->init(&rcMaindb, insim, msg);
+    school->init(db, insim, msg);
 #endif // _RC_AUTOSCHOOL_H
 
 }
@@ -235,15 +237,12 @@ void save_user_cars (byte UCID)
 {
     char sql[128];
 
-    /*if ( mysql_ping( &rcMaindb ) != 0 )
-        printf("Bank Error: connection with MySQL server was lost\n");
-*/
     for (int i = 0; i < MAX_CARS; i++)
     {
         if ( strlen( players.at(UCID).cars[i].car ) > 0 )
         {
             sprintf(sql, "UPDATE garage SET tuning = %d, dist = %f WHERE car = '%s' AND username = '%s';", players.at(UCID).cars[i].tuning , players.at(UCID).cars[i].dist , players.at(UCID).cars[i].car , players.at(UCID).UName );
-            if ( mysql_query( &rcMaindb , sql) != 0 )
+            if ( db->exec(sql) == false )
                 printf("Bank Error: MySQL Query Save\n");
         }
     }
@@ -259,41 +258,18 @@ void read_user_cars(byte UCID)
     char query[128];
     sprintf(query, "SELECT car, tuning, dist FROM garage WHERE username='%s';", players.at(UCID).UName);
 
-    /*if ( mysql_ping( &rcMaindb ) != 0 )
-    {
-        printf("Error: connection with MySQL server was lost\n");
-        insim->SendMST(msg);
-        insim->SendMST(kickCmd);
-        return;
-    }*/
+    DB_ROWS result = db->select(query);
 
-    if ( mysql_query( &rcMaindb , query) != 0 )
-    {
-        printf("Error: MySQL Query\n");
-        insim->SendMST(msg);
-        insim->SendMST(kickCmd);
-        return;
-    }
-
-    rcMainRes = mysql_store_result(&rcMaindb);
-    if (rcMainRes == NULL)
-    {
-        printf("Error: can't get the result description\n");
-        insim->SendMST(msg);
-        insim->SendMST(kickCmd);
-        return;
-    }
-
-    if ( mysql_num_rows( rcMainRes ) > 0 )
+    if ( result.size() > 0 )
     {
         int i = 0;
-        while ( ( rcMainRow = mysql_fetch_row( rcMainRes ) ) )
+        for ( auto row: result )
         {
-            strcpy(players.at(UCID).cars[i].car, rcMainRow[0]);
-            players.at(UCID).cars[i].tuning = atoi( rcMainRow[1] );
-            players.at(UCID).cars[i].dist = atof( rcMainRow[2] );
+            strcpy(players.at(UCID).cars[i].car, row["car"].c_str());
+            players.at(UCID).cars[i].tuning = atoi( row["tuning"].c_str() );
+            players.at(UCID).cars[i].dist = atof( row["dist"].c_str() );
             /** map<> **/
-            players.at(UCID).PLC += carMap[ rcMainRow[0] ].PLC;
+            players.at(UCID).PLC += carMap[ row["car"] ].PLC;
             i++;
         }
     }
@@ -303,10 +279,8 @@ void read_user_cars(byte UCID)
 
         sprintf(query, "INSERT INTO garage (username, car ) VALUES ('%s' , 'UF1');", players.at(UCID).UName);
 
-        /*if ( mysql_ping( &rcMaindb ) != 0 )
-            printf("Error: connection with MySQL server was lost\n");
-*/
-        if ( mysql_query( &rcMaindb , query) != 0 )
+
+        if ( db->exec(query) != 0 )
             printf("Error: MySQL Query\n");
 
         strcpy(players.at(UCID).cars[0].car, "UF1");
@@ -318,7 +292,7 @@ void read_user_cars(byte UCID)
         save_user_cars(UCID);
         btn_info(UCID,4);
     }
-    mysql_free_result( rcMainRes );
+    
     insim->SendPLC(UCID, players.at(UCID).PLC);
 }
 
@@ -342,15 +316,15 @@ void Save(byte UCID)
     if(UCID == 255)
         return;
 
-	save_car(UCID);
-	save_user_cars(UCID);
+    save_car(UCID);
+    save_user_cars(UCID);
 
-	for( cl = classes.begin(); cl != classes.end(); ++cl )
-	{
-		(*cl)->Save( UCID );
-	}
+    for( cl = classes.begin(); cl != classes.end(); ++cl )
+    {
+        (*cl)->Save( UCID );
+    }
 
-	insim->SendMTC(UCID, msg->_( UCID, "3000" ));
+    insim->SendMTC(UCID, msg->_( UCID, "3000" ));
 }
 
 void SaveAll(bool SaveBonus)
@@ -358,21 +332,21 @@ void SaveAll(bool SaveBonus)
     if(players.size() <= 0)
         return;
 
-	for(auto& pl: players)
-	{
-	    byte UCID = pl.first;
+    for(auto& pl: players)
+    {
+        byte UCID = pl.first;
 
-		Save(UCID);
+        Save(UCID);
 
-		if(SaveBonus)
+        if(SaveBonus)
         {
             bonuses[ players.at(UCID).UName ]["count"] = players.at(UCID).Bonus_count;
             bonuses[ players.at(UCID).UName ]["dist"] = players.at(UCID).Bonus_dist;
         }
-	}
-	RCBaseClass::CCText("^2DATA SAVED");
+    }
+    RCBaseClass::CCText("^2DATA SAVED");
 
-	if(SaveBonus)
+    if(SaveBonus)
     {
         SaveBonuses();
     }
@@ -450,16 +424,16 @@ void help_cmds (byte UCID, int h_type)
 void btn_info (byte UCID, int b_type)
 {
     list<string> about_text = {
-		RCBaseClass::StringFormat("^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME),
-		"^C^7Developers: Denis Kostin, Aleksandr Mochalov",
-		"^C^7Jabber: denis-kostin@jabber.ru",
-		"^C^7Jabber conference: lfs@conference.jabber.ru",
-		"^7",
-		"^C^7More information",
-		"^C^7http://vk.com/russiancruise",
-		"^7",
-		"^C^7Thanks:",
-		"^C^3repeat, nose, R.Ratzinger"
+        RCBaseClass::StringFormat("^7RUSSIAN CRUISE  %s", IS_PRODUCT_NAME),
+        "^C^7Developers: Denis Kostin, Aleksandr Mochalov",
+        "^C^7Jabber: denis-kostin@jabber.ru",
+        "^C^7Jabber conference: lfs@conference.jabber.ru",
+        "^7",
+        "^C^7More information",
+        "^C^7http://vk.com/russiancruise",
+        "^7",
+        "^C^7Thanks:",
+        "^C^3repeat, nose"
     };
 
     list<string> help_text = {
@@ -476,18 +450,18 @@ void btn_info (byte UCID, int b_type)
     char Text[128];
 
     byte c;
-    if (b_type == 1) c=MAX_CARS/2;				//количество строк дл€ 1 вкладки
+    if (b_type == 1) c=MAX_CARS/2;              //количество строк дл€ 1 вкладки
     #ifdef _RC_POLICE_H
-    if (b_type == 2) c=police->GetFineCount();	//количество строк дл€ 2 вкладки
+    if (b_type == 2) c=police->GetFineCount();  //количество строк дл€ 2 вкладки
     #endif
-    if (b_type == 3) c=about_text.size();	//да, да, ты угадал
+    if (b_type == 3) c=about_text.size();   //да, да, ты угадал
     if (b_type == 4) c=help_text.size();   //да, да, ты угадал
     byte
-    id=183, 			//стартовый ид кнопок
-    l=100, t=90,		//центр пол€
-    hButton=5, 			//высота одной строки
-    w=100, 				//ширина пол€
-    h=16+c*hButton; 	//высота пол€
+    id=183,             //стартовый ид кнопок
+    l=100, t=90,        //центр пол€
+    hButton=5,          //высота одной строки
+    w=100,              //ширина пол€
+    h=16+c*hButton;     //высота пол€
 
     insim->SendButton(255, UCID, 176, l-w/2, t-h/2, w, h+8, 32, "");                                   //фон
     id++;
@@ -498,20 +472,20 @@ void btn_info (byte UCID, int b_type)
     insim->SendButton(255, UCID, id++, l-w/2, t-h/2, 25, 10, 3+64, "RUSSIAN CRUISE");                  //заголовок
     insim->SendButton(255, UCID, id++, l-w/2+24, t-h/2+2, 20, 3, 5+64, IS_PRODUCT_NAME);               //верси€
 
-    insim->SendButton(255, UCID, 180, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));	//вкладка раз
+    insim->SendButton(255, UCID, 180, l-w/2+1, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "200"));  //вкладка раз
     id++;
-    insim->SendButton(255, UCID, 181, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201"));	//два
+    insim->SendButton(255, UCID, 181, l-w/2+17, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "201")); //два
     id++;
-    insim->SendButton(255, UCID, 182, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202"));	//нутыпонел
+    insim->SendButton(255, UCID, 182, l-w/2+33, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "202")); //нутыпонел
     id++;
     insim->SendButton(255, UCID, 183, l-w/2+49, t-h/2+9, 16, 6, 16+8, msg->_(UCID, "help_tab")); //нутыпонел
     id++;
 
     map<byte, string>tabs = {
-    	pair<byte, string>{131,msg->_(UCID, "200")},
-    	pair<byte, string>{132,msg->_(UCID, "201")},
-		pair<byte, string>{133, msg->_(UCID, "202")}
-	};
+        pair<byte, string>{131,msg->_(UCID, "200")},
+        pair<byte, string>{132,msg->_(UCID, "201")},
+        pair<byte, string>{133, msg->_(UCID, "202")}
+    };
 
     if (b_type == 1)
         for (int i=0; i<MAX_CARS; i++)
@@ -545,14 +519,14 @@ void btn_info (byte UCID, int b_type)
 #endif
 
     if (b_type == 3)
-	{
-		byte i = 0;
+    {
+        byte i = 0;
         for (auto& txt: about_text)
-		{
-			insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i++, w-2, hButton, 0, txt);
-		}
+        {
+            insim->SendButton(255, UCID, id++, l-w/2+1, t-h/2+16+hButton*i++, w-2, hButton, 0, txt);
+        }
 
-	}
+    }
 
      if (b_type == 4)
     {
@@ -598,14 +572,14 @@ void case_bfn ()
 {
     struct IS_BFN *pack_bfn = (struct IS_BFN*)insim->get_packet();
 
-	time_t now;
-	time(&now);
+    time_t now;
+    time(&now);
 
-	if ((now - players.at(pack_bfn->UCID).LastBFN) < 5)
-		return;
+    if ((now - players.at(pack_bfn->UCID).LastBFN) < 5)
+        return;
 
-	players.at(pack_bfn->UCID).LastBFN = now;
-	btn_info(pack_bfn->UCID, 1);
+    players.at(pack_bfn->UCID).LastBFN = now;
+    btn_info(pack_bfn->UCID, 1);
 }
 
 void case_btc ()
@@ -759,11 +733,11 @@ void case_cnl ()
 {
     struct IS_CNL *pack_cnl = (struct IS_CNL*)insim->get_packet();
 
-	RCBaseClass::CCText("^1<< disconnected " + string(players.at(pack_cnl->UCID).UName) + " (" + string(RCBaseClass::GetReason(pack_cnl->Reason) ) + ")");
+    RCBaseClass::CCText("^1<< disconnected " + string(players.at(pack_cnl->UCID).UName) + " (" + string(RCBaseClass::GetReason(pack_cnl->Reason) ) + ")");
 
-	Save( pack_cnl->UCID );
-	bonuses[ players.at(pack_cnl->UCID).UName ] = Json::nullValue;
-	players.erase(pack_cnl->UCID);
+    Save( pack_cnl->UCID );
+    bonuses[ players.at(pack_cnl->UCID).UName ] = Json::nullValue;
+    players.erase(pack_cnl->UCID);
 
 }
 
@@ -771,15 +745,15 @@ void case_toc ()
 {
     struct IS_TOC *pack_toc = (struct IS_TOC*)insim->get_packet();
 
-	insim->SendMTC(pack_toc->NewUCID, "^1Access Denine");
-	insim->SendMST("/spec " + string(players.at(pack_toc->NewUCID).UName));
+    insim->SendMTC(pack_toc->NewUCID, "^1Access Denine");
+    insim->SendMST("/spec " + string(players.at(pack_toc->NewUCID).UName));
 
 }
 
 void case_cpr ()
 {
     struct IS_CPR *pack_cpr = (struct IS_CPR*)insim->get_packet();
-	players.at(pack_cpr->UCID).PName = pack_cpr->PName;
+    players.at(pack_cpr->UCID).PName = pack_cpr->PName;
 }
 
 void case_mci ()
@@ -905,7 +879,7 @@ void case_mso ()
 
 
     xString Message = pack_mso->Msg + pack_mso->TextStart;
-	vector<string> args = Message.split(' ',1);
+    vector<string> args = Message.split(' ',1);
 
     //!help
     if (Message == "!info" or Message == "!^Cинфо")
@@ -1303,7 +1277,7 @@ void case_mso ()
             return;
         }
 
-		const char* id = args[1].c_str();
+        const char* id = args[1].c_str();
         int CarID;
 
         for (CarID = 0; CarID < MAX_CARS; CarID ++)
@@ -1379,7 +1353,7 @@ void case_mso ()
 
                 char sql[128];
                 sprintf(sql, "INSERT INTO garage  ( username, car ) VALUES ( '%s' , '%s' );", players.at(pack_mso->UCID).UName , ginfo->car[CarID].car );
-                mysql_query( &rcMaindb , sql );
+                db->exec(sql );
 
                 break;
             }
@@ -1403,7 +1377,7 @@ void case_mso ()
             return;
         }
 
-		const char* id = args[1].c_str();
+        const char* id = args[1].c_str();
 
         if (strcmp(id, "UF1")==0)
             return;
@@ -1451,7 +1425,7 @@ void case_mso ()
 
                 char sql[128];
                 sprintf(sql, "DELETE FROM garage WHERE  username = '%s' AND  car = '%s'", players.at(pack_mso->UCID).UName , ginfo->car[j].car );
-                mysql_query( &rcMaindb , sql );
+                db->exec(sql );
                 break;
             }
 
@@ -1466,7 +1440,7 @@ void case_mso ()
     {
         insim->SendMTC(255, "^1| ^3Russian Cruise: ^7^C¬ыключение, сохранение данных");
 
-		SaveAll(true);
+        SaveAll(true);
 
         ok=0;
         return;
@@ -1499,11 +1473,11 @@ void case_mso ()
 
     if (Message == "!pit" or Message == "!^Cпит")
     {
-    	if (bank->GetCash(pack_mso->UCID)<=250)
-		{
-			insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "NoManyPay" ));
-			return;
-		}
+        if (bank->GetCash(pack_mso->UCID)<=250)
+        {
+            insim->SendMTC(pack_mso->UCID, msg->_( pack_mso->UCID, "NoManyPay" ));
+            return;
+        }
 
 #ifdef _RC_POLICE_H
         if ( police->InPursuite( pack_mso->UCID ) == 1 )
@@ -1540,10 +1514,10 @@ void case_mso ()
 
     //!users
     if (Message == "!users" or Message == "!^Cнарод")
-	{
-		ShowUsersList(pack_mso->UCID);
-		return;
-	}
+    {
+        ShowUsersList(pack_mso->UCID);
+        return;
+    }
 
 
 }
@@ -1852,7 +1826,7 @@ void case_vtn ()
 
     if (pack_vtn->UCID == 0) return;
 
-	insim->SendMST("/cv");
+    insim->SendMST("/cv");
 }
 
 void ShowUsersList(byte UCID)
@@ -2104,7 +2078,7 @@ void ReadBonuses()
 {
     RCBaseClass::CCText("^3Restore bonus");
 
-    string filename = string(RootDir) + "/bonuses.json";
+    string filename = string(RootDir) + "/bonuses" + ServiceName + ".json";
 
     if(!RCBaseClass::FileExists(filename))
     {
@@ -2114,35 +2088,35 @@ void ReadBonuses()
 
     ifstream file;
 
-	file.open(filename, ios::binary);
+    file.open(filename, ios::binary);
 
-	if( !file.is_open() )
-	{
-		RCBaseClass::CCText("^1Failed to open bonuses file");
-		return;
-	}
+    if( !file.is_open() )
+    {
+        RCBaseClass::CCText("^1Failed to open bonuses file");
+        return;
+    }
 
-	bool readed = bonusesReader.parse( file, bonuses, false );
+    bool readed = bonusesReader.parse( file, bonuses, false );
 
-	if ( !readed )
-	{
-		file.close();
-		// report to the user the failure and their locations in the document.
-		cout << "Failed to parse bonuses\n" << bonusesReader.getFormattedErrorMessages();
-		return;
-	}
-	file.close();
+    if ( !readed )
+    {
+        file.close();
+        // report to the user the failure and their locations in the document.
+        cout << "Failed to parse bonuses\n" << bonusesReader.getFormattedErrorMessages();
+        return;
+    }
+    file.close();
 
     for(auto& pl:players)
     {
         byte UCID = pl.first;
 
-		Json::Value bonus = bonuses[players.at(UCID).UName];
+        Json::Value bonus = bonuses[players.at(UCID).UName];
 
         if( bonus.isObject() )
-		{
-			players.at(UCID).Bonus_count = bonus["count"].asInt();
-			players.at(UCID).Bonus_dist = bonus["dist"].asFloat();
+        {
+            players.at(UCID).Bonus_count = bonus["count"].asInt();
+            players.at(UCID).Bonus_dist = bonus["dist"].asFloat();
         }
 
         if (players.at(UCID).Bonus_count > 0)
@@ -2156,7 +2130,7 @@ void ReadBonuses()
 
 void SaveBonuses()
 {
-    string filename = string(RootDir) + "/bonuses.json";
+    string filename = string(RootDir) + "/bonuses" + ServiceName + ".json";
 
     ofstream f;
     f.open(filename, ios::out);
@@ -2178,9 +2152,9 @@ void *ThreadMci (void *params)
             case_mci ();
 
             for( cl = classes.begin(); cl != classes.end(); ++cl )
-    		{
-    			(*cl)->upd_next_packet();
-    		}
+            {
+                (*cl)->upd_next_packet();
+            }
         }
         catch(const logic_error& lerror)
         {
@@ -2212,18 +2186,18 @@ void *ThreadSave (void *params)
                 RCBaseClass::CCText(string("^1SAVE ERROR: ") + lerror.what() );
             }
 
-            //mysql_ping
+            
             int my_ping = 0;
-            if( (my_ping = mysql_ping(&rcMaindb)) != 0 )
+            if( my_ping = db->ping() != 0 )
             {
-                RCBaseClass::CCText( mysql_error(&rcMaindb) );
+                RCBaseClass::CCText( db->getError() );
 
                 if (my_reconnect > 2)
                 {
-                    if ( (mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+                    if ( db->connect( conf.host, conf.port, conf.user, conf.password, conf.database) == false )
                     {
                         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
-                        RCBaseClass::CCText( mysql_error(&rcMaindb) );
+                        RCBaseClass::CCText( db->getError() );
 
                     }
                     else
@@ -2367,28 +2341,24 @@ int main(int argc, char* argv[])
 
     if (strlen(ServiceName) == 0)
     {
-		RCBaseClass::CCText("^3RCMain:\t^C^1Ќе задан файл конфигурации");
-		return 0;
-    }
-
-	if (!mysql_init(&rcMaindb))
-    {
-        RCBaseClass::CCText("^3RCMain: ^1Can't create MySQL-descriptor");
+        RCBaseClass::CCText("^3RCMain:\t^C^1Ќе задан файл конфигурации");
         return 0;
     }
 
-    my_bool reconnect = 1;
-    mysql_options( &rcMaindb , MYSQL_OPT_RECONNECT, &reconnect ); // разрешаем переподключение
+   
 
+    
     char path[MAX_PATH];
     memset(&path,0,MAX_PATH);
     sprintf(path, "%s/misc/%s_mysql.cfg", RootDir, ServiceName);
     tools::read_mysql(path, conf);
 
-    while ( (mysql_real_connect( &rcMaindb , conf.host , conf.user , conf.password , conf.database , conf.port , NULL, 0)) == false )
+    db = new DBMySQL();
+
+    while ( db->connect(conf.host, conf.port, conf.user, conf.password, conf.database) == false )
     {
         RCBaseClass::CCText("^3RCMain: ^1Can't connect to MySQL server");
-        RCBaseClass::CCText( mysql_error(&rcMaindb) );
+        RCBaseClass::CCText(db->getError());
         #ifdef CIS_LINUX
         sleep(5); // 5 sec
         #else
@@ -2404,12 +2374,14 @@ int main(int argc, char* argv[])
 
     read_cfg();
 
-    if ( core_connect(&pack_ver) < 0 )
+    IS_VER *pack_ver = new IS_VER();
+
+    if ( core_connect(pack_ver) < 0 )
         for (;;)
-            if ( core_reconnect(&pack_ver) > 0 )
+            if ( core_reconnect(pack_ver) > 0 )
                 break;
 
-    if (pack_ver.InSimVer != 5)
+    if (pack_ver->InSimVer != 5)
     {
         RCBaseClass::CCText("^3RCMain:\t^1INSIM VER != 5");
         return -1;
@@ -2451,7 +2423,7 @@ int main(int argc, char* argv[])
     {
         if (insim->next_packet() < 0)
             for (;;)
-                if ( core_reconnect(&pack_ver) > 0 )
+                if ( core_reconnect(pack_ver) > 0 )
                     break;
 
         msg->next_packet(); // обрабатываетс€ первым, из-за того что потом е вывод€тс€ сообщени€. приоритет емае
@@ -2528,10 +2500,10 @@ int main(int argc, char* argv[])
                 break;
             }
 
-    	   for( cl = classes.begin(); cl != classes.end(); ++cl )
-    	   {
-    			(*cl)->next_packet();
-    	   }
+           for( cl = classes.begin(); cl != classes.end(); ++cl )
+           {
+                (*cl)->next_packet();
+           }
         }
         catch(const logic_error& lerror)
         {

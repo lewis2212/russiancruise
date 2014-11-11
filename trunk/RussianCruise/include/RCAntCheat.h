@@ -69,7 +69,7 @@ public:
     ~RCAntCheat();  // Деструктор класса (обязательно)
     struct  track_inf TrackInf;             // Where PitBox and Shop
     // Основные функции класса
-    int init(MYSQL *conn,CInsim *InSim, void *Message);    // classname - указатель на класс RCAntCheat.
+    int init(DBMySQL *conn,CInsim *InSim, void *Message);    // classname - указатель на класс RCAntCheat.
 
 };
 #endif // #define _RC_TAXI_H

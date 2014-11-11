@@ -22,10 +22,10 @@ bool RCLight::SetLight3( byte UCID, bool Key)
 	return true;
 }
 
-int RCLight::init(MYSQL *conn, CInsim *InSim, void *Message, void *RCDLic)
+int RCLight::init(DBMySQL *db, CInsim *InSim, void *Message, void *RCDLic)
 {
-	dbconn = conn;
-	if (!dbconn)
+	this->db = db;
+    if (!this->db)
 	{
 		printf("RCLight: Can't sctruct MySQL Connector\n");
 		return -1;
@@ -591,7 +591,13 @@ void RCLight::WrongWay(byte UCID)
 
 void RCLight::Event()
 {
-	if (!LightWorks)
+	struct tm *lt = tools::GetLocalTime();
+	bool nightTime = false;
+	
+	if(lt->tm_hour >= 23 || lt->tm_hour < 6)
+		nightTime = true;
+
+	if (!LightWorks || nightTime)
 	{
 		if (gff)
 		{

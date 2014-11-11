@@ -74,7 +74,7 @@ public:
 
     const char* GetStreetName(byte UCID, int StreetID);
 
-    int init(MYSQL *conn,CInsim *InSim, void *Message);
+    int init(DBMySQL *db,CInsim *InSim, void *Message);
     void ReadConfig(const char *Track);     // Чтение данных о точках "Пункт назначения"
 
 };

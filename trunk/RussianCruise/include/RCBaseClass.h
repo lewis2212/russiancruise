@@ -27,21 +27,17 @@ using namespace std;
 
 #include <sys/stat.h>
 
-#include <mysql/mysql.h>
+#include <DBMySQL.h>
 
 #include <json/json.h>
+
+#include "xString.h"
 
 #include "tools.h"
 #define MAX_PATH	260
 
 /**< переменная - очередь игровых объектов */
 typedef queue< ObjectInfo > ObjectsInfo;
-
-/**< переменная - асоциативный массив вида "название поля" -> "значение поля" */
-typedef map< string, string > DB_ROW;
-
-/**< переменная - массив состоящий из элементов DB_ROW */
-typedef vector<DB_ROW> DB_ROWS;
 
 struct GlobalPlayer
 {
@@ -92,8 +88,6 @@ public:
 	static string ToString (double d);
 	static string ToString (const char *c);
 
-	inline string Trim(const string &s);
-
 	static string StringFormat(const string fmt_str, ...);
 
 	static inline bool FileExists (const std::string& name)
@@ -104,6 +98,7 @@ public:
 
 protected:
     CInsim      *insim;				// Переменная-указатель на класс CInsim
+    DBMySQL     *db;
     char        RootDir[MAX_PATH];	// Полный путь до папки с программой
     map< byte, byte >PLIDtoUCID;
 
@@ -150,44 +145,12 @@ protected:
 
     virtual void ReadConfig(const char *Track){};
 
-
-    //MYSQL
-    MYSQL       *dbconn;
-    MYSQL_RES   *dbres;
-    MYSQL_ROW   dbrow;
-
-    bool dbPing(string query);
-	DB_ROWS dbSelect( string query );
-	bool dbExec( string query );
-	bool dbExec( const char *query );
-
-	/** @brief Добавление данных в базу
-	 *
-	 * @param string query - стандартная SQL команда
-	 * @return unsigned int - ID последней добавленой строки, если есть PRIMARY KEY (результат запроса SELECT LAST_INSERT_ID();)
-	 *
-	 */
-	unsigned int dbInsert( string query );
-	unsigned int dbInsert( const char *query );
-	bool dbUpdate( string table, DB_ROW fields, pair<string, string> where );
-
 	Json::Value 		config;
 	Json::Reader 		configReader;
 	Json::StyledWriter 	configWriter;
 
 private:
 
-};
-
-class xString : public string
-{
-    vector<string> flds;
-public:
-    xString(char *s) : string(s) { };
-    xString(const char *s) : string(s) { };
-    xString(string s) : string(s) { };
-    xString() : string() { };
-    vector<string>& split( const char delim, int rep=0);
 };
 
 #endif // RCBASECLASS_H
