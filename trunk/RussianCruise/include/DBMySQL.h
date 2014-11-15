@@ -26,7 +26,6 @@ class DBMySQL
 {
 	//MYSQL
     MYSQL       dbconn;
-    MYSQL_RES   *dbres;
 
 public:
 	DBMySQL();
