@@ -1,2 +1,2 @@
-Capital=3780300
+Capital=6987756
 NumCars=5
