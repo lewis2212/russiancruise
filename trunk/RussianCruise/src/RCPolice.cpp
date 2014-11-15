@@ -1445,12 +1445,13 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             if (!players[UCID].cop and players[UCID].Pogonya == 0 and players[play.first].cop and players[play.first].Radar.On)
             {
                 Dist = Distance(X1, Y1, players[play.first].Radar.X/16, players[play.first].Radar.Y/16);
-                if (Dist < 50)
+                
+                if (Dist < 100)
                 {
                     struct streets StreetInfo;
                     street->CurentStreetInfo(&StreetInfo, UCID);
 
-                    if (Dist < 25)
+                    if (Dist < 50)
                     {
                         int Speed = players[UCID].Info.Speed * 360 / 32768;
 
