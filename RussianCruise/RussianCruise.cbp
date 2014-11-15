@@ -92,6 +92,8 @@
 		<Unit filename="include/pthread.h" />
 		<Unit filename="include/tools.h" />
 		<Unit filename="include/version.h" />
+		<Unit filename="include/DBMySQL.h" />
+		<Unit filename="include/xString.h" />
 		<Unit filename="src/CInsim.cpp" />
 		<Unit filename="src/CarInfo.cpp" />
 		<Unit filename="src/RCAntCheat.cpp" />
@@ -110,6 +112,8 @@
 		<Unit filename="src/RCStreet.cpp" />
 		<Unit filename="src/RCTaxi.cpp" />
 		<Unit filename="src/tools.cpp" />
+		<Unit filename="src/DBMySQL.cpp" />
+		<Unit filename="src/xString.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
