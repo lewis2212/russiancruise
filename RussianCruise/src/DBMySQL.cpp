@@ -33,6 +33,7 @@ DBMySQL::ping()
 DB_ROWS
 DBMySQL::select( string query )
 {
+	MYSQL_RES   *dbres;
 	MYSQL_ROW   dbrow;
 	DB_ROWS out;
     out.clear();
@@ -76,6 +77,12 @@ DBMySQL::select( string query )
 			printf("TABLE %s NOT FOUND\n", tableName.c_str());
 			return out;
 		}
+		else if(mysql_num_rows(dbres) == 0)
+		{
+			mysql_free_result(dbres);
+			printf("TABLE %s NOT FOUND\n", tableName.c_str());
+			return out;
+		}
 
 		string *columns = new string[ mysql_num_rows(dbres) ];
 
@@ -113,6 +120,8 @@ DBMySQL::select( string query )
 			}
 			out.push_back( row );
 		}
+
+		mysql_free_result(dbres);
 
 		delete [] columns;
 
@@ -165,6 +174,7 @@ DBMySQL::select( string query )
 			}
 			out.push_back( row );
 		}
+		
 		mysql_free_result(dbres);
     }
 
