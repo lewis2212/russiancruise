@@ -16,8 +16,6 @@ Russian Cruise by TurboSnail
 
 #ifndef __linux__
 #include <windows.h>
-#else
-typedef SOCKET int;
 #endif
 
 #include <json/json.h>
