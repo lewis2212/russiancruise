@@ -39,6 +39,8 @@ public:
 	DBMySQL();
 	~DBMySQL();
 
+	bool debug = false;
+
 	bool connect(const char *host, int port, const char *username, const char *password, const char *database);
 
 	string getError(){return mysql_error(&dbconn);}

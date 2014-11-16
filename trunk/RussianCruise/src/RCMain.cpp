@@ -318,9 +318,14 @@ void Save(byte UCID)
 
     save_car(UCID);
     save_user_cars(UCID);
+    if(db->debug)
+        cout << "Size of classes = " << classes.size() << endl;
 
     for( cl = classes.begin(); cl != classes.end(); ++cl )
     {
+        if(db->debug)
+            cout << (*cl)->ClassName << "::Save()" << endl;
+
         (*cl)->Save( UCID );
     }
 
@@ -1458,6 +1463,8 @@ void case_mso ()
 
     if (Message == "!debug")
     {
+        db->debug = !db->debug;
+
         if (players.at(pack_mso->UCID).Svetofor == 0)
             players.at(pack_mso->UCID).Svetofor = 1;
         else
