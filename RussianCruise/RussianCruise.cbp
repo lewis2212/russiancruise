@@ -62,7 +62,6 @@
 			<Add option="-l wsock32" />
 			<Add option="-static" />
 			<Add option="-static-libgcc" />
-			<Add library=".\lib\pthread\x86\libpthreadGC2.a" />
 			<Add library=".\lib\mysql\debug\libmysql.lib" />
 			<Add library=".\lib\jsoncpp\libjson.a" />
 		</Linker>
@@ -71,6 +70,7 @@
 		<Unit filename="TODO.txt" />
 		<Unit filename="include/CInsim.h" />
 		<Unit filename="include/CarInfo.h" />
+		<Unit filename="include/DBMySQL.h" />
 		<Unit filename="include/RCAntCheat.h" />
 		<Unit filename="include/RCAutoschool.h" />
 		<Unit filename="include/RCBank.h" />
@@ -88,13 +88,12 @@
 		<Unit filename="include/RCStreet.h" />
 		<Unit filename="include/RCTaxi.h" />
 		<Unit filename="include/insim.h" />
-		<Unit filename="include/pthread.h" />
 		<Unit filename="include/tools.h" />
 		<Unit filename="include/version.h" />
-		<Unit filename="include/DBMySQL.h" />
 		<Unit filename="include/xString.h" />
 		<Unit filename="src/CInsim.cpp" />
 		<Unit filename="src/CarInfo.cpp" />
+		<Unit filename="src/DBMySQL.cpp" />
 		<Unit filename="src/RCAntCheat.cpp" />
 		<Unit filename="src/RCAutoschool.cpp" />
 		<Unit filename="src/RCBank.cpp" />
@@ -111,7 +110,6 @@
 		<Unit filename="src/RCStreet.cpp" />
 		<Unit filename="src/RCTaxi.cpp" />
 		<Unit filename="src/tools.cpp" />
-		<Unit filename="src/DBMySQL.cpp" />
 		<Unit filename="src/xString.cpp" />
 		<Extensions>
 			<code_completion />
