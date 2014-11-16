@@ -199,7 +199,7 @@ void RCDL::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT lvl, skill FROM dl WHERE username='%s' LIMIT 1;", packet->UName);
 
-    DB_ROWS result = db->select(query);
+    DB_ROWS result = db->select({"lvl","skill"},"dl",{{"username",packet->UName}});
     DB_ROW row;
 
     if( result.size() != 0 )
@@ -265,7 +265,7 @@ void RCDL::Save (byte UCID)
     DB_ROW query;
     query["lvl"] = ToString(players[ UCID ].LVL);
     query["skill"] = ToString(players[ UCID ].Skill);
-    db->update("dl",query,{"username",players[ UCID ].UName});
+    db->update("dl",query,{{"username",players[ UCID ].UName}});
 
 }
 

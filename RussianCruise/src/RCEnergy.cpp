@@ -94,6 +94,9 @@ void RCEnergy::ReadConfig(const char *Track)
 
 void RCEnergy::InsimNCN( struct IS_NCN* packet )
 {
+    if(packet->UCID == 0)
+        return;
+
     players[packet->UCID].UName = packet->UName;
     players[packet->UCID].PName = packet->PName;
     players[packet->UCID].Admin = packet->Admin;
@@ -102,7 +105,7 @@ void RCEnergy::InsimNCN( struct IS_NCN* packet )
     char query[128];
     sprintf(query, "SELECT energy FROM energy WHERE username='%s' LIMIT 1;", packet->UName);
 
-    DB_ROWS result = db->select(query);
+    DB_ROWS result = db->select({"energy"},"energy",{{"username",packet->UName}});
 
     DB_ROW row;
 

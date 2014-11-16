@@ -12,6 +12,10 @@ using namespace std;
 #include <string>
 #include <algorithm>
 
+#ifndef __linux__
+#include <windows.h>
+#endif
+
 #include <mysql/mysql.h>
 
 #include "xString.h"
@@ -26,6 +30,10 @@ class DBMySQL
 {
 	//MYSQL
     MYSQL       dbconn;
+    map<string, vector<string>> columns;
+
+    map<string,vector<string>> collectTables(string dbName);
+    vector<string> collectColumns(string tableName);
 
 public:
 	DBMySQL();
@@ -36,7 +44,7 @@ public:
 	string getError(){return mysql_error(&dbconn);}
 
     bool ping();
-	DB_ROWS select( string query );
+	DB_ROWS select(vector<string> fields, string table, DB_ROW where);
 	bool exec( string query );
 	bool exec( const char *query );
 
@@ -48,10 +56,10 @@ public:
 	 */
 	unsigned int insert( string query );
 	unsigned int insert( const char *query );
-	bool update( string table, DB_ROW fields, pair<string, string> where );
+	bool update( string table, DB_ROW fields, DB_ROW where );
 
 	inline string Trim(const string &s);
-	
+
 };
 
 #endif

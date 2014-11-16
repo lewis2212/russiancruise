@@ -14,6 +14,7 @@ public:
     xString(string s) : string(s) { };
     xString() : string() { };
     vector<string>& split( const char delim, int rep=0);
+    static string join(vector<string> v, string glue);
 };
 
 #endif
