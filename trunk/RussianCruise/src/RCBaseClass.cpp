@@ -542,13 +542,15 @@ void RCBaseClass::CCText(string Text, bool useTime)
 
     if(useTime)
     {
-        printf("\e[1;35m[%d-%02d-%02d %02d:%02d:%02d]:\e[0m ",
+        string time = StringFormat("^5[%d-%02d-%02d %02d:%02d:%02d]:^8 ",
             timeStruct->tm_year,
             timeStruct->tm_mon,
             timeStruct->tm_mday,
             timeStruct->tm_hour,
             timeStruct->tm_min,
             timeStruct->tm_sec);
+
+            Text = time + Text;
     }
 
 	char str[256];
@@ -566,7 +568,7 @@ void RCBaseClass::CCText(string Text, bool useTime)
         char ColorPref [2];
         strncpy(ColorPref, NonFormatText, 1);
         int COLOR = atoi(ColorPref);
-
+        #ifdef __linux__
         switch(COLOR)
         {
             case 0: COLOR = 30; break;
@@ -584,8 +586,33 @@ void RCBaseClass::CCText(string Text, bool useTime)
         strncpy(text, NonFormatText+1, strlen((NonFormatText)));
 
         printf("\e[1;%dm%s", COLOR, text);
+        #else
+        switch(COLOR)
+        {
+        	case 1: COLOR = 12; break;
+        	case 2: COLOR = 10; break;
+        	case 3: COLOR = 14; break;
+        	case 4: COLOR = 9;  break;
+        	case 5: COLOR = 13; break;
+        	case 6: COLOR = 11; break;
+        	case 7: COLOR = 15; break;
+        	case 8: COLOR = 7;  break;
+        	case 9: COLOR = 8;  break;
+        }
+
+        strncpy(text, NonFormatText+1, strlen((NonFormatText)));
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | COLOR));
+        printf("%s", text);
+        #endif
     }
+    #ifdef __linux__
     printf("\e[0m\n");
+    #else
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(0 | 7));
+    printf("\n");
+    #endif
+
 }
 
 

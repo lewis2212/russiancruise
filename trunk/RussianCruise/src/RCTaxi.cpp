@@ -1116,9 +1116,7 @@ void RCTaxi::InsimPLL( struct IS_PLL* packet )
 
 void RCTaxi::ReadUser( byte UCID )
 {
-	string query = StringFormat("SELECT * FROM taxi WHERE username = '%s'",players[UCID].UName.c_str());
-
-	DB_ROWS res = db->select( query );
+	DB_ROWS res = db->select({}, "taxi", {{"username",players[UCID].UName}});
 
 	if( res.size() > 0 )
 	{

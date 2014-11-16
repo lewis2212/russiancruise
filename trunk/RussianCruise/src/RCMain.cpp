@@ -258,7 +258,7 @@ void read_user_cars(byte UCID)
     char query[128];
     sprintf(query, "SELECT car, tuning, dist FROM garage WHERE username='%s';", players.at(UCID).UName);
 
-    DB_ROWS result = db->select(query);
+    DB_ROWS result = db->select({"car","tuning","dist"},"garage",{{"username",players.at(UCID).UName}});
 
     if ( result.size() > 0 )
     {
@@ -292,7 +292,7 @@ void read_user_cars(byte UCID)
         save_user_cars(UCID);
         btn_info(UCID,4);
     }
-    
+
     insim->SendPLC(UCID, players.at(UCID).PLC);
 }
 
@@ -444,7 +444,7 @@ void btn_info (byte UCID, int b_type)
         msg->_(UCID,"info_help_4"),
         msg->_(UCID,"info_help_5"),
         msg->_(UCID,"info_help_6"),
-        msg->_(UCID,"info_help_7") 
+        msg->_(UCID,"info_help_7")
     };
 
     char Text[128];
@@ -2186,7 +2186,7 @@ void *ThreadSave (void *params)
                 RCBaseClass::CCText(string("^1SAVE ERROR: ") + lerror.what() );
             }
 
-            
+
             int my_ping = 0;
             if( my_ping = db->ping() != 0 )
             {
@@ -2258,7 +2258,7 @@ void *ThreadEvent (void *params)
         {
             RCBaseClass::CCText(string("^1EVENT ERROR: ") + lerror.what() );
         }
-
+        #ifdef __linux__
         /* Выводим список пользователей и машину на которой они катаются */
         printf("\e[s\e[0;0H");
         RCBaseClass::CCText(string("^6") + IS_PRODUCT_NAME + string("\e[K"));
@@ -2292,6 +2292,7 @@ void *ThreadEvent (void *params)
         }
 
         printf("\e[u");
+        #endif // __linux__
         #ifdef CIS_LINUX
         usleep(500 * 1000); // 0.5 sec
         #else
@@ -2345,9 +2346,9 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-   
 
-    
+
+
     char path[MAX_PATH];
     memset(&path,0,MAX_PATH);
     sprintf(path, "%s/misc/%s_mysql.cfg", RootDir, ServiceName);

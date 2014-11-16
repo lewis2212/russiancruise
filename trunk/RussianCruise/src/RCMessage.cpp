@@ -163,7 +163,7 @@ void RCMessage::InsimNCN( struct IS_NCN* packet )
     query += packet->UName;
     query += "';";
 
-    DB_ROWS result = db->select( query );
+    DB_ROWS result = db->select({}, "message", {{"username",packet->UName}});
 
     if( result.size() > 0 )
 	{

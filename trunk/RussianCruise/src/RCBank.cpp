@@ -95,6 +95,8 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     if (packet->UCID == 0)
         return;
 
+    char query[MAX_PATH];
+
     char kickCmd[64], msg[96];
     sprintf(kickCmd, "/kick %s",packet->UName);
     sprintf(msg, "^1RCBank error - BAD USER");
@@ -103,10 +105,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     players[packet->UCID].PName = packet->PName;
     players[packet->UCID].Admin = packet->Admin;
 
-    char query[128];
-    sprintf(query, "SELECT cash FROM bank WHERE username = '%s' LIMIT 1;", packet->UName);
-
-    DB_ROWS result = db->select(query);
+    DB_ROWS result = db->select({"cash"}, "bank", {{"username", packet->UName}});
     DB_ROW row;
 
     if( result.size() != 0 )
@@ -127,9 +126,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     }
 
     /** кредиты **/
-    sprintf(query, "SELECT cash, date_create FROM bank_credits WHERE username='%s' LIMIT 1;", packet->UName);
-
-	result = db->select(query);
+    result = db->select({"cash","date_create"}, "bank_credits", {{"username", packet->UName}});
 
     if ( result.size() > 0)
     {
@@ -151,9 +148,7 @@ void RCBank::InsimNCN(struct IS_NCN* packet)
     }
 
     /** вклады **/
-    sprintf(query, "SELECT cash, date_create FROM bank_deposits WHERE username='%s' LIMIT 1;", packet->UName);
-
-    result = db->select(query);
+    result = db->select({"cash","date_create"}, "bank_deposits", {{"username", packet->UName}});
 
     if ( result.size() > 0)
     {
@@ -719,10 +714,7 @@ void RCBank::ReadConfig(const char *Track)
     }
     readf.close();
 
-    char query[128];
-    sprintf(query, "SELECT cash FROM bank WHERE username='_RC_Bank_Capital_' LIMIT 1;");
-
-	DB_ROWS result = db->select(query);
+ 	DB_ROWS result = db->select({"cash"},"bank",{{"username","_RC_Bank_Capital_"}});
 
     if ( result.size() > 0)
     {

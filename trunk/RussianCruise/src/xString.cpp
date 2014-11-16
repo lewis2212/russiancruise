@@ -29,3 +29,14 @@ xString::split( const char delim, int rep)
         flds.push_back(buf);
     return flds;
 }
+
+string
+xString::join(vector<string> v, string glue)
+{
+    string result;
+    for (size_t i = 0, i_end = v.size(); i < i_end; ++i) {
+        result += (i ? glue : "");  // main line in this blog-post
+        result += v[i];
+    }
+    return result;
+}

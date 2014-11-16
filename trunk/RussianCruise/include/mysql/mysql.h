@@ -156,7 +156,7 @@ typedef struct st_mysql_data {
   struct embedded_query_result *embedded_info;
 } MYSQL_DATA;
 
-enum mysql_option 
+enum mysql_option
 {
   MYSQL_OPT_CONNECT_TIMEOUT, MYSQL_OPT_COMPRESS, MYSQL_OPT_NAMED_PIPE,
   MYSQL_INIT_COMMAND, MYSQL_READ_DEFAULT_FILE, MYSQL_READ_DEFAULT_GROUP,
@@ -218,12 +218,12 @@ struct st_mysql_options {
   void *local_infile_userdata;
 };
 
-enum mysql_status 
+enum mysql_status
 {
   MYSQL_STATUS_READY,MYSQL_STATUS_GET_RESULT,MYSQL_STATUS_USE_RESULT
 };
 
-enum mysql_protocol_type 
+enum mysql_protocol_type
 {
   MYSQL_PROTOCOL_DEFAULT, MYSQL_PROTOCOL_TCP, MYSQL_PROTOCOL_SOCKET,
   MYSQL_PROTOCOL_PIPE, MYSQL_PROTOCOL_MEMORY
@@ -233,7 +233,7 @@ enum mysql_protocol_type
   the master, the ones that go to a slave, and the adminstrative
   type which must happen on the pivot connectioin
 */
-enum mysql_rpl_type 
+enum mysql_rpl_type
 {
   MYSQL_RPL_MASTER, MYSQL_RPL_SLAVE, MYSQL_RPL_ADMIN
 };
@@ -301,7 +301,7 @@ typedef struct st_mysql
   const struct st_mysql_methods *methods;
   void *thd;
   /*
-    Points to boolean flag in MYSQL_RES  or MYSQL_STMT. We set this flag 
+    Points to boolean flag in MYSQL_RES  or MYSQL_STMT. We set this flag
     from mysql_stmt_close if close had to cancel result set of this object.
   */
   my_bool *unbuffered_fetch_owner;
@@ -324,11 +324,11 @@ typedef struct st_mysql_res {
   MYSQL_ROW	current_row;		/* buffer to current row */
   my_bool	eof;			/* Used by mysql_fetch_row */
   /* mysql_stmt_close() had to cancel this result */
-  my_bool       unbuffered_fetch_cancelled;  
+  my_bool       unbuffered_fetch_cancelled;
   const struct st_mysql_methods *methods;
 } MYSQL_RES;
 
-#define MAX_MYSQL_MANAGER_ERR 256  
+#define MAX_MYSQL_MANAGER_ERR 256
 #define MAX_MYSQL_MANAGER_MSG 256
 
 #define MANAGER_OK           200
@@ -428,7 +428,7 @@ my_bool		STDCALL mysql_ssl_set(MYSQL *mysql, const char *key,
 				      const char *cert, const char *ca,
 				      const char *capath, const char *cipher);
 const char *    STDCALL mysql_get_ssl_cipher(MYSQL *mysql);
-my_bool		STDCALL mysql_change_user(MYSQL *mysql, const char *user, 
+my_bool		STDCALL mysql_change_user(MYSQL *mysql, const char *user,
 					  const char *passwd, const char *db);
 MYSQL *		STDCALL mysql_real_connect(MYSQL *mysql, const char *host,
 					   const char *user,
@@ -451,7 +451,7 @@ my_bool		STDCALL mysql_master_query(MYSQL *mysql, const char *q,
 					   unsigned long length);
 my_bool		STDCALL mysql_master_send_query(MYSQL *mysql, const char *q,
 						unsigned long length);
-/* perform query on slave */  
+/* perform query on slave */
 my_bool		STDCALL mysql_slave_query(MYSQL *mysql, const char *q,
 					  unsigned long length);
 my_bool		STDCALL mysql_slave_send_query(MYSQL *mysql, const char *q,
@@ -484,18 +484,18 @@ mysql_set_local_infile_default(MYSQL *mysql);
 */
 void            STDCALL mysql_enable_rpl_parse(MYSQL* mysql);
 void            STDCALL mysql_disable_rpl_parse(MYSQL* mysql);
-/* get the value of the parse flag */  
+/* get the value of the parse flag */
 int             STDCALL mysql_rpl_parse_enabled(MYSQL* mysql);
 
 /*  enable/disable reads from master */
 void            STDCALL mysql_enable_reads_from_master(MYSQL* mysql);
 void            STDCALL mysql_disable_reads_from_master(MYSQL* mysql);
-/* get the value of the master read flag */  
+/* get the value of the master read flag */
 my_bool		STDCALL mysql_reads_from_master_enabled(MYSQL* mysql);
 
-enum mysql_rpl_type     STDCALL mysql_rpl_query_type(const char* q, int len);  
+enum mysql_rpl_type     STDCALL mysql_rpl_query_type(const char* q, int len);
 
-/* discover the master and its slaves */  
+/* discover the master and its slaves */
 my_bool		STDCALL mysql_rpl_probe(MYSQL* mysql);
 
 /* set the master, close/free the old one, if it is not a pivot */
@@ -564,7 +564,7 @@ char *		STDCALL mysql_odbc_escape_string(MYSQL *mysql,
 void 		STDCALL myodbc_remove_escape(MYSQL *mysql,char *name);
 unsigned int	STDCALL mysql_thread_safe(void);
 my_bool		STDCALL mysql_embedded(void);
-MYSQL_MANAGER*  STDCALL mysql_manager_init(MYSQL_MANAGER* con);  
+MYSQL_MANAGER*  STDCALL mysql_manager_init(MYSQL_MANAGER* con);
 MYSQL_MANAGER*  STDCALL mysql_manager_connect(MYSQL_MANAGER* con,
 					      const char* host,
 					      const char* user,
@@ -580,7 +580,7 @@ my_bool         STDCALL mysql_read_query_result(MYSQL *mysql);
 
 
 /*
-  The following definitions are added for the enhanced 
+  The following definitions are added for the enhanced
   client-server protocol
 */
 
@@ -700,7 +700,7 @@ typedef struct st_mysql_stmt
     mysql_stmt_fetch() calls this function to fetch one row (it's different
     for buffered, unbuffered and cursor fetch).
   */
-  int            (*read_row_func)(struct st_mysql_stmt *stmt, 
+  int            (*read_row_func)(struct st_mysql_stmt *stmt,
                                   unsigned char **row);
   unsigned long	 stmt_id;	       /* Id for prepared statement */
   unsigned long  flags;                /* i.e. type of cursor to open */
@@ -721,19 +721,19 @@ typedef struct st_mysql_stmt
   my_bool        bind_param_done;      /* input buffers were supplied */
   unsigned char  bind_result_done;     /* output buffers were supplied */
   /* mysql_stmt_close() had to cancel this result */
-  my_bool       unbuffered_fetch_cancelled;  
+  my_bool       unbuffered_fetch_cancelled;
   /*
-    Is set to true if we need to calculate field->max_length for 
+    Is set to true if we need to calculate field->max_length for
     metadata fields when doing mysql_stmt_store_result.
   */
-  my_bool       update_max_length;     
+  my_bool       update_max_length;
 } MYSQL_STMT;
 
 enum enum_stmt_attr_type
 {
   /*
     When doing mysql_stmt_store_result calculate max_length attribute
-    of statement metadata. This is to be consistent with the old API, 
+    of statement metadata. This is to be consistent with the old API,
     where this was done automatically.
     In the new API we do that only by request because it slows down
     mysql_stmt_store_result sufficiently.
@@ -766,7 +766,7 @@ typedef struct st_mysql_methods
   MYSQL_DATA *(*read_rows)(MYSQL *mysql,MYSQL_FIELD *mysql_fields,
 			   unsigned int fields);
   MYSQL_RES * (*use_result)(MYSQL *mysql);
-  void (*fetch_lengths)(unsigned long *to, 
+  void (*fetch_lengths)(unsigned long *to,
 			MYSQL_ROW column, unsigned int field_count);
   void (*flush_use_result)(MYSQL *mysql);
 #if !defined(MYSQL_SERVER) || defined(EMBEDDED_LIBRARY)
@@ -789,7 +789,7 @@ int STDCALL mysql_stmt_prepare(MYSQL_STMT *stmt, const char *query,
                                unsigned long length);
 int STDCALL mysql_stmt_execute(MYSQL_STMT *stmt);
 int STDCALL mysql_stmt_fetch(MYSQL_STMT *stmt);
-int STDCALL mysql_stmt_fetch_column(MYSQL_STMT *stmt, MYSQL_BIND *bind_arg, 
+int STDCALL mysql_stmt_fetch_column(MYSQL_STMT *stmt, MYSQL_BIND *bind_arg,
                                     unsigned int column,
                                     unsigned long offset);
 int STDCALL mysql_stmt_store_result(MYSQL_STMT *stmt);
@@ -805,16 +805,16 @@ my_bool STDCALL mysql_stmt_bind_result(MYSQL_STMT * stmt, MYSQL_BIND * bnd);
 my_bool STDCALL mysql_stmt_close(MYSQL_STMT * stmt);
 my_bool STDCALL mysql_stmt_reset(MYSQL_STMT * stmt);
 my_bool STDCALL mysql_stmt_free_result(MYSQL_STMT *stmt);
-my_bool STDCALL mysql_stmt_send_long_data(MYSQL_STMT *stmt, 
+my_bool STDCALL mysql_stmt_send_long_data(MYSQL_STMT *stmt,
                                           unsigned int param_number,
-                                          const char *data, 
+                                          const char *data,
                                           unsigned long length);
 MYSQL_RES *STDCALL mysql_stmt_result_metadata(MYSQL_STMT *stmt);
 MYSQL_RES *STDCALL mysql_stmt_param_metadata(MYSQL_STMT *stmt);
 unsigned int STDCALL mysql_stmt_errno(MYSQL_STMT * stmt);
 const char *STDCALL mysql_stmt_error(MYSQL_STMT * stmt);
 const char *STDCALL mysql_stmt_sqlstate(MYSQL_STMT * stmt);
-MYSQL_ROW_OFFSET STDCALL mysql_stmt_row_seek(MYSQL_STMT *stmt, 
+MYSQL_ROW_OFFSET STDCALL mysql_stmt_row_seek(MYSQL_STMT *stmt,
                                              MYSQL_ROW_OFFSET offset);
 MYSQL_ROW_OFFSET STDCALL mysql_stmt_row_tell(MYSQL_STMT *stmt);
 void STDCALL mysql_stmt_data_seek(MYSQL_STMT *stmt, my_ulonglong offset);

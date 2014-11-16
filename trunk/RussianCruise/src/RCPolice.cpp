@@ -636,16 +636,14 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
         {
             if (strlen(param) > 0)
             {
-                string query = string("SELECT * FROM police WHERE username = '") + param + string("';");
-
-                DB_ROWS res = db->select(query);
+                DB_ROWS res = db->select({"username"}, "police", {{"username",param}});
 
                 if ( res.size() > 0)
                 {
                     DB_ROW arFields;
                     arFields["active"] = "Y";
 
-                    db->update("police", arFields, {"username",param});
+                    db->update("police", arFields, {{"username",param}});
                 }
                 else
                 {
@@ -664,7 +662,7 @@ void RCPolice::InsimMSO( struct IS_MSO* packet )
                 DB_ROW arFields;
                 arFields["active"] = "N";
 
-                db->update("police", arFields, {"username",param});
+                db->update("police", arFields, {{"username",param}});
             }
         }
 
@@ -1445,7 +1443,7 @@ void RCPolice::InsimMCI( struct IS_MCI* packet )
             if (!players[UCID].cop and players[UCID].Pogonya == 0 and players[play.first].cop and players[play.first].Radar.On)
             {
                 Dist = Distance(X1, Y1, players[play.first].Radar.X/16, players[play.first].Radar.Y/16);
-                
+
                 if (Dist < 100)
                 {
                     struct streets StreetInfo;
@@ -1771,12 +1769,7 @@ void RCPolice::SendMTCToCop(const char* Msg, int Rank, ...)
 bool
 RCPolice::LoadCopStat(byte UCID)
 {
-
-    string query = "SELECT * FROM police WHERE username = '";
-    query += players[UCID].UName;
-    query += "';";
-
-    DB_ROWS res = db->select(query);
+    DB_ROWS res = db->select({}, "police", {{"username",players[UCID].UName}});
 
     if ( res.size() > 0)
     {
@@ -1831,7 +1824,7 @@ void RCPolice::SaveCopStat(byte UCID)
     arFields["fined"] = ToString(players[UCID].PStat.Fined);
     arFields["fines_canceled"] = ToString(players[UCID].PStat.CanceledFines);
 
-    bool up = db->update("police", arFields, {"username",players[UCID].UName});
+    bool up = db->update("police", arFields, {{"username",players[UCID].UName}});
 
     if ( !up )
     {
