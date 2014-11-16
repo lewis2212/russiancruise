@@ -105,12 +105,10 @@ DBMySQL::select(vector<string> fields, string table, DB_ROW where)
     {
         if(columns.find(table) != columns.end())
         {
-            cout << "1" << endl;
             fields = columns.at(table);
         }
         else
         {
-            cout << "2" << endl;
             fields = collectColumns(table);
         }
     }
@@ -129,9 +127,11 @@ DBMySQL::select(vector<string> fields, string table, DB_ROW where)
 
             first = false;
         }
-
     }
-cout << query << endl;
+
+    if(debug)
+        cout << query << endl;
+
     if( mysql_query(&dbconn, query.c_str() ) != 0 )
 		{
 			cout<< "DB SELECT ERROR: " + (string)mysql_error(&dbconn) << endl;
@@ -216,13 +216,16 @@ DBMySQL::update( string table, DB_ROW fields, DB_ROW where )
         for (DB_ROW::iterator it=where.begin(); it!=where.end(); ++it)
         {
             if(first)
-                query += " WHERE " + it->first + "=" + it->second;
+                query += " WHERE " + it->first + "='" + it->second + "'";
             else
-                query += " AND " + it->first + "=" + it->second;
+                query += " AND " + it->first + "=" + it->second + "'";
 
             first = false;
         }
     }
+
+    if(debug)
+        cout << query << endl;
 
     return exec( query );
 }
